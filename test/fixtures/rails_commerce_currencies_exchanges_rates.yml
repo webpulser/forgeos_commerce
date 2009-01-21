@@ -1,0 +1,13 @@
+dollar_euro:
+  from_currency_id: 1
+  to_currency_id: 2
+  rate: 0.6650
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+
+euro_dollar:
+  from_currency_id: 2
+  to_currency_id: 1
+  rate: 1.5038
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>

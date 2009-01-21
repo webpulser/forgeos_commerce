@@ -1,0 +1,19 @@
+voucher_moins_cinq_euros_good:
+  name: Moins 5€
+  value: 5
+  total_min: 100
+  code: GOOD_CODE
+  date_start: <%= 1.days.ago.to_s(:db) %>
+  date_end: <%= 5.days.from_now.to_s(:db) %>
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+
+voucher_moins_cinq_euros_bad:
+  name: Moins 5€
+  value: 5
+  total_min: 100
+  code: BAD_CODE
+  date_start: <%= 5.days.ago.to_s(:db) %>
+  date_end: <%= 3.days.ago.to_s(:db) %>
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>

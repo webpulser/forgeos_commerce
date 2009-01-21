@@ -1,0 +1,23 @@
+addresses_jonathan_demoutiez_delivery:
+  civility: namable_civility_mr
+  name: Démoutiez
+  firstname: Jonathan
+  address: 257 avenue de lattre de tassigny
+  zip_code: 59700
+  city: Marcq-en-Baroeul
+  type: RailsCommerce::AddressDelivery
+  user: users_jonathan_demoutiez
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+
+addresses_jonathan_demoutiez_invoice:
+  civility: namable_civility_mr
+  name: Démoutiez
+  firstname: Jonathan
+  address: 257 avenue de lattre de tassigny
+  zip_code: 59700
+  city: Marcq-en-Baroeul
+  type: RailsCommerce::AddressInvoice
+  user: users_jonathan_demoutiez
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>

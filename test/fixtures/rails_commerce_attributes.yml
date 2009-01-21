@@ -1,0 +1,23 @@
+attribute_group_color_black:
+  name: black
+  attributes_group: attribute_group_color
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+
+attribute_group_color_pink:
+  name: pink
+  attributes_group: attribute_group_color
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+
+attribute_group_marque_nokia:
+  name: nokia
+  attributes_group: attribute_group_marque
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+
+attribute_group_marque_samsung:
+  name: samsung
+  attributes_group: attribute_group_marque
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>

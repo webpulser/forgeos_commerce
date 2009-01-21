@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: RailsCommerce::OrderHelper</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">RailsCommerce::OrderHelper</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/rails_commerce/helpers/order_helper_rb.html">
+                lib/rails_commerce/helpers/order_helper.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000066">display_address</a>&nbsp;&nbsp;
+      <a href="#M000064">display_order</a>&nbsp;&nbsp;
+      <a href="#M000063">display_order_all_products_lines</a>&nbsp;&nbsp;
+      <a href="#M000062">display_order_by_carts_product</a>&nbsp;&nbsp;
+      <a href="#M000065">display_shipping_methods</a>&nbsp;&nbsp;
+      <a href="#M000068">display_total</a>&nbsp;&nbsp;
+      <a href="#M000067">display_voucher</a>&nbsp;&nbsp;
+      <a href="#M000069">link_to_remove_voucher</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000066" class="method-detail">
+        <a name="M000066"></a>
+
+        <div class="method-heading">
+          <a href="#M000066" class="method-signature">
+          <span class="method-name">display_address</span><span class="method-args">(address, multiple_addresses=true)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Display user&#8216;s addresses choice
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000066-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rails_commerce/helpers/order_helper.rb, line 117</span>
+117:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_address</span>(<span class="ruby-identifier">address</span>, <span class="ruby-identifier">multiple_addresses</span>=<span class="ruby-keyword kw">true</span>)
+118:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">address</span>
+119:       <span class="ruby-identifier">content</span> = <span class="ruby-value str">'&lt;div class=&quot;display_address&quot; id=&quot;order_address_'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">address</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'&quot;&gt;'</span>
+120:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;div class=&quot;order_address_update&quot;&gt;'</span>
+121:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">link_to_remote</span>(<span class="ruby-value str">'Update'</span>, <span class="ruby-identifier">:url</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'order'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'update_address'</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">address</span> })
+122:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+123: 
+124:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">multiple_addresses</span>
+125:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">select_tag</span> <span class="ruby-identifier">address</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'RailsCommerce::'</span>, <span class="ruby-value str">''</span>).<span class="ruby-identifier">underscore</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'_id'</span>, 
+126:                           <span class="ruby-identifier">options_for_select</span>(<span class="ruby-identifier">address</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find_all_by_user_id</span>(<span class="ruby-identifier">address</span>.<span class="ruby-identifier">user_id</span>).<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">address_</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">address_</span>, <span class="ruby-identifier">address_</span>.<span class="ruby-identifier">id</span>] }, <span class="ruby-identifier">address</span>.<span class="ruby-identifier">id</span>), 
+127:                           <span class="ruby-identifier">:onchange</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">remote_function</span>(
+128:                             <span class="ruby-identifier">:url</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'order'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'change_address'</span> }, 
+129:                             <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;'id=' + this.value&quot;</span>
+130:                           )
+131:         <span class="ruby-keyword kw">end</span>
+132: 
+133:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;div class=&quot;address_name&quot;&gt;'</span>
+134:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{address.name} #{address.firstname}&quot;</span>
+135:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+136:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;div class=&quot;address_address&quot;&gt;'</span>
+137:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">address</span>.<span class="ruby-identifier">address</span>
+138:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">address</span>.<span class="ruby-identifier">address_2</span>.<span class="ruby-identifier">blank?</span>
+139:             <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;br /&gt;#{address.address_2}&quot;</span>
+140:           <span class="ruby-keyword kw">end</span>
+141:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+142:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;div class=&quot;address_city&quot;&gt;'</span>
+143:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{address.zip_code} #{address.city}&quot;</span>
+144:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+145:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+146:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000064" class="method-detail">
+        <a name="M000064"></a>
+
+        <div class="method-heading">
+          <a href="#M000064" class="method-signature">
+          <span class="method-name">display_order</span><span class="method-args">(order)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Display a order
+</p>
+<h2>Parameters</h2>
+<ul>
+<li><tt>order</tt> a <em><a href="Cart.html">RailsCommerce::Cart</a></em>
+object
+
+</li>
+<li><tt>static</tt> add action&#8216;s buttons for edit this cart if true,
+false by default
+
+</li>
+</ul>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000064-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000064-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rails_commerce/helpers/order_helper.rb, line 62</span>
+62:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_order</span>(<span class="ruby-identifier">order</span>)
+63:       <span class="ruby-identifier">content</span> = <span class="ruby-value str">&quot;&lt;div class='orders'&gt;&quot;</span>
+64:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='order_detail'&gt;&quot;</span>
+65:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;div class='order_name'&gt;#{order.id}&lt;/div&gt;&quot;</span>
+66:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;div class='order_name'&gt;#{I18n.l order.created_at}&lt;/div&gt;&quot;</span>
+67:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;/div&gt;&quot;</span>
+68:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='clear'&gt;&amp;nbsp;&lt;/div&gt;&quot;</span>
+69:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;div class='order_name'&gt;#{RailsCommerce::OPTIONS[:text][:name]}&lt;/div&gt;&quot;</span>
+70:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;div class='order_name'&gt;#{RailsCommerce::OPTIONS[:text][:quantity]}&lt;/div&gt;&quot;</span>
+71:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;div class='order_name'&gt;#{RailsCommerce::OPTIONS[:text][:unit_price]}&lt;/div&gt;&quot;</span>
+72:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;div class='order_name'&gt;#{RailsCommerce::OPTIONS[:text][:tax]}&lt;/div&gt;&quot;</span>
+73:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;div class='order_name'&gt;#{RailsCommerce::OPTIONS[:text][:total]}&lt;/div&gt;&quot;</span>
+74:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='orders_details'&gt;&quot;</span>
+75:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">display_order_all_products_lines</span>(<span class="ruby-identifier">order</span>)
+76:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;/div&gt;&quot;</span>
+77:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='order_status'&gt;&quot;</span>
+78:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-identifier">order</span>.<span class="ruby-identifier">status</span>)
+79:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;/div&gt;&quot;</span>
+80:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;/div&gt;&quot;</span>
+81:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='clear'&gt;&amp;nbsp;&lt;/div&gt;&quot;</span>
+82:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000063" class="method-detail">
+        <a name="M000063"></a>
+
+        <div class="method-heading">
+          <a href="#M000063" class="method-signature">
+          <span class="method-name">display_order_all_products_lines</span><span class="method-args">(order)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Display all products lines
+</p>
+<h2>Parameters</h2>
+<ul>
+<li><tt>cart</tt> a <em><a href="Cart.html">RailsCommerce::Cart</a></em> object
+
+</li>
+<li><tt>static</tt> add action&#8216;s buttons for edit this cart if true,
+false by default
+
+</li>
+</ul>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000063-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000063-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rails_commerce/helpers/order_helper.rb, line 34</span>
+34:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_order_all_products_lines</span>(<span class="ruby-identifier">order</span>)
+35:       <span class="ruby-identifier">content</span> = <span class="ruby-value str">&quot;&quot;</span>
+36:       <span class="ruby-identifier">order</span>.<span class="ruby-identifier">orders_details</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">orders_detail</span><span class="ruby-operator">|</span>
+37:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">display_order_by_carts_product</span>(<span class="ruby-identifier">order</span>, <span class="ruby-identifier">orders_detail</span>)
+38:       <span class="ruby-keyword kw">end</span>
+39:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='order_shipping_method'&gt;&quot;</span>
+40:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">order</span>.<span class="ruby-identifier">shipping_method</span>
+41:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+42:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='order_shipping_method_price'&gt;&quot;</span>
+43:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">order</span>.<span class="ruby-identifier">shipping_method_price</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$currency</span>.<span class="ruby-identifier">html</span>
+44:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+45:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">order</span>.<span class="ruby-identifier">voucher</span>
+46:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='order_voucher'&gt;&quot;</span>
+47:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value str">'Voucher'</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">': -'</span>
+48:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">order</span>.<span class="ruby-identifier">voucher</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$currency</span>.<span class="ruby-identifier">html</span>
+49:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+50:       <span class="ruby-keyword kw">end</span>
+51:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;div class='order_total'&gt;&lt;b&gt;#{RailsCommerce::OPTIONS[:text][:total]}: &lt;/b&gt;&quot;</span>
+52:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">order</span>.<span class="ruby-identifier">total</span>(<span class="ruby-keyword kw">true</span>).<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$currency</span>.<span class="ruby-identifier">html</span>
+53:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;/div&gt;&quot;</span>
+54:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
+
+        <div class="method-heading">
+          <a href="#M000062" class="method-signature">
+          <span class="method-name">display_order_by_carts_product</span><span class="method-args">(order, orders_detail)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Display a cart&#8216;s product
+</p>
+<h2>Parameters</h2>
+<ul>
+<li><tt>cart</tt> a <em><a href="Cart.html">RailsCommerce::Cart</a></em> object
+
+</li>
+<li><tt>carts_product</tt> a <em><a
+href="CartsProduct.html">RailsCommerce::CartsProduct</a></em> object
+
+</li>
+<li><tt>static</tt> add action&#8216;s buttons for edit this cart if true,
+false by default
+
+</li>
+</ul>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000062-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/rails_commerce/helpers/order_helper.rb, line 9</span>
+ 9:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_order_by_carts_product</span>(<span class="ruby-identifier">order</span>, <span class="ruby-identifier">orders_detail</span>)
+10:       <span class="ruby-identifier">content</span> = <span class="ruby-value str">&quot;&lt;div class='order_product_line'&gt;&quot;</span>
+11:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='order_name'&gt;&quot;</span>
+12:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">orders_detail</span>.<span class="ruby-identifier">name</span>
+13:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;/div&gt;&quot;</span>
+14:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='order_quantity'&gt;&quot;</span>
+15:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">orders_detail</span>.<span class="ruby-identifier">quantity</span>.<span class="ruby-identifier">to_s</span>
+16:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;/div&gt;&quot;</span>
+17:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='order_price'&gt;&quot;</span>
+18:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">orders_detail</span>.<span class="ruby-identifier">price</span>.<span class="ruby-identifier">to_s</span>
+19:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;/div&gt;&quot;</span>
+20:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='order_tax'&gt;&quot;</span>
+21:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">orders_detail</span>.<span class="ruby-identifier">total_tax</span>.<span class="ruby-identifier">to_s</span>
+22:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;/div&gt;&quot;</span>
+23:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;div class='order_price'&gt;&quot;</span>
+24:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">orders_detail</span>.<span class="ruby-identifier">total</span>(<span class="ruby-keyword kw">true</span>).<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$currency</span>.<span class="ruby-identifier">html</span>
+25:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;/div&gt;&quot;</span>
+26:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;&lt;/div&gt;&quot;</span>
+27:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000065" class="method-detail">
+        <a name="M000065"></a>
+
+        <div class="method-heading">
+          <a href="#M000065" class="method-signature">
+          <span class="method-name">display_shipping_methods</span><span class="method-args">(cart=current_user.cart)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Display all shipping methods available for cart
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000065-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000065-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rails_commerce/helpers/order_helper.rb, line 85</span>
+ 85:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_shipping_methods</span>(<span class="ruby-identifier">cart</span>=<span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">cart</span>)
+ 86:       <span class="ruby-identifier">content</span> = <span class="ruby-value str">'&lt;div class=&quot;order_shipping_methods&quot;&gt;'</span>
+ 87:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cart</span>.<span class="ruby-identifier">get_shipping_method_details</span>.<span class="ruby-identifier">empty?</span>
+ 88:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value str">'We are sorry, but it is temporarily impossible to place order...'</span>)
+ 89:       <span class="ruby-keyword kw">else</span>
+ 90:         <span class="ruby-identifier">cart</span>.<span class="ruby-identifier">get_shipping_method_details</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">shipping_method_detail</span><span class="ruby-operator">|</span>
+ 91:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;div class=&quot;order_shipping_method&quot;&gt;'</span>
+ 92:             <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;span class=&quot;order_shipping_method_name&quot;&gt;'</span>
+ 93:               <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">radio_button_tag</span>(
+ 94:                           <span class="ruby-value str">'shipping_method_detail_id'</span>, 
+ 95:                           <span class="ruby-identifier">shipping_method_detail</span>.<span class="ruby-identifier">id</span>, 
+ 96:                           (<span class="ruby-identifier">shipping_method_detail</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:order_shipping_method_detail_id</span>]),
+ 97:                           <span class="ruby-identifier">:onclick</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">remote_function</span>(
+ 98:                             <span class="ruby-identifier">:url</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'update_shipping_method'</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">shipping_method_detail</span>.<span class="ruby-identifier">id</span> }
+ 99:                           )
+100:                         )
+101:               <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">shipping_method_detail</span>.<span class="ruby-identifier">name</span>
+102:             <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/span&gt;'</span>
+103:             <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;span class=&quot;order_shipping_method_price&quot;&gt;'</span>
+104:               <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{shipping_method_detail.price} #{$currency.html}&quot;</span>
+105:             <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/span&gt;'</span>
+106: 
+107:             <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;div class=&quot;order_shipping_method_description&quot;&gt;'</span>
+108:               <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">shipping_method_detail</span>.<span class="ruby-identifier">shipping_method</span>.<span class="ruby-identifier">description</span>
+109:             <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+110:           <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+111:         <span class="ruby-keyword kw">end</span>
+112:       <span class="ruby-keyword kw">end</span>
+113:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+114:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
+
+        <div class="method-heading">
+          <a href="#M000068" class="method-signature">
+          <span class="method-name">display_total</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Display the order&#8216;s total price
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000068-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rails_commerce/helpers/order_helper.rb, line 169</span>
+169:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_total</span>
+170:       <span class="ruby-identifier">content</span> = <span class="ruby-value str">'&lt;div class=&quot;order_total&quot;&gt;'</span>
+171:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;TOTAL: &lt;span id='order_total_price'&gt;&lt;/span&gt; #{$currency.html}&quot;</span>
+172:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">javascript_tag</span> <span class="ruby-identifier">remote_function</span>(<span class="ruby-identifier">:url</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'order'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'update_total'</span> })
+173:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+174:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000067" class="method-detail">
+        <a name="M000067"></a>
+
+        <div class="method-heading">
+          <a href="#M000067" class="method-signature">
+          <span class="method-name">display_voucher</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Display the voucher&#8216;s form_tag or the activate voucher
+<em>session[:order_voucher_id]</em>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000067-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000067-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rails_commerce/helpers/order_helper.rb, line 149</span>
+149:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_voucher</span>
+150:       <span class="ruby-identifier">content</span> = <span class="ruby-value str">'&lt;div class=&quot;order_voucher&quot; id=&quot;order_voucher&quot;&gt;'</span>
+151:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:order_voucher_id</span>]
+152:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{I18n.t('Voucher')} : -&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-constant">RailsCommerce</span><span class="ruby-operator">::</span><span class="ruby-constant">Voucher</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:order_voucher_id</span>]).<span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> 
+153:         <span class="ruby-node">&quot; #{$currency.html} &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">link_to_remove_voucher</span>
+154:       <span class="ruby-keyword kw">else</span>
+155:         <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{I18n.t('Voucher')} : &quot;</span> <span class="ruby-operator">+</span> 
+156:         <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-identifier">:voucher_code</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'voucher_code'</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> 
+157:         <span class="ruby-identifier">button_to_function</span>(
+158:           <span class="ruby-value str">&quot;Add&quot;</span>, 
+159:           <span class="ruby-identifier">remote_function</span>(
+160:             <span class="ruby-identifier">:url</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'order'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'add_voucher'</span> },
+161:             <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;'voucher_code='+$('voucher_code').value&quot;</span>
+162:           )
+163:         )
+164:       <span class="ruby-keyword kw">end</span>
+165:       <span class="ruby-identifier">content</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">'&lt;/div&gt;'</span>
+166:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
+
+        <div class="method-heading">
+          <a href="#M000069" class="method-signature">
+          <span class="method-name">link_to_remove_voucher</span><span class="method-args">(name=RailsCommerce::OPTIONS[:text][:remove_voucher], url={:controller =&gt; 'order', :action =&gt; 'remove_voucher'}, options=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Extension of <em>link_to(name, options = {}, html_options = nil)</em> with
+a <em><a href="Product.html">RailsCommerce::Product</a></em> object of
+first parameter
+</p>
+<h4>Parameters</h4>
+<ul>
+<li><tt>:name</tt> - name,
+<em>RailsCommerce::OPTIONS[:text][:remove_voucher]</em> by default
+
+</li>
+<li><tt>:url</tt> - url, <em>{:controller =&gt; &#8216;order&#8217;, :action
+=&gt; &#8216;remove_voucher&#8217;}</em> by default
+
+</li>
+<li><tt>options</tt> the html options
+
+</li>
+</ul>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000069-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000069-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/rails_commerce/helpers/order_helper.rb, line 182</span>
+182:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">link_to_remove_voucher</span>(<span class="ruby-identifier">name</span>=<span class="ruby-constant">RailsCommerce</span><span class="ruby-operator">::</span><span class="ruby-constant">OPTIONS</span>[<span class="ruby-identifier">:text</span>][<span class="ruby-identifier">:remove_voucher</span>], <span class="ruby-identifier">url</span>={<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'order'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'remove_voucher'</span>}, <span class="ruby-identifier">options</span>=<span class="ruby-keyword kw">nil</span>)
+183:       <span class="ruby-identifier">link_to_remote</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-identifier">name</span>), <span class="ruby-identifier">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">url</span>, <span class="ruby-identifier">:html</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>
+184:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

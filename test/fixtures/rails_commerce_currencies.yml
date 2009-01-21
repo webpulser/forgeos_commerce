@@ -1,0 +1,16 @@
+euro:
+  id: 1
+  name: euro
+  code: EUR
+  html: "&euro;"
+  default: true
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
+
+dollar:
+  id: 2
+  name: dollar
+  code: USD
+  html: "$"
+  created_at: <%= Time.now.to_s(:db) %>
+  updated_at: <%= Time.now.to_s(:db) %>
