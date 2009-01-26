@@ -40,7 +40,7 @@ namespace :rails_commerce do
   end
   task :migration => :environment do
     # TODO - globalize MAX
-    MAX = 14
+    MAX = 15
     # TODO - if schema_info not installed
     id = RailsCommerce::SchemaInfo.find(:first).version + 1
     unless MAX >= id
@@ -425,6 +425,88 @@ namespace :rails_commerce do
       t.integer :picture_id
     end
     RailsCommerce::SchemaInfo.find(:first).update_attribute(:version, 13)
+  end
+  task :migration_15 => :environment do
+    RailsCommerce::Product.all.each do |product|
+      type = product.type.to_s
+      product.update_attribute(:type, type.gsub('RailsCommerce::',''))
+    end
+    RailsCommerce::Namable.all.each do |namable|
+      type = namable.type.to_s
+      namable.update_attribute(:type, type.gsub('RailsCommerce::',''))
+    end
+    RailsCommerce::Address.all.each do |address|
+      type = address.type.to_s
+      address.update_attribute(:type, type.gsub('RailsCommerce::',''))
+    end
+    ActiveRecord::Base.connection.rename_table :rails_commerce_pictures, :pictures
+    ActiveRecord::Base.connection.rename_table :rails_commerce_products, :products
+    ActiveRecord::Base.connection.rename_table :rails_commerce_categories, :categories
+    ActiveRecord::Base.connection.rename_table :rails_commerce_categories_products, :categories_products
+    ActiveRecord::Base.connection.rename_table :rails_commerce_addresses, :addresses
+    ActiveRecord::Base.connection.rename_table :rails_commerce_attributes, :attributes
+    ActiveRecord::Base.connection.rename_table :rails_commerce_attributes_groups, :attributes_groups
+    ActiveRecord::Base.connection.rename_table :rails_commerce_attributes_groups_products, :attributes_groups_product_parentss
+    ActiveRecord::Base.connection.rename_table :rails_commerce_attributes_product_details, :attributes_product_details
+    ActiveRecord::Base.connection.rename_table :rails_commerce_carts, :carts
+    ActiveRecord::Base.connection.rename_table :rails_commerce_carts_products, :carts_products
+    ActiveRecord::Base.connection.rename_table :rails_commerce_countries, :countries
+    ActiveRecord::Base.connection.rename_table :rails_commerce_cross_sellings_product_parents, :cross_sellings_product_parents
+    ActiveRecord::Base.connection.rename_table :rails_commerce_currencies, :currencies
+    ActiveRecord::Base.connection.rename_table :rails_commerce_currencies_exchanges_rates, :currencies_exchanges_rates
+    ActiveRecord::Base.connection.rename_table :rails_commerce_dynamic_attributes, :dynamic_attributes
+    ActiveRecord::Base.connection.rename_table :rails_commerce_namables, :namables
+    ActiveRecord::Base.connection.rename_table :rails_commerce_orders, :orders
+    ActiveRecord::Base.connection.rename_table :rails_commerce_orders_details, :orders_details
+    ActiveRecord::Base.connection.rename_table :rails_commerce_shipping_methods, :shipping_methods
+    ActiveRecord::Base.connection.rename_table :rails_commerce_shipping_method_details, :shipping_method_details
+    ActiveRecord::Base.connection.rename_table :rails_commerce_sortable_pictures, :sortable_pictures
+    ActiveRecord::Base.connection.rename_table :rails_commerce_vouchers, :vouchers
+    ActiveRecord::Base.connection.rename_column :attributes_groups_product_parents, :product_id, :product_parent_id
+    RailsCommerce::SchemaInfo.find(:first).update_attribute(:version, 15)
+  end
+  task :down_migration_15 => :environment do
+    ActiveRecord::Base.connection.rename_column :attributes_groups_product_parents, :product_parent_id, :product_id
+    ActiveRecord::Base.connection.rename_table :pictures, :rails_commerce_pictures
+    ActiveRecord::Base.connection.rename_table :products, :rails_commerce_products
+    ActiveRecord::Base.connection.rename_table :categories, :rails_commerce_categories
+    ActiveRecord::Base.connection.rename_table :categories_products, :rails_commerce_categories_products
+    ActiveRecord::Base.connection.rename_table :addresses, :rails_commerce_addresses
+    ActiveRecord::Base.connection.rename_table :attributes, :rails_commerce_attributes
+    ActiveRecord::Base.connection.rename_table :attributes_groups, :rails_commerce_attributes_groups
+    ActiveRecord::Base.connection.rename_table :attributes_groups_product_parents, :rails_commerce_attributes_groups_products
+    ActiveRecord::Base.connection.rename_table :attributes_product_details, :rails_commerce_attributes_product_details
+    ActiveRecord::Base.connection.rename_table :carts, :rails_commerce_carts
+    ActiveRecord::Base.connection.rename_table :carts_products, :rails_commerce_carts_products
+    ActiveRecord::Base.connection.rename_table :countries, :rails_commerce_countries
+    ActiveRecord::Base.connection.rename_table :cross_sellings_product_parents, :rails_commerce_cross_sellings_product_parents
+    ActiveRecord::Base.connection.rename_table :currencies, :rails_commerce_currencies
+    ActiveRecord::Base.connection.rename_table :currencies_exchanges_rates, :rails_commerce_currencies_exchanges_rates
+    ActiveRecord::Base.connection.rename_table :dynamic_attributes, :rails_commerce_dynamic_attributes
+    ActiveRecord::Base.connection.rename_table :namables, :rails_commerce_namables
+    ActiveRecord::Base.connection.rename_table :orders, :rails_commerce_orders
+    ActiveRecord::Base.connection.rename_table :orders_details, :rails_commerce_orders_details
+    ActiveRecord::Base.connection.rename_table :shipping_methods, :rails_commerce_shipping_methods
+    ActiveRecord::Base.connection.rename_table :shipping_method_details, :rails_commerce_shipping_method_details
+    ActiveRecord::Base.connection.rename_table :sortable_pictures, :rails_commerce_sortable_pictures
+    ActiveRecord::Base.connection.rename_table :vouchers, :rails_commerce_vouchers
+    RailsCommerce::Product.all.each do |product|
+      type = product.type.to_s
+      type = 'RailsCommerce::'+type unless type.start_with?('RailsCommerce')
+      product.update_attribute(:type, type)
+    end
+    RailsCommerce::Namable.all.each do |namable|
+      type = namable.type.to_s
+      type = 'RailsCommerce::'+type unless type.start_with?('RailsCommerce')
+      namable.update_attribute(:type, type)
+    end
+    RailsCommerce::Address.all.each do |address|
+      type = address.type.to_s
+      type = 'RailsCommerce::'+type unless type.start_with?('RailsCommerce')
+      address.update_attribute(:type, type)
+    end
+
+    RailsCommerce::SchemaInfo.find(:first).update_attribute(:version, 14)
   end
 
 end
