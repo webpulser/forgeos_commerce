@@ -1,0 +1,61 @@
+<%= display_standard_flashes %>
+<fieldset>
+  <legend><%= link_to_effect_toggle('Attributes','static_attributes') %></legend>
+  <% form_for :product_parent, :url => { :id => product_parent.id }, :html => { :id => 'static_attributes' } do |f| %>
+    <p>
+      <b><%= f.label :categories %> : </b>
+      <%= select_tag "product_parent[category_ids][]",
+        options_from_collection_for_select(Category.all, :id, :name,
+                                           product_parent.category_ids ),
+        :multiple => true %>
+    </p>
+    <p><b><%= f.label :reference %> : </b><%= f.text_field :reference %></p>
+    <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
+    <p><b><%= f.label :description %> : </b><%= f.text_area :description %></p>
+    <p><b><%= f.label :rate_tax %> : </b><%= f.text_field :rate_tax %></p>
+    <p><b><%= f.label :selling_date %> : </b><%= f.date_select :selling_date, :include_blank => true %></p>
+    <p><b><%= f.label :offer_month %> : </b><%= f.check_box :offer_month %></p>
+    <p><b><%= f.label :on_first_page %> : </b><%= f.check_box :on_first_page %></p>
+    <p><b><%= f.label :weight %> : </b><%= f.text_field :weight %></p>
+    <p><b><%= f.label :keywords %> : </b><%= f.text_field :keywords %></p>
+    <p><b><%= f.label :stock %> : </b><%= f.text_field :stock %></p>
+    
+    <fieldset>
+      <legend>
+        <%= link_to_effect_toggle('Attributes Groups','attributes_groups') %> |
+        <%= link_to_function('select all',"$$('.attributes_groups').each(function(box){box.checked=true;})") %> |
+        <%= link_to_function('unselect all',"$$('.attributes_groups').each(function(box){box.checked=false;})") %>
+      </legend>
+      <p id="attributes_groups">
+      <% AttributesGroup.all.each do |attr_group| %>
+        <%= check_box_tag 'product_parent[attributes_group_ids][]', attr_group.id,
+          attr_group.products.include?(product_parent), :class => 'attributes_groups' %>
+        <b><%= label_tag attr_group.name %></b>
+        <br />
+      <% end %>
+      </p>
+    </fieldset>
+    <center><%= f.submit 'Save' %><%= link_to 'back', :back %></center>
+  <% end %>
+</fieldset>
+<fieldset>
+  <legend><%= link_to_effect_toggle('Product Details','product_details') %></legend>
+  <div id="product_details">
+    <%= render :partial => 'list_product_details', :locals => { :product_parent => product_parent } %>
+  </div>
+</fieldset>
+<fieldset>
+  <legend><%= link_to_effect_toggle('Pictures','product_pictures') %></legend>
+  <div id="product_pictures">
+    <%= link_to_unless product_parent.id.nil?, 'create a picture',
+      { :controller => 'pictures', :action => 'create', 'picture[product_ids][]' => product_parent.id,
+        :target => 'product', :target_id => product_parent.id },
+        :class => 'add' %>
+    <div id="list_pictures">
+      <%= render :partial => 'admin/pictures/list', :locals => { :pictures => product_parent.pictures, :target => 'product', :target_id => product_parent.id } %>
+    </div>
+  </div>
+</fieldset>
+
+<%= hide_html_elements_onload %w[product_details static_attributes product_pictures] %>
+<% @content_for_tools << link_to('list', { :controller => 'admin/products', :action => 'index' }, :class => 'house' )%>

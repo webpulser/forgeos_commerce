@@ -1,0 +1,32 @@
+<% address = address || nil %>
+
+<% form_remote_for :address, address, :url => { :controller => 'order', :action => 'create_address', :id => address } do |f| %>
+  <%= f.select :type, [['Address delivery'.t, 'AddressDelivery'], ['Address invoice'.t, 'AddressInvoice']] %><br />
+  <%= f.select :civility_id, RailsCommerce::Civility.find(:all).collect { |civility| [civility.name, civility.id] } %><br />
+  <div>
+    <label><%= 'Name'.t %></label>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <label><%= 'Firstname'.t %></label>
+    <%= f.text_field :firstname %>    
+  </div>
+  <div>
+    <label><%= 'Address'.t %></label>
+    <%= f.text_field :address %>
+  </div>
+  <div>
+    <label><%= 'Address'.t %></label>
+    <%= f.text_field :address_2 %>
+  </div>
+  <div>
+    <label><%= 'Zip code'.t %></label>
+    <%= f.text_field :zip_code %>
+  </div>
+  <div>
+    <label><%= 'City'.t %></label>
+    <%= f.text_field :city %>    
+  </div>
+  <%= submit_tag "Add address".t %>
+<% end %>
+<%= link_to_remote('Back'.t, :url => { :controller => 'order', :action => 'back_addresses' }) %>

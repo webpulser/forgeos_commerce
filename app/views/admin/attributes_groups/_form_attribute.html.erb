@@ -1,0 +1,29 @@
+<fieldset>
+  <legend><%= link_to_effect_toggle('Pictures','attributes_pictures') %></legend>
+  <div id="attributes_pictures">
+    <%= link_to_unless attribute.id.nil?, 'create a picture', 
+      { :controller => 'pictures', :action => 'create',
+      'picture[tattribute_ids][]' => attribute.id,
+      :target => 'tattribute', :target_id => attribute.id },
+      :class => 'add'
+    %>
+    <div id="list_pictures">
+      <%= render :partial => 'admin/pictures/list', :locals => { :pictures => attribute.pictures, :target => 'tattribute', :target_id => attribute.id } %>
+    </div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend><%= link_to_effect_toggle('Attributes', 'static_attributes') %></legend>
+  <% form_for :attribute, :url => { :id => attribute.id, :group_id => attribute.attributes_group.id }, :update => 'attributes',
+    :html => { :id => 'static_attributes' } do |f| %>
+      <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
+    <center>
+      <%= f.submit 'Save' %>
+      <%= link_to 'back', :back %>
+    </center>
+  <% end %>
+</fieldset>
+
+<%= hide_html_elements_onload %w[attributes_pictures static_attributes] %>
+<% @content_for_tools << link_to('edit AttributesGroup', { :controller => 'admin/attributes_groups', :action => 'edit', :id => attribute.attributes_group.id }, :class => 'manage') %>

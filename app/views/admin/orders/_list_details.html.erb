@@ -1,0 +1,23 @@
+<%= display_standard_flashes %>
+<%= link_to 'create a detail', { :controller => 'admin/orders', :action => 'create_detail', :id => order.id }, :class => 'add' %>
+<table>
+  <thead>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Actions</th>
+  </thead>
+  <tbody>
+    <% order.orders_details.each do |orders_detail| %>
+      <tr>
+        <td><%= orders_detail.name %></td>
+        <td><%= orders_detail.price %></td>
+        <td><%= orders_detail.quantity %></td>
+        <td>
+          <%= link_to 'edit', { :controller => 'admin/orders', :action => 'edit_detail', :id => order.id, :detail_id => orders_detail.id } %>
+          <%= link_to_remote 'destroy', :url => { :controller => 'admin/orders', :action => 'destroy_detail', :id => order.id, :detail_id => orders_detail.id }, :update => 'orders_details', :confirm => 'Are you sure to destroy this order detail ?' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

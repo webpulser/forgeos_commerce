@@ -1,0 +1,7 @@
+<div class="product_special">
+	<%= display_product ProductDetail::get_offer_month, with_description=true, { :thumbnail_type => :small } %>
+</div>
+
+<div class="product_home">
+	<%= display_all_products ProductDetail::get_on_first_page %>
+</div>

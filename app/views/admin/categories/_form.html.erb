@@ -1,0 +1,23 @@
+<fieldset>
+  <legend><%= link_to_effect_toggle('Category Pictures','pictures') %></legend>
+  <div id="pictures">
+    <%= link_to_unless category.id.nil?, 'create a picture',
+      { :controller => 'pictures', :action => 'create',
+      'picture[category_ids][]' => category.id,
+      :target => 'category', :target_id => category.id },
+      :class => 'add'
+    %>
+    <div id="list_pictures">
+      <%= render :partial => 'admin/pictures/list', :locals => { :pictures => category.pictures, :target => 'category', :target_id => category.id } %>
+    </div>
+  </div>
+</fieldset>
+<fieldset>
+  <legend><%= link_to_effect_toggle('Attributes','category_form') %></legend>
+<% form_for :category, category, :url => { :id => category.id }, :html => { :id => 'category_form' } do |f| %>
+  <p><b><%= f.label :parent_id %></b><%= f.collection_select :parent_id, Category.all, :id, :name, { :prompt => true, :include_blank => 'None' }%></p>
+  <p><b><%= f.label :name %></b><%= f.text_field :name %></p>
+  <%= f.submit 'Save' %>
+<% end %>
+<%= hide_html_elements_onload %w[pictures category_form] %>
+<% @content_for_tools << link_to('list', { :controller => 'admin/categories', :action => 'index' }, :class => 'house' )%>

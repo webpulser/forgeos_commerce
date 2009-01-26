@@ -1,0 +1,31 @@
+<%= display_standard_flashes %>
+<% @content_for_tools << link_to('create an user', { :controller => 'admin/users', :action => 'create' }, :class => 'add') %>
+<table>
+  <thead>
+    <th>Avatar</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Created on</th>
+    <th>Active ?</th>
+    <th>Actions</th>
+  </thead>
+  <tbody>
+    <% if users.empty? %>
+      No users
+    <% else %>
+      <% users.each do |user| %>
+        <tr>
+          <td><%= image_tag(user.avatar.public_filename(:small)) if user.avatar %></td>
+          <td><%=h user.fullname %></td>
+          <td><%=h user.email %></td>
+          <td><%= user.created_at %></td>
+          <td><%= (user.active? ? 'Yes' : 'No') %></td>
+          <td>
+            <%= link_to 'edit', :controller => 'admin/users', :action => 'edit', :id => user.id %>
+            <%= link_to_remote 'destroy', :url => { :controller => 'admin/users', :action => 'destroy', :id => user.id }, :confirm => 'Are you sure to destroy this user ?', :update => 'users' %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+</tbody>
+</table>

@@ -1,0 +1,15 @@
+<div class="form_group">
+  <% remote_form_for comment, :url => {:action => params[:action], :id => comment.commentable_id }, :update => 'comments', :html => { :id => 'form_comment'} do |f|%>
+    <%= f.error_messages %>
+    <p>
+      <%= label_tag :title %>
+      <%= f.text_field :title %>
+    </p>
+    <p>
+      <%= label_tag :comment %>
+      <%= f.text_area :comment, :rows => 5 %>
+    </p>
+    <%= hidden_field_tag :comment_id, comment.id %>
+    <%= f.submit 'Save' %>
+  <% end %>
+</div>

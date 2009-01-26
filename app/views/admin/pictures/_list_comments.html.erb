@@ -1,0 +1,10 @@
+<%= display_standard_flashes %>
+<ul class="comment_list">
+<% comments.each do |comment| %>
+  <li>
+    from <%= comment.user.name if comment.user %> the <%= comment.created_at.to_s(:long) %> | <%= comment.comment %>
+    <%= link_to_remote('destroy', :url => {:action => 'destroy_comment', :comment_id => comment.id, :id => comment.commentable_id }, :update => 'comments', :confirm => 'Are you sure you want to delete this comment?') %>
+  </li>
+<% end %>
+</ul>
+<div id="comment_add"></div>

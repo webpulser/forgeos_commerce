@@ -1,0 +1,18 @@
+<ul id="picture_list" class="no-list-style-type">
+<% pictures.each do |picture| %>
+  <li id="item_<%= picture.id %>">
+    <table><tr>
+      <td><%= image_tag picture.public_filename(:small) %></td>
+      <td><%= picture.content_type %></td>
+      <td>
+        <%= link_to 'show', :controller => 'pictures', :action => 'show', :id => picture.id %>
+        <%= link_to_remote 'destroy', :url => { :controller => 'pictures', :action => 'destroy', :id => picture.id, :target => target, :target_id => target_id }, :update => 'list_pictures' %>
+      </td>
+    </tr></table>
+  </li>
+<% end %>
+</ul>
+<%= sortable_element 'picture_list',
+  :url => { :controller => 'admin/pictures', :action => 'sort', :id => target_id, :target => target },
+:complete => visual_effect(:highlight, 'picture_list')
+%>

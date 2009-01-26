@@ -1,0 +1,51 @@
+<%= display_standard_flashes %>
+<fieldset>
+  <legend><%= link_to_effect_toggle('Attributes','static_attributes') %></legend>
+  <% form_for :product_detail, :url => { :id => (product_detail.id || product_detail.product_parent.id) }, :html => { :id => 'static_attributes' } do |f| %>
+    <p>
+      <b><%= f.label :categories %> : </b>
+      <%= select_tag "product_detail[category_ids][]",
+        options_from_collection_for_select(Category.all, :id, :name,
+                                           product_detail.category_ids ),
+        :multiple => true %>
+    </p>
+    <p><b><%= f.label :reference %> : </b><%= f.text_field :reference %></p>
+    <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
+    <p><b><%= f.label :description %> : </b><%= f.text_area :description %></p>
+    <p><b><%= f.label :selling_date %> : </b><%= f.date_select :selling_date, :include_blank => true %></p>
+    <p><b><%= f.label :offer_month %> : </b><%= f.check_box :offer_month %></p>
+    <p><b><%= f.label :stock %> : </b><%= f.text_field :stock %></p>
+    <p><b><%= f.label :price %> : </b><%= f.text_field :price %></p>
+
+    <% product_detail.attributes_groups.each do |attr_group| %>
+      <p><b><%= label_tag attr_group.name %> : </b>
+      <% unless attr_group.dynamic? %>
+        <%= select_tag "product_detail[tattribute_ids][]",
+            options_from_collection_for_select(attr_group.tattributes, :id, :name,
+              (attr_group.tattribute_ids & product_detail.tattribute_ids)),
+            :multiple => true %>
+      <% else %>
+        <% dynamic_attribute = product_detail.dynamic_attributes.find_by_attributes_group_id(attr_group.id) %>
+        <%= text_field "dynamic_attributes[#{attr_group.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?) %>
+      <% end %>
+      </p>
+    <% end %>
+    <center><%= f.submit 'Save' %><%= link_to 'back', :back %></center>
+  <% end %>
+</fieldset>
+
+<fieldset>
+  <legend><%= link_to_effect_toggle('Pictures','product_pictures') %></legend>
+  <div id="product_pictures">
+    <%= link_to_unless product_detail.id.nil?, 'create a picture',
+      { :controller => 'pictures', :action => 'create',
+      'picture[product_ids][]' => product_detail.id,
+      :target => 'product', :target_id => product_detail.id }, 
+      :class => 'add' %>
+    <div id="list_pictures">
+      <%= render :partial => 'admin/pictures/list', :locals => { :pictures => product_detail.pictures, :target => 'product', :target_id => product_detail.id } %>
+    </div>
+  </div>
+</fieldset>
+<%= hide_html_elements_onload %w[static_attributes product_pictures] %>
+<% @content_for_tools << link_to('edit Product Parent', { :controller => 'products', :action => 'edit', :id => product_detail.product_parent.id }, :class => 'manage' ) if product_detail.product_parent %>

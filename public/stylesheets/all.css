@@ -1,0 +1,38 @@
+body { 
+	margin: 0; 
+	padding: 0; 
+	font: normal 11px/1.5em Verdana, "Lucida Grande", Lucida, Tahoma, "Trebuchet MS", Arial, Geneva, Helvetica, sans-serif; 
+	color: #777;
+}
+
+a { color: blue; }
+a:hover { text-decoration: none; color: red;}
+
+#header { text-align: center; }
+
+img { border: none; margin: 0; padding: 0; }
+img a { margin: 0; padding: 0; }
+
+.change_currency, .change_language, .logged_in { float: right; clear: both; }
+
+#nav { float: left; list-style: none; margin-left: 400px; }
+#nav li { margin: 0 2px; }
+#nav li a { display: block; padding: 4px 10px 5px 10px; text-decoration: none; }
+#nav { position: absolute; top: 10px; left: -400px; }
+#rails_commerce_cart_link { clear: both; margin-left: 100px; }
+
+#page { float: left; margin-left: 20%; }
+
+.display_categories { width: 600px; height: 20px; margin-left: 100px; margin-top: 20px; }
+.category { float: left; padding-right: 50px; width: 100px; }
+.category, .category { margin-left: 10px; }
+
+.yield { clear: both; padding-top: 50px; }
+
+#footer { width: 300px; margin: 0 auto; text-align: center; }
+
+
+/********* HOME *********/
+.product_special .product_description { display: none; }
+.product { padding: 20px; text-align: center; }
+.product_name { background-color: gray; text-align: center; padding: 2px; }

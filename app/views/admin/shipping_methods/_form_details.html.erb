@@ -1,0 +1,12 @@
+<%= display_standard_flashes %>
+<% form_for :shipping_method_detail, shipping_method_detail, { :id => shipping_method_detail.id } do |f| %>
+  <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
+  <p><b><%= f.label :price %> : </b><%= f.text_field :price %></p>
+  <p><b><%= f.label :weight_min %> : </b><%= f.text_field :weight_min %></p>
+  <p><b><%= f.label :weight_max %> : </b><%= f.text_field :weight_max %></p>
+  <%= f.submit 'Save' %>
+<% end %>
+<% @content_for_tools << link_to('edit shipping method', 
+    { :controller => 'admin/shipping_methods', :action => 'edit', :id => shipping_method_detail.shipping_method.id },
+    :class => 'manage' )
+%>

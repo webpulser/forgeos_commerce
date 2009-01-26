@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='fr' xml:lang='fr' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
+    <title>RailsCommerce</title>
+		<%= stylesheet_link_tag 'rails_commerce', session[:design] || 'design_aqtp' %>
+    <%= javascript_include_tag(:all, :cache => true) %>
+  </head>
+  <body>
+    <div id='application'>
+      <div id='header'>
+        <h1><a href="/">RailsCommerce</a></h1>
+        <div class="change_currency">
+  				<%=t "Change currency" %> :
+  				<% Currency.find(:all).each do |currency| %>
+  					<%= link_to "#{currency.name} (#{currency.html})", :controller => 'home', :action => 'change_currency', :id => currency %> |
+  				<% end %>
+        </div>
+        <div class="change_language">
+  				<%=t "Change language" %> :
+  				<%# LOCALES.each do |key, locale| %>
+  					<%#= link_to RFC_3066.parse(locale).country, :controller => 'home', :locale => key %> |
+  				<%# end %>
+        </div>
+				<div>&nbsp;</div>
+  			<div class="logged_in">
+  				<% if logged_in? %>
+            <%=t "Hello" %> <%= current_user.fullname %>
+  				  <%= link_to "Disconnect".t, session_path(:locale => params[:locale]), :method => :delete %>
+  				<% else %>
+  				  <%= link_to "Log in".t, new_session_path(:locale => params[:locale]) %>
+  				  <%= link_to "Sign in".t, new_user_path(:locale => params[:locale]) %>
+  			  <% end %>
+			  </div>
+        <ul class='nav' id='nav'>
+          <li><%= link_to I18n.t("Home"), url_for(:controller => 'home', :action => 'index', :locale => params[:locale]) %></li>
+          <li><%= link_to_catalog %></li>
+          <li>
+            <% form_tag :controller => 'catalog', :action => 'search' do %>
+              <%= text_field_tag 'keywords' %>
+              <%= submit_tag I18n.t("Search") %>
+            <% end %>
+          </li>
+          <li id="rails_commerce_cart_link"><%= link_to_cart %></li>
+        </ul>
+        <div class='clear'></div>
+      </div>
+      <div id='page'>
+        
+        <div id='content'>
+					<div id="notice">
+						<%= display_standard_flashes %>
+					</div>
+          <div class="display_categories">
+            <%= display_categories %>
+          </div>
+          <div class="yield">
+					  <%= yield %>
+          </div>
+        </div>
+<!--
+        <div id='sidebar'>
+          <div class='block' id='presentation'>
+            <p class='inside'>
+            </p>
+            <p class='right'>
+              <div class='clear'></div>
+            </p>
+          </div>
+        </div>
+-->
+        <div class='clear'></div>
+      </div>
+      <div id='ancillary'>
+        <div class='blocks'>
+          <div class='block first'>
+          <div class='clear'></div>
+        </div>
+        <div id='footer'>
+          <p>
+            &copy; 2008 <%= link_to "Jonathan Démoutiez", "http://jonathan.demoutiez.net", :target => "_blank" %>
+            | Design : 
+            <%= link_to "Design_1", :controller => 'home', :action => 'change_design', :design => 'design_aqtp' %>
+            <%= link_to "Design_2", :controller => 'home', :action => 'change_design', :design => 'all' %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

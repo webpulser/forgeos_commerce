@@ -1,0 +1,8 @@
+<%= step_order(2) %>
+
+<% if logged_in? %>
+  <%= render :partial => 'users/edit_form' %>
+<% else %>
+  <%= render :partial => 'sessions/new_form' %>
+  <%= render :partial => 'users/new_form' %>
+<% end %>

@@ -1,0 +1,5 @@
+<h1>Users</h1>
+<div id="users">
+  <%= render :partial => 'list', :locals => { :users => @users } %>
+</div>
+<% @content_for_tools << link_to('export for newsletter', { :controller => 'admin/users', :action => 'export_newsletter' }, :class => 'report_seo' )%>

@@ -1,0 +1,30 @@
+<h1>Products</h1>
+<% @content_for_tools << link_to('create a product', { :controller => 'admin/products', :action => 'create' }, :class => 'add' ) %>
+<%= display_standard_flashes %>
+<div id="list">
+  <table>
+    <thead>
+      <th>Reference</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Details</th>
+      <th>Categories</th>
+      <th>Actions</th>
+    </thead>
+    <tbody>
+  <% @products.each do |product| %>
+    <tr>
+      <td><%=h product.reference %></td>
+      <td><%=h product.name %></td>
+      <td><%=h truncate(product.description,230) %></td>
+      <td><%= product.product_details.count %></td>
+      <td><%= product.categories.collect{ |cat| cat.name }.join(', ') %></td>
+      <td>
+        <%= link_to 'edit', :action => 'edit', :id => product.id %>
+        <%= link_to 'destroy', :action => 'destroy', :id => product.id %>
+      </td>
+    </tr>
+  <% end %>
+    </tbody>
+  </table>
+</div>

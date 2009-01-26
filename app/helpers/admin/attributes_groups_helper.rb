@@ -1,0 +1,2 @@
+module Admin::AttributesGroupsHelper
+end

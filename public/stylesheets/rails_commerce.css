@@ -1,0 +1,117 @@
+.clear {
+	clear: both;
+}
+
+/* Cart */
+.cart {
+	width: 720px;
+}
+
+.cart .cart_product_line {
+	clear: both;
+}
+
+.cart .cart_name{
+	font-weight: bold;
+}
+
+.cart .cart_name, .cart_quantity, .cart_price, .cart_tax {
+	float: left;
+	width: 120px;
+}
+
+.cart .cart_remove {
+	float: left;
+	width: 16px;
+}
+
+.cart .cart_total {
+	float: right;
+	text-transform: uppercase;
+	clear: both;
+}
+
+/* Products */
+.products {
+	width: 600px;	
+}
+
+.product {
+	width: 100px;
+	height: 75px;
+	float: left;
+}
+
+.product .product_picture {
+	margin: 10px;
+}
+
+.product_show .product_price .product_price_label { float: left; font-weight: bold; }
+.product_show .product_attribute_group_name { 
+	float: left;
+	font-weight: bold;
+	width: 75px;
+}
+.product_show .product_attribute { 
+	float: left;
+	width: 75px;
+}
+.product_show .product_attributes_groups{
+	float: left;
+	width: 500px;
+}
+.product_show .product_link_cart{
+	float: left;
+}
+
+.categories{
+	float: left;
+}
+
+/* FLASH */
+.notice {
+	padding: 7px;
+	color: green;
+
+	border: 2px solid green;
+	padding: 7px;
+	padding-bottom: 12px;
+
+	background-color: #f0f0f0;
+	font: bold 10px sans-serif;
+	text-align: center;
+}
+
+.error {
+	border: 2px solid #df5d78;
+	padding: 7px;
+	padding-bottom: 12px;
+
+	background-color: #f0f0f0;
+	font: bold 10px sans-serif;
+	text-align: center;
+}
+
+.warning {
+	border: 2px solid red;
+	padding: 7px;
+	padding-bottom: 12px;
+
+	color: black;
+
+	background-color: #f0f0f0;
+	font: bold 10px sans-serif;
+	text-align: center;
+}
+
+.display_address { float:left; }
+.address { float: left; margin-left: 50px; }
+.display_address SELECT { width: 200px; }
+
+.order .order_shipping_methods { width: 720px; }
+.order .order_shipping_method { padding: 5px; border: 1px solid black; margin-bottom: 10px; }
+.order .order_shipping_method_name { float: left; }
+.order .order_shipping_method_price { float: right; }
+.order .order_shipping_method_description { clear: both; }
+
+.display_categories { width: 100px; float: left; }

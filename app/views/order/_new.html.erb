@@ -1,0 +1,33 @@
+<% form_tag :controller => 'order', :action => 'valid_shipment' do |f| %>
+  <div id="order_addresses" class="addresses">
+    <div style="float: left;">
+      <b><%= "Address invoice".t %></b>
+      <%= display_address current_user.address_invoice %>
+    </div>
+
+    <div style="float: left;">
+      <b><%= "Address delivery".t %></b>
+      <%= display_address current_user.address_delivery %>
+    </div>
+
+    <div class="clear"></div>
+
+    <center>
+      <%= link_to_remote('Add an address'.t, :url => { :controller => 'order', :action => 'add_address' }) %>
+    </center>
+  </div>
+  <div class="clear">&nbsp;</div>
+  <div>
+    <%= display_cart(current_user.cart, true) %>
+  </div>
+
+  <br />
+
+  <%= display_shipping_methods %>
+  <%= display_voucher %>
+  <%= display_total %>
+
+  <center>
+    <%= submit_tag "Make order".t %>
+  </center>
+<% end %>

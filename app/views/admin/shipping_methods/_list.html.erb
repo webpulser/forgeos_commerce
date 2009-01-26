@@ -1,0 +1,22 @@
+<%= display_standard_flashes %>
+<table>
+  <thead>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Actions</th>
+  </thead>
+  <tbody>
+    <% shipping_methods.each do |shipping_method| %>
+      <tr>
+        <td><%= shipping_method.name %></td>
+        <td><%= shipping_method.description %></td>
+        <td>
+          <%= link_to 'show', { :controller => 'admin/shipping_methods', :action => 'show', :id => shipping_method.id } %>
+          <%= link_to 'edit', { :controller => 'admin/shipping_methods', :action => 'edit', :id => shipping_method.id } %>
+          <%= link_to_remote 'destroy', :url => { :controller => 'admin/shipping_methods', :action => 'destroy', :id => shipping_method.id }, :update => 'shipping_methods', :method => 'get', :confirm => 'are your sure toi destroy this Shipping Method ?' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% @content_for_tools << link_to('create a shipping method', { :controller => 'admin/shipping_methods', :action => 'create' }, :class => 'add') %>

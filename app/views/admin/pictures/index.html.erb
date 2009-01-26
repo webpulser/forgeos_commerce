@@ -1,0 +1,5 @@
+<h1>Pictures</h1>
+<% @content_for_tools << link_to('create a picture', { :controller => 'admin/pictures', :action => 'create' }, :class => 'add' ) %>
+<div id="list_pictures">
+  <%= render :partial => 'list', :locals => { :pictures => @pictures , :target => 'picture_index', :target_id => nil } %>
+</div>

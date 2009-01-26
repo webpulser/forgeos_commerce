@@ -1,0 +1,12 @@
+<% form_for :orders_detail, orders_detail, :url => { :id => orders_detail.order_id , :detail_id => orders_detail.id }, :html => { :id => 'detail_form' } do |f| %>
+  <%= f.error_messages %>
+  <p><b>Product : </b><%= collection_select 'product', 'id', products, :id, :name, { :prompt => true}, :onchange => remote_function(:url => { :controller => 'admin/orders', :action => "get_product", :id => orders_detail.order_id }, :with => "'product_id=' + this.value", :update => 'detail_form' ) %></p>
+
+  <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
+  <p><b><%= f.label :description %> : </b><%= f.text_field :description %></p>
+  <p><b><%= f.label :price %> : </b><%= f.text_field :price %></p>
+  <p><b><%= f.label :rate_tax %> : </b><%= f.text_field :rate_tax %></p>
+  <p><b><%= f.label :quantity %> : </b><%= f.text_field :quantity %></p>
+  <%= f.submit 'Save' %>
+<% end %>
+<% @content_for_tools << link_to('edit order', { :controller => 'admin/orders', :action => 'edit', :id => orders_detail.order_id }, :class => 'manage') %>

@@ -1,0 +1,10 @@
+<h1>Shipping Methods</h1>
+<p><b>Name : </b><%= @shipping_method.name %></p>
+<p><b>Description : </b><%= @shipping_method.description %></p>
+
+<fieldset>
+  <legend><%= link_to_effect_toggle('Details','details') %></legend>
+  <div id="details">
+    <%= render :partial => 'list_details', :locals => { :shipping_method => @shipping_method } %>
+  </div>
+</fieldset>

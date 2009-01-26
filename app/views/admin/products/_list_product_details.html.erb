@@ -1,0 +1,33 @@
+<div id="list">
+  <%= display_standard_flashes %>
+  <%= link_to_unless product_parent.id.nil?, 'create a product detail',
+    { :action => 'create_product_detail', :id => product_parent.id },
+    :class => 'add' %><br /><br />
+  <table>
+    <thead>
+      <th>Reference</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Categories</th>
+      <th>Actions</th>
+    </thead>
+    <tbody>
+  <% product_parent.product_details.each do |product| %>
+    <tr>
+      <td><%=h product.reference %></td>
+      <td><%=h product.name %></td>
+      <td><%=h truncate(product.description,230) %></td>
+      <td><%=h product.price %></td>
+      <td><%= product.categories.collect{ |cat| cat.name }.join(', ') %></td>
+      <td>
+        <%= link_to 'edit', :action => 'edit_product_detail', :id => product.id %>
+        <%= link_to_remote 'destroy', :url => { :action => 'destroy_product_detail', :id => product.id }, :update => 'list' %>
+        <%= link_to_remote 'quick edit', :url => { :action => 'quick_edit_product_detail', :id => product.id }, :method => 'get' %>
+      </td>
+    </tr>
+  <% end %>
+    </tbody>
+  </table>
+  <div id="quick_edit"></div>
+</div>

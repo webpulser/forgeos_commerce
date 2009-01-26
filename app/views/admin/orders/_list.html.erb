@@ -1,0 +1,27 @@
+<%= display_standard_flashes %>
+<table>
+  <thead>
+    <th>Status</th>
+    <th>User</th>
+    <th>Shipping Method</th>
+    <th>Actions</th>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.status %></td>
+        <td><%= order.user.fullname %></td>
+        <td><%= order.shipping_method %></td>
+        <td>
+          <%= link_to_remote('pay', :url => { :controller => 'admin/orders', :action => 'pay', :id => order.id }, :update => 'orders' ) if order.current_state == :unpaid %>
+          <%= link_to_remote('accept', :url => { :controller => 'admin/orders', :action => 'accept', :id => order.id }, :update => 'orders' ) if order.current_state == :paid %>
+          <%= link_to_remote('sent', :url => { :controller => 'admin/orders', :action => 'sent', :id => order.id }, :update => 'orders' ) if order.current_state == :accepted %>
+
+          <%= link_to 'edit', { :controller => 'admin/orders', :action => 'edit', :id => order.id } %>
+          <%= link_to_remote('destroy', :url => { :controller => 'admin/orders', :action => 'destroy', :id => order.id }, :update => 'orders', :confirm => 'Are you sure to destroy this order ?') %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% @content_for_tools << link_to('create an order', { :controller => 'admin/orders', :action => 'create' }, :class => 'add' )%>

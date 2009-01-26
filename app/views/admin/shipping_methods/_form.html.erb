@@ -1,0 +1,20 @@
+<%= display_standard_flashes %>
+<fieldset>
+  <legend><%= link_to_effect_toggle('Attributes','static_attributes') %></legend>
+  <% form_for :shipping_method, shipping_method,
+    :url => { :id => shipping_method.id },
+    :html => { :id => 'static_attributes' } do |f| %>
+    <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
+    <p><b><%= f.label :description %> : </b><%= f.text_area :description %></p>
+    <%= f.submit 'Save' %>
+  <% end %>
+</fieldset>
+
+<fieldset>
+  <legend><%= link_to_effect_toggle('Details','details') %></legend>
+  <div id="details">
+    <%= render :partial => 'list_details', :locals => { :shipping_method => shipping_method } %>
+  </div>
+</fieldset>
+<%= hide_html_elements_onload %w[details static_attributes] %>
+<% @content_for_tools << link_to('list', { :controller => 'admin/shipping_methods', :action => 'index' }, :class => 'house' )%>

@@ -1,0 +1,24 @@
+<%= display_standard_flashes %>
+<%= link_to_unless shipping_method.id.nil?, 'create detail',
+  { :controller => 'admin/shipping_methods', :action => 'create_detail', :id => shipping_method.id },
+  :class => 'add'
+%>
+<table>
+  <thead>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Actions</th>
+  </thead>
+  <tbody>
+    <% shipping_method.shipping_method_details.each do |shipping_method_detail| %>
+      <tr>
+        <td><%= shipping_method_detail.name %></td>
+        <td><%= shipping_method_detail.price %></td>
+        <td>
+          <%= link_to 'edit', { :controller => 'admin/shipping_methods', :action => 'edit_detail', :id => shipping_method.id, :detail_id => shipping_method_detail.id } %>
+          <%= link_to_remote 'destroy', :url => { :controller => 'admin/shipping_methods', :action => 'destroy_detail', :id => shipping_method.id, :detail_id => shipping_method_detail.id }, :update => 'details', :method => 'get', :confirm => 'Are you sure to destroy this detail ?' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

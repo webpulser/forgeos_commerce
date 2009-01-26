@@ -1,0 +1,57 @@
+<%= display_standard_flashes %>
+<fieldset>
+  <legend><%= link_to_effect_toggle('Attributes','static_attributes') %></legend>
+  <% form_for :order, order, :url => { :id => order.id }, :html => { :id => 'static_attributes' } do |f| %>
+    <p><b><%= f.label :user_id %> : </b><%= f.collection_select :user_id, User.find_all_by_activation_code(nil), :id, :fullname, { :prompt => true } %></p>
+    <p><b><%= f.label :voucher %> : </b><%= f.collection_select :voucher, Voucher.all, :value, :name, { :prompt => true } %></p>
+    <p><b><%= f.label :shipping_method %> : </b><%= f.collection_select :shipping_method, ShippingMethod.all, :name, :name, { :prompt => true } %></p>
+    <p><b><%= f.label :shipping_method_price %> : </b><%= f.collection_select :shipping_method_price, ShippingMethodDetail.all, :price, :price, { :prompt => true } %></p>
+    <% if order.user %>
+    <% 
+      civilities = Civility.all
+      countries = Country.all
+    %>
+    <fieldset>
+      <legend><%= link_to_effect_toggle('Invoice Address','address_invoice') %></legend>
+      <div id="address_invoice">
+      <% fields_for order.address_invoice do |fa| %>
+        <p><b><%= fa.label :name %> : </b><%= fa.text_field :name %></p>
+        <p><b><%= fa.label :firstname %> : </b><%= fa.text_field :firstname %></p>
+        <p><b><%= fa.label :civility_id %> : </b><%= fa.collection_select :civility_id, civilities, :id, :name %></p>
+        <p><b><%= fa.label :address %> : </b><%= fa.text_field :address %></p>
+        <p><b><%= fa.label :address_2 %> : </b><%= fa.text_field :address_2 %></p>
+        <p><b><%= fa.label :zip_code %> : </b><%= fa.text_field :zip_code %></p>
+        <p><b><%= fa.label :city %> : </b><%= fa.text_field :city %></p>
+        <p><b><%= fa.label :country_id %> : </b><%= fa.collection_select :country_id, countries, :id, :printable_name,{ :prompt => true } %></p>
+      <% end %>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend><%= link_to_effect_toggle('Delivery Address','address_delivery') %></legend>
+      <div id="address_delivery">
+      <% fields_for order.address_delivery do |fb| %>
+        <p><b><%= fb.label :name %> : </b><%= fb.text_field :name %></p>
+        <p><b><%= fb.label :firstname %> : </b><%= fb.text_field :firstname %></p>
+        <p><b><%= fb.label :civility_id %> : </b><%= fb.collection_select :civility_id, civilities, :id, :name %></p>
+        <p><b><%= fb.label :address %> : </b><%= fb.text_field :address %></p>
+        <p><b><%= fb.label :address_2 %> : </b><%= fb.text_field :address_2 %></p>
+        <p><b><%= fb.label :zip_code %> : </b><%= fb.text_field :zip_code %></p>
+        <p><b><%= fb.label :city %> : </b><%= fb.text_field :city %></p>
+        <p><b><%= fb.label :country_id %> : </b><%= fb.collection_select :country_id, countries, :id, :printable_name,{ :prompt => true } %></p>
+      <% end %>
+      </div>
+    </fieldset>
+    <% end %>
+    <%= f.submit 'Save' %>
+  <% end %>
+</fieldset>
+
+<fieldset>
+  <legend><%= link_to_effect_toggle('Details','orders_details') %></legend>
+  <div id="orders_details">
+    <%= render :partial => 'list_details', :locals => { :order => order } %>
+  </div>
+</fieldset>
+<%= hide_html_elements_onload %w[address_invoice address_delivery static_attributes orders_details] %>
+<% @content_for_tools << link_to('list', { :controller => 'admin/orders', :action => 'index' }, :class => 'house' )%>
