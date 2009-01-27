@@ -9,7 +9,7 @@
   <body>
     <div id='application'>
       <div id='header'>
-        <h1><%= link_to('project_name'.t, :root) %></h1>
+        <h1><%= link_to(I18n.t('project_name'), :root) %></h1>
         <div class="change_currency">
           <%=t "Change currency" %> :
           <% Currency.find(:all).each do |currency| %>
@@ -26,10 +26,10 @@
         <div class="logged_in">
           <% if logged_in? %>
             <%=t "Hello" %> <%= current_user.fullname %>
-            <%= link_to "Disconnect".t, session_path(:locale => params[:locale]), :method => :delete %>
+            <%= link_to I18n.t('Disconnect'), session_path(:locale => params[:locale]), :method => :delete %>
           <% else %>
-            <%= link_to "Log in".t, new_session_path(:locale => params[:locale]) %>
-            <%= link_to "Sign in".t, new_user_path(:locale => params[:locale]) %>
+            <%= link_to I18n.t('Log in'), new_session_path(:locale => params[:locale]) %>
+            <%= link_to I18n.t('Sign in'), new_user_path(:locale => params[:locale]) %>
           <% end %>
         </div>
         <ul class='nav' id='nav'>
