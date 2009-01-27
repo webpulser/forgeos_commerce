@@ -44,7 +44,7 @@ class Product < ActiveRecord::Base
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def price(with_tax=false, with_currency=true)
-    price = super
+    price = super || 0
     price += tax(false) if with_tax
     return price if Currency::is_default? || !with_currency
     ("%01.2f" % (price * $currency.to_exchanges_rate(Currency::default).rate)).to_f
@@ -68,6 +68,6 @@ class Product < ActiveRecord::Base
   #
   # This method use <i>price</i> : <i>price(false, with_currency)</i>
   def tax(with_currency=true)
-    return ("%01.2f" % (price(false, with_currency) * rate_tax/100)).to_f
+    return ("%01.2f" % (price(false, with_currency) * self.rate_tax/100)).to_f
   end
 end

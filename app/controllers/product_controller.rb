@@ -15,7 +15,7 @@ class ProductController < ApplicationController
     @product_details = @product.product_details.reject do |product_detail|
       tmp = true
       session["product_#{@product.id}"][:attributes].each do |key, attribute|
-        tmp &&= !product_detail.tattributes.find_by_id(attribute.id).nil?
+        tmp &&= !product_detail.tattributes.find_by_id(attribute.id).nil? unless attribute.nil?
       end
       !tmp
     end
@@ -38,7 +38,7 @@ class ProductController < ApplicationController
                 page.visual_effect :highlight, "display_product_page_price_#{@product.id}"
                   else
                   page.replace_html("display_product_page_price_#{@product.id}", @product.price_to_s(true))
-        page.replace_html("display_product_link_cart_#{@product.id.to_s}", OPTIONS[:text][:add_to_cart])
+        page.replace_html("display_product_link_cart_#{@product.id.to_s}", RailsCommerce::OPTIONS[:text][:add_to_cart])
                   end
               end
   end

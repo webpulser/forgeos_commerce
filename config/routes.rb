@@ -6,4 +6,5 @@ root :controller => 'home'
 
 namespace :admin do |admin|
   admin.root :controller => 'users'
+  admin.resources :products
 end

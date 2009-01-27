@@ -1,6 +1,6 @@
-# Methods for display <i>RailsCommerce::Category</i>
+# Methods for display <i>Category</i>
 module CategoryHelper
-  # Display all tree struct <i>RailsCommerce::Category</i>
+  # Display all tree struct <i>Category</i>
   def display_categories(categories=Category::roots)
     content = "<div class='categories'>"
       categories.each do |category|
@@ -9,7 +9,7 @@ module CategoryHelper
     content += "</div>"    
   end
 
-  # Display one tree struct <i>RailsCommerce::Category</i>
+  # Display one tree struct <i>Category</i>
   def display_category(category)
     current_category = Category.find_by_id(params[:id])
 

@@ -1,10 +1,10 @@
-# Methods for display <i>RailsCommerce::Cart</i> (in totality, by product, ...).
+# Methods for display <i>Cart</i> (in totality, by product, ...).
 module CartHelper
   # Display a cart's product
   #
   # == Parameters
-  # * <tt>cart</tt> a <i>RailsCommerce::Cart</i> object
-  # * <tt>carts_product</tt> a <i>RailsCommerce::CartsProduct</i> object
+  # * <tt>cart</tt> a <i>Cart</i> object
+  # * <tt>carts_product</tt> a <i>CartsProduct</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_cart_by_carts_product(cart, carts_product, static=false)
     content = "<div class='cart_product_line' id='rails_commerce_cart_product_line_#{carts_product.product_id}'>"
@@ -39,7 +39,7 @@ module CartHelper
   # Display all products lines
   #
   # == Parameters
-  # * <tt>cart</tt> a <i>RailsCommerce::Cart</i> object
+  # * <tt>cart</tt> a <i>Cart</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_cart_all_products_lines(cart, static=false)
     content = ""
@@ -55,7 +55,7 @@ module CartHelper
   # Display a cart
   #
   # == Parameters
-  # * <tt>cart</tt> a <i>RailsCommerce::Cart</i> object
+  # * <tt>cart</tt> a <i>Cart</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_cart(cart, static=false)
     content = "<div class='cart' id='rails_commerce_cart'>"
@@ -71,10 +71,10 @@ module CartHelper
     content += "<div class='clear'></div>"
   end
 
-  # Extension of <i>link_to(name, options = {}, html_options = nil)</i> with a <i>RailsCommerce::Product</i> object of first parameter
+  # Extension of <i>link_to(name, options = {}, html_options = nil)</i> with a <i>Product</i> object of first parameter
   #
   # ==== Parameters
-  # * <tt>:product</tt> - a <i>RailsCommerce::Product</i> object
+  # * <tt>:product</tt> - a <i>Product</i> object
   # * <tt>:name</tt> - name, <i>image_tag('rails_commerce/remove_product.gif')</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'cart', :action => 'empty'}</i> by default
   # * <tt>options</tt> the html options, <i>{:confirm => RailsCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart]}</i> by default
@@ -98,20 +98,20 @@ module CartHelper
   # * <tt>:name</tt> - name, <i>"Cart"</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'cart'}</i> by default
   # * <tt>options</tt> the html options
-  def link_to_cart(name="Cart", url={:controller => 'cart'}, options=nil)
-    cart = RailsCommerce::Cart.find_by_id(session[:cart_id])
+  def link_to_cart(name='cart', url={:controller => 'cart'}, options=nil)
+    cart = Cart.find_by_id(session[:cart_id])
     unless cart.nil?
-      name = I18n.t('cart', :count => cart.size)
+      name = I18n.t('product', :count => cart.size)
     else
       name = I18n.t(name)
     end
-    link_to name, {:controller => 'cart'}, options
+    link_to name.capitalize, {:controller => 'cart'}, options
   end
 
-  # Extension of <i>link_to(name, options = {}, html_options = nil)</i> with a <i>RailsCommerce::Product</i> object of first parameter
+  # Extension of <i>link_to(name, options = {}, html_options = nil)</i> with a <i>Product</i> object of first parameter
   #
   # ==== Parameters
-  # * <tt>:product</tt> - a <i>RailsCommerce::Product</i> object
+  # * <tt>:product</tt> - a <i>Product</i> object
   # * <tt>:name</tt> - name, <i>RailsCommerce::OPTIONS[:text][:add_to_cart]</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'cart', :action => 'add_product'}</i> by default
   # * <tt>options</tt> the html options

@@ -6,33 +6,40 @@ class Admin::ProductsController < Admin::BaseController
     @products = ProductParent.all
   end
 
+  def new
+    @product_parent = ProductParent.new(params[:product_parent])
+    @product_parent.rate_tax = 19.6
+  end
+
   # Create a ProductParent
   # ==== Params
   # * product_parent = Hash of ProductParent's attributes
   def create
     @product_parent = ProductParent.new(params[:product_parent])
-    @product_parent.rate_tax = 19.6
     if request.post?
       if @product_parent.save
         flash[:notice] = 'The Product was successfully created'
+        redirect_to edit_admin_product_path(:id => @product_parent.id)
       else
         flash[:error] = @product_parent.errors
       end
     end
   end
- 
-  # Edit a ProductParent
-  # ==== Params
-  # * id = ProductParent's id
+  
   def edit
     @product_parent = Product.find_by_id(params[:id])
     return redirect_to(:action => 'edit_product_detail', :id => params[:id]) if @product_parent.is_a?(ProductDetail)
-    if request.post?
-      if @product_parent.update_attributes(params[:product_parent])
-        flash[:notice] = 'The Product was successfully saved'
-      else
-        flash[:error] = @product_parent.errors
-      end
+  end
+
+  # Update a ProductParent
+  # ==== Params
+  # * id = ProductParent's id
+  def update
+    @product_parent = Product.find_by_id(params[:id])
+    if @product_parent.update_attributes(params[:product_parent])
+      flash[:notice] = 'The Product was successfully saved'
+    else
+      flash[:error] = @product_parent.errors
     end
   end
 

@@ -1,5 +1,5 @@
 <%= display_standard_flashes %>
-<% form_for :shipping_method_detail, shipping_method_detail, { :id => shipping_method_detail.id } do |f| %>
+<% form_for :shipping_method_detail, { :detail_id => shipping_method_detail.id, :id => shipping_method_detail.shipping_method.id } do |f| %>
   <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
   <p><b><%= f.label :price %> : </b><%= f.text_field :price %></p>
   <p><b><%= f.label :weight_min %> : </b><%= f.text_field :weight_min %></p>

@@ -2,7 +2,7 @@
 # * <tt>Product</tt>
 class ProductParent < Product
   has_many :product_details, :foreign_key => 'product_id', :dependent => :destroy
-  has_and_belongs_to_many :cross_sellings, :class_name => 'ProductParent'
+  has_and_belongs_to_many :cross_sellings, :class_name => 'ProductParent', :join_table => 'cross_sellings_product_parents'
 
   has_and_belongs_to_many :attributes_groups, :readonly => true
   has_and_belongs_to_many :dynamic_attributes_groups, :class_name => 'AttributesGroup', :readonly => true,
@@ -31,11 +31,11 @@ class ProductParent < Product
   end
 
   def price(with_tax=false, with_currency=true)
-    raise RailsCommerceException.new(:code => 101) if product_details.size > 1
+    #raise RailsCommerceException.new(:code => 101) if product_details.size > 1
     super(with_tax, with_currency)
   end
 
   def price_to_s(with_tax=false, with_currency=true)
-    return OPTIONS[:text][:na] unless product_details.empty?
+    return RailsCommerce::OPTIONS[:text][:na] unless product_details.empty?
   end
 end

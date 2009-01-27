@@ -7,12 +7,13 @@ class ApplicationController < ActionController::Base
   
   helper :all # include all helpers, all the time
 
-  before_filter :set_locale
+  before_filter :set_locale, :set_currency
   # Change the currency
   def change_currency(currency_id)
     # TODO - move this method in an appriate class or module.
     currency = RailsCommerce::Currency.find_by_id(currency_id)
     $currency = currency if currency # Security if currency_id don't exist
+    session[:currency] = $currency.id
     redirect_to_home
   end
 
@@ -47,20 +48,24 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_locale
+  def set_currency
     if Currency.table_exists?
-      currency = Currency.find_by_code('EUR') #Locale.active.currency_code
+      currency = Currency.find_by_id(session[:currency])
+      currency = Currency.find_by_code('EUR') unless currency #Locale.active.currency_code
       $currency = currency if currency
+      session[:currency] = $currency.id 
     end
+  end
 
-    #if !params[:locale].nil? #&& LOCALES.keys.include?(params[:locale])
-    #  if session[:locale] != params[:locale]
-    #    session[:locale] = params[:locale]
-    #    #Locale.set LOCALES[params[:locale]]
-    #  end
-    #else
-    #  redirect_to params.merge( 'locale' => session[:locale] || 'en') #Locale.base_language.code )
-    #end
+  def set_locale
+    if !params[:locale].nil? && LOCALES.keys.include?(params[:locale])
+      if session[:locale] != params[:locale].to_sym
+        session[:locale] = params[:locale].to_sym
+      end
+    elsif !session[:locale]
+      session[:locale] = I18n.default_locale
+    end
+    I18n.locale = session[:locale]
   end
 
   # See ActionController::RequestForgeryProtection for details

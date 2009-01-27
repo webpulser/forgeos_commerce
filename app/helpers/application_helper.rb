@@ -1,9 +1,9 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  include RailsCommerce::CategoryHelper
-  include RailsCommerce::ProductHelper
-  include RailsCommerce::CartHelper
-  include RailsCommerce::OrderHelper
+  include CategoryHelper
+  include ProductHelper
+  include CartHelper
+  include OrderHelper
   
   def step_order(index=1)
     content = '<div class="step_order">'

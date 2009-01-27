@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title><%=t 'project_name' %> - Admin</title>
-	<%= stylesheet_link_tag 'admin/style', 'admin/theme'+cookies[:theme] %>
+	<%= stylesheet_link_tag 'admin/style', 'admin/theme'+(cookies[:theme]||'') %>
   <%= javascript_include_tag(:all, :cache => true) %>
   <!--[if IE]>
 	  <%= stylesheet_link_tag '/stylesheets/admin/ie-sucks' %>

@@ -1,11 +1,11 @@
 <%= display_standard_flashes %>
 <fieldset>
   <legend><%= link_to_effect_toggle('Attributes','static_attributes') %></legend>
-  <% form_for :product_parent, :url => { :id => product_parent.id }, :html => { :id => 'static_attributes' } do |f| %>
+  <% form_for :product_parent, :url => (product_parent.id.nil? ? admin_products_path : admin_product_path( :id => product_parent.id)), :html => { :method => (product_parent.id.nil? ? :post : :put), :id => 'static_attributes' } do |f| %>
     <p>
       <b><%= f.label :categories %> : </b>
       <%= select_tag "product_parent[category_ids][]",
-        options_from_collection_for_select(Category.all, :id, :name,
+        option_groups_from_collection_for_select(Category.all(:conditions => 'parent_id IS NULL'), :children, :name, :id, :name,
                                            product_parent.category_ids ),
         :multiple => true %>
     </p>
@@ -13,7 +13,7 @@
     <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
     <p><b><%= f.label :description %> : </b><%= f.text_area :description %></p>
     <p><b><%= f.label :rate_tax %> : </b><%= f.text_field :rate_tax %></p>
-    <p><b><%= f.label :selling_date %> : </b><%= f.date_select :selling_date, :include_blank => true %></p>
+    <p><b><%= f.label :selling_date %> : </b><%= f.date_select :selling_date %></p>
     <p><b><%= f.label :offer_month %> : </b><%= f.check_box :offer_month %></p>
     <p><b><%= f.label :on_first_page %> : </b><%= f.check_box :on_first_page %></p>
     <p><b><%= f.label :weight %> : </b><%= f.text_field :weight %></p>

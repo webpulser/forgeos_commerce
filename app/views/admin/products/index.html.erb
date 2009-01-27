@@ -1,5 +1,5 @@
 <h1>Products</h1>
-<% @content_for_tools << link_to('create a product', { :controller => 'admin/products', :action => 'create' }, :class => 'add' ) %>
+<% @content_for_tools << link_to('create a product', new_admin_product_path, :class => 'add' ) %>
 <%= display_standard_flashes %>
 <div id="list">
   <table>
@@ -20,8 +20,8 @@
       <td><%= product.product_details.count %></td>
       <td><%= product.categories.collect{ |cat| cat.name }.join(', ') %></td>
       <td>
-        <%= link_to 'edit', :action => 'edit', :id => product.id %>
-        <%= link_to 'destroy', :action => 'destroy', :id => product.id %>
+        <%= link_to 'edit', edit_admin_product_path(:id => product.id) %>
+        <%= link_to 'destroy', admin_product_path(:id => product.id), :method => :delete, :confirm => 'Are you sure to destroy this Product ?' %>
       </td>
     </tr>
   <% end %>

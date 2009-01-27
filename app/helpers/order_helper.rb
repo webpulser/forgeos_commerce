@@ -2,8 +2,8 @@ module OrderHelper
   # Display a cart's product
   #
   # == Parameters
-  # * <tt>cart</tt> a <i>RailsCommerce::Cart</i> object
-  # * <tt>carts_product</tt> a <i>RailsCommerce::CartsProduct</i> object
+  # * <tt>cart</tt> a <i>Cart</i> object
+  # * <tt>carts_product</tt> a <i>CartsProduct</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_order_by_carts_product(order, orders_detail)
     content = "<div class='order_product_line'>"
@@ -28,7 +28,7 @@ module OrderHelper
   # Display all products lines
   #
   # == Parameters
-  # * <tt>cart</tt> a <i>RailsCommerce::Cart</i> object
+  # * <tt>cart</tt> a <i>Cart</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_order_all_products_lines(order)
     content = ""
@@ -47,7 +47,7 @@ module OrderHelper
         content += order.voucher.to_s + " " + $currency.html
       content += '</div>'
     end
-    content += "<div class='order_total'><b>#{RailsCommerce::OPTIONS[:text][:total]}: </b>"
+    content += "<div class='order_total'><b>#{OPTIONS[:text][:total]}: </b>"
     content += order.total(true).to_s + " " + $currency.html
     content += "</div>"
   end
@@ -56,7 +56,7 @@ module OrderHelper
   # Display a order
   #
   # == Parameters
-  # * <tt>order</tt> a <i>RailsCommerce::Cart</i> object
+  # * <tt>order</tt> a <i>Cart</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_order(order)
     content = "<div class='orders'>"
@@ -65,11 +65,11 @@ module OrderHelper
         content += "<div class='order_name'>#{I18n.l order.created_at}</div>"
       content += "</div>"
       content += "<div class='clear'>&nbsp;</div>"
-      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:name]}</div>"
-      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:quantity]}</div>"
-      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:unit_price]}</div>"
-      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:tax]}</div>"
-      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:total]}</div>"
+      content += "<div class='order_name'>#{OPTIONS[:text][:name]}</div>"
+      content += "<div class='order_name'>#{OPTIONS[:text][:quantity]}</div>"
+      content += "<div class='order_name'>#{OPTIONS[:text][:unit_price]}</div>"
+      content += "<div class='order_name'>#{OPTIONS[:text][:tax]}</div>"
+      content += "<div class='order_name'>#{OPTIONS[:text][:total]}</div>"
       content += "<div class='orders_details'>"
         content += display_order_all_products_lines(order)
       content += "</div>"
@@ -121,7 +121,7 @@ module OrderHelper
       content += '</div>'
 
       if multiple_addresses
-        content += select_tag address.class.to_s.gsub('RailsCommerce::', '').underscore + '_id', 
+        content += select_tag address.class.to_s.gsub('', '').underscore + '_id', 
                         options_for_select(address.class.find_all_by_user_id(address.user_id).collect { |address_| [address_, address_.id] }, address.id), 
                         :onchange => remote_function(
                           :url => { :controller => 'order', :action => 'change_address' }, 
@@ -148,7 +148,7 @@ module OrderHelper
   def display_voucher
     content = '<div class="order_voucher" id="order_voucher">'
     if session[:order_voucher_id]
-      content += "#{I18n.t('Voucher')} : -" + RailsCommerce::Voucher.find(session[:order_voucher_id]).value.to_s + 
+      content += "#{I18n.t('Voucher')} : -" + Voucher.find(session[:order_voucher_id]).value.to_s + 
       " #{$currency.html} " + link_to_remove_voucher
     else
       content += "#{I18n.t('Voucher')} : " + 
@@ -172,13 +172,13 @@ module OrderHelper
     content += '</div>'
   end
 
-  # Extension of <i>link_to(name, options = {}, html_options = nil)</i> with a <i>RailsCommerce::Product</i> object of first parameter
+  # Extension of <i>link_to(name, options = {}, html_options = nil)</i> with a <i>Product</i> object of first parameter
   #
   # ==== Parameters
-  # * <tt>:name</tt> - name, <i>RailsCommerce::OPTIONS[:text][:remove_voucher]</i> by default
+  # * <tt>:name</tt> - name, <i>OPTIONS[:text][:remove_voucher]</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'order', :action => 'remove_voucher'}</i> by default
   # * <tt>options</tt> the html options
-  def link_to_remove_voucher(name=RailsCommerce::OPTIONS[:text][:remove_voucher], url={:controller => 'order', :action => 'remove_voucher'}, options=nil)
+  def link_to_remove_voucher(name=OPTIONS[:text][:remove_voucher], url={:controller => 'order', :action => 'remove_voucher'}, options=nil)
     link_to_remote I18n.t(name), :url => url, :html => options
   end
 end

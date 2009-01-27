@@ -101,7 +101,7 @@ module ProductHelper
       content += '<div class="product_attributes">'
         attributes_group.tattributes.each do |attribute|
           content += '<div class="product_attribute">'
-            if product.product_details.find(:first, :conditions => ["#{RailsCommerce::Attribute.table_name}.id = ?", attribute.id], :include => 'tattributes')
+            if product.product_details.find(:first, :conditions => ["#{Attribute.table_name}.id = ?", attribute.id], :include => 'tattributes')
               if options_attributes && options_attributes[attributes_group.id] && options_attributes[attributes_group.id].id == attribute.id
                 content += attribute.name
               else
