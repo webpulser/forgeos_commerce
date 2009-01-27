@@ -14,6 +14,28 @@ RailsCommerce is an extension of Ruby on Rails for e-commerce development
 * will_paginate
 * acts_as_commentable
 
+Install acts_as_tree :
+ ./script/plugin install git://github.com/rails/acts_as_tree.git
+
+Install acts_as_state_machine :
+ ./script/plugin install http://elitists.textdriven.com/svn/plugins/acts_as_state_machine/trunk
+
+Install restful_authentication :
+ git clone git://github.com/technoweenie/restful-authentication.git vendor/plugins/restful_authentication
+
+Install attachment_fu :
+ git clone git://github.com/technoweenie/attachment_fu.git vendor/plugins/attachment_fu
+
+Install mislav-will_paginate :
+ gem sources -a http://gems.github.com
+ gem install mislav-will_paginate
+
+Install acts_as_commentable :
+ ./script/plugin install http://juixe.com/svn/acts_as_commentable
+
+Install localized_dates :
+./script/plugin install git://github.com/clemens/localized_dates.git
+
 == Initialize
   ./script/generate authenticated user sessions --include-activation
   

@@ -1,32 +1,32 @@
 <% address = address || nil %>
 
 <% form_remote_for :address, address, :url => { :controller => 'order', :action => 'create_address', :id => address } do |f| %>
-  <%= f.select :type, [['Address delivery'.t, 'AddressDelivery'], ['Address invoice'.t, 'AddressInvoice']] %><br />
-  <%= f.select :civility_id, RailsCommerce::Civility.find(:all).collect { |civility| [civility.name, civility.id] } %><br />
+  <%= f.select :type, [[I18n.t('Address delivery'), 'AddressDelivery'], [I18n.t('Address invoice'), 'AddressInvoice']] %><br />
+  <%= f.select :civility_id, Civility.find(:all).collect { |civility| [civility.name, civility.id] } %><br />
   <div>
-    <label><%= 'Name'.t %></label>
+    <label><%=t 'Name' %></label>
     <%= f.text_field :name %>
   </div>
   <div>
-    <label><%= 'Firstname'.t %></label>
+    <label><%=t 'Firstname' %></label>
     <%= f.text_field :firstname %>    
   </div>
   <div>
-    <label><%= 'Address'.t %></label>
+    <label><%=t 'Address' %></label>
     <%= f.text_field :address %>
   </div>
   <div>
-    <label><%= 'Address'.t %></label>
+    <label><%=t 'Address' %></label>
     <%= f.text_field :address_2 %>
   </div>
   <div>
-    <label><%= 'Zip code'.t %></label>
+    <label><%=t 'Zip code' %></label>
     <%= f.text_field :zip_code %>
   </div>
   <div>
-    <label><%= 'City'.t %></label>
+    <label><%=t 'City' %></label>
     <%= f.text_field :city %>    
   </div>
-  <%= submit_tag "Add address".t %>
+  <%= submit_tag I18n.t('Add address') %>
 <% end %>
-<%= link_to_remote('Back'.t, :url => { :controller => 'order', :action => 'back_addresses' }) %>
+<%= link_to_remote(I18n.t('Back'), :url => { :controller => 'order', :action => 'back_addresses' }) %>
