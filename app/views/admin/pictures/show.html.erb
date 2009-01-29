@@ -12,7 +12,7 @@
 
 <% thumbnail_names = %w[big normal small thumb] #@picture.attachment_options[:thumbnails].keys %>
 <fieldset>
-  <legend><%= link_to_effect_toggle('Thumbnails','thumbnails','Appear') %></legend>
+  <legend><%= link_to_effect_toggle('Thumbnails','thumbnails',:toggle_slide) %></legend>
   <table id="thumbnails">
     <% thumbnail_names.each do |thumb| %>
     <tr>

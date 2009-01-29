@@ -5,8 +5,8 @@ class ProductParent < Product
   has_and_belongs_to_many :cross_sellings, :class_name => 'ProductParent', :join_table => 'cross_sellings_product_parents'
 
   has_and_belongs_to_many :attributes_groups, :readonly => true
-  has_and_belongs_to_many :dynamic_attributes_groups, :class_name => 'AttributesGroup', :readonly => true,
-    :conditions => ['attributes_groups.dynamic = 1']
+  has_and_belongs_to_many :dynamic_attributes_groups, :class_name => 'AttributesGroup', :readonly => true, :join_table => 'attributes_groups_product_parents', :association_foreign_key => 'attributes_group_id',
+    :conditions => ['attributes_groups.dynamic IS TRUE']
 
   # Destroy all ProductDetails associated with this ProductParent
   def after_destroy

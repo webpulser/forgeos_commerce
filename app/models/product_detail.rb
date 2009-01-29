@@ -43,14 +43,6 @@ class ProductDetail < Product
     tattributes.find_by_attributes_group_id(attributes_group.id)
   end
 
-  def attributes
-    attribs = super
-    tattributes.collect{ |attr| { attr.attributes_group.name => attr.name } }.each do |attrib|
-      attribs.update(attrib)
-    end
-    return attribs
-  end
-
   # Overload the <i>name</i> attribute.
   #
   # Returns the <i>name</i> of <i>ProductParent</i> if <i>name</i> is <i>nil</i>
