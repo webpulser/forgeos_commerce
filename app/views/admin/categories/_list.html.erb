@@ -1,7 +1,7 @@
 <% unless defined?(level); level = 0; end %>
 <ul>
   <% categories.each do |category| %>
-    <li onmouseover="this.select('span.<%= level %>').invoke('show')" onmouseout="this.select('span.<%= level %>').invoke('hide')">
+    <li onmouseover="$(this).find('span.<%= level %>').show()" onmouseout="$(this).find('span.<%= level %>').hide()">
       <% picture = category.pictures.first %>
       <%= image_tag(picture.public_filename(:thumb)) if picture  %>
       <%= category.name %>

@@ -26,45 +26,49 @@
 </fieldset>
 
 <fieldset>
-  <legend><%= link_to_effect_toggle('Associated Elements','associated_elements','Appear') %></legend>
+  <legend><%= link_to_effect_toggle('Associated Elements','associated_elements') %></legend>
   <ul class="no-list-style-type" id="associated_elements">
-    <% unless @picture.products.empty? %>
+    <% products = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Product)}.compact
+    unless products && products.empty?%>
       <li>
         <h3><%= 'Products :' %></h3>
         <ul class="no-list-style-type">
-        <% @picture.products.each do |product| %>
+        <% products.each do |product| %>
           <li><%= link_to(product.name, :controller => 'products', :action => 'edit', :id => product.id) %></li>
         <% end %>
         </ul>
       </li>
     <% end %>
 
-    <% unless @picture.attributes_groups.empty? %>
+    <% attributes_groups = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(AttributesGroup)}.compact
+    unless attributes_groups && attributes_groups.empty? %>
       <li>
         <h3><%= 'Attributes Groups :' %></h3>
         <ul class="no-list-style-type">
-        <% @picture.attributes_groups.each do |attributes_group| %>
+        <% attributes_groups.each do |attributes_group| %>
           <li><%= link_to(attributes_group.name, :controller => 'attributes_groups', :action => 'edit', :id => attributes_group.id) %></li>
         <% end %>
         </ul>
       </li>
     <% end %>
 
-    <% unless @picture.tattributes.empty? %>
+    <% tattributes = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Attribute)}.compact
+    unless tattributes && tattributes.empty? %>
       <li>
         <h3><%= 'Attributes :' %></h3>
         <ul class="no-list-style-type">
-        <% @picture.tattributes.each do |tattribute| %>
+        <% tattributes.each do |tattribute| %>
           <li><%= link_to(tattribute.name, :controller => 'attributes_groups', :action => 'edit_attribute', :id => tattribute.id) %></li>
         <% end %>
         </ul>
       </li>
     <% end %>
-    <% unless @picture.categories.empty? %>
+    <% categories = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Category)}.compact
+    unless categories && categories.empty? %>
       <li>
         <h3><%= 'Categories :' %></h3>
         <ul class="no-list-style-type">
-        <% @picture.categories.each do |category| %>
+        <% categories.each do |category| %>
           <li><%= link_to(category.name, :controller => 'categories', :action => 'edit', :id => category.id) %></li>
         <% end %>
         </ul>
@@ -74,7 +78,7 @@
 
 <fieldset>
   <legend>
-    <%= link_to_effect_toggle('Comments','comments','Appear') %> |
+    <%= link_to_effect_toggle('Comments','comments') %> |
     <%= link_to_remote 'create a comment', 
     :url => { :controller => 'pictures', :action => 'create_comment', :id => @picture.id },
     :update => 'comment_add', :method => 'get', :complete => "$('comments').show()" %>

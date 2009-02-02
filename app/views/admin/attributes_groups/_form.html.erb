@@ -14,7 +14,7 @@
   <legend><%= link_to_effect_toggle('Pictures','attributes_group_pictures') %></legend>
   <div id="attributes_group_pictures">
     <%= link_to_unless attributes_group.id.nil?, 'create a picture',
-      { :controller => 'pictures', :action => 'create', 'picture[attributes_group_ids][]' => attributes_group.id,
+      { :controller => 'pictures', :action => 'create',
         :target => 'attributes_group', :target_id => attributes_group.id }, 
         :class => 'add' %>
     <div id="list_pictures">

@@ -3,7 +3,6 @@
   <div id="pictures">
     <%= link_to_unless category.id.nil?, 'create a picture',
       { :controller => 'pictures', :action => 'create',
-      'picture[category_ids][]' => category.id,
       :target => 'category', :target_id => category.id },
       :class => 'add'
     %>
