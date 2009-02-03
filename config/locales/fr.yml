@@ -1,0 +1,42 @@
+fr:
+  Add to cart: 'Ajouter au panier'
+  cart: 'panier'
+  product: 'produit'
+  Home: 'Acceuil'
+  Change language: 'Changer de langue'
+  Change currency: 'Changer de devise'
+  Search: 'Rechercher'
+  Catalog: 'Catalogue'
+  Sign in: "S'inscrire"
+  Log in: 'Se connecter'
+  Empty cart: 'Panier vide'
+  Make order: 'Poursuivre la commande'
+  Hello: 'Bonjour'
+  Disconnect: 'Déconnection'
+
+  date:
+    formats:
+      default: "%d-%m-%Y"
+      short: "%e %b"
+      long: "%B %e, %Y"
+      only_day: "%e"
+
+    day_names: [Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi]
+    abbr_day_names: [Dim, Lun, Mar, Mer, Jeu, Ven, Sam]
+    month_names: [~, Janvier, Février, Mars, Avril, Mai, Juin, Juillet, Aout, Septembre, Octobre, Novembre, Décembre]
+    abbr_month_names: [~, Jan, Fev, Mar, Avr, Mai, Jui, Juil, Aou, Sep, Oct, Nov, Déc]
+    order: [ :day, :month, :year ]
+  
+  time:
+    formats:
+      default: "%a %b %d %H:%M:%S %Z %Y"
+      time: "%H:%M"
+      short: "%d %b %H:%M"
+      long: "%B %d, %Y %H:%M"
+      only_second: "%S"
+      
+      datetime:
+        formats:
+          default: "%Y-%m-%dT%H:%M:%S%Z"
+    am: 'am'
+    pm: 'pm'
