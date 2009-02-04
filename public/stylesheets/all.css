@@ -9,7 +9,6 @@ a { color: blue; }
 a:hover { text-decoration: none; color: red;}
 
 #header { text-align: center; }
-
 img { border: none; margin: 0; padding: 0; }
 img a { margin: 0; padding: 0; }
 
@@ -24,11 +23,7 @@ img a { margin: 0; padding: 0; }
 #page { float: left; margin-left: 20%; }
 
 .display_categories { width: 600px; height: 20px; margin-left: 100px; margin-top: 20px; }
-.category { float: left; padding-right: 50px; width: 100px; }
-.category, .category { margin-left: 10px; }
-
-.yield { clear: both; padding-top: 50px; }
-
+.category { padding-right: 50px; width: 100px; }
 #footer { width: 300px; margin: 0 auto; text-align: center; }
 
 

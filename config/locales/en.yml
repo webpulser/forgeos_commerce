@@ -1,7 +1,9 @@
 en:
   Add to cart: 'Add to cart'
   cart: 'cart'
-  product: 'product'
+  product:
+    one : 'product'
+    other: 'products'
   Home: 'Home'
   Change language: 'Change language'
   Change currency: 'Change currency'

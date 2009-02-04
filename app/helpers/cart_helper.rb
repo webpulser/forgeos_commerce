@@ -16,7 +16,7 @@ module CartHelper
           content += carts_product.quantity.to_s
         else
           content += text_field_tag "quantity_#{carts_product.product_id}", carts_product.quantity.to_s, :size => 2
-          content += observe_field("quantity_#{carts_product.product_id}", :frequency => 1, :loading => "Element.show('spinner2')", :complete => "Element.hide('spinner2')", :url => { :controller => 'cart', :action => 'update_quantity' }, :with => "'quantity=' + escape(value) + '&product_id=#{carts_product.product_id}'")
+          content += observe_field("quantity_#{carts_product.product_id}", :frequency => 1, :loading => "$('#spinner2').show()", :complete => "$('#spinner2').hide()", :url => { :controller => 'cart', :action => 'update_quantity' }, :with => "'quantity=' + escape(value) + '&product_id=#{carts_product.product_id}'")
         end
       content += "</div>"
       content += "<div class='cart_price'>"
@@ -101,7 +101,7 @@ module CartHelper
   def link_to_cart(name='cart', url={:controller => 'cart'}, options=nil)
     cart = Cart.find_by_id(session[:cart_id])
     unless cart.nil?
-      name = I18n.t('product', :count => cart.size)
+      name = "#{I18n.t(name)} (#{cart.size} #{I18n.t('product', :count => cart.size)})"
     else
       name = I18n.t(name)
     end

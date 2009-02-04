@@ -1,7 +1,9 @@
 fr:
   Add to cart: 'Ajouter au panier'
   cart: 'panier'
-  product: 'produit'
+  product:
+    one: 'produit'
+    other: 'produits'
   Home: 'Acceuil'
   Change language: 'Changer de langue'
   Change currency: 'Changer de devise'
