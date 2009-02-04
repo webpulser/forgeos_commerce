@@ -1,6 +1,7 @@
 fr:
   Add to cart: 'Ajouter au panier'
   cart: 'panier'
+  Empty cart: 'Vider le panier'
   product:
     one: 'produit'
     other: 'produits'
@@ -11,10 +12,16 @@ fr:
   Catalog: 'Catalogue'
   Sign in: "S'inscrire"
   Log in: 'Se connecter'
-  Empty cart: 'Panier vide'
   Make order: 'Poursuivre la commande'
   Hello: 'Bonjour'
   Disconnect: 'Déconnection'
+  Add an address: 'Ajouter une adresse'
+  Add address: "Ajouter l'adresse"
+  Back: 'Retour'
+  Address invoice: 'Adresse de facturation'
+  Address delivery: 'Adresse de livraison'
+  Voucher: 'Code promo'
+  We are sorry, but it is temporarily impossible to place order: 'Nous sommes désolés, mais il est temporairement impossible de passer commande'
 
   date:
     formats:

@@ -3,8 +3,16 @@ namespace :rails_commerce do
   task :load_fixtures => :environment do
       Currency.destroy_all
       Currency.reset_column_information
-      Currency.create(:name => 'euro', :html => '&euro;', :default => true, :code => 'EUR')
-      Currency.create(:name => 'dollar', :html => '$', :default => false, :code => 'USD')
+      euro = Currency.create(:name => 'euro', :html => '&euro;', :default => true, :code => 'EUR')
+      usd = Currency.create(:name => 'usd', :html => '$', :default => false, :code => 'USD')
+      euro.to_exchanges_rates.create(:to_currency_id=>usd.id, :rate =>  0.778089013)
+      euro.from_exchanges_rates.create(:from_currency_id=>usd.id, :rate =>1.2852)
+
+      Civility.destroy_all
+      Civility.reset_column_information
+      Civility.create(:name=>'Mr')
+      Civility.create(:name=>'Miss')
+      Civility.create(:name=>'Mses')
 
       Country.destroy_all
       Country.reset_column_information

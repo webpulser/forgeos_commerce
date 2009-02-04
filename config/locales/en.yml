@@ -1,6 +1,7 @@
 en:
   Add to cart: 'Add to cart'
   cart: 'cart'
+  Empty cart: 'Empty cart'
   product:
     one : 'product'
     other: 'products'
@@ -11,10 +12,16 @@ en:
   Catalog: 'Catalog'
   Sign in: "Sign in"
   Log in: 'Log in'
-  Empty cart: 'Empty cart'
   Make order: 'Make order'
   Hello: 'Hello'
   Disconnect: 'Disconnect'
+  Add an address: 'Add an address'
+  Add address: 'Add address'
+  Back: 'Back'
+  Address invoice: 'Address invoice'
+  Address delivery: 'Address delivery'
+  Voucher: 'Voucher'
+  We are sorry, but it is temporarily impossible to place order: 'We are sorry, but it is temporarily impossible to place order'
 
   date:
     formats:
