@@ -154,10 +154,10 @@ module OrderHelper
       content += "#{I18n.t('Voucher')} : " + 
       text_field_tag(:voucher_code, "", :id => 'voucher_code') + " " + 
       button_to_function(
-        "Add", 
+        I18n.t('Add'), 
         remote_function(
           :url => { :controller => 'order', :action => 'add_voucher' },
-          :with => "'voucher_code='+$('voucher_code').value"
+          :with => "'voucher_code='+$('#voucher_code').val()"
         )
       )
     end
@@ -175,10 +175,10 @@ module OrderHelper
   # Extension of <i>link_to(name, options = {}, html_options = nil)</i> with a <i>Product</i> object of first parameter
   #
   # ==== Parameters
-  # * <tt>:name</tt> - name, <i>OPTIONS[:text][:remove_voucher]</i> by default
+  # * <tt>:name</tt> - name, <i>RailsCommerce::OPTIONS[:text][:remove_voucher]</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'order', :action => 'remove_voucher'}</i> by default
   # * <tt>options</tt> the html options
-  def link_to_remove_voucher(name=OPTIONS[:text][:remove_voucher], url={:controller => 'order', :action => 'remove_voucher'}, options=nil)
+  def link_to_remove_voucher(name=RailsCommerce::OPTIONS[:text][:remove_voucher], url={:controller => 'order', :action => 'remove_voucher'}, options=nil)
     link_to_remote I18n.t(name), :url => url, :html => options
   end
 end

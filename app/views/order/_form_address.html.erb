@@ -2,7 +2,10 @@
 
 <% form_remote_for :address, address, :url => { :controller => 'order', :action => 'create_address', :id => address } do |f| %>
   <%= f.select :type, [[I18n.t('Address delivery'), 'AddressDelivery'], [I18n.t('Address invoice'), 'AddressInvoice']] %><br />
-  <%= f.select :civility_id, Civility.find(:all).collect { |civility| [civility.name, civility.id] } %><br />
+  <div>
+    <label><%=t 'Civility' %></label>
+    <%= f.collection_select :civility_id, Civility.all, :id, :name, { :prompt => I18n.t('Please select') } %>
+  </div>
   <div>
     <label><%=t 'Name' %></label>
     <%= f.text_field :name %>
@@ -27,6 +30,11 @@
     <label><%=t 'City' %></label>
     <%= f.text_field :city %>    
   </div>
+  <div>
+    <label><%=t 'Country' %></label>
+    <%= f.collection_select :country_id, Country.all, :id, :printable_name, { :prompt => I18n.t('Please select') } %>    
+  </div>
+
   <%= submit_tag I18n.t('Add address') %>
 <% end %>
 <%= link_to_remote(I18n.t('Back'), :url => { :controller => 'order', :action => 'back_addresses' }) %>

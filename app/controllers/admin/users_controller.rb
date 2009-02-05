@@ -12,6 +12,17 @@ class Admin::UsersController < Admin::BaseController
     @user = User.find_by_id(params[:id])
   end
 
+  def activate
+    @user = User.find_by_id(params[:id])
+    @user.activate
+    if request.xhr? 
+      index
+      return render :partial => 'list', :locals => { :users => @users }
+    else
+      return redirect_to :back
+    end
+  end
+
   # Create an User
   # ==== Params
   # * <i>user</i> = Hash of User attributes

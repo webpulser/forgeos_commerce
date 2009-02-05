@@ -10,7 +10,7 @@ fr:
   Change currency: 'Changer de devise'
   Search: 'Rechercher'
   Catalog: 'Catalogue'
-  Sign in: "S'inscrire"
+  Sign up: "S'inscrire"
   Log in: 'Se connecter'
   Make order: 'Poursuivre la commande'
   Hello: 'Bonjour'
@@ -22,6 +22,23 @@ fr:
   Address delivery: 'Adresse de livraison'
   Voucher: 'Code promo'
   We are sorry, but it is temporarily impossible to place order: 'Nous sommes désolés, mais il est temporairement impossible de passer commande'
+  Civility: 'Civilité'
+  Name: 'Nom'
+  Lastname: 'Nom'
+  Firstname: 'Prénom'
+  Address: 'Adresse'
+  Zip code: 'Code postal'
+  City: 'Ville'
+  Country: 'Pays'
+  E-mail: 'Courriel'
+  Password: 'Mot de passe'
+  Confirm password: 'Confirmation du mot de passe'
+  Remember me: 'Mémoriser la connection'
+  Please select: 'Veuillez choisir une valeur'
+  Thank you for your order: 'Merci pour votre commande'
+  remove this voucher: 'annuler ce code promo'
+  Add: 'Ajouter'
+  free_payment: "Gratuit !!!"
 
   date:
     formats:

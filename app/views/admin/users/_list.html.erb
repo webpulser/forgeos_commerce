@@ -21,6 +21,7 @@
           <td><%= user.created_at %></td>
           <td><%= (user.active? ? 'Yes' : 'No') %></td>
           <td>
+            <%= link_to_remote('activate', :url => { :controller => 'admin/users', :action => 'activate', :id => user.id }, :update => 'users') unless user.active? %>
             <%= link_to 'edit', :controller => 'admin/users', :action => 'edit', :id => user.id %>
             <%= link_to_remote 'destroy', :url => { :controller => 'admin/users', :action => 'destroy', :id => user.id }, :confirm => 'Are you sure to destroy this user ?', :update => 'users' %>
           </td>

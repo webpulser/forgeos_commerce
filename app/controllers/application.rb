@@ -59,8 +59,8 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     if !params[:locale].nil? && LOCALES.keys.include?(params[:locale])
-      if session[:locale] != params[:locale].to_sym
-        session[:locale] = params[:locale].to_sym
+      if session[:locale] != params[:locale]
+        session[:locale] = params[:locale]
       end
     elsif !session[:locale]
       session[:locale] = I18n.default_locale
