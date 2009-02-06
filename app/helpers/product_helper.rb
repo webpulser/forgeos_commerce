@@ -63,7 +63,7 @@ module ProductHelper
                content += product.description
               content += '</div>'
         content += '<div class="product_picture">'
-          content += image_tag(product.pictures.first.public_filename(:thumb)) unless product.pictures.empty?
+          content += image_tag(product.pictures.first.public_filename(:normal)) unless product.pictures.empty?
         content += '</div>'
         content += '<div class="product_attributes_groups" id="product_attributes_groups_' + product.id.to_s + '">'
           content += display_product_page_attributes(product)

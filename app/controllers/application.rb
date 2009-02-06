@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     currency = RailsCommerce::Currency.find_by_id(currency_id)
     $currency = currency if currency # Security if currency_id don't exist
     session[:currency] = $currency.id
-    redirect_to_home
+    redirect_to(:back)
   end
 
   # Generate a cart and save this in session and instance <i>@cart</i>.

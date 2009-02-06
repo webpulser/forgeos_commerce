@@ -17,7 +17,7 @@
       <div id="topmenu">
         <ul>
           <% 
-            menu = { 'users' => { 'create' => { 'class' => 'add' }, 'export_newsletter' => { 'class' => 'report_seo' } },
+            menu = { 'users' => { 'create' => { 'class' => 'add' }, 'export_for_newsletter' => { 'class' => 'report_seo' } },
             'products' => { 'attributes_groups' => { 'create' => { 'class' => 'add' } }, 'categories' =>{ 'create' => { 'class' => 'add' } }},
             'orders' => { 'vouchers' => { 'create' => { 'class' => 'add' } }, 'shipping_methods' => { 'create' => { 'class' => 'add' } } },
             'pictures' => { 'create' => { 'class' => 'add' } }
@@ -25,7 +25,7 @@
           %>
 
           <% %w[users pictures products orders shipping_methods vouchers categories attributes_groups].each do |adminview| %>
-          <li<% if (@controller.controller_name == adminview) %> class="current"<% end %>><%= link_to adminview.humanize, { :controller => adminview } %></li>
+          <li<% if (@controller.controller_name == adminview) %> class="current"<% end %>><%= link_to I18n.t(adminview).humanize, { :controller => adminview } %></li>
           <% end %>
         </ul>
       </div>
@@ -45,10 +45,10 @@
         <ul>
             <% menu.each_key do |entry| %>
             <li>
-              <h3><%= link_to(entry.humanize, { :controller => entry } , :class => 'folder_table') %></h3>
+              <h3><%= link_to(I18n.t(entry).humanize, { :controller => entry } , :class => 'folder_table') %></h3>
               <ul>
                 <% menu[entry].each_key do |subentry| %>
-                  <li><%= link_to(subentry.humanize, { :controller => (menu[entry][subentry]['class'].nil? ? subentry : entry), :action => (menu[entry][subentry]['class'].nil? ? 'index' : subentry) } , :class => menu[entry][subentry]['class'] || 'folder_table') %></li>
+                  <li><%= link_to(I18n.t(subentry).humanize, { :controller => (menu[entry][subentry]['class'].nil? ? subentry : entry), :action => (menu[entry][subentry]['class'].nil? ? 'index' : subentry) } , :class => menu[entry][subentry]['class'] || 'folder_table') %></li>
                 <% end %>
               </ul>
             </li>
@@ -58,15 +58,21 @@
     </div>
     <div id="footer">
       <div id="credits">
-        Template by <a href="http://www.bloganje.com">Bloganje</a>
+        <%=t 'template_by' %> <a href="http://www.bloganje.com">Bloganje</a>
+      </div>
+      <div class="change_language">
+        <%=t "Change language" %> :
+        <% LOCALES.each do |key, locale| %>
+          <%= link_to_unless(I18n.locale==key, key, :locale => key) %> |
+        <% end %>
       </div>
       <div id="styleswitcher">
         <ul>
-          <li><a href="javascript: document.cookie='theme='; window.location.reload();" title="Default" id="defswitch">d</a></li>
-          <li><a href="javascript: document.cookie='theme=1'; window.location.reload();" title="Blue" id="blueswitch">b</a></li>
-          <li><a href="javascript: document.cookie='theme=2'; window.location.reload();" title="Green" id="greenswitch">g</a></li>
-          <li><a href="javascript: document.cookie='theme=3'; window.location.reload();" title="Brown" id="brownswitch">b</a></li>
-          <li><a href="javascript: document.cookie='theme=4'; window.location.reload();" title="Mix" id="mixswitch">m</a></li>
+          <li><%= link_to_function 'd', "document.cookie='theme='; window.location.reload()", :title=>I18n.t('default'), :id=>'defswitch' %></li>
+          <li><%= link_to_function 'b', "document.cookie='theme=1'; window.location.reload()", :title=>I18n.t('blue'), :id=>'blueswitch' %></li>
+          <li><%= link_to_function 'g', "document.cookie='theme=2'; window.location.reload()", :title=>I18n.t('green'), :id=>'greenswitch' %></li>
+          <li><%= link_to_function 'br', "document.cookie='theme=3'; window.location.reload()", :title=>I18n.t('brown'), :id=>'brownswitch' %></li>
+          <li><%= link_to_function 'm', "document.cookie='theme=4'; window.location.reload()", :title=>I18n.t('mix'), :id=>'mixswitch' %></li>
         </ul>
       </div><br />
     </div>

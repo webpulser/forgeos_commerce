@@ -17,9 +17,9 @@ class Admin::UsersController < Admin::BaseController
     @user.activate
     if request.xhr? 
       index
-      return render :partial => 'list', :locals => { :users => @users }
+      return render(:partial => 'list', :locals => { :users => @users })
     else
-      return redirect_to :back
+      return redirect_to(:back)
     end
   end
 

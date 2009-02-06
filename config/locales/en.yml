@@ -1,4 +1,5 @@
 en:
+# FrontOffice
   Add to cart: 'Add to cart'
   cart: 'cart'
   Empty cart: 'Empty cart'
@@ -41,6 +42,21 @@ en:
   free_payment: "It's free!!!"
   no_product: 'No product'
 
+# Admin
+  create: 'create'
+  products: 'products'
+  orders: 'orders'
+  shipping_methods: 'shipping methods'
+  pictures: 'pictures'
+  attributes_groups: 'attributes groups'
+  attributes: 'attributes'
+  vouchers: 'vouchers'
+  users: 'users'
+  categories: 'categories'
+  export_for_newsletter: 'export for newsletter'
+  template_by: 'Template by'
+
+# Dates formats 
   date:
     formats:
       default: "%Y-%m-%d"
