@@ -3,7 +3,7 @@
   <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
     <title><%=t 'project_name' %></title>
-    <%= stylesheet_link_tag 'rails_commerce', session[:design] || 'design_aqtp' %>
+    <%= stylesheet_link_tag session[:design] || 'design_aqtp', 'rails_commerce' %>
     <%= javascript_include_tag(:defaults, :cache => true) %>
   </head>
   <body>

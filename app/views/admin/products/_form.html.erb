@@ -14,8 +14,6 @@
     <p><b><%= f.label :description %> : </b><%= f.text_area :description %></p>
     <p><b><%= f.label :rate_tax %> : </b><%= f.text_field :rate_tax %></p>
     <p><b><%= f.label :selling_date %> : </b><%= f.date_select :selling_date %></p>
-    <p><b><%= f.label :offer_month %> : </b><%= f.check_box :offer_month %></p>
-    <p><b><%= f.label :on_first_page %> : </b><%= f.check_box :on_first_page %></p>
     <p><b><%= f.label :weight %> : </b><%= f.text_field :weight %></p>
     <p><b><%= f.label :keywords %> : </b><%= f.text_field :keywords %></p>
     <p><b><%= f.label :stock %> : </b><%= f.text_field :stock %></p>
@@ -23,8 +21,8 @@
     <fieldset>
       <legend>
         <%= link_to_effect_toggle('Attributes Groups','attributes_groups') %> |
-        <%= link_to_function('select all',"$$('.attributes_groups').each(function(box){box.checked=true;})") %> |
-        <%= link_to_function('unselect all',"$$('.attributes_groups').each(function(box){box.checked=false;})") %>
+        <%= link_to_function('select all',"$('.attributes_groups').each(function(){this.checked=true;})") %> |
+        <%= link_to_function('unselect all',"$('.attributes_groups').each(function(){this.checked=false;})") %>
       </legend>
       <p id="attributes_groups">
       <% AttributesGroup.all.each do |attr_group| %>

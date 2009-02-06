@@ -24,6 +24,7 @@ module ProductHelper
   end
 
   def display_product(product, with_description=false, options={})
+    return I18n.t('no_product') unless product
     content = "<div class='product'>"
       if product.pictures.first
         content += "<div class='product_picture'>"

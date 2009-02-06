@@ -39,6 +39,7 @@ fr:
   remove this voucher: 'annuler ce code promo'
   Add: 'Ajouter'
   free_payment: "Gratuit !!!"
+  no_product: 'Pas de produit'
 
   date:
     formats:

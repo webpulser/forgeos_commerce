@@ -39,6 +39,7 @@ en:
   remove this voucher: 'remove this voucher'
   Add: 'Add'
   free_payment: "It's free!!!"
+  no_product: 'No product'
 
   date:
     formats:
