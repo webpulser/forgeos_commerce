@@ -5,8 +5,8 @@
       <td><%= image_tag picture.public_filename(:small) %></td>
       <td><%= picture.content_type %></td>
       <td>
-        <%= link_to 'show', :controller => 'pictures', :action => 'show', :id => picture.id %>
-        <%= link_to_remote 'destroy', :url => { :controller => 'pictures', :action => 'destroy', :id => picture.id, :target => target, :target_id => target_id }, :update => 'list_pictures' %>
+        <%= link_to I18n.t('show').humanize, admin_picture_path(picture) %>
+        <%= link_to_remote I18n.t('destroy').humanize, :url => admin_picture_path(picture, :target => target, :target_id => target_id), :update => 'list_pictures', :confirm => I18n.t(:confirm_delete_picture), :method => 'delete' %>
       </td>
     </tr></table>
   </li>

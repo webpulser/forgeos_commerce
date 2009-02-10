@@ -1,4 +1,4 @@
-<% @content_for_tools << link_to('create attributes group', { :controller => 'attributes_groups', :action => 'create' }, :class => 'add' ) %>
+<% @content_for_tools << link_to('create attributes group', new_admin_attributes_group_path, :class => 'add' ) %>
 <%= display_standard_flashes %>
 <table>
   <thead>
@@ -13,8 +13,8 @@
         <td><%= attr_group.name %></td>
         <td><%= (attr_group.dynamic? ? 'Dynamic' : attr_group.tattributes.count) %></td>
         <td>
-          <%= link_to 'edit', :controller => 'attributes_groups', :action => 'edit', :id => attr_group.id %>
-          <%= link_to 'destroy', :controller => 'attributes_groups', :action => 'destroy', :id => attr_group.id %>
+          <%= link_to 'edit', edit_admin_attributes_group_path(attr_group) %>
+          <%= link_to 'destroy', admin_attributes_group_path(attr_group), :method => 'delete' %>
         </td>
       </tr>
       <% end %>

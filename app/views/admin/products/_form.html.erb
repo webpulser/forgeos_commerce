@@ -1,7 +1,7 @@
 <%= display_standard_flashes %>
 <fieldset>
   <legend><%= link_to_effect_toggle('Attributes','static_attributes') %></legend>
-  <% form_for :product_parent, :url => (product_parent.id.nil? ? admin_products_path : admin_product_path( :id => product_parent.id)), :html => { :method => (product_parent.id.nil? ? :post : :put), :id => 'static_attributes' } do |f| %>
+  <% form_for :product_parent, :url => (product_parent.id.nil? ? admin_products_path : admin_product_path(product_parent)), :html => { :method => (product_parent.id.nil? ? :post : :put), :id => 'static_attributes' } do |f| %>
     <p>
       <b><%= f.label :categories %> : </b>
       <%= select_tag "product_parent[category_ids][]",
@@ -46,8 +46,7 @@
   <legend><%= link_to_effect_toggle('Pictures','product_pictures') %></legend>
   <div id="product_pictures">
     <%= link_to_unless product_parent.id.nil?, 'create a picture',
-      { :controller => 'pictures', :action => 'create', 
-        :target => 'product', :target_id => product_parent.id },
+        new_admin_picture_path(:target => 'product', :target_id => product_parent.id),
         :class => 'add' %>
     <div id="list_pictures">
       <%= render :partial => 'admin/pictures/list', :locals => { :pictures => product_parent.pictures, :target => 'product', :target_id => product_parent.id } %>
@@ -56,4 +55,4 @@
 </fieldset>
 
 <%= hide_html_elements_onload %w[product_details static_attributes product_pictures] %>
-<% @content_for_tools << link_to('list', { :controller => 'admin/products', :action => 'index' }, :class => 'house' )%>
+<% @content_for_tools << link_to('list', admin_products_path, :class => 'house' )%>

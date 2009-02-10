@@ -1,7 +1,9 @@
 <%= display_standard_flashes %>
-<% form_for :attributes_group, :url => { :id => attributes_group.id } do |f| %>
+<% form_for :attributes_group, attributes_group,
+  :url => (attributes_group.id.nil? ? admin_attributes_groups_path : admin_attributes_group_path(attributes_group)),
+  :html => { :method => (attributes_group.id.nil? ? :post : :put)} do |f| %>
   <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
-  <p><b><%= f.label :dynamic %> : </b><%= f.check_box :dynamic, :onchange => "Effect.toggle('attributes_fieldset','Appear')" %></p>
+  <p><b><%= f.label :dynamic %> : </b><%= f.check_box :dynamic, :onchange => visual_effect(:toggle_appear,'#attributes_fieldset') %></p>
   <center><%= f.submit 'Save' %></center>
 <% end %>
 <fieldset id="attributes_fieldset"<% if attributes_group.dynamic? %> style="display: none;"<% end %>>
@@ -14,8 +16,7 @@
   <legend><%= link_to_effect_toggle('Pictures','attributes_group_pictures') %></legend>
   <div id="attributes_group_pictures">
     <%= link_to_unless attributes_group.id.nil?, 'create a picture',
-      { :controller => 'pictures', :action => 'create',
-        :target => 'attributes_group', :target_id => attributes_group.id }, 
+      new_admin_picture_path(:target => 'attributes_group', :target_id => attributes_group.id },
         :class => 'add' %>
     <div id="list_pictures">
       <%= render :partial => 'admin/pictures/list', :locals => { :pictures => attributes_group.pictures, :target => 'attributes_group', :target_id => attributes_group.id } %>
@@ -23,4 +24,4 @@
   </div>
 </fieldset>
 <%= hide_html_elements_onload %w[attributes_group_pictures attributes] %>
-<% @content_for_tools << link_to('list', { :controller => 'admin/attributes_groups', :action => 'index' }, :class => 'house' )%>
+<% @content_for_tools << link_to('list', admin_attributes_groups_path, :class => 'house' )%>

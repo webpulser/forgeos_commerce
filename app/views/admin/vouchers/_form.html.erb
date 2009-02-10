@@ -1,5 +1,6 @@
 <%= display_standard_flashes %>
-<% form_for :voucher, voucher, { :id => voucher.id } do |f| %>
+<% form_for :voucher, voucher, :url => (voucher.id.nil? ? admin_vouchers_path : admin_voucher_path(voucher)),
+  :html => { :method => (voucher.id.nil? ? :post : :put) } do |f| %>
   <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
   <p><b><%= f.label :code %> : </b><%= f.text_field :code %></p>
   <p><b><%= f.label :value %> : </b><%= f.text_field :value %></p>
@@ -8,4 +9,4 @@
   <p><b><%= f.label :date_end %> : </b><%= f.date_select :date_end, :include_blank => true %></p>
   <%= f.submit 'Save' %>
 <% end %>
-<% @content_for_tools << link_to('list', { :controller => 'admin/vouchers', :action => 'index' }, :class => 'house' )%>
+<% @content_for_tools << link_to('list', admin_vouchers_path, :class => 'house' )%>

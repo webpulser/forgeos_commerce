@@ -1,7 +1,8 @@
 <%= display_standard_flashes %>
 <fieldset>
   <legend><%= link_to_effect_toggle('Attributes','static_attributes') %></legend>
-  <% form_for :order, order, :url => { :id => order.id }, :html => { :id => 'static_attributes' } do |f| %>
+  <% form_for :order, order, :url => (order.new_record? ? admin_orders_path : admin_order_path(order)),
+    :html => { :id => 'static_attributes', :method => (order.new_record? ? :post : :put) } do |f| %>
     <p><b><%= f.label :user_id %> : </b><%= f.collection_select :user_id, User.find_all_by_activation_code(nil), :id, :fullname, { :prompt => true } %></p>
     <p><b><%= f.label :voucher %> : </b><%= f.collection_select :voucher, Voucher.all, :value, :name, { :prompt => true } %></p>
     <p><b><%= f.label :shipping_method %> : </b><%= f.collection_select :shipping_method, ShippingMethod.all, :name, :name, { :prompt => true } %></p>
@@ -54,4 +55,4 @@
   </div>
 </fieldset>
 <%= hide_html_elements_onload %w[address_invoice address_delivery static_attributes orders_details] %>
-<% @content_for_tools << link_to('list', { :controller => 'admin/orders', :action => 'index' }, :class => 'house' )%>
+<% @content_for_tools << link_to('list', admin_orders_path, :class => 'house' )%>

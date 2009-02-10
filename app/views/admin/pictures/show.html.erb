@@ -1,18 +1,17 @@
-<h1>Show Picture</h1>
-<% @content_for_tools << link_to('back', :back) %>
+<h1><%= I18n.t('show_picture').humanize %></h1>
 <p>
-  <b>Filename :</b>
+<b><%= I18n.t('filename').humanize %> :</b>
   <%= @picture.filename %>
 </p>
 
 <p>
-  <b>Content Type:</b>
+<b><%= I18n.t('content_type').humanize %> :</b>
   <%= @picture.content_type %>
 </p>
 
 <% thumbnail_names = %w[big normal small thumb] #@picture.attachment_options[:thumbnails].keys %>
 <fieldset>
-  <legend><%= link_to_effect_toggle('Thumbnails','thumbnails',:toggle_slide) %></legend>
+  <legend><%= link_to_effect_toggle(I18n.t('thumbnail', :count => 2).humanize,'thumbnails',:toggle_slide) %></legend>
   <table id="thumbnails">
     <% thumbnail_names.each do |thumb| %>
     <tr>
@@ -26,15 +25,15 @@
 </fieldset>
 
 <fieldset>
-  <legend><%= link_to_effect_toggle('Associated Elements','associated_elements') %></legend>
+  <legend><%= link_to_effect_toggle(I18n.t('associated_element', :count => 2).humanize,'associated_elements') %></legend>
   <ul class="no-list-style-type" id="associated_elements">
     <% products = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Product)}.compact
     unless products && products.empty?%>
       <li>
-        <h3><%= 'Products :' %></h3>
+      <h3><%= I18n.t('product', :count => 2).humanize %> : </h3>
         <ul class="no-list-style-type">
         <% products.each do |product| %>
-          <li><%= link_to(product.name, :controller => 'products', :action => 'edit', :id => product.id) %></li>
+          <li><%= link_to product.name, edit_admin_product_path(product) %></li>
         <% end %>
         </ul>
       </li>
@@ -43,7 +42,7 @@
     <% attributes_groups = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(AttributesGroup)}.compact
     unless attributes_groups && attributes_groups.empty? %>
       <li>
-        <h3><%= 'Attributes Groups :' %></h3>
+      <h3><%= I18n.t('attributes_group', :count => 2).humanize %> : </h3>
         <ul class="no-list-style-type">
         <% attributes_groups.each do |attributes_group| %>
           <li><%= link_to(attributes_group.name, :controller => 'attributes_groups', :action => 'edit', :id => attributes_group.id) %></li>
@@ -55,7 +54,7 @@
     <% tattributes = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Attribute)}.compact
     unless tattributes && tattributes.empty? %>
       <li>
-        <h3><%= 'Attributes :' %></h3>
+      <h3><%= I18n.t('attribute', :count => 2).humanize %> : </h3>
         <ul class="no-list-style-type">
         <% tattributes.each do |tattribute| %>
           <li><%= link_to(tattribute.name, :controller => 'attributes_groups', :action => 'edit_attribute', :id => tattribute.id) %></li>
@@ -66,10 +65,10 @@
     <% categories = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Category)}.compact
     unless categories && categories.empty? %>
       <li>
-        <h3><%= 'Categories :' %></h3>
+      <h3><%= I18n.t('category', :count => 2).humanize %> : </h3>
         <ul class="no-list-style-type">
         <% categories.each do |category| %>
-          <li><%= link_to(category.name, :controller => 'categories', :action => 'edit', :id => category.id) %></li>
+          <li><%= link_to category.name, edit_admin_category_path(category) %></li>
         <% end %>
         </ul>
       </li>
@@ -78,8 +77,8 @@
 
 <fieldset>
   <legend>
-    <%= link_to_effect_toggle('Comments','comments') %> |
-    <%= link_to_remote 'create a comment', 
+    <%= link_to_effect_toggle(I18n.t('comment', :count => 2).humanize ,'comments') %> |
+    <%= link_to_remote I18n.t('create_comment').humanize, 
     :url => { :controller => 'pictures', :action => 'create_comment', :id => @picture.id },
     :update => 'comment_add', :method => 'get', :complete => "$('comments').show()" %>
   </legend>
@@ -87,4 +86,6 @@
     <%= render :partial => 'list_comments', :locals => { :comments => @picture.comments } %>
   </div>
 </fieldset>
+
 <%= hide_html_elements_onload %w[comments thumbnails associated_elements] %>
+<% @content_for_tools << link_to(I18n.t('back').humanize, :back) %>

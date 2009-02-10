@@ -3,31 +3,37 @@ class Admin::ShippingMethodsController < Admin::BaseController
     @shipping_methods = ShippingMethod.all
   end
 
-  def create
+  def new
     @shipping_method = ShippingMethod.new(params[:shipping_method])
-    if request.post?
-      if @shipping_method.save
-        flash[:notice] = 'Shipping Method was successfully created'
-        redirect_to(:action => 'index')
-      else
-        flash[:error] = @shipping_method.errors
-      end
-    end
+    render :action => 'create'
   end
 
-  def edit
-    @shipping_method = ShippingMethod.find_by_id(params[:id])
-    if request.post?
-      if @shipping_method.update_attributes(params[:shipping_method])
-        flash[:notice] = 'Shipping Method was successfully updated'
-      else
-        flash[:error] = @shipping_method.errors
-      end
+  def create
+    @shipping_method = ShippingMethod.new(params[:shipping_method])
+    if @shipping_method.save
+      flash[:notice] = 'Shipping Method was successfully created'
+      redirect_to(:action => 'index')
+    else
+      flash[:error] = @shipping_method.errors
     end
   end
 
   def show
     @shipping_method = ShippingMethod.find_by_id(params[:id])
+  end
+
+  def edit
+    @shipping_method = ShippingMethod.find_by_id(params[:id])
+  end
+
+  def update
+    @shipping_method = ShippingMethod.find_by_id(params[:id])
+    if @shipping_method.update_attributes(params[:shipping_method])
+      flash[:notice] = 'Shipping Method was successfully updated'
+    else
+      flash[:error] = @shipping_method.errors
+    end
+    render :action => 'edit'
   end
 
   def destroy

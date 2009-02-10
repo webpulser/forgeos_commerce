@@ -6,17 +6,21 @@ class Admin::AttributesGroupsController < Admin::BaseController
     @groups = AttributesGroup.all
   end
 
+  def new
+    @attributes_group = AttributesGroup.new(params[:attributes_group])
+    render :action => 'create'
+  end
+
   # Create a AttributesGroup
   # ==== Params
   # * attributes_group = Hash of AttributesGroup's attributes
   def create
     @attributes_group = AttributesGroup.new(params[:attributes_group])
-    if request.post?
-      if @attributes_group.save
-        flash[:notice] = 'Attributes Group was successfully saved'
-      else
-        flash[:error] = 'A problem occured during Attributes Group save'
-      end
+    if @attributes_group.save
+      flash[:notice] = 'Attributes Group was successfully saved'
+      redirect_to(edit_admin_attributes_group_path(@attributes_group))
+    else
+      flash[:error] = 'A problem occured during Attributes Group save'
     end
   end
 
@@ -25,13 +29,16 @@ class Admin::AttributesGroupsController < Admin::BaseController
   # * id = AttributesGroup's id
   def edit
     @attributes_group = AttributesGroup.find_by_id(params[:id])
-    if request.post?
-      if @attributes_group.update_attributes(params[:attributes_group])
-        flash[:notice] = 'Attributes Group was successfully saved'
-      else
-        flash[:error] = 'A problem occured during Attributes Group save'
-      end
+  end
+
+  def update
+    @attributes_group = AttributesGroup.find_by_id(params[:id])
+    if @attributes_group.update_attributes(params[:attributes_group])
+      flash[:notice] = 'Attributes Group was successfully saved'
+    else
+      flash[:error] = 'A problem occured during Attributes Group save'
     end
+    render :action => 'edit'
   end
 
   # Destroy a AttributesGroup
@@ -59,7 +66,7 @@ class Admin::AttributesGroupsController < Admin::BaseController
   # * group_id = AttributesGroup's id
   # * attribute = Hash of Attribute's attributes
   def create_attribute
-    group = AttributesGroup.find_by_id(params[:group_id])
+    group = AttributesGroup.find_by_id(params[:id])
 
     if group.dynamic
       flash[:warning] = "This group is dynamic, it can't have attributes"
@@ -79,7 +86,7 @@ class Admin::AttributesGroupsController < Admin::BaseController
   # * id = Attribute's id
   # * attribute = Hash of Attribute's attributes
   def edit_attribute
-    @attribute = Attribute.find_by_id(params[:id])
+    @attribute = Attribute.find_by_id(params[:attr_id])
     if request.post?
       if @attribute.update_attributes(params[:attribute])
         redirect_to(:action => 'edit', :id => @attribute.attributes_group.id)

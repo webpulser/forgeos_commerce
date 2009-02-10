@@ -1,53 +1,53 @@
 <%= display_standard_flashes %>
-<% form_for :user, user, { :id => user.id }, :html => { :multipart => true, :id => 'user_form' } do |f| %>
+<% form_for :user, user, :url => (user.id.nil? ? admin_users_path : admin_user_path(user)), :html => { :method => (user.id.nil? ? :post : :put), :multipart => true, :id => 'user_form' } do |f| %>
   <% fields_for :avatar, user.avatar do |avatar| %>
     <%= image_tag(user.avatar.public_filename(:small)) if user.avatar && !user.avatar.filename.nil? %>
-    <p><b><%= avatar.label :uploaded_data, 'Avatar' %> : </b><%= avatar.file_field :uploaded_data %></p>
+    <p><b><%= avatar.label :uploaded_data, I18n.t('avatar').humanize %> : </b><%= avatar.file_field :uploaded_data %></p>
   <% end %>
-  <p><b><%= f.label :firstname %> : </b><%= f.text_field :firstname %></p>
-  <p><b><%= f.label :lastname %> : </b><%= f.text_field :lastname %></p>
-  <p><b><%= f.label :email %> : </b><%= f.text_field :email %></p>
-  <p><b><%= f.label :password %> : </b><%= f.password_field :password %></p>
-  <p><b><%= f.label :password_confirmation %> : </b><%= f.password_field :password_confirmation %></p>
+  <p><b><%= f.label :firstname, I18n.t('firstname').humanize %> : </b><%= f.text_field :firstname %></p>
+  <p><b><%= f.label :lastname, I18n.t('lastname').humanize %> : </b><%= f.text_field :lastname %></p>
+  <p><b><%= f.label :email, I18n.t('email').humanize %> : </b><%= f.text_field :email %></p>
+  <p><b><%= f.label :password, I18n.t('password').humanize %> : </b><%= f.password_field :password %></p>
+  <p><b><%= f.label :password_confirmation, I18n.t('password_confirmation').humanize %> : </b><%= f.password_field :password_confirmation %></p>
 
   <% 
     civilities = Civility.all
     countries = Country.all
 %>
   <fieldset>
-    <legend><%= link_to_effect_toggle('Invoice Address','address_invoice') %></legend>
+    <legend><%= link_to_effect_toggle(I18n.t('Address invoice'),'address_invoice') %></legend>
     <div id="address_invoice">
       <% fields_for user.address_invoice do |fa| %>
-        <p><b><%= fa.label :name %> : </b><%= fa.text_field :name %></p>
-        <p><b><%= fa.label :firstname %> : </b><%= fa.text_field :firstname %></p>
-        <p><b><%= fa.label :civility_id %> : </b><%= fa.collection_select :civility_id, civilities, :id, :name %></p>
-        <p><b><%= fa.label :address %> : </b><%= fa.text_field :address %></p>
-        <p><b><%= fa.label :address_2 %> : </b><%= fa.text_field :address_2 %></p>
-        <p><b><%= fa.label :zip_code %> : </b><%= fa.text_field :zip_code %></p>
-        <p><b><%= fa.label :city %> : </b><%= fa.text_field :city %></p>
-        <p><b><%= fa.label :country_id %> : </b><%= fa.collection_select :country_id, countries, :id, :printable_name,{ :prompt => true } %></p>
+        <p><b><%= fa.label :name, I18n.t('lastname').humanize %> : </b><%= fa.text_field :name %></p>
+        <p><b><%= fa.label :firstname, I18n.t('firstname').humanize %> : </b><%= fa.text_field :firstname %></p>
+        <p><b><%= fa.label :civility_id, I18n.t('civility').humanize %> : </b><%= fa.collection_select :civility_id, civilities, :id, :name %></p>
+        <p><b><%= fa.label :address, I18n.t('address').humanize %> : </b><%= fa.text_field :address %></p>
+        <p><b><%= fa.label :address_2, I18n.t('address').humanize %> : </b><%= fa.text_field :address_2 %></p>
+        <p><b><%= fa.label :zip_code, I18n.t('zip_code').humanize %> : </b><%= fa.text_field :zip_code %></p>
+        <p><b><%= fa.label :city, I18n.t('city').humanize %> : </b><%= fa.text_field :city %></p>
+        <p><b><%= fa.label :country_id, I18n.t('country').humanize %> : </b><%= fa.collection_select :country_id, countries, :id, :printable_name,{ :prompt => true } %></p>
       <% end %>
     </div>
   </fieldset>
 
   <fieldset>
-    <legend><%= link_to_effect_toggle('Delivery Address','address_delivery') %></legend>
+    <legend><%= link_to_effect_toggle(I18n.t('Address delivery'),'address_delivery') %></legend>
     <div id="address_delivery">
       <% fields_for user.address_delivery do |fb| %>
-        <p><b><%= fb.label :name %> : </b><%= fb.text_field :name %></p>
-        <p><b><%= fb.label :firstname %> : </b><%= fb.text_field :firstname %></p>
-        <p><b><%= fb.label :civility_id %> : </b><%= fb.collection_select :civility_id, civilities, :id, :name %></p>
-        <p><b><%= fb.label :address %> : </b><%= fb.text_field :address %></p>
-        <p><b><%= fb.label :address_2 %> : </b><%= fb.text_field :address_2 %></p>
-        <p><b><%= fb.label :zip_code %> : </b><%= fb.text_field :zip_code %></p>
-        <p><b><%= fb.label :city %> : </b><%= fb.text_field :city %></p>
-        <p><b><%= fb.label :country_id %> : </b><%= fb.collection_select :country_id, countries, :id, :printable_name,{ :prompt => true } %></p>
+        <p><b><%= fb.label :name, I18n.t('lastname').humanize %> : </b><%= fb.text_field :name %></p>
+        <p><b><%= fb.label :firstname, I18n.t('firstname').humanize %> : </b><%= fb.text_field :firstname %></p>
+        <p><b><%= fb.label :civility_id, I18n.t('civility').humanize %> : </b><%= fb.collection_select :civility_id, civilities, :id, :name %></p>
+        <p><b><%= fb.label :address, I18n.t('address').humanize %> : </b><%= fb.text_field :address %></p>
+        <p><b><%= fb.label :address_2, I18n.t('address').humanize %> : </b><%= fb.text_field :address_2 %></p>
+        <p><b><%= fb.label :zip_code, I18n.t('zip_code').humanize %> : </b><%= fb.text_field :zip_code %></p>
+        <p><b><%= fb.label :city, I18n.t('city').humanize %> : </b><%= fb.text_field :city %></p>
+        <p><b><%= fb.label :country_id, I18n.t('country').humanize %> : </b><%= fb.collection_select :country_id, countries, :id, :printable_name,{ :prompt => true } %></p>
       <% end %>
     </div>
   </fieldset>
 
-  <%= f.submit 'Save' %>
+  <%= f.submit I18n.t('save').humanize %>
 <% end %>
 
 <%= hide_html_elements_onload %w[address_invoice address_delivery] %>
-<% @content_for_tools << link_to('list', { :controller => 'admin/users', :action => 'index' }, :class => 'house' )%>
+<% @content_for_tools << link_to(I18n.t('list').humanize, admin_users_path, :class => 'house' )%>

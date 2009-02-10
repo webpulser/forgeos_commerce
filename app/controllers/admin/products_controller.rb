@@ -9,6 +9,7 @@ class Admin::ProductsController < Admin::BaseController
   def new
     @product_parent = ProductParent.new(params[:product_parent])
     @product_parent.rate_tax = 19.6
+    render :action => 'create'
   end
 
   # Create a ProductParent
@@ -41,6 +42,7 @@ class Admin::ProductsController < Admin::BaseController
     else
       flash[:error] = @product_parent.errors
     end
+    render :action => 'edit'
   end
 
   # Destroy a ProductParent

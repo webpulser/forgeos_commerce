@@ -13,12 +13,12 @@
         <td><%= voucher.code %></td>
         <td><%= voucher.value %></td>
         <td>
-          <%= link_to 'show', { :controller => 'admin/vouchers', :action => 'show', :id => voucher.id } %>
-          <%= link_to 'edit', { :controller => 'admin/vouchers', :action => 'edit', :id => voucher.id } %>
-          <%= link_to_remote 'destroy', :url => { :controller => 'admin/vouchers', :action => 'destroy', :id => voucher.id }, :confirm => 'Are you sure to destroy this voucher ?', :update => 'vouchers', :method => 'get' %>
+          <%= link_to 'show', admin_voucher_path(voucher) %>
+          <%= link_to 'edit', edit_admin_voucher_path(voucher) %>
+          <%= link_to_remote 'destroy', :url => admin_voucher_path(voucher), :confirm => 'Are you sure to destroy this voucher ?', :update => 'vouchers', :method => 'delete' %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<% @content_for_tools << link_to('create a voucher', { :controller => 'admin/vouchers', :action => 'create' }, :class => 'add') %>
+<% @content_for_tools << link_to('create a voucher', new_admin_voucher_path, :class => 'add') %>

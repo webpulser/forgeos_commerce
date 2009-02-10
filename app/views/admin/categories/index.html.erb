@@ -1,5 +1,5 @@
 <h1>Categories</h1>
-<% @content_for_tools << link_to('create a category', { :controller => 'admin/categories', :action => 'create' }, :class => 'add' ) %>
+<% @content_for_tools << link_to('create a category', new_admin_category_path, :class => 'add' ) %>
 <div id="categories">
   <%= render :partial => 'list', :locals => { :categories => @categories } %>
 </div>

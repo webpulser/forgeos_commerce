@@ -1,8 +1,11 @@
 <%= display_standard_flashes %>
 <%= image_tag picture.public_filename(:normal) unless picture.id.nil? %>
-<% form_for picture, :url => { :id => picture.id, :target => params[:target], :target_id => params[:target_id] }, :html => { :multipart => true } do |f| %>
+<% form_for picture, :url => (picture.new_record? ? admin_pictures_path : admin_picture_path(picture)),
+  :html => { :method => (picture.new_record? ? :post : :put), :multipart => true } do |f| %>
   <%= f.error_messages %>
   <%= f.file_field :uploaded_data %>
-  <%= f.submit 'Save' %>
+  <%= hidden_field_tag :target, params[:target] %>
+  <%= hidden_field_tag :target_id, params[:target_id] %>
+  <%= f.submit I18n.t('save').humanize %>
 <% end %>
-<% @content_for_tools << link_to('list', { :controller => 'admin/pictures', :action => 'index' }, :class => 'house' )%>
+<% @content_for_tools << link_to(I18n.t('list').humanize, admin_pictures_path, :class => 'house' )%>

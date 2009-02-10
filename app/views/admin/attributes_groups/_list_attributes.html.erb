@@ -1,5 +1,5 @@
 <%= link_to_unless group.id.nil?, 'create attribute',
-  { :action => 'create_attribute', :group_id => group.id },
+  { :action => 'create_attribute', :id => group.id },
   :class => 'add' %>
 <table>
   <thead>

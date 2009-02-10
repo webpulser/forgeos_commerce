@@ -44,6 +44,7 @@ fr:
 
 # Admin
   create: 'créer'
+  new: 'créer'
   products: 'produits'
   orders: 'commandes'
   shipping_methods: "méthodes d'expédition"
@@ -53,8 +54,58 @@ fr:
   vouchers: 'code promos'
   users: 'utilisateurs'
   categories: 'catégories'
-  export_for_newsletter: 'export pour la newsletter'
+  export_newsletter: 'export pour la newsletter'
   template_by: 'Thème par'
+  user:
+    one: 'utilisateur'
+    other: 'utilisateurs'
+  avatar: 'avatar'
+  created_on: 'créé à'
+  active: 'activé'
+  actions: 'actions'
+  edit: 'éditer'
+  edit_user: "éditer l'utilisateur"
+  destroy: 'supprimer'
+  activate: 'activer'
+  name: 'nom'
+  email: 'email'
+  _yes: 'oui'
+  _no: 'non'
+  create_user: 'créer un utilisateur'
+  firstname: 'prénom'
+  lastname: 'nom'
+  password: 'mot de passe'
+  password_confirmation: 'vérification du mot de passe'
+  save: 'sauvegarder'
+  list: 'lister'
+  civility: 'civilité'
+  address: 'adresse'
+  city: 'ville'
+  country: 'pays'
+  zip_code: 'code postale'
+  confirm_delete_picture: 'êtes vous sure de vouloir supprimer cette photo ?'
+  confirm_delete_user: 'êtes vous sure de vouloir supprimer cet utilisateur ?'
+  show: 'voir'
+  back: 'retour'
+  create_picture: 'créer une photo'
+  show_picture: 'Voir la photo'
+  thumbnail:
+    one: 'vignette'
+    other: 'vignettes'
+  comment:
+    one: 'commentaire'
+    other: 'commentaires'
+  associated_element:
+    one: 'élément associé'
+    other: 'éléments associés'
+  picture:
+    zero: 'photo'
+    one: 'photo'
+    other: 'photos'
+  create_comment: 'créer un commentaire'
+  title: 'titre'
+  filename: 'nom de fichier'
+  content_type: 'type de contenu'
 
 # Date formats
   date:

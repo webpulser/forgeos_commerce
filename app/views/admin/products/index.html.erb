@@ -20,8 +20,8 @@
       <td><%= product.product_details.count %></td>
       <td><%= product.categories.collect{ |cat| cat.name }.join(', ') %></td>
       <td>
-        <%= link_to 'edit', edit_admin_product_path(:id => product.id) %>
-        <%= link_to 'destroy', admin_product_path(:id => product.id), :method => :delete, :confirm => 'Are you sure to destroy this Product ?' %>
+        <%= link_to 'edit', edit_admin_product_path(product) %>
+        <%= link_to 'destroy', admin_product_path(product), :method => :delete, :confirm => 'Are you sure to destroy this Product ?' %>
       </td>
     </tr>
   <% end %>

@@ -1,9 +1,16 @@
 <fieldset>
+  <legend><%= link_to_effect_toggle('Attributes','category_form') %></legend>
+  <% form_for :category, category, :url => (category.id.nil? ? admin_categories_path : admin_category_path(category)) , :html => { :method => (category.id.nil? ? :post : :put),:id => 'category_form' } do |f| %>
+    <p><b><%= f.label :parent_id %></b><%= f.collection_select :parent_id, Category.all, :id, :name, { :prompt => true, :include_blank => 'None' }%></p>
+    <p><b><%= f.label :name %></b><%= f.text_field :name %></p>
+    <%= f.submit 'Save' %>
+  <% end %>
+</fieldset>
+<fieldset>
   <legend><%= link_to_effect_toggle('Category Pictures','pictures') %></legend>
   <div id="pictures">
     <%= link_to_unless category.id.nil?, 'create a picture',
-      { :controller => 'pictures', :action => 'create',
-      :target => 'category', :target_id => category.id },
+      new_admin_picture_path(:target => 'category', :target_id => category.id),
       :class => 'add'
     %>
     <div id="list_pictures">
@@ -11,12 +18,6 @@
     </div>
   </div>
 </fieldset>
-<fieldset>
-  <legend><%= link_to_effect_toggle('Attributes','category_form') %></legend>
-<% form_for :category, category, :url => { :id => category.id }, :html => { :id => 'category_form' } do |f| %>
-  <p><b><%= f.label :parent_id %></b><%= f.collection_select :parent_id, Category.all, :id, :name, { :prompt => true, :include_blank => 'None' }%></p>
-  <p><b><%= f.label :name %></b><%= f.text_field :name %></p>
-  <%= f.submit 'Save' %>
-<% end %>
+
 <%= hide_html_elements_onload %w[pictures category_form] %>
 <% @content_for_tools << link_to('list', { :controller => 'admin/categories', :action => 'index' }, :class => 'house' )%>

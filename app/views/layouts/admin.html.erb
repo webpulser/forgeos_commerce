@@ -17,10 +17,10 @@
       <div id="topmenu">
         <ul>
           <% 
-            menu = { 'users' => { 'create' => { 'class' => 'add' }, 'export_for_newsletter' => { 'class' => 'report_seo' } },
-            'products' => { 'attributes_groups' => { 'create' => { 'class' => 'add' } }, 'categories' =>{ 'create' => { 'class' => 'add' } }},
-            'orders' => { 'vouchers' => { 'create' => { 'class' => 'add' } }, 'shipping_methods' => { 'create' => { 'class' => 'add' } } },
-            'pictures' => { 'create' => { 'class' => 'add' } }
+            menu = { 'users' => { 'new' => { 'class' => 'add' }, 'export_newsletter' => { 'id' => 0, 'class' => 'report_seo' } },
+            'products' => { 'attributes_groups' => { 'new' => { 'class' => 'add' } }, 'categories' =>{ 'new' => { 'class' => 'add' } }},
+            'orders' => { 'vouchers' => { 'new' => { 'class' => 'add' } }, 'shipping_methods' => { 'new' => { 'class' => 'add' } } },
+            'pictures' => { 'new' => { 'class' => 'add' } }
             }
           %>
 
@@ -48,7 +48,7 @@
               <h3><%= link_to(I18n.t(entry).humanize, { :controller => entry } , :class => 'folder_table') %></h3>
               <ul>
                 <% menu[entry].each_key do |subentry| %>
-                  <li><%= link_to(I18n.t(subentry).humanize, { :controller => (menu[entry][subentry]['class'].nil? ? subentry : entry), :action => (menu[entry][subentry]['class'].nil? ? 'index' : subentry) } , :class => menu[entry][subentry]['class'] || 'folder_table') %></li>
+                  <li><%= link_to(I18n.t(subentry).humanize, { :controller => (menu[entry][subentry]['class'].nil? ? subentry : entry), :action => (menu[entry][subentry]['class'].nil? ? 'index' : subentry), :id => menu[entry][subentry]['id'] } , :class => menu[entry][subentry]['class'] || 'folder_table') %></li>
                 <% end %>
               </ul>
             </li>
@@ -62,9 +62,11 @@
       </div>
       <div class="change_language">
         <%=t "Change language" %> :
+        <% locale_links = [] %>
         <% LOCALES.each do |key, locale| %>
-          <%= link_to_unless(I18n.locale==key, key, :locale => key) %> |
+          <% locale_links << link_to_unless(I18n.locale==key, key, :locale => key) %>
         <% end %>
+        <%= locale_links.join(' | ')%>
       </div>
       <div id="styleswitcher">
         <ul>

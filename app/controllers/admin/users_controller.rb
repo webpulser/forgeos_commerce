@@ -23,6 +23,11 @@ class Admin::UsersController < Admin::BaseController
     end
   end
 
+  def new
+    @user = User.new(params[:user])
+    render :action => 'create'
+  end
+
   # Create an User
   # ==== Params
   # * <i>user</i> = Hash of User attributes
@@ -33,12 +38,11 @@ class Admin::UsersController < Admin::BaseController
     @user.build_address_invoice(params[:address_invoice]) unless @user.address_invoice
     @user.build_address_delivery(params[:address_delivery]) unless @user.address_delivery
     @user.build_avatar(params[:avatar]) unless @user.avatar
-    if request.post?
-      if @user.save
-        flash[:notice] = 'User successfully created'
-      else
-        flash[:error] = @user.errors
-      end
+    if @user.save
+      flash[:notice] = I18n.t('user_create_successfully')
+      redirect_to(edit_admin_user_path(@user))
+    else
+      flash[:error] = @user.errors
     end
   end
 
@@ -50,18 +54,21 @@ class Admin::UsersController < Admin::BaseController
   # * <i>address_delivery</i> = Hash of Railscommerce::AddressDelivery attributes
   def edit
     @user = User.find_by_id(params[:id])
+  end
+
+  def update
+    @user = User.find_by_id(params[:id])
     @user.build_address_invoice(params[:address_invoice]) unless @user.address_invoice
     @user.build_address_delivery(params[:address_delivery]) unless @user.address_delivery
-    if request.post?
-      upload_avatar 
-      if @user.update_attributes(params[:user]) &&
-        @user.address_invoice.update_attributes(params[:address_invoice]) &&
-        @user.address_delivery.update_attributes(params[:address_delivery]) &&
-        flash[:notice] = 'User successfully updated'
-      else
-        flash[:error] = @user.errors
-      end
+    upload_avatar 
+    if @user.update_attributes(params[:user]) &&
+      @user.address_invoice.update_attributes(params[:address_invoice]) &&
+      @user.address_delivery.update_attributes(params[:address_delivery]) &&
+      flash[:notice] = I18n.t('user_updated_successfully')
+    else
+      flash[:error] = @user.errors
     end
+    render :action => 'edit'
   end
 
   # Remotly Destroy an User
@@ -69,7 +76,7 @@ class Admin::UsersController < Admin::BaseController
   def destroy
     @user = User.find_by_id(params[:id])
     if @user.destroy
-      flash[:notice] = 'User successfully destroyed'
+      flash[:notice] = I18n.t('user_successfully_destroyed')
     else
       flash[:error] = @user.errors
     end
@@ -82,7 +89,7 @@ class Admin::UsersController < Admin::BaseController
   # of a table in CSV format
   def export_newsletter
     require 'fastercsv'
-    users = User.find(:all)
+    users = User.all
     stream_csv do |csv|
       csv << %w[name email]
       users.each do |u|

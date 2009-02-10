@@ -6,8 +6,12 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   
   helper :all # include all helpers, all the time
+  # See ActionController::RequestForgeryProtection for details
+  # Uncomment the :secret if you're not using the cookie session store
+  protect_from_forgery # :secret => '3ed30cea0de1b40821196f7ca4414b19'
 
   before_filter :set_locale, :set_currency
+
   # Change the currency
   def change_currency(currency_id)
     # TODO - move this method in an appriate class or module.
@@ -16,6 +20,8 @@ class ApplicationController < ActionController::Base
     session[:currency] = $currency.id
     redirect_to(:back)
   end
+
+private
 
   # Generate a cart and save this in session and instance <i>@cart</i>.
   #
@@ -68,7 +74,4 @@ class ApplicationController < ActionController::Base
     I18n.locale = session[:locale]
   end
 
-  # See ActionController::RequestForgeryProtection for details
-  # Uncomment the :secret if you're not using the cookie session store
-  protect_from_forgery # :secret => '3ed30cea0de1b40821196f7ca4414b19'
 end

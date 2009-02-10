@@ -15,38 +15,41 @@ class Admin::PicturesController < Admin::BaseController
     @picture = Picture.find_by_id(params[:id])
   end
 
+  def new
+    @picture = Picture.new(params[:picture])
+    render :action => 'create'
+  end
+
   # Create a Picture
   # and redirect to
   # his owner edit page or pictures/index page
   def create
     @picture = Picture.new(params[:picture])
-    if request.post?
-      if @picture.save
-        sortable_picture = @picture.sortable_pictures.new
-        flash[:notice] = 'The Picture was successfully created'
-        case params[:target]
-        when 'product'
-          sortable_picture.picturable = Product.find_by_id(params[:target_id])
-          sortable_picture.save
-          return redirect_to(:controller => 'products', :action => 'edit', :id => params[:target_id])
-        when 'attributes_group'
-          sortable_picture.picturable = AttributesGroup.find_by_id(params[:target_id])
-          sortable_picture.save
-         return redirect_to(:controller => 'attributes_groups', :action => 'edit', :id => params[:target_id])
-        when 'tattribute'
-          sortable_picture.picturable = Attribute.find_by_id(params[:target_id])
-          sortable_picture.save
-         return redirect_to(:controller => 'attributes_groups', :action => 'edit_attribute', :id => params[:target_id])
-        when 'category'
-          sortable_picture.picturable = Category.find_by_id(params[:target_id])
-          sortable_picture.save
-          return redirect_to(:controller => 'categories', :action => 'edit', :id => params[:target_id])
-        else
-          return redirect_to(:action => 'index')
-        end
+    if @picture.save
+      sortable_picture = @picture.sortable_pictures.new
+      flash[:notice] = 'The Picture was successfully created'
+      case params[:target]
+      when 'product'
+        sortable_picture.picturable = Product.find_by_id(params[:target_id])
+        sortable_picture.save
+        return redirect_to(:controller => 'products', :action => 'edit', :id => params[:target_id])
+      when 'attributes_group'
+        sortable_picture.picturable = AttributesGroup.find_by_id(params[:target_id])
+        sortable_picture.save
+       return redirect_to(:controller => 'attributes_groups', :action => 'edit', :id => params[:target_id])
+      when 'tattribute'
+        sortable_picture.picturable = Attribute.find_by_id(params[:target_id])
+        sortable_picture.save
+       return redirect_to(:controller => 'attributes_groups', :action => 'edit_attribute', :id => params[:target_id])
+      when 'category'
+        sortable_picture.picturable = Category.find_by_id(params[:target_id])
+        sortable_picture.save
+        return redirect_to(:controller => 'categories', :action => 'edit', :id => params[:target_id])
       else
-        flash[:error] = @picture.errors
+        return redirect_to(:action => 'index')
       end
+    else
+      flash[:error] = @picture.errors
     end
   end
 

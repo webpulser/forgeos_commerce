@@ -5,4 +5,4 @@
 <p><b>Total min :</b><%= @voucher.total_min %></p>
 <p><b>Date start :</b><%= @voucher.date_start %></p>
 <p><b>Date end :</b><%= @voucher.date_end %></p>
-<% @content_for_tools << link_to('list', { :contoller => 'admin/vouchers', :action => 'index' }, :class => 'house' )%>
+<% @content_for_tools << link_to('list', admin_vouchers_path, :class => 'house' )%>
