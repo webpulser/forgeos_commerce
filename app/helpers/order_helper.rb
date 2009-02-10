@@ -97,7 +97,7 @@ module OrderHelper
                           :url => { :action => 'update_shipping_method', :id => shipping_method_detail.id }
                         )
                       )
-            content += shipping_method_detail.name
+            content += shipping_method_detail.fullname
           content += '</span>'
           content += '<span class="order_shipping_method_price">'
             content += "#{shipping_method_detail.price} #{$currency.html}"
