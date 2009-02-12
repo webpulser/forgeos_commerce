@@ -1,11 +1,11 @@
 <%= display_standard_flashes %>
 <% form_for :shipping_method_detail, { :detail_id => shipping_method_detail.id, :id => shipping_method_detail.shipping_method.id } do |f| %>
-  <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
-  <p><b><%= f.label :price %> : </b><%= f.text_field :price %></p>
-  <p><b><%= f.label :weight_min %> : </b><%= f.text_field :weight_min %></p>
-  <p><b><%= f.label :weight_max %> : </b><%= f.text_field :weight_max %></p>
-  <%= f.submit 'Save' %>
+  <p><b><%= f.label :name, I18n.t('name').humanize %> : </b><%= f.text_field :name %></p>
+  <p><b><%= f.label :price, I18n.t('price', :count => 1).humanize %> : </b><%= f.text_field :price %></p>
+  <p><b><%= f.label :weight_min, I18n.t('weight_min').humanize %> : </b><%= f.text_field :weight_min %></p>
+  <p><b><%= f.label :weight_max, I18n.t('weight_max').humanize %> : </b><%= f.text_field :weight_max %></p>
+  <%= f.submit I18n.t('save').humanize %>
 <% end %>
-<% @content_for_tools << link_to('edit shipping method', 
+<% @content_for_tools << link_to(I18n.t('edit_shipping_method').humanize, 
     edit_admin_shipping_method_path(shipping_method_detail.shipping_method), :class => 'manage' )
 %>

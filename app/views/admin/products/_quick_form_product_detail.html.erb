@@ -1,9 +1,9 @@
 <% form_for :product_detail,
     :url => { :id => (product_detail.id || product_detail.product_parent.id) } do |f| %>
- <p><b><%= f.label :offer_month %> : </b><%= f.check_box :offer_month %></p>
- <p><b><%= f.label :on_first_page %> : </b><%= f.check_box :on_first_page %></p>
- <p><b><%= f.label :stock %> : </b><%= f.text_field :stock %></p>
- <p><b><%= f.label :price %> : </b><%= f.text_field :price %></p>
+ <p><b><%= f.label :offer_month, I18n.t('offer_month').humanize %> : </b><%= f.check_box :offer_month %></p>
+ <p><b><%= f.label :on_first_page, I18n.t('on_first_page').humanize %> : </b><%= f.check_box :on_first_page %></p>
+ <p><b><%= f.label :stock, I18n.t('stock', :count => 1).humanize %> : </b><%= f.text_field :stock %></p>
+ <p><b><%= f.label :price, I18n.t('price', :count => 1).humanize %> : </b><%= f.text_field :price %></p>
 
   <% product_detail.attributes_groups.each do |attr_group| %>
     <p><b><%= label_tag attr_group.name %> : </b>
@@ -18,5 +18,5 @@
     <% end %>
     </p>
   <% end %>
-  <%= f.submit 'save' %> 
+  <%= f.submit I18n.t('save').humanize %> 
 <% end %>

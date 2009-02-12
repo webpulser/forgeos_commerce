@@ -3,38 +3,38 @@
 <% form_remote_for :address, address, :url => { :controller => 'order', :action => 'create_address', :id => address } do |f| %>
   <%= f.select :type, [[I18n.t('Address delivery'), 'AddressDelivery'], [I18n.t('Address invoice'), 'AddressInvoice']] %><br />
   <div>
-    <label><%=t 'Civility' %></label>
-    <%= f.collection_select :civility_id, Civility.all, :id, :name, { :prompt => I18n.t('Please select') } %>
+    <label><%= I18n.t('civility').humanize %></label>
+    <%= f.collection_select :civility_id, Civility.all, :id, :name, { :prompt => I18n.t('please_select').humanize } %>
   </div>
   <div>
-    <label><%=t 'Name' %></label>
+    <label><%= I18n.t('lastname').humanize %></label>
     <%= f.text_field :name %>
   </div>
   <div>
-    <label><%=t 'Firstname' %></label>
+    <label><%= I18n.t('firstname').humanize %></label>
     <%= f.text_field :firstname %>    
   </div>
   <div>
-    <label><%=t 'Address' %></label>
+    <label><%= I18n.t('address').humanize %></label>
     <%= f.text_field :address %>
   </div>
   <div>
-    <label><%=t 'Address' %></label>
+    <label><%= I18n.t('address').humanize %></label>
     <%= f.text_field :address_2 %>
   </div>
   <div>
-    <label><%=t 'Zip code' %></label>
+    <label><%= I18n.t('zip_code').humanize %></label>
     <%= f.text_field :zip_code %>
   </div>
   <div>
-    <label><%=t 'City' %></label>
+    <label><%= I18n.t('city').humanize %></label>
     <%= f.text_field :city %>    
   </div>
   <div>
-    <label><%=t 'Country' %></label>
-    <%= f.collection_select :country_id, Country.all, :id, :printable_name, { :prompt => I18n.t('Please select') } %>    
+    <label><%= I18n.t('country').humanize %></label>
+    <%= f.collection_select :country_id, Country.all, :id, :printable_name, { :prompt => I18n.t('please_select').humanize } %>    
   </div>
 
-  <%= submit_tag I18n.t('Add address') %>
+  <%= submit_tag I18n.t('add_address').humanize %>
 <% end %>
-<%= link_to_remote(I18n.t('Back'), :url => { :controller => 'order', :action => 'back_addresses' }) %>
+<%= link_to_remote(I18n.t('back').humanize, :url => { :controller => 'order', :action => 'back_addresses' }) %>

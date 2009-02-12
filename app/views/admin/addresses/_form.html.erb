@@ -1,0 +1,11 @@
+<% civilities = Civility.all
+   countries = Country.all %>
+
+<p><b><%= f.label :name, I18n.t('lastname').humanize %> : </b><%= f.text_field :name %></p>
+<p><b><%= f.label :firstname, I18n.t('firstname').humanize %> : </b><%= f.text_field :firstname %></p>
+<p><b><%= f.label :civility_id, I18n.t('civility').humanize %> : </b><%= f.collection_select :civility_id, civilities, :id, :name, { :prompt => I18n.t('please_select').humanize } %></p>
+<p><b><%= f.label :address, I18n.t('address').humanize %> : </b><%= f.text_field :address %></p>
+<p><b><%= f.label :address_2, I18n.t('address').humanize %> : </b><%= f.text_field :address_2 %></p>
+<p><b><%= f.label :zip_code, I18n.t('zip_code').humanize %> : </b><%= f.text_field :zip_code %></p>
+<p><b><%= f.label :city, I18n.t('city').humanize %> : </b><%= f.text_field :city %></p>
+<p><b><%= f.label :country_id, I18n.t('country').humanize %> : </b><%= f.collection_select :country_id, countries, :id, :printable_name,{ :prompt => I18n.t('please_select').humanize } %></p>

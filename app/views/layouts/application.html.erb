@@ -11,13 +11,13 @@
       <div id='header'>
         <h1><%= link_to(I18n.t('project_name'), :root) %></h1>
         <div class="change_currency">
-          <%=t "Change currency" %> :
+          <%= I18n.t('change_currency').capitalize %> :
           <% Currency.find(:all).each do |currency| %>
             <%= link_to_unless($currency==currency, "#{currency.name} (#{currency.html})", :controller => 'home', :action => 'change_currency', :id => currency) %> |
           <% end %>
         </div>
         <div class="change_language">
-          <%=t "Change language" %> :
+          <%= I18n.t('change_language').capitalize %> :
           <% LOCALES.each do |key, locale| %>
             <%= link_to_unless(I18n.locale==key, key, :controller => 'home', :locale => key) %> |
           <% end %>
@@ -26,19 +26,19 @@
         <div class="logged_in">
           <% if logged_in? %>
             <%=t "Hello" %> <%= current_user.fullname %>
-            <%= link_to I18n.t('Disconnect'), session_path(:locale => params[:locale]), :method => :delete %>
+            <%= link_to I18n.t('disconnect').capitalize, session_path(:locale => params[:locale]), :method => :delete %>
           <% else %>
-            <%= link_to I18n.t('Log in'), new_session_path(:locale => params[:locale]) %>
-            <%= link_to I18n.t('Sign up'), new_user_path(:locale => params[:locale]) %>
+            <%= link_to I18n.t('log_in').capitalize, new_session_path(:locale => params[:locale]) %>
+            <%= link_to I18n.t('sign_in').capitalize, new_user_path(:locale => params[:locale]) %>
           <% end %>
         </div>
         <ul class='nav' id='nav'>
-          <li><%= link_to I18n.t("Home"), url_for(:controller => 'home', :action => 'index', :locale => params[:locale]) %></li>
+          <li><%= link_to I18n.t('home').capitalize, url_for(:controller => 'home', :action => 'index', :locale => params[:locale]) %></li>
           <li><%= link_to_catalog %></li>
           <li>
             <% form_tag :controller => 'catalog', :action => 'search' do %>
               <%= text_field_tag 'keywords' %>
-              <%= submit_tag I18n.t("Search") %>
+              <%= submit_tag I18n.t('search').capitalize %>
             <% end %>
           </li>
           <li id="rails_commerce_cart_link"><%= link_to_cart %></li>

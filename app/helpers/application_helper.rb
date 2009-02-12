@@ -7,12 +7,16 @@ module ApplicationHelper
   
   def step_order(index=1)
     content = '<div class="step_order">'
-      content += link_to image_tag("step1_" + ((index == 1) ? 'on' : 'go') + '.gif'), :controller => 'cart'
-      content += link_to image_tag("step2_" + ((index == 2) ? 'on' : 'go') + '.gif'), :controller => 'order', :action => 'informations'
-      content += link_to image_tag("step3_" + ((index == 3) ? 'on' : 'go') + '.gif'), :controller => 'order', :action => 'new'
-      content += link_to image_tag("step4_" + ((index == 4) ? 'on' : 'go') + '.gif'), :controller => 'order', :action => 'payment'
-      content += link_to image_tag("step5_" + ((index == 5) ? 'on' : 'go') + '.gif'), :controller => 'order', :action => 'confirmation'
+      content += link_to image_tag(step_order_image_filename(1,index)), :controller => 'cart'
+      content += link_to image_tag(step_order_image_filename(2,index)), :controller => 'order', :action => 'informations'
+      content += link_to image_tag(step_order_image_filename(3,index)), :controller => 'order', :action => 'new'
+      content += link_to image_tag(step_order_image_filename(4,index)), :controller => 'order', :action => 'payment'
+      content += link_to image_tag(step_order_image_filename(5,index)), :controller => 'order', :action => 'confirmation'
     content += '</div>'
+  end
+
+  def step_order_image_filename(step,index)
+    "step#{step}_#{((index == step) ? 'on' : 'go')}_#{I18n.locale}.gif"
   end
 
   def activerecord_error_list(errors)
@@ -23,7 +27,7 @@ module ApplicationHelper
     error_list
   end
 
-  def display_standard_flashes(message = "There were some problems with your submission:")
+  def display_standard_flashes(message = I18n.t("There were some problems with your submission:"))
     if !flash[:notice].nil? && !flash[:notice].blank?
       flash_to_display, level = flash[:notice], 'notice'
       flash[:notice] = nil

@@ -1,46 +1,38 @@
 en:
 # FrontOffice
-  Add to cart: 'Add to cart'
-  cart: 'cart'
-  Empty cart: 'Empty cart'
+  add_to_cart: 'add to cart'
+  update: 'update'
+  cart:
+    one: 'cart'
+    other: 'carts'
+  empty cart: 'empty cart'
   product:
     one : 'product'
     other: 'products'
-  Home: 'Home'
-  Change language: 'Change language'
-  Change currency: 'Change currency'
-  Search: 'Search'
-  Catalog: 'Catalog'
-  Sign up: "Sign up"
-  Log in: 'Log in'
-  Make order: 'Make order'
-  Hello: 'Hello'
-  Disconnect: 'Disconnect'
-  Add an address: 'Add an address'
-  Add address: 'Add address'
-  Back: 'Back'
+  home: 'home'
+  change_language: 'Change language'
+  change_currency: 'Change currency'
+  search: 'search'
+  catalog: 'catalog'
+  log_in: 'log in'
+  sign_in: 'sign in'
+  make_order: 'Make order'
+  disconnect: 'disconnect'
+  add_address: 'add an address'
   Address invoice: 'Address invoice'
   Address delivery: 'Address delivery'
-  Voucher: 'Voucher'
   We are sorry, but it is temporarily impossible to place order: 'We are sorry, but it is temporarily impossible to place order'
-  Civility: 'Civility'
-  Name: 'Name'
-  Lastname: 'Lastname'
-  Firstname: 'Firstname'
-  Address: 'Address'
-  Zip code: 'Zip code'
-  City: 'City'
-  Country: 'Country'
-  E-mail: 'E-mail'
-  Password: 'Password'
-  Confirm password: 'Confirm password'
-  Remember me: 'Remember me'
-  Please select: 'Please select'
+  remember_me: 'remember me'
   Thank you for your order: 'Thank you for your order'
-  remove this voucher: 'remove this voucher'
-  Add: 'Add'
-  free_payment: "It's free!!!"
-  no_product: 'No product'
+  remove_this_voucher: 'remove this voucher'
+  add: 'add'
+  free_payment: "it's free!!!"
+  no_product: 'no product'
+  total: 'total'
+  unit_price: 'unit price' 
+  tax:
+    one: 'tax'
+    other: 'taxes'
 
 # Admin
   create: 'create'
@@ -105,6 +97,113 @@ en:
   title: 'title'
   filename: 'file name'
   content_type: 'content type'
+  create_product: 'create a product'
+  edit_product: 'edit product'
+  category:
+    one: 'category'
+    other: 'categories'
+  reference: 'reference'
+  description: 'description'
+  rate_tax: 'taxe'
+  selling_date: 'selling date'
+  weight: 'weight'
+  keyword:
+    one: 'keyword'
+    other: 'keywords'
+  stock:
+    one: 'stock'
+    other : 'stocks'
+  attributes_group:
+    one: "attributes group"
+    other: "attributes groups"
+  select_all: 'select all'
+  unselect_all: 'unselect all'
+  product_detail:
+    one: 'product detail'
+    other: 'product details'
+  edit_product_parent: 'edit product parent'
+  edit_product_detail: 'edit product detail'
+  create_product_detail: 'create a product detail'
+  attribute:
+    one: 'attribute'
+    other: 'attributes'
+  price:
+    one: 'price'
+    other: 'prices'
+  offer_month: 'month offer ?'
+  on_first_page: 'on the first page ?'
+  action:
+    one: 'action'
+    other: 'actions'
+  quick_edit: 'quick edit'
+  confirm_delete_product: 'are you sure to delete this product ?'
+  status:
+    one: 'status'
+    other: 'statuses'
+  create_order: 'create an order'
+  edit_order: 'edit order'
+  confirm_delete_order: 'are you sure to delete this order ?'
+  confirm_delete_order_detail: 'are you sure to delete this order detail ?'
+  shipping_method:
+    one: "shipping method"
+    other: "shipping methods"
+  shipping_method_price:
+    one: "shipping method price"
+    other: "shipping method prices"
+  order:
+    one: 'order'
+    other: 'orders'
+  order_detail:
+    one: 'order detail'
+    other: 'order details'
+  create_order_detail: 'create an order detail'
+  edit_order_detail: "edit order detail"
+  quantity:
+    one: 'quantity'
+    other: 'quantities'
+  please_select: 'Veuillez choisir'
+  edit_shipping_method: "edit a shipping method"
+  create_shipping_method: "create a shipping method"
+  edit_shipping_method_detail: "edit shipping method detail"
+  create_shipping_method_detail: "create a shipping method detail"
+  confirm_delete_shipping_method: "are you sure to delete this shipping method ?"
+  confirm_delete_shipping_method_detail: "are you sure to delete this shipping method detail ?"
+  shipping_method_detail:
+    one: "shipping method detail"
+    other: "shipping method details"
+  weight_max: 'max weight'
+  weight_min: 'min weight'
+  voucher:
+    one: 'voucher'
+    other: 'vouchers'
+  create_voucher: 'create a voucher'
+  edit_voucher: 'edit voucher'
+  confirm_delete_voucher: 'are you sure to delete this voucher ?'
+  code:
+   one: 'code'
+   other: 'codes'
+  value:
+    one: 'value'
+    other:  'values'
+  total_min: 'total min'
+  date_start: 'start date'
+  date_end: 'end date'
+  create_category: 'create a category'
+  create_subcategory: 'create a sub category'
+  edit_category: 'edit category'
+  confirm_delete_category: 'are you sure to delete this category ?'
+  parent: 'parent'
+  attributes_group:
+    one: "attributes group"
+    other: "attributes groups"
+  create_attribute: "create an attribute"
+  edit_attribute: "edit attribute"
+  create_attributes_group: "create an attributes group"
+  edit_attributes_group: "edit attributes group"
+  dynamic: 'dynamic'
+  values_count: 'values count'
+  confirm_delete_attribute: "are you sure to delete this attribute ?"
+  confirm_delete_attributes_group: "are you sure to delete this attributes group ?"
 
 # Dates formats 
   date:

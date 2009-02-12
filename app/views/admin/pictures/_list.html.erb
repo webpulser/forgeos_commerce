@@ -1,3 +1,12 @@
+<table>
+  <thead>
+    <th><%= I18n.t('thumbnail', :count =>1).humanize %></th>
+    <th><%= I18n.t('content_type').humanize %></th>
+    <th><%= I18n.t('action', :count=>2).humanize %></th>
+  <thead>
+  <tbody>
+    <tr>
+      <td colspan="3">
 <ul id="picture_list" class="no-list-style-type">
 <% pictures.each do |picture| %>
   <li id="item_<%= picture.id %>">
@@ -5,7 +14,7 @@
       <td><%= image_tag picture.public_filename(:small) %></td>
       <td><%= picture.content_type %></td>
       <td>
-        <%= link_to I18n.t('show').humanize, admin_picture_path(picture) %>
+        <%= link_to I18n.t('show').humanize, admin_picture_path(picture) %> -
         <%= link_to_remote I18n.t('destroy').humanize, :url => admin_picture_path(picture, :target => target, :target_id => target_id), :update => 'list_pictures', :confirm => I18n.t(:confirm_delete_picture), :method => 'delete' %>
       </td>
     </tr></table>
@@ -16,3 +25,7 @@
   :url => { :controller => 'admin/pictures', :action => 'sort', :id => target_id, :target => target },
 :complete => visual_effect(:highlight, 'picture_list')
 %>
+      </td>
+    </tr>
+  </tbody>
+</table>

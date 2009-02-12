@@ -46,7 +46,7 @@ module CartHelper
     cart.carts_products.each do |carts_product|
       content += display_cart_by_carts_product(cart, carts_product, static)
     end
-    content += "<div class='cart_total'><b>#{RailsCommerce::OPTIONS[:text][:total]}: </b>"
+    content += "<div class='cart_total'><b>#{I18n.t('total').capitalize}: </b>"
       content += cart.total(true).to_s + " " + $currency.html
     content += "</div>"
   end
@@ -59,11 +59,11 @@ module CartHelper
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_cart(cart, static=false)
     content = "<div class='cart' id='rails_commerce_cart'>"
-      content += "<div class='cart_name'>#{RailsCommerce::OPTIONS[:text][:name]}</div>"
-      content += "<div class='cart_name'>#{RailsCommerce::OPTIONS[:text][:quantity]}</div>"
-      content += "<div class='cart_name'>#{RailsCommerce::OPTIONS[:text][:unit_price]}</div>"
-      content += "<div class='cart_name'>#{RailsCommerce::OPTIONS[:text][:tax]}</div>"
-      content += "<div class='cart_name'>#{RailsCommerce::OPTIONS[:text][:total]}</div>"
+      content += "<div class='cart_name'>#{I18n.t('name').capitalize}</div>"
+      content += "<div class='cart_name'>#{I18n.t('quantity', :count=>1).capitalize}</div>"
+      content += "<div class='cart_name'>#{I18n.t('unit_price').capitalize}</div>"
+      content += "<div class='cart_name'>#{I18n.t('tax', :count=>1).capitalize}</div>"
+      content += "<div class='cart_name'>#{I18n.t('total').capitalize}</div>"
       content += "<div id='rails_commerce_cart_products'>"
         content += display_cart_all_products_lines(cart, static)
       content += "</div>"
@@ -89,7 +89,7 @@ module CartHelper
   # * <tt>:url</tt> - url, <i>{:controller => 'cart', :action => 'empty'}</i> by default
   # * <tt>options</tt> the html options, <i>{:confirm => RailsCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart]}</i> by default
   def link_to_cart_empty(name=RailsCommerce::OPTIONS[:text][:empty_cart], url={:controller => 'cart', :action => 'empty'}, options={:confirm => I18n.t(RailsCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart])})
-    link_to I18n.t(name), {:controller => 'cart', :action => 'empty'}, options
+    link_to I18n.t(name).humanize, {:controller => 'cart', :action => 'empty'}, options
   end
 
   # Extension of <i>link_to(name, options = {}, html_options = nil)</i>
@@ -101,9 +101,9 @@ module CartHelper
   def link_to_cart(name='cart', url={:controller => 'cart'}, options=nil)
     cart = Cart.find_by_id(session[:cart_id])
     unless cart.nil?
-      name = "#{I18n.t(name)} (#{cart.size} #{I18n.t('product', :count => cart.size)})"
+      name = "#{I18n.t(name, :count=>1)} (#{cart.size} #{I18n.t('product', :count => cart.size)})"
     else
-      name = I18n.t(name)
+      name = I18n.t(name,:count=>1)
     end
     link_to name.capitalize, {:controller => 'cart'}, options
   end
@@ -115,7 +115,7 @@ module CartHelper
   # * <tt>:name</tt> - name, <i>RailsCommerce::OPTIONS[:text][:add_to_cart]</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'cart', :action => 'add_product'}</i> by default
   # * <tt>options</tt> the html options
-  def link_to_add_cart(product, name=RailsCommerce::OPTIONS[:text][:add_to_cart], url={:controller => 'cart', :action => 'add_product'}, options=nil)
-    link_to I18n.t(name), url.merge({:id => product.id}), options
+  def link_to_add_cart(product, name=I18n.t('add_to_cart'), url={:controller => 'cart', :action => 'add_product'}, options=nil)
+    link_to I18n.t(name).capitalize, url.merge({:id => product.id}), options
   end
 end

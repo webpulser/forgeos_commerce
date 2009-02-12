@@ -1,11 +1,11 @@
 <%= display_standard_flashes %>
-<%= link_to 'create a detail', { :controller => 'admin/orders', :action => 'create_detail', :id => order.id }, :class => 'add' %>
+<%= link_to_unless order.new_record?, I18n.t('create_order_detail').humanize, { :controller => 'admin/orders', :action => 'create_detail', :id => order.id }, :class => 'add' %>
 <table>
   <thead>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Quantity</th>
-    <th>Actions</th>
+    <th><%= I18n.t('name').humanize %></th>
+    <th><%= I18n.t('price', :count => 1).humanize %></th>
+    <th><%= I18n.t('quantity', :count => 1).humanize %></th>
+    <th><%= I18n.t('action', :count => 2).humanize %></th>
   </thead>
   <tbody>
     <% order.orders_details.each do |orders_detail| %>
@@ -14,8 +14,8 @@
         <td><%= orders_detail.price %></td>
         <td><%= orders_detail.quantity %></td>
         <td>
-          <%= link_to 'edit', { :controller => 'admin/orders', :action => 'edit_detail', :id => order.id, :detail_id => orders_detail.id } %>
-          <%= link_to_remote 'destroy', :url => { :controller => 'admin/orders', :action => 'destroy_detail', :id => order.id, :detail_id => orders_detail.id }, :update => 'orders_details', :confirm => 'Are you sure to destroy this order detail ?' %>
+          <%= link_to I18n.t('edit').humanize, { :controller => 'admin/orders', :action => 'edit_detail', :id => order.id, :detail_id => orders_detail.id } %> -
+          <%= link_to_remote I18n.t('destroy').humanize, :url => { :controller => 'admin/orders', :action => 'destroy_detail', :id => order.id, :detail_id => orders_detail.id }, :update => 'orders_details', :confirm => I18n.t('confirm_delete_order_detail').humanize %>
         </td>
       </tr>
     <% end %>

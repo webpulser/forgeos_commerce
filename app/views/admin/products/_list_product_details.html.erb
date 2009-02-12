@@ -1,16 +1,16 @@
 <div id="list">
   <%= display_standard_flashes %>
-  <%= link_to_unless product_parent.id.nil?, 'create a product detail',
+  <%= link_to_unless product_parent.new_record?, I18n.t('create_product_detail').humanize,
     { :action => 'create_product_detail', :id => product_parent.id },
     :class => 'add' %><br /><br />
   <table>
     <thead>
-      <th>Reference</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Price</th>
-      <th>Categories</th>
-      <th>Actions</th>
+      <th><%= I18n.t('reference').humanize %></th>
+      <th><%= I18n.t('name').humanize %></th>
+      <th><%= I18n.t('description').humanize %></th>
+      <th><%= I18n.t('price', :count => 1).humanize %></th>
+      <th><%= I18n.t('category', :count => 2).humanize %></th>
+      <th><%= I18n.t('action', :count => 2).humanize %></th>
     </thead>
     <tbody>
   <% product_parent.product_details.each do |product| %>
@@ -21,9 +21,9 @@
       <td><%=h product.price %></td>
       <td><%= product.categories.collect{ |cat| cat.name }.join(', ') %></td>
       <td>
-        <%= link_to 'edit', :action => 'edit_product_detail', :id => product.id %>
-        <%= link_to_remote 'destroy', :url => { :action => 'destroy_product_detail', :id => product.id }, :update => 'list' %>
-        <%= link_to_remote 'quick edit', :url => { :action => 'quick_edit_product_detail', :id => product.id }, :method => 'get' %>
+        <%= link_to I18n.t('edit').humanize, :action => 'edit_product_detail', :id => product.id %> -
+        <%= link_to_remote I18n.t('destroy').humanize, :url => { :action => 'destroy_product_detail', :id => product.id }, :update => 'list' %> -
+        <%= link_to_remote I18n.t('quick_edit').humanize, :url => { :action => 'quick_edit_product_detail', :id => product.id }, :method => 'get' %>
       </td>
     </tr>
   <% end %>

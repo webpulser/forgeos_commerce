@@ -117,7 +117,7 @@ module ProductHelper
     return content
   end
   
-  def link_to_catalog(name=I18n.t("Catalog"), url={:controller => 'catalog'}, options=nil)
+  def link_to_catalog(name=I18n.t('catalog').capitalize, url={:controller => 'catalog'}, options=nil)
     link_to name, :controller => 'catalog'
   end
   

@@ -1,12 +1,12 @@
 <% form_for :orders_detail, orders_detail, :url => { :id => orders_detail.order_id , :detail_id => orders_detail.id }, :html => { :id => 'detail_form' } do |f| %>
   <%= f.error_messages %>
-  <p><b>Product : </b><%= collection_select 'product', 'id', products, :id, :name, { :prompt => true}, :onchange => remote_function(:url => { :controller => 'admin/orders', :action => "get_product", :id => orders_detail.order_id }, :with => "'product_id=' + this.value", :update => 'detail_form' ) %></p>
+  <p><b><%= I18n.t('product', :count => 1).humanize %> : </b><%= collection_select 'product', 'id', products, :id, :name, { :prompt => I18n.t('please_select').humanize}, :onchange => remote_function(:url => { :controller => 'admin/orders', :action => "get_product", :id => orders_detail.order_id }, :with => "'product_id=' + this.value", :update => 'detail_form' ) %></p>
 
-  <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
-  <p><b><%= f.label :description %> : </b><%= f.text_field :description %></p>
-  <p><b><%= f.label :price %> : </b><%= f.text_field :price %></p>
-  <p><b><%= f.label :rate_tax %> : </b><%= f.text_field :rate_tax %></p>
-  <p><b><%= f.label :quantity %> : </b><%= f.text_field :quantity %></p>
-  <%= f.submit 'Save' %>
+  <p><b><%= f.label :name, I18n.t('name').humanize %> : </b><%= f.text_field :name %></p>
+  <p><b><%= f.label :description, I18n.t('description').humanize %> : </b><%= f.text_field :description %></p>
+  <p><b><%= f.label :price, I18n.t('price', :count => 1).humanize %> : </b><%= f.text_field :price %></p>
+  <p><b><%= f.label :rate_tax, I18n.t('rate_tax').humanize %> : </b><%= f.text_field :rate_tax %></p>
+  <p><b><%= f.label :quantity, I18n.t('quantity', :count => 1).humanize %> : </b><%= f.text_field :quantity %></p>
+  <%= f.submit I18n.t('save').humanize %>
 <% end %>
-<% @content_for_tools << link_to('edit order', edit_admin_order_path(orders_detail.order), :class => 'manage') %>
+<% @content_for_tools << link_to(I18n.t('edit_order').humanize, edit_admin_order_path(orders_detail.order), :class => 'manage') %>

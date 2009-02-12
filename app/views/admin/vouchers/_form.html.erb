@@ -1,12 +1,12 @@
 <%= display_standard_flashes %>
 <% form_for :voucher, voucher, :url => (voucher.id.nil? ? admin_vouchers_path : admin_voucher_path(voucher)),
   :html => { :method => (voucher.id.nil? ? :post : :put) } do |f| %>
-  <p><b><%= f.label :name %> : </b><%= f.text_field :name %></p>
-  <p><b><%= f.label :code %> : </b><%= f.text_field :code %></p>
-  <p><b><%= f.label :value %> : </b><%= f.text_field :value %></p>
-  <p><b><%= f.label :total_min %> : </b><%= f.text_field :total_min %></p>
-  <p><b><%= f.label :date_start %> : </b><%= f.date_select :date_start, :include_blank => true %></p>
-  <p><b><%= f.label :date_end %> : </b><%= f.date_select :date_end, :include_blank => true %></p>
-  <%= f.submit 'Save' %>
+  <p><b><%= f.label :name, I18n.t('name').humanize %> : </b><%= f.text_field :name %></p>
+  <p><b><%= f.label :code, I18n.t('code', :count => 1).humanize %> : </b><%= f.text_field :code %></p>
+  <p><b><%= f.label :value, I18n.t('value', :count=>1).humanize %> : </b><%= f.text_field :value %></p>
+  <p><b><%= f.label :total_min, I18n.t('total_min').humanize %> : </b><%= f.text_field :total_min %></p>
+  <p><b><%= f.label :date_start, I18n.t('date_start').humanize %> : </b><%= f.date_select :date_start, :include_blank => true %></p>
+  <p><b><%= f.label :date_end, I18n.t('date_end').humanize %> : </b><%= f.date_select :date_end, :include_blank => true %></p>
+  <%= f.submit I18n.t('save').humanize %>
 <% end %>
-<% @content_for_tools << link_to('list', admin_vouchers_path, :class => 'house' )%>
+<% @content_for_tools << link_to(I18n.t('list').humanize, admin_vouchers_path, :class => 'house' )%>

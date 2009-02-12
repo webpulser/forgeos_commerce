@@ -6,9 +6,9 @@
       <%= image_tag(picture.public_filename(:thumb)) if picture  %>
       <%= category.name %>
       <span style="display: none;" class="<%= level || 0 %>">
-      <%= link_to 'Edit', edit_admin_category_path(category) %> |
-      <%= link_to_remote 'Destroy', :url => admin_category_path(category), :method => :delete, :update => 'categories' %> |
-      <%= link_to 'Create sub category', new_admin_category_path(:category => { :parent_id => category.id }) %>
+      <%= link_to I18n.t('edit').humanize, edit_admin_category_path(category) %> -
+      <%= link_to_remote I18n.t('destroy').humanize, :url => admin_category_path(category), :method => :delete, :update => 'categories', :confirm => I18n.t('confirm_delete_category').humanize %> -
+      <%= link_to I18n.t('create_subcategory').humanize, new_admin_category_path(:category => { :parent_id => category.id }) %>
       </span>
       <% category.children.each do |child| %>
         <%= render :partial => 'list', :locals => { :categories => [child], :level => (level + 1) } %>

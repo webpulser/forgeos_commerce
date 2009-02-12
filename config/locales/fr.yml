@@ -1,46 +1,38 @@
 fr:
 # FrontOffice
-  Add to cart: 'Ajouter au panier'
-  cart: 'panier'
-  Empty cart: 'Vider le panier'
+  add_to_cart: 'ajouter au panier'
+  update: 'modifier'
+  cart:
+    one: 'panier'
+    other: 'paniers'
+  empty_cart: 'vider le panier'
   product:
-    one: 'produit'
-    other: 'produits'
-  Home: 'Acceuil'
-  Change language: 'Changer de langue'
-  Change currency: 'Changer de devise'
-  Search: 'Rechercher'
-  Catalog: 'Catalogue'
-  Sign up: "S'inscrire"
-  Log in: 'Se connecter'
-  Make order: 'Poursuivre la commande'
-  Hello: 'Bonjour'
-  Disconnect: 'Déconnection'
-  Add an address: 'Ajouter une adresse'
-  Add address: "Ajouter l'adresse"
-  Back: 'Retour'
-  Address invoice: 'Adresse de facturation'
-  Address delivery: 'Adresse de livraison'
-  Voucher: 'Code promo'
-  We are sorry, but it is temporarily impossible to place order: 'Nous sommes désolés, mais il est temporairement impossible de passer commande'
-  Civility: 'Civilité'
-  Name: 'Nom'
-  Lastname: 'Nom'
-  Firstname: 'Prénom'
-  Address: 'Adresse'
-  Zip code: 'Code postal'
-  City: 'Ville'
-  Country: 'Pays'
-  E-mail: 'Courriel'
-  Password: 'Mot de passe'
-  Confirm password: 'Confirmation du mot de passe'
-  Remember me: 'Mémoriser la connection'
-  Please select: 'Veuillez choisir une valeur'
-  Thank you for your order: 'Merci pour votre commande'
-  remove this voucher: 'annuler ce code promo'
-  Add: 'Ajouter'
-  free_payment: "Gratuit !!!"
-  no_product: 'Pas de produit'
+    one : 'product'
+    other: 'products'
+  home: 'Accueil'
+  change_language: 'changer de langue'
+  change_currency: 'changer de monnaie'
+  search: 'rechercher'
+  catalog: 'catalogue'
+  log_in: 'se connecter'
+  sign_in: "s'inscrire"
+  make_order: 'passer commande'
+  disconnect: 'se déconnecter'
+  add_address: 'ajouter une addresse'
+  Address invoice: 'adresse de facturation'
+  Address delivery: 'adresse de livraison'
+  We are sorry, but it is temporarily impossible to place order: 'Nous sommes désolés mais il est temporairement impossible de passer commande'
+  remember_me: 'rester connecté'
+  Thank you for your order: "Nous vous remmercions d'avoir passer commande chez nous"
+  remove_this_voucher: 'supprimer ce code promo'
+  add: 'ajouter'
+  free_payment: "gratuit !!!"
+  no_product: 'pas de produits'
+  total: 'total'
+  unit_price: "prix à l'unité"
+  tax:
+    one: 'taxe'
+    other: 'taxes'
 
 # Admin
   create: 'créer'
@@ -49,9 +41,9 @@ fr:
   orders: 'commandes'
   shipping_methods: "méthodes d'expédition"
   pictures: 'photos'
-  attributes_groups: "groupes d'attributes"
+  attributes_groups : "groupes d'attributs"
   attributes: 'attributs'
-  vouchers: 'code promos'
+  vouchers: 'codes promo'
   users: 'utilisateurs'
   categories: 'catégories'
   export_newsletter: 'export pour la newsletter'
@@ -105,6 +97,113 @@ fr:
   title: 'titre'
   filename: 'nom de fichier'
   content_type: 'type de contenu'
+  create_product: 'créer un produit'
+  edit_product: 'éditer le produit'
+  category:
+    one: 'categorie'
+    other: 'categories'
+  reference: 'référence'
+  description: 'description'
+  rate_tax: 'taxe'
+  selling_date: 'date de vente'
+  weight: 'poid'
+  keyword:
+    one: 'mot clé'
+    other: 'mots clés'
+  stock:
+    one: 'stock'
+    other : 'stocks'
+  attributes_group:
+    one: "group d'attributs"
+    other: "groupes d'attributs"
+  select_all: 'sélectionner tout'
+  unselect_all: 'désélectionner tout'
+  product_detail:
+    one: 'Détail de produit'
+    other: 'Détails de produit'
+  edit_product_parent: 'éditer le produit parent'
+  edit_product_detail: 'éditer le détail du produit'
+  create_product_detail: 'créer un détail de produit'
+  attribute:
+    one: 'attribut'
+    other: 'attributs'
+  price:
+    one: 'prix'
+    other: 'prix'
+  offer_month: 'offre du mois ?'
+  on_first_page: 'sur la première page ?'
+  action:
+    one: 'action'
+    other: 'actions'
+  quick_edit: 'édition rapide'
+  confirm_delete_product: 'êtes vous sure de vouloir supprimer ce produit ?'
+  status:
+    one: 'status'
+    other: 'status'
+  create_order: 'créer une commande'
+  edit_order: 'éditer la commande'
+  confirm_delete_order: 'êtes vous sure de vouloir supprimer cette commande ?'
+  confirm_delete_order_detail: 'êtes vous sure de vouloir supprimer ce détail de commande ?'
+  shipping_method:
+    one: "méthode d'expédition"
+    other: "méthodes d'expédition"
+  shipping_method_price:
+    one: "coût d'expédition"
+    other: "coûts d'expédition"
+  order:
+    one: 'commande'
+    other: 'commandes'
+  order_detail:
+    one: 'détail de commande'
+    other: 'détails de commande'
+  create_order_detail: 'créer un détail de commande'
+  edit_order_detail: "éditer le détails d'une commande"
+  quantity:
+    one: 'quantité'
+    other: 'quantités'
+  please_select: 'Veuillez choisir'
+  edit_shipping_method: "éditer une méthode d'expédition"
+  create_shipping_method: "créer une méthode d'expédition"
+  edit_shipping_method_detail: "éditer un détail d'expédition"
+  create_shipping_method_detail: "créer un détail d'expédition"
+  confirm_delete_shipping_method: "êtes vous sure de vouloir supprimer cette méthode d'expédition ?"
+  confirm_delete_shipping_method_detail: "êtes vous sure de vouloir supprimer ce détail d'expédition ?"
+  shipping_method_detail:
+    one: "Détail d'expédition"
+    other: "Détails d'expédition"
+  weight_max: 'poid maximal'
+  weight_min: 'poid minimal'
+  voucher:
+    one: 'code promo'
+    other: 'codes promo'
+  create_voucher: 'créer un code promo'
+  edit_voucher: 'éditer un code promo'
+  confirm_delete_voucher: 'êtes vous sure de vouloir supprimer ce code promo ?'
+  code:
+   one: 'code'
+   other: 'codes'
+  value:
+    one: 'valeur'
+    other:  'valeurs'
+  total_min: 'somme minimum'
+  date_start: 'date de début'
+  date_end: 'date de fin'
+  create_category: 'créer une catégorie'
+  create_subcategory: 'créer une catégorie sous-jacente'
+  edit_category: 'édtier la catégorie'
+  confirm_delete_category: 'êtes vous sure de vouloir supprimer cette catégorie ?'
+  parent: 'parent'
+  attributes_group:
+    one: "groupe d'attributs"
+    other: "groupes d'attributs"
+  create_attribute: "créer un attribut"
+  edit_attribute: "éditer l'attribut"
+  create_attributes_group: "créer un groupe d'attributs"
+  edit_attributes_group: "éditer le groupe d'attributs"
+  dynamic: 'dynamique'
+  values_count: 'nombre de valeurs'
+  confirm_delete_attribute: "êtes vous sure de vouloir supprimer cet attribut ?"
+  confirm_delete_attributes_group: "êtes vous sure de vouloir supprimer ce groupe d'attributs ?"
 
 # Date formats
   date:

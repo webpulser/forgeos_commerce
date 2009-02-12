@@ -86,7 +86,7 @@ class Admin::AttributesGroupsController < Admin::BaseController
   # * id = Attribute's id
   # * attribute = Hash of Attribute's attributes
   def edit_attribute
-    @attribute = Attribute.find_by_id(params[:attr_id])
+    @attribute = Attribute.find_by_id(params[:id])
     if request.post?
       if @attribute.update_attributes(params[:attribute])
         redirect_to(:action => 'edit', :id => @attribute.attributes_group.id)

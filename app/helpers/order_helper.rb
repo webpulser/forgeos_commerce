@@ -43,11 +43,11 @@ module OrderHelper
     content += '</div>'
     if order.voucher
       content += "<div class='order_voucher'>"
-        content += I18n.t('Voucher') + ': -'
+        content += I18n.t('voucher',:count=>1) + ': -'
         content += order.voucher.to_s + " " + $currency.html
       content += '</div>'
     end
-    content += "<div class='order_total'><b>#{OPTIONS[:text][:total]}: </b>"
+    content += "<div class='order_total'><b>#{RailsCommerce::OPTIONS[:text][:total]}: </b>"
     content += order.total(true).to_s + " " + $currency.html
     content += "</div>"
   end
@@ -65,11 +65,11 @@ module OrderHelper
         content += "<div class='order_name'>#{I18n.l order.created_at}</div>"
       content += "</div>"
       content += "<div class='clear'>&nbsp;</div>"
-      content += "<div class='order_name'>#{OPTIONS[:text][:name]}</div>"
-      content += "<div class='order_name'>#{OPTIONS[:text][:quantity]}</div>"
-      content += "<div class='order_name'>#{OPTIONS[:text][:unit_price]}</div>"
-      content += "<div class='order_name'>#{OPTIONS[:text][:tax]}</div>"
-      content += "<div class='order_name'>#{OPTIONS[:text][:total]}</div>"
+      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:name]}</div>"
+      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:quantity]}</div>"
+      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:unit_price]}</div>"
+      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:tax]}</div>"
+      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:total]}</div>"
       content += "<div class='orders_details'>"
         content += display_order_all_products_lines(order)
       content += "</div>"
@@ -117,7 +117,7 @@ module OrderHelper
     return unless address
     content = '<div class="display_address" id="order_address_' + address.class.to_s + '">'
       content += '<div class="order_address_update">'
-        content += link_to_remote('Update', :url => { :controller => 'order', :action => 'update_address', :id => address })
+        content += link_to_remote(I18n.t('update').capitalize, :url => { :controller => 'order', :action => 'update_address', :id => address })
       content += '</div>'
 
       if multiple_addresses
@@ -148,13 +148,13 @@ module OrderHelper
   def display_voucher
     content = '<div class="order_voucher" id="order_voucher">'
     if session[:order_voucher_id]
-      content += "#{I18n.t('Voucher')} : -" + Voucher.find(session[:order_voucher_id]).value.to_s + 
+      content += "#{I18n.t('voucher', :count=>1)} : -" + Voucher.find(session[:order_voucher_id]).value.to_s + 
       " #{$currency.html} " + link_to_remove_voucher
     else
-      content += "#{I18n.t('Voucher')} : " + 
+      content += "#{I18n.t('voucher', :count=>1)} : " + 
       text_field_tag(:voucher_code, "", :id => 'voucher_code') + " " + 
       button_to_function(
-        I18n.t('Add'), 
+        I18n.t('add').capitalize, 
         remote_function(
           :url => { :controller => 'order', :action => 'add_voucher' },
           :with => "'voucher_code='+$('#voucher_code').val()"
@@ -167,7 +167,7 @@ module OrderHelper
   # Display the order's total price
   def display_total
     content = '<div class="order_total">'
-      content += "TOTAL: <span id='order_total_price'></span> #{$currency.html}"
+      content += I18n.t('total').upcase + "<span id='order_total_price'></span> #{$currency.html}"
       content += javascript_tag remote_function(:url => { :controller => 'order', :action => 'update_total' })
     content += '</div>'
   end
@@ -179,6 +179,6 @@ module OrderHelper
   # * <tt>:url</tt> - url, <i>{:controller => 'order', :action => 'remove_voucher'}</i> by default
   # * <tt>options</tt> the html options
   def link_to_remove_voucher(name=RailsCommerce::OPTIONS[:text][:remove_voucher], url={:controller => 'order', :action => 'remove_voucher'}, options=nil)
-    link_to_remote I18n.t(name), :url => url, :html => options
+    link_to_remote I18n.t(name).capitalize, :url => url, :html => options
   end
 end

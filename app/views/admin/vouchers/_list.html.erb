@@ -1,10 +1,10 @@
 <%= display_standard_flashes %>
 <table>
   <thead>
-    <th>Name</th>
-    <th>Code</th>
-    <th>Value</th>
-    <th>Actions</th>
+    <th><%= I18n.t('name').humanize %></th>
+    <th><%= I18n.t('code', :count=>1).humanize %></th>
+    <th><%= I18n.t('value', :count=>1).humanize %></th>
+    <th><%= I18n.t('action', :count => 2).humanize %></th>
   </thead>
   <tbody>
     <% vouchers.each do |voucher| %>
@@ -13,12 +13,12 @@
         <td><%= voucher.code %></td>
         <td><%= voucher.value %></td>
         <td>
-          <%= link_to 'show', admin_voucher_path(voucher) %>
-          <%= link_to 'edit', edit_admin_voucher_path(voucher) %>
-          <%= link_to_remote 'destroy', :url => admin_voucher_path(voucher), :confirm => 'Are you sure to destroy this voucher ?', :update => 'vouchers', :method => 'delete' %>
+          <%= link_to I18n.t('show').humanize, admin_voucher_path(voucher) %> -
+          <%= link_to I18n.t('edit').humanize, edit_admin_voucher_path(voucher) %> -
+          <%= link_to_remote I18n.t('destroy').humanize, :url => admin_voucher_path(voucher), :confirm => I18n.t('confirm_delete_voucher').humanize, :update => 'vouchers', :method => 'delete' %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<% @content_for_tools << link_to('create a voucher', new_admin_voucher_path, :class => 'add') %>
+<% @content_for_tools << link_to(I18n.t('create_voucher').humanize, new_admin_voucher_path, :class => 'add') %>

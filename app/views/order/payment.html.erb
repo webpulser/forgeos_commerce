@@ -1,5 +1,3 @@
 <%= step_order(4) %>
 
-<center>
-  <%= link_to I18n.t("free_payment"), :action => 'create' %>
-</center>
+<center><%= link_to I18n.t('free_payment').humanize, :action => 'create' %></center>

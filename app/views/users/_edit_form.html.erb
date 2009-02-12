@@ -1,13 +1,12 @@
-<%#= error_messages_for :user %>
 <% form_for :user, current_user, :url => edit_user_url(current_user, :locale => params[:locale]) do |f| -%>
-  <p><label for="lastname"><%=t 'Last Name' %></label><br/>
+  <p><%= f.label :lastname, I18n.t('lastname').humanize %><br/>
   <%= f.text_field :lastname %></p>
 
-  <p><label for="fistname"><%=t 'First Name' %></label><br/>
+  <p><%= f.label :fistname, I18n.t('lastname').humanize %><br/>
   <%= f.text_field :firstname %></p>
 
-  <p><label for="email">Email</label><br/>
+  <p><%= f.label :email, I18n.t('email').humanize %><br/>
   <%= f.text_field :email %></p>
 
-  <p><%= submit_tag I18n.t('Sign up') %></p>
+  <p><%= submit_tag I18n.t('sign_in').humanize %></p>
 <% end -%>

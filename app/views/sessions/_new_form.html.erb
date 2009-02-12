@@ -1,12 +1,12 @@
 <% form_tag session_path do -%>
-  <p><label for="email"><%=t 'E-mail' %></label><br/>
+  <p><label for="email"><%= I18n.t('email').humanize %></label><br/>
   <%= text_field_tag 'email' %></p>
 
-  <p><label for="password"><%=t 'Password' %></label><br/>
+  <p><label for="password"><%= I18n.t('password').humanize %></label><br/>
   <%= password_field_tag 'password' %></p>
 
-  <p><label for="remember_me"><%=t 'Remember me' %> :</label>
+  <p><label for="remember_me"><%= I18n.t('remember_me').humanize %> :</label>
   <%= check_box_tag 'remember_me' %></p>
 
-  <p><%= submit_tag I18n.t('Log in') %></p>
+  <p><%= submit_tag I18n.t('log_in').humanize %></p>
 <% end -%>

@@ -1,8 +1,8 @@
-<h1>Voucher</h1>
-<p><b>Name :</b><%= @voucher.name %></p>
-<p><b>Code :</b><%= @voucher.code %></p>
-<p><b>Value :</b><%= @voucher.value %></p>
-<p><b>Total min :</b><%= @voucher.total_min %></p>
-<p><b>Date start :</b><%= @voucher.date_start %></p>
-<p><b>Date end :</b><%= @voucher.date_end %></p>
-<% @content_for_tools << link_to('list', admin_vouchers_path, :class => 'house' )%>
+<h1><%= I18n.t('voucher', :count=>1).humanize %></h1>
+<p><b><%= I18n.t('name').humanize %> :</b><%= @voucher.name %></p>
+<p><b><%= I18n.t('code', :count=>1).humanize %> :</b><%= @voucher.code %></p>
+<p><b><%= I18n.t('value', :count=>1).humanize %> :</b><%= @voucher.value %></p>
+<p><b><%= I18n.t('total_min').humanize %> :</b><%= @voucher.total_min %></p>
+<p><b><%= I18n.t('date_start').humanize %> :</b><%= @voucher.date_start %></p>
+<p><b><%= I18n.t('date_end').humanize %> :</b><%= @voucher.date_end %></p>
+<% @content_for_tools << link_to(I18n.t('list').humanize, admin_vouchers_path, :class => 'house' )%>
