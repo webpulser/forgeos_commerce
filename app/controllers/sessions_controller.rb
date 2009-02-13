@@ -13,16 +13,16 @@ class SessionsController < ApplicationController
       end
       if redirect = session[:redirect]
         session[:redirect] = nil
-        redirect_to redirect
+        redirect_to(redirect)
       else
         redirect_to_home
       end
-      flash[:notice] = "Logged in successfully"
+      flash[:notice] = I18n.t("log_in_ok").capitalize
     else
-      flash[:error] = "The email and/or password you entered is invalid."
+      flash[:error] = I18n.t('log_in_failed').capitalize
       if redirect = session[:redirect]
         session[:redirect] = nil
-        redirect_to redirect
+        redirect_to(redirect)
       else
         redirect_to :action => 'new'
       end
@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
     reset_session
-    flash[:notice] = "You have been logged out."
+    flash[:notice] = I18n.t('log_out_ok').capitalize
     redirect_to_home
   end
 end

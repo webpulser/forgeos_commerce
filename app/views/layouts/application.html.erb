@@ -25,7 +25,7 @@
         <div>&nbsp;</div>
         <div class="logged_in">
           <% if logged_in? %>
-            <%=t "Hello" %> <%= current_user.fullname %>
+            <%= I18n.t('hello').capitalize + '&nbsp;' + current_user.fullname %>
             <%= link_to I18n.t('disconnect').capitalize, session_path(:locale => params[:locale]), :method => :delete %>
           <% else %>
             <%= link_to I18n.t('log_in').capitalize, new_session_path(:locale => params[:locale]) %>

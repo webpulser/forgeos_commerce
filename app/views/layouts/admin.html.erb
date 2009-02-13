@@ -61,7 +61,7 @@
         <%=t 'template_by' %> <a href="http://www.bloganje.com">Bloganje</a>
       </div>
       <div class="change_language">
-        <%=t "Change language" %> :
+        <%= I18n.t('change_language').capitalize %> :
         <% locale_links = [] %>
         <% LOCALES.each do |key, locale| %>
           <% locale_links << link_to_unless(I18n.locale==key, key, :locale => key) %>

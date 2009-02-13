@@ -5,13 +5,13 @@ en:
   cart:
     one: 'cart'
     other: 'carts'
-  empty cart: 'empty cart'
+  empty_cart: 'empty cart'
   product:
     one : 'product'
     other: 'products'
   home: 'home'
-  change_language: 'Change language'
-  change_currency: 'Change currency'
+  change_language: 'change language'
+  change_currency: 'change currency'
   search: 'search'
   catalog: 'catalog'
   log_in: 'log in'
@@ -19,11 +19,11 @@ en:
   make_order: 'Make order'
   disconnect: 'disconnect'
   add_address: 'add an address'
-  Address invoice: 'Address invoice'
-  Address delivery: 'Address delivery'
-  We are sorry, but it is temporarily impossible to place order: 'We are sorry, but it is temporarily impossible to place order'
+  address_invoice: 'Address invoice'
+  address_delivery: 'Address delivery'
+  cant_not_place_order: 'We are sorry, but it is temporarily impossible to place order'
   remember_me: 'remember me'
-  Thank you for your order: 'Thank you for your order'
+  thank_you_to_place_order: 'Thank you for your order'
   remove_this_voucher: 'remove this voucher'
   add: 'add'
   free_payment: "it's free!!!"
@@ -33,6 +33,17 @@ en:
   tax:
     one: 'tax'
     other: 'taxes'
+  product_added: 'product successfully added'
+  your_cart_is_empty: 'your cart is empty'
+  cart_is_empty: 'the cart is empty'
+  product_has_been_removed: 'product successfully remove from cart'
+  account_update_ok: 'your account have been successfully created'
+  account_creation_ok: 'your account have been successfully created'
+  signup_completed: 'your subscrition have been completed'
+  log_in_ok: 'you are successfully connected'
+  log_in_failed: 'connexion failed, check your email and password' 
+  log_out_ok: 'you have been successfully disconnected'
+  hello: 'hello'
 
 # Admin
   create: 'create'
@@ -204,6 +215,9 @@ en:
   values_count: 'values count'
   confirm_delete_attribute: "are you sure to delete this attribute ?"
   confirm_delete_attributes_group: "are you sure to delete this attributes group ?"
+  pay: 'validate payment'
+  accept: 'validate order'
+  sent: 'validate shipping'
 
 # Dates formats 
   date:

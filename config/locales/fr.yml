@@ -19,11 +19,11 @@ fr:
   make_order: 'passer commande'
   disconnect: 'se déconnecter'
   add_address: 'ajouter une addresse'
-  Address invoice: 'adresse de facturation'
-  Address delivery: 'adresse de livraison'
-  We are sorry, but it is temporarily impossible to place order: 'Nous sommes désolés mais il est temporairement impossible de passer commande'
+  address_invoice: 'adresse de facturation'
+  address_delivery: 'adresse de livraison'
+  can_not_place_order: 'Nous sommes désolés mais il est temporairement impossible de passer commande'
   remember_me: 'rester connecté'
-  Thank you for your order: "Nous vous remmercions d'avoir passer commande chez nous"
+  thank_you_to_place_order: "Nous vous remmercions d'avoir passé commande chez nous"
   remove_this_voucher: 'supprimer ce code promo'
   add: 'ajouter'
   free_payment: "gratuit !!!"
@@ -33,6 +33,20 @@ fr:
   tax:
     one: 'taxe'
     other: 'taxes'
+  product_added: 'produit ajouté'
+  your_cart_is_empty: 'votre panier est vide'
+  cart_is_empty: 'le panier est vide'
+  product_has_been_removed: 'le produit a été enlevé du panier'
+  account_update_ok: 'votre compte a bien été mis à jour'
+  account_creation_ok: 'votre compte a bien été créé'
+  signup_completed: 'votre inscription est complétée'
+  log_in_ok: 'connection réussie'
+  log_in_failed: 'connection échouée, vérifiez votre email et votre mot de passe' 
+  log_out_ok: 'déconnection réussie'
+  hello: 'bienvenue'
+  confirm_empty_cart: 'êtes-vous sûr de vouloir vider le panier ?'
+  confirm_remove_product: 'êtes-vous sûr de vouloir enlever ce produit du panier ?'
+
 
 # Admin
   create: 'créer'
@@ -75,8 +89,8 @@ fr:
   city: 'ville'
   country: 'pays'
   zip_code: 'code postale'
-  confirm_delete_picture: 'êtes vous sure de vouloir supprimer cette photo ?'
-  confirm_delete_user: 'êtes vous sure de vouloir supprimer cet utilisateur ?'
+  confirm_delete_picture: 'êtes-vous sûr de vouloir supprimer cette photo ?'
+  confirm_delete_user: 'êtes-vous sûr de vouloir supprimer cet utilisateur ?'
   show: 'voir'
   back: 'retour'
   create_picture: 'créer une photo'
@@ -136,14 +150,14 @@ fr:
     one: 'action'
     other: 'actions'
   quick_edit: 'édition rapide'
-  confirm_delete_product: 'êtes vous sure de vouloir supprimer ce produit ?'
+  confirm_delete_product: 'êtes-vous sûr de vouloir supprimer ce produit ?'
   status:
     one: 'status'
     other: 'status'
   create_order: 'créer une commande'
   edit_order: 'éditer la commande'
-  confirm_delete_order: 'êtes vous sure de vouloir supprimer cette commande ?'
-  confirm_delete_order_detail: 'êtes vous sure de vouloir supprimer ce détail de commande ?'
+  confirm_delete_order: 'êtes-vous sûr de vouloir supprimer cette commande ?'
+  confirm_delete_order_detail: 'êtes-vous sûr de vouloir supprimer ce détail de commande ?'
   shipping_method:
     one: "méthode d'expédition"
     other: "méthodes d'expédition"
@@ -166,8 +180,8 @@ fr:
   create_shipping_method: "créer une méthode d'expédition"
   edit_shipping_method_detail: "éditer un détail d'expédition"
   create_shipping_method_detail: "créer un détail d'expédition"
-  confirm_delete_shipping_method: "êtes vous sure de vouloir supprimer cette méthode d'expédition ?"
-  confirm_delete_shipping_method_detail: "êtes vous sure de vouloir supprimer ce détail d'expédition ?"
+  confirm_delete_shipping_method: "êtes-vous sûr de vouloir supprimer cette méthode d'expédition ?"
+  confirm_delete_shipping_method_detail: "êtes-vous sûr de vouloir supprimer ce détail d'expédition ?"
   shipping_method_detail:
     one: "Détail d'expédition"
     other: "Détails d'expédition"
@@ -178,7 +192,7 @@ fr:
     other: 'codes promo'
   create_voucher: 'créer un code promo'
   edit_voucher: 'éditer un code promo'
-  confirm_delete_voucher: 'êtes vous sure de vouloir supprimer ce code promo ?'
+  confirm_delete_voucher: 'êtes-vous sûr de vouloir supprimer ce code promo ?'
   code:
    one: 'code'
    other: 'codes'
@@ -191,7 +205,7 @@ fr:
   create_category: 'créer une catégorie'
   create_subcategory: 'créer une catégorie sous-jacente'
   edit_category: 'édtier la catégorie'
-  confirm_delete_category: 'êtes vous sure de vouloir supprimer cette catégorie ?'
+  confirm_delete_category: 'êtes-vous sûr de vouloir supprimer cette catégorie ?'
   parent: 'parent'
   attributes_group:
     one: "groupe d'attributs"
@@ -202,8 +216,11 @@ fr:
   edit_attributes_group: "éditer le groupe d'attributs"
   dynamic: 'dynamique'
   values_count: 'nombre de valeurs'
-  confirm_delete_attribute: "êtes vous sure de vouloir supprimer cet attribut ?"
-  confirm_delete_attributes_group: "êtes vous sure de vouloir supprimer ce groupe d'attributs ?"
+  confirm_delete_attribute: "êtes-vous sûr de vouloir supprimer cet attribut ?"
+  confirm_delete_attributes_group: "êtes-vous sûr de vouloir supprimer ce groupe d'attributs ?"
+  pay: 'valider le paiement'
+  accept: 'valider la commande'
+  sent: "valider l'expédition"
 
 # Date formats
   date:

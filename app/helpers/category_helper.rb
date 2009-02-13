@@ -2,7 +2,7 @@
 module CategoryHelper
   # Display all tree struct <i>Category</i>
   def display_categories(categories=Category::roots)
-    content = "<div class='categories'>"
+    content = '<div class="categories">'
       categories.each do |category|
         content += display_category(category)
       end
@@ -13,13 +13,13 @@ module CategoryHelper
   def display_category(category)
     current_category = Category.find_by_id(params[:id])
 
-    content = "<div class='category'>"
+    content = '<div class="category">'
       (0..category.level).each do |i|
         content += "&nbsp;"
       end
       unless category.children.empty?
         content += link_to_function category.name, visual_effect('appear', "category_#{category.id}")
-        content += "<div id='category_#{category.id}' " + ((current_category && current_category.parent.eql?(category)) ? "" : "style='display: none;'") + ">"
+        content += '<div id="category_#{category.id}" ' + ((current_category && current_category.parent.eql?(category)) ? '' : 'style="display: none;"') + '>'
           category.children.each do |subcategory|
             content += display_category(subcategory)
           end

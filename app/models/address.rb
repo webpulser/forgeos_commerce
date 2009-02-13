@@ -27,4 +27,12 @@ class Address < ActiveRecord::Base
   def to_s
     "#{firstname} #{name} #{address} #{zip_code} #{city}"
   end
+  
+  def kind
+    read_attribute(:type)
+  end
+  
+  def kind=(kind)
+    write_attribute(:type, kind)
+  end 
 end

@@ -29,18 +29,18 @@ class ProductController < ApplicationController
     end
 
     # Mise à jour de la fiche produit
-              render(:update) do |page|
-                  page.replace_html("product_attributes_groups_#{@product.id}", display_product_page_attributes(@product, session["product_#{@product.id}"][:attributes]))
+    render(:update) do |page|
+      page.replace_html("product_attributes_groups_#{@product.id}", display_product_page_attributes(@product, session["product_#{@product.id}"][:attributes]))
       if @product_detail
-                  page.replace_html("display_product_page_price_#{@product.id}", "#{@product_detail.price_to_s(true)}")
+        page.replace_html("display_product_page_price_#{@product.id}", "#{@product_detail.price_to_s(true)}")
         page.replace_html("display_product_link_cart_#{@product.id.to_s}", link_to_add_cart(@product_detail))
-                page.replace_html("display_product_page_name_#{@product.id}", @product_detail.name)
-                page.visual_effect :highlight, "display_product_page_price_#{@product.id}"
-                  else
-                  page.replace_html("display_product_page_price_#{@product.id}", @product.price_to_s(true))
-        page.replace_html("display_product_link_cart_#{@product.id.to_s}", RailsCommerce::OPTIONS[:text][:add_to_cart])
-                  end
-              end
+        page.replace_html("display_product_page_name_#{@product.id}", @product_detail.name)
+        page.visual_effect :highlight, "display_product_page_price_#{@product.id}"
+      else
+        page.replace_html("display_product_page_price_#{@product.id}", @product.price_to_s(true))
+        page.replace_html("display_product_link_cart_#{@product.id.to_s}", I18n.t('add_to_cart').capitalize)
+      end
+    end
   end
 
 private

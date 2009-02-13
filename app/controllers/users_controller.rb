@@ -12,10 +12,10 @@ class UsersController < ApplicationController
   def update
     current_user.update_attributes(params[:user])
     if current_user.errors.empty?
-      flash[:notice] = "Your account has been updated"
+      flash[:notice] = I18n.t('account_update_ok').capitalize
       if redirect = session[:redirect]
         session[:redirect] = nil
-        redirect_to redirect
+        redirect_to(redirect)
       else
         redirect_to_home
       end
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       flash[:error] = current_user.errors
       if redirect = session[:redirect]
         session[:redirect] = nil
-        redirect_to redirect
+        redirect_to(redirect)
       else
         render :action => 'new'
       end
@@ -37,11 +37,11 @@ class UsersController < ApplicationController
     @user.save
     if @user.errors.empty?
       self.current_user = @user
-      flash[:notice] = "Thanks for signing up!"
+      flash[:notice] = I18n.t('account_creation_ok').capitalize
       get_cart
       if redirect = session[:redirect]
         session[:redirect] = nil
-        redirect_to redirect
+        redirect_to(redirect)
       else
         redirect_to_home
       end
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
       flash[:user] = @user
       if redirect = session[:redirect]
         session[:redirect] = nil
-        redirect_to redirect
+        redirect_to(redirect)
       else
         render :action => 'new'
       end
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
     self.current_user = params[:activation_code].blank? ? false : User.find_by_activation_code(params[:activation_code])
     if logged_in? && !current_user.active?
       current_user.activate
-      flash[:notice] = "Signup complete!"
+      flash[:notice] = I18n.t('signup_completed').capitalize
     end
     redirect_back_or_default('/')
   end

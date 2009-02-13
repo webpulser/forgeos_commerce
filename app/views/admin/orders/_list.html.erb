@@ -1,10 +1,10 @@
 <%= display_standard_flashes %>
 <table>
   <thead>
-    <th><%= I18n.t('status', :count => 1).humanize %></th>
-    <th><%= I18n.t('user', :count => 1).humanize %></th>
-    <th><%= I18n.t('shipping_method', :count => 2).humanize %></th>
-    <th><%= I18n.t('action', :count => 2).humanize %></th>
+    <th><%= I18n.t('status', :count => 1).capitalize %></th>
+    <th><%= I18n.t('user', :count => 1).capitalize %></th>
+    <th><%= I18n.t('shipping_method', :count => 2).capitalize %></th>
+    <th><%= I18n.t('action', :count => 2).capitalize %></th>
   </thead>
   <tbody>
     <% @orders.each do |order| %>
@@ -13,15 +13,15 @@
         <td><%= order.user.fullname %></td>
         <td><%= order.shipping_method %></td>
         <td>
-          <%= link_to_remote(I18n.t('pay').humanize, :url => { :controller => 'admin/orders', :action => 'pay', :id => order.id }, :update => 'orders' ) if order.current_state == :unpaid %>
-          <%= link_to_remote(I18n.t('accept').humanize, :url => { :controller => 'admin/orders', :action => 'accept', :id => order.id }, :update => 'orders' ) if order.current_state == :paid %>
-          <%= link_to_remote(I18n.t('sent').humanize, :url => { :controller => 'admin/orders', :action => 'sent', :id => order.id }, :update => 'orders' ) if order.current_state == :accepted %>
+          <%= link_to_remote(I18n.t('pay').capitalize, :url => { :controller => 'admin/orders', :action => 'pay', :id => order.id }, :update => 'orders' ) + ' -' if order.current_state == :unpaid %>
+          <%= link_to_remote(I18n.t('accept').capitalize, :url => { :controller => 'admin/orders', :action => 'accept', :id => order.id }, :update => 'orders' ) + ' -' if order.current_state == :paid %>
+          <%= link_to_remote(I18n.t('sent').capitalize, :url => { :controller => 'admin/orders', :action => 'sent', :id => order.id }, :update => 'orders' ) + ' -' if order.current_state == :accepted %>
 
-          <%= link_to I18n.t('edit').humanize, edit_admin_order_path(order) %> -
-          <%= link_to_remote(I18n.t('destroy').humanize, :url => admin_order_path(order), :method => 'delete',:update => 'orders', :confirm => I18n.t('confirm_delete_order').humanize) %>
+          <%= link_to I18n.t('edit').capitalize, edit_admin_order_path(order) %> -
+          <%= link_to_remote(I18n.t('destroy').capitalize, :url => admin_order_path(order), :method => 'delete',:update => 'orders', :confirm => I18n.t('confirm_delete_order').capitalize) %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<% @content_for_tools << link_to(I18n.t('create_order').humanize, new_admin_order_path, :class => 'add' )%>
+<% @content_for_tools << link_to(I18n.t('create_order').capitalize, new_admin_order_path, :class => 'add' )%>

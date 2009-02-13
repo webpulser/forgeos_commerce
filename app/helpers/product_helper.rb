@@ -84,7 +84,7 @@ module ProductHelper
           if product.product_details.size == 1
             content += link_to_add_cart(product.product_details.first)
           else
-            content += I18n.t(RailsCommerce::OPTIONS[:text][:add_to_cart])
+            content += I18n.t('add_to_cart')
           end
         content += '</div>'
       content += '</div>'

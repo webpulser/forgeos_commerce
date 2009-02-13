@@ -6,23 +6,23 @@ module OrderHelper
   # * <tt>carts_product</tt> a <i>CartsProduct</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_order_by_carts_product(order, orders_detail)
-    content = "<div class='order_product_line'>"
-      content += "<div class='order_name'>"
+    content = '<div class="order_product_line">'
+      content += '<div class="order_name">'
         content += orders_detail.name
-      content += "</div>"
-      content += "<div class='order_quantity'>"
+      content += '</div>'
+      content += '<div class="order_quantity">'
         content += orders_detail.quantity.to_s
-      content += "</div>"
-      content += "<div class='order_price'>"
+      content += '</div>'
+      content += '<div class="order_price">'
         content += orders_detail.price.to_s
-      content += "</div>"
-      content += "<div class='order_tax'>"
+      content += '</div>'
+      content += '<div class="order_tax">'
         content += orders_detail.total_tax.to_s
-      content += "</div>"
-      content += "<div class='order_price'>"
-        content += orders_detail.total(true).to_s + " " + $currency.html
-      content += "</div>"
-    content += "</div>"
+      content += '</div>'
+      content += '<div class="order_price">'
+        content += orders_detail.total(true).to_s + ' ' + $currency.html
+      content += '</div>'
+    content += '</div>'
   end
 
   # Display all products lines
@@ -35,21 +35,21 @@ module OrderHelper
     order.orders_details.each do |orders_detail|
       content += display_order_by_carts_product(order, orders_detail)
     end
-    content += "<div class='order_shipping_method'>"
+    content += '<div class="order_shipping_method">'
       content += order.shipping_method
     content += '</div>'
-    content += "<div class='order_shipping_method_price'>"
-      content += order.shipping_method_price.to_s + " " + $currency.html
+    content += '<div class="order_shipping_method_price">'
+      content += order.shipping_method_price.to_s + ' ' + $currency.html
     content += '</div>'
     if order.voucher
-      content += "<div class='order_voucher'>"
+      content += '<div class="order_voucher">'
         content += I18n.t('voucher',:count=>1) + ': -'
-        content += order.voucher.to_s + " " + $currency.html
+        content += order.voucher.to_s + ' ' + $currency.html
       content += '</div>'
     end
-    content += "<div class='order_total'><b>#{RailsCommerce::OPTIONS[:text][:total]}: </b>"
-    content += order.total(true).to_s + " " + $currency.html
-    content += "</div>"
+    content += '<div class="order_total"><b>'+ I18n.t('total').capitalize + ': </b>'
+    content += order.total(true).to_s + ' ' + $currency.html
+    content += '</div>'
   end
   
 
@@ -59,32 +59,32 @@ module OrderHelper
   # * <tt>order</tt> a <i>Cart</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_order(order)
-    content = "<div class='orders'>"
-      content += "<div class='order_detail'>"
-        content += "<div class='order_name'>#{order.id}</div>"
-        content += "<div class='order_name'>#{I18n.l order.created_at}</div>"
-      content += "</div>"
-      content += "<div class='clear'>&nbsp;</div>"
-      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:name]}</div>"
-      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:quantity]}</div>"
-      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:unit_price]}</div>"
-      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:tax]}</div>"
-      content += "<div class='order_name'>#{RailsCommerce::OPTIONS[:text][:total]}</div>"
-      content += "<div class='orders_details'>"
+    content = '<div class="orders">'
+      content += '<div class="order_detail">'
+        content += "<div class=\"order_name\">#{order.id}</div>"
+        content += "<div class=\"order_name\">#{I18n.l order.created_at}</div>"
+      content += '</div>'
+      content += '<div class="clear">&nbsp;</div>'
+      content += "<div class=\"order_name\">#{I18n.t('name').capitalize}</div>"
+      content += "<div class=\"order_name\">#{I18n.t('quantity').capitalize}</div>"
+      content += "<div class=\"order_name'>#{I18n.t('unit_price').capitalize}</div>"
+      content += "<div class=\"order_name'>#{I18n.t('tax', :count => 1)}</div>"
+      content += "<div class=\"order_name'>#{I18n.t('total').capitalize}</div>"
+      content += '<div class="orders_details">'
         content += display_order_all_products_lines(order)
-      content += "</div>"
-      content += "<div class='order_status'>"
+      content += '</div>'
+      content += '<div class="order_status">'
         content += I18n.t(order.status)
-      content += "</div>"
-    content += "</div>"
-    content += "<div class='clear'>&nbsp;</div>"
+      content += '</div>'
+    content += '</div>'
+    content += '<div class="clear">&nbsp;</div>'
   end
 
   # Display all shipping methods available for cart
   def display_shipping_methods(cart=current_user.cart)
     content = '<div class="order_shipping_methods">'
     if cart.get_shipping_method_details.empty?
-      content += I18n.t('We are sorry, but it is temporarily impossible to place order...')
+      content += I18n.t('can_not_place_order')
     else
       cart.get_shipping_method_details.each do |shipping_method_detail|
         content += '<div class="order_shipping_method">'
@@ -167,7 +167,7 @@ module OrderHelper
   # Display the order's total price
   def display_total
     content = '<div class="order_total">'
-      content += I18n.t('total').upcase + "<span id='order_total_price'></span> #{$currency.html}"
+      content += I18n.t('total').upcase + " : <span id='order_total_price'></span> #{$currency.html}"
       content += javascript_tag remote_function(:url => { :controller => 'order', :action => 'update_total' })
     content += '</div>'
   end
@@ -175,10 +175,10 @@ module OrderHelper
   # Extension of <i>link_to(name, options = {}, html_options = nil)</i> with a <i>Product</i> object of first parameter
   #
   # ==== Parameters
-  # * <tt>:name</tt> - name, <i>RailsCommerce::OPTIONS[:text][:remove_voucher]</i> by default
+  # * <tt>:name</tt> - name, <i>
   # * <tt>:url</tt> - url, <i>{:controller => 'order', :action => 'remove_voucher'}</i> by default
   # * <tt>options</tt> the html options
-  def link_to_remove_voucher(name=RailsCommerce::OPTIONS[:text][:remove_voucher], url={:controller => 'order', :action => 'remove_voucher'}, options=nil)
+  def link_to_remove_voucher(name='remove_voucher', url={:controller => 'order', :action => 'remove_voucher'}, options=nil)
     link_to_remote I18n.t(name).capitalize, :url => url, :html => options
   end
 end

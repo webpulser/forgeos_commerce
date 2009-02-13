@@ -16,8 +16,8 @@ class OrderController < ApplicationController
 
     # AddressInvoice and AddressDelivery is obligatory for valid an order
     if !@address_invoice || !@address_delivery
-      flash[:warning] = "Addresses"
-      redirect_to :action => 'new'
+      flash[:warning] = I18n.t('address', :count=>2).capitalize
+      redirect_to(:action => 'new')
       return false
     end
 
@@ -25,12 +25,12 @@ class OrderController < ApplicationController
     # ShippingMethodDetail is obligatory for valid an order
     @shipping_method_detail = ShippingMethodDetail.find_by_id(session[:order_shipping_method_detail_id])
     unless @shipping_method_detail
-      flash[:warning] = "Shipping method"
-      redirect_to :action => 'new'
+      flash[:warning] = I18n.t('shipping_method',:count=>1).capitalize
+      redirect_to(:action => 'new')
       return false
     end
 
-    redirect_to :action => 'payment' if action
+    redirect_to(:action => 'payment') if action
     return true
   end
 
@@ -49,7 +49,7 @@ class OrderController < ApplicationController
 
   # Final step, this action is accessible only if <i>session[:order_confirmation]</i> is true
   def confirmation
-    redirect_to :action => 'payment' unless session[:order_confirmation]
+    redirect_to(:action => 'payment') unless session[:order_confirmation]
     session[:order_confirmation] = nil
   end
 
@@ -84,31 +84,31 @@ class OrderController < ApplicationController
       @order.orders_details << OrdersDetail.create(:name => product.name, :description => product.description, :price => product.price(false, false), :rate_tax => product.rate_tax, :quantity => cart_product.quantity)
     end
     @cart.destroy
-    flash[:notice] = "Thank you !"
+    flash[:notice] = I18n.t('thank_you').capitalize
     session[:order_confirmation] = true
-    redirect_to :action => 'confirmation'
+    redirect_to(:action => 'confirmation')
   end
 
   def add_address
-              render(:update) do |page|
-              page.replace_html("order", :partial => 'form_address')
-              end
+    render(:update) do |page|
+      page.replace_html("order", :partial => 'form_address')
+    end
   end
 
   def update_total
-                total = current_user.cart.total(true)
-                if session[:order_shipping_method_detail_id]
-                  total += ShippingMethodDetail.find_by_id(session[:order_shipping_method_detail_id]).price
-          end
+    total = current_user.cart.total(true)
+    if session[:order_shipping_method_detail_id]
+      total += ShippingMethodDetail.find_by_id(session[:order_shipping_method_detail_id]).price
+    end
     if session[:order_voucher_id]
       total -= Voucher.find(session[:order_voucher_id]).value
     end
 
-              render(:update) do |page|
-              page.replace_html('order_voucher', display_voucher)
-              page.replace_html("order_total_price", total)
-              page.visual_effect :highlight, 'order_total_price'
-              end
+    render(:update) do |page|
+      page.replace_html('order_voucher', display_voucher)
+      page.replace_html("order_total_price", total)
+      page.visual_effect :highlight, 'order_total_price'
+    end
   end
 
   def add_voucher
@@ -116,52 +116,55 @@ class OrderController < ApplicationController
     session[:order_voucher_id] = voucher.id if voucher && voucher.is_valid?(current_user.cart.total(true))
     update_total
   end
+
   def remove_voucher
     session[:order_voucher_id] = nil
     update_total
   end
 
   def update_shipping_method
-                shipping_method_detail = ShippingMethodDetail.find_by_id(params[:id])
-                session[:order_shipping_method_detail_id] = shipping_method_detail.id if shipping_method_detail
+    shipping_method_detail = ShippingMethodDetail.find_by_id(params[:id])
+    session[:order_shipping_method_detail_id] = shipping_method_detail.id if shipping_method_detail
     update_total
   end
 
   # form to addresses
   def back_addresses
-              render(:update) do |page|
-              page.replace_html("order", :partial => 'new')
-              page.replace_html("order_address_#{@address.class.to_s}", display_address(@address)) if @address
-              end
+    render(:update) do |page|
+      page.replace_html("order", :partial => 'new')
+      page.replace_html("order_address_#{@address.class.to_s}", display_address(@address)) if @address
+    end
   end
+
   # Change select_tag address
   def change_address
     @address = Address.find_by_id(params[:id])
-              render(:update) do |page|
-              page.replace_html("order_address_#{@address.class.to_s}", display_address(@address))
-              page.visual_effect :highlight, "order_address_#{@address.class.to_s}"
-              end
+    render(:update) do |page|
+      page.replace_html("order_address_#{@address.class.to_s}", display_address(@address))
+      page.visual_effect :highlight, "order_address_#{@address.class.to_s}"
+    end
   end
+  
   # Go to form address
   def update_address
     @address = Address.find_by_id(params[:id])
-              render(:update) do |page|
-              page.replace_html("order", :partial => 'form_address', :locals => { :address, @address })
-              end
+    render(:update) do |page|
+      page.replace_html("order", :partial => 'form_address', :locals => { :address, @address })
+    end
   end
+  
   # Make or update Address and back to addresses
   def create_address
     @address = Address.find_by_id(params[:id])
     if @address
       @address.update_attributes(params[:address])
-      @address.update_attribute(:type, params[:address][:type])
     else
       if current_user.addresses.size == 0
         [AddressDelivery, AddressInvoice].each do |type|
           current_user.addresses << type.create(params[:address])
         end
       else
-        type = (params[:address][:type] == 'AddressDelivery') ? AddressDelivery : AddressInvoice
+        type = (params[:address][:kind] == 'AddressDelivery') ? AddressDelivery : AddressInvoice
         current_user.addresses << type.create(params[:address])
       end
     end
@@ -172,7 +175,7 @@ private
   def can_create_order?
     @cart = Cart.find_by_id(session[:cart_id])
     if @cart.nil? || @cart.carts_products.empty?
-      flash[:error] = "Your cart is empty"
+      flash[:error] = I18n.t('your_cart_is_empty').capitalize
       redirect_to_home
     end
   end
@@ -181,12 +184,12 @@ private
   def must_to_be_logged
     unless logged_in?
       if flash.nil?
-        flash[:warning] = "You must be connected"
+        flash[:warning] = I18n.t('you_must_be_connected').capitalize
       else
         flash[:error] = flash[:error]
         flash[:user] = flash[:user]
       end
-      redirect_to :action => 'informations'
+      redirect_to(:action => 'informations')
     end
   end
 end

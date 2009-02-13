@@ -1,40 +1,34 @@
 <% address = address || nil %>
 
 <% form_remote_for :address, address, :url => { :controller => 'order', :action => 'create_address', :id => address } do |f| %>
-  <%= f.select :type, [[I18n.t('Address delivery'), 'AddressDelivery'], [I18n.t('Address invoice'), 'AddressInvoice']] %><br />
-  <div>
-    <label><%= I18n.t('civility').humanize %></label>
-    <%= f.collection_select :civility_id, Civility.all, :id, :name, { :prompt => I18n.t('please_select').humanize } %>
-  </div>
-  <div>
-    <label><%= I18n.t('lastname').humanize %></label>
+  <p><b><label><%= I18n.t('type').capitalize %></label> : </b>
+    <%= f.select :kind, [[I18n.t('address_delivery').capitalize, 'AddressDelivery'], [I18n.t('address_invoice').capitalize, 'AddressInvoice']] %>
+  </p>
+  <p><b><label><%= I18n.t('civility').capitalize %></label> : </b>
+    <%= f.collection_select :civility_id, Civility.all, :id, :name, { :prompt => I18n.t('please_select').capitalize } %>
+  </p>
+  <p><b><label><%= I18n.t('lastname').capitalize %></label> : </b>
     <%= f.text_field :name %>
-  </div>
-  <div>
-    <label><%= I18n.t('firstname').humanize %></label>
+  </p>
+  <p><b><label><%= I18n.t('firstname').capitalize %></label> : </b>
     <%= f.text_field :firstname %>    
-  </div>
-  <div>
-    <label><%= I18n.t('address').humanize %></label>
+  </p>
+  <p><b><label><%= I18n.t('address').capitalize %></label> : </b>
     <%= f.text_field :address %>
-  </div>
-  <div>
-    <label><%= I18n.t('address').humanize %></label>
+  </p>
+  <p><b><label><%= I18n.t('address').capitalize %></label> : </b>
     <%= f.text_field :address_2 %>
-  </div>
-  <div>
-    <label><%= I18n.t('zip_code').humanize %></label>
+  </p>
+  <p><b><label><%= I18n.t('zip_code').capitalize %></label> : </b>
     <%= f.text_field :zip_code %>
-  </div>
-  <div>
-    <label><%= I18n.t('city').humanize %></label>
+  </p>
+  <p><b><label><%= I18n.t('city').capitalize %></label> : </b>
     <%= f.text_field :city %>    
-  </div>
-  <div>
-    <label><%= I18n.t('country').humanize %></label>
-    <%= f.collection_select :country_id, Country.all, :id, :printable_name, { :prompt => I18n.t('please_select').humanize } %>    
-  </div>
+  </p>
+  <p><b><label><%= I18n.t('country').capitalize %></label> : </b>
+    <%= f.collection_select :country_id, Country.all, :id, :printable_name, { :prompt => I18n.t('please_select').capitalize } %>    
+  </p>
 
-  <%= submit_tag I18n.t('add_address').humanize %>
+  <%= submit_tag I18n.t('save').capitalize %>
+  <%= link_to_remote(I18n.t('back').capitalize, :url => { :controller => 'order', :action => 'back_addresses' }) %>
 <% end %>
-<%= link_to_remote(I18n.t('back').humanize, :url => { :controller => 'order', :action => 'back_addresses' }) %>
