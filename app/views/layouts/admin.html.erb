@@ -3,8 +3,8 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title><%=t 'project_name' %> - Admin</title>
-  <%= stylesheet_link_tag 'admin/style', 'admin/theme'+(cookies[:theme]||'') %>
-  <%= javascript_include_tag(:defaults, :cache => true) %>
+  <%= stylesheet_link_tag 'admin/droppy', 'admin/style', 'admin/theme'+(cookies[:theme]||'') %>
+  <%= javascript_include_tag(:defaults, 'jquery.droppy', :cache => true) %>
   <!--[if IE]>
     <%= stylesheet_link_tag '/stylesheets/admin/ie-sucks' %>
   <![endif]-->
@@ -15,7 +15,7 @@
     <div id="header">
       <h2><%=t 'project_name' %> - Admin</h2>
       <div id="topmenu">
-        <ul>
+        <ul id="nav">
           <% 
             menu = { 'users' => { 'new' => { 'class' => 'add' }, 'export_newsletter' => { 'id' => 0, 'class' => 'report_seo' } },
             'products' => { 'attributes_groups' => { 'new' => { 'class' => 'add' } }, 'categories' =>{ 'new' => { 'class' => 'add' } }},
@@ -24,11 +24,20 @@
             }
           %>
 
-          <% %w[users pictures products orders shipping_methods vouchers categories attributes_groups].each do |adminview| %>
-          <li<% if (@controller.controller_name == adminview) %> class="current"<% end %>><%= link_to I18n.t(adminview).humanize, { :controller => adminview } %></li>
+            <% menu.each_key do |entry| %>
+              <li<% if (@controller.controller_name == entry || menu[entry].keys.include?(@controller.controller_name))%> class="current"<% end %>>
+              <%= link_to(I18n.t(entry).humanize, { :controller => entry } , :class => 'folder_table') %>
+              <ul>
+                <% menu[entry].each_key do |subentry| %>
+                  <li><%= link_to(I18n.t(subentry).humanize, { :controller => (menu[entry][subentry]['class'].nil? ? subentry : entry), :action => (menu[entry][subentry]['class'].nil? ? 'index' : subentry), :id => menu[entry][subentry]['id'] } , :class => menu[entry][subentry]['class'] || 'folder_table') %></li>
+                <% end %>
+              </ul>
+            </li>
           <% end %>
+
         </ul>
       </div>
+      <%= javascript_tag "$('#nav').droppy({speed: 300})" %>
     </div>
     <div id="top-panel">
       <div id="panel">

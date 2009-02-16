@@ -119,3 +119,5 @@ form#form #button1:hover, form#form #button2:hover {
 	background:#f3f9ff;
 	border-bottom:1px solid #d9e6f0;
 }
+
+#nav ul a.hover { background-color: #375b91 !important; }

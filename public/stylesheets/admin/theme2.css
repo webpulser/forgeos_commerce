@@ -29,7 +29,7 @@ select{
 	background:#e7eedc;
 }
 #topmenu a:hover{
-	color: #93ad7e;
+	color: #fff;
 }
 #topmenu .current a, #topmenu .current a:hover, #topmenu .current a:visited{
 	color:#93ad7e;
@@ -119,3 +119,5 @@ form#form #button1:hover, form#form #button2:hover {
 	background:#f0f7e8;
 	border-bottom:1px solid #e7eedf;
 }
+
+#nav ul a.hover { background-color: #93ad7e !important; }
