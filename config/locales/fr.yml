@@ -221,6 +221,7 @@ fr:
   pay: 'valider le paiement'
   accept: 'valider la commande'
   sent: "valider l'expédition"
+  confirm_delete_comment: "êtes-vous sûr de vouloir supprimer ce commentaire ?"
 
 # Date formats
   date:

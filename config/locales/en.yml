@@ -218,6 +218,7 @@ en:
   pay: 'validate payment'
   accept: 'validate order'
   sent: 'validate shipping'
+  confirm_delete_comment: "are you sure to delete this comment ?"
 
 # Dates formats 
   date:
