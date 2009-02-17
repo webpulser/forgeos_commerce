@@ -1,8 +1,10 @@
 # This Controller Manage Products and his association with
 # ProductDetail
+a
 class Admin::ProductsController < Admin::BaseController
   # List ProductParent
   def index
+    a
     @products = ProductParent.all
   end
 
