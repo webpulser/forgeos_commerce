@@ -3,7 +3,7 @@
   <head>
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
     <title><%=t 'project_name' %></title>
-    <%= stylesheet_link_tag session[:design] || 'design_aqtp', 'rails_commerce' %>
+    <%= stylesheet_link_tag session[:design] || 'design_aqtp', 'rails_commerce', 'ui.all' %>
     <%= javascript_include_tag(:defaults, :cache => true) %>
   </head>
   <body>
@@ -26,6 +26,7 @@
         <div class="logged_in">
           <% if logged_in? %>
             <%= I18n.t('hello').capitalize + '&nbsp;' + current_user.fullname %>
+            <%= link_to I18n.t('your_account').capitalize, user_path(current_user) %>
             <%= link_to I18n.t('disconnect').capitalize, session_path(:locale => params[:locale]), :method => :delete %>
           <% else %>
             <%= link_to I18n.t('log_in').capitalize, new_session_path(:locale => params[:locale]) %>
@@ -78,10 +79,10 @@
         </div>
         <div id='footer'>
           <p>
-            &copy; 2008 <%= link_to "Jonathan Démoutiez", "http://jonathan.demoutiez.net", :target => "_blank" %>
-            | Design : 
-            <%= link_to "Design_1", :controller => 'home', :action => 'change_design', :design => 'design_aqtp' %>
-            <%= link_to "Design_2", :controller => 'home', :action => 'change_design', :design => 'all' %>
+          &copy; 2009 <%= link_to 'Webpulser', 'http://www.webpulser.com', :popup => true %>
+            | Designs : 
+            <%= link_to 'Default', :controller => 'home', :action => 'change_design', :design => 'design_aqtp' %>
+            <%= link_to 'Minimalist', :controller => 'home', :action => 'change_design', :design => 'all' %>
           </p>
         </div>
       </div>

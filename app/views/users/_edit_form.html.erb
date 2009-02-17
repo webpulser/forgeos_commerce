@@ -1,12 +1,16 @@
-<% form_for :user, current_user, :url => edit_user_url(current_user, :locale => params[:locale]) do |f| -%>
-  <p><%= f.label :lastname, I18n.t('lastname').humanize %><br/>
-  <%= f.text_field :lastname %></p>
+<% form_for :user, current_user, :url => user_path(current_user), :html => { :method => :put } do |f| -%>
+  <p>
+    <b><%= f.label :lastname, I18n.t('lastname').capitalize %> : </b>
+    <%= f.text_field :lastname %>
+  </p>
+  <p>
+    <b><%= f.label :fistname, I18n.t('firstname').capitalize %> : </b>
+    <%= f.text_field :firstname %>
+  </p>
+  <p>
+    <b><%= f.label :email, I18n.t('email').capitalize %> : </b>
+    <%= f.text_field :email %>
+  </p>
 
-  <p><%= f.label :fistname, I18n.t('lastname').humanize %><br/>
-  <%= f.text_field :firstname %></p>
-
-  <p><%= f.label :email, I18n.t('email').humanize %><br/>
-  <%= f.text_field :email %></p>
-
-  <p><%= submit_tag I18n.t('sign_in').humanize %></p>
+  <%= submit_tag I18n.t('save').capitalize %>&nbsp;<%= link_to I18n.t('back').capitalize, user_path(current_user) %>
 <% end -%>

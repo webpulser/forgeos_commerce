@@ -1,0 +1,42 @@
+<% remote_form_for :address, address, :url => (address.new_record? ? addresses_path : address_path(address)), :html => { :method => (address.new_record? ? :post : :put)}, :update => 'addresses' do |f| %>
+  <% civilities = Civility.all
+     countries = Country.all %>
+
+  <p>
+    <b><label><%= I18n.t('type').capitalize %></label> : </b>
+    <%= f.select :kind, [[I18n.t('address_delivery').capitalize, 'AddressDelivery'], [I18n.t('address_invoice').capitalize, 'AddressInvoice']] %>
+  </p>
+  <p>
+    <b><%= f.label :name, I18n.t('lastname').capitalize %> : </b>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <b><%= f.label :firstname, I18n.t('firstname').capitalize %> : </b>
+    <%= f.text_field :firstname %>
+  </p>
+  <p>
+    <b><%= f.label :civility_id, I18n.t('civility').capitalize %> : </b>
+    <%= f.collection_select :civility_id, civilities, :id, :name, { :prompt => I18n.t('please_select').capitalize } %>
+  </p>
+  <p>
+    <b><%= f.label :address, I18n.t('address', :count=>1).capitalize %> : </b>
+    <%= f.text_field :address %>
+  </p>
+  <p>
+    <b><%= f.label :address_2, I18n.t('address', :count=>1).capitalize %> : </b>
+    <%= f.text_field :address_2 %>
+  </p>
+  <p>
+    <b><%= f.label :zip_code, I18n.t('zip_code').capitalize %> : </b>
+    <%= f.text_field :zip_code %>
+  </p>
+  <p>
+    <b><%= f.label :city, I18n.t('city').capitalize %> : </b>
+    <%= f.text_field :city %>
+  </p>
+  <p>
+    <b><%= f.label :country_id, I18n.t('country').capitalize %> : </b>
+    <%= f.collection_select :country_id, countries, :id, :printable_name,{ :prompt => I18n.t('please_select').capitalize } %>
+  </p>
+  <%= f.submit I18n.t('save').capitalize %>&nbsp;<%= link_to_remote I18n.t('back').capitalize, :url => addresses_path, :update => 'addresses', :method => :get %>
+<% end %>

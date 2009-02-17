@@ -2,6 +2,8 @@
 # add <tt>map.resources</tt>, here you would add just <tt>resources</tt>
 
 # resources :rails_commerces
+resources :addresses
+resources :orders
 
 namespace :admin do |admin|
   admin.resources :products

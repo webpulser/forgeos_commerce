@@ -1,0 +1,39 @@
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1"><%= I18n.t('my_informations').capitalize %></a></li>
+    <li><a href="#tabs-2"><%= I18n.t('order',:count=>current_user.orders.count).capitalize %></a></li>
+      <li><a href="#tabs-3"><%= I18n.t('address',:count=>2).capitalize %></a></li>
+  </ul>
+
+  <div id="tabs-1">
+    <div id="informations">
+    <%= link_to_remote I18n.t('edit').capitalize, :url => edit_user_path(current_user), :update => 'informations', :method => 'get' %>
+    <% if current_user.avatar %>
+      <p>
+        <b><%= I18n.t('avatar').capitalize %> : </b>
+        <%= image_tag(current_user.avatar.public_filename(:thumb)) %>
+      </p>
+    <% end %>
+    <p>
+      <b><%= I18n.t('name').capitalize %> : </b>
+      <%= current_user.fullname %>
+    </p>
+    <p>
+      <b><%= I18n.t('email').capitalize %> : </b>
+      <%= current_user.email %>
+    </p>
+    </div>
+  </div>
+  <div id="tabs-2">
+    <div id="orders">
+      <%= render :partial => 'orders/list', :locals => { :orders => current_user.orders } %>
+    </div>
+  </div>
+  <div id="tabs-3">
+      <%= link_to_remote I18n.t('add_address').capitalize, :url => new_address_path, :method => :get, :update => 'addresses' %>
+      <div id="addresses">
+        <%= render :partial => 'addresses/list', :locals => { :addresses => current_user.addresses } %> 
+      </div>
+  </div>
+</div>
+<%= javascript_tag "$('#tabs').tabs();" %>

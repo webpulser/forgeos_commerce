@@ -44,6 +44,15 @@ en:
   log_in_failed: 'connexion failed, check your email and password' 
   log_out_ok: 'you have been successfully disconnected'
   hello: 'hello'
+  confirm_empty_cart: 'are you sure to wipe your cart ?'
+  confirm_remove_product: 'are you sure to remove this product from your cart ?'
+  type: 'type'
+  your_account: 'your account'
+  cancel: 'cancel'
+  unaccessible_function: 'unaccessible function'
+  my_informations: 'my informations'
+  confirm_delete_address: 'are you sure to remove this address ?'
+  unpaid: 'unpaid'
 
 # Admin
   create: 'create'
@@ -82,7 +91,9 @@ en:
   save: 'save'
   list: 'list'
   civility: 'civility'
-  address: 'address'
+  address: 
+    one: 'address'
+    other:  'addresses'
   city: 'city'
   country: 'country'
   zip_code: 'zip code'

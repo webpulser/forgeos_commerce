@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
   # Return an HTML form for describing the edit user
   def edit
+    render :layout => false
   end
 
   # Update user
@@ -28,6 +29,7 @@ class UsersController < ApplicationController
         render :action => 'new'
       end
     end
+    render :layout => false
   end
 
   # Create user

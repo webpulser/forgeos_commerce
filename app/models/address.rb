@@ -18,14 +18,14 @@
 class Address < ActiveRecord::Base
   
   belongs_to :civility
-  belongs_to :use
+  belongs_to :user
   belongs_to :country
 
   validates_presence_of :country_id, :civility_id, :address, :city
 
   # Returns address in a string <i>#{firstname} #{name} #{address} #{zip_code} #{city}</i>
   def to_s
-    "#{firstname} #{name} #{address} #{zip_code} #{city}"
+    "#{civility.name} #{firstname} #{name} #{address} #{zip_code} #{city} #{country.name.upcase}"
   end
   
   def kind

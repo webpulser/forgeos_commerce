@@ -7,8 +7,8 @@ fr:
     other: 'paniers'
   empty_cart: 'vider le panier'
   product:
-    one : 'product'
-    other: 'products'
+    one : 'produit'
+    other: 'produits'
   home: 'Accueil'
   change_language: 'changer de langue'
   change_currency: 'changer de monnaie'
@@ -46,7 +46,13 @@ fr:
   hello: 'bienvenue'
   confirm_empty_cart: 'êtes-vous sûr de vouloir vider le panier ?'
   confirm_remove_product: 'êtes-vous sûr de vouloir enlever ce produit du panier ?'
-
+  type: 'type'
+  your_account: 'votre compte'
+  cancel: 'annuler'
+  unaccessible_function: 'fonction inaccessible'
+  my_informations: 'mes informations'
+  confirm_delete_address: 'êtes-vous sûr de vouloir supprimer cette adresse'
+  unpaid: 'en attente du payment'
 
 # Admin
   create: 'créer'
@@ -85,7 +91,9 @@ fr:
   save: 'sauvegarder'
   list: 'lister'
   civility: 'civilité'
-  address: 'adresse'
+  address: 
+    one: 'adresse'
+    other: 'adresses'
   city: 'ville'
   country: 'pays'
   zip_code: 'code postale'
