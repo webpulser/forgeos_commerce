@@ -1,10 +1,8 @@
 # This Controller Manage Products and his association with
 # ProductDetail
-a
 class Admin::ProductsController < Admin::BaseController
   # List ProductParent
   def index
-    a
     @products = ProductParent.all
   end
 
@@ -30,7 +28,6 @@ class Admin::ProductsController < Admin::BaseController
   end
   
   def edit
-    a
     @product_parent = Product.find_by_id(params[:id])
     return redirect_to(:action => 'edit_product_detail', :id => params[:id]) if @product_parent.is_a?(ProductDetail)
   end

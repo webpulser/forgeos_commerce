@@ -6,7 +6,6 @@ resources :addresses
 resources :orders
 
 namespace :admin do |admin|
-  admin.resources :products
   admin.resources :shipping_methods
   admin.resources :vouchers
   admin.resources :categories
@@ -14,6 +13,7 @@ namespace :admin do |admin|
   admin.resources :attributes_groups
   admin.resources :orders
   admin.resources :pictures
+  admin.resources :products
   admin.root :controller => 'users'
 end
 
