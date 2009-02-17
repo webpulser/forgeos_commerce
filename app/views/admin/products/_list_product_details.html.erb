@@ -17,7 +17,7 @@
     <tr>
       <td><%=h product.reference %></td>
       <td><%=h product.name %></td>
-      <td><%=h truncate(product.description,230) %></td>
+      <td><%=h truncate(product.description, :length => 230) %></td>
       <td><%=h product.price %></td>
       <td><%= product.categories.collect{ |cat| cat.name }.join(', ') %></td>
       <td>
