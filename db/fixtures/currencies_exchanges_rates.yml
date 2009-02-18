@@ -1,0 +1,9 @@
+--- 
+currencies_exchanges_rates_001: 
+  from_currency_id: <%= Fixtures.identify(:currencies_001) %>
+  rate: "1.2852"
+  to_currency_id: <%= Fixtures.identify(:currencies_002) %>
+currencies_exchanges_rates_002: 
+  from_currency_id: <%= Fixtures.identify(:currencies_002) %>
+  rate: "0.778089"
+  to_currency_id: <%= Fixtures.identify(:currencies_001) %>

@@ -1,0 +1,10 @@
+--- 
+namables_001: 
+  name: Mses
+  type: Civility
+namables_002: 
+  name: Miss
+  type: Civility
+namables_003: 
+  name: Mr
+  type: Civility
