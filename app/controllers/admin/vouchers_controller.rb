@@ -11,10 +11,10 @@ class Admin::VouchersController < Admin::BaseController
   def create
     @voucher = Voucher.new(params[:voucher])
     if @voucher.save
-      flash[:notice] = 'Voucher was successfully created'
+      flash[:notice] = I18n.t('voucher.create.success').capitalize
       redirect_to(:action => 'index')
     else
-      flash[:error] = @voucher.errors
+      flash[:error] = I18n.t('voucher.create.failed').capitalize
     end
   end
 
@@ -29,9 +29,9 @@ class Admin::VouchersController < Admin::BaseController
   def update
     @voucher = Voucher.find_by_id(params[:id])
     if @voucher.update_attributes(params[:voucher])
-      flash[:notice] = 'Voucher was successfully updated'
+      flash[:notice] = I18n.t('voucher.update.success').capitalize
     else
-      flash[:error] = @voucher.errors
+      flash[:error] = I18n.t('voucher.update.failed').capitalize
     end
     render :action => 'edit'
   end
@@ -39,9 +39,12 @@ class Admin::VouchersController < Admin::BaseController
   def destroy
     @voucher = Voucher.find_by_id(params[:id])
     if @voucher.destroy
-      index
-      render :partial => 'list', :locals => { :vouchers => @vouchers }
+      flash[:notice] = I18n.t('voucher.destroy.success').capitalize
+    else
+      flash[:error] = I18n.t('voucher.destroy.failed').capitalize
     end
+    index
+    render :partial => 'list', :locals => { :vouchers => @vouchers }
   end
 
 end

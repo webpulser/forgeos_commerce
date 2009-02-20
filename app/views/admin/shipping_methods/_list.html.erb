@@ -1,9 +1,9 @@
 <%= display_standard_flashes %>
 <table>
   <thead>
-    <th><%= I18n.t('name').humanize %></th>
-    <th><%= I18n.t('description').humanize %></th>
-    <th><%= I18n.t('action', :count=>2).humanize %></th>
+    <th><%= I18n.t('name').capitalize %></th>
+    <th><%= I18n.t('description').capitalize %></th>
+    <th><%= I18n.t('action', :count=>2).capitalize %></th>
   </thead>
   <tbody>
     <% shipping_methods.each do |shipping_method| %>
@@ -11,12 +11,12 @@
         <td><%= shipping_method.name %></td>
         <td><%= shipping_method.description %></td>
         <td>
-          <%= link_to I18n.t('show').humanize, admin_shipping_method_path(shipping_method) %> -
-          <%= link_to I18n.t('edit').humanize, edit_admin_shipping_method_path(shipping_method) %> -
-          <%= link_to_remote I18n.t('destroy').humanize, :url => admin_shipping_method_path(shipping_method), :update => 'shipping_methods', :method => 'delete', :confirm => I18n.t('confirm_delete_shipping_method').humanize %>
+          <%= link_to I18n.t('show').capitalize, admin_shipping_method_path(shipping_method) %> -
+          <%= link_to I18n.t('edit').capitalize, edit_admin_shipping_method_path(shipping_method) %> -
+          <%= link_to_remote I18n.t('destroy').capitalize, :url => admin_shipping_method_path(shipping_method), :update => 'shipping_methods', :method => 'delete', :confirm => I18n.t('shipping_method.destroy.confirm').capitalize %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<% @content_for_tools << link_to(I18n.t('create_shipping_method').humanize, new_admin_shipping_method_path, :class => 'add') %>
+<% @content_for_tools << link_to(I18n.t('shipping_method.create.action').capitalize, new_admin_shipping_method_path, :class => 'add') %>

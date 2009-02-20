@@ -6,16 +6,13 @@ en:
     one: 'cart'
     other: 'carts'
   empty_cart: 'empty cart'
-  product:
-    one : 'product'
-    other: 'products'
   home: 'home'
   change_language: 'change language'
   change_currency: 'change currency'
   search: 'search'
   catalog: 'catalog'
   log_in: 'log in'
-  sign_in: 'sign in'
+  sign_up: 'sign up'
   make_order: 'Make order'
   disconnect: 'disconnect'
   add_address: 'add an address'
@@ -68,22 +65,17 @@ en:
   categories: 'categories'
   export_newsletter: 'export for newsletter'
   template_by: 'Template by'
-  user:
-    one: 'user'
-    other: 'users'
   avatar: 'avatar'
   created_on: 'created on'
   active: 'active'
   actions: 'actions'
   edit: 'edit'
-  edit_user: 'edit user'
   destroy: 'destroy'
   activate: 'activate'
   name: 'name'
   email: 'email'
   _yes: 'yes'
   _no: 'no'
-  create_user: 'create an user'
   firstname: 'firstname'
   lastname: 'lastname'
   password: 'password'
@@ -97,12 +89,8 @@ en:
   city: 'city'
   country: 'country'
   zip_code: 'zip code'
-  confirm_delete_picture: 'are you sure to delete this picture ?'
-  confirm_delete_user: 'are you sure to delete this user ?'
   show: 'show'
   back: 'back'
-  create_picture: 'create a picture'
-  show_picture: 'show picture'
   thumbnail:
     one: 'thumbnail'
     other: 'thumbnails'
@@ -112,18 +100,9 @@ en:
   associated_element:
     one: 'associated element'
     other: 'associated elements'
-  picture:
-    one: 'picture'
-    other: 'pictures'
-  create_comment: 'create a comment'
   title: 'title'
   filename: 'file name'
   content_type: 'content type'
-  create_product: 'create a product'
-  edit_product: 'edit product'
-  category:
-    one: 'category'
-    other: 'categories'
   reference: 'reference'
   description: 'description'
   rate_tax: 'taxe'
@@ -135,20 +114,8 @@ en:
   stock:
     one: 'stock'
     other : 'stocks'
-  attributes_group:
-    one: "attributes group"
-    other: "attributes groups"
   select_all: 'select all'
   unselect_all: 'unselect all'
-  product_detail:
-    one: 'product detail'
-    other: 'product details'
-  edit_product_parent: 'edit product parent'
-  edit_product_detail: 'edit product detail'
-  create_product_detail: 'create a product detail'
-  attribute:
-    one: 'attribute'
-    other: 'attributes'
   price:
     one: 'price'
     other: 'prices'
@@ -158,49 +125,18 @@ en:
     one: 'action'
     other: 'actions'
   quick_edit: 'quick edit'
-  confirm_delete_product: 'are you sure to delete this product ?'
   status:
     one: 'status'
     other: 'statuses'
-  create_order: 'create an order'
-  edit_order: 'edit order'
-  confirm_delete_order: 'are you sure to delete this order ?'
-  confirm_delete_order_detail: 'are you sure to delete this order detail ?'
-  shipping_method:
-    one: "shipping method"
-    other: "shipping methods"
   shipping_method_price:
     one: "shipping method price"
     other: "shipping method prices"
-  order:
-    one: 'order'
-    other: 'orders'
-  order_detail:
-    one: 'order detail'
-    other: 'order details'
-  create_order_detail: 'create an order detail'
-  edit_order_detail: "edit order detail"
   quantity:
     one: 'quantity'
     other: 'quantities'
-  please_select: 'Veuillez choisir'
-  edit_shipping_method: "edit a shipping method"
-  create_shipping_method: "create a shipping method"
-  edit_shipping_method_detail: "edit shipping method detail"
-  create_shipping_method_detail: "create a shipping method detail"
-  confirm_delete_shipping_method: "are you sure to delete this shipping method ?"
-  confirm_delete_shipping_method_detail: "are you sure to delete this shipping method detail ?"
-  shipping_method_detail:
-    one: "shipping method detail"
-    other: "shipping method details"
+  please_select: 'please select'
   weight_max: 'max weight'
   weight_min: 'min weight'
-  voucher:
-    one: 'voucher'
-    other: 'vouchers'
-  create_voucher: 'create a voucher'
-  edit_voucher: 'edit voucher'
-  confirm_delete_voucher: 'are you sure to delete this voucher ?'
   code:
    one: 'code'
    other: 'codes'
@@ -210,26 +146,219 @@ en:
   total_min: 'total min'
   date_start: 'start date'
   date_end: 'end date'
-  create_category: 'create a category'
-  create_subcategory: 'create a sub category'
-  edit_category: 'edit category'
-  confirm_delete_category: 'are you sure to delete this category ?'
   parent: 'parent'
-  attributes_group:
-    one: "attributes group"
-    other: "attributes groups"
-  create_attribute: "create an attribute"
-  edit_attribute: "edit attribute"
-  create_attributes_group: "create an attributes group"
-  edit_attributes_group: "edit attributes group"
   dynamic: 'dynamic'
   values_count: 'values count'
-  confirm_delete_attribute: "are you sure to delete this attribute ?"
-  confirm_delete_attributes_group: "are you sure to delete this attributes group ?"
   pay: 'validate payment'
   accept: 'validate order'
   sent: 'validate shipping'
-  confirm_delete_comment: "are you sure to delete this comment ?"
+  attributes_group:
+    one: "attributes group"
+    other: "attributes groups"
+    create:
+      success: 'the attributes group was successfully created'
+      failed: 'a problem occured during the attributes group creation'
+      action: 'create an attributes group'
+    update:
+      success: 'the attributes group was successfully updated'
+      failed: 'a problem occured during the attributes group update'
+      action: 'edit attributes group'
+    destroy:
+      success: 'the attributes group was successfully destroyed'
+      failed: 'a problem occured during the attributes group destroy'
+      confirm: 'are you sure to delete this attributes group ?' 
+  attribute:
+    one: 'attribute'
+    other: 'attributes'
+    create:
+      success: 'the attribute was successfully created'
+      dynamic: "this group is dynamic, it can't have attributes"
+      failed: 'a problem occured during the attribute creation'
+      action: 'create an attribute'
+    update:
+      success: 'the attribute was successfully updated'
+      failed: 'a problem occured during the attribute update'
+      action: 'edit attribute'
+    destroy:
+      success: 'the attribute was successfully destroyed'
+      failed: 'a problem occured during the attribute destroy'
+      confirm: 'are you sure to delete this attribute ?'
+  category:
+    one: 'category'
+    other: 'categories'
+    create:
+      success: 'the category was successfully created'
+      failed: 'a problem occured during the category creation'
+      action: 'create a category'
+    update:
+      success: 'the category was successfully updated'
+      failed: 'a problem occured during the category update'
+      action: 'edit category'
+    destroy:
+      success: 'the category was successfully destroyed'
+      failed: 'a problem occured during the category destroy'
+      confirm: 'are you sure to delete this category ?' 
+    sub:
+      create:
+        action: 'create a subcategory'
+  order_detail:
+    one: 'order detail'
+    other: 'order details'
+    create:
+      success: 'the order detail was successfully created'
+      failed: 'a problem occured during the order detail creation'
+      action: 'create an order detail'
+    update:
+      success: 'the order detail was successfully updated'
+      failed: 'a problem occured during the order detail update'
+      action: 'edit order detail'
+    destroy:
+      success: 'the order detail was successfully destroyed'
+      failed: 'a problem occured during the order detail destroy'
+      confirm: 'are you sure to delete this order detail ?'
+  order:
+    one: 'order'
+    other: 'orders'
+    create:
+      success: 'the order was successfully created'
+      failed: 'a problem occured during the order creation'
+      action: 'create an order'
+    update:
+      success: 'the order was successfully updated'
+      failed: 'a problem occured during the order update'
+      action: 'edit order'
+    destroy:
+      success: 'the order was successfully destroyed'
+      failed: 'a problem occured during the order destroy'
+      confirm: 'are you sure to delete this order ?'
+    pay:
+      success: 'the order was successfully paid'
+    accept:
+      success: 'the order was successfully accepted'
+    send:
+      success: 'the order was successfully sent'
+  voucher:
+    one: 'voucher'
+    other: 'vouchers'
+    create:
+      success: 'the voucher was successfully created'
+      failed: 'a problem occured during the voucher creation'
+      action: 'create a voucher'
+    update:
+      success: 'the voucher was successfully updated'
+      failed: 'a problem occured during the voucher update'
+      action: 'edit voucher'
+    destroy:
+      success: 'the voucher was successfully destroyed'
+      failed: 'a problem occured during the voucher destroy'
+      confirm: 'are you sure to delete this voucher ?'
+  shipping_method:
+    one: "shipping method"
+    other: "shipping methods"
+    create:
+      success: 'the shipping method was successfully created'
+      failed: 'a problem occured during the shipping method creation'
+      action: 'create a shipping method'
+    update:
+      success: 'the shipping method was successfully updated'
+      failed: 'a problem occured during the shipping method update'
+      action: 'edit shipping method'
+    destroy:
+      success: 'the shipping method was successfully destroyed'
+      failed: 'a problem occured during the shipping method destroy'
+      confirm: 'are you sure to delete this shipping method ?'
+  shipping_method_detail:
+    one: "shipping method detail"
+    other: "shipping method details"
+    create:
+      success: 'the shipping method detail was successfully created'
+      failed: 'a problem occured during the shipping method detail creation'
+      action: 'create a shipping method detail'
+    update:
+      success: 'the shipping method detail was successfully updated'
+      failed: 'a problem occured during the shipping method detail update'
+      action: 'edit shipping method detail'
+    destroy:
+      success: 'the shipping method detail was successfully destroyed'
+      failed: 'a problem occured during the shipping method detail destroy'
+      confirm: 'are you sure to delete this shipping method detail ?'
+  user:
+    one: 'user'
+    other: 'users'
+    create:
+      success: 'the user was successfully created'
+      failed: 'a problem occured during the user creation'
+      action: 'create an user'
+    update:
+      success: 'the user was successfully updated'
+      failed: 'a problem occured during the user update'
+      action: 'edit user'
+    destroy:
+      success: 'the user was successfully destroyed'
+      failed: 'a problem occured during the user destroy'
+      confirm: 'are you sure to delete this user ?'
+  product:
+    one : 'product'
+    other: 'products'
+    create:
+      success: 'the product was successfully created'
+      failed: 'a problem occured during the product creation'
+      action: 'create a product'
+    update:
+      success: 'the product was successfully updated'
+      failed: 'a problem occured during the product update'
+      action: 'edit product'
+    destroy:
+      success: 'the product was successfully destroyed'
+      failed: 'a problem occured during the product destroy'
+      confirm: 'are you sure to delete this product ?'
+  product_detail:
+    one : 'product detail'
+    other: 'products details'
+    create:
+      success: 'the product detail was successfully created'
+      failed: 'a problem occured during the product detail creation'
+      action: 'create a product detail'
+    update:
+      success: 'the product detail was successfully updated'
+      failed: 'a problem occured during the product detail update'
+      action: 'edit product detail'
+    destroy:
+      success: 'the product detail was successfully destroyed'
+      failed: 'a problem occured during the product detail destroy'
+      confirm: 'are you sure to delete this product detail ?'
+  picture:
+    one: 'picture'
+    other: 'pictures'
+    show:
+      action: 'show picture'
+    create:
+      success: 'the picture was successfully created'
+      failed: 'a problem occured during the picture creation'
+      action: 'create a picture'
+    update:
+      success: 'the picture was successfully updated'
+      failed: 'a problem occured during the picture update'
+      action: 'edit picture'
+    destroy:
+      success: 'the picture was successfully destroyed'
+      failed: 'a problem occured during the picture destroy'
+      confirm: 'are you sure to delete this picture ?'
+  comment:
+    one: 'comment'
+    other: 'comments'
+    create:
+      success: 'the comment was successfully created'
+      failed: 'a problem occured during the comment creation'
+      action: 'create a comment'
+    update:
+      success: 'the comment was successfully updated'
+      failed: 'a problem occured during the comment update'
+      action: 'edit comment'
+    destroy:
+      success: 'the comment was successfully destroyed'
+      failed: 'a problem occured during the comment destroy'
+      confirm: 'are you sure to delete this comment ?'
 
 # Dates formats 
   date:

@@ -39,10 +39,10 @@ class Admin::UsersController < Admin::BaseController
     @user.build_address_delivery(params[:address_delivery]) unless @user.address_delivery
     @user.build_avatar(params[:avatar]) unless @user.avatar
     if @user.save
-      flash[:notice] = I18n.t('user_create_successfully')
+      flash[:notice] = I18n.t('user.create.success').capitalize
       redirect_to(edit_admin_user_path(@user))
     else
-      flash[:error] = @user.errors
+      flash[:error] = I18n.t('user.create.failed').capitalize
     end
   end
 
@@ -64,9 +64,9 @@ class Admin::UsersController < Admin::BaseController
     if @user.update_attributes(params[:user]) &&
       @user.address_invoice.update_attributes(params[:address_invoice]) &&
       @user.address_delivery.update_attributes(params[:address_delivery]) &&
-      flash[:notice] = I18n.t('user_updated_successfully')
+      flash[:notice] = I18n.t('user.update.success').capitalize
     else
-      flash[:error] = @user.errors
+      flash[:error] = I18n.t('user.update.failed').capitalize
     end
     render :action => 'edit'
   end
@@ -76,9 +76,9 @@ class Admin::UsersController < Admin::BaseController
   def destroy
     @user = User.find_by_id(params[:id])
     if @user.destroy
-      flash[:notice] = I18n.t('user_successfully_destroyed')
+      flash[:notice] = I18n.t('user.destroy.success').capitalize
     else
-      flash[:error] = @user.errors
+      flash[:error] = I18n.t('user.destroy.failed').capitalize
     end
     index
     render :partial => 'list', :locals => { :users => @users }

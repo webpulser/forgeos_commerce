@@ -13,7 +13,7 @@
     </td>
     <td>
       <%= link_to_remote I18n.t('edit').capitalize, :url => edit_address_path(address), :update => 'addresses', :method => 'get' %> -
-      <%= link_to_remote I18n.t('destroy').capitalize, :url => address_path(address), :confirm => I18n.t('confirm_delete_address').capitalize, :method => 'delete', :update => 'addresses' %>
+      <%= link_to_remote I18n.t('destroy').capitalize, :url => address_path(address), :confirm => I18n.t('address.destroy.confirm').capitalize, :method => 'delete', :update => 'addresses' %>
     </td>
   </tr>
 <% end %>

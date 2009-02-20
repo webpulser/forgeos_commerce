@@ -11,10 +11,10 @@ class Admin::ShippingMethodsController < Admin::BaseController
   def create
     @shipping_method = ShippingMethod.new(params[:shipping_method])
     if @shipping_method.save
-      flash[:notice] = 'Shipping Method was successfully created'
+      flash[:notice] = I18n.t('shipping_method.create.success').capitalize
       redirect_to(:action => 'index')
     else
-      flash[:error] = @shipping_method.errors
+      flash[:error] = I18n.t('shipping_method.create.failed').capitalize
     end
   end
 
@@ -29,9 +29,9 @@ class Admin::ShippingMethodsController < Admin::BaseController
   def update
     @shipping_method = ShippingMethod.find_by_id(params[:id])
     if @shipping_method.update_attributes(params[:shipping_method])
-      flash[:notice] = 'Shipping Method was successfully updated'
+      flash[:notice] = I18n.t('shipping_method.update.success').capitalize
     else
-      flash[:error] = @shipping_method.errors
+      flash[:error] = I18n.t('shipping_method.update.failed').capitalize
     end
     render :action => 'edit'
   end
@@ -49,10 +49,10 @@ class Admin::ShippingMethodsController < Admin::BaseController
     @shipping_method_detail = shipping_method.shipping_method_details.new(params[:shipping_method_detail])
     if request.post?
       if @shipping_method_detail.save
-        flash[:notice] = 'Shipping Method Detail was successfully created'
+        flash[:notice] = I18n.t('shipping_method_detail.create.success').capitalize
         redirect_to(:action => 'edit', :id => shipping_method.id)
       else
-        flash[:error] = @shipping_method_detail.errors
+        flash[:error] = I18n.t('shipping_method_detail.create.failed').capitalize
       end
     end
   end
@@ -62,9 +62,9 @@ class Admin::ShippingMethodsController < Admin::BaseController
     @shipping_method_detail = shipping_method.shipping_method_details.find_by_id(params[:detail_id])
     if request.post?
       if @shipping_method_detail.update_attributes(params[:shipping_method_detail])
-        flash[:notice] = 'Shipping Method Detail was successfully created'
+        flash[:notice] = I18n.t('shipping_method_detail.update.success').capitalize
       else
-        flash[:error] = @shipping_method_detail.errors
+        flash[:error] = I18n.t('shipping_method_detail.update.failed').capitalize
       end
     end
   end
@@ -73,7 +73,7 @@ class Admin::ShippingMethodsController < Admin::BaseController
     shipping_method = ShippingMethod.find_by_id(params[:id])
     @shipping_method_detail = shipping_method.shipping_method_details.find_by_id(params[:detail_id])
     if @shipping_method_detail.destroy
-      flash[:notice] = 'Shipping Method Detail was successfully destroyed'
+      flash[:notice] = I18n.t('shipping_method_detail.destroy.success').capitalize
       render :partial => 'list_details', :locals => { :shipping_method => shipping_method }
     end
   end

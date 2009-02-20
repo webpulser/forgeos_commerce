@@ -1,28 +1,28 @@
 <%= display_standard_flashes %>
 <fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('attribute', :count=>2).humanize,'static_attributes') %></legend>
+  <legend><%= link_to_effect_toggle(I18n.t('attribute', :count=>2).capitalize,'static_attributes') %></legend>
   <% form_for :product_parent, :url => (product_parent.new_record? ? admin_products_path : admin_product_path(product_parent)), :html => { :method => (product_parent.new_record? ? :post : :put), :id => 'static_attributes' } do |f| %>
     <p>
-    <b><%= f.label :categories, I18n.t('category', :count => 2).humanize %> : </b>
+    <b><%= f.label :categories, I18n.t('category', :count => 2).capitalize %> : </b>
       <%= select_tag "product_parent[category_ids][]",
         option_groups_from_collection_for_select(Category.all(:conditions => 'parent_id IS NULL'), :children, :name, :id, :name,
                                            product_parent.category_ids ),
         :multiple => true %>
     </p>
-    <p><b><%= f.label :reference, I18n.t('reference').humanize %> : </b><%= f.text_field :reference %></p>
-    <p><b><%= f.label :name, I18n.t('name').humanize %> : </b><%= f.text_field :name %></p>
-    <p><b><%= f.label :description, I18n.t('description').humanize %> : </b><%= f.text_area :description %></p>
-    <p><b><%= f.label :rate_tax, I18n.t('rate_tax').humanize %> : </b><%= f.text_field :rate_tax %></p>
-    <p><b><%= f.label :selling_date, I18n.t('selling_date').humanize %> : </b><%= f.date_select :selling_date %></p>
-    <p><b><%= f.label :weight, I18n.t('weight').humanize %> : </b><%= f.text_field :weight %></p>
-    <p><b><%= f.label :keywords, I18n.t('keyword', :count => 2).humanize %> : </b><%= f.text_field :keywords %></p>
-    <p><b><%= f.label :stock, I18n.t('stock', :count => 1).humanize %> : </b><%= f.text_field :stock %></p>
+    <p><b><%= f.label :reference, I18n.t('reference').capitalize %> : </b><%= f.text_field :reference %></p>
+    <p><b><%= f.label :name, I18n.t('name').capitalize %> : </b><%= f.text_field :name %></p>
+    <p><b><%= f.label :description, I18n.t('description').capitalize %> : </b><%= f.text_area :description %></p>
+    <p><b><%= f.label :rate_tax, I18n.t('rate_tax').capitalize %> : </b><%= f.text_field :rate_tax %></p>
+    <p><b><%= f.label :selling_date, I18n.t('selling_date').capitalize %> : </b><%= f.date_select :selling_date %></p>
+    <p><b><%= f.label :weight, I18n.t('weight').capitalize %> : </b><%= f.text_field :weight %></p>
+    <p><b><%= f.label :keywords, I18n.t('keyword', :count => 2).capitalize %> : </b><%= f.text_field :keywords %></p>
+    <p><b><%= f.label :stock, I18n.t('stock', :count => 1).capitalize %> : </b><%= f.text_field :stock %></p>
     
     <fieldset>
       <legend>
-        <%= link_to_effect_toggle(I18n.t('attributes_group', :count => 2).humanize,'attributes_groups') %> |
-        <%= link_to_function(I18n.t('select_all').humanize,"$('.attributes_groups').each(function(){this.checked=true;})") %> |
-        <%= link_to_function(I18n.t('unselect_all').humanize,"$('.attributes_groups').each(function(){this.checked=false;})") %>
+        <%= link_to_effect_toggle(I18n.t('attributes_group', :count => 2).capitalize,'attributes_groups') %> |
+        <%= link_to_function(I18n.t('select_all').capitalize,"$('.attributes_groups').each(function(){this.checked=true;})") %> |
+        <%= link_to_function(I18n.t('unselect_all').capitalize,"$('.attributes_groups').each(function(){this.checked=false;})") %>
       </legend>
       <p id="attributes_groups">
       <% AttributesGroup.all.each do |attr_group| %>
@@ -33,19 +33,19 @@
       <% end %>
       </p>
     </fieldset>
-    <center><%= f.submit I18n.t('save').humanize %><%= link_to I18n.t('back').humanize, :back %></center>
+    <center><%= f.submit I18n.t('save').capitalize %><%= link_to I18n.t('back').capitalize, :back %></center>
   <% end %>
 </fieldset>
 <fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('product_detail', :count => 2).humanize,'product_details') %></legend>
+  <legend><%= link_to_effect_toggle(I18n.t('product_detail', :count => 2).capitalize,'product_details') %></legend>
   <div id="product_details">
     <%= render :partial => 'list_product_details', :locals => { :product_parent => product_parent } %>
   </div>
 </fieldset>
 <fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('picture', :count => 2).humanize,'product_pictures') %></legend>
+  <legend><%= link_to_effect_toggle(I18n.t('picture', :count => 2).capitalize,'product_pictures') %></legend>
   <div id="product_pictures">
-    <%= link_to_unless product_parent.id.nil?, I18n.t('create_picture').humanize,
+    <%= link_to_unless product_parent.id.nil?, I18n.t('picture.create.action').capitalize,
         new_admin_picture_path(:target => 'product', :target_id => product_parent.id),
         :class => 'add' %>
     <div id="list_pictures">
@@ -55,4 +55,4 @@
 </fieldset>
 
 <%= hide_html_elements_onload %w[product_details static_attributes product_pictures] %>
-<% @content_for_tools << link_to(I18n.t('list').humanize, admin_products_path, :class => 'house' )%>
+<% @content_for_tools << link_to(I18n.t('list').capitalize, admin_products_path, :class => 'house' )%>

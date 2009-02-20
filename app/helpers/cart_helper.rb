@@ -89,7 +89,7 @@ module CartHelper
   # * <tt>:url</tt> - url, <i>{:controller => 'cart', :action => 'empty'}</i> by default
   # * <tt>options</tt> the html options, <i>{:confirm => RailsCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart]}</i> by default
   def link_to_cart_empty(name='empty_cart', url={:controller => 'cart', :action => 'empty'}, options={:confirm => I18n.t(:confirm_empty_cart)})
-    link_to I18n.t(name).humanize, {:controller => 'cart', :action => 'empty'}, options
+    link_to I18n.t(name).capitalize, {:controller => 'cart', :action => 'empty'}, options
   end
 
   # Extension of <i>link_to(name, options = {}, html_options = nil)</i>

@@ -20,7 +20,7 @@
     </td>
     <td>
       <%= link_to_remote I18n.t('show').capitalize, :url => order_path(order), :method => 'get', :update => 'orders' %> -
-      <%= link_to_remote I18n.t('destroy').capitalize, :url => order_path(order), :confirm => I18n.t('confirm_delete_order').capitalize, :method => 'delete', :update => 'orders' %>
+      <%= link_to_remote I18n.t('destroy').capitalize, :url => order_path(order), :confirm => I18n.t('order.destroy.confirm').capitalize, :method => 'delete', :update => 'orders' %>
     </td>
   </tr>
 <% end %>

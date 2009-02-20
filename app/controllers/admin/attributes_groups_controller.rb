@@ -17,10 +17,10 @@ class Admin::AttributesGroupsController < Admin::BaseController
   def create
     @attributes_group = AttributesGroup.new(params[:attributes_group])
     if @attributes_group.save
-      flash[:notice] = 'Attributes Group was successfully saved'
+      flash[:notice] = I18n.t('attributes_group.create.success').capitalize
       redirect_to(edit_admin_attributes_group_path(@attributes_group))
     else
-      flash[:error] = 'A problem occured during Attributes Group save'
+      flash[:error] = I18n.t('attributes_group.create.failed').capitalize
     end
   end
 
@@ -34,9 +34,9 @@ class Admin::AttributesGroupsController < Admin::BaseController
   def update
     @attributes_group = AttributesGroup.find_by_id(params[:id])
     if @attributes_group.update_attributes(params[:attributes_group])
-      flash[:notice] = 'Attributes Group was successfully saved'
+      flash[:notice] = I18n.t('attributes_group.update.success').capitalize
     else
-      flash[:error] = 'A problem occured during Attributes Group save'
+      flash[:error] = I18n.t('attributes_group.update.failed').capitalize
     end
     render :action => 'edit'
   end
@@ -47,9 +47,9 @@ class Admin::AttributesGroupsController < Admin::BaseController
   def destroy
     @group = AttributesGroup.find_by_id(params[:id])
     if @group.destroy
-      flash[:notice] = 'Attributes Group was successfully destroyed'
+      flash[:notice] = I18n.t('attributes_group.destroy.success').capitalize
     else
-      flash[:error] = 'A problem occured during Attributes Group destroy'
+      flash[:error] = I18n.t('attributes_group.destroy.failed').capitalize
     end
     return redirect_to(:action => 'index')
   end
@@ -69,7 +69,7 @@ class Admin::AttributesGroupsController < Admin::BaseController
     group = AttributesGroup.find_by_id(params[:id])
 
     if group.dynamic
-      flash[:warning] = "This group is dynamic, it can't have attributes"
+      flash[:warning] = I18n.t('attribute.create.dynamic').capitalize
       return redirect_to(:action => 'edit', :id => group.id)
     end
 

@@ -22,7 +22,7 @@ module ApplicationHelper
   def activerecord_error_list(errors)
     error_list = '<ul>'
     error_list << errors.collect do |e, m|
-      "<li>#{e.humanize unless e == "base"} #{m}</li>"
+      "<li>#{e.capitalize unless e == "base"} #{m}</li>"
     end.to_s << '</ul>'
     error_list
   end
@@ -46,7 +46,8 @@ module ApplicationHelper
     else
       return
     end
-    content_tag('div', flash_to_display, :class => "#{level}")
+
+    javascript_tag render(:update){ |page| page.replace_html('display_standard_flashes', content_tag('div', flash_to_display, :class => "#{level}")) }
   end
 
 end

@@ -1,16 +1,16 @@
 <fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('attribute', :count=>2).humanize, 'static_attributes') %></legend>
+  <legend><%= link_to_effect_toggle(I18n.t('attribute', :count=>2).capitalize, 'static_attributes') %></legend>
   <% form_for :attribute, :url => { :attr_id => attribute.id, :id => attribute.attributes_group.id }, :update => 'attributes',
     :html => { :id => 'static_attributes' } do |f| %>
-      <p><b><%= f.label :name, I18n.t('name').humanize %> : </b><%= f.text_field :name %></p>
-    <center><%= f.submit I18n.t('save').humanize %> <%= link_to I18n.t('back').humanize, :back %></center>
+      <p><b><%= f.label :name, I18n.t('name').capitalize %> : </b><%= f.text_field :name %></p>
+    <center><%= f.submit I18n.t('save').capitalize %> <%= link_to I18n.t('back').capitalize, :back %></center>
   <% end %>
 </fieldset>
 
 <fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('picture', :count=>2).humanize,'attributes_pictures') %></legend>
+  <legend><%= link_to_effect_toggle(I18n.t('picture', :count=>2).capitalize,'attributes_pictures') %></legend>
   <div id="attributes_pictures">
-    <%= link_to_unless attribute.id.nil?, I18n.t('create_picture').humanize, 
+    <%= link_to_unless attribute.id.nil?, I18n.t('picture.create.action').capitalize, 
       new_admin_picture_path(:target => 'tattribute', :target_id => attribute.id),
       :class => 'add'
     %>
@@ -21,4 +21,4 @@
 </fieldset>
 
 <%= hide_html_elements_onload %w[attributes_pictures static_attributes] %>
-<% @content_for_tools << link_to(I18n.t('edit_attributes_group').humanize, edit_admin_attributes_group_path(attribute.attributes_group), :class => 'manage') %>
+<% @content_for_tools << link_to(I18n.t('attributes_group.update.action').capitalize, edit_admin_attributes_group_path(attribute.attributes_group), :class => 'manage') %>

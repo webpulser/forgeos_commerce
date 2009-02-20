@@ -1,18 +1,18 @@
-<%= link_to_unless group.id.nil?, I18n.t('create_attribute').humanize,
+<%= link_to_unless group.id.nil?, I18n.t('attribute.create.action').capitalize,
   { :action => 'create_attribute', :id => group.id },
   :class => 'add' %>
 <table>
   <thead>
-    <th><%= I18n.t('value', :count=>1).humanize %></th>
-    <th><%= I18n.t('action', :count=>2).humanize %></th>
+    <th><%= I18n.t('value', :count=>1).capitalize %></th>
+    <th><%= I18n.t('action', :count=>2).capitalize %></th>
   </thead>
   <tbody>
     <% group.tattributes.each do |attribute| %>
       <tr>
         <td><%= attribute.name %></td>
         <td>
-          <%= link_to I18n.t('edit').humanize, :action => 'edit_attribute', :id => attribute.id %> -
-          <%= link_to_remote I18n.t('destroy').humanize, :url => { :action => 'destroy_attribute', :id => attribute.id }, :update => 'attributes', :confirm => I18n.t('confirm_delete_attribute').humanize %>
+          <%= link_to I18n.t('edit').capitalize, :action => 'edit_attribute', :id => attribute.id %> -
+          <%= link_to_remote I18n.t('destroy').capitalize, :url => { :action => 'destroy_attribute', :id => attribute.id }, :update => 'attributes', :confirm => I18n.t('attribute.destroy.confirm').capitalize %>
         </td>
       </tr>
     <% end %>

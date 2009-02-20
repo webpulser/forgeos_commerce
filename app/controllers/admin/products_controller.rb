@@ -17,13 +17,11 @@ class Admin::ProductsController < Admin::BaseController
   # * product_parent = Hash of ProductParent's attributes
   def create
     @product_parent = ProductParent.new(params[:product_parent])
-    if request.post?
-      if @product_parent.save
-        flash[:notice] = 'The Product was successfully created'
-        redirect_to edit_admin_product_path(:id => @product_parent.id)
-      else
-        flash[:error] = @product_parent.errors
-      end
+    if @product_parent.save
+      flash[:notice] = I18n.t('product.create.success').capitalize
+      redirect_to edit_admin_product_path(:id => @product_parent.id)
+    else
+      flash[:error] = I18n.t('product.create.failed').capitalize
     end
   end
   
@@ -38,9 +36,9 @@ class Admin::ProductsController < Admin::BaseController
   def update
     @product_parent = Product.find_by_id(params[:id])
     if @product_parent.update_attributes(params[:product_parent])
-      flash[:notice] = 'The Product was successfully saved'
+      flash[:notice] = I18n.t('product.update.success').capitalize
     else
-      flash[:error] = @product_parent.errors
+      flash[:error] = I18n.t('product.update.failed').capitalize
     end
     render :action => 'edit'
   end
@@ -51,9 +49,9 @@ class Admin::ProductsController < Admin::BaseController
   def destroy
     @product_parent = ProductParent.find_by_id(params[:id])
     if @product_parent.destroy
-      flash[:notice] = 'The Product was successfully destroyed'
+      flash[:notice] = I18n.t('product.destroy.success').capitalize
     else
-      flash[:error] = @product_parent.errors
+      flash[:error] = I18n.t('product.destroy.failed').capitalize
     end
     return redirect_to(:action => 'index' )
   end
@@ -67,9 +65,9 @@ class Admin::ProductsController < Admin::BaseController
     @product_detail = product_parent.product_details.new(params[:product_detail])
     if request.post?
       if @product_detail.save && manage_dynamic_attributes
-        flash[:notice] = 'The ProductDetail was successfully created'
+        flash[:notice] = I18n.t('product_detail.create.success').capitalize
       else
-        flash[:error] = @product_detail.errors
+        flash[:error] = I18n.t('product_detail.create.failed').capitalize
       end
     end
   end
@@ -83,9 +81,9 @@ class Admin::ProductsController < Admin::BaseController
     return redirect_to(:action => 'edit', :id => params[:id]) if @product_detail.is_a?(ProductParent)
     if request.post?
       if @product_detail.update_attributes(params[:product_detail]) && manage_dynamic_attributes
-        flash[:notice] = 'The ProductDetail was successfully saved'
+        flash[:notice] = I18n.t('product_detail.update.success').capitalize
       else
-        flash[:error] = @product_detail.errors
+        flash[:error] = I18n.t('product_detail.update.failed').capitalize
       end
     end
   end
@@ -98,12 +96,12 @@ class Admin::ProductsController < Admin::BaseController
     @product_detail = ProductDetail.find_by_id(params[:id])
     if request.post?
       if @product_detail.update_attributes(params[:product_detail]) && manage_dynamic_attributes
-        flash[:notice] = 'The ProductDetail was successfully saved'
+        flash[:notice] = I18n.t('product_detail.update.success').capitalize
         #return (render :update do |page|
         #  page.replace_html 'list', :partial => 'list_product_details', :locals => { :product_parent => @product_detail.product_parent }
         #end)
       else
-        flash[:error] = @product_detail.errors
+        flash[:error] = I18n.t('product_detail.update.failed').capitalize
       end
     end
     if request.xhr?
@@ -122,9 +120,9 @@ class Admin::ProductsController < Admin::BaseController
     @product_detail = ProductDetail.find_by_id(params[:id])
     product_parent = @product_detail.product_parent
     if @product_detail.destroy
-      flash[:notice] = 'The ProductDetail was successfully destroyed'
+      flash[:notice] = I18n.t('product_detail.destroy.success').capitalize
     else
-      flash[:error] = @product_detail.errors
+      flash[:error] = I18n.t('product_detail.destroy.failed').capitalize
     end
     return render(:partial => 'list_product_details', :locals => { :product_parent => product_parent })
   end

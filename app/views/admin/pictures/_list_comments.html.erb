@@ -3,7 +3,7 @@
 <% comments.each do |comment| %>
   <li>
     from <%= comment.user.name if comment.user %> the <%= comment.created_at.to_s(:long) %> | <%= comment.comment %>
-    <%= link_to_remote(I18n.t('destroy').humanize, :url => {:action => 'destroy_comment', :comment_id => comment.id, :id => comment.commentable_id }, :update => 'comments', :confirm => I18n.t(:confirm_delete_comment).humanize) %>
+    <%= link_to_remote(I18n.t('destroy').capitalize, :url => {:action => 'destroy_comment', :comment_id => comment.id, :id => comment.commentable_id }, :update => 'comments', :confirm => I18n.t('comment.destroy.confirm').capitalize) %>
   </li>
 <% end %>
 </ul>

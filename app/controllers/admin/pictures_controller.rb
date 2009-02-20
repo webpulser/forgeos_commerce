@@ -27,7 +27,7 @@ class Admin::PicturesController < Admin::BaseController
     @picture = Picture.new(params[:picture])
     if @picture.save
       sortable_picture = @picture.sortable_pictures.new
-      flash[:notice] = 'The Picture was successfully created'
+      flash[:notice] = I18n.t('picture.create.success').capitalize
       case params[:target]
       when 'product'
         sortable_picture.picturable = Product.find_by_id(params[:target_id])
@@ -49,7 +49,7 @@ class Admin::PicturesController < Admin::BaseController
         return redirect_to(:action => 'index')
       end
     else
-      flash[:error] = @picture.errors
+      flash[:error] = I18n.t('picture.create.failed').capitalize
     end
   end
 
@@ -77,10 +77,10 @@ class Admin::PicturesController < Admin::BaseController
     end
 
     if @success
-      flash[:notice] = 'The Picture was successfully destroyed'
+      flash[:notice] = I18n.t('picture.destroy.success').capitalize
       return render(:partial => 'list', :locals => { :pictures => @pictures, :target => params[:target], :target_id => params[:target_id] })
     else
-      flash[:error] = @picture.errors
+      flash[:error] = I18n.t('picture.destroy.failed').capitalize
     end
   end
 
@@ -91,10 +91,10 @@ class Admin::PicturesController < Admin::BaseController
     @comment = @picture.comments.new(params[:comment])
     if request.post?
       if @comment.save
-        flash[:notice] = 'The Comment was successfully created'
+        flash[:notice] = I18n.t('comment.create.success').capitalize
         return render(:partial => 'list_comments', :locals => { :comments => @picture.comments })
       else
-        flash[:error] = @comment.errors
+        flash[:error] = I18n.t('comment.create.failed').capitalize
       end
     end
     render(:partial => 'form_comment', :locals => { :comment => @comment })
@@ -106,10 +106,10 @@ class Admin::PicturesController < Admin::BaseController
     @picture = Picture.find_by_id(params[:id])
     @comment = @picture.comments.find_by_id(params[:comment_id])
     if @comment.destroy
-      flash[:notice] = 'The Comment was successfully destroyed'
+      flash[:notice] = I18n.t('comment.destroy.success').capitalize
       return render(:partial => 'list_comments', :locals => { :comments => @picture.comments })
     else
-      flash[:error] = @comment.errors
+      flash[:error] = I18n.t('comment.destroy.failed').capitalize
     end
   end
 

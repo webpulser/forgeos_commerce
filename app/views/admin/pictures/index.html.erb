@@ -1,5 +1,5 @@
-<h1><%= I18n.t('picture', :count => 2).humanize %></h1>
-<% @content_for_tools << link_to(I18n.t('create_picture').humanize, new_admin_picture_path, :class => 'add' ) %>
+<h1><%= I18n.t('picture', :count => 2).capitalize %></h1>
+<% @content_for_tools << link_to(I18n.t('picture.create.action').capitalize, new_admin_picture_path, :class => 'add' ) %>
 <div id="list_pictures">
   <%= render :partial => 'list', :locals => { :pictures => @pictures , :target => 'picture_index', :target_id => nil } %>
 </div>

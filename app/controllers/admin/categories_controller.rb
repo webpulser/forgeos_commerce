@@ -17,10 +17,10 @@ class Admin::CategoriesController < Admin::BaseController
   def create
     @category = Category.new(params[:category])
     if @category.save
-      flash[:notice] = 'The Category was successfully created'
+      flash[:notice] = I18n.t('category.create.success').capitalize
       redirect_to(edit_admin_category_path @category )
     else
-      flash[:error] = @category.errors
+      flash[:error] = I18n.t('category.create.failed').capitalize
     end
   end
 
@@ -37,9 +37,9 @@ class Admin::CategoriesController < Admin::BaseController
   def update
     @category = Category.find_by_id(params[:id])
     if @category.update_attributes(params[:category])
-      flash[:notice] = 'The Category was successfully saved'
+      flash[:notice] = I18n.t('category.update.success').capitalize
     else
-      flash[:error] = @category.errors
+      flash[:error] = I18n.t('category.update.failed').capitalize
     end
     render :action => 'edit'
   end
@@ -51,11 +51,11 @@ class Admin::CategoriesController < Admin::BaseController
   def destroy
     @category = Category.find_by_id(params[:id])
     if @category.destroy
-      flash[:notice] = 'The Category was successfully destroyed'
+      flash[:notice] = I18n.t('category.destroy.success').capitalize
       index
       return render(:partial => 'list', :locals => { :categories => @categories })
     else
-      flash[:error] = @category.errors
+      flash[:error] = I18n.t('category.destroy.failed').capitalize
     end
   end
 

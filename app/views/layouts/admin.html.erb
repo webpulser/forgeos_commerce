@@ -27,10 +27,10 @@
 
             <% menu.each_key do |entry| %>
               <li<% if (@controller.controller_name == entry || menu[entry].keys.include?(@controller.controller_name))%> class="current"<% end %>>
-              <%= link_to(I18n.t(entry).humanize, { :controller => entry } , :class => 'folder_table') %>
+              <%= link_to(I18n.t(entry).capitalize, { :controller => entry } , :class => 'folder_table') %>
               <ul>
                 <% menu[entry].each_key do |subentry| %>
-                  <li><%= link_to(I18n.t(subentry).humanize, { :controller => (menu[entry][subentry]['class'].nil? ? subentry : entry), :action => (menu[entry][subentry]['class'].nil? ? 'index' : subentry), :id => menu[entry][subentry]['id'] } , :class => menu[entry][subentry]['class'] || 'folder_table') %></li>
+                  <li><%= link_to(I18n.t(subentry).capitalize, { :controller => (menu[entry][subentry]['class'].nil? ? subentry : entry), :action => (menu[entry][subentry]['class'].nil? ? 'index' : subentry), :id => menu[entry][subentry]['id'] } , :class => menu[entry][subentry]['class'] || 'folder_table') %></li>
                 <% end %>
               </ul>
             </li>
@@ -42,6 +42,7 @@
     </div>
     <div id="top-panel">
       <div id="panel">
+        <div id="display_standard_flashes"><%= display_standard_flashes %></div>
         <ul>
           <%= yield_for_tools %>
         </ul>
@@ -55,10 +56,10 @@
         <ul>
             <% menu.each_key do |entry| %>
             <li>
-              <h3><%= link_to(I18n.t(entry).humanize, { :controller => entry } , :class => 'folder_table') %></h3>
+              <h3><%= link_to(I18n.t(entry).capitalize, { :controller => entry } , :class => 'folder_table') %></h3>
               <ul>
                 <% menu[entry].each_key do |subentry| %>
-                  <li><%= link_to(I18n.t(subentry).humanize, { :controller => (menu[entry][subentry]['class'].nil? ? subentry : entry), :action => (menu[entry][subentry]['class'].nil? ? 'index' : subentry), :id => menu[entry][subentry]['id'] } , :class => menu[entry][subentry]['class'] || 'folder_table') %></li>
+                  <li><%= link_to(I18n.t(subentry).capitalize, { :controller => (menu[entry][subentry]['class'].nil? ? subentry : entry), :action => (menu[entry][subentry]['class'].nil? ? 'index' : subentry), :id => menu[entry][subentry]['id'] } , :class => menu[entry][subentry]['class'] || 'folder_table') %></li>
                 <% end %>
               </ul>
             </li>

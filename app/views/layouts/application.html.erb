@@ -31,7 +31,7 @@
             <%= link_to I18n.t('disconnect').capitalize, session_path(:locale => params[:locale]), :method => :delete %>
           <% else %>
             <%= link_to I18n.t('log_in').capitalize, new_session_path(:locale => params[:locale]) %>
-            <%= link_to I18n.t('sign_in').capitalize, new_user_path(:locale => params[:locale]) %>
+            <%= link_to I18n.t('sign_up').capitalize, new_user_path(:locale => params[:locale]) %>
           <% end %>
         </div>
         <ul class='nav' id='nav'>

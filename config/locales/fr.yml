@@ -1,89 +1,81 @@
 fr:
 # FrontOffice
   add_to_cart: 'ajouter au panier'
-  update: 'modifier'
+  update: 'mettre à jour'
   cart:
     one: 'panier'
     other: 'paniers'
   empty_cart: 'vider le panier'
-  product:
-    one : 'produit'
-    other: 'produits'
-  home: 'Accueil'
+  home: 'accueil'
   change_language: 'changer de langue'
   change_currency: 'changer de monnaie'
   search: 'rechercher'
   catalog: 'catalogue'
   log_in: 'se connecter'
-  sign_in: "s'inscrire"
+  sign_up: "s'inscrire"
   make_order: 'passer commande'
   disconnect: 'se déconnecter'
   add_address: 'ajouter une addresse'
   address_invoice: 'adresse de facturation'
   address_delivery: 'adresse de livraison'
-  can_not_place_order: 'Nous sommes désolés mais il est temporairement impossible de passer commande'
+  cant_not_place_order: 'Nous sommes désolé, mais il est temporairement impossible de passer commande'
   remember_me: 'rester connecté'
-  thank_you_to_place_order: "Nous vous remmercions d'avoir passé commande chez nous"
-  remove_this_voucher: 'supprimer ce code promo'
+  thank_you_to_place_order: "Merci d'avoir passé commande"
+  remove_this_voucher: 'enlever ce code promo'
   add: 'ajouter'
   free_payment: "gratuit !!!"
-  no_product: 'pas de produits'
+  no_product: 'aucun produit'
   total: 'total'
-  unit_price: "prix à l'unité"
+  unit_price: "prix à l'unité" 
   tax:
     one: 'taxe'
     other: 'taxes'
-  product_added: 'produit ajouté'
+  product_added: 'le produit à bien été ajouté au panier'
   your_cart_is_empty: 'votre panier est vide'
   cart_is_empty: 'le panier est vide'
-  product_has_been_removed: 'le produit a été enlevé du panier'
-  account_update_ok: 'votre compte a bien été mis à jour'
-  account_creation_ok: 'votre compte a bien été créé'
-  signup_completed: 'votre inscription est complétée'
-  log_in_ok: 'connection réussie'
-  log_in_failed: 'connection échouée, vérifiez votre email et votre mot de passe' 
-  log_out_ok: 'déconnection réussie'
+  product_has_been_removed: 'le produit à bien été enlevé du panier'
+  account_update_ok: 'votre compte à bien été mis à jour'
+  account_creation_ok: 'votre compte à bien été créé'
+  signup_completed: 'votre inscription à bien été prise en compte'
+  log_in_ok: 'connection réussie, bienvenue !'
+  log_in_failed: 'connection échouée, veuillez vérifier votre email et votre mot de passe' 
+  log_out_ok: 'déconnection réussie, à bientôt !'
   hello: 'bienvenue'
-  confirm_empty_cart: 'êtes-vous sûr de vouloir vider le panier ?'
-  confirm_remove_product: 'êtes-vous sûr de vouloir enlever ce produit du panier ?'
+  confirm_empty_cart: 'êtes vous sûr de vouloir vider votre panier ?'
+  confirm_remove_product: 'êtes vous sûr de vouloir supprimer ce produit de votre panier ?'
   type: 'type'
   your_account: 'votre compte'
   cancel: 'annuler'
   unaccessible_function: 'fonction inaccessible'
   my_informations: 'mes informations'
-  confirm_delete_address: 'êtes-vous sûr de vouloir supprimer cette adresse'
-  unpaid: 'en attente du payment'
+  confirm_delete_address: 'êtes vous sûr de vouloir supprimer cette adresse ?'
+  unpaid: 'impayé'
 
 # Admin
   create: 'créer'
   new: 'créer'
   products: 'produits'
   orders: 'commandes'
-  shipping_methods: "méthodes d'expédition"
-  pictures: 'photos'
-  attributes_groups : "groupes d'attributs"
+  shipping_methods: "methodes d'expédition"
+  pictures: 'images'
+  attributes_groups: "groupes d'attributs"
   attributes: 'attributs'
   vouchers: 'codes promo'
   users: 'utilisateurs'
   categories: 'catégories'
-  export_newsletter: 'export pour la newsletter'
+  export_newsletter: 'exporter pour la newsletter'
   template_by: 'Thème par'
-  user:
-    one: 'utilisateur'
-    other: 'utilisateurs'
   avatar: 'avatar'
-  created_on: 'créé à'
+  created_on: 'créé le'
   active: 'activé'
   actions: 'actions'
   edit: 'éditer'
-  edit_user: "éditer l'utilisateur"
   destroy: 'supprimer'
-  activate: 'activer'
+  activate: 'activé'
   name: 'nom'
   email: 'email'
   _yes: 'oui'
   _no: 'non'
-  create_user: 'créer un utilisateur'
   firstname: 'prénom'
   lastname: 'nom'
   password: 'mot de passe'
@@ -93,16 +85,12 @@ fr:
   civility: 'civilité'
   address: 
     one: 'adresse'
-    other: 'adresses'
+    other:  'adresses'
   city: 'ville'
-  country: 'pays'
+  country: 'pay'
   zip_code: 'code postale'
-  confirm_delete_picture: 'êtes-vous sûr de vouloir supprimer cette photo ?'
-  confirm_delete_user: 'êtes-vous sûr de vouloir supprimer cet utilisateur ?'
   show: 'voir'
   back: 'retour'
-  create_picture: 'créer une photo'
-  show_picture: 'Voir la photo'
   thumbnail:
     one: 'vignette'
     other: 'vignettes'
@@ -112,22 +100,13 @@ fr:
   associated_element:
     one: 'élément associé'
     other: 'éléments associés'
-  picture:
-    one: 'photo'
-    other: 'photos'
-  create_comment: 'créer un commentaire'
   title: 'titre'
   filename: 'nom de fichier'
   content_type: 'type de contenu'
-  create_product: 'créer un produit'
-  edit_product: 'éditer le produit'
-  category:
-    one: 'categorie'
-    other: 'categories'
   reference: 'référence'
   description: 'description'
   rate_tax: 'taxe'
-  selling_date: 'date de vente'
+  selling_date: 'date de mise en vente'
   weight: 'poid'
   keyword:
     one: 'mot clé'
@@ -135,20 +114,8 @@ fr:
   stock:
     one: 'stock'
     other : 'stocks'
-  attributes_group:
-    one: "group d'attributs"
-    other: "groupes d'attributs"
   select_all: 'sélectionner tout'
   unselect_all: 'désélectionner tout'
-  product_detail:
-    one: 'Détail de produit'
-    other: 'Détails de produit'
-  edit_product_parent: 'éditer le produit parent'
-  edit_product_detail: 'éditer le détail du produit'
-  create_product_detail: 'créer un détail de produit'
-  attribute:
-    one: 'attribut'
-    other: 'attributs'
   price:
     one: 'prix'
     other: 'prix'
@@ -158,78 +125,240 @@ fr:
     one: 'action'
     other: 'actions'
   quick_edit: 'édition rapide'
-  confirm_delete_product: 'êtes-vous sûr de vouloir supprimer ce produit ?'
   status:
     one: 'status'
     other: 'status'
-  create_order: 'créer une commande'
-  edit_order: 'éditer la commande'
-  confirm_delete_order: 'êtes-vous sûr de vouloir supprimer cette commande ?'
-  confirm_delete_order_detail: 'êtes-vous sûr de vouloir supprimer ce détail de commande ?'
-  shipping_method:
-    one: "méthode d'expédition"
-    other: "méthodes d'expédition"
   shipping_method_price:
-    one: "coût d'expédition"
-    other: "coûts d'expédition"
-  order:
-    one: 'commande'
-    other: 'commandes'
-  order_detail:
-    one: 'détail de commande'
-    other: 'détails de commande'
-  create_order_detail: 'créer un détail de commande'
-  edit_order_detail: "éditer le détails d'une commande"
+    one: "frai d'expédition"
+    other: "frais d'expédition"
   quantity:
     one: 'quantité'
     other: 'quantités'
   please_select: 'Veuillez choisir'
-  edit_shipping_method: "éditer une méthode d'expédition"
-  create_shipping_method: "créer une méthode d'expédition"
-  edit_shipping_method_detail: "éditer un détail d'expédition"
-  create_shipping_method_detail: "créer un détail d'expédition"
-  confirm_delete_shipping_method: "êtes-vous sûr de vouloir supprimer cette méthode d'expédition ?"
-  confirm_delete_shipping_method_detail: "êtes-vous sûr de vouloir supprimer ce détail d'expédition ?"
-  shipping_method_detail:
-    one: "Détail d'expédition"
-    other: "Détails d'expédition"
-  weight_max: 'poid maximal'
-  weight_min: 'poid minimal'
-  voucher:
-    one: 'code promo'
-    other: 'codes promo'
-  create_voucher: 'créer un code promo'
-  edit_voucher: 'éditer un code promo'
-  confirm_delete_voucher: 'êtes-vous sûr de vouloir supprimer ce code promo ?'
+  weight_max: 'poid max'
+  weight_min: 'poid min'
   code:
    one: 'code'
    other: 'codes'
   value:
     one: 'valeur'
     other:  'valeurs'
-  total_min: 'somme minimum'
+  total_min: 'somme minimale'
   date_start: 'date de début'
   date_end: 'date de fin'
-  create_category: 'créer une catégorie'
-  create_subcategory: 'créer une catégorie sous-jacente'
-  edit_category: 'édtier la catégorie'
-  confirm_delete_category: 'êtes-vous sûr de vouloir supprimer cette catégorie ?'
   parent: 'parent'
-  attributes_group:
-    one: "groupe d'attributs"
-    other: "groupes d'attributs"
-  create_attribute: "créer un attribut"
-  edit_attribute: "éditer l'attribut"
-  create_attributes_group: "créer un groupe d'attributs"
-  edit_attributes_group: "éditer le groupe d'attributs"
   dynamic: 'dynamique'
   values_count: 'nombre de valeurs'
-  confirm_delete_attribute: "êtes-vous sûr de vouloir supprimer cet attribut ?"
-  confirm_delete_attributes_group: "êtes-vous sûr de vouloir supprimer ce groupe d'attributs ?"
   pay: 'valider le paiement'
   accept: 'valider la commande'
   sent: "valider l'expédition"
-  confirm_delete_comment: "êtes-vous sûr de vouloir supprimer ce commentaire ?"
+  attributes_group:
+    one: "groupe d'attributs"
+    other: "groupes d'attributs"
+    create:
+      success: "le groupe d'attributs a bien été créé"
+      failed: "un problème est survenue lors de la création du groupe d'attributs"
+      action: "créer un groupe d'attributs"
+    update:
+      success: "le groupe d'attributs a bien été mis à jour"
+      failed: "un problème est survenue lors de la mise à jour du groupe d'attributs"
+      action: "éditer le groupe d'attributs"
+    destroy:
+      success: "le groupe d'attributs a bien été supprimé"
+      failed: "un problème est survenue lors de la suppression du groupe d'attributs"
+      confirm: "êtes vous sûr de vouloir supprimer ce groupe d'attributs ?" 
+  attribute:
+    one: 'attribut'
+    other: 'attributs'
+    create:
+      success: "l'attribut a bien été créé"
+      dynamic: "ce groupe est dynamique, il ne peut avoir d'attribut"
+      failed: "un problème est survenue lors de la création de l'attribut"
+      action: "créer un attribut"
+    update:
+      success: "l' attribut a bien été mis à jour"
+      failed: "un problème est survenue lors de la mise à jour de l'attribut"
+      action: "éditer l'attribut"
+    destroy:
+      success: "l'attribut a bien été supprimé"
+      failed: "un problème est survenue lors de la suppression de l'attribut"
+      confirm: "êtes vous sûr de vouloir supprimer cet attribut ?"
+  category:
+    one: 'catégorie'
+    other: 'catégories'
+    create:
+      success: 'la catégorie a bien été créée'
+      failed: 'un problème est survenue lors de la création de la catégorie'
+      action: 'créer une catégorie'
+    update:
+      success: 'la catégorie a bien été mise à jour'
+      failed: 'un problème est survenue lors de la mise à jour de la catégorie'
+      action: 'éditer la catégorie'
+    destroy:
+      success: 'la catégorie a bien été supprimée'
+      failed: 'un problème est survenue lors de la suppression de la catégorie'
+      confirm: 'êtes vous sûr de vouloir supprimer cette catégorie ?' 
+    sub:
+      create:
+        action: 'créer une catégorie sous-jacente'
+  order_detail:
+    one: 'détail de commande'
+    other: 'détails de commande'
+    create:
+      success: 'le détail de la commande a bien été créé'
+      failed: 'un problème est survenue lors de la création du détail de commande'
+      action: 'créer un détail de commande'
+    update:
+      success: 'le détail de commande a bien été mis à jour'
+      failed: 'un problème est survenue lors de la mise à jour du détail de commande'
+      action: 'éditer le détail de commande'
+    destroy:
+      success: 'le détail de commande a bien été supprimé'
+      failed: 'un problème est survenue lors de la suppression du détail de commande'
+      confirm: 'êtes vous sûr de vouloir supprimer ce détail de commande ?'
+  order:
+    one: 'commande'
+    other: 'commandes'
+    create:
+      success: 'la commande a bien été créée'
+      failed: 'un problème est survenue lors de la création de la commande'
+      action: 'créer une commande'
+    update:
+      success: 'la commande a bien été mise à jour'
+      failed: 'un problème est survenue lors de la mise ç jour de la commande'
+      action: 'éditer la commande'
+    destroy:
+      success: 'la commande a bien été supprimée'
+      failed: 'un problème est survenue lors de la suppression de la commande'
+      confirm: 'êtes vous sûr de vouloir supprimer cette commande ?'
+    pay:
+      success: 'la commande a bien été payé'
+    accept:
+      success: 'la commande a bien été acceptée'
+    send:
+      success: 'la commande a bien été envoyée'
+  voucher:
+    one: 'code promo'
+    other: 'codes promo'
+    create:
+      success: 'le code promo a bien été créé'
+      failed: 'un problème est survenue lors de la création du code promo'
+      action: 'créer un code promo'
+    update:
+      success: 'le code promo a bien été mis à jour'
+      failed: 'un problème est survenue lors de la mise à jour du code promo'
+      action: 'éditer le code promo'
+    destroy:
+      success: 'le code promo a bien été supprimé'
+      failed: 'un problème est survenue lors de la suppression du code promo'
+      confirm: 'êtes vous sûr de vouloir supprimer ce code promo ?'
+  shipping_method:
+    one: "méthode d'expédition"
+    other: "méthodes d'expédition"
+    create:
+      success: "la méthode d'expédition a bien été créée"
+      failed: "un problème est survenue lors de la création de la méthode d'expédition"
+      action: "créer une méthode d'expédition"
+    update:
+      success: "la méthode d'expédition a bien été créée"
+      failed: "un problème est survenue lors de la méthode d'expédition"
+      action: "éditer la méthode d'expédition"
+    destroy:
+      success: "la méthode d'expédition a bien été supprimée"
+      failed: "un problème est survenue lors de la suppression de la méthode d'expédition"
+      confirm: "êtes vous sûr de vouloir supprimer la méthode d'expédition ?"
+  shipping_method_detail:
+    one: "détail de méthode d'expédition"
+    other: "détails de méthode d'expédition"
+    create:
+      success: "le détail de méthode d'expédition a bien été créée"
+      failed: "un problème est survenue lors de la création du détail de méthode d'expédition"
+      action: "créer un détail de méthode d'expédition"
+    update:
+      success: "le détail de méthode d'expédition a bien été mis à jour"
+      failed: "un problème est survenue lors de la mise à jour du détail de méthode d'expédition"
+      action: "éditer le détail de méthode d'expédition"
+    destroy:
+      success: "le détail de méthode d'expédition a bien été supprimé"
+      failed: "un problème est survenue lors de la suppression du détail de méthode d'expédition"
+      confirm: "êtes vous sûr de vouloir supprimer ce détail de méthode d'expédition ?"
+  user:
+    one: 'utilisateur'
+    other: 'utilisateurs'
+    create:
+      success: "l'utilisateur a bien été créé"
+      failed: "un problème est survenue lors de la création de l'utilisateur"
+      action: "créer un utilisateur"
+    update:
+      success: "l'utilisateur a bien été mis à jour"
+      failed: "un problème est survenue lors de la mise à jour de l'utilisateur"
+      action: "éditer l'utilisateur"
+    destroy:
+      success: "l'utilisateur a bien été supprimé"
+      failed: "un problème est survenue lors de la suppression de l'utilisateur"
+      confirm: "êtes vous sûr de vouloir supprimer cet utilisateur ?"
+  product:
+    one : 'produit'
+    other: 'produits'
+    create:
+      success: 'le produit a bien été créé'
+      failed: 'un problème est survenue lors de la création du produit'
+      action: 'créer un produit'
+    update:
+      success: 'le produit a bien été mis à jour'
+      failed: 'un problème est survenue lors de la mise à jour du produit'
+      action: 'éditer produit'
+    destroy:
+      success: 'le produit a bien été supprimé'
+      failed: 'un problème est survenue lors de la suppression du produit'
+      confirm: 'êtes vous sûr de vouloir de supprimé ce produit ?'
+  product_detail:
+    one : 'produit fils'
+    other: 'produits fils'
+    create:
+      success: 'le produit a bien été créé'
+      failed: 'un problème est survenue lors de la création du produit'
+      action: 'créer un produit'
+    update:
+      success: 'le produit a bien été mis à jour'
+      failed: 'un problème est survenue lors de la mise à jour du produit'
+      action: 'éditer produit'
+    destroy:
+      success: 'le produit a bien été supprimé'
+      failed: 'un problème est survenue lors de la suppression du produit'
+      confirm: 'êtes vous sûr de vouloir de supprimé ce produit ?'
+  picture:
+    one: 'image'
+    other: 'images'
+    show:
+      action: "voir l'image"
+    create:
+      success: "l'image a bien été créée"
+      failed: "un problème est survenue lors de la création de l'image"
+      action: 'créer une image'
+    update:
+      success: "l'image a bien été mise à jour"
+      failed: "un problème est survenue lors de la mise à jour de l'image"
+      action: "éditer l'image"
+    destroy:
+      success: "l'image a bien été supprimée"
+      failed: "un problème est survenue lors de la suppression de l'image"
+      confirm: 'êtes vous sûr de vouloir supprimer cette image ?'
+  comment:
+    one: 'commentaire'
+    other: 'commentaires'
+    create:
+      success: 'the comment a bien été créé'
+      failed: 'un problème est survenue lors de la création du commentaire'
+      action: 'créer un commentaire'
+    update:
+      success: 'le commentaire a bien été mis à jour'
+      failed: 'un problème est survenue lors de la mise à jour commentaire'
+      action: 'éditer le commentaire'
+    destroy:
+      success: 'le commentaire a bien été supprimé'
+      failed: 'un problème est survenue lors de la suppression du commentaire'
+      confirm: 'êtes vous sûr de vouloir supprimer ce commentaire ?'
 
 # Date formats
   date:

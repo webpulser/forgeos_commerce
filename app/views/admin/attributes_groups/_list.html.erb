@@ -1,20 +1,20 @@
-<% @content_for_tools << link_to(I18n.t('create_attributes_group').humanize, new_admin_attributes_group_path, :class => 'add' ) %>
+<% @content_for_tools << link_to(I18n.t('attributes_group.action.create').capitalize, new_admin_attributes_group_path, :class => 'add' ) %>
 <%= display_standard_flashes %>
 <table>
   <thead>
-    <th><%= I18n.t('name').humanize %></th>
-    <th><%= I18n.t('values_count').humanize %></th>
-    <th><%= I18n.t('action', :count=>2).humanize %></th>
+    <th><%= I18n.t('name').capitalize %></th>
+    <th><%= I18n.t('values_count').capitalize %></th>
+    <th><%= I18n.t('action', :count=>2).capitalize %></th>
   </thead>
   <% unless groups.empty? %>
     <tbody>
       <% groups.each do |attr_group| %>
       <tr>
         <td><%= attr_group.name %></td>
-        <td><%= (attr_group.dynamic? ? I18n.t('dynamic').humanize : attr_group.tattributes.count) %></td>
+        <td><%= (attr_group.dynamic? ? I18n.t('dynamic').capitalize : attr_group.tattributes.count) %></td>
         <td>
-          <%= link_to I18n.t('edit').humanize, edit_admin_attributes_group_path(attr_group) %> -
-          <%= link_to I18n.t('destroy').humanize, admin_attributes_group_path(attr_group), :method => 'delete', :confirm => I18n.t('confirm_delete_attributes_group').humanize %>
+          <%= link_to I18n.t('edit').capitalize, edit_admin_attributes_group_path(attr_group) %> -
+          <%= link_to I18n.t('destroy').capitalize, admin_attributes_group_path(attr_group), :method => 'delete', :confirm => I18n.t('attributes_group.destroy.confirm').capitalize %>
         </td>
       </tr>
       <% end %>

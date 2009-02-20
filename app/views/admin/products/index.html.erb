@@ -1,15 +1,15 @@
-<h1><%= I18n.t('product', :count => 2).humanize %></h1>
-<% @content_for_tools << link_to(I18n.t('create_product').humanize, new_admin_product_path, :class => 'add' ) %>
+<h1><%= I18n.t('product', :count => 2).capitalize %></h1>
+<% @content_for_tools << link_to(I18n.t('product.create.action').capitalize, new_admin_product_path, :class => 'add' ) %>
 <%= display_standard_flashes %>
 <div id="list">
   <table>
     <thead>
-      <th><%= I18n.t('reference').humanize %></th>
-      <th><%= I18n.t('name').humanize %></th>
-      <th><%= I18n.t('description').humanize %></th>
-      <th><%= I18n.t('product_detail', :count => 2).humanize %></th>
-      <th><%= I18n.t('category', :count => 2).humanize %></th>
-      <th><%= I18n.t('action', :count => 2).humanize %></th>
+      <th><%= I18n.t('reference').capitalize %></th>
+      <th><%= I18n.t('name').capitalize %></th>
+      <th><%= I18n.t('description').capitalize %></th>
+      <th><%= I18n.t('product_detail', :count => 2).capitalize %></th>
+      <th><%= I18n.t('category', :count => 2).capitalize %></th>
+      <th><%= I18n.t('action', :count => 2).capitalize %></th>
     </thead>
     <tbody>
   <% @products.each do |product| %>
@@ -20,8 +20,8 @@
       <td><%= product.product_details.count %></td>
       <td><%= product.categories.collect{ |cat| cat.name }.join(', ') %></td>
       <td>
-        <%= link_to I18n.t('edit').humanize, edit_admin_product_path(product) %> -
-        <%= link_to I18n.t('destroy').humanize, admin_product_path(product), :method => :delete, :confirm => I18n.t('confirm_delete_product').humanize %>
+        <%= link_to I18n.t('edit').capitalize, edit_admin_product_path(product) %> -
+        <%= link_to I18n.t('destroy').capitalize, admin_product_path(product), :method => :delete, :confirm => I18n.t('product.destroy.confirm').capitalize %>
       </td>
     </tr>
   <% end %>

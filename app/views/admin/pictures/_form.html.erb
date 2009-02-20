@@ -6,6 +6,6 @@
   <%= f.file_field :uploaded_data %>
   <%= hidden_field_tag :target, params[:target] %>
   <%= hidden_field_tag :target_id, params[:target_id] %>
-  <%= f.submit I18n.t('save').humanize %>
+  <%= f.submit I18n.t('save').capitalize %>
 <% end %>
-<% @content_for_tools << link_to(I18n.t('list').humanize, admin_pictures_path, :class => 'house' )%>
+<% @content_for_tools << link_to(I18n.t('list').capitalize, admin_pictures_path, :class => 'house' )%>

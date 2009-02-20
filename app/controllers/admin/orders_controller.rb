@@ -16,9 +16,9 @@ class Admin::OrdersController < Admin::BaseController
     @order = Order.new(params[:order])
     create_addresses if @order.user
     if @order.save
-      flash[:notice] = 'Order successfully created'
+      flash[:notice] = I18n.t('order.create.success').capitalize
     else
-      flash[:error] = @order.errors
+      flash[:error] = I18n.t('order.create.failed').capitalize
     end
   end
 
@@ -32,9 +32,9 @@ class Admin::OrdersController < Admin::BaseController
     if @order.update_attributes(params[:order]) &&
       @order.address_invoice.update_attributes(params[:address_invoice]) &&
       @order.address_delivery.update_attributes(params[:address_delivery])
-      flash[:notice] = 'Order successfully updated'
+      flash[:notice] = I18n.t('order.update.success').capitalize
     else
-      flash[:error] = @order.errors
+      flash[:error] = I18n.t('order.update.failed').capitalize
     end
     render :action => 'edit'
   end
@@ -42,26 +42,26 @@ class Admin::OrdersController < Admin::BaseController
   def destroy
     @order = Order.find_by_id(params[:id])
     if @order.destroy
-      flash[:notice] = 'Order was successfully destroyed'
+      flash[:notice] = I18n.t('order.destroy.success').capitalize
     end
     render_list
   end
 
   def pay
     @order = Order.find_by_id(params[:id])
-    flash[:notice] = 'Order was successfully paid' if @order.paid! == true
+    flash[:notice] = I18n.t('order.pay.success').capitalize if @order.paid! == true
     render_list
   end
 
   def accept
     @order = Order.find_by_id(params[:id])
-    flash[:notice] = 'Order was successfully accepted' if @order.accepted! == true
+    flash[:notice] = I18n.t('order.accept.success').capitalize if @order.accepted! == true
     render_list
   end
 
   def sent
     @order = Order.find_by_id(params[:id])
-    flash[:notice] = 'Order was successfully sended' if @order.sended! == true
+    flash[:notice] = I18n.t('order.send.success').capitalize if @order.sended! == true
     render_list
   end
 
@@ -70,10 +70,10 @@ class Admin::OrdersController < Admin::BaseController
     @orders_detail = order.orders_details.new(params[:orders_detail])
     if request.post?
       if @orders_detail.save
-        flash[:notice] = 'Order Detail was successfully created'
+        flash[:notice] = I18n.t('order_detail.create.success').capitalize
         redirect_to(:action => 'edit', :id => order.id)
       else
-        flash[:error] = @orders_detail.errors
+        flash[:error] = I18n.t('order_detail.create.failed').capitalize
       end
     end
     get_products
@@ -84,9 +84,9 @@ class Admin::OrdersController < Admin::BaseController
     @orders_detail = order.orders_details.find_by_id(params[:detail_id])
     if request.post?
       if @orders_detail.update_attributes(params[:orders_detail])
-        flash[:notice] = 'Order Detail was successfully updated'
+        flash[:notice] = I18n.t('order_detail.update.success').capitalize
       else
-        flash[:error] = @orders_detail.errors
+        flash[:error] = I18n.t('order_detail.update.failed').capitalize
       end
     end
     get_products
@@ -96,7 +96,7 @@ class Admin::OrdersController < Admin::BaseController
     order = Order.find_by_id(params[:id])
     @orders_detail = order.orders_details.find_by_id(params[:detail_id])
     if @orders_detail.destroy
-      flash[:notice] = 'Order detail was successfully destroyed'
+      flash[:notice] = I18n.t('order_detail.destroy.success').capitalize
     end
     render :partial => 'list_details', :locals => { :order => order }
   end
