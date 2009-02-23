@@ -31,12 +31,12 @@ class ProductDetail < Product
 
   # Returns month's offers
   def self.get_offer_month
-    find_by_offer_month(true)
+    find_by_active_and_offer_month(true,true)
   end
 
   # Returns the first page products
   def self.get_on_first_page
-    find_all_by_on_first_page(true)
+    find_all_by_active_and_on_first_page(true,true)
   end
 
   def attribute_of(attributes_group)

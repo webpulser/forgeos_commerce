@@ -19,6 +19,18 @@ class Product < ActiveRecord::Base
   has_many :sortable_pictures, :dependent => :destroy, :as => :picturable
   has_many :pictures, :through => :sortable_pictures, :readonly => true, :order => 'sortable_pictures.position'
 
+  after_save :synchronize_stock
+
+  def synchronize_stock
+    if active && stock < 1
+      self.update_attribute('active', false)
+    end
+  end
+  
+  def activate
+    self.update_attribute('active', !self.active )
+  end
+
   # Constructor's overload.
   #
   # <i>Product</i> is not instanciable, use <i>ProductParent</i> or <i>ProductDetail</i>.

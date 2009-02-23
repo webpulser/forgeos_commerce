@@ -8,7 +8,9 @@
       <th><%= I18n.t('name').capitalize %></th>
       <th><%= I18n.t('description').capitalize %></th>
       <th><%= I18n.t('product_detail', :count => 2).capitalize %></th>
+      <th><%= I18n.t('stock', :count=>1).capitalize %></th>
       <th><%= I18n.t('category', :count => 2).capitalize %></th>
+      <th><%= I18n.t('active').capitalize %> ?</th>
       <th><%= I18n.t('action', :count => 2).capitalize %></th>
     </thead>
     <tbody>
@@ -18,7 +20,13 @@
       <td><%=h product.name %></td>
       <td><%=h truncate(product.description, :length => 230) %></td>
       <td><%= product.product_details.count %></td>
+      <td><%= product.stock %></td>
       <td><%= product.categories.collect{ |cat| cat.name }.join(', ') %></td>
+      <td>
+        <% remote_form_for product, :url => {:controller => 'admin/products', :action => 'activate', :id => product.id} do |f| %>
+          <%= check_box_tag :product, :active, product.active, :onchange => "$(this.form).trigger('onsubmit')"%>
+        <% end %>
+      </td>
       <td>
         <%= link_to I18n.t('edit').capitalize, edit_admin_product_path(product) %> -
         <%= link_to I18n.t('destroy').capitalize, admin_product_path(product), :method => :delete, :confirm => I18n.t('product.destroy.confirm').capitalize %>

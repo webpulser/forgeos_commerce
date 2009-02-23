@@ -6,6 +6,11 @@ class Admin::ProductsController < Admin::BaseController
     @products = ProductParent.all
   end
 
+  def activate
+    @product = Product.find_by_id(params[:id])
+    render :text => @product.activate
+  end
+
   def new
     @product_parent = ProductParent.new(params[:product_parent])
     @product_parent.rate_tax = 19.6
