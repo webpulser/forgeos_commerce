@@ -1,7 +1,7 @@
 class CatalogController < ApplicationController
   # Show all <i>ProductDetail</i>
   def index
-    @products = ProductDetail.paginate(:all, :per_page => 8, :page => params[:page], :conditions => { :active => true })
+    @products = ProductDetail.paginate(:all, :per_page => 8, :page => params[:page], :conditions => { :active => true, :deleted => false })
   end
 
   # Show all <i>ProductDetail</i> by <i>Category</i>

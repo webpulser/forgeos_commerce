@@ -1,40 +1,35 @@
-<div id="list">
-  <%= display_standard_flashes %>
-  <%= link_to_unless product_parent.new_record?, I18n.t('product_detail.create.action').capitalize,
-    { :action => 'create_product_detail', :id => product_parent.id },
-    :class => 'add' %><br /><br />
-  <table>
-    <thead>
-      <th><%= I18n.t('reference').capitalize %></th>
-      <th><%= I18n.t('name').capitalize %></th>
-      <th><%= I18n.t('description').capitalize %></th>
-      <th><%= I18n.t('price', :count => 1).capitalize %></th>
-      <th><%= I18n.t('stock', :count=>1).capitalize %></th>
-      <th><%= I18n.t('category', :count => 2).capitalize %></th>
-      <th><%= I18n.t('active').capitalize %> ?</th>
-      <th><%= I18n.t('action', :count => 2).capitalize %></th>
-    </thead>
-    <tbody>
-  <% product_parent.product_details.each do |product| %>
-    <tr>
-      <td><%=h product.reference %></td>
-      <td><%=h product.name %></td>
-      <td><%=h truncate(product.description, :length => 230) %></td>
-      <td><%=h product.price %></td>
-      <td><%=h product.stock %></td>
-      <td><%= product.categories.collect{ |cat| cat.name }.join(', ') %></td>
-      <td>
-        <% remote_form_for product, :url => {:controller => 'admin/products', :action => 'activate', :id => product.id} do |f| %>
-          <%= check_box_tag :product, :active, product.active, :onchange => "$(this.form).trigger('onsubmit')"%>
-        <% end %></td>
-      <td>
-        <%= link_to I18n.t('edit').capitalize, :action => 'edit_product_detail', :id => product.id %> -
-        <%= link_to_remote I18n.t('destroy').capitalize, :url => { :action => 'destroy_product_detail', :id => product.id }, :update => 'list', :confirm => I18n.t('product_detail.destroy.confirm').capitalize %> -
-        <%= link_to_remote I18n.t('quick_edit').capitalize, :url => { :action => 'quick_edit_product_detail', :id => product.id }, :method => 'get' %>
-      </td>
-    </tr>
-  <% end %>
-    </tbody>
-  </table>
-  <div id="quick_edit"></div>
-</div>
+<%= display_standard_flashes %>
+<table>
+  <thead>
+    <th><%= I18n.t('reference').capitalize %></th>
+    <th><%= I18n.t('name').capitalize %></th>
+    <th><%= I18n.t('description').capitalize %></th>
+    <th><%= I18n.t('price', :count => 1).capitalize %></th>
+    <th><%= I18n.t('stock', :count=>1).capitalize %></th>
+    <th><%= I18n.t('category', :count => 2).capitalize %></th>
+    <th><%= I18n.t('active').capitalize %> ?</th>
+    <th><%= I18n.t('action', :count => 2).capitalize %></th>
+  </thead>
+  <tbody>
+<% product_details.each do |product| %>
+  <tr>
+    <td><%=h product.reference %></td>
+    <td><%=h product.name %></td>
+    <td><%=h truncate(product.description, :length => 230) %></td>
+    <td><%=h product.price %></td>
+    <td><%=h product.stock %></td>
+    <td><%= product.categories.collect{ |cat| cat.name }.join(', ') %></td>
+    <td>
+      <% remote_form_for product, :url => {:controller => 'admin/products', :action => 'activate', :id => product.id} do |f| %>
+        <%= check_box_tag :product, :active, product.active, :onchange => "$(this.form).trigger('onsubmit')"%>
+      <% end %></td>
+    <td>
+      <%= link_to I18n.t('edit').capitalize, :action => 'edit_product_detail', :id => product.id %> -
+      <%= link_to_remote I18n.t('destroy').capitalize, :url => { :action => 'destroy_product_detail', :id => product.id }, :update => 'list', :confirm => I18n.t('product_detail.destroy.confirm').capitalize %> -
+      <%= link_to_remote I18n.t('quick_edit').capitalize, :url => { :action => 'quick_edit_product_detail', :id => product.id }, :method => 'get' %>
+    </td>
+  </tr>
+<% end %>
+  </tbody>
+</table>
+<div id="quick_edit"></div>

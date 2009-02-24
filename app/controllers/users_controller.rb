@@ -11,22 +11,21 @@ class UsersController < ApplicationController
 
   # Update user
   def update
-    current_user.update_attributes(params[:user])
-    if current_user.errors.empty?
+    if current_user.update_attributes(params[:user])
       flash[:notice] = I18n.t('account_update_ok').capitalize
       if redirect = session[:redirect]
         session[:redirect] = nil
-        redirect_to(redirect)
+        return redirect_to(redirect)
       else
-        redirect_to_home
+        return redirect_to_home
       end
     else
       flash[:error] = current_user.errors
       if redirect = session[:redirect]
         session[:redirect] = nil
-        redirect_to(redirect)
+        return redirect_to(redirect)
       else
-        render :action => 'new'
+        return render :action => 'new'
       end
     end
     render :layout => false

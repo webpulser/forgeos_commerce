@@ -2,6 +2,8 @@
 <fieldset>
   <legend><%= link_to_effect_toggle(I18n.t('attribute', :count => 2).capitalize,'static_attributes') %></legend>
   <% form_for :product_detail, :url => { :id => (product_detail.id || product_detail.product_parent.id) }, :html => { :id => 'static_attributes' } do |f| %>
+
+    <p><b><%= f.label :deleted, I18n.t('deleted').capitalize %> : </b><%= f.check_box :deleted %></p>
     <p>
     <b><%= f.label :categories, I18n.t('category', :count => 2).capitalize %> : </b>
       <%= select_tag "product_detail[category_ids][]",

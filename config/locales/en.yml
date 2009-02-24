@@ -50,8 +50,11 @@ en:
   my_informations: 'my informations'
   confirm_delete_address: 'are you sure to remove this address ?'
   unpaid: 'unpaid'
+  sended: 'sended'
 
 # Admin
+  show_deleted: 'show deleted'
+  deleted: 'deleted'
   create: 'create'
   new: 'new'
   products: 'products'
@@ -151,7 +154,7 @@ en:
   values_count: 'values count'
   pay: 'validate payment'
   accept: 'validate order'
-  sent: 'validate shipping'
+  send: 'validate shipping'
   attributes_group:
     one: "attributes group"
     other: "attributes groups"

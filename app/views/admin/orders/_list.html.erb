@@ -9,7 +9,7 @@
   <tbody>
     <% @orders.each do |order| %>
       <tr>
-        <td><%= order.status %></td>
+        <td><%=t order.status %></td>
         <td><%= order.user.fullname %></td>
         <td><%= order.shipping_method %></td>
         <td>

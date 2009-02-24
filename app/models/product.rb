@@ -31,6 +31,10 @@ class Product < ActiveRecord::Base
     self.update_attribute('active', !self.active )
   end
 
+ def soft_delete
+    self.update_attribute('deleted', !self.deleted )
+  end
+
   # Constructor's overload.
   #
   # <i>Product</i> is not instanciable, use <i>ProductParent</i> or <i>ProductDetail</i>.

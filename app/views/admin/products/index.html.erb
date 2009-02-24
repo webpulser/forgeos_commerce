@@ -1,5 +1,5 @@
 <h1><%= I18n.t('product', :count => 2).capitalize %></h1>
-<% @content_for_tools << link_to(I18n.t('product.create.action').capitalize, new_admin_product_path, :class => 'add' ) %>
+<% @content_for_tools << link_to(I18n.t('product.create.action').capitalize, new_admin_product_path, :class => 'add' ) << link_to(I18n.t('show_deleted'), admin_products_path(:deleted => true), :class => 'home') %>
 <%= display_standard_flashes %>
 <div id="list">
   <table>

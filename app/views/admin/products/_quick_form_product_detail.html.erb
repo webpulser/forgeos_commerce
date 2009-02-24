@@ -4,6 +4,7 @@
  <p><b><%= f.label :on_first_page, I18n.t('on_first_page').capitalize %> : </b><%= f.check_box :on_first_page %></p>
  <p><b><%= f.label :stock, I18n.t('stock', :count => 1).capitalize %> : </b><%= f.text_field :stock %></p>
  <p><b><%= f.label :price, I18n.t('price', :count => 1).capitalize %> : </b><%= f.text_field :price %></p>
+ <p><b><%= f.label :deleted, I18n.t('deleted').capitalize %> : </b><%= f.check_box :deleted %></p>
 
   <% product_detail.attributes_groups.each do |attr_group| %>
     <p><b><%= label_tag attr_group.name %> : </b>

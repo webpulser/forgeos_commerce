@@ -2,6 +2,8 @@
 <fieldset>
   <legend><%= link_to_effect_toggle(I18n.t('attribute', :count=>2).capitalize,'static_attributes') %></legend>
   <% form_for :product_parent, :url => (product_parent.new_record? ? admin_products_path : admin_product_path(product_parent)), :html => { :method => (product_parent.new_record? ? :post : :put), :id => 'static_attributes' } do |f| %>
+
+    <p><b><%= f.label :deleted, I18n.t('deleted').capitalize %> : </b><%= f.check_box :deleted %></p>
     <p>
     <b><%= f.label :categories, I18n.t('category', :count => 2).capitalize %> : </b>
       <%= select_tag "product_parent[category_ids][]",
@@ -39,7 +41,14 @@
 <fieldset>
   <legend><%= link_to_effect_toggle(I18n.t('product_detail', :count => 2).capitalize,'product_details') %></legend>
   <div id="product_details">
-    <%= render :partial => 'list_product_details', :locals => { :product_parent => product_parent } %>
+    <%= link_to_unless product_parent.new_record?, I18n.t('product_detail.create.action').capitalize,
+    { :action => 'create_product_detail', :id => product_parent.id },
+    :class => 'add' %>
+    <%= link_to_remote I18n.t('show_deleted').capitalize,
+      :url => { :controller => 'admin/products', :action => 'list_product_details', :id => product_parent }, :update => 'list' %>
+    <div id="list">
+      <%= render :partial => 'list_product_details', :locals => { :product_details => product_parent.product_details.find_all_by_deleted(false) } %>
+    </div>
   </div>
 </fieldset>
 <fieldset>

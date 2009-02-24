@@ -50,8 +50,11 @@ fr:
   my_informations: 'mes informations'
   confirm_delete_address: 'êtes vous sûr de vouloir supprimer cette adresse ?'
   unpaid: 'impayé'
+  sended: 'expédié'
 
 # Admin
+  show_deleted: 'voir les éléments supprimés'
+  deleted: 'supprimé'
   create: 'créer'
   new: 'créer'
   products: 'produits'
@@ -151,7 +154,7 @@ fr:
   values_count: 'nombre de valeurs'
   pay: 'valider le paiement'
   accept: 'valider la commande'
-  sent: "valider l'expédition"
+  send: "valider l'expédition"
   attributes_group:
     one: "groupe d'attributs"
     other: "groupes d'attributs"

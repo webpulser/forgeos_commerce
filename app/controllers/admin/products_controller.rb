@@ -3,7 +3,7 @@
 class Admin::ProductsController < Admin::BaseController
   # List ProductParent
   def index
-    @products = ProductParent.all
+    @products = ProductParent.all(:conditions => { :deleted => !params[:deleted].nil? })
   end
 
   def activate
@@ -53,7 +53,13 @@ class Admin::ProductsController < Admin::BaseController
   # * id = ProductParent's id
   def destroy
     @product_parent = ProductParent.find_by_id(params[:id])
-    if @product_parent.destroy
+    unless @product_parent.deleted?
+      @success = @product_parent.soft_delete
+    else
+      @success = @product_parent.destroy
+    end
+
+    if @success
       flash[:notice] = I18n.t('product.destroy.success').capitalize
     else
       flash[:error] = I18n.t('product.destroy.failed').capitalize
@@ -124,12 +130,22 @@ class Admin::ProductsController < Admin::BaseController
   def destroy_product_detail
     @product_detail = ProductDetail.find_by_id(params[:id])
     product_parent = @product_detail.product_parent
-    if @product_detail.destroy
+    unless @product_detail.deleted?
+      @success = @product_detail.soft_delete
+    else
+      @success = @product_detail.destroy
+    end
+    if @success
       flash[:notice] = I18n.t('product_detail.destroy.success').capitalize
     else
       flash[:error] = I18n.t('product_detail.destroy.failed').capitalize
     end
-    return render(:partial => 'list_product_details', :locals => { :product_parent => product_parent })
+    return render(:partial => 'list_product_details', :locals => { :product_details => product_parent.product_details.find_all_by_deleted(false) })
+  end
+
+  def list_product_details
+    @product_parent = ProductParent.find_by_id(params[:id])
+    render :partial => 'list_product_details', :locals => { :product_details => @product_parent.product_details.find_all_by_deleted(true) }
   end
 
 protected

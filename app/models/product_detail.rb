@@ -31,12 +31,12 @@ class ProductDetail < Product
 
   # Returns month's offers
   def self.get_offer_month
-    find_by_active_and_offer_month(true,true)
+    find_by_active_and_deleted_and_offer_month(true,false,true)
   end
 
   # Returns the first page products
   def self.get_on_first_page
-    find_all_by_active_and_on_first_page(true,true)
+    find_all_by_active_and_deleted_and_on_first_page(true,false,true)
   end
 
   def attribute_of(attributes_group)
@@ -118,11 +118,11 @@ class ProductDetail < Product
   # ==== Parameters
   # * <tt>:keyword</tt> - a keyword
   def self.search(keyword)
-    results = ProductDetail.find(:all, :conditions => ["name LIKE ? OR description LIKE ?", "%#{keyword}%", "%#{keyword}%"])
+    results = ProductDetail.find(:all, :conditions => ["active IS TRUE AND deleted IS NOT TRUE AND name LIKE ? OR description LIKE ?", "%#{keyword}%", "%#{keyword}%"])
 
     # name and description inheritance of ProductParent
     # TODO - rewrite this code
-    products = ProductDetail.find(:all, :conditions => ["name IS NULL OR description IS NULL", "%#{keyword}%", "%#{keyword}%"])
+    products = ProductDetail.find(:all, :conditions => ["active IS TRUE AND deleted IS NOT TRUE AND name IS NULL OR description IS NULL"])
     products.each do |product|
       results << product if product.product_parent.name.include?(keyword)
     end

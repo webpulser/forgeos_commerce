@@ -15,6 +15,13 @@ class ProductParent < Product
     super
   end
 
+  def soft_delete
+    product_details.each do |product_detail|
+      product_detail.update_attribute('deleted', !self.deleted )
+    end
+    super
+  end
+
   def stock
     product_details.sum('stock')
   end
