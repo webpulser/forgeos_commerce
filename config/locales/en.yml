@@ -220,6 +220,7 @@ en:
       failed: 'a problem occured during the order detail destroy'
       confirm: 'are you sure to delete this order detail ?'
   order:
+    zero: 'no orders'
     one: 'order'
     other: 'orders'
     create:

@@ -220,6 +220,7 @@ fr:
       failed: 'un problème est survenue lors de la suppression du détail de commande'
       confirm: 'êtes vous sûr de vouloir supprimer ce détail de commande ?'
   order:
+    zero: 'pas de commande'
     one: 'commande'
     other: 'commandes'
     create:
