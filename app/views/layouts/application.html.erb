@@ -60,6 +60,12 @@
             <%= yield %>
           </div>
         </div>
+        <% unless @controller.controller_name == 'cart' %>
+            <div id="cart">
+              <%= display_cart(@cart, false, true) %>
+            </div>
+            <%= drop_receiving_element('cart', :accept=> '.product,.product_show', :url => {:controller => 'cart', :action => 'add_product'}, :with => "'id='+($(ui.draggable).attr('id').split('_')[1])", :update => 'cart', :hoverClass => 'hover' ) %>
+        <% end %>
 <!--
         <div id='sidebar'>
           <div class='block' id='presentation'>
@@ -70,8 +76,7 @@
             </p>
           </div>
         </div>
--->
-        <div class='clear'></div>
+        <div class='clear'></div>-->
       </div>
       <div id='ancillary'>
         <div class='blocks'>

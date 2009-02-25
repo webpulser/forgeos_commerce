@@ -1,11 +1,11 @@
 <%= step_order(1) %>
 
 <% unless @cart.is_empty? %>
-	<%= display_cart(@cart) %>
-	<div class="link_empty">
-		<%= link_to_cart_empty %>
-	</div>
-	<div class="link_order">
+  <%= display_cart(@cart) %>
+  <div class="link_empty">
+    <%= link_to_cart_empty %>
+  </div>
+  <div class="link_order">
     <%= link_to I18n.t('make_order').capitalize, :controller => 'order', :action => 'new' %>
-	</div>
+  </div>
 <% end %>

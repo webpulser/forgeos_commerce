@@ -6,6 +6,23 @@
 .cart {
 	width: 720px;
 }
+.cart.mini {
+  width: auto;
+}
+.cart.mini .cart_name, .cart_quantity, .cart_price, .cart_tax {
+  width: 60px;
+}
+#cart .link_empty, .link_order {
+  width: 200px;
+  display: inline-table;
+}
+#cart .cart.mini {
+        background-color: transparent;
+}
+#cart.hover {
+        background-color: #d8d8d8;
+}
+#cart { float: right; width: 200px; height: 200px; background-color: #F0FEDA; overflow: auto; }
 
 .cart .cart_product_line {
 	clear: both;

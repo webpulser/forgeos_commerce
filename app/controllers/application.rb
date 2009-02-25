@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => '3ed30cea0de1b40821196f7ca4414b19'
 
-  before_filter :set_locale, :set_currency
+  before_filter :set_locale, :set_currency, :get_cart
 
   # Change the currency
   def change_currency(currency_id)

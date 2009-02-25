@@ -32,10 +32,15 @@ class ProductController < ApplicationController
     render(:update) do |page|
       page.replace_html("product_attributes_groups_#{@product.id}", display_product_page_attributes(@product, session["product_#{@product.id}"][:attributes]))
       if @product_detail
+        page.select('.product_show').attr('id',"product_#{@product_detail.id}")
+        page.replace_html("display_product_pictures_#{@product.id}", image_tag(@product_detail.pictures.first.public_filename(:normal))) unless @product_detail.pictures.empty?
         page.replace_html("display_product_page_price_#{@product.id}", "#{@product_detail.price_to_s(true)}")
         page.replace_html("display_product_link_cart_#{@product.id.to_s}", link_to_add_cart(@product_detail))
         page.replace_html("display_product_page_name_#{@product.id}", @product_detail.name)
         page.visual_effect :highlight, "display_product_page_price_#{@product.id}"
+        page.draggable("product_#{@product_detail.id}", :revert => true, :cursor => '"move"', :helper => "function(event) {
+                                 return $('<div class=\"ui-widget-header\">#{escape_javascript(@product_detail.name)}</div>');
+                                 }")
       else
         page.replace_html("display_product_page_price_#{@product.id}", @product.price_to_s(true))
         page.replace_html("display_product_link_cart_#{@product.id.to_s}", I18n.t('add_to_cart').capitalize)

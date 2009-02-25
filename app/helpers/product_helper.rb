@@ -16,16 +16,16 @@ module ProductHelper
   end
 
   def display_all_products(products=ProductDetail.find(:all), with_description=false)
-    content = "<div class='products'>"
+    content = '<div class="products">'
     products.each do |product|
       content += display_product(product, with_description)
     end
-    content += "</div>"
+    content += '</div>'
   end
 
   def display_product(product, with_description=false, options={})
     return I18n.t('no_product') unless product
-    content = "<div class='product'>"
+    content = "<div id=\"product_#{product.id}\" class=\"product\">"
       if product.pictures.first
         content += "<div class='product_picture'>"
           content += image_tag(product.pictures.first.public_filename(options[:thumbnail_type] || :thumb))
@@ -46,11 +46,12 @@ module ProductHelper
         content += "</div>"
       end
     content += "</div>"
+    content += draggable_element("product_#{product.id}", :helper => '"clone"')
   end
   
   def display_product_page(product)
     content = '<div class="large">'
-      content += '<div class="product_show">'
+      content += '<div id="product_'+product.id.to_s+'" class="product_show">'
               content += '<div class="product_name">'
                       content += '<h1>'
                         content += "<div id='display_product_page_name_#{product.id}'>"
@@ -62,7 +63,7 @@ module ProductHelper
               content += '<div class="product_description">'
                content += product.description
               content += '</div>'
-        content += '<div class="product_picture">'
+        content += '<div class="product_picture" id="display_product_pictures_'+product.id.to_s+'">'
           content += image_tag(product.pictures.first.public_filename(:normal)) unless product.pictures.empty?
         content += '</div>'
         content += '<div class="product_attributes_groups" id="product_attributes_groups_' + product.id.to_s + '">'
@@ -89,6 +90,8 @@ module ProductHelper
         content += '</div>'
       content += '</div>'
     content += '</div>'
+
+    content += draggable_element("product_#{product.id}", :cursor => '"move"', :helper => "function(event) { return $('<div class=\"ui-widget-header\">#{escape_javascript(product.name)}</div>'); }" )
   end
   
   def display_product_page_attributes(product, options_attributes=nil)

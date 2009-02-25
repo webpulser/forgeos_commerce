@@ -12,7 +12,7 @@ class CartController < ApplicationController
   def add_product
     reset_order_session
     flash[:notice] = I18n.t(:product_added).capitalize if get_cart.add_product_id(params[:id])
-    redirect_to(:action => 'index')
+    redirect_or_update
   end
 
   # Empty the <i>Cart</i>
@@ -21,7 +21,7 @@ class CartController < ApplicationController
     reset_order_session
     get_cart.to_empty
     flash[:notice] = I18n.t(:cart_is_empty).capitalize
-    redirect_to(:action => 'index')
+    redirect_or_update
   end
 
   # Remove a <i>Product</i> of <i>Cart</i>
@@ -31,7 +31,7 @@ class CartController < ApplicationController
   def remove_product
     reset_order_session
     flash[:notice] = I18n.t(:product_has_been_remove).capitalize if @cart.remove_product_id(params[:id])
-    redirect_to(:action => 'index')
+    redirect_or_update
   end
 
   # Update quantity of a <i>Product</i>
@@ -47,7 +47,7 @@ class CartController < ApplicationController
 
     if request.xhr?
       render(:update) do |page|
-        page.replace_html("rails_commerce_cart_products", display_cart_all_products_lines(@cart))
+        page.replace_html("rails_commerce_cart_products", display_cart_all_products_lines(@cart, false, params[:mini]))
         page.replace_html("rails_commerce_cart_link", link_to_cart)
         page.visual_effect :pulsate, 'rails_commerce_cart_link'
         page.visual_effect :highlight, 'rails_commerce_cart'
@@ -66,5 +66,13 @@ protected
   # User must again valid the shipping method and his voucher if his <i>Cart</i> is updated
   def reset_order_session
     session[:order_shipping_method_detail_id] = session[:order_voucher_id] = nil
+  end
+
+  def redirect_or_update
+    unless request.xhr?
+      redirect_to(:action => 'index') 
+    else
+      render :action => 'update_cart', :layout => false
+    end
   end
 end
