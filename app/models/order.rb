@@ -52,7 +52,7 @@ class Order < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def shipping_method_price(with_currency=true)
-    return super if Currency::is_default? || !with_currency
+    return super if Currency::is_default? || !with_currency || super.nil?
     ("%01.2f" % (super * $currency.to_exchanges_rate(Currency::default).rate)).to_f
   end
 end

@@ -44,7 +44,7 @@ module CartHelper
   # * <tt>cart</tt> a <i>Cart</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_cart_all_products_lines(cart, static=false, mini=false)
-    return I18n.t('your_cart_is_empty').capitalize if cart.is_empty?
+    return I18n.t('your_cart_is_empty').capitalize if cart.nil? || cart.is_empty?
     content = ""
     cart.carts_products.each do |carts_product|
       content += display_cart_by_carts_product(cart, carts_product, static, mini)

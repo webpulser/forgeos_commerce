@@ -60,7 +60,7 @@
             <%= yield %>
           </div>
         </div>
-        <% unless @controller.controller_name == 'cart' %>
+        <% unless ['cart','order'].include?(@controller.controller_name) %>
             <div id="cart">
               <%= display_cart(@cart, false, true) %>
             </div>
