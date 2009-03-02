@@ -3,6 +3,7 @@ module ApplicationHelper
   include CategoryHelper
   include ProductHelper
   include CartHelper
+  include WishlistHelper
   include OrderHelper
   
   def step_order(index=1)

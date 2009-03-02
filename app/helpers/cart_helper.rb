@@ -73,7 +73,7 @@ module CartHelper
         content += display_cart_all_products_lines(cart, static, mini)
       content += "</div>"
     content += "</div>"
-    if mini
+    if mini && !cart.is_empty?
       content += '<div class="link_empty">'
       content += link_to_cart_empty(mini)
       content += '</div>'

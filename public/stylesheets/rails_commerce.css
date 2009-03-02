@@ -22,7 +22,7 @@
 #cart.hover {
         background-color: #d8d8d8;
 }
-#cart { float: right; width: 200px; height: 200px; background-color: #F0FEDA; overflow: auto; }
+#cart { margin: 3px; border: 1px solid #d8d8d8;float: right; width: 200px; height: 200px; background: #F0FEDA url('/images/rails_commerce/sac.png') no-repeat scroll center; overflow: auto; }
 
 .cart .cart_product_line {
 	clear: both;
@@ -47,6 +47,53 @@
 	text-transform: uppercase;
 	clear: both;
 }
+
+/* Wishlist */
+.wishlist {
+	width: 720px;
+}
+.wishlist.mini {
+  width: auto;
+}
+.wishlist.mini .wishlist_name, .wishlist_quantity, .wishlist_price, .wishlist_tax {
+  width: 60px;
+}
+#wishlist .link_empty, .link_order {
+  width: 200px;
+  display: inline-table;
+}
+#wishlist .wishlist.mini {
+        background-color: transparent;
+}
+#wishlist.hover {
+        background-color: #d8d8d8;
+}
+#wishlist { margin: 3px; border: 1px solid #d8d8d8;float: right; width: 200px; height: 200px; background: #F0FEDA url('/images/rails_commerce/wishlist.png') no-repeat scroll center; overflow: auto; }
+
+.wishlist .wishlist_product_line {
+	clear: both;
+}
+
+.wishlist .wishlist_name{
+	font-weight: bold;
+}
+
+.wishlist .wishlist_name, .wishlist_quantity, .wishlist_price, .wishlist_tax {
+	float: left;
+	width: 120px;
+}
+
+.wishlist .wishlist_remove {
+	float: left;
+	width: 16px;
+}
+
+.wishlist .wishlist_total {
+	float: right;
+	text-transform: uppercase;
+	clear: both;
+}
+
 
 /* Products */
 .products {

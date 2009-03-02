@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => '3ed30cea0de1b40821196f7ca4414b19'
 
-  before_filter :set_locale, :set_currency, :get_cart
+  before_filter :set_locale, :set_currency, :get_cart, :get_wishlist
 
   # Change the currency
   def change_currency(currency_id)
@@ -39,6 +39,24 @@ private
     # Associate cart with user if he's logged
     @cart.update_attribute(:user_id, current_user.id) if logged_in? && @cart.user_id != current_user.id
     return @cart
+  end
+
+  # Generate a wishlist and save this in session and instance <i>@wishlist</i>.
+  #
+  # If <i>session[:wishlist_id]</i> existing, this method instance just <i>@wishlist</i>
+  def get_wishlist
+    session[:wishlist_id] = current_user.wishlist.id if session[:wishlist_id].nil? && logged_in? && current_user.wishlist
+    session[:wishlist_id] = Wishlist.create.id if session[:wishlist_id].nil?
+    @wishlist = Wishlist.find_by_id(session[:wishlist_id])
+    # If @wishlist is nil because a problem of session or db.
+    # This recursive call method, risk of stack error if this problem persist.
+    if @wishlist.nil?
+      session[:wishlist_id] = nil
+      get_wishlist
+    end
+    # Associate wishlist with user if he's logged
+    @wishlist.update_attribute(:user_id, current_user.id) if logged_in? && @wishlist.user_id != current_user.id
+    return @wishlist
   end
 
   # A short cut for redirect user to the homepage

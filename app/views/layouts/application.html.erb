@@ -44,6 +44,7 @@
             <% end %>
           </li>
           <li id="rails_commerce_cart_link"><%= link_to_cart %></li>
+          <li id="rails_commerce_wishlist_link"><%= link_to_wishlist %></li>
         </ul>
         <div class='clear'></div>
       </div>
@@ -60,11 +61,17 @@
             <%= yield %>
           </div>
         </div>
-        <% unless ['cart','order'].include?(@controller.controller_name) %>
+        <% unless %w[cart order wishlist].include?(@controller.controller_name) %>
             <div id="cart">
               <%= display_cart(@cart, false, true) %>
             </div>
             <%= drop_receiving_element('cart', :accept=> '.product,.product_show', :url => {:controller => 'cart', :action => 'add_product'}, :with => "'id='+($(ui.draggable).attr('id').split('_')[1])", :update => 'cart', :hoverClass => 'hover' ) %>
+        <% end %>
+        <% unless %w[cart order wishlist].include?(@controller.controller_name) %>
+            <div id="wishlist">
+              <%= display_wishlist(@wishlist, false, true) %>
+            </div>
+            <%= drop_receiving_element('wishlist', :accept=> '.product,.product_show', :url => {:controller => 'wishlist', :action => 'add_product'}, :with => "'id='+($(ui.draggable).attr('id').split('_')[1])", :update => 'wishlist', :hoverClass => 'hover' ) %>
         <% end %>
 <!--
         <div id='sidebar'>

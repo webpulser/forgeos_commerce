@@ -1,0 +1,9 @@
+<% unless @wishlist.is_empty? %>
+  <%= display_wishlist(@wishlist) %>
+  <div class="link_empty">
+    <%= link_to_wishlist_empty %>
+  </div>
+  <div class="link_send">
+    <%= link_to_send_wishlist %>
+  </div>
+<% end %>
