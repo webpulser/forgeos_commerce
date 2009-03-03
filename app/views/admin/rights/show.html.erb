@@ -1,0 +1,16 @@
+<p>
+  <b><%= I18n.t('name').capitalize %> : </b>
+  <%=h @right.name %>
+</p>
+
+<p>
+  <b><%= I18n.t('controller_name').capitalize %> : </b>
+  <%=h @right.controller_name %>
+</p>
+
+<p>
+  <b><%= I18n.t('action_name').capitalize %> : </b>
+  <%=h @right.action_name %>
+</p>
+
+<% @content_for_tools << link_to(I18n.t('edit').capitalize, edit_admin_right_path(@right)) << link_to(I18n.t('back').capitalize, admin_rights_path) %>

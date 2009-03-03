@@ -77,6 +77,11 @@ en:
   vouchers: 'vouchers'
   users: 'users'
   categories: 'categories'
+  roles: 'roles'
+  rights: 'rights'
+  admins: 'administrators'
+  controller_name: 'controller name'
+  action_name: 'action name'
   export_newsletter: 'export for newsletter'
   template_by: 'Template by'
   avatar: 'avatar'
@@ -374,6 +379,51 @@ en:
       success: 'the comment was successfully destroyed'
       failed: 'a problem occured during the comment destroy'
       confirm: 'are you sure to delete this comment ?'
+  admin:
+    one: 'administrator'
+    other: 'administrators'
+    create:
+      success: 'the administrator was successfully created'
+      failed: 'a problem occured during the administrator creation'
+      action: 'create an administrator'
+    update:
+      success: 'the administrator was successfully updated'
+      failed: 'a problem occured during the administrator update'
+      action: 'edit administrator'
+    destroy:
+      success: 'the administrator was successfully destroyed'
+      failed: 'a problem occured during the administrator destroy'
+      confirm: 'are you sure to delete this administrator ?'   
+  role:
+    one: 'role'
+    other: 'roles'
+    create:
+      success: 'the role was successfully created'
+      failed: 'a problem occured during the role creation'
+      action: 'create a role'
+    update:
+      success: 'the role was successfully updated'
+      failed: 'a problem occured during the role update'
+      action: 'edit role'
+    destroy:
+      success: 'the role was successfully destroyed'
+      failed: 'a problem occured during the role destroy'
+      confirm: 'are you sure to delete this role ?'
+  right:
+    one: 'right'
+    other: 'rights'
+    create:
+      success: 'the right was successfully created'
+      failed: 'a problem occured during the right creation'
+      action: 'create a right'
+    update:
+      success: 'the right was successfully updated'
+      failed: 'a problem occured during the right update'
+      action: 'edit right'
+    destroy:
+      success: 'the right was successfully destroyed'
+      failed: 'a problem occured during the right destroy'
+      confirm: 'are you sure to delete this right ?'
 
 # Dates formats 
   date:

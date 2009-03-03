@@ -1,0 +1,24 @@
+<% form_for :right, right, :url => (right.new_record? ? admin_rights_path : admin_right_path(right)), :html => { :method => (right.new_record? ? :post : :put ) }  do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <b><%= f.label :name, I18n.t('name').capitalize %> : </b>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <b><%= f.label :controller_name, I18n.t('controller_name').capitalize %> : </b>
+    <%= f.text_field :controller_name %>
+  </p>
+  <p>
+    <b><%= f.label :action_name, I18n.t('action_name').capitalize %> : </b>
+    <%= f.text_field :action_name %>
+  </p>
+  <p>
+    <%= f.submit I18n.t('save').capitalize %>
+  </p>
+<% end %>
+
+<% if !(right.new_record?) %>
+  <% @content_for_tools << link_to(I18n.t('show').capitalize, admin_right_path(right)) %> 
+<% end %>
+<% @content_for_tools << link_to(I18n.t('back').capitalize, admin_rights_path) %>

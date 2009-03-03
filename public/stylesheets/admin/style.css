@@ -425,3 +425,15 @@ a.modules_manage {
 #display_standard_flashes .notice { color: green; border-color: green; }
 #display_standard_flashes .warning { color: orange; border-color: orange; }
 #display_standard_flashes .error { color: red; border-color: red; }
+
+form p {
+  min-height: 2em;
+  max-width: 65%;
+}
+form p b {
+  float: left;
+}
+
+form p input, form p textarea, form p select, form img {
+  float: right;
+}

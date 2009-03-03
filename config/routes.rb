@@ -14,6 +14,9 @@ namespace :admin do |admin|
   admin.resources :orders
   admin.resources :pictures
   admin.resources :products
+  admin.resources :admins
+  admin.resources :roles
+  admin.resources :rights
   admin.root :controller => 'users'
 end
 

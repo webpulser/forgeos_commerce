@@ -1,0 +1,72 @@
+<% form_for :admin, admin, :url => (admin.new_record? ? admin_admins_path : admin_admin_path(admin)), :html => { :method => (admin.new_record? ? :post : :put), :id => 'edit_admin', :multipart=>true } do |f| %>
+  <%= f.error_messages %>
+
+  <%= image_tag(admin.avatar.public_filename(:small)) if admin.avatar && !admin.avatar.filename.nil? %>
+  <% fields_for :avatar, admin.avatar do |avatar| %>
+    <p>
+      <b><%= avatar.label :uploaded_data, I18n.t('avatar').capitalize %> : </b>
+      <%= avatar.file_field :uploaded_data %>
+    </p>
+    <% end %>
+    <p>
+      <b><%= f.label :lastname, I18n.t('lastname').capitalize %> : </b>
+      <%= f.text_field :lastname %>
+    </p>
+    <p>
+      <b><%= f.label :firstname, I18n.t('firstname').capitalize %> : </b>
+      <%= f.text_field :firstname %>
+    </p>
+
+    <p>
+      <b><%= f.label :email, I18n.t('email').capitalize %> : </b>
+      <%= f.text_field :email %>
+    </p>
+    
+    <% if (admin.new_record?) %>
+    
+        <p>
+          <b><%= f.label :password, I18n.t('password').capitalize %> : </b>
+          <%= f.password_field :password %>
+        </p>
+        <p>
+          <b><%= f.label :password_confirmation, I18n.t('password_confirmation').capitalize %> : </b>
+          <%= f.password_field :password_confirmation %>
+        </p>
+        
+    <% end %>
+
+    <fieldset>
+    <legend><%= link_to_effect_toggle(I18n.t('role', :count => 2).capitalize, 'roles') %></legend>
+    <%= hidden_field_tag "admin[role_ids][]" %>
+    <div id="roles">
+      <table>
+      <% Role.all.in_groups_of(4,false).each do |role_group| %>
+        <tr>
+        <% role_group.each do |role| %>
+          <td class='content'>
+            <%= check_box_tag "admin[role_ids][]", role.id, admin.roles.include?(role), :onclick => remote_function(:url => { :action => 'update_rights', :id => admin.id }, :with => "$('#edit_admin').serialize()", :update => 'rights') %><%= role.name %>
+          </td>
+        <% end %>
+        </tr>
+      <% end %>
+      </table>
+    </div>
+  </fieldset>
+
+  <fieldset>
+  <legend><%= link_to_effect_toggle(I18n.t('right', :count => 2).capitalize, 'rights') %></legend>
+  <div id="rights">
+  <%= render :partial => 'form_rights', :locals => { :admin => admin, :rights => admin.roles.collect{|role| role.rights}.flatten }%> 
+  </div>
+  </fieldset>
+  <p>
+    <%= f.submit I18n.t('save').capitalize %>
+  </p>
+
+<% end %>
+
+<%#= hide_html_elements_onload %w[roles rights] %>
+<% if !(admin.new_record?) %>
+  <% @content_for_tools << link_to(I18n.t('show').capitalize, admin_admin_path(admin)) %> 
+<% end %>
+<% @content_for_tools << link_to(I18n.t('back').capitalize, admin_admins_path) %>

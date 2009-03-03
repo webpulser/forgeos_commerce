@@ -1,0 +1,22 @@
+<p>
+  <b><%= I18n.t('name').capitalize %> : </b>
+  <%=h @role.name %>
+</p>
+
+<p>
+  <b><%= I18n.t('rights',:count => 2).capitalize %> : <b>
+  <table>
+  <% @role.rights.in_groups_of(4,false).each do |right_group| %>
+    <tr>
+    <% right_group.each do |right| %>
+      <td>
+      <%=h right.name %>
+      </td>
+    <% end %>
+    </tr>
+  <% end %>
+  </table>
+</p>
+
+
+<% @content_for_tools << link_to(I18n.t('edit').capitalize, edit_admin_role_path(@role)) << link_to(I18n.t('back').capitalize, admin_roles_path) %>

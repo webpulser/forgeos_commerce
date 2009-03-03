@@ -1,0 +1,21 @@
+<% form_for :role, @role, :url => (role.new_record? ? admin_roles_path : admin_role_path(role)), :html => { :method => (role.new_record? ? :post : :put) } do |f| %>
+  <%= f.error_messages %>
+  
+  <p>
+    <b><%= f.label :name, I18n.t('name').capitalize %> : </b>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <b><%= I18n.t('right', :count => 2).capitalize %> : </b>
+    <%= render :partial => 'form_rights', :locals => { :rights => Right.all, :role => role } %>
+  </p>
+  <p>
+    <%= f.submit I18n.t('save').capitalize %>
+  </p>
+
+<% end %>
+
+<% if !(role.new_record?) %>
+  <% @content_for_tools << link_to(I18n.t('show').capitalize, admin_role_path(role)) %>
+<% end %>
+<% @content_for_tools << link_to(I18n.t('back').capitalize, admin_roles_path) %>
