@@ -17,6 +17,7 @@ namespace :admin do |admin|
   admin.resources :admins
   admin.resources :roles
   admin.resources :rights
+  admin.resource :session
   admin.root :controller => 'users'
 end
 
