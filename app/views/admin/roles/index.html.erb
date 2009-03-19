@@ -1,23 +1,23 @@
 <h1><%= I18n.t('role', :count => 2).capitalize %></h1>
 
 <table>
-  <tr>
-    <th><%= I18n.t('name').capitalize %></th>
-    <th><%= I18n.t('action', :count => 2).capitalize %></th>
-  </tr>
-
-<% for role in @roles %>
-  <tr>
-    <td><%=h role.name %></td>
-    <td>
-      <%= link_to I18n.t('show').capitalize, admin_role_path(role) %> -
-      <%= link_to I18n.t('edit').capitalize, edit_admin_role_path(role) %> -
-      <%= link_to I18n.t('destroy').capitalize, admin_role_path(role), :confirm => I18n.t('role.destroy.confirm').capitalize, :method => :delete %>
-    </td>
-  </tr>
-<% end %>
+  <thead>
+    <tr>
+      <th><%= I18n.t('name').capitalize %></th>
+      <th><%= I18n.t('action', :count => 2).capitalize %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% for role in @roles %>
+    <tr>
+      <td><%=h role.name %></td>
+      <td>
+        <%= link_to I18n.t('show').capitalize, admin_role_path(role) %> -
+        <%= link_to I18n.t('edit').capitalize, edit_admin_role_path(role) %> -
+        <%= link_to I18n.t('destroy').capitalize, admin_role_path(role), :confirm => I18n.t('role.destroy.confirm').capitalize, :method => :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
 </table>
-
-<br />
-
 <% @content_for_tools << link_to(I18n.t('role.create.action').capitalize, new_admin_role_path, :class => 'add') %>

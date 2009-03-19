@@ -15,6 +15,23 @@
   <div id="container">
     <div id="header">
       <h2><%=t 'project_name' %> - Admin</h2>
+      <div class="logged_in">
+        <% if logged_in? %>
+          <%= link_to current_user.fullname, admin_account_path(current_user), :title => I18n.t('your_account').capitalize %> |
+          <%= link_to I18n.t('disconnect').capitalize, admin_session_path(:locale => params[:locale]), :method => :delete %>
+        <% else %>
+          <%= link_to I18n.t('log_in').capitalize, new_admin_session_path(:locale => params[:locale]) %>
+        <% end %>
+      </div>
+      <div>&nbsp;</div>
+      <div class="change_language">
+        <%= I18n.t('change_language').capitalize %> :
+        <% locale_links = [] -%>
+        <% LOCALES.each do |key, locale| -%>
+          <% locale_links << link_to_unless(I18n.locale==key, key, :locale => key) %>
+        <% end -%>
+        <%= locale_links.join(' | ') %>
+      </div>
       <div id="topmenu">
         <ul id="nav">
           <% 
@@ -70,14 +87,6 @@
     <div id="footer">
       <div id="credits">
         <%=t 'template_by' %> <a href="http://www.bloganje.com">Bloganje</a>
-      </div>
-      <div class="change_language">
-        <%= I18n.t('change_language').capitalize %> :
-        <% locale_links = [] %>
-        <% LOCALES.each do |key, locale| %>
-          <% locale_links << link_to_unless(I18n.locale==key, key, :locale => key) %>
-        <% end %>
-        <%= locale_links.join(' | ')%>
       </div>
       <div id="styleswitcher">
         <ul>

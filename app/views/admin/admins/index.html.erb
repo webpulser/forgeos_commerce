@@ -1,27 +1,30 @@
-<h1><%= I18n.t('admin', :count => 2) %></h1>
+<h1><%= I18n.t('admin', :count => 2).capitalize %></h1>
 
 <table>
-  <tr>
-    <th><%= I18n.t('avatar').capitalize %></th>
-    <th><%= I18n.t('email').capitalize %></th>
-    <th><%= I18n.t('firstname').capitalize %></th>
-    <th><%= I18n.t('lastname').capitalize %></th>
-    <th><%= I18n.t('action', :count => 2).capitalize %></th>
-  </tr>
-
-<% for admin in @admins %>
-  <tr>
-    <td><%= image_tag(admin.avatar.public_filename(:small)) if admin.avatar && !admin.avatar.filename.nil? %></td>
-    <td><%=h admin.email %></td>
-    <td><%=h admin.lastname %></td>
-    <td><%=h admin.firstname %></td>
-    <td>
-      <%= link_to I18n.t('show').capitalize, admin_admin_path(admin) %> -
-      <%= link_to I18n.t('edit').capitalize, edit_admin_admin_path(admin) %> -
-      <%= link_to I18n.t('destroy').capitalize, admin_admin_path(admin), :confirm => I18n.t('admin.destroy.confirm').capitalize, :method => :delete %>
-    </td>
-  </tr>
-<% end %>
+  <thead>
+    <tr>
+      <th><%= I18n.t('avatar').capitalize %></th>
+      <th><%= I18n.t('email').capitalize %></th>
+      <th><%= I18n.t('firstname').capitalize %></th>
+      <th><%= I18n.t('lastname').capitalize %></th>
+      <th><%= I18n.t('action', :count => 2).capitalize %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @admins.each do |admin| %>
+    <tr>
+      <td><%= image_tag(admin.avatar.public_filename(:small)) if admin.avatar && !admin.avatar.filename.nil? %></td>
+      <td><%=h admin.email %></td>
+      <td><%=h admin.lastname %></td>
+      <td><%=h admin.firstname %></td>
+      <td>
+        <%= link_to I18n.t('show').capitalize, admin_admin_path(admin) %> -
+        <%= link_to I18n.t('edit').capitalize, edit_admin_admin_path(admin) %> -
+        <%= link_to I18n.t('destroy').capitalize, admin_admin_path(admin), :confirm => I18n.t('admin.destroy.confirm').capitalize, :method => :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
 </table>
 
 <br />

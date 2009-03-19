@@ -1,0 +1,13 @@
+--- 
+administrator: 
+  salt: e30b9e6542e51581f01b0c3fa5225a096e291c85
+  activated_at: 
+  remember_token_expires_at: 
+  crypted_password: 508e5472d3dc0e7fd47be784df949cc5c713ae82
+  activation_code: 48b20940fdff90ce449974b83c679fba15e85d98
+  avatar_id: 
+  lastname: admin
+  type: Admin
+  remember_token: 
+  firstname: admin
+  email: admin@plage.com

@@ -394,6 +394,15 @@ en:
       success: 'the administrator was successfully destroyed'
       failed: 'a problem occured during the administrator destroy'
       confirm: 'are you sure to delete this administrator ?'   
+  my_account:
+    update:
+      success: 'you account was successfully updated'
+      failed: 'a problem occured during your account update'
+      action: 'edit my account'
+    destroy:
+      success: 'your account was successfully destroyed'
+      failed: 'a problem occured during your account destroy'
+      confirm: 'are you sure that you want to delete your account?'
   role:
     one: 'role'
     other: 'roles'

@@ -1,11 +1,12 @@
 # This controller handles the login/logout function of the site.  
 class Admin::SessionsController < Admin::BaseController
+  skip_before_filter :login_required, :only => [:new, :create]
   def new
     session[:redirect] = nil
   end
 
   def create
-    self.current_user = Person.authenticate(params[:email], params[:password])
+    self.current_user = Admin.authenticate(params[:email], params[:password])
     if logged_in?
       if params[:remember_me] == "1"
         current_user.remember_me unless current_user.remember_token?

@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   # Change the currency
   def change_currency(currency_id)
     # TODO - move this method in an appriate class or module.
-    currency = RailsCommerce::Currency.find_by_id(currency_id)
+    currency = Currency.find_by_id(currency_id)
     $currency = currency if currency # Security if currency_id don't exist
     session[:currency] = $currency.id
     redirect_to(:back)

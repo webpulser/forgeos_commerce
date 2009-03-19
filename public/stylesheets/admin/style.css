@@ -92,7 +92,7 @@ margin-top:20px;
   TopMenu, Top-Panel
 *********************/
 #topmenu{
-	margin-top:33px;
+	margin-top:19px;
 	/*width:700px;*/
 	float:left;
 	voice-family:inherit;
@@ -436,4 +436,13 @@ form p b {
 
 form p input, form p textarea, form p select, form img {
   float: right;
+}
+
+.logged_in, .change_language {
+  float: right;
+  color: #fff;
+}
+
+.change_language a, .change_language a:visited, .logged_in a, .logged_in a:visited {
+  color: #c1c1c1;
 }

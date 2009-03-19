@@ -32,9 +32,13 @@ module AuthenticatedSystem
     #  end
     #
     def authorized?(action = action_name, resource = nil)
+      return admin_authorized?(controller_path, action) if logged_in? && current_user.is_a?(Admin) && controller_path.start_with?('admin/')
       logged_in?
-      logger.debug(controller.class.inspect+'-'*1000)
-      current_user.type == 'Admin' if controller_name.start_with?('admin/')
+    end
+
+    def admin_authorized?(controller, action)
+      return true if current_user.rights.find_by_controller_name_and_action_name(controller, action)
+      return false
     end
 
     # Filter method to enforce a login requirement.
@@ -67,7 +71,7 @@ module AuthenticatedSystem
       respond_to do |format|
         format.html do
           store_location
-          redirect_to(controller_name.start_with?('admin/') ? new_admin_session_path : new_session_path)
+          redirect_to(controller_path.start_with?('admin/') ? new_admin_session_path : new_session_path)
         end
         # format.any doesn't work in rails version < http://dev.rubyonrails.org/changeset/8987
         # Add any other API formats here.  (Some browsers, notably IE6, send Accept: */* and trigger 

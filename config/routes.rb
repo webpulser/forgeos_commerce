@@ -6,6 +6,8 @@ resources :addresses
 resources :orders
 
 namespace :admin do |admin|
+  admin.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  admin.login '/login', :controller => 'sessions', :action => 'new'
   admin.resources :shipping_methods
   admin.resources :vouchers
   admin.resources :categories
@@ -18,7 +20,8 @@ namespace :admin do |admin|
   admin.resources :roles
   admin.resources :rights
   admin.resource :session
-  admin.root :controller => 'users'
+  admin.resources :account
+  admin.root :controller => 'account'
 end
 
 root :controller => 'home'

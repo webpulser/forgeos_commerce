@@ -51,15 +51,15 @@ fr:
   log_in_failed: 'connection échouée, veuillez vérifier votre email et votre mot de passe' 
   log_out_ok: 'déconnection réussie, à bientôt !'
   hello: 'bienvenue'
-  confirm_empty_cart: 'êtes vous sûr de vouloir vider votre panier ?'
-  confirm_empty_wishlist: 'êtes vous sûr de vouloir vider votre sélection ?'
-  confirm_remove_product: 'êtes vous sûr de vouloir supprimer ce produit de votre panier ?'
+  confirm_empty_cart: 'êtes-vous sûr de vouloir vider votre panier ?'
+  confirm_empty_wishlist: 'êtes-vous sûr de vouloir vider votre sélection ?'
+  confirm_remove_product: 'êtes-vous sûr de vouloir supprimer ce produit de votre panier ?'
   type: 'type'
   your_account: 'votre compte'
   cancel: 'annuler'
   unaccessible_function: 'fonction inaccessible'
   my_informations: 'mes informations'
-  confirm_delete_address: 'êtes vous sûr de vouloir supprimer cette adresse ?'
+  confirm_delete_address: 'êtes-vous sûr de vouloir supprimer cette adresse ?'
   unpaid: 'impayé'
   sended: 'expédié'
 
@@ -79,7 +79,7 @@ fr:
   categories: 'catégories'
   rights: 'droits'
   roles: 'roles'
-  admins: 'administrateur'
+  admins: 'administrateurs'
   controller_name: 'nom du contrôleur'
   action_name: "nom de l'action"
   export_newsletter: 'exporter pour la newsletter'
@@ -176,47 +176,47 @@ fr:
     other: "groupes d'attributs"
     create:
       success: "le groupe d'attributs a bien été créé"
-      failed: "un problème est survenue lors de la création du groupe d'attributs"
+      failed: "un problème est survenu lors de la création du groupe d'attributs"
       action: "créer un groupe d'attributs"
     update:
       success: "le groupe d'attributs a bien été mis à jour"
-      failed: "un problème est survenue lors de la mise à jour du groupe d'attributs"
+      failed: "un problème est survenu lors de la mise à jour du groupe d'attributs"
       action: "éditer le groupe d'attributs"
     destroy:
       success: "le groupe d'attributs a bien été supprimé"
-      failed: "un problème est survenue lors de la suppression du groupe d'attributs"
-      confirm: "êtes vous sûr de vouloir supprimer ce groupe d'attributs ?" 
+      failed: "un problème est survenu lors de la suppression du groupe d'attributs"
+      confirm: "êtes-vous sûr de vouloir supprimer ce groupe d'attributs ?" 
   attribute:
     one: 'attribut'
     other: 'attributs'
     create:
       success: "l'attribut a bien été créé"
       dynamic: "ce groupe est dynamique, il ne peut avoir d'attribut"
-      failed: "un problème est survenue lors de la création de l'attribut"
+      failed: "un problème est survenu lors de la création de l'attribut"
       action: "créer un attribut"
     update:
       success: "l' attribut a bien été mis à jour"
-      failed: "un problème est survenue lors de la mise à jour de l'attribut"
+      failed: "un problème est survenu lors de la mise à jour de l'attribut"
       action: "éditer l'attribut"
     destroy:
       success: "l'attribut a bien été supprimé"
-      failed: "un problème est survenue lors de la suppression de l'attribut"
-      confirm: "êtes vous sûr de vouloir supprimer cet attribut ?"
+      failed: "un problème est survenu lors de la suppression de l'attribut"
+      confirm: "êtes-vous sûr de vouloir supprimer cet attribut ?"
   category:
     one: 'catégorie'
     other: 'catégories'
     create:
       success: 'la catégorie a bien été créée'
-      failed: 'un problème est survenue lors de la création de la catégorie'
+      failed: 'un problème est survenu lors de la création de la catégorie'
       action: 'créer une catégorie'
     update:
       success: 'la catégorie a bien été mise à jour'
-      failed: 'un problème est survenue lors de la mise à jour de la catégorie'
+      failed: 'un problème est survenu lors de la mise à jour de la catégorie'
       action: 'éditer la catégorie'
     destroy:
       success: 'la catégorie a bien été supprimée'
-      failed: 'un problème est survenue lors de la suppression de la catégorie'
-      confirm: 'êtes vous sûr de vouloir supprimer cette catégorie ?' 
+      failed: 'un problème est survenu lors de la suppression de la catégorie'
+      confirm: 'êtes-vous sûr de vouloir supprimer cette catégorie ?' 
     sub:
       create:
         action: 'créer une catégorie sous-jacente'
@@ -225,32 +225,32 @@ fr:
     other: 'détails de commande'
     create:
       success: 'le détail de la commande a bien été créé'
-      failed: 'un problème est survenue lors de la création du détail de commande'
+      failed: 'un problème est survenu lors de la création du détail de commande'
       action: 'créer un détail de commande'
     update:
       success: 'le détail de commande a bien été mis à jour'
-      failed: 'un problème est survenue lors de la mise à jour du détail de commande'
+      failed: 'un problème est survenu lors de la mise à jour du détail de commande'
       action: 'éditer le détail de commande'
     destroy:
       success: 'le détail de commande a bien été supprimé'
-      failed: 'un problème est survenue lors de la suppression du détail de commande'
-      confirm: 'êtes vous sûr de vouloir supprimer ce détail de commande ?'
+      failed: 'un problème est survenu lors de la suppression du détail de commande'
+      confirm: 'êtes-vous sûr de vouloir supprimer ce détail de commande ?'
   order:
     zero: 'pas de commande'
     one: 'commande'
     other: 'commandes'
     create:
       success: 'la commande a bien été créée'
-      failed: 'un problème est survenue lors de la création de la commande'
+      failed: 'un problème est survenu lors de la création de la commande'
       action: 'créer une commande'
     update:
       success: 'la commande a bien été mise à jour'
-      failed: 'un problème est survenue lors de la mise ç jour de la commande'
+      failed: 'un problème est survenu lors de la mise ç jour de la commande'
       action: 'éditer la commande'
     destroy:
       success: 'la commande a bien été supprimée'
-      failed: 'un problème est survenue lors de la suppression de la commande'
-      confirm: 'êtes vous sûr de vouloir supprimer cette commande ?'
+      failed: 'un problème est survenu lors de la suppression de la commande'
+      confirm: 'êtes-vous sûr de vouloir supprimer cette commande ?'
     pay:
       success: 'la commande a bien été payé'
     accept:
@@ -262,91 +262,91 @@ fr:
     other: 'codes promo'
     create:
       success: 'le code promo a bien été créé'
-      failed: 'un problème est survenue lors de la création du code promo'
+      failed: 'un problème est survenu lors de la création du code promo'
       action: 'créer un code promo'
     update:
       success: 'le code promo a bien été mis à jour'
-      failed: 'un problème est survenue lors de la mise à jour du code promo'
+      failed: 'un problème est survenu lors de la mise à jour du code promo'
       action: 'éditer le code promo'
     destroy:
       success: 'le code promo a bien été supprimé'
-      failed: 'un problème est survenue lors de la suppression du code promo'
-      confirm: 'êtes vous sûr de vouloir supprimer ce code promo ?'
+      failed: 'un problème est survenu lors de la suppression du code promo'
+      confirm: 'êtes-vous sûr de vouloir supprimer ce code promo ?'
   shipping_method:
     one: "méthode d'expédition"
     other: "méthodes d'expédition"
     create:
       success: "la méthode d'expédition a bien été créée"
-      failed: "un problème est survenue lors de la création de la méthode d'expédition"
+      failed: "un problème est survenu lors de la création de la méthode d'expédition"
       action: "créer une méthode d'expédition"
     update:
       success: "la méthode d'expédition a bien été créée"
-      failed: "un problème est survenue lors de la méthode d'expédition"
+      failed: "un problème est survenu lors de la méthode d'expédition"
       action: "éditer la méthode d'expédition"
     destroy:
       success: "la méthode d'expédition a bien été supprimée"
-      failed: "un problème est survenue lors de la suppression de la méthode d'expédition"
-      confirm: "êtes vous sûr de vouloir supprimer la méthode d'expédition ?"
+      failed: "un problème est survenu lors de la suppression de la méthode d'expédition"
+      confirm: "êtes-vous sûr de vouloir supprimer la méthode d'expédition ?"
   shipping_method_detail:
     one: "détail de méthode d'expédition"
     other: "détails de méthode d'expédition"
     create:
       success: "le détail de méthode d'expédition a bien été créée"
-      failed: "un problème est survenue lors de la création du détail de méthode d'expédition"
+      failed: "un problème est survenu lors de la création du détail de méthode d'expédition"
       action: "créer un détail de méthode d'expédition"
     update:
       success: "le détail de méthode d'expédition a bien été mis à jour"
-      failed: "un problème est survenue lors de la mise à jour du détail de méthode d'expédition"
+      failed: "un problème est survenu lors de la mise à jour du détail de méthode d'expédition"
       action: "éditer le détail de méthode d'expédition"
     destroy:
       success: "le détail de méthode d'expédition a bien été supprimé"
-      failed: "un problème est survenue lors de la suppression du détail de méthode d'expédition"
-      confirm: "êtes vous sûr de vouloir supprimer ce détail de méthode d'expédition ?"
+      failed: "un problème est survenu lors de la suppression du détail de méthode d'expédition"
+      confirm: "êtes-vous sûr de vouloir supprimer ce détail de méthode d'expédition ?"
   user:
     one: 'utilisateur'
     other: 'utilisateurs'
     create:
       success: "l'utilisateur a bien été créé"
-      failed: "un problème est survenue lors de la création de l'utilisateur"
+      failed: "un problème est survenu lors de la création de l'utilisateur"
       action: "créer un utilisateur"
     update:
       success: "l'utilisateur a bien été mis à jour"
-      failed: "un problème est survenue lors de la mise à jour de l'utilisateur"
+      failed: "un problème est survenu lors de la mise à jour de l'utilisateur"
       action: "éditer l'utilisateur"
     destroy:
       success: "l'utilisateur a bien été supprimé"
-      failed: "un problème est survenue lors de la suppression de l'utilisateur"
-      confirm: "êtes vous sûr de vouloir supprimer cet utilisateur ?"
+      failed: "un problème est survenu lors de la suppression de l'utilisateur"
+      confirm: "êtes-vous sûr de vouloir supprimer cet utilisateur ?"
   product:
     one : 'produit'
     other: 'produits'
     create:
       success: 'le produit a bien été créé'
-      failed: 'un problème est survenue lors de la création du produit'
+      failed: 'un problème est survenu lors de la création du produit'
       action: 'créer un produit'
     update:
       success: 'le produit a bien été mis à jour'
-      failed: 'un problème est survenue lors de la mise à jour du produit'
+      failed: 'un problème est survenu lors de la mise à jour du produit'
       action: 'éditer produit'
     destroy:
       success: 'le produit a bien été supprimé'
-      failed: 'un problème est survenue lors de la suppression du produit'
-      confirm: 'êtes vous sûr de vouloir de supprimé ce produit ?'
+      failed: 'un problème est survenu lors de la suppression du produit'
+      confirm: 'êtes-vous sûr de vouloir de supprimé ce produit ?'
   product_detail:
     one : 'produit fils'
     other: 'produits fils'
     create:
       success: 'le produit a bien été créé'
-      failed: 'un problème est survenue lors de la création du produit'
+      failed: 'un problème est survenu lors de la création du produit'
       action: 'créer un produit'
     update:
       success: 'le produit a bien été mis à jour'
-      failed: 'un problème est survenue lors de la mise à jour du produit'
+      failed: 'un problème est survenu lors de la mise à jour du produit'
       action: 'éditer produit'
     destroy:
       success: 'le produit a bien été supprimé'
-      failed: 'un problème est survenue lors de la suppression du produit'
-      confirm: 'êtes vous sûr de vouloir de supprimé ce produit ?'
+      failed: 'un problème est survenu lors de la suppression du produit'
+      confirm: 'êtes-vous sûr de vouloir de supprimé ce produit ?'
   picture:
     one: 'image'
     other: 'images'
@@ -354,76 +354,85 @@ fr:
       action: "voir l'image"
     create:
       success: "l'image a bien été créée"
-      failed: "un problème est survenue lors de la création de l'image"
+      failed: "un problème est survenu lors de la création de l'image"
       action: 'créer une image'
     update:
       success: "l'image a bien été mise à jour"
-      failed: "un problème est survenue lors de la mise à jour de l'image"
+      failed: "un problème est survenu lors de la mise à jour de l'image"
       action: "éditer l'image"
     destroy:
       success: "l'image a bien été supprimée"
-      failed: "un problème est survenue lors de la suppression de l'image"
-      confirm: 'êtes vous sûr de vouloir supprimer cette image ?'
+      failed: "un problème est survenu lors de la suppression de l'image"
+      confirm: 'êtes-vous sûr de vouloir supprimer cette image ?'
   comment:
     one: 'commentaire'
     other: 'commentaires'
     create:
       success: 'le commentaire a bien été créé'
-      failed: 'un problème est survenue lors de la création du commentaire'
+      failed: 'un problème est survenu lors de la création du commentaire'
       action: 'créer un commentaire'
     update:
       success: 'le commentaire a bien été mis à jour'
-      failed: 'un problème est survenue lors de la mise à jour commentaire'
+      failed: 'un problème est survenu lors de la mise à jour commentaire'
       action: 'éditer le commentaire'
     destroy:
       success: 'le commentaire a bien été supprimé'
-      failed: 'un problème est survenue lors de la suppression du commentaire'
-      confirm: 'êtes vous sûr de vouloir supprimer ce commentaire ?'
+      failed: 'un problème est survenu lors de la suppression du commentaire'
+      confirm: 'êtes-vous sûr de vouloir supprimer ce commentaire ?'
   admin:
     one: 'administrateur'
     other: 'administrateurs'
     create:
       success: "l'administrateur a bien été créé"
-      failed: "un problème est survenue lors de la création de l'administrateur"
+      failed: "un problème est survenu lors de la création de l'administrateur"
       action: 'créer un administrateur'
     update:
       success: "l'administrateur a bien été mis à jour"
-      failed: "un problème est survenue lors de la mise à jour de l'administrateur"
+      failed: "un problème est survenu lors de la mise à jour de l'administrateur"
       action: "éditer l'administrateur"
     destroy:
       success: "l'administrateur a bien été supprimé"
-      failed: "un problème est survenue lors de la suppression de l'administrateur"
-      confirm: "êtes vous sûr de vouloir supprimer cet administrateur ?"
+      failed: "un problème est survenu lors de la suppression de l'administrateur"
+      confirm: "êtes-vous sûr de vouloir supprimer cet administrateur ?"
+  my_account:
+    update:
+      success: 'votre compte à bien été mis à jours'
+      failed: 'un problème est survenu lors de la mise à jours de votre compte'
+      action: 'éditer votre compte'
+    destroy:
+      success: 'votre compte à bien été supprimé'
+      failed: 'un problème est survenu lors de la suppression de votre compte'
+      confirm: "êtes-vous sûr de vouloir supprimer votre compte ?"
   role:
     one: 'role'
     other: 'roles'
     create:
       success: "le role a bien été créé"
-      failed: "un problème est survenue lors de la création du role"
+      failed: "un problème est survenu lors de la création du role"
       action: 'créer un role'
     update:
       success: "le role a bien été mis à jour"
-      failed: "un problème est survenue lors de la mise à jour du role"
+      failed: "un problème est survenu lors de la mise à jour du role"
       action: "éditer le role"
     destroy:
       success: "le role a bien été supprimé"
-      failed: "un problème est survenue lors de la suppression du role"
-      confirm: "êtes vous sûr de vouloir supprimer ce role ?"
+      failed: "un problème est survenu lors de la suppression du role"
+      confirm: "êtes-vous sûr de vouloir supprimer ce role ?"
   right:
     one: 'droit'
     other: 'droits'
     create:
       success: "le droit a bien été créé"
-      failed: "un problème est survenue lors de la création du droit"
+      failed: "un problème est survenu lors de la création du droit"
       action: 'créer un droit'
     update:
       success: "le droit a bien été mis à jour"
-      failed: "un problème est survenue lors de la mise à jour du droit"
+      failed: "un problème est survenu lors de la mise à jour du droit"
       action: "éditer le droit"
     destroy:
       success: "le droit a bien été supprimé"
-      failed: "un problème est survenue lors de la suppression du droit"
-      confirm: "êtes vous sûr de vouloir supprimer ce droit ?"
+      failed: "un problème est survenu lors de la suppression du droit"
+      confirm: "êtes-vous sûr de vouloir supprimer ce droit ?"
 
 # Date formats
   date:

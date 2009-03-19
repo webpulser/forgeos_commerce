@@ -1,27 +1,27 @@
 <h1><%= I18n.t('right', :count => 2).capitalize %></h1>
 
 <table>
-  <tr>
-    <th><%= I18n.t('name').capitalize %></th>
-    <th><%= I18n.t('controller_name').capitalize %></th>
-    <th><%= I18n.t('action_name').capitalize %></th>
-    <th><%= I18n.t('action', :count => 2).capitalize %></th>
-  </tr>
-
-<% for right in @rights %>
-  <tr>
-    <td><%=h right.name %></td>
-    <td><%=h right.controller_name %></td>
-    <td><%=h right.action_name %></td>
-    <td>
-      <%= link_to I18n.t('show').capitalize, admin_right_path(right) %> -
-      <%= link_to I18n.t('edit').capitalize, edit_admin_right_path(right) %> -
-      <%= link_to I18n.t('destroy').capitalize, admin_right_path(right), :confirm => I18n.t('right.destroy.confirm').capitalize, :method => :delete %>
-    </td>
-  </tr>
-<% end %>
+  <thead>
+    <tr>
+      <th><%= I18n.t('name').capitalize %></th>
+      <th><%= I18n.t('controller_name').capitalize %></th>
+      <th><%= I18n.t('action_name').capitalize %></th>
+      <th><%= I18n.t('action', :count => 2).capitalize %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @rights.each do |right| %>
+    <tr>
+      <td><%=h right.name %></td>
+      <td><%=h right.controller_name %></td>
+      <td><%=h right.action_name %></td>
+      <td>
+        <%= link_to I18n.t('show').capitalize, admin_right_path(right) %> -
+        <%= link_to I18n.t('edit').capitalize, edit_admin_right_path(right) %> -
+        <%= link_to I18n.t('destroy').capitalize, admin_right_path(right), :confirm => I18n.t('right.destroy.confirm').capitalize, :method => :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
 </table>
-
-<br />
-
 <% @content_for_tools << link_to(I18n.t('right.create.action').capitalize, new_admin_right_path, :class => 'add') %>

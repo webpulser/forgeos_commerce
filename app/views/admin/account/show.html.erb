@@ -1,0 +1,30 @@
+<%= render :partial => 'top_links', :locals => { :user => @user } %>
+
+<h1><%= I18n.t('your_account').capitalize %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= I18n.t('avatar').capitalize %></th>
+      <th><%= I18n.t('email').capitalize %></th>
+      <th><%= I18n.t('firstname').capitalize %></th>
+      <th><%= I18n.t('lastname').capitalize %></th>
+      <th><%= I18n.t('action', :count => 2).capitalize %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% unless @user.nil? %>
+    <tr>
+      <td><%= image_tag(@user.avatar.public_filename(:thumb)) if @user.avatar && !@user.avatar.filename.nil? %></td>
+      <td><%=h @user.email %></td>
+      <td><%=h @user.lastname %></td>
+      <td><%=h @user.firstname %></td>
+      <td>
+        <%= link_to I18n.t('edit').capitalize, edit_admin_account_path(@user) %> -
+        <%= link_to I18n.t('destroy').capitalize, admin_account_path(@user), :confirm => I18n.t('my_account.destroy.confirm').capitalize, :method => :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+

@@ -1,0 +1,38 @@
+<% form_for :user, user, :url => admin_account_path(user), :html => { :method => :put, :id => 'edit_user', :multipart=>true } do |f| %>
+  <%= f.error_messages %>
+
+  <%= image_tag(user.avatar.public_filename(:thumb)) if user.avatar && !user.avatar.filename.nil? %>
+  <% fields_for :avatar, user.avatar do |avatar| %>
+    <p>
+      <b><%= avatar.label :uploaded_data, I18n.t('avatar').capitalize %> : </b>
+      <%= avatar.file_field :uploaded_data %>
+    </p>
+    <% end %>
+    <p>
+      <b><%= f.label :lastname, I18n.t('lastname').capitalize %> : </b>
+      <%= f.text_field :lastname %>
+    </p>
+    <p>
+      <b><%= f.label :firstname, I18n.t('firstname').capitalize %> : </b>
+      <%= f.text_field :firstname %>
+    </p>
+
+    <p>
+      <b><%= f.label :email, I18n.t('email').capitalize %> : </b>
+      <%= f.text_field :email %>
+    </p>
+       
+    <p>
+      <b><%= f.label :password, I18n.t('password').capitalize %> : </b>
+      <%= f.password_field :password %>
+    </p>
+    <p>
+      <b><%= f.label :password_confirmation, I18n.t('password_confirmation').capitalize %> : </b>
+      <%= f.password_field :password_confirmation %>
+    </p>
+
+  <p>
+    <%= f.submit I18n.t('save').capitalize %>
+  </p>
+
+<% end %>

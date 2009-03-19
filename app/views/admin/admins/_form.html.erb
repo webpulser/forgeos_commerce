@@ -40,11 +40,13 @@
     <%= hidden_field_tag "admin[role_ids][]" %>
     <div id="roles">
       <table>
-      <% Role.all.in_groups_of(4,false).each do |role_group| %>
+      <% Role.all.in_groups_of(4).each do |role_group| %>
         <tr>
         <% role_group.each do |role| %>
           <td class='content'>
-            <%= check_box_tag "admin[role_ids][]", role.id, admin.roles.include?(role), :onclick => remote_function(:url => { :action => 'update_rights', :id => admin.id }, :with => "$('#edit_admin').serialize()", :update => 'rights') %><%= role.name %>
+            <% unless role.nil? %>
+              <%= check_box_tag "admin[role_ids][]", role.id, admin.roles.include?(role), :onclick => remote_function(:url => { :action => 'update_rights', :id => admin.id }, :with => "$('#edit_admin').serialize()", :update => 'rights') %> <%= role.name %>
+            <% end %>
           </td>
         <% end %>
         </tr>

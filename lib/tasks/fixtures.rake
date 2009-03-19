@@ -3,8 +3,8 @@ namespace :rails_commerce do
     desc "Load seed fixtures (from db/fixtures) into the current environment's database." 
     task :load => :environment do
       require 'active_record/fixtures'
-      PLUGIN_PATH = Desert::Manager.plugin_path('rails_commerce')
       
+      PLUGIN_PATH = Desert::Manager.plugin_path('rails_commerce')
       if ENV['FIXTURES']
         tables = ENV['FIXTURES'].split(',')
       else
