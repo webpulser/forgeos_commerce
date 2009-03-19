@@ -36,7 +36,11 @@
     <% end %>
 
     <fieldset>
-    <legend><%= link_to_effect_toggle(I18n.t('role', :count => 2).capitalize, 'roles') %></legend>
+      <legend>
+        <%= link_to_effect_toggle(I18n.t('role', :count => 2).capitalize, 'roles') %> |
+        <%= link_to_function(I18n.t('select_all').capitalize,"$('.roles').each(function(){this.checked=true;}); $($('.roles')[0]).trigger('onchange')") %> |
+        <%= link_to_function(I18n.t('unselect_all').capitalize,"$('.roles').each(function(){this.checked=false;}); $($('.roles')[0]).trigger('onchange')") %>
+      </legend>
     <%= hidden_field_tag "admin[role_ids][]" %>
     <div id="roles">
       <table>
@@ -45,7 +49,7 @@
         <% role_group.each do |role| %>
           <td class='content'>
             <% unless role.nil? %>
-              <%= check_box_tag "admin[role_ids][]", role.id, admin.roles.include?(role), :onclick => remote_function(:url => { :action => 'update_rights', :id => admin.id }, :with => "$('#edit_admin').serialize()", :update => 'rights') %> <%= role.name %>
+              <%= check_box_tag "admin[role_ids][]", role.id, admin.roles.include?(role), :onchange => remote_function(:url => { :action => 'update_rights', :id => admin.id }, :with => "$('#edit_admin').serialize()", :update => 'rights'), :class => 'roles' %> <%= role.name %>
             <% end %>
           </td>
         <% end %>
@@ -56,7 +60,11 @@
   </fieldset>
 
   <fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('right', :count => 2).capitalize, 'rights') %></legend>
+    <legend>
+      <%= link_to_effect_toggle(I18n.t('right', :count => 2).capitalize, 'rights') %> |
+      <%= link_to_function(I18n.t('select_all').capitalize,"$('.rights').each(function(){this.checked=true;})") %> |
+      <%= link_to_function(I18n.t('unselect_all').capitalize,"$('.rights').each(function(){this.checked=false;})") %>
+    </legend>
   <div id="rights">
   <%= render :partial => 'form_rights', :locals => { :admin => admin, :rights => admin.roles.collect{|role| role.rights}.flatten }%> 
   </div>

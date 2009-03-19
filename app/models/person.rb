@@ -29,7 +29,7 @@ class Person < ActiveRecord::Base
     @activated = true
     self.activated_at = Time.now.utc
     self.activation_code = nil
-    save(false)
+    save(false) unless self.new_record?
   end
 
   def active?

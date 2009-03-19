@@ -5,7 +5,7 @@
     <% right_group.each do |right| %> 
     <td class='content'>
     <% unless right.nil? %>
-      <%= check_box_tag "admin[right_ids][]", right.id, (admin.nil? ? false : admin.rights.include?(right)) %> <%= right.name %>
+      <%= check_box_tag "admin[right_ids][]", right.id, (admin.nil? ? false : admin.rights.include?(right)), :class => 'rights' %> <%= right.name %>
     <% end %>
     </td>
     <% end %>
