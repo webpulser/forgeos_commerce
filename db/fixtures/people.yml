@@ -10,4 +10,4 @@ administrator:
   type: Admin
   remember_token: 
   firstname: admin
-  email: admin@plage.com
+  email: admin@rails-commerce.com
