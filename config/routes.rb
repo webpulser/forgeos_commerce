@@ -1,7 +1,14 @@
 # Add your custom routes here.  If in config/routes.rb you would 
 # add <tt>map.resources</tt>, here you would add just <tt>resources</tt>
-
+logout '/logout', :controller => 'sessions', :action => 'destroy'
+login '/login', :controller => 'sessions', :action => 'new'
+register '/register', :controller => 'users', :action => 'create'
+signup '/signup', :controller => 'users', :action => 'new'
+activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
+ 
 # resources :rails_commerces
+resources :users
+resource :session
 resources :addresses
 resources :orders
 

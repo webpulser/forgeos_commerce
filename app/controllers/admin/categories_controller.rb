@@ -52,10 +52,11 @@ class Admin::CategoriesController < Admin::BaseController
     @category = Category.find_by_id(params[:id])
     if @category.destroy
       flash[:notice] = I18n.t('category.destroy.success').capitalize
-      index
-      return render(:partial => 'list', :locals => { :categories => @categories })
     else
       flash[:error] = I18n.t('category.destroy.failed').capitalize
+    end
+    render(:update) do |page|
+      display_standard_flashes
     end
   end
 

@@ -5,11 +5,27 @@
 
     <p><b><%= f.label :deleted, I18n.t('deleted').capitalize %> : </b><%= f.check_box :deleted %></p>
     <p>
-    <b><%= f.label :categories, I18n.t('category', :count => 2).capitalize %> : </b>
-      <%= select_tag "product_detail[category_ids][]",
-        options_from_collection_for_select(Category.all, :id, :name,
-                                           product_detail.category_ids ),
-        :multiple => true %>
+      <b><%= f.label :categories, I18n.t('category', :count => 2).capitalize %> : </b>
+      <div id="categories">
+        <ul>
+          <%= render :partial => 'admin/categories/list', :locals => { :categories => Category.find_all_by_parent_id(nil) } %>
+        </ul>
+      </div>
+      <% product_detail.category_ids.each do |cat| -%>
+        <%= hidden_field_tag  "product_detail[category_ids][]" , cat, :id => "cat_#{cat}" %>
+      <% end %>
+      <%= javascript_include_tag 'jstree/tree_component.min.js', 'jstree/css.js' %>
+      <%= stylesheet_link_tag 'jstree/tree_component.css' %>
+      <%= javascript_tag("$(function() { tree1 = $.tree_create(); tree1.init($('#categories'), { 
+                  ui: { theme_path : '/stylesheets/jstree/themes/', theme_name : 'rails-commerce', context : [] },
+                  rules : { multiple : 'on' },
+                  callback : {
+                    onselect : function(NODE,TREE_OBJ) { var cat_id = $(NODE).attr('id').replace('category_',''); if ($('#cat_'+cat_id).size() == 0) { $('#categories').after('<input type=\"hidden\" value=\"'+cat_id+'\" name=\"product_detail[category_ids][]\" id=\"cat_'+cat_id+'\" />'); } },
+                    ondeselect : function(NODE,TREE_OBJ) { $('#cat_'+$(NODE).attr('id').replace('category_','')).remove(); } 
+                  },
+                  selected : ['#{product_detail.category_ids.collect{|cat| "category_#{cat}"}.join('\',\'')}']
+              });
+            }); ") -%>
     </p>
     <p><b><%= f.label :reference, I18n.t('reference').capitalize %> : </b><%= f.text_field :reference %></p>
     <p><b><%= f.label :name, I18n.t('name').capitalize %> : </b><%= f.text_field :name %></p>

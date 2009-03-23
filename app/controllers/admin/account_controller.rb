@@ -10,10 +10,10 @@ class Admin::AccountController < Admin::BaseController
   # GET /account/1.xml
   def show
     @user = self.current_user
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @user }
-    end
+#    respond_to do |format|
+#      format.html # show.html.erb
+#      format.xml  { render :xml => @user }
+#    end
   end
 
   # GET /account/1/edit

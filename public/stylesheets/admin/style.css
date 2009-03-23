@@ -5,7 +5,7 @@
 	margin:0;
 	padding:0;
 }
-img, div,a { behavior: url(iepngfix.htc) }
+img, div,a { behavior: url('/stylesheets/admin/iepngfix.htc') }
 body{
 	font-size: 12px;
 	font-family: Arial, Tahoma, Verdana;
@@ -426,17 +426,17 @@ a.modules_manage {
 #display_standard_flashes .warning { color: orange; border-color: orange; }
 #display_standard_flashes .error { color: red; border-color: red; }
 
-form p {
+/*form p {
   min-height: 2em;
   max-width: 65%;
-}
-form p b {
+}*/
+/*form p b {
   float: left;
-}
+}*/
 
-form p input, form p textarea, form p select, form img {
+/*form p input, form p textarea, form p select, form img {
   float: right;
-}
+}*/
 
 .logged_in, .change_language {
   float: right;
@@ -445,4 +445,8 @@ form p input, form p textarea, form p select, form img {
 
 .change_language a, .change_language a:visited, .logged_in a, .logged_in a:visited {
   color: #c1c1c1;
+}
+
+#categories {
+ display : table;
 }
