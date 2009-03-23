@@ -2,7 +2,7 @@
   <% level = 0 -%>
 <% end -%>
 <% categories.each do |category| -%>
-    <li id="category_<%= category.id %>">
+  <li id="category_<%= category.id %>" rel="<%= category.children.empty? ? 'file' : 'folder' %>">
       <% picture = category.pictures.first -%>
     <a href="#"<% if picture %> style="background-image : url('<%= picture.public_filename(:icon) %>');"<% end %>><%= category.name %></a>
       <%= "<ul>" unless category.children.empty? %>
