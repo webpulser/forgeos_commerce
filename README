@@ -9,7 +9,6 @@ RailsCommerce is an extension of Ruby on Rails for e-commerce development
 == Plugins
 * acts_as_state_machine
 * acts_as_tree
-* globalize
 * restful_authentication
 * will_paginate
 * acts_as_commentable
@@ -42,12 +41,12 @@ Install jrails :
  ./script/plugin install http://ennerchi.googlecode.com/svn/trunk/plugins/jrails
 
 == Initialize
-  ./script/generate authenticated user sessions --include-activation
-  
-  rake db:migrate
-  rake globalize:setup
-  rake rails_commerce:migrate
-  rake rails_commerce:init_translation
+  ./script/generate migration install_rails_commerce_plugin
+  -> add "migrate_plugin 'rails_commerce', LAST_MIGRATION" in self.up and "migrate_plugin 'rails_commerce', 0" in self.down
+
+  rake db:migrate;
+  rake rails_commerce:fixtures:load FIXTURES=countries,currencies_exchanges_rates,currencies,namables,people;
+  rake rails_commerce:generate:rights_and_roles;
 
 == update routes.rb
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
@@ -77,33 +76,4 @@ Install jrails :
   include CartHelper
   include OrderHelper
 
-= Models
-
-== modify create_users migration
-
-  change generated db/migrate/VERSION_create_users file to :
-
-  class CreateUsers < ActiveRecord::Migration
-    def self.up
-      create_table :users, :force => true do |t|
-        t.string :email,
-          :firstname,
-          :lastname
-        t.string :crypted_password,
-          :salt,
-          :remember_token,
-          :activation_code,
-          :limit => 40
-        t.datetime :created_at,
-          :updated_at,
-          :remember_token_expires_at,
-          :activated_at
-      end
-    end
-
-    def self.down
-      drop_table :users
-    end
-  end
-
-Powered by [http://jonathan.demoutiez.net Jonathan Démoutiez]
+Powered by [http://www.webpulser.com Webpulser]
