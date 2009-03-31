@@ -1,5 +1,39 @@
 <h1><%= I18n.t('picture', :count => 2).capitalize %></h1>
 <% @content_for_tools << link_to(I18n.t('picture.create.action').capitalize, new_admin_picture_path, :class => 'add' ) %>
 <div id="list_pictures">
-  <%= render :partial => 'list', :locals => { :pictures => @pictures , :target => 'picture_index', :target_id => nil } %>
+<table id="table">
+  <thead>
+    <tr>
+      <th><%= I18n.t('thumbnail', :count =>1).capitalize %></th>
+      <th><%= I18n.t('content_type').capitalize %></th>
+      <th><%= I18n.t('action', :count=>2).capitalize %></th>
+    </tr>
+  <thead>
+  <tbody>
+<% @pictures.each do |picture| %>
+    <tr>
+      <td><%= image_tag picture.public_filename(:small) %></td>
+      <td><%= picture.content_type %></td>
+      <td>
+        <%= link_to I18n.t('show').capitalize, admin_picture_path(picture) %> -
+        <%= link_to I18n.t('destroy').capitalize, :url => admin_picture_path(picture), :confirm => I18n.t('picture.destroy.confirm'), :method => 'delete' %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
 </div>
+<%= javascript_tag "$($('#table').dataTable({
+        'aoColumns': [
+            null,
+            null,
+            { 'bSearchable': false, 'bSortable': false }
+        ],
+        'oLanguage': { 
+        'sProcessing':'#{I18n.t('jquery.dataTables.oLanguage.sProcessing')}',
+        'sLengthMenu':'#{I18n.t('jquery.dataTables.oLanguage.sLengthMenu')}',
+        'sZeroRecords':'#{I18n.t('jquery.dataTables.oLanguage.sZeroRecords')}',
+        'sInfo':'#{I18n.t('jquery.dataTables.oLanguage.sInfo')}',
+        'sInfoEmpty':'#{I18n.t('jquery.dataTables.oLanguage.sInfoEmpty')}',
+        'sSearch':'#{I18n.t('jquery.dataTables.oLanguage.sSearch')}' }
+    }))" %>

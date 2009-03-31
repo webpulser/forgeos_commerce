@@ -4,8 +4,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title><%=t 'project_name' %> - Admin</title>
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-  <%= stylesheet_link_tag 'jquery-ui/ui.all', 'admin/droppy', 'admin/style', 'admin/theme'+(cookies[:theme]||'') %>
-  <%= javascript_include_tag(:defaults, 'jquery.droppy', :cache => false) %>
+  <%= stylesheet_link_tag 'jquery-ui/ui.all', 'admin/droppy', 'admin/style', 'admin/theme'+(cookies[:theme]||''), 'dataTables/demo_page', 'dataTables/demo_table' %>
+  <%= javascript_include_tag(:defaults, 'jquery.droppy', 'jquery.dataTables.min', :cache => false) %>
   <!--[if IE]>
     <%= stylesheet_link_tag '/stylesheets/admin/ie-sucks' %>
   <![endif]-->

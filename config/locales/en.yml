@@ -434,6 +434,16 @@ en:
       failed: 'a problem occured during the right destroy'
       confirm: 'are you sure to delete this right ?'
 
+  jquery:
+    dataTables:
+      oLanguage:
+        sProcessing: 'Processing...'
+        sLengthMenu: 'Show _MENU_ entries'
+        sZeroRecords: 'No matching records found'
+        sInfo: 'Showing _START_ to _END_ of _TOTAL_ entries'
+        sInfoEmpty: 'Showing 0 to 0 of 0 entries'
+        sSearch: 'Search:'
+
 # Dates formats 
   date:
     formats:
