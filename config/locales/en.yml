@@ -444,6 +444,21 @@ en:
         sInfoEmpty: 'Showing 0 to 0 of 0 entries'
         sSearch: 'Search:'
 
+  tag:
+    one: 'tag'
+    other: 'tags'
+    create:
+      success: 'the tag was successfully created'
+      failed: 'a problem occured during the tag creation'
+      action: 'create a tag'
+    update:
+      success: 'the tag was successfully updated'
+      failed: 'a problem occured during the tag update'
+      action: 'edit tag'
+    destroy:
+      success: 'the tag was successfully destroyed'
+      failed: 'a problem occured during the tag destroy'
+      confirm: 'are you sure to delete this tag ?'
 # Dates formats 
   date:
     formats:

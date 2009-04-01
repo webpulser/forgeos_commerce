@@ -1,0 +1,3 @@
+<% remote_form_for @tag, :url => admin_tags_path(:id => @taggable.id, :type => @taggable.class), :update => "tags_for_#{@taggable.id}" do |f|%>
+  <%= f.text_field :name %><%= f.submit I18n.t('save') %>
+<% end %>

@@ -443,6 +443,22 @@ fr:
         sInfo: 'Visualisation de _START_ à _END_ sur _TOTAL_ entrées'
         sInfoEmpty: 'Visualistation de 0 à 0 sur 0 entrées'
         sSearch: 'Rechercher:'
+
+  tag:
+    one: 'tag'
+    other: 'tags'
+    create:
+      success: "le tag a bien été créé"
+      failed: "un problème est survenu lors de la création du tag"
+      action: 'créer un tag'
+    update:
+      success: "le tag a bien été mis à jour"
+      failed: "un problème est survenu lors de la mise à jour du tag"
+      action: "éditer le tag"
+    destroy:
+      success: "le tag a bien été supprimé"
+      failed: "un problème est survenu lors de la suppression du tag"
+      confirm: "êtes-vous sûr de vouloir supprimer ce tag ?"
 # Date formats
   date:
     formats:

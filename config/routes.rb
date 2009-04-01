@@ -28,6 +28,7 @@ namespace :admin do |admin|
   admin.resources :rights
   admin.resource :session
   admin.resources :account
+  admin.resources :tags
   admin.root :controller => 'account'
 end
 
