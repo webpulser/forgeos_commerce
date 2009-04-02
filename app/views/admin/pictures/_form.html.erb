@@ -20,6 +20,8 @@
     'script': '<%= (picture.new_record? ? admin_pictures_path : admin_picture_path(picture)) %>',
     'scriptData': { 'target': '<%= params[:target] %>', 'target_id': '<%= params[:target_id] %>', 'format': 'json', 'authenticity_token': encodeURIComponent('<%= form_authenticity_token %>'), '<%= Rails.configuration.action_controller.session[:session_key]%>': '<%= u session.session_id %>' },
     'ScriptAccess': 'always',
+    'fileDesc': 'Images Files',
+    'fileExt': '*.jpg;*.jpeg;*.png;*.bmp;*.gif;',
     'multi': 'true',
     'displayData': 'speed'
     });});
