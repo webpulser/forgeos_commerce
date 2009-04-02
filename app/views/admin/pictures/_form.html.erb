@@ -1,5 +1,6 @@
 <%= display_standard_flashes %>
 <%= image_tag picture.public_filename(:normal) unless picture.id.nil? %>
+<div id="fileUpload">
 <% form_for picture, :url => (picture.new_record? ? admin_pictures_path : admin_picture_path(picture)),
   :html => { :method => (picture.new_record? ? :post : :put), :multipart => true } do |f| %>
   <%= f.error_messages %>
@@ -8,4 +9,19 @@
   <%= hidden_field_tag :target_id, params[:target_id] %>
   <%= f.submit I18n.t('save').capitalize %>
 <% end %>
+</div>
 <% @content_for_tools << link_to(I18n.t('list').capitalize, admin_pictures_path, :class => 'house' )%>
+<%= javascript_include_tag 'jquery.uploadify' %>
+<%= stylesheet_link_tag 'admin/uploadify' %>
+<% javascript_tag do %>
+  $(document).ready(function(){ $('#fileUpload').fileUpload({
+    'uploader': '/images/uploadify/uploader.swf',
+    'cancelImg': '<%= image_path('uploadify/cancel.png') %>',
+    'script': '<%= (picture.new_record? ? admin_pictures_path : admin_picture_path(picture)) %>',
+    'scriptData': { 'target': '<%= params[:target] %>', 'target_id': '<%= params[:target_id] %>', 'format': 'json', 'authenticity_token': encodeURIComponent('<%= form_authenticity_token %>'), '<%= Rails.configuration.action_controller.session[:session_key]%>': '<%= u session.session_id %>' },
+    'ScriptAccess': 'always',
+    'multi': 'true',
+    'displayData': 'speed'
+    });});
+<% end %>
+<%= link_to_function 'Start Upload', "$('#fileUpload').fileUploadStart()" %> | <%= link_to_function 'Clear Queue',"$('#fileUpload').fileUploadClearQueue()" %>

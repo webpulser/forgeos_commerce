@@ -5,6 +5,7 @@
 #  * Category
 #  * Comment
 class Admin::PicturesController < Admin::BaseController
+  session :cookie_only => false, :only => :create
   # List all pictures
   def index
     @pictures = Picture.find(:all, :conditions => 'parent_id IS NULL')
@@ -24,32 +25,69 @@ class Admin::PicturesController < Admin::BaseController
   # and redirect to
   # his owner edit page or pictures/index page
   def create
-    @picture = Picture.new(params[:picture])
-    if @picture.save
-      sortable_picture = @picture.sortable_pictures.new
-      flash[:notice] = I18n.t('picture.create.success').capitalize
-      case params[:target]
-      when 'product'
-        sortable_picture.picturable = Product.find_by_id(params[:target_id])
-        sortable_picture.save
-        return redirect_to(:controller => 'products', :action => 'edit', :id => params[:target_id])
-      when 'attributes_group'
-        sortable_picture.picturable = AttributesGroup.find_by_id(params[:target_id])
-        sortable_picture.save
-       return redirect_to(:controller => 'attributes_groups', :action => 'edit', :id => params[:target_id])
-      when 'tattribute'
-        sortable_picture.picturable = Attribute.find_by_id(params[:target_id])
-        sortable_picture.save
-       return redirect_to(:controller => 'attributes_groups', :action => 'edit_attribute', :id => params[:target_id])
-      when 'category'
-        sortable_picture.picturable = Category.find_by_id(params[:target_id])
-        sortable_picture.save
-        return redirect_to(:controller => 'categories', :action => 'edit', :id => params[:target_id])
-      else
-        return redirect_to(:action => 'index')
+    respond_to do |format|
+      format.html do
+        @picture = Picture.new(params[:picture])
+        if @picture.save
+          sortable_picture = @picture.sortable_pictures.new
+          flash[:notice] = I18n.t('picture.create.success').capitalize
+          case params[:target]
+          when 'product'
+            sortable_picture.picturable = Product.find_by_id(params[:target_id])
+            sortable_picture.save
+            return redirect_to(:controller => 'products', :action => 'edit', :id => params[:target_id])
+          when 'attributes_group'
+            sortable_picture.picturable = AttributesGroup.find_by_id(params[:target_id])
+            sortable_picture.save
+           return redirect_to(:controller => 'attributes_groups', :action => 'edit', :id => params[:target_id])
+          when 'tattribute'
+            sortable_picture.picturable = Attribute.find_by_id(params[:target_id])
+            sortable_picture.save
+           return redirect_to(:controller => 'attributes_groups', :action => 'edit_attribute', :id => params[:target_id])
+          when 'category'
+            sortable_picture.picturable = Category.find_by_id(params[:target_id])
+            sortable_picture.save
+            return redirect_to(:controller => 'categories', :action => 'edit', :id => params[:target_id])
+          else
+            return redirect_to(:action => 'index')
+          end
+        else
+          flash[:error] = I18n.t('picture.create.failed').capitalize
+        end
       end
-    else
-      flash[:error] = I18n.t('picture.create.failed').capitalize
+
+      format.json do
+        if params[:Filedata]
+          require 'mime/types'
+          @picture = Picture.new
+          @picture.uploaded_data = { 'tempfile' => params[:Filedata], 'content_type' => 'none', 'filename' => params[:Filename] }
+          @picture.content_type = MIME::Types.type_for(@picture.filename).to_s
+          if @picture.save
+            sortable_picture = @picture.sortable_pictures.new
+            flash[:notice] = I18n.t('picture.create.success').capitalize
+            case params[:target]
+            when 'product'
+              sortable_picture.picturable = Product.find_by_id(params[:target_id])
+              sortable_picture.save
+            when 'attributes_group'
+              sortable_picture.picturable = AttributesGroup.find_by_id(params[:target_id])
+              sortable_picture.save
+            when 'tattribute'
+              sortable_picture.picturable = Attribute.find_by_id(params[:target_id])
+              sortable_picture.save
+            when 'category'
+              sortable_picture.picturable = Category.find_by_id(params[:target_id])
+              sortable_picture.save
+            end
+            render :json => { :result => 'success', :asset => @picture.id}
+          else
+            logger.debug(@picture.errors.inspect)
+            render :json => { :result => 'error', :error => @picture.errors.first }
+          end
+        else
+          render :json => { :result => 'error', :error => 'bad parameters' }
+        end
+      end
     end
   end
 
@@ -78,6 +116,13 @@ class Admin::PicturesController < Admin::BaseController
 
     if @success
       flash[:notice] = I18n.t('picture.destroy.success').capitalize
+      return render(:update) do |page|
+        if params[:target].blank?
+          page << "oTable.fnDeleteRow(oTable.fnGetPosition($('#tags_for_#{params[:id]}').parents('tr')[0]));"
+        else
+          page << "$('#tags_for_#{params[:id]}').parents('li').remove()"
+        end
+      end if request.xhr?
       return render(:partial => 'list', :locals => { :pictures => @pictures, :target => params[:target], :target_id => params[:target_id] })
     else
       flash[:error] = I18n.t('picture.destroy.failed').capitalize

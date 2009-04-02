@@ -25,14 +25,14 @@
       </td>
       <td>
         <%= link_to I18n.t('show').capitalize, admin_picture_path(picture) %> -
-        <%= link_to I18n.t('destroy').capitalize, :url => admin_picture_path(picture), :confirm => I18n.t('picture.destroy.confirm'), :method => 'delete' %>
+        <%= link_to_remote I18n.t('destroy').capitalize, :url => admin_picture_path(picture), :confirm => I18n.t('picture.destroy.confirm'), :method => 'delete' %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 </div>
-<%= javascript_tag "$($('#table').dataTable({
+<%= javascript_tag "$( oTable = $('#table').dataTable({
         'aoColumns': [
             null,
             null,

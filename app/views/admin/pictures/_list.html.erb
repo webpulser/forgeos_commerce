@@ -24,7 +24,7 @@
       </td>
       <td>
         <%= link_to I18n.t('show').capitalize, admin_picture_path(picture) %> -
-        <%= link_to_remote I18n.t('destroy').capitalize, :url => admin_picture_path(picture, :target => target, :target_id => target_id), :update => 'list_pictures', :confirm => I18n.t('picture.destroy.confirm'), :method => 'delete' %>
+        <%= link_to_remote I18n.t('destroy').capitalize, :url => admin_picture_path(picture, :target => target, :target_id => target_id), :confirm => I18n.t('picture.destroy.confirm'), :method => 'delete' %>
       </td>
     </tr></table>
   </li>
