@@ -1,7 +1,7 @@
 # ==== Inheritance
 # * <tt>Product</tt>
 class ProductDetail < Product
-
+  acts_as_ferret :fields => [ :name, :description, :keywords, :reference ] 
   has_and_belongs_to_many :tattributes, :join_table => 'attributes_product_details', :class_name => 'Attribute', :readonly => true
   has_many :dynamic_attributes, :dependent => :destroy
   has_many :dynamic_attributes_groups, :through => :dynamic_attributes, :class_name => 'AttributesGroup', :source => 'attributes_group'
@@ -118,16 +118,7 @@ class ProductDetail < Product
   # ==== Parameters
   # * <tt>:keyword</tt> - a keyword
   def self.search(keyword)
-    results = ProductDetail.find(:all, :conditions => ["active IS TRUE AND deleted IS NOT TRUE AND name LIKE ? OR description LIKE ?", "%#{keyword}%", "%#{keyword}%"])
-
-    # name and description inheritance of ProductParent
-    # TODO - rewrite this code
-    products = ProductDetail.find(:all, :conditions => ["active IS TRUE AND deleted IS NOT TRUE AND name IS NULL OR description IS NULL"])
-    products.each do |product|
-      results << product if product.product_parent.name.include?(keyword)
-    end
-
-    results.uniq
+    results = ProductDetail.find_with_ferret("*#{keyword}*", :limit => :all)
   end
 
   # Returns a <i>WillPaginate::Collection</i> of <i>ProductDetail</i> who <i>name LIKE '%keyword%' OR description LIKE '%keyword%'</i>

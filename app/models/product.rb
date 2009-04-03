@@ -5,7 +5,6 @@
 # * <tt>ProductParent</tt>
 # * <tt>ProductDetail</tt>
 class Product < ActiveRecord::Base
-
   # A <i>Product</i> is not instanciable, use <i>ProductParent</i> or <i>ProductDetail</i>.
   # find's methods is already accepted
   attr_accessor :is_instanciable
