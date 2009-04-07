@@ -1,5 +1,6 @@
 fr:
 # FrontOffice
+  or: 'ou'
   add_to_cart: 'ajouter au panier'
   update: 'mettre à jour'
   cart:
