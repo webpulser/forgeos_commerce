@@ -9,7 +9,7 @@
       <p><b><%= f.label :shipping_method_price, I18n.t('shipping_method_price',:count=>1).capitalize %> : </b><%= f.collection_select :shipping_method_price, ShippingMethodDetail.all, :price, :price, { :prompt => I18n.t('please_select').capitalize } %></p>
     <% if order.user %>
     <fieldset>
-      <legend><%= link_to_effect_toggle(I18n.t('address_invoice').capitalize,'address_invoice') %></legend>
+      <legend><%= link_to_effect_toggle(I18n.t('address.invoice').capitalize,'address_invoice') %></legend>
       <div id="address_invoice">
       <% fields_for order.address_invoice do |fa| %>
         <%= render :partial => 'admin/addresses/form', :locals => { :f => fa } %>
@@ -18,7 +18,7 @@
     </fieldset>
 
     <fieldset>
-      <legend><%= link_to_effect_toggle(I18n.t('address_delivery').capitalize,'address_delivery') %></legend>
+      <legend><%= link_to_effect_toggle(I18n.t('address.delivery').capitalize,'address_delivery') %></legend>
       <div id="address_delivery">
       <% fields_for order.address_delivery do |fb| %>
         <%= render :partial => 'admin/addresses/form', :locals => { :f => fb } %>

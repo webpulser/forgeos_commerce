@@ -15,7 +15,7 @@
     countries = Country.all
 %>
   <fieldset>
-    <legend><%= link_to_effect_toggle(I18n.t('address_invoice').capitalize,'address_invoice') %></legend>
+    <legend><%= link_to_effect_toggle(I18n.t('address.invoice').capitalize,'address_invoice') %></legend>
     <div id="address_invoice">
       <% fields_for user.address_invoice do |fa| %>
         <%= render :partial => 'admin/addresses/form', :locals => { :f => fa } %>
@@ -24,7 +24,7 @@
   </fieldset>
 
   <fieldset>
-    <legend><%= link_to_effect_toggle(I18n.t('address_delivery').capitalize,'address_delivery') %></legend>
+    <legend><%= link_to_effect_toggle(I18n.t('address.delivery').capitalize,'address_delivery') %></legend>
     <div id="address_delivery">
       <% fields_for user.address_delivery do |fb| %>
         <%= render :partial => 'admin/addresses/form', :locals => { :f => fb } %>

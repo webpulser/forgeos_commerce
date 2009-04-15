@@ -24,9 +24,6 @@ en:
   sign_up: 'sign up'
   make_order: 'Make order'
   disconnect: 'disconnect'
-  add_address: 'add an address'
-  address_invoice: 'Address invoice'
-  address_delivery: 'Address delivery'
   cant_not_place_order: 'We are sorry, but it is temporarily impossible to place order'
   remember_me: 'remember me'
   thank_you_to_place_order: 'Thank you for your order'
@@ -60,7 +57,6 @@ en:
   cancel: 'cancel'
   unaccessible_function: 'unaccessible function'
   my_informations: 'my informations'
-  confirm_delete_address: 'are you sure to remove this address ?'
   unpaid: 'unpaid'
   sended: 'sended'
 
@@ -106,6 +102,12 @@ en:
   address: 
     one: 'address'
     other:  'addresses'
+    invoice: 'Address invoice'
+    delivery: 'Address delivery'
+    create:
+      action: 'add an address'
+    destroy:
+      confirm: 'are you sure to remove this address ?'
   city: 'city'
   country: 'country'
   zip_code: 'zip code'

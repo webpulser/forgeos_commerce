@@ -1,9 +1,9 @@
 <p>
-  <b><%= I18n.t('address_invoice').capitalize %></b> 
+  <b><%= I18n.t('address.invoice').capitalize %></b> 
   <%= render :partial => 'addresses/show', :locals => { :address => @order.address_invoice } %>
 </p>
 <p>
-  <b><%= I18n.t('address_delivery').capitalize %></b> 
+  <b><%= I18n.t('address.delivery').capitalize %></b> 
   <%= render :partial => 'addresses/show', :locals => { :address => @order.address_delivery } %>
 </p>
 

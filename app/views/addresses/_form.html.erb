@@ -4,7 +4,7 @@
 
   <p>
     <b><label><%= I18n.t('type').capitalize %></label> : </b>
-    <%= f.select :kind, [[I18n.t('address_delivery').capitalize, 'AddressDelivery'], [I18n.t('address_invoice').capitalize, 'AddressInvoice']] %>
+    <%= f.select :kind, [[I18n.t('address.delivery').capitalize, 'AddressDelivery'], [I18n.t('address.invoice').capitalize, 'AddressInvoice']] %>
   </p>
   <p>
     <b><%= f.label :name, I18n.t('lastname').capitalize %> : </b>

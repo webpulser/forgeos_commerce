@@ -24,9 +24,6 @@ fr:
   sign_up: "s'inscrire"
   make_order: 'passer commande'
   disconnect: 'se déconnecter'
-  add_address: 'ajouter une addresse'
-  address_invoice: 'adresse de facturation'
-  address_delivery: 'adresse de livraison'
   cant_not_place_order: 'Nous sommes désolé, mais il est temporairement impossible de passer commande'
   remember_me: 'rester connecté'
   thank_you_to_place_order: "Merci d'avoir passé commande"
@@ -60,7 +57,6 @@ fr:
   cancel: 'annuler'
   unaccessible_function: 'fonction inaccessible'
   my_informations: 'mes informations'
-  confirm_delete_address: 'êtes-vous sûr de vouloir supprimer cette adresse ?'
   unpaid: 'impayé'
   sended: 'expédié'
 
@@ -106,6 +102,12 @@ fr:
   address: 
     one: 'adresse'
     other:  'adresses'
+    invoice: 'adresse de facturation'
+    delivery: 'adresse de livraison'
+    create:
+      action: 'ajouter une addresse'
+    destroy:
+      confirm: 'êtes-vous sûr de vouloir supprimer cette adresse ?'
   city: 'ville'
   country: 'pays'
   zip_code: 'code postale'

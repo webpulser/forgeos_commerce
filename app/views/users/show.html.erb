@@ -30,7 +30,7 @@
     </div>
   </div>
   <div id="tabs-3">
-      <%= link_to_remote I18n.t('add_address').capitalize, :url => new_address_path, :method => :get, :update => 'addresses' %>
+      <%= link_to_remote I18n.t('address.create.action').capitalize, :url => new_address_path, :method => :get, :update => 'addresses' %>
       <div id="addresses">
         <%= render :partial => 'addresses/list', :locals => { :addresses => current_user.addresses } %> 
       </div>

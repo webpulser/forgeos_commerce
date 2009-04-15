@@ -1,19 +1,19 @@
 <% form_tag :controller => 'order', :action => 'valid_shipment' do %>
   <div id="order_addresses" class="addresses">
     <div style="float: left;">
-      <b><%= I18n.t('address_invoice').capitalize %></b>
+      <b><%= I18n.t('address.invoice').capitalize %></b>
       <%= display_address current_user.address_invoice %>
     </div>
 
     <div style="float: left;">
-      <b><%= I18n.t('address_delivery').capitalize %></b>
+      <b><%= I18n.t('address.delivery').capitalize %></b>
       <%= display_address current_user.address_delivery %>
     </div>
 
     <div class="clear"></div>
 
     <center>
-      <%= link_to_remote(I18n.t('add_address').capitalize, :url => { :controller => 'order', :action => 'add_address' }) %>
+      <%= link_to_remote(I18n.t('address.create.action').capitalize, :url => { :controller => 'order', :action => 'add_address' }) %>
     </center>
   </div>
   <div class="clear">&nbsp;</div>
