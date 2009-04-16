@@ -86,6 +86,7 @@ class OrderController < ApplicationController
       @order.orders_details << OrdersDetail.create(:name => product.name, :description => product.description, :price => product.price(false, false), :rate_tax => product.rate_tax, :quantity => cart_product.quantity)
     end
     @cart.destroy
+    @order.paid! if params[:trans] && !params[:trans].blank?
     flash[:notice] = I18n.t('thank_you').capitalize
     session[:order_confirmation] = true
     redirect_to(:action => 'confirmation')
