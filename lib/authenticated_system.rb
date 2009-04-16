@@ -32,13 +32,11 @@ module AuthenticatedSystem
     #  end
     #
     def authorized?(action = action_name, resource = nil)
-      return admin_authorized?(controller_path, action) if logged_in? && current_user.is_a?(Admin) && controller_path.start_with?('admin/')
       logged_in?
     end
 
-    def admin_authorized?(controller, action)
-      return true if current_user.rights.find_by_controller_name_and_action_name(controller, action)
-      return false
+    def admin_authorized?(controller = controller_path, action = action_name, ressource = nil)
+      (logged_in? && current_user.is_a?(Admin) && current_user.rights.find_by_controller_name_and_action_name(controller, action)) || false
     end
 
     # Filter method to enforce a login requirement.
@@ -56,7 +54,7 @@ module AuthenticatedSystem
     #   skip_before_filter :login_required
     #
     def login_required
-      authorized? || access_denied
+      (controller_path.start_with?('admin/') ? admin_authorized? : authorized?) || access_denied
     end
 
     # Redirect as appropriate when an access request fails.
