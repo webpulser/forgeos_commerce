@@ -9,7 +9,7 @@ class Cart < ActiveRecord::Base
   has_many :carts_products, :dependent => :destroy
   has_many :products, :through => :carts_products
   belongs_to :user
-
+  before_save :destroy_duplicates
   # Add a <i>product</i> in this cart
   #
   # Returns false if <i>product</i> is <i>nil</i> or not recorded
@@ -30,6 +30,9 @@ class Cart < ActiveRecord::Base
     end
   end
 
+  def destroy_duplicates
+    destroy_all(:user_id => user_id)
+  end
   # Add a <i>product</i> in this cart
   #
   # Returns false if <i>product</i> is <i>nil</i> or not recorded
