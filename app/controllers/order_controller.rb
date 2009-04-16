@@ -40,7 +40,7 @@ class OrderController < ApplicationController
     # TODO - include ActiveMerchant
     valid_shipment(false)
   end
-
+ 
   # Subscribe or edit user's informations
   # Link render with partials of user's views
   # session[:redirect] is initialize with <i>{:controller => 'order', :action => 'new'}</i>
@@ -77,7 +77,8 @@ class OrderController < ApplicationController
       :address_delivery_id    => address_delivery.id,
       :shipping_method        => shipping_method_detail.name,
       :shipping_method_price  => shipping_method_detail.price(false),
-      :voucher                => (voucher) ? voucher.value : nil
+      :voucher                => (voucher) ? voucher.value : nil,
+      :transaction_number     => params[:trans]
     )
 
     @cart.carts_products.each do |cart_product|
