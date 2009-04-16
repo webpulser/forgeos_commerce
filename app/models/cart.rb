@@ -31,7 +31,7 @@ class Cart < ActiveRecord::Base
   end
 
   def destroy_duplicates
-    destroy_all(:user_id => user_id)
+    Cart.destroy_all(:user_id => user_id) unless user_id.nil?
   end
   # Add a <i>product</i> in this cart
   #
