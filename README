@@ -15,6 +15,7 @@ RailsCommerce is an extension of Ruby on Rails for e-commerce development
 * localized_dates
 * jrails
 * acts_as_ferret
+* sortable_pictures
 
 Install acts_as_tree :
  ./script/plugin install git://github.com/rails/acts_as_tree.git
@@ -41,11 +42,14 @@ Install localized_dates :
 Install jrails :
  ./script/plugin install http://ennerchi.googlecode.com/svn/trunk/plugins/jrails
 
-Install mislav-will_paginate :
+Install acts_as_ferret :
  gem install acts_as_ferret
  cd RAILS_ROOT
  aaf_install
  ./script/ferret_server start
+
+Install sortable_pictures:
+ ./script/plugin install git://github.com/qtousart/sortable_pictures.git
 
 == Initialize
   ./script/generate migration install_rails_commerce_plugin
@@ -54,6 +58,7 @@ Install mislav-will_paginate :
   rake db:migrate;
   rake rails_commerce:fixtures:load FIXTURES=countries,currencies_exchanges_rates,currencies,namables,people;
   rake rails_commerce:generate:rights_and_roles;
+  rake rails_commerce:sync;
 
 == update routes.rb
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
