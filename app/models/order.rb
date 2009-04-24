@@ -12,23 +12,24 @@
 # * <tt>shipping_method</tt> - <i>ShippingMethod</i> name
 # * <tt>shipping_method_price</tt> - <i>ShippingMethod</i> price
 class Order < ActiveRecord::Base
+  include AASM
+  aasm_column :status
+  aasm_initial_state :unpaid
+  aasm_state :unpaid
+  aasm_state :paid
+  aasm_state :accepted
+  aasm_state :sended
 
-  acts_as_state_machine :initial => :unpaid, :column => 'status'
-  state :unpaid
-  state :paid
-  state :accepted
-  state :sended
-
-  event :paid do
+  aasm_event :paid do
     transitions :from => :unpaid, :to => :paid
   end
 
-  event :accepted do
+  aasm_event :accepted do
     #transitions :from => :unpaid, :to => :accepted
     transitions :from => :paid, :to => :accepted
   end
 
-  event :sended do
+  aasm_event :sended do
     transitions :from => :accepted, :to => :sended
   end
 

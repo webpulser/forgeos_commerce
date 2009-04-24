@@ -17,39 +17,43 @@ RailsCommerce is an extension of Ruby on Rails for e-commerce development
 * acts_as_ferret
 * sortable_pictures
 
-Install acts_as_tree :
- ./script/plugin install git://github.com/rails/acts_as_tree.git
+1) Add the following lines at the end of Rails::Initializers in config/environement.rb :
+  config.gem 'mime-types', :lib => 'mime/types'
+  config.gem 'desert', :version => '0.5.0', :lib => 'desert'
+  config.gem "mbleigh-acts-as-taggable-on", :source => "http://gems.github.com", :lib => "acts-as-taggable-on"
+  config.gem "acts_as_ferret", :lib => "acts_as_ferret"
+  config.gem "rubyist-aasm", :source => "http://gems.github.com", :lib => 'aasm'
+  config.gem 'mislav-will_paginate', :source => "http://gems.github.com", :lib => "will_paginate"
+  config.gem 'coupa-acts_as_list', :source => "http://gems.github.com"
+  config.gem 'coupa-acts_as_tree', :source => "http://gems.github.com"
 
-Install acts_as_state_machine :
- ./script/plugin install http://elitists.textdriven.com/svn/plugins/acts_as_state_machine/trunk
+2) Run :
+  gem install desert
+  rake gems:install
 
-Install restful_authentication :
- git clone git://github.com/technoweenie/restful-authentication.git vendor/plugins/restful_authentication
+3) And install all others plugins (don't forget to read there README) :
 
-Install attachment_fu :
- git clone git://github.com/technoweenie/attachment_fu.git vendor/plugins/attachment_fu
+  Install restful_authentication :
+   git clone git://github.com/technoweenie/restful-authentication.git vendor/plugins/restful_authentication
 
-Install mislav-will_paginate :
- gem sources -a http://gems.github.com
- gem install mislav-will_paginate
+  Install attachment_fu :
+   git clone git://github.com/technoweenie/attachment_fu.git vendor/plugins/attachment_fu
 
-Install acts_as_commentable :
- ./script/plugin install http://juixe.com/svn/acts_as_commentable
+  Install acts_as_commentable :
+   ./script/plugin install http://juixe.com/svn/acts_as_commentable
 
-Install localized_dates :
- ./script/plugin install git://github.com/clemens/localized_dates.git
+  Install localized_dates :
+   ./script/plugin install git://github.com/clemens/localized_dates.git
 
-Install jrails :
- ./script/plugin install http://ennerchi.googlecode.com/svn/trunk/plugins/jrails
+  Install jrails :
+   ./script/plugin install http://ennerchi.googlecode.com/svn/trunk/plugins/jrails
 
-Install acts_as_ferret :
- gem install acts_as_ferret
- cd RAILS_ROOT
- aaf_install
- ./script/ferret_server start
+  Install acts_as_ferret :
+   aaf_install
+   ./script/ferret_server start
 
-Install sortable_pictures:
- ./script/plugin install git://github.com/qtousart/sortable_pictures.git
+  Install sortable_pictures:
+   ./script/plugin install git://github.com/qtousart/sortable_pictures.git
 
 == Initialize
   ./script/generate migration install_rails_commerce_plugin
@@ -63,21 +67,7 @@ Install sortable_pictures:
 == update routes.rb
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
 
-== update environment.rb
-  require File.join(File.dirname(__FILE__), 'boot')
-
-  require "desert" # <--- Here !!!
-
-  Rails::Initializer.run do |config|
-
-= Controllers
-
-== Example
-
-  class CartController < ApplicationController
-    include RailsCommerce::CartController
-    before_filter :get_cart
-  end
+== Examples
 
 = Helpers
 
