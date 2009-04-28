@@ -88,7 +88,7 @@ class OrderController < ApplicationController
     @cart.destroy
     @order.paid! if params[:trans] && !params[:trans].blank?
     flash[:notice] = I18n.t('thank_you').capitalize
-    session[:order_confirmation] = true
+    session[:order_confirmation] = @order.id
     redirect_to(:action => 'confirmation')
   end
 
