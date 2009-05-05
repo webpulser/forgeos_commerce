@@ -2,6 +2,7 @@ class Admin::BaseController < ApplicationController
   include AuthenticatedSystem
   layout 'admin'
   before_filter :login_required
+  skip_before_filter :get_cart, :get_wishlist
 private
 
   def initialize
