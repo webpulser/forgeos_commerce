@@ -8,7 +8,7 @@ class ProductController < ApplicationController
     return redirect_to_home unless request.xhr?
     # Sauvegarde de l'attribut (supplémentaire) selectionné
     @attribute = Attribute.find_by_id(params[:attribute_id])
-    return render :nothing => true unless @attribute
+    return render(:nothing => true) unless @attribute
     session["product_#{@product.id}"][:attributes][@attribute.attributes_group.id] = @attribute
 
     # Recherche des correspondances avec les différents attributs selectionnés.
