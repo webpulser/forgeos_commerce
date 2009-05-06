@@ -1,5 +1,7 @@
 <h1><%= I18n.t('picture', :count => 2).capitalize %></h1>
-<% @content_for_tools << link_to(I18n.t('picture.create.action').capitalize, new_admin_picture_path, :class => 'add' ) %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('picture.create.action').capitalize, new_admin_picture_path, :class => 'add' ) %>
+<% end %>
 <div id="list_pictures">
 <table id="table">
   <thead>

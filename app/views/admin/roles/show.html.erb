@@ -19,4 +19,6 @@
 </p>
 
 
-<% @content_for_tools << link_to(I18n.t('edit').capitalize, edit_admin_role_path(@role)) << link_to(I18n.t('back').capitalize, admin_roles_path) %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('edit').capitalize, edit_admin_role_path(@role)) %>
+<% end %>

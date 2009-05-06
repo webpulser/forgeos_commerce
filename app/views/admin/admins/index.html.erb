@@ -28,4 +28,6 @@
 </table>
 
 <br />
-<% @content_for_tools << link_to(I18n.t('admin.create.action').capitalize, new_admin_admin_path, :class => 'add') %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('admin.create.action').capitalize, new_admin_admin_path, :class => 'add') %>
+<% end %>

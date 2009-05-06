@@ -37,4 +37,6 @@
   </div>
 </fieldset>
 <%= hide_html_elements_onload %w[address_invoice address_delivery static_attributes orders_details] %>
-<% @content_for_tools << link_to(I18n.t('list').capitalize, admin_orders_path, :class => 'house' )%>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('list').capitalize, admin_orders_path, :class => 'house') %>
+<% end %>

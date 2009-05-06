@@ -13,4 +13,6 @@
   <%=h @right.action_name %>
 </p>
 
-<% @content_for_tools << link_to(I18n.t('edit').capitalize, edit_admin_right_path(@right)) << link_to(I18n.t('back').capitalize, admin_rights_path) %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('edit').capitalize, edit_admin_right_path(@right)) %>
+<% end %>

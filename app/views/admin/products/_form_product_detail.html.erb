@@ -55,7 +55,7 @@
       <% end %>
       </p>
     <% end %>
-    <center><%= f.submit I18n.t('save').capitalize %><%= link_to I18n.t('back').capitalize, :back %></center>
+    <center><%= f.submit I18n.t('save').capitalize %></center>
   <% end %>
 </fieldset>
 
@@ -72,4 +72,6 @@
 </fieldset>
 
 <%= hide_html_elements_onload %w[static_attributes product_pictures] %>
-<% @content_for_tools << link_to(I18n.t('product.update.action').capitalize, edit_admin_product_path(product_detail.product_parent), :class => 'manage' ) if product_detail.product_parent %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('product.update.action').capitalize, edit_admin_product_path(product_detail.product_parent), :class => 'manage' ) if product_detail.product_parent %>
+<% end %>

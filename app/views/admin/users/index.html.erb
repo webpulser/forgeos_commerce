@@ -2,4 +2,6 @@
 <div id="users">
   <%= render :partial => 'list', :locals => { :users => @users } %>
 </div>
-<% @content_for_tools << link_to(I18n.t('export_newsletter').capitalize, { :controller => 'admin/users', :action => 'export_newsletter', :id => 0 }, :class => 'report_seo' )%>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('export_newsletter').capitalize, { :controller => 'admin/users', :action => 'export_newsletter', :id => 0 }, :class => 'report_seo' ) %>
+<% end %>

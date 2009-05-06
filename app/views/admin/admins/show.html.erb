@@ -28,4 +28,6 @@
   <%= @admin.rights.collect{ |right| right.name }.join(', ') %>
 </p>
 
-<% @content_for_tools << link_to(I18n.t('edit').capitalize, edit_admin_admin_path(@admin)) << link_to(I18n.t('back').capitalize, admin_admins_path) %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('edit').capitalize, edit_admin_admin_path(@admin)) %>
+<% end %>

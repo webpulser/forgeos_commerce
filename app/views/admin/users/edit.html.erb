@@ -1,5 +1,7 @@
 <h1><%= I18n.t('user.update.action').capitalize %></h1>
 <%= render :partial => 'form', :locals => { :user => @user } %>
 <% unless @user.active? %>
-  <% @content_for_tools << link_to(I18n.t('activate').capitalize, :controller => 'users', :action => 'activate', :id => @user.id ) %>
+  <% content_for :tools do %>
+    <%= link_to(I18n.t('activate').capitalize, :controller => 'users', :action => 'activate', :id => @user.id ) %>
+  <% end %>
 <% end %>

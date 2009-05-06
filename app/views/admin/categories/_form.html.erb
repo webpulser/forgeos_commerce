@@ -20,4 +20,6 @@
 </fieldset>
 
 <%= hide_html_elements_onload %w[pictures category_form] %>
-<% @content_for_tools << link_to(I18n.t('list').capitalize, admin_categories_path, :class => 'house' )%>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('list').capitalize, admin_categories_path, :class => 'house') %>
+<% end %>

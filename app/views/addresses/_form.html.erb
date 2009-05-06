@@ -38,5 +38,5 @@
     <b><%= f.label :country_id, I18n.t('country').capitalize %> : </b>
     <%= f.collection_select :country_id, countries, :id, :printable_name,{ :prompt => I18n.t('please_select').capitalize } %>
   </p>
-  <%= f.submit I18n.t('save').capitalize %>&nbsp;<%= link_to_remote I18n.t('back').capitalize, :url => addresses_path, :update => 'addresses', :method => :get %>
+  <%= f.submit I18n.t('save').capitalize %>
 <% end %>

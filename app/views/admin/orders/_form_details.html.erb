@@ -9,4 +9,6 @@
   <p><b><%= f.label :quantity, I18n.t('quantity', :count => 1).capitalize %> : </b><%= f.text_field :quantity %></p>
   <%= f.submit I18n.t('save').capitalize %>
 <% end %>
-<% @content_for_tools << link_to(I18n.t('order.update.action').capitalize, edit_admin_order_path(orders_detail.order), :class => 'manage') %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('order.update.action').capitalize, edit_admin_order_path(orders_detail.order), :class => 'manage') %>
+<% end %>

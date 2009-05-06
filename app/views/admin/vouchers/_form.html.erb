@@ -9,4 +9,6 @@
   <p><b><%= f.label :date_end, I18n.t('date_end').capitalize %> : </b><%= f.date_select :date_end, :include_blank => true %></p>
   <%= f.submit I18n.t('save').capitalize %>
 <% end %>
-<% @content_for_tools << link_to(I18n.t('list').capitalize, admin_vouchers_path, :class => 'house' )%>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('list').capitalize, admin_vouchers_path, :class => 'house') %>
+<% end %>

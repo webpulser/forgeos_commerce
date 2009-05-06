@@ -24,4 +24,6 @@
     <% end %>
   </tbody>
 </table>
-<% @content_for_tools << link_to(I18n.t('order.create.action').capitalize, new_admin_order_path, :class => 'add' )%>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('order.create.action').capitalize, new_admin_order_path, :class => 'add' )%>
+<% end %>

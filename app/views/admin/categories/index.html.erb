@@ -1,6 +1,8 @@
 <%= display_standard_flashes %>
 <h1><%= I18n.t('category', :count=>2).capitalize %></h1>
-<% @content_for_tools << link_to(I18n.t('category.create.action').capitalize, new_admin_category_path, :class => 'add' ) %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('category.create.action').capitalize, new_admin_category_path, :class => 'add' ) %>
+<% end %>
 <div id="categories">
   <ul>
   <%= render :partial => 'list', :locals => { :categories => @categories } %>

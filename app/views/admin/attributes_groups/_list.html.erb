@@ -1,4 +1,6 @@
-<% @content_for_tools << link_to(I18n.t('attributes_group.create.action').capitalize, new_admin_attributes_group_path, :class => 'add' ) %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('attributes_group.create.action').capitalize, new_admin_attributes_group_path, :class => 'add' ) %>
+<% end %>
 <%= display_standard_flashes %>
 <table>
   <thead>

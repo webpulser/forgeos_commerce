@@ -20,4 +20,6 @@
   <% end %>
   </tbody>
 </table>
-<% @content_for_tools << link_to(I18n.t('role.create.action').capitalize, new_admin_role_path, :class => 'add') %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('role.create.action').capitalize, new_admin_role_path, :class => 'add') %>
+<% end %>
