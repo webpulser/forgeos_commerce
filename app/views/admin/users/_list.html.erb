@@ -18,9 +18,13 @@
           <td><%=h user.fullname %></td>
           <td><%=h user.email %></td>
           <td><%= user.created_at %></td>
-          <td><%= (user.active? ? I18n.t('_yes') : I18n.t('_no')).capitalize %></td>
           <td>
-            <%= link_to_remote(I18n.t('activate').capitalize,
+            <% form_tag :controller => 'admin/users', :action => 'activate', :id => user.id do |f| %>
+            <%= check_box_tag :user, :active, user.active?, :onchange => "$(this.form).trigger('submit')"%>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to_remote(I18n.t('user.activation.action').capitalize,
                                :url => { :controller => 'admin/users', :action => 'activate', :id => user.id },
                                :update => 'users')+ ' -' unless user.active? %>
             <%= link_to I18n.t('edit').capitalize, edit_admin_user_path(user) %> -

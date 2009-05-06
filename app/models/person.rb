@@ -24,6 +24,13 @@ class Person < ActiveRecord::Base
     "#{lastname} #{firstname}"
   end
 
+  # Disactivates the user in the database.
+  def disactivate
+    self.activated_at = nil
+    make_activation_code
+    save(false) unless self.new_record?
+  end
+
   # Activates the user in the database.
   def activate
     @activated = true
@@ -32,8 +39,9 @@ class Person < ActiveRecord::Base
     save(false) unless self.new_record?
   end
 
+  # return the user status
+  # the existence of an activation code means they have not activated
   def active?
-    # the existence of an activation code means they have not activated yet
     activation_code.nil?
   end
 

@@ -41,7 +41,9 @@
     <p><b><%= f.label :weight, I18n.t('weight').capitalize %> : </b><%= f.text_field :weight %></p>
     <p><b><%= f.label :keywords, I18n.t('keyword', :count => 2).capitalize %> : </b><%= f.text_field :keywords %></p>
     <p><b><%= f.label :stock, I18n.t('stock', :count => 1).capitalize %> : </b><%= f.text_field :stock %></p>
-    
+
+    <% attributes_groups = AttributesGroup.all %>
+    <% unless attributes_groups.empty? %> 
     <fieldset>
       <legend>
         <%= link_to_effect_toggle(I18n.t('attributes_group', :count => 2).capitalize,'attributes_groups') %> |
@@ -49,7 +51,7 @@
         <%= link_to_function(I18n.t('unselect_all').capitalize,"$('.attributes_groups').each(function(){this.checked=false;})") %>
       </legend>
       <p id="attributes_groups">
-      <% AttributesGroup.all.each do |attr_group| %>
+      <% attributes_groups.each do |attr_group| %>
         <%= check_box_tag 'product_parent[attributes_group_ids][]', attr_group.id,
           attr_group.products.include?(product_parent), :class => 'attributes_groups' %>
         <b><%= label_tag attr_group.name %></b>
@@ -57,13 +59,15 @@
       <% end %>
       </p>
     </fieldset>
+    <% end %>
     <center><%= f.submit I18n.t('save').capitalize %></center>
   <% end %>
 </fieldset>
+<% unless  product_parent.new_record? %>
 <fieldset>
   <legend><%= link_to_effect_toggle(I18n.t('product_detail', :count => 2).capitalize,'product_details') %></legend>
   <div id="product_details">
-    <%= link_to_unless product_parent.new_record?, I18n.t('product_detail.create.action').capitalize,
+    <%= link_to I18n.t('product_detail.create.action').capitalize,
     { :action => 'create_product_detail', :id => product_parent.id },
     :class => 'add' %>
     <%= link_to_remote I18n.t('show_deleted').capitalize,
@@ -76,7 +80,7 @@
 <fieldset>
   <legend><%= link_to_effect_toggle(I18n.t('picture', :count => 2).capitalize,'product_pictures') %></legend>
   <div id="product_pictures">
-    <%= link_to_unless product_parent.id.nil?, I18n.t('picture.create.action').capitalize,
+    <%= link_to I18n.t('picture.create.action').capitalize,
         new_admin_picture_path(:target => 'product', :target_id => product_parent.id),
         :class => 'add' %>
     <div id="list_pictures">
@@ -84,8 +88,8 @@
     </div>
   </div>
 </fieldset>
-
-<%= hide_html_elements_onload %w[product_details static_attributes product_pictures] %>
+<% end %>
+<%= hide_html_elements_onload %w[product_details product_pictures] %>
 <% content_for :tools do %>
   <%= link_to(I18n.t('list').capitalize, admin_products_path, :class => 'house' ) %>
 <% end %>

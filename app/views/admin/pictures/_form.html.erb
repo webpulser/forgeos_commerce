@@ -26,6 +26,7 @@
     'fileExt': '*.jpg;*.jpeg;*.png;*.bmp;*.gif;',
     'multi': 'true',
     'displayData': 'speed'
+    'onAllComplete': function(){alert('ok');}
     });});
 <% end %>
-<%= link_to_function 'Start Upload', "$('#fileUpload').fileUploadStart()" %> | <%= link_to_function 'Clear Queue',"$('#fileUpload').fileUploadClearQueue()" %>
+<%= link_to_function I18n.t('picture.upload.start').capitalize, "$('#fileUpload').fileUploadStart()" %> | <%= link_to_function I18n.t('picture.upload.clear_queue').capitalize,"$('#fileUpload').fileUploadClearQueue()" %>

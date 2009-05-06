@@ -14,7 +14,19 @@ class Admin::UsersController < Admin::BaseController
 
   def activate
     @user = User.find_by_id(params[:id])
-    @user.activate
+    unless @user.active?
+      if @user.activate
+        flash[:notice] = I18n.t('user.activation.success').capitalize
+      else
+        flash[:error] = I18n.t('user.activation.failed').capitalize
+      end
+    else
+      if @user.disactivate
+        flash[:notice] = I18n.t('user.disactivation.success').capitalize
+      else
+        flash[:error] = I18n.t('user.disactivation.failed').capitalize
+      end
+    end
     if request.xhr? 
       index
       return render(:partial => 'list', :locals => { :users => @users })

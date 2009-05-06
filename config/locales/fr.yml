@@ -87,7 +87,7 @@ fr:
   actions: 'actions'
   edit: 'éditer'
   destroy: 'supprimer'
-  activate: 'activé'
+  activate: 'activer'
   name: 'nom'
   email: 'email'
   _yes: 'oui'
@@ -320,6 +320,14 @@ fr:
       success: "l'utilisateur a bien été supprimé"
       failed: "un problème est survenu lors de la suppression de l'utilisateur"
       confirm: "êtes-vous sûr de vouloir supprimer cet utilisateur ?"
+    activation:
+      success: "l'utilisateur a bien été activé"
+      failed: "un problème est survenu lors de l'activation de l'utilisateur"
+      action: "activer"
+    disactivation:
+      success: "l'utilisateur a bien été désactivé"
+      failed: "un problème est survenu lors de l'désactivation de l'utilisateur"
+      action: "désactiver"
   product:
     one : 'produit'
     other: 'produits'
@@ -367,6 +375,9 @@ fr:
       success: "l'image a bien été supprimée"
       failed: "un problème est survenu lors de la suppression de l'image"
       confirm: 'êtes-vous sûr de vouloir supprimer cette image ?'
+    upload:
+      start: "Commencer l'envoie"
+      clear_queue: 'Vider la liste'
   comment:
     one: 'commentaire'
     other: 'commentaires'

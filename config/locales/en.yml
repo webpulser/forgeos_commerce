@@ -320,6 +320,14 @@ en:
       success: 'the user was successfully destroyed'
       failed: 'a problem occured during the user destroy'
       confirm: 'are you sure to delete this user ?'
+    activation:
+      success: 'the user was successfully activated'
+      failed: 'a problem occured during the user activation'
+      action: 'activate'
+    disactivation:
+      success: 'the user was successfully disactivated'
+      failed: 'a problem occured during the user disactivation'
+      action: 'disactivate'
   product:
     one : 'product'
     other: 'products'
@@ -367,6 +375,9 @@ en:
       success: 'the picture was successfully destroyed'
       failed: 'a problem occured during the picture destroy'
       confirm: 'are you sure to delete this picture ?'
+    upload:
+      start: 'Start Upload'
+      clear_queue: 'Clear Queue'
   comment:
     one: 'comment'
     other: 'comments'

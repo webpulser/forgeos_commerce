@@ -6,10 +6,11 @@
     <%= f.submit I18n.t('save').capitalize %>
   <% end %>
 </fieldset>
+<% unless category.new_record? %>
 <fieldset>
   <legend><%= link_to_effect_toggle(I18n.t('picture', :count=>2).capitalize,'pictures') %></legend>
   <div id="pictures">
-    <%= link_to_unless category.new_record?, I18n.t('picture.create.action').capitalize,
+    <%= link_to I18n.t('picture.create.action').capitalize,
       new_admin_picture_path(:target => 'category', :target_id => category.id),
       :class => 'add'
     %>
@@ -18,8 +19,8 @@
     </div>
   </div>
 </fieldset>
-
-<%= hide_html_elements_onload %w[pictures category_form] %>
+<% end %>
+<%#= hide_html_elements_onload %w[pictures category_form] %>
 <% content_for :tools do %>
   <%= link_to(I18n.t('list').capitalize, admin_categories_path, :class => 'house') %>
 <% end %>
