@@ -6,6 +6,7 @@
   <p><b><%= f.label :dynamic, I18n.t('dynamic').capitalize %> : </b><%= f.check_box :dynamic, :onchange => visual_effect(:toggle_appear,'#attributes_fieldset') %></p>
   <center><%= f.submit I18n.t('save').capitalize %></center>
 <% end %>
+<% unless attributes_group.new_record? %>
 <fieldset id="attributes_fieldset"<% if attributes_group.dynamic? %> style="display: none;"<% end %>>
     <legend><%= link_to_effect_toggle(I18n.t('attribute', :count=>2).capitalize,'attributes') %></legend>
   <div id="attributes">
@@ -24,6 +25,7 @@
   </div>
 </fieldset>
 <%= hide_html_elements_onload %w[attributes_group_pictures attributes] %>
+<% end %>
 <% content_for :tools do %>
   <%= link_to(I18n.t('list').capitalize, admin_attributes_groups_path, :class => 'house' )%>
 <% end %>

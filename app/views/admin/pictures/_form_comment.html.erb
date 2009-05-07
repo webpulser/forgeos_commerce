@@ -9,5 +9,6 @@
     </p>
     <%= hidden_field_tag :comment_id, comment.id %>
     <%= f.submit I18n.t('save').capitalize %>
+    <%= link_to_function I18n.t('cancel').capitalize, "$('#comment_add').empty()" %>
   <% end %>
 </div>

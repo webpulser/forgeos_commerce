@@ -451,3 +451,5 @@ a.modules_manage {
 #categories {
  display : table;
 }
+
+ul.comment_list { padding-left: 30px; }

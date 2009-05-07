@@ -78,10 +78,7 @@
 
 <fieldset>
   <legend>
-    <%= link_to_effect_toggle(I18n.t('comment', :count => 2).capitalize ,'comments') %> |
-    <%= link_to_remote I18n.t('comment.create.action').capitalize, 
-    :url => { :controller => 'pictures', :action => 'create_comment', :id => @picture.id },
-    :update => 'comment_add', :method => 'get', :complete => "$('comments').show()" %>
+    <%= link_to_effect_toggle(I18n.t('comment', :count => 2).capitalize ,'comments') %>
   </legend>
   <div id="comments">
     <%= render :partial => 'list_comments', :locals => { :comments => @picture.comments } %>

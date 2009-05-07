@@ -134,6 +134,7 @@ class Admin::PicturesController < Admin::BaseController
   def create_comment
     @picture = Picture.find_by_id(params[:id])
     @comment = @picture.comments.new(params[:comment])
+    @comment.user = current_user
     if request.post?
       if @comment.save
         flash[:notice] = I18n.t('comment.create.success').capitalize

@@ -11,12 +11,6 @@ class Admin::TagsController < Admin::BaseController
     render :action => 'update'
   end
 
-  def show
-  end
-
-  def edit
-  end
-
   def update
     if params[:taggable] && params[:taggable][:tag_list]
       @taggable.tag_list << params[:taggable][:tag_list]
@@ -32,9 +26,6 @@ class Admin::TagsController < Admin::BaseController
 
   def selector
     @tags = Tag.all - @taggable.tags
-  end
-
-  def index
   end
 
 private

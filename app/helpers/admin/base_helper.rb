@@ -8,8 +8,8 @@ module Admin::BaseHelper
   end
 
   def yield_for_tools
-    return if @content_for_tools.nil?
-    out = content_tag('li', link_to(I18n.t('back').capitalize,:back, :class => 'back'))
+    content_for :tools, link_to(I18n.t('back').capitalize,:back, :class => 'back')
+    out = ''
     @content_for_tools.each do |content|
       out += content_tag('li', content) unless content.blank?
     end
