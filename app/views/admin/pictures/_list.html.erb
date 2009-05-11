@@ -4,14 +4,10 @@
     <th><%= I18n.t('content_type').capitalize %></th>
     <th><%= I18n.t('tag', :count => 2).capitalize %></th>
     <th><%= I18n.t('action', :count=>2).capitalize %></th>
-  <thead>
-  <tbody>
-    <tr>
-      <td colspan="4">
-<ul id="picture_list" class="no-list-style-type">
+  </thead>
+  <tbody id="picture_list">
 <% pictures.each do |picture| %>
-  <li id="item_<%= picture.id %>">
-    <table><tr>
+    <tr id="item_<%= picture.id %>">
       <td><%= image_tag picture.public_filename(:small) %></td>
       <td><%= picture.content_type %></td>
       <td id="tags_for_<%= picture.id %>">
@@ -26,15 +22,11 @@
         <%= link_to I18n.t('show').capitalize, admin_picture_path(picture) %> -
         <%= link_to_remote I18n.t('destroy').capitalize, :url => admin_picture_path(picture, :target => target, :target_id => target_id), :confirm => I18n.t('picture.destroy.confirm'), :method => 'delete' %>
       </td>
-    </tr></table>
-  </li>
-<% end %>
-</ul>
-<%= sortable_element 'picture_list',
-  :url => { :controller => 'admin/pictures', :action => 'sort', :id => target_id, :target => target },
-:complete => visual_effect(:highlight, 'picture_list')
-%>
-      </td>
     </tr>
+  <% end %>
   </tbody>
 </table>
+
+<%= sortable_element 'picture_list',
+  :url => { :controller => 'admin/pictures', :action => 'sort', :id => target_id, :target => target },
+  :complete => visual_effect(:highlight, 'picture_list'), :tag => 'tr', :with => "$(this).sortable('serialize',{key:'picture_list[]'})" %>

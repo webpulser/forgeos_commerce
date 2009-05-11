@@ -184,7 +184,9 @@ class Admin::PicturesController < Admin::BaseController
       end
 
       pictures.each do |picture|
-        picture.update_attribute(:position,params['picture_list'].index(picture.picture_id.to_s)+1)
+        if index = params['picture_list'].index(picture.picture_id.to_s)
+          picture.update_attribute(:position,index+1)
+        end
       end
     end
     render(:nothing => true)
