@@ -1,7 +1,7 @@
 en:
 # FrontOffice
   or: 'or'
-  dd_to_cart: 'add to cart'
+  add_to_cart: 'add to cart'
   update: 'update'
   cart:
     one: 'cart'
