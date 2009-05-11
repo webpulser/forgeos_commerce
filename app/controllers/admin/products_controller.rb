@@ -13,7 +13,7 @@ class Admin::ProductsController < Admin::BaseController
 
   def new
     @product_parent = ProductParent.new(params[:product_parent])
-    @product_parent.rate_tax = 19.6
+    @product_parent.rate_tax = 0.0
     render :action => 'create'
   end
 
