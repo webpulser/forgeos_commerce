@@ -15,9 +15,7 @@ class Product < ActiveRecord::Base
   has_many :carts, :through => :carts_products
 
   has_and_belongs_to_many :categories, :readonly => true
-  has_many :sortable_pictures, :dependent => :destroy, :as => :picturable
-  has_many :pictures, :through => :sortable_pictures, :readonly => true, :order => 'sortable_pictures.position'
-
+  sortable_pictures
   after_save :synchronize_stock
 
   def synchronize_stock
