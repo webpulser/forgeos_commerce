@@ -421,8 +421,8 @@ a.modules,
 a.modules_manage {
   padding-left: 19px;
 }
-#display_standard_flashes { width: 100%; }
-#display_standard_flashes * { text-align: center; font-weight: bold; border: solid 2px transparent; }
+#display_standard_flashes { position: absolute; background-color: #ffffff; top: 5px; left: 40%; z-index: 9999; }
+#display_standard_flashes * { text-align: center; font-weight: bold; border: solid 2px transparent; padding: 10px; }
 #display_standard_flashes .notice { color: green; border-color: green; }
 #display_standard_flashes .warning { color: orange; border-color: orange; }
 #display_standard_flashes .error { color: red; border-color: red; }

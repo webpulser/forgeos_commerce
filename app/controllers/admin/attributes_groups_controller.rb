@@ -76,7 +76,10 @@ class Admin::AttributesGroupsController < Admin::BaseController
     @attribute = group.tattributes.new(params[:attribute])
     if request.post?
       if @attribute.save
+        flash[:notice] = I18n.t('attribute.create.success').capitalize
         redirect_to(:action => 'edit', :id => group.id)
+      else
+        flash[:error] = I18n.t('attribute.create.failed').capitalize
       end
     end
   end
@@ -89,7 +92,10 @@ class Admin::AttributesGroupsController < Admin::BaseController
     @attribute = Attribute.find_by_id(params[:id])
     if request.post?
       if @attribute.update_attributes(params[:attribute])
+        flash[:notice] = I18n.t('attribute.update.success').capitalize
         redirect_to(:action => 'edit', :id => @attribute.attributes_group.id)
+      else
+        flash[:error] = I18n.t('attribute.update.failed').capitalize
       end
     end
   end
@@ -101,7 +107,10 @@ class Admin::AttributesGroupsController < Admin::BaseController
     @attribute = Attribute.find_by_id(params[:id])
     group = @attribute.attributes_group
     if @attribute.destroy
+      flash[:notice] = I18n.t('attribute.destroy.success').capitalize
       render(:partial => 'list_attributes', :locals => { :group => group })
+    else
+      flash[:error] = I18n.t('attributes.destroy.failed').capitalize
     end
   end
 

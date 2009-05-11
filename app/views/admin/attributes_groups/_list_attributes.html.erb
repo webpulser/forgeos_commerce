@@ -1,3 +1,4 @@
+<%= display_standard_flashes %>
 <%= link_to_unless group.id.nil?, I18n.t('attribute.create.action').capitalize,
   { :action => 'create_attribute', :id => group.id },
   :class => 'add' %>

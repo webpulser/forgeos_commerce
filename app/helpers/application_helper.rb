@@ -28,7 +28,7 @@ module ApplicationHelper
     error_list
   end
 
-  def display_standard_flashes(message = I18n.t("There were some problems with your submission:"))
+  def display_standard_flashes(message = I18n.t("There were some problems with your submission:"), with_tag = true)
     if !flash[:notice].nil? && !flash[:notice].blank?
       flash_to_display, level = flash[:notice], 'notice'
       flash[:notice] = nil
@@ -48,7 +48,14 @@ module ApplicationHelper
       return
     end
 
-    javascript_tag render(:update){ |page| page.replace_html('display_standard_flashes', content_tag('div', flash_to_display, :class => "#{level}")) }
+    script = render(:update) do |page|
+      page.replace_html('display_standard_flashes', content_tag('div', flash_to_display, :class => "#{level}"))
+      page.visual_effect(:slide_down, 'display_standard_flashes')
+      page.delay(30) do
+        page.visual_effect(:slide_up,'display_standard_flashes')
+      end
+    end
+    return with_tag ? javascript_tag(script) : script
   end
 
 end

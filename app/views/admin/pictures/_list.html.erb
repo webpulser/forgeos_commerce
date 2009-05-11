@@ -29,4 +29,4 @@
 
 <%= sortable_element 'picture_list',
   :url => { :controller => 'admin/pictures', :action => 'sort', :id => target_id, :target => target },
-  :complete => visual_effect(:highlight, 'picture_list'), :tag => 'tr', :with => "$(this).sortable('serialize',{key:'picture_list[]'})" %>
+  :complete => visual_effect(:highlight, 'picture_list'), :tag => 'tr' %>

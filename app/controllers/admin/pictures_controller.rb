@@ -120,8 +120,9 @@ class Admin::PicturesController < Admin::BaseController
         if params[:target].blank?
           page << "oTable.fnDeleteRow(oTable.fnGetPosition($('#tags_for_#{params[:id]}').parents('tr')[0]));"
         else
-          page << "$('#tags_for_#{params[:id]}').parents('li').remove()"
+          page << "$('#tags_for_#{params[:id]}').parents('tr').remove()"
         end
+        page << display_standard_flashes('',false)
       end if request.xhr?
       return render(:partial => 'list', :locals => { :pictures => @pictures, :target => params[:target], :target_id => params[:target_id] })
     else
