@@ -28,7 +28,7 @@ class Product < ActiveRecord::Base
     self.update_attribute('active', !self.active )
   end
 
- def soft_delete
+  def soft_delete
     self.update_attribute('deleted', !self.deleted )
   end
 
@@ -38,7 +38,7 @@ class Product < ActiveRecord::Base
   #
   # <i>Product.new</i> raise <i>Exception</i> code 101
   def initialize(options={})
-    raise RailsCommerceException.new(:code => 101) if self.is_instanciable.nil? || !self.is_instanciable
+ #   raise RailsCommerceException.new(:code => 101) if self.is_instanciable.nil? || !self.is_instanciable
     super(options)
   end
 

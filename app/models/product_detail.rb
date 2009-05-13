@@ -1,15 +1,26 @@
 # ==== Inheritance
 # * <tt>Product</tt>
 class ProductDetail < Product
-  acts_as_ferret :fields => [ :name, :description, :keywords, :reference ] 
+  acts_as_ferret :fields => [ :name, :description, :keywords, :reference ]
+
   has_and_belongs_to_many :tattributes, :join_table => 'attributes_product_details', :class_name => 'Attribute', :readonly => true
   has_many :dynamic_attributes, :dependent => :destroy
   has_many :dynamic_attributes_groups, :through => :dynamic_attributes, :class_name => 'AttributesGroup', :source => 'attributes_group'
 
   belongs_to :product_parent, :foreign_key => 'product_id'
+
   before_create :add_product_parent_dynamic_attributes_groups
   before_destroy :product_parent_product_details_size
-  
+  before_save :clean_strings
+
+  # Call by <i>before_save</i>
+  # convert all blank strings to nil for attribute inheritance save
+  def clean_strings
+    self.class.columns.find_all{ |column| column.type == :string }.each do |field|
+      send("#{field.name}=", nil) if self.attributes[field.name].blank?
+    end
+  end
+
   # Call by <i>before_destroy</i>
   # check if associated ProductParent ProductDetails size was superior to 1
   def product_parent_product_details_size
@@ -110,18 +121,15 @@ class ProductDetail < Product
     return 0
   end
 
-  # Returns all <i>ProductDetail</i> who <i>name LIKE '%keyword%' OR description LIKE '%keyword%'</i>
-  #
-  # Inheritance of <i>ProductParent</i> is consider
-  # when <i>ProductDetail.name</i> or if <i>ProductDetail.descrition</i> are nil
-  #
+
+  # Returns an <i>Array</i> of <i>ProductDetail</i> who match gived keyword
   # ==== Parameters
   # * <tt>:keyword</tt> - a keyword
   def self.search(keyword)
-    results = ProductDetail.find_with_ferret("*#{keyword}*", :limit => :all)
+    results = ProductDetail.find_with_ferret("%#{keyword}%", :limit => :all)
   end
 
-  # Returns a <i>WillPaginate::Collection</i> of <i>ProductDetail</i> who <i>name LIKE '%keyword%' OR description LIKE '%keyword%'</i>
+  # Returns a <i>WillPaginate::Collection</i> of <i>ProductDetail</i> who match gived keyword
   #
   # ==== Parameters
   # * <tt>:keyword</tt> - a keyword

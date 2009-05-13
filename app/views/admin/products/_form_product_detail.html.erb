@@ -41,6 +41,9 @@
     <p><b><%= f.label :on_first_page, I18n.t('on_first_page').capitalize %> : </b><%= f.check_box :on_first_page %></p>
     <p><b><%= f.label :stock, I18n.t('stock', :count => 1).capitalize %> : </b><%= f.text_field :stock %></p>
     <p><b><%= f.label :price, I18n.t('price', :count => 1).capitalize %> : </b><%= f.text_field :price %></p>
+    <p><b><%= f.label :rate_tax, I18n.t('rate_tax').capitalize %> : </b><%= f.text_field :rate_tax %></p>
+    <p><b><%= f.label :weight, I18n.t('weight').capitalize %> : </b><%= f.text_field :weight %></p>
+    <p><b><%= f.label :keywords, I18n.t('keyword', :count => 2).capitalize %> : </b><%= f.text_field :keywords %></p>
 
     <% product_detail.attributes_groups.each do |attr_group| %>
       <p><b><%= label_tag attr_group.name %> : </b>

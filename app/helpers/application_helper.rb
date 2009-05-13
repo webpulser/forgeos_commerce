@@ -51,7 +51,7 @@ module ApplicationHelper
     script = render(:update) do |page|
       page.replace_html('display_standard_flashes', content_tag('div', flash_to_display, :class => "#{level}"))
       page.visual_effect(:slide_down, 'display_standard_flashes')
-      page.delay(30) do
+      page.delay(10) do
         page.visual_effect(:slide_up,'display_standard_flashes')
       end
     end
