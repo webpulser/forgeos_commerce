@@ -9,7 +9,7 @@
 # * <tt>quantity</tt> - <i>Product</i> quantity
 class OrdersDetail < ActiveRecord::Base
   
-  belongs_to :order
+  belongs_to :order, :product_detail
 
   validates_presence_of :name, :price, :rate_tax, :order_id, :quantity
 

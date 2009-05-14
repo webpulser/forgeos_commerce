@@ -83,7 +83,13 @@ class OrderController < ApplicationController
 
     @cart.carts_products.each do |cart_product|
       product = cart_product.product
-      @order.orders_details.create(:name => product.name, :description => product.description, :price => product.price(false, false), :rate_tax => product.rate_tax, :quantity => cart_product.quantity)
+      @order.orders_details.create(:name => product.name,
+                                   :description => product.description,
+                                   :price => product.price(false, false),
+                                   :rate_tax => product.rate_tax,
+                                   :quantity => cart_product.quantity,
+                                   :product_detail_id => cart_product.product_id
+                                  )
     end
     @cart.destroy
     @order.paid! if params[:trans] && !params[:trans].blank?
