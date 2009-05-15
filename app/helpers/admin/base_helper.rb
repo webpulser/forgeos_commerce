@@ -16,4 +16,33 @@ module Admin::BaseHelper
     return out
   end
 
+  def display_standard_flashes(message = I18n.t("There were some problems with your submission:"), with_tag = true)
+    if !flash[:notice].nil? && !flash[:notice].blank?
+      flash_to_display, level = flash[:notice], 'notice'
+      flash[:notice] = nil
+    elsif !flash[:warning].nil? && !flash[:warning].blank?
+      flash_to_display, level = flash[:warning], 'warning'
+      flash[:warning] = nil
+    elsif !flash[:error].nil? && !flash[:error].blank?
+      level = 'error'
+      if flash[:error].instance_of? ActiveRecord::Errors
+        flash_to_display = '<span class="ico close">' + message + '</span>'
+        flash_to_display << activerecord_error_list(flash[:error])
+      else
+        flash_to_display = '<span class="ico close">' + flash[:error] + '</span>'
+      end
+      flash[:error] = nil
+    else
+      return
+    end
+
+    script = render(:update) do |page|
+      page.replace_html('display_standard_flashes', content_tag('div', flash_to_display, :class => "#{level}"))
+      page.visual_effect(:slide_down, 'display_standard_flashes')
+      page.delay(10) do
+        page.visual_effect(:slide_up,'display_standard_flashes')
+      end
+    end
+    return with_tag ? javascript_tag(script) : script
+  end
 end
