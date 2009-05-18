@@ -78,7 +78,7 @@ class OrderController < ApplicationController
       :shipping_method        => shipping_method_detail.name,
       :shipping_method_price  => shipping_method_detail.price(false),
       :voucher                => (voucher) ? voucher.value : nil,
-      :transaction_number     => params[:trans]
+      :transaction_number     => params[:trans],
       :reference              => @cart.id
     )
 
