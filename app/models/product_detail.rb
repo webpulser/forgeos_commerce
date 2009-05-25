@@ -1,7 +1,8 @@
 # ==== Inheritance
 # * <tt>Product</tt>
+require 'rails_commerce/search'
 class ProductDetail < Product
-  acts_as_ferret :fields => [ :name, :description, :keywords, :reference ]
+  acts_as_ferret YAML.load_file(File.join(RAILS_ROOT, 'config', 'search.yml'))['product_detail'].symbolize_keys
 
   has_and_belongs_to_many :tattributes, :join_table => 'attributes_product_details', :class_name => 'Attribute', :readonly => true
   has_many :dynamic_attributes, :dependent => :destroy

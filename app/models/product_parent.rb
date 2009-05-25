@@ -2,7 +2,7 @@
 # * <tt>Product</tt>
 class ProductParent < Product
   has_many :product_details, :foreign_key => 'product_id', :dependent => :destroy, :order => 'active DESC'
-  has_and_belongs_to_many :cross_sellings, :class_name => 'ProductParent', :join_table => 'cross_sellings_product_parents'
+  has_and_belongs_to_many :cross_sellings, :class_name => 'ProductParent', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_parent_id', :join_table => 'cross_sellings_product_parents'
 
   has_and_belongs_to_many :attributes_groups, :readonly => true
   has_and_belongs_to_many :dynamic_attributes_groups, :class_name => 'AttributesGroup', :readonly => true, :join_table => 'attributes_groups_product_parents', :association_foreign_key => 'attributes_group_id',
