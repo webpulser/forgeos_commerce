@@ -1,12 +1,13 @@
-= RailsCommerce
+h1. RailsCommerce
 
 RailsCommerce is an extension of Ruby on Rails for e-commerce development 
 
-= Versionning
+RAILS_COMMERCE_VERSION : 0.6.0
 
-= Prerequisites
+h1. Prerequisites
 
-== Plugins
+h2. Plugins
+
 * acts_as_state_machine
 * acts_as_tree
 * restful_authentication
@@ -17,9 +18,10 @@ RailsCommerce is an extension of Ruby on Rails for e-commerce development
 * acts_as_ferret
 * sortable_pictures
 
-1) Add the following lines at the end of Rails::Initializers in config/environement.rb :
+# Add the following lines at the end of Rails::Initializers in config/environement.rb :
+ <pre><code>
   config.gem 'mime-types', :lib => 'mime/types'
-  config.gem 'desert', :version => '0.5.0', :lib => 'desert'
+  config.gem 'desert', :lib => 'desert'
   config.gem "mbleigh-acts-as-taggable-on", :source => "http://gems.github.com", :lib => "acts-as-taggable-on"
   config.gem "acts_as_ferret", :lib => "acts_as_ferret"
   config.gem "rubyist-aasm", :source => "http://gems.github.com", :lib => 'aasm'
@@ -27,22 +29,17 @@ RailsCommerce is an extension of Ruby on Rails for e-commerce development
   config.gem 'coupa-acts_as_list', :source => "http://gems.github.com"
   config.gem 'coupa-acts_as_tree', :source => "http://gems.github.com"
   config.gem 'jimiray-acts_as_commentable', :source => "http://gems.github.com", :lib => 'acts_as_commentable'
-  config.gem 'qtousart-sortable_pictures', :source => "http://gems.github.com", :lib => 'sortable_pictures'
+  config.gem 'webpulser-sortable_pictures', :source => "http://gems.github.com", :lib => 'sortable_pictures'
+ </code></pre>
 
-2) Run :
-  gem install desert
-  rake gems:install
+# And install all others plugins (don't forget to read there README) :
 
-3) And install all others plugins (don't forget to read there README) :
-
+ <pre><code>
   Install restful_authentication :
    git clone git://github.com/technoweenie/restful-authentication.git vendor/plugins/restful_authentication
 
   Install attachment_fu :
    git clone git://github.com/technoweenie/attachment_fu.git vendor/plugins/attachment_fu
-
-  Install acts_as_commentable :
-   ./script/plugin install http://juixe.com/svn/acts_as_commentable
 
   Install localized_dates :
    ./script/plugin install git://github.com/clemens/localized_dates.git
@@ -52,32 +49,29 @@ RailsCommerce is an extension of Ruby on Rails for e-commerce development
 
   Install acts_as_ferret :
    aaf_install
-   ./script/ferret_server start
+ </pre></code>
+h2. Initialize
 
-  Install sortable_pictures:
-   ./script/plugin install git://github.com/qtousart/sortable_pictures.git
-
-== Initialize
+ <pre><code>
   ./script/generate migration install_rails_commerce_plugin
   -> add "migrate_plugin 'rails_commerce', LAST_MIGRATION" in self.up and "migrate_plugin 'rails_commerce', 0" in self.down
 
-  rake db:migrate;
-  rake rails_commerce:fixtures:load FIXTURES=countries,currencies_exchanges_rates,currencies,namables,people;
-  rake rails_commerce:generate:rights_and_roles;
-  rake rails_commerce:sync;
+  gem install desert
+  rake db:migrate
+  rake rails_commerce:install
+  ./script/ferret_server start (in production)
+ </code></pre>
 
-== update routes.rb
-  map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
+h1. Examples
 
-== Examples
+h2. Helpers
 
-= Helpers
+h3. add in application_helper.rb
 
-== add in application_helper.rb
-
+ <pre><code>
   include CategoryHelper
   include ProductHelper
   include CartHelper
   include OrderHelper
-
+ </code></pre>
 Powered by [http://www.webpulser.com Webpulser]
