@@ -83,7 +83,7 @@ private
   end
 
   def set_locale
-    if !params[:locale].nil? && LOCALES.keys.include?(params[:locale])
+    if !params[:locale].nil? && I18n.available_locales.include?(params[:locale].to_sym)
       if session[:locale] != params[:locale]
         session[:locale] = params[:locale]
       end

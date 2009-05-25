@@ -19,8 +19,8 @@
         </div>
         <div class="change_language">
           <%= I18n.t('change_language').capitalize %> :
-          <% LOCALES.each do |key, locale| %>
-            <%= link_to_unless(I18n.locale==key, key, :controller => 'home', :locale => key) %> |
+          <% I18n.available_locales.each do |key, locale| %>
+            <%= link_to_unless(I18n.locale.to_sym==key.to_sym, key, :controller => 'home', :locale => key) %> |
           <% end %>
         </div>
         <div>&nbsp;</div>

@@ -28,7 +28,7 @@
         <%= I18n.t('change_language').capitalize %> :
         <% locale_links = [] -%>
         <% I18n.available_locales.each do |key, locale| -%>
-          <% locale_links << link_to_unless(I18n.locale==key, key, :locale => key) %>
+          <% locale_links << link_to_unless(I18n.locale.to_sym==key.to_sym, key, :locale => key) %>
         <% end -%>
         <%= locale_links.join(' | ') %>
       </div>
