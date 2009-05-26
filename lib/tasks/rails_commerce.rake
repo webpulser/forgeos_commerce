@@ -1,6 +1,6 @@
 namespace :rails_commerce do
   task :patch do
-    system 'cp vendor/plugins/rails_commerce/config/initializers/*.rb ./config/initializers/'
+    #system 'cp vendor/plugins/rails_commerce/config/initializers/*.rb ./config/initializers/'
   end
 
   task :sync do

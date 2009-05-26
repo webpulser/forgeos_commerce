@@ -16,7 +16,7 @@ module Admin::BaseHelper
     return out
   end
 
-  def display_standard_flashes(message = I18n.t("There were some problems with your submission:"), with_tag = true)
+  def display_standard_flashes(message = nil, with_tag = true)
     if !flash[:notice].nil? && !flash[:notice].blank?
       flash_to_display, level = flash[:notice], 'notice'
       flash[:notice] = nil
@@ -33,7 +33,9 @@ module Admin::BaseHelper
       end
       flash[:error] = nil
     else
-      return
+      return if message.nil?
+      flash_to_display = message
+      level = 'notice'
     end
 
     script = render(:update) do |page|
