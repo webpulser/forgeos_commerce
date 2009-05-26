@@ -5,7 +5,6 @@
 #  * Category
 #  * Comment
 class Admin::PicturesController < Admin::BaseController
-  session :cookie_only => false, :only => :create
   # List all pictures
   def index
     @pictures = Picture.find(:all, :conditions => 'parent_id IS NULL')
