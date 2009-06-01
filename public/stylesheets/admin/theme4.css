@@ -1,3 +1,5 @@
+@import "/stylesheets/jquery-ui/themes/start.css";
+
 body{
 	background:#d9eaed url(/images/admin//bg_mix.jpg) repeat-x top;
 	color: #202020;

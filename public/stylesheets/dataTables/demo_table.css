@@ -1,3 +1,31 @@
+/*
+ *  File:         demo_table.css
+ *  CVS:          $Id$
+ *  Description:  CSS descriptions for DataTables demo pages
+ *  Author:       Allan Jardine
+ *  Created:      Tue May 12 06:47:22 BST 2009
+ *  Modified:     $Date$ by $Author$
+ *  Language:     C#
+ *  Project:      RCAD/USB VPN creation utility
+ *
+ *  Copyright 2009 U4EA. All Rights Reserved.
+ *
+ * ***************************************************************************
+ * DESCRIPTION
+ *
+ * The styles given here are suitable for the demos that are used with the standard DataTables
+ * distribution (see www.datatables.net). You will most likely wish to modify these styles to
+ * meet the layout requirements of your site.
+ *
+ * Common issues:
+ *   'full_numbers' pagination - I use an extra selector on the body tag to ensure that there is
+ *     no conflict between the two pagination types. If you want to use full_numbers pagination
+ *     ensure that you either have "example_alt_pagination" as a body class name, or better yet,
+ *     modify that selector.
+ *   Note that the path used for Images is relative. All images are by default located in
+ *     ../images/ - relative to this CSS file.
+ */
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables features
  */
@@ -54,19 +82,19 @@
 }
 
 .paginate_disabled_previous {
-	background-image: url('/images/dataTables/back_disabled.jpg');
+	background-image: url('../images/back_disabled.jpg');
 }
 
 .paginate_enabled_previous {
-	background-image: url('/images/dataTables/back_enabled.jpg');
+	background-image: url('../images/back_enabled.jpg');
 }
 
 .paginate_disabled_next {
-	background-image: url('/images/dataTables/forward_disabled.jpg');
+	background-image: url('../images/forward_disabled.jpg');
 }
 
 .paginate_enabled_next {
-	background-image: url('/images/dataTables/forward_enabled.jpg');
+	background-image: url('../images/forward_enabled.jpg');
 }
 
 
@@ -81,7 +109,7 @@ table.display {
 }
 
 table.display thead th {
-	padding: 3px 10px;
+	padding: 3px 18px 3px 10px;
 	border-bottom: 1px solid black;
 	font-weight: bold;
 	cursor: pointer;
@@ -113,15 +141,15 @@ table.display td.center {
  */
 
 .sorting_asc {
-	background: url('/images/dataTables/sort_asc.jpg') no-repeat center right;
+	background: url('../images/sort_asc.jpg') no-repeat center right;
 }
 
 .sorting_desc {
-	background: url('/images/dataTables/sort_desc.jpg') no-repeat center right;
+	background: url('../images/sort_desc.jpg') no-repeat center right;
 }
 
 .sorting {
-	background: url('/images/dataTables/sort_both.jpg') no-repeat center right;
+	background: url('../images/sort_both.jpg') no-repeat center right;
 }
 
 
@@ -233,12 +261,14 @@ td.details {
 	width: 40%;
 }
 
-.example_alt_pagination .dataTables_paginate {
+.paging_full_numbers {
 	width: 400px;
+	height: 22px;
+	line-height: 22px;
 }
 
-.example_alt_pagination div.dataTables_paginate span.paginate_button,
- 	.example_alt_pagination div.dataTables_paginate span.paginate_active {
+.paging_full_numbers span.paginate_button,
+ 	.paging_full_numbers span.paginate_active {
 	border: 1px solid #aaa;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -248,24 +278,23 @@ td.details {
 	*cursor: hand;
 }
 
-.example_alt_pagination div.dataTables_paginate span.paginate_button {
+.paging_full_numbers span.paginate_button {
 	background-color: #ddd;
 }
 
-.example_alt_pagination div.dataTables_paginate span.paginate_button:hover {
+.paging_full_numbers span.paginate_button:hover {
 	background-color: #ccc;
 }
 
-.example_alt_pagination div.dataTables_paginate span.paginate_active {
+.paging_full_numbers span.paginate_active {
 	background-color: #99B3FF;
 }
 
-
-table.display tr.row_selected.odd td {
+table.display tr.even.row_selected td {
 	background-color: #B0BED9;
 }
 
-table.display tr.row_selected.even td {
+table.display tr.odd.row_selected td {
 	background-color: #9FAFD1;
 }
 

@@ -1,6 +1,14 @@
 <%= display_standard_flashes %>
-<fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('attribute', :count => 2).capitalize,'static_attributes') %></legend>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('product.update.action').capitalize, edit_admin_product_path(product_detail.product_parent), :class => 'manage' ) if product_detail.product_parent %>
+<% end %>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1"><%= I18n.t('attribute', :count=>2).capitalize %></a></li>
+    <li><a href="#tabs-2"><%= I18n.t('picture', :count => 2).capitalize %></a></li>
+  </ul>
+<div id="tabs-1">
   <% form_for :product_detail, :url => { :id => (product_detail.id || product_detail.product_parent.id) }, :html => { :id => 'static_attributes' } do |f| %>
 
     <p><b><%= f.label :deleted, I18n.t('deleted').capitalize %> : </b><%= f.check_box :deleted %></p>
@@ -60,10 +68,9 @@
     <% end %>
     <center><%= f.submit I18n.t('save').capitalize %></center>
   <% end %>
-</fieldset>
+</div>
 
-<fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('picture', :count => 2).capitalize,'product_pictures') %></legend>
+<div id="tabs-2">
   <div id="product_pictures">
     <%= link_to_unless product_detail.new_record?,I18n.t('picture.create.action').capitalize,
       new_admin_picture_path(:target => 'product', :target_id => product_detail.id),
@@ -72,9 +79,7 @@
       <%= render :partial => 'admin/pictures/list', :locals => { :pictures => product_detail.pictures, :target => 'product', :target_id => product_detail.id } %>
     </div>
   </div>
-</fieldset>
+</div>
+</div>
 
-<%= hide_html_elements_onload %w[static_attributes product_pictures] %>
-<% content_for :tools do %>
-  <%= link_to(I18n.t('product.update.action').capitalize, edit_admin_product_path(product_detail.product_parent), :class => 'manage' ) if product_detail.product_parent %>
-<% end %>
+<%= javascript_tag "$('#tabs').tabs();" %>

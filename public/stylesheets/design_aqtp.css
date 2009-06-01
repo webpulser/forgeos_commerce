@@ -45,7 +45,7 @@ h1 a { display: block; width: 193px; height: 74px; }
 #ancillary .blocks .block a { display: block; }
 
 
-#footer { width: 300px; margin: 0 auto; border-top: 1px solid #3377bb; text-align: center; }
+#footer { margin: 0 auto; }
 #footer p { margin: 0; padding: 10px 0; }
 a { color: #000; }
 .large { margin-left: 100px; }

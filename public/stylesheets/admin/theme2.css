@@ -1,3 +1,5 @@
+@import "/stylesheets/jquery-ui/themes/smoothness.css";
+
 body{
 	background:#f0f7e8 url(/images/admin//bg_light_green.jpg) repeat-x top;
 	color: #202020;

@@ -1,3 +1,5 @@
+@import "/stylesheets/jquery-ui/themes/blitzer.css";
+
 body{
 	background:#f7f6f0 url(/images/admin//bg.jpg) repeat-x top;
 	color: #202020;

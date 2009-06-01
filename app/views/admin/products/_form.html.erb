@@ -1,6 +1,15 @@
 <%= display_standard_flashes %>
-<fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('attribute', :count=>2).capitalize,'static_attributes') %></legend>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('list').capitalize, admin_products_path, :class => 'house' ) %>
+<% end %>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1"><%= I18n.t('attribute', :count=>2).capitalize %></a></li>
+    <li><a href="#tabs-2"><%= I18n.t('product_detail', :count => 2).capitalize %></a></li>
+    <li><a href="#tabs-3"><%= I18n.t('picture', :count => 2).capitalize %></a></li>
+  </ul>
+<div id="tabs-1">
   <% form_for :product_parent, :url => (product_parent.new_record? ? admin_products_path : admin_product_path(product_parent)), :html => { :method => (product_parent.new_record? ? :post : :put), :id => 'static_attributes' } do |f| %>
 
     <p><b><%= f.label :deleted, I18n.t('deleted').capitalize %> : </b><%= f.check_box :deleted %></p>
@@ -62,11 +71,9 @@
     <% end %>
     <center><%= f.submit I18n.t('save').capitalize %></center>
   <% end %>
-</fieldset>
+</div>
 <% unless  product_parent.new_record? %>
-<fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('product_detail', :count => 2).capitalize,'product_details') %></legend>
-  <div id="product_details">
+<div id="tabs-2">
     <%= link_to I18n.t('product_detail.create.action').capitalize,
     { :action => 'create_product_detail', :id => product_parent.id },
     :class => 'add' %>
@@ -75,10 +82,8 @@
     <div id="list">
       <%= render :partial => 'list_product_details', :locals => { :product_details => product_parent.product_details.find_all_by_deleted(false) } %>
     </div>
-  </div>
-</fieldset>
-<fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('picture', :count => 2).capitalize,'product_pictures') %></legend>
+</div>
+<div id="tabs-3">
   <div id="product_pictures">
     <%= link_to I18n.t('picture.create.action').capitalize,
         new_admin_picture_path(:target => 'product', :target_id => product_parent.id),
@@ -87,9 +92,8 @@
       <%= render :partial => 'admin/pictures/list', :locals => { :pictures => product_parent.pictures, :target => 'product', :target_id => product_parent.id } %>
     </div>
   </div>
-</fieldset>
+</div>
 <% end %>
-<%= hide_html_elements_onload %w[product_details product_pictures] %>
-<% content_for :tools do %>
-  <%= link_to(I18n.t('list').capitalize, admin_products_path, :class => 'house' ) %>
-<% end %>
+</div>
+
+<%= javascript_tag "$('#tabs').tabs();" %>

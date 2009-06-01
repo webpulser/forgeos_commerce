@@ -1,3 +1,5 @@
+@import "/stylesheets/jquery-ui/themes/redmond.css";
+
 body{
 	background:#f3f9ff url(/images/admin//bg_blue.jpg) repeat-x top;
 	color: #202020;
