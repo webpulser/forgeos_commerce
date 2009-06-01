@@ -18,28 +18,30 @@ module Admin::BaseHelper
 
   def display_standard_flashes(message = nil, with_tag = true)
     if !flash[:notice].nil? && !flash[:notice].blank?
-      flash_to_display, level = flash[:notice], 'notice'
+      flash_to_display, level = flash[:notice], 'ui-state-highlight'
       flash[:notice] = nil
     elsif !flash[:warning].nil? && !flash[:warning].blank?
-      flash_to_display, level = flash[:warning], 'warning'
+      flash_to_display, level = flash[:warning], 'ui-state-error'
       flash[:warning] = nil
     elsif !flash[:error].nil? && !flash[:error].blank?
-      level = 'error'
+      level = 'ui-state-error'
       if flash[:error].instance_of? ActiveRecord::Errors
         flash_to_display = '<span class="ico close">' + message + '</span>'
         flash_to_display << activerecord_error_list(flash[:error])
       else
-        flash_to_display = '<span class="ico close">' + flash[:error] + '</span>'
+        flash_to_display = flash[:error]
       end
       flash[:error] = nil
     else
       return if message.nil?
       flash_to_display = message
-      level = 'notice'
+      level = 'ui-state-highlight'
     end
 
+    
+    content = content_tag('div', content_tag('div', content_tag('p',flash_to_display, :style => 'text-align : center'), :class => "#{level} ui-corner-all"), :class => 'ui-widget')
     script = render(:update) do |page|
-      page.replace_html('display_standard_flashes', content_tag('div', flash_to_display, :class => "#{level}"))
+      page.replace_html('display_standard_flashes', content)
       page.visual_effect(:slide_down, 'display_standard_flashes')
       page.delay(10) do
         page.visual_effect(:slide_up,'display_standard_flashes')

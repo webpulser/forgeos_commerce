@@ -11,16 +11,19 @@
     <div id='application'>
       <div id='header'>
         <h1><%= link_to(I18n.t('project_name'), :root) %></h1>
-        <div class="change_currency">
-          <%= I18n.t('change_currency').capitalize %> :
-          <% Currency.find(:all).each do |currency| %>
-            <%= link_to_unless($currency==currency, "#{currency.name} (#{currency.html})", :controller => 'home', :action => 'change_currency', :id => currency) %> |
+        <div id="display_standard_flashes">
+          <%= display_standard_flashes %>
+        </div>
+
+        <div class="change_language">
+          <% I18n.available_locales.each do |key, locale| %>
+            <%= link_to_unless(I18n.locale.to_sym==key.to_sym, image_tag("flags/#{key}.gif"), :controller => 'home', :locale => key) %>
           <% end %>
         </div>
-        <div class="change_language">
-          <%= I18n.t('change_language').capitalize %> :
-          <% I18n.available_locales.each do |key, locale| %>
-            <%= link_to_unless(I18n.locale.to_sym==key.to_sym, key, :controller => 'home', :locale => key) %> |
+        <div>&nbsp;</div>
+        <div class="change_currency">
+          <% Currency.find(:all).each do |currency| %>
+            <%= link_to_unless($currency==currency, currency.html, :controller => 'home', :action => 'change_currency', :id => currency) %>
           <% end %>
         </div>
         <div>&nbsp;</div>
@@ -51,9 +54,6 @@
       <div id='page'>
         
         <div id='content'>
-          <div id="display_standard_flashes">
-            <%= display_standard_flashes %>
-          </div>
           <div class="display_categories">
             <%= display_categories %>
           </div>

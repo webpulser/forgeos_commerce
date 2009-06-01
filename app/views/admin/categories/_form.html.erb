@@ -1,26 +1,35 @@
-<fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('attribute', :count=>2).capitalize,'category_form') %></legend>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('list').capitalize, admin_categories_path, :class => 'house') %>
+<% end %>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1"><%= I18n.t('information', :count =>2).capitalize %></a></li>
+  <% unless category.new_record? %>
+    <li><a href="#tabs-2"><%= I18n.t('picture', :count=>2).capitalize %></a></li>
+  <% end %>
+  </ul>
+
+  <div id="tabs-1">
   <% form_for :category, category, :url => (category.id.nil? ? admin_categories_path : admin_category_path(category)) , :html => { :method => (category.id.nil? ? :post : :put),:id => 'category_form' } do |f| %>
     <p><b><%= f.label :parent_id, I18n.t('parent').capitalize %> : </b><%= f.collection_select :parent_id, Category.all, :id, :name, { :prompt => I18n.t('please_select').capitalize, :include_blank => 'None' }%></p>
     <p><b><%= f.label :name, I18n.t('name').capitalize %> : </b><%= f.text_field :name %></p>
     <%= f.submit I18n.t('save').capitalize %>
   <% end %>
-</fieldset>
+  </div>
 <% unless category.new_record? %>
-<fieldset>
-  <legend><%= link_to_effect_toggle(I18n.t('picture', :count=>2).capitalize,'pictures') %></legend>
-  <div id="pictures">
-    <%= link_to I18n.t('picture.create.action').capitalize,
-      new_admin_picture_path(:target => 'category', :target_id => category.id),
-      :class => 'add'
-    %>
-    <div id="list_pictures">
-      <%= render :partial => 'admin/pictures/list', :locals => { :pictures => category.pictures, :target => 'category', :target_id => category.id } %>
+  <div id="tabs-2">
+    <div id="pictures">
+      <%= link_to I18n.t('picture.create.action').capitalize,
+        new_admin_picture_path(:target => 'category', :target_id => category.id),
+        :class => 'add'
+      %>
+      <div id="list_pictures">
+        <%= render :partial => 'admin/pictures/list', :locals => { :pictures => category.pictures, :target => 'category', :target_id => category.id } %>
+      </div>
     </div>
   </div>
-</fieldset>
 <% end %>
-<%#= hide_html_elements_onload %w[pictures category_form] %>
-<% content_for :tools do %>
-  <%= link_to(I18n.t('list').capitalize, admin_categories_path, :class => 'house') %>
-<% end %>
+</div>
+
+<%= javascript_tag "$('#tabs').tabs();" %>

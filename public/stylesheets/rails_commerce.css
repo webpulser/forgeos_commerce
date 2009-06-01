@@ -180,3 +180,5 @@
 
 .display_categories { width: 100px; float: left; }
 #ancillary { position: absolute; bottom: 0; width: 100%; }
+
+#display_standard_flashes { width: 350px; margin: 0px auto; text-align: center; z-index: 9999; position: absolute; left: 40%; top: 0px; }

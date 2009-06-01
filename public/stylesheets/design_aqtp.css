@@ -14,12 +14,12 @@ a:hover { text-decoration: none; color: red;}
 a.block { display: block; text-align: center; }
 
 #header { width: 960px; height: 74px; margin: 0 auto; padding-bottom: 5px; }
-#header h1 { margin-left: -100px; width: 300px; color: green; }
-#header h1 a { color: #568; }
-#header a { color: white; }
+#header h1 { margin-left: -148px;}
+#header h1 a { color: #fff; }
+#header a { color: #fff; }
 
 h1 { float: left; margin: 0; padding: 0; }
-h1 a { display: block; width: 193px; height: 74px; }
+h1 a { display: block; height: 64px; padding-top: 10px; }
 
 .cart_link { float: right; margin-top: 10px; padding-left: 15px; background: url(/images/rails_commerce/cart.gif) center left no-repeat; font-size: 10px; }
 .cart_link a { color: #fff; }

@@ -2,7 +2,7 @@
   <ul>
     <li><a href="#tabs-1"><%= I18n.t('my_informations').capitalize %></a></li>
     <li><a href="#tabs-2"><%= I18n.t('order',:count=>current_user.orders.count).capitalize %></a></li>
-      <li><a href="#tabs-3"><%= I18n.t('address',:count=>2).capitalize %></a></li>
+    <li><a href="#tabs-3"><%= I18n.t('address',:count=>2).capitalize %></a></li>
   </ul>
 
   <div id="tabs-1">
@@ -30,7 +30,7 @@
     </div>
   </div>
   <div id="tabs-3">
-      <%= link_to_remote I18n.t('address.create.action').capitalize, :url => new_address_path, :method => :get, :update => 'addresses' %>
+    <%= link_to_remote I18n.t('address.create.action').capitalize, :url => new_address_path, :method => :get, :update => 'addresses', :html => { :title => I18n.t('address.create.action').capitalize, :class => 'ui-icon ui-icon-plus'} %>
       <div id="addresses">
         <%= render :partial => 'addresses/list', :locals => { :addresses => current_user.addresses } %> 
       </div>

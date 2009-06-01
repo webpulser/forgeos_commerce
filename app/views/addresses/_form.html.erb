@@ -39,4 +39,5 @@
     <%= f.collection_select :country_id, countries, :id, :printable_name,{ :prompt => I18n.t('please_select').capitalize } %>
   </p>
   <%= f.submit I18n.t('save').capitalize %>
+  <%= link_to I18n.t('back').capitalize, user_path(current_user) %>
 <% end %>

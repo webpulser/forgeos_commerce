@@ -5,7 +5,7 @@
   <title><%=t 'project_name' %> - Admin</title>
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
   <%= stylesheet_link_tag 'admin/droppy', 'admin/style', 'admin/theme'+(cookies[:theme]||''), 'dataTables/demo_page', 'dataTables/demo_table' %>
-  <%= javascript_include_tag(:defaults, 'jquery.droppy', 'jquery.dataTables.min', :cache => false) %>
+  <%= javascript_include_tag(:defaults, 'jquery.droppy', 'jquery.dataTables.min', 'jquery.cookies.min', :cache => false) %>
   <!--[if IE]>
     <%= stylesheet_link_tag '/stylesheets/admin/ie-sucks' %>
   <![endif]-->
@@ -25,12 +25,9 @@
       </div>
       <div>&nbsp;</div>
       <div class="change_language">
-        <%= I18n.t('change_language').capitalize %> :
-        <% locale_links = [] -%>
         <% I18n.available_locales.each do |key, locale| -%>
-          <% locale_links << link_to_unless(I18n.locale.to_sym==key.to_sym, key, :locale => key) %>
+          <%= link_to_unless(I18n.locale.to_sym==key.to_sym, image_tag("flags/#{key}.gif"), :locale => key) %>
         <% end -%>
-        <%= locale_links.join(' | ') %>
       </div>
       <div id="topmenu">
         <ul id="nav">
@@ -69,20 +66,6 @@
       <div id="content">
         <%= yield %>
       </div>
-      <div id="sidebar">
-        <ul>
-            <% menu.each_key do |entry| %>
-            <li>
-              <h3><%= link_to(I18n.t(entry).capitalize, { :controller => entry } , :class => 'folder_table') %></h3>
-              <ul>
-                <% menu[entry].each_key do |subentry| %>
-                  <li><%= link_to(I18n.t(subentry).capitalize, { :controller => (menu[entry][subentry]['class'].nil? ? subentry : entry), :action => (menu[entry][subentry]['class'].nil? ? 'index' : subentry), :id => menu[entry][subentry]['id'] } , :class => menu[entry][subentry]['class'] || 'folder_table') %></li>
-                <% end %>
-              </ul>
-            </li>
-          <% end %>
-        </ul>       
-      </div>
     </div>
     <div id="footer">
       <div id="credits">
@@ -90,11 +73,11 @@
       </div>
       <div id="styleswitcher">
         <ul>
-          <li><%= link_to_function 'd', "document.cookie='theme='; window.location.reload()", :title=>I18n.t('default'), :id=>'defswitch' %></li>
-          <li><%= link_to_function 'b', "document.cookie='theme=1'; window.location.reload()", :title=>I18n.t('blue'), :id=>'blueswitch' %></li>
-          <li><%= link_to_function 'g', "document.cookie='theme=2'; window.location.reload()", :title=>I18n.t('green'), :id=>'greenswitch' %></li>
-          <li><%= link_to_function 'br', "document.cookie='theme=3'; window.location.reload()", :title=>I18n.t('brown'), :id=>'brownswitch' %></li>
-          <li><%= link_to_function 'm', "document.cookie='theme=4'; window.location.reload()", :title=>I18n.t('mix'), :id=>'mixswitch' %></li>
+          <li><%= link_to_function 'd', "$.cookies.set('theme', null); window.location.reload()", :title=>I18n.t('default'), :id=>'defswitch' %></li>
+          <li><%= link_to_function 'b', "$.cookies.set('theme', 1); window.location.reload()", :title=>I18n.t('blue'), :id=>'blueswitch' %></li>
+          <li><%= link_to_function 'g', "$.cookies.set('theme',2); window.location.reload()", :title=>I18n.t('green'), :id=>'greenswitch' %></li>
+          <li><%= link_to_function 'br', "$.cookies.set('theme',3); window.location.reload()", :title=>I18n.t('brown'), :id=>'brownswitch' %></li>
+          <li><%= link_to_function 'm', "$.cookies.set('theme',4); window.location.reload()", :title=>I18n.t('mix'), :id=>'mixswitch' %></li>
         </ul>
       </div><br />
     </div>
