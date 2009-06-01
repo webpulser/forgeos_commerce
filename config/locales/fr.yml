@@ -61,6 +61,9 @@ fr:
   sended: 'expédié'
 
 # Admin
+  information:
+    one: 'information'
+    other: 'informations'
   show_deleted: 'voir les éléments supprimés'
   deleted: 'supprimé'
   create: 'créer'

@@ -61,6 +61,9 @@ en:
   sended: 'sended'
 
 # Admin
+  information:
+    one: 'information'
+    other: 'informations'
   show_deleted: 'show deleted'
   deleted: 'deleted'
   create: 'create'
