@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title><%=t 'project_name' %> - Admin</title>
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <%= stylesheet_link_tag 'admin/droppy', 'admin/style', 'admin/theme'+(cookies[:theme]||''), 'dataTables/demo_page', 'dataTables/demo_table' %>
+  <%= javascript_include_tag(:defaults, 'jquery.droppy', 'jquery.dataTables.min', 'jquery.cookies.min', :cache => false) %>
+  <!--[if IE]>
+    <%= stylesheet_link_tag '/stylesheets/admin/ie-sucks' %>
+  <![endif]-->
+</head>
+
+<body>
+  <div id="container">
+    <div id="header">
+      <h2><%=t 'project_name' %> - Admin</h2>
+      <div class="logged_in">
+        <% if logged_in? %>
+          <%= link_to current_user.fullname, admin_account_path(current_user), :title => I18n.t('your_account').capitalize %> |
+          <%= link_to I18n.t('disconnect').capitalize, admin_session_path(:locale => params[:locale]), :method => :delete %>
+        <% else %>
+          <%= link_to I18n.t('log_in').capitalize, new_admin_session_path(:locale => params[:locale]) %>
+        <% end %>
+      </div>
+      <div>&nbsp;</div>
+      <div class="change_language">
+        <% I18n.available_locales.each do |key, locale| -%>
+          <%= link_to_unless(I18n.locale.to_sym==key.to_sym, image_tag("flags/#{key}.gif"), :locale => key) %>
+        <% end -%>
+      </div>
+      <div id="topmenu">
+        <ul id="nav">
+          <% 
+            menu = { 'admins' => { 'roles' => {}, 'rights' => {} }, 'users' => { 'new' => { 'class' => 'add' }, 'export_newsletter' => { 'id' => 0, 'class' => 'report_seo' } },
+            'products' => { 'attributes_groups' => { 'new' => { 'class' => 'add' } }, 'categories' =>{ 'new' => { 'class' => 'add' } }},
+            'orders' => { 'vouchers' => { 'new' => { 'class' => 'add' } }, 'shipping_methods' => { 'new' => { 'class' => 'add' } } },
+            'pictures' => { 'new' => { 'class' => 'add' } }
+            }
+          %>
+
+            <% menu.each_key do |entry| %>
+              <li<% if (@controller.controller_name == entry || menu[entry].keys.include?(@controller.controller_name))%> class="current"<% end %>>
+              <%= link_to(I18n.t(entry).capitalize, { :controller => entry } , :class => 'folder_table') %>
+              <ul>
+                <% menu[entry].each_key do |subentry| %>
+                  <li><%= link_to(I18n.t(subentry).capitalize, { :controller => (menu[entry][subentry]['class'].nil? ? subentry : entry), :action => (menu[entry][subentry]['class'].nil? ? 'index' : subentry), :id => menu[entry][subentry]['id'] } , :class => menu[entry][subentry]['class'] || 'folder_table') %></li>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
+
+        </ul>
+      </div>
+      <%= javascript_tag "$('#nav').droppy({speed: 5, timeout: 5})" %>
+    </div>
+    <div id="top-panel">
+      <div id="panel">
+        <div id="display_standard_flashes"><%= display_standard_flashes %></div>
+        <ul>
+          <%= yield_for_tools %>
+        </ul>
+      </div>
+    </div>
+    <div id="wrapper">
+      <div id="content">
+        <%= yield %>
+      </div>
+    </div>
+    <div id="footer">
+      <div id="credits">
+        <%=t 'template_by' %> <a href="http://www.bloganje.com">Bloganje</a>
+      </div>
+      <div id="styleswitcher">
+        <ul>
+          <li><%= link_to_function 'd', "$.cookies.set('theme', null); window.location.reload()", :title=>I18n.t('default'), :id=>'defswitch' %></li>
+          <li><%= link_to_function 'b', "$.cookies.set('theme', 1); window.location.reload()", :title=>I18n.t('blue'), :id=>'blueswitch' %></li>
+          <li><%= link_to_function 'g', "$.cookies.set('theme',2); window.location.reload()", :title=>I18n.t('green'), :id=>'greenswitch' %></li>
+          <li><%= link_to_function 'br', "$.cookies.set('theme',3); window.location.reload()", :title=>I18n.t('brown'), :id=>'brownswitch' %></li>
+          <li><%= link_to_function 'm', "$.cookies.set('theme',4); window.location.reload()", :title=>I18n.t('mix'), :id=>'mixswitch' %></li>
+        </ul>
+      </div><br />
+    </div>
+  </div>
+</body>
+</html>

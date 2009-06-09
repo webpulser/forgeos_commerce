@@ -1,0 +1,24 @@
+<%= display_standard_flashes %>
+<%= link_to_unless shipping_method.new_record?, I18n.t('shipping_method_detail.create.action').capitalize,
+  { :controller => 'admin/shipping_methods', :action => 'create_detail', :id => shipping_method.id },
+  :class => 'add'
+%>
+<table>
+  <thead>
+    <th><%= I18n.t('name').capitalize %></th>
+    <th><%= I18n.t('price', :count=>1).capitalize %></th>
+    <th><%= I18n.t('action', :count=>2).capitalize %></th>
+  </thead>
+  <tbody>
+    <% shipping_method.shipping_method_details.each do |shipping_method_detail| %>
+      <tr>
+        <td><%= shipping_method_detail.name %></td>
+        <td><%= shipping_method_detail.price %></td>
+        <td>
+          <%= link_to I18n.t('edit').capitalize , { :controller => 'admin/shipping_methods', :action => 'edit_detail', :id => shipping_method.id, :detail_id => shipping_method_detail.id } %> -
+          <%= link_to_remote I18n.t('destroy').capitalize, :url => { :controller => 'admin/shipping_methods', :action => 'destroy_detail', :id => shipping_method.id, :detail_id => shipping_method_detail.id }, :update => 'details', :method => 'get', :confirm => I18n.t('shipping_method_detail.destroy.confirm').capitalize %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

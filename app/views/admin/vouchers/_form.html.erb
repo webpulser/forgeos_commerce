@@ -1,0 +1,14 @@
+<%= display_standard_flashes %>
+<% form_for :voucher, voucher, :url => (voucher.id.nil? ? admin_vouchers_path : admin_voucher_path(voucher)),
+  :html => { :method => (voucher.id.nil? ? :post : :put) } do |f| %>
+  <p><b><%= f.label :name, I18n.t('name').capitalize %> : </b><%= f.text_field :name %></p>
+  <p><b><%= f.label :code, I18n.t('code', :count => 1).capitalize %> : </b><%= f.text_field :code %></p>
+  <p><b><%= f.label :value, I18n.t('value', :count=>1).capitalize %> : </b><%= f.text_field :value %></p>
+  <p><b><%= f.label :total_min, I18n.t('total_min').capitalize %> : </b><%= f.text_field :total_min %></p>
+  <p><b><%= f.label :date_start, I18n.t('date_start').capitalize %> : </b><%= f.date_select :date_start, :include_blank => true %></p>
+  <p><b><%= f.label :date_end, I18n.t('date_end').capitalize %> : </b><%= f.date_select :date_end, :include_blank => true %></p>
+  <%= f.submit I18n.t('save').capitalize %>
+<% end %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('list').capitalize, admin_vouchers_path, :class => 'house') %>
+<% end %>

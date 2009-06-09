@@ -1,0 +1,6 @@
+<% tags = [] %>
+<% @taggable.tag_list.each do |tag| %>
+  <% tags << link_to_remote(tag, :url => admin_tag_path(@taggable, :type => @taggable.class, :tag => tag), :method => 'delete', :confirm => I18n.t('tag.destroy.confirm'), :update => "tags_for_#{@taggable.id}") %>
+<% end %>
+<%= tags.join(',') %>
+<%= link_to_remote('',:url => { :controller => 'admin/tags', :action => 'selector', :id => @taggable.id, :type => @taggable.class},:method => :get, :update => "tags_for_#{@taggable.id}", :html => { :class => 'icon addorder'}) %>

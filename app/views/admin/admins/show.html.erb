@@ -1,0 +1,33 @@
+<p>
+  <b><%= I18n.t('avatar').capitalize %> : </b>
+  <%= image_tag(@admin.avatar.public_filename(:small)) if @admin.avatar && !@admin.avatar.filename.nil? %>
+</p>
+
+<p>
+  <b><%= I18n.t('email').capitalize %> : </b>
+  <%=h @admin.email %>
+</p>
+
+<p>
+  <b><%= I18n.t('lastname').capitalize %> : </b>
+  <%=h @admin.lastname %>
+</p>
+
+<p>
+  <b><%= I18n.t('firstname').capitalize %> : </b>
+  <%=h @admin.firstname %>
+</p>
+
+<p>
+  <b><%= I18n.t('role', :count => 2).capitalize %> : </b>
+  <%= @admin.roles.collect{ |role| role.name}.join(', ') %>
+</p>
+
+<p>
+  <b><%= I18n.t('right', :count => 2).capitalize %> : </b>
+  <%= @admin.rights.collect{ |right| right.name }.join(', ') %>
+</p>
+
+<% content_for :tools do %>
+  <%= link_to(I18n.t('edit').capitalize, edit_admin_admin_path(@admin)) %>
+<% end %>

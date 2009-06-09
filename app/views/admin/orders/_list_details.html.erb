@@ -1,0 +1,23 @@
+<%= display_standard_flashes %>
+<%= link_to_unless order.new_record?, I18n.t('order_detail.create.action').capitalize, { :controller => 'admin/orders', :action => 'create_detail', :id => order.id }, :class => 'add' %>
+<table>
+  <thead>
+    <th><%= I18n.t('name').capitalize %></th>
+    <th><%= I18n.t('price', :count => 1).capitalize %></th>
+    <th><%= I18n.t('quantity', :count => 1).capitalize %></th>
+    <th><%= I18n.t('action', :count => 2).capitalize %></th>
+  </thead>
+  <tbody>
+    <% order.orders_details.each do |orders_detail| %>
+      <tr>
+        <td><%= orders_detail.name %></td>
+        <td><%= orders_detail.price %></td>
+        <td><%= orders_detail.quantity %></td>
+        <td>
+          <%= link_to I18n.t('edit').capitalize, { :controller => 'admin/orders', :action => 'edit_detail', :id => order.id, :detail_id => orders_detail.id } %> -
+          <%= link_to_remote I18n.t('destroy').capitalize, :url => { :controller => 'admin/orders', :action => 'destroy_detail', :id => order.id, :detail_id => orders_detail.id }, :update => 'orders_details', :confirm => I18n.t('order_detail.destroy.confirm').capitalize %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

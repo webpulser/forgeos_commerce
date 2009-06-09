@@ -1,0 +1,14 @@
+<% form_for :orders_detail, orders_detail, :url => { :id => orders_detail.order_id , :detail_id => orders_detail.id }, :html => { :id => 'detail_form' } do |f| %>
+  <%= f.error_messages %>
+  <p><b><%= I18n.t('product', :count => 1).capitalize %> : </b><%= collection_select 'product', 'id', products, :id, :name, { :prompt => I18n.t('please_select').capitalize}, :onchange => remote_function(:url => { :controller => 'admin/orders', :action => "get_product", :id => orders_detail.order_id }, :with => "'product_id=' + this.value", :update => 'detail_form' ) %></p>
+
+  <p><b><%= f.label :name, I18n.t('name').capitalize %> : </b><%= f.text_field :name %></p>
+  <p><b><%= f.label :description, I18n.t('description').capitalize %> : </b><%= f.text_field :description %></p>
+  <p><b><%= f.label :price, I18n.t('price', :count => 1).capitalize %> : </b><%= f.text_field :price %></p>
+  <p><b><%= f.label :rate_tax, I18n.t('rate_tax').capitalize %> : </b><%= f.text_field :rate_tax %></p>
+  <p><b><%= f.label :quantity, I18n.t('quantity', :count => 1).capitalize %> : </b><%= f.text_field :quantity %></p>
+  <%= f.submit I18n.t('save').capitalize %>
+<% end %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('order.update.action').capitalize, edit_admin_order_path(orders_detail.order), :class => 'manage') %>
+<% end %>

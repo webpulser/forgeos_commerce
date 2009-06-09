@@ -1,0 +1,77 @@
+h1. RailsCommerce
+
+RailsCommerce is an extension of Ruby on Rails for e-commerce development 
+
+RAILS_COMMERCE_VERSION : 0.6.0
+
+h1. Prerequisites
+
+h2. Plugins
+
+* acts_as_state_machine
+* acts_as_tree
+* restful_authentication
+* will_paginate
+* acts_as_commentable
+* localized_dates
+* jrails
+* acts_as_ferret
+* sortable_pictures
+
+# Add the following lines at the end of Rails::Initializers in config/environement.rb :
+ <pre><code>
+  config.gem 'mime-types', :lib => 'mime/types'
+  config.gem 'desert', :lib => 'desert'
+  config.gem "mbleigh-acts-as-taggable-on", :source => "http://gems.github.com", :lib => "acts-as-taggable-on"
+  config.gem "acts_as_ferret", :lib => "acts_as_ferret"
+  config.gem "rubyist-aasm", :source => "http://gems.github.com", :lib => 'aasm'
+  config.gem 'mislav-will_paginate', :source => "http://gems.github.com", :lib => "will_paginate"
+  config.gem 'coupa-acts_as_list', :source => "http://gems.github.com"
+  config.gem 'coupa-acts_as_tree', :source => "http://gems.github.com"
+  config.gem 'jimiray-acts_as_commentable', :source => "http://gems.github.com", :lib => 'acts_as_commentable'
+  config.gem 'webpulser-sortable_pictures', :source => "http://gems.github.com", :lib => 'sortable_pictures'
+ </code></pre>
+
+# And install all others plugins (don't forget to read there README) :
+
+ <pre><code>
+  Install restful_authentication :
+   git clone git://github.com/technoweenie/restful-authentication.git vendor/plugins/restful_authentication
+
+  Install attachment_fu :
+   git clone git://github.com/technoweenie/attachment_fu.git vendor/plugins/attachment_fu
+
+  Install localized_dates :
+   ./script/plugin install git://github.com/clemens/localized_dates.git
+
+  Install jrails :
+   ./script/plugin install http://ennerchi.googlecode.com/svn/trunk/plugins/jrails
+
+  Install acts_as_ferret :
+   aaf_install
+ </pre></code>
+h2. Initialize
+
+ <pre><code>
+  ./script/generate migration install_rails_commerce_plugin
+  -> add "migrate_plugin 'rails_commerce', LAST_MIGRATION" in self.up and "migrate_plugin 'rails_commerce', 0" in self.down
+
+  gem install desert
+  rake db:migrate
+  rake rails_commerce:install
+  ./script/ferret_server start (in production)
+ </code></pre>
+
+h1. Examples
+
+h2. Helpers
+
+h3. add in application_helper.rb
+
+ <pre><code>
+  include CategoryHelper
+  include ProductHelper
+  include CartHelper
+  include OrderHelper
+ </code></pre>
+Powered by [http://www.webpulser.com Webpulser]

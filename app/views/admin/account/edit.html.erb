@@ -1,0 +1,4 @@
+<%= render :partial => 'top_links', :locals => { :user => @user } %>
+
+<h1><%= I18n.t('my_account.update.action').capitalize %></h1>
+<%= render :partial => 'form', :locals => { :user => @user }  %>

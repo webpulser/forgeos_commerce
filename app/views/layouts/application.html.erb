@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='fr' xml:lang='fr' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
+    <title><%=t 'project_name' %></title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <%= stylesheet_link_tag session[:design] || 'design_aqtp', 'rails_commerce', 'jquery-ui/ui.base', 'jquery-ui/themes/redmond' %>
+    <%= javascript_include_tag(:defaults, :cache => true) %>
+  </head>
+  <body>
+    <div id='application'>
+      <div id='header'>
+        <h1><%= link_to(I18n.t('project_name'), :root) %></h1>
+        <div id="display_standard_flashes">
+          <%= display_standard_flashes %>
+        </div>
+
+        <div class="change_language">
+          <% I18n.available_locales.each do |key, locale| %>
+            <%= link_to_unless(I18n.locale.to_sym==key.to_sym, image_tag("flags/#{key}.gif"), :controller => 'home', :locale => key) %>
+          <% end %>
+        </div>
+        <div>&nbsp;</div>
+        <div class="change_currency">
+          <% Currency.find(:all).each do |currency| %>
+            <%= link_to_unless($currency==currency, currency.html, :controller => 'home', :action => 'change_currency', :id => currency) %>
+          <% end %>
+        </div>
+        <div>&nbsp;</div>
+        <div class="logged_in">
+          <% if logged_in? %>
+            <%= I18n.t('hello').capitalize + '&nbsp;' + current_user.fullname %>
+            <%= link_to I18n.t('your_account').capitalize, user_path(current_user) %>
+            <%= link_to I18n.t('disconnect').capitalize, session_path(:locale => params[:locale]), :method => :delete %>
+          <% else %>
+            <%= link_to I18n.t('log_in').capitalize, new_session_path(:locale => params[:locale]) %>
+            <%= link_to I18n.t('sign_up').capitalize, new_user_path(:locale => params[:locale]) %>
+          <% end %>
+        </div>
+        <ul class='nav' id='nav'>
+          <li><%= link_to I18n.t('home').capitalize, url_for(:controller => 'home', :action => 'index', :locale => params[:locale]) %></li>
+          <li><%= link_to_catalog %></li>
+          <li>
+            <% form_tag :controller => 'catalog', :action => 'search' do %>
+              <%= text_field_tag 'keywords' %>
+              <%= submit_tag I18n.t('search').capitalize %>
+            <% end %>
+          </li>
+          <li id="rails_commerce_cart_link"><%= link_to_cart %></li>
+          <li id="rails_commerce_wishlist_link"><%= link_to_wishlist %></li>
+        </ul>
+        <div class='clear'></div>
+      </div>
+      <div id='page'>
+        
+        <div id='content'>
+          <div class="display_categories">
+            <%= display_categories %>
+          </div>
+          <div class="yield">
+            <%= yield %>
+          </div>
+        </div>
+        <% unless %w[cart order wishlist].include?(@controller.controller_name) %>
+            <div id="cart">
+              <%= display_cart(@cart, false, true) %>
+            </div>
+            <%= drop_receiving_element('cart', :accept=> '.product,.product_show', :url => {:controller => 'cart', :action => 'add_product'}, :with => "'id='+($(ui.draggable).attr('id').split('_')[1])", :update => 'cart', :hoverClass => 'hover' ) %>
+        <% end %>
+        <% unless %w[cart order wishlist].include?(@controller.controller_name) %>
+            <div id="wishlist">
+              <%= display_wishlist(@wishlist, false, true) %>
+            </div>
+            <%= drop_receiving_element('wishlist', :accept=> '.product,.product_show', :url => {:controller => 'wishlist', :action => 'add_product'}, :with => "'id='+($(ui.draggable).attr('id').split('_')[1])", :update => 'wishlist', :hoverClass => 'hover' ) %>
+        <% end %>
+<!--
+        <div id='sidebar'>
+          <div class='block' id='presentation'>
+            <p class='inside'>
+            </p>
+            <p class='right'>
+              <div class='clear'></div>
+            </p>
+          </div>
+        </div>
+        <div class='clear'></div>-->
+      </div>
+      <div id='ancillary'>
+        <div class='blocks'>
+          <div class='block first'>
+          <div class='clear'></div>
+        </div>
+        <div id='footer'>
+          <p>
+          &copy; 2009 <%= link_to 'Webpulser', 'http://www.webpulser.com', :popup => true %>
+            | Designs : 
+            <%= link_to 'Default', :controller => 'home', :action => 'change_design', :design => 'design_aqtp' %>
+            <%= link_to 'Minimalist', :controller => 'home', :action => 'change_design', :design => 'all' %>
+
+            | Demos : 
+            <%= link_to 'Book', "http://book.rails-commerce.com" %>
+            <%= link_to 'Flower', "http://flower.rails-commerce.com" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

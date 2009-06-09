@@ -1,0 +1,63 @@
+<h1><%= I18n.t('product', :count => 2).capitalize %></h1>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('product.create.action').capitalize, new_admin_product_path, :class => 'add' ) %>
+  <%= link_to(I18n.t('show_deleted'), admin_products_path(:deleted => true), :class => 'home') %>
+<% end %>
+<%= display_standard_flashes %>
+<div id="list">
+  <table id="table">
+    <thead>
+      <tr>
+        <th><%= I18n.t('reference').capitalize %></th>
+        <th><%= I18n.t('name').capitalize %></th>
+        <th><%= I18n.t('description').capitalize %></th>
+        <th><%= I18n.t('product_detail', :count => 2).capitalize %></th>
+        <th><%= I18n.t('stock', :count=>1).capitalize %></th>
+        <th><%= I18n.t('category', :count => 2).capitalize %></th>
+        <th><%= I18n.t('active').capitalize %> ?</th>
+        <th><%= I18n.t('action', :count => 2).capitalize %></th>
+      </tr>
+    </thead>
+    <tbody>
+  <% @products.each do |product| %>
+    <tr>
+      <td><%=h product.reference %></td>
+      <td><%=h product.name %></td>
+      <td><%=h truncate(product.description, :length => 230) %></td>
+      <td><%= product.product_details.count %></td>
+      <td><%= product.stock %></td>
+      <td><%= product.categories.collect{ |cat| cat.name }.join(', ') %></td>
+      <td>
+        <% remote_form_for product, :url => {:controller => 'admin/products', :action => 'activate', :id => product.id} do |f| %>
+          <%= check_box_tag :product, :active, product.active, :onchange => "$(this.form).trigger('onsubmit')"%>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to I18n.t('edit').capitalize, edit_admin_product_path(product) %> -
+        <%= link_to I18n.t('destroy').capitalize, admin_product_path(product), :method => :delete, :confirm => I18n.t('product.destroy.confirm').capitalize %>
+      </td>
+    </tr>
+  <% end %>
+    </tbody>
+  </table>
+</div>
+<%= javascript_tag "$($('#table').dataTable({
+        'aoColumns': [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            { 'bSearchable': false, 'bSortable': false },
+            { 'bSearchable': false, 'bSortable': false }
+        ],
+        'oLanguage': { 
+        'sProcessing':'#{I18n.t('jquery.dataTables.oLanguage.sProcessing')}',
+        'sLengthMenu':'#{I18n.t('jquery.dataTables.oLanguage.sLengthMenu')}',
+        'sZeroRecords':'#{I18n.t('jquery.dataTables.oLanguage.sZeroRecords')}',
+        'sInfo':'#{I18n.t('jquery.dataTables.oLanguage.sInfo')}',
+        'sInfoEmpty':'#{I18n.t('jquery.dataTables.oLanguage.sInfoEmpty')}',
+        'sSearch':'#{I18n.t('jquery.dataTables.oLanguage.sSearch')}' }
+    }
+))" %>

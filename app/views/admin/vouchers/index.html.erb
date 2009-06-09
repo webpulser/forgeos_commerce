@@ -1,0 +1,4 @@
+<h1><%= I18n.t('voucher', :count=>2).capitalize %></h1>
+<div id="vouchers">
+  <%= render :partial => 'list', :locals => { :vouchers => @vouchers } %>
+</div>

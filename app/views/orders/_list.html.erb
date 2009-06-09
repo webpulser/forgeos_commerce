@@ -1,0 +1,32 @@
+<% if orders.empty? %>
+  <%= I18n.t('order', :count => 0).capitalize %>
+<% else %>
+<table>
+  <thead>
+    <th><%= I18n.t('reference').capitalize %></th>
+    <th><%= I18n.t('status', :count=>1).capitalize %></th>
+    <th><%= I18n.t('address.delivery').capitalize %></th>
+    <th><%= I18n.t('action', :count=>2).capitalize %></th>
+  </thead>
+  <tbody>
+  <% orders.each do |order| %>
+    <tr>
+      <td><%#= order.reference %></td>
+      <td><%= I18n.t(order.aasm_current_state).capitalize %></td>
+      <td>
+        <pre>
+          <%= order.address_delivery.civility.name %>&nbsp;<%= order.address_delivery.name %>&nbsp;<%= order.address_delivery.firstname %>
+          <%= order.address_delivery.address %>&nbsp;<%= order.address_delivery.address_2 %>
+          <%= order.address_delivery.zip_code %>&nbsp;<%= order.address_delivery.city %>
+          <%= order.address_delivery.country.name %>
+        </pre>
+      </td>
+      <td>
+        <%= link_to_remote I18n.t('show').capitalize, :url => order_path(order), :method => 'get', :update => 'orders' %> -
+        <%#= link_to_remote I18n.t('destroy').capitalize, :url => order_path(order), :confirm => I18n.t('order.destroy.confirm').capitalize, :method => 'delete', :update => 'orders' %>
+      </td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+<% end %>

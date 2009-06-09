@@ -1,0 +1,7 @@
+<h1><%= I18n.t('user', :count => 2).capitalize %></h1>
+<div id="users">
+  <%= render :partial => 'list', :locals => { :users => @users } %>
+</div>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('export_newsletter').capitalize, { :controller => 'admin/users', :action => 'export_newsletter', :id => 0 }, :class => 'report_seo' ) %>
+<% end %>

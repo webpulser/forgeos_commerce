@@ -1,0 +1,14 @@
+<% unless defined?(level) -%>
+  <% level = 0 -%>
+<% end -%>
+<% categories.each do |category| -%>
+  <li id="category_<%= category.id %>" rel="<%= category.children.empty? ? 'file' : 'folder' %>">
+      <% picture = category.pictures.first -%>
+    <a href="#"<% if picture %> style="background-image : url('<%= picture.public_filename(:icon) %>');"<% end %>><%= category.name %></a>
+      <%= "<ul>" unless category.children.empty? %>
+      <% category.children.each do |child| -%>
+        <%= render :partial => 'admin/categories/list', :locals => { :categories => [child], :level => (level + 1) } %>
+      <% end -%>
+      <%= "</ul>" unless category.children.empty? %>
+    </li>
+<% end %>

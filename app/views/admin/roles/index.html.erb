@@ -1,0 +1,25 @@
+<h1><%= I18n.t('role', :count => 2).capitalize %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= I18n.t('name').capitalize %></th>
+      <th><%= I18n.t('action', :count => 2).capitalize %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% for role in @roles %>
+    <tr>
+      <td><%=h role.name %></td>
+      <td>
+        <%= link_to I18n.t('show').capitalize, admin_role_path(role) %> -
+        <%= link_to I18n.t('edit').capitalize, edit_admin_role_path(role) %> -
+        <%= link_to I18n.t('destroy').capitalize, admin_role_path(role), :confirm => I18n.t('role.destroy.confirm').capitalize, :method => :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('role.create.action').capitalize, new_admin_role_path, :class => 'add') %>
+<% end %>

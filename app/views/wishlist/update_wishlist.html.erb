@@ -1,0 +1,7 @@
+<%= display_wishlist(@wishlist, false, true) %>
+<%= javascript_tag(render(:update){ |page|
+  page.replace_html("rails_commerce_wishlist_link", link_to_wishlist)
+  page.visual_effect(:pulsate, 'rails_commerce_wishlist_link')
+  page.visual_effect(:highlight, 'rails_commerce_wishlist')
+}) %>
+

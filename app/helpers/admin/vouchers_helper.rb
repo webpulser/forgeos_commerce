@@ -1,0 +1,2 @@
+module Admin::VouchersHelper
+end

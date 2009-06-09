@@ -1,0 +1,11 @@
+--- 
+currencies_001: 
+  html: $
+  name: usd
+  default: "0"
+  code: USD
+currencies_002: 
+  html: "&euro;"
+  name: euro
+  default: "1"
+  code: EUR

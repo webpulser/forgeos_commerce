@@ -1,0 +1,41 @@
+<%= display_standard_flashes %>
+<% form_for :user, user, :url => (user.id.nil? ? admin_users_path : admin_user_path(user)), :html => { :method => (user.id.nil? ? :post : :put), :multipart => true, :id => 'user_form' } do |f| %>
+  <% fields_for :avatar, user.avatar do |avatar| %>
+    <%= image_tag(user.avatar.public_filename(:small)) if user.avatar && !user.avatar.filename.nil? %>
+    <p><b><%= avatar.label :uploaded_data, I18n.t('avatar').capitalize %> : </b><%= avatar.file_field :uploaded_data %></p>
+  <% end %>
+  <p><b><%= f.label :firstname, I18n.t('firstname').capitalize %> : </b><%= f.text_field :firstname %></p>
+  <p><b><%= f.label :lastname, I18n.t('lastname').capitalize %> : </b><%= f.text_field :lastname %></p>
+  <p><b><%= f.label :email, I18n.t('email').capitalize %> : </b><%= f.text_field :email %></p>
+  <p><b><%= f.label :password, I18n.t('password').capitalize %> : </b><%= f.password_field :password %></p>
+  <p><b><%= f.label :password_confirmation, I18n.t('password_confirmation').capitalize %> : </b><%= f.password_field :password_confirmation %></p>
+
+  <% 
+    civilities = Civility.all
+    countries = Country.all
+%>
+  <fieldset>
+    <legend><%= link_to_effect_toggle(I18n.t('address.invoice').capitalize,'address_invoice') %></legend>
+    <div id="address_invoice">
+      <% fields_for user.address_invoice do |fa| %>
+        <%= render :partial => 'admin/addresses/form', :locals => { :f => fa } %>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend><%= link_to_effect_toggle(I18n.t('address.delivery').capitalize,'address_delivery') %></legend>
+    <div id="address_delivery">
+      <% fields_for user.address_delivery do |fb| %>
+        <%= render :partial => 'admin/addresses/form', :locals => { :f => fb } %>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <%= f.submit I18n.t('save').capitalize %>
+<% end %>
+
+<%= hide_html_elements_onload %w[address_invoice address_delivery] %>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('list').capitalize, admin_users_path, :class => 'house' ) %>
+<% end %>

@@ -1,0 +1,5 @@
+<% remote_form_for :taggable, @taggable, :url => admin_tag_path(@taggable, :type => @taggable.class), :method => :put, :update => "tags_for_#{@taggable.id}"  do |f| %>
+  <%= f.collection_select :tag_list, @tags, :name, :name,{ :include_blank => true,:prompt => I18n.t('please_select')},  :onchange => "$(this.form).trigger('onsubmit')" %>
+  <%= link_to_remote '', :url => new_admin_tag_path(:id => @taggable.id, :type => @taggable.class), :update => "tags_for_#{@taggable.id}", :html => { :class => 'icon add', :title => I18n.t('tag.create.action') } %>
+  <%= link_to_remote I18n.t('cancel'),:url => admin_tag_path(@taggable, :type => @taggable.class),:method => :put, :update => "tags_for_#{@taggable.id}" %>
+<% end %>

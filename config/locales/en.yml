@@ -1,0 +1,506 @@
+en:
+# FrontOffice
+  or: 'or'
+  add_to_cart: 'add to cart'
+  update: 'update'
+  cart:
+    one: 'cart'
+    other: 'carts'
+  empty_cart: 'empty cart'
+  add_to_wishlist: 'add to wishlist'
+  wishlist:
+    one: 'wishlist'
+    other: 'wishlists'
+    send:
+      friend: 'send to a friend'
+      email: 'send by mail'
+  empty_wishlist: 'empty wishlist'
+  home: 'home'
+  change_language: 'change language'
+  change_currency: 'change currency'
+  search: 'search'
+  catalog: 'catalog'
+  log_in: 'log in'
+  sign_up: 'sign up'
+  make_order: 'Make order'
+  disconnect: 'disconnect'
+  cant_not_place_order: 'We are sorry, but it is temporarily impossible to place order'
+  remember_me: 'remember me'
+  thank_you_to_place_order: 'Thank you for your order'
+  remove_this_voucher: 'remove this voucher'
+  add: 'add'
+  free_payment: "it's free!!!"
+  no_product: 'no product'
+  total: 'total'
+  unit_price: 'unit price' 
+  tax:
+    one: 'tax'
+    other: 'taxes'
+  product_added: 'product successfully added'
+  your_cart_is_empty: 'your cart is empty'
+  cart_is_empty: 'the cart is empty'
+  your_wishlist_is_empty: 'your wishlist is empty'
+  wishlist_is_empty: 'the wishlist is empty'
+  product_has_been_removed: 'product successfully remove from cart'
+  account_update_ok: 'your account have been successfully created'
+  account_creation_ok: 'your account have been successfully created'
+  signup_completed: 'your subscrition have been completed'
+  log_in_ok: 'you are successfully connected'
+  log_in_failed: 'connexion failed, check your email and password' 
+  log_out_ok: 'you have been successfully disconnected'
+  hello: 'hello'
+  confirm_empty_cart: 'are you sure to wipe your cart ?'
+  confirm_empty_wishlist: 'are you sure to wipe your wishlist ?'
+  confirm_remove_product: 'are you sure to remove this product from your cart ?'
+  type: 'type'
+  your_account: 'your account'
+  cancel: 'cancel'
+  unaccessible_function: 'unaccessible function'
+  my_informations: 'my informations'
+  unpaid: 'unpaid'
+  sended: 'sended'
+
+# Admin
+  information:
+    one: 'information'
+    other: 'informations'
+  show_deleted: 'show deleted'
+  deleted: 'deleted'
+  create: 'create'
+  new: 'new'
+  products: 'products'
+  orders: 'orders'
+  shipping_methods: 'shipping methods'
+  pictures: 'pictures'
+  attributes_groups: 'attributes groups'
+  attributes: 'attributes'
+  vouchers: 'vouchers'
+  users: 'users'
+  categories: 'categories'
+  roles: 'roles'
+  rights: 'rights'
+  admins: 'administrators'
+  controller_name: 'controller name'
+  action_name: 'action name'
+  export_newsletter: 'export for newsletter'
+  template_by: 'Template by'
+  avatar: 'avatar'
+  created_on: 'created on'
+  active: 'active'
+  actions: 'actions'
+  edit: 'edit'
+  destroy: 'destroy'
+  activate: 'activate'
+  name: 'name'
+  email: 'email'
+  _yes: 'yes'
+  _no: 'no'
+  firstname: 'firstname'
+  lastname: 'lastname'
+  password: 'password'
+  password_confirmation: 'password confirmation'
+  save: 'save'
+  list: 'list'
+  civility: 'civility'
+  address: 
+    one: 'address'
+    other:  'addresses'
+    invoice: 'Address invoice'
+    delivery: 'Address delivery'
+    create:
+      action: 'add an address'
+    destroy:
+      confirm: 'are you sure to remove this address ?'
+  city: 'city'
+  country: 'country'
+  zip_code: 'zip code'
+  show: 'show'
+  back: 'back'
+  thumbnail:
+    one: 'thumbnail'
+    other: 'thumbnails'
+  comment:
+    one: 'comment'
+    other: 'comments'
+  associated_element:
+    one: 'associated element'
+    other: 'associated elements'
+  title: 'title'
+  filename: 'file name'
+  content_type: 'content type'
+  reference: 'reference'
+  description: 'description'
+  rate_tax: 'taxe'
+  selling_date: 'selling date'
+  weight: 'weight'
+  keyword:
+    one: 'keyword'
+    other: 'keywords'
+  stock:
+    one: 'stock'
+    other : 'stocks'
+  select_all: 'select all'
+  unselect_all: 'unselect all'
+  price:
+    one: 'price'
+    other: 'prices'
+  offer_month: 'month offer ?'
+  on_first_page: 'on the first page ?'
+  action:
+    one: 'action'
+    other: 'actions'
+  quick_edit: 'quick edit'
+  status:
+    one: 'status'
+    other: 'statuses'
+  shipping_method_price:
+    one: "shipping method price"
+    other: "shipping method prices"
+  quantity:
+    one: 'quantity'
+    other: 'quantities'
+  please_select: 'please select'
+  weight_max: 'max weight'
+  weight_min: 'min weight'
+  code:
+   one: 'code'
+   other: 'codes'
+  value:
+    one: 'value'
+    other:  'values'
+  total_min: 'total min'
+  date_start: 'start date'
+  date_end: 'end date'
+  parent: 'parent'
+  dynamic: 'dynamic'
+  values_count: 'values count'
+  pay: 'validate payment'
+  accept: 'validate order'
+  send: 'validate shipping'
+  attributes_group:
+    one: "attributes group"
+    other: "attributes groups"
+    create:
+      success: 'the attributes group was successfully created'
+      failed: 'a problem occured during the attributes group creation'
+      action: 'create an attributes group'
+    update:
+      success: 'the attributes group was successfully updated'
+      failed: 'a problem occured during the attributes group update'
+      action: 'edit attributes group'
+    destroy:
+      success: 'the attributes group was successfully destroyed'
+      failed: 'a problem occured during the attributes group destroy'
+      confirm: 'are you sure to delete this attributes group ?' 
+  attribute:
+    one: 'attribute'
+    other: 'attributes'
+    create:
+      success: 'the attribute was successfully created'
+      dynamic: "this group is dynamic, it can't have attributes"
+      failed: 'a problem occured during the attribute creation'
+      action: 'create an attribute'
+    update:
+      success: 'the attribute was successfully updated'
+      failed: 'a problem occured during the attribute update'
+      action: 'edit attribute'
+    destroy:
+      success: 'the attribute was successfully destroyed'
+      failed: 'a problem occured during the attribute destroy'
+      confirm: 'are you sure to delete this attribute ?'
+  category:
+    one: 'category'
+    other: 'categories'
+    create:
+      success: 'the category was successfully created'
+      failed: 'a problem occured during the category creation'
+      action: 'create a category'
+    update:
+      success: 'the category was successfully updated'
+      failed: 'a problem occured during the category update'
+      action: 'edit category'
+    destroy:
+      success: 'the category was successfully destroyed'
+      failed: 'a problem occured during the category destroy'
+      confirm: 'are you sure to delete this category ?' 
+    sub:
+      create:
+        action: 'create a subcategory'
+  order_detail:
+    one: 'order detail'
+    other: 'order details'
+    create:
+      success: 'the order detail was successfully created'
+      failed: 'a problem occured during the order detail creation'
+      action: 'create an order detail'
+    update:
+      success: 'the order detail was successfully updated'
+      failed: 'a problem occured during the order detail update'
+      action: 'edit order detail'
+    destroy:
+      success: 'the order detail was successfully destroyed'
+      failed: 'a problem occured during the order detail destroy'
+      confirm: 'are you sure to delete this order detail ?'
+  order:
+    zero: 'no orders'
+    one: 'order'
+    other: 'orders'
+    create:
+      success: 'the order was successfully created'
+      failed: 'a problem occured during the order creation'
+      action: 'create an order'
+    update:
+      success: 'the order was successfully updated'
+      failed: 'a problem occured during the order update'
+      action: 'edit order'
+    destroy:
+      success: 'the order was successfully destroyed'
+      failed: 'a problem occured during the order destroy'
+      confirm: 'are you sure to delete this order ?'
+    pay:
+      success: 'the order was successfully paid'
+    accept:
+      success: 'the order was successfully accepted'
+    send:
+      success: 'the order was successfully sent'
+  voucher:
+    one: 'voucher'
+    other: 'vouchers'
+    create:
+      success: 'the voucher was successfully created'
+      failed: 'a problem occured during the voucher creation'
+      action: 'create a voucher'
+    update:
+      success: 'the voucher was successfully updated'
+      failed: 'a problem occured during the voucher update'
+      action: 'edit voucher'
+    destroy:
+      success: 'the voucher was successfully destroyed'
+      failed: 'a problem occured during the voucher destroy'
+      confirm: 'are you sure to delete this voucher ?'
+  shipping_method:
+    one: "shipping method"
+    other: "shipping methods"
+    create:
+      success: 'the shipping method was successfully created'
+      failed: 'a problem occured during the shipping method creation'
+      action: 'create a shipping method'
+    update:
+      success: 'the shipping method was successfully updated'
+      failed: 'a problem occured during the shipping method update'
+      action: 'edit shipping method'
+    destroy:
+      success: 'the shipping method was successfully destroyed'
+      failed: 'a problem occured during the shipping method destroy'
+      confirm: 'are you sure to delete this shipping method ?'
+  shipping_method_detail:
+    one: "shipping method detail"
+    other: "shipping method details"
+    create:
+      success: 'the shipping method detail was successfully created'
+      failed: 'a problem occured during the shipping method detail creation'
+      action: 'create a shipping method detail'
+    update:
+      success: 'the shipping method detail was successfully updated'
+      failed: 'a problem occured during the shipping method detail update'
+      action: 'edit shipping method detail'
+    destroy:
+      success: 'the shipping method detail was successfully destroyed'
+      failed: 'a problem occured during the shipping method detail destroy'
+      confirm: 'are you sure to delete this shipping method detail ?'
+  user:
+    one: 'user'
+    other: 'users'
+    create:
+      success: 'the user was successfully created'
+      failed: 'a problem occured during the user creation'
+      action: 'create an user'
+    update:
+      success: 'the user was successfully updated'
+      failed: 'a problem occured during the user update'
+      action: 'edit user'
+    destroy:
+      success: 'the user was successfully destroyed'
+      failed: 'a problem occured during the user destroy'
+      confirm: 'are you sure to delete this user ?'
+    activation:
+      success: 'the user was successfully activated'
+      failed: 'a problem occured during the user activation'
+      action: 'activate'
+    disactivation:
+      success: 'the user was successfully disactivated'
+      failed: 'a problem occured during the user disactivation'
+      action: 'disactivate'
+  product:
+    one : 'product'
+    other: 'products'
+    create:
+      success: 'the product was successfully created'
+      failed: 'a problem occured during the product creation'
+      action: 'create a product'
+    update:
+      success: 'the product was successfully updated'
+      failed: 'a problem occured during the product update'
+      action: 'edit product'
+    destroy:
+      success: 'the product was successfully destroyed'
+      failed: 'a problem occured during the product destroy'
+      confirm: 'are you sure to delete this product ?'
+  product_detail:
+    one : 'product detail'
+    other: 'products details'
+    create:
+      success: 'the product detail was successfully created'
+      failed: 'a problem occured during the product detail creation'
+      action: 'create a product detail'
+    update:
+      success: 'the product detail was successfully updated'
+      failed: 'a problem occured during the product detail update'
+      action: 'edit product detail'
+    destroy:
+      success: 'the product detail was successfully destroyed'
+      failed: 'a problem occured during the product detail destroy'
+      confirm: 'are you sure to delete this product detail ?'
+  picture:
+    one: 'picture'
+    other: 'pictures'
+    show:
+      action: 'show picture'
+    create:
+      success: 'the picture was successfully created'
+      failed: 'a problem occured during the picture creation'
+      action: 'create a picture'
+    update:
+      success: 'the picture was successfully updated'
+      failed: 'a problem occured during the picture update'
+      action: 'edit picture'
+    destroy:
+      success: 'the picture was successfully destroyed'
+      failed: 'a problem occured during the picture destroy'
+      confirm: 'are you sure to delete this picture ?'
+    upload:
+      start: 'Start Upload'
+      clear_queue: 'Clear Queue'
+  comment:
+    one: 'comment'
+    other: 'comments'
+    create:
+      success: 'the comment was successfully created'
+      failed: 'a problem occured during the comment creation'
+      action: 'create a comment'
+    update:
+      success: 'the comment was successfully updated'
+      failed: 'a problem occured during the comment update'
+      action: 'edit comment'
+    destroy:
+      success: 'the comment was successfully destroyed'
+      failed: 'a problem occured during the comment destroy'
+      confirm: 'are you sure to delete this comment ?'
+  admin:
+    one: 'administrator'
+    other: 'administrators'
+    create:
+      success: 'the administrator was successfully created'
+      failed: 'a problem occured during the administrator creation'
+      action: 'create an administrator'
+    update:
+      success: 'the administrator was successfully updated'
+      failed: 'a problem occured during the administrator update'
+      action: 'edit administrator'
+    destroy:
+      success: 'the administrator was successfully destroyed'
+      failed: 'a problem occured during the administrator destroy'
+      confirm: 'are you sure to delete this administrator ?'   
+  my_account:
+    update:
+      success: 'you account was successfully updated'
+      failed: 'a problem occured during your account update'
+      action: 'edit my account'
+    destroy:
+      success: 'your account was successfully destroyed'
+      failed: 'a problem occured during your account destroy'
+      confirm: 'are you sure that you want to delete your account?'
+  role:
+    one: 'role'
+    other: 'roles'
+    create:
+      success: 'the role was successfully created'
+      failed: 'a problem occured during the role creation'
+      action: 'create a role'
+    update:
+      success: 'the role was successfully updated'
+      failed: 'a problem occured during the role update'
+      action: 'edit role'
+    destroy:
+      success: 'the role was successfully destroyed'
+      failed: 'a problem occured during the role destroy'
+      confirm: 'are you sure to delete this role ?'
+  right:
+    one: 'right'
+    other: 'rights'
+    create:
+      success: 'the right was successfully created'
+      failed: 'a problem occured during the right creation'
+      action: 'create a right'
+    update:
+      success: 'the right was successfully updated'
+      failed: 'a problem occured during the right update'
+      action: 'edit right'
+    destroy:
+      success: 'the right was successfully destroyed'
+      failed: 'a problem occured during the right destroy'
+      confirm: 'are you sure to delete this right ?'
+
+  jquery:
+    dataTables:
+      oLanguage:
+        sProcessing: 'Processing...'
+        sLengthMenu: 'Show _MENU_ entries'
+        sZeroRecords: 'No matching records found'
+        sInfo: 'Showing _START_ to _END_ of _TOTAL_ entries'
+        sInfoEmpty: 'Showing 0 to 0 of 0 entries'
+        sSearch: 'Search:'
+
+  tag:
+    one: 'tag'
+    other: 'tags'
+    create:
+      success: 'the tag was successfully created'
+      failed: 'a problem occured during the tag creation'
+      action: 'create a tag'
+    update:
+      success: 'the tag was successfully updated'
+      failed: 'a problem occured during the tag update'
+      action: 'edit tag'
+    destroy:
+      success: 'the tag was successfully destroyed'
+      failed: 'a problem occured during the tag destroy'
+      confirm: 'are you sure to delete this tag ?'
+# Dates formats 
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%e %b"
+      long: "%B %e, %Y"
+      only_day: "%e"
+
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    order: [ :year, :month, :day ]
+  
+  time:
+    formats:
+      default: "%a %b %d %H:%M:%S %Z %Y"
+      time: "%H:%M"
+      short: "%d %b %H:%M"
+      long: "%B %d, %Y %H:%M"
+      only_second: "%S"
+      
+      datetime:
+        formats:
+          default: "%Y-%m-%dT%H:%M:%S%Z"
+          
+      am: 'am'
+      pm: 'pm'

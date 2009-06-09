@@ -1,0 +1,32 @@
+<%= display_standard_flashes %>
+<%= image_tag picture.public_filename(:normal) unless picture.id.nil? %>
+<div id="fileUpload">
+  <% form_for picture, :url => new_admin_picture_path, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages %>
+  <%= f.file_field :uploaded_data %>
+  <%= hidden_field_tag :target, params[:target] %>
+  <%= hidden_field_tag :target_id, params[:target_id] %>
+  <%= f.submit I18n.t('save').capitalize %>
+<% end %>
+</div>
+<% content_for :tools do %>
+  <%= link_to(I18n.t('list').capitalize, admin_pictures_path, :class => 'house' )%>
+<% end %>
+<%= javascript_include_tag 'jquery.uploadify' %>
+<%= stylesheet_link_tag 'admin/uploadify' %>
+<% session_key = ActionController::Base.session_options[:key]
+  javascript_tag do %>
+  $(document).ready(function(){ $('#fileUpload').fileUpload({
+    'uploader': '/images/uploadify/uploader.swf',
+    'cancelImg': '<%= image_path('uploadify/cancel.png') %>',
+    'script': '<%= (picture.new_record? ? admin_pictures_path : admin_picture_path(picture)) %>',
+    'scriptData': { 'target': '<%= params[:target] %>', 'target_id': '<%= params[:target_id] %>', 'format': 'json', 'authenticity_token': encodeURIComponent('<%= form_authenticity_token %>'), '<%= session_key %>': encodeURIComponent('<%= cookies[session_key] %>') },
+    'ScriptAccess': 'always',
+    'fileDesc': 'Images Files',
+    'fileExt': '*.jpg;*.jpeg;*.png;*.bmp;*.gif;',
+    'multi': 'true',
+    'displayData': 'speed',
+    'onAllComplete': function(){ <%= display_standard_flashes(I18n.t('picture.create.success').capitalize,false) %>}
+    });});
+<% end %>
+<%= link_to_function I18n.t('picture.upload.start').capitalize, "$('#fileUpload').fileUploadStart()" %> | <%= link_to_function I18n.t('picture.upload.clear_queue').capitalize,"$('#fileUpload').fileUploadClearQueue()" %>

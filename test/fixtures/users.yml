@@ -1,8 +1,0 @@
-users_jonathan_demoutiez:
-  lastname: Démoutiez
-  firstname: Jonathan
-  email: jonathan@demoutiez.net
-  crypted_password: 26281079ade2bfe11ec634fbd5179088ed0b81a2 # passee
-  salt: d8034f233b0b4b80178cde13eb769dd74424d50a
-  created_at: <%= Time.now.to_s(:db) %>
-  updated_at: <%= Time.now.to_s(:db) %>
