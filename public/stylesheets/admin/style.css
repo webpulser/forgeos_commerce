@@ -1,4 +1,3 @@
-@import "/stylesheets/jquery-ui/ui.base.css";
 /*********************
 	HTML Elements
 *********************/
@@ -379,8 +378,6 @@ form#form #button1:hover, form#form #button2:hover {
 .modules{background:transparent url(/images/admin/icons/bricks.png) no-repeat left;}
 .modules_manage{background:transparent url(/images/admin/icons/bricks_gear.png) no-repeat left;}
 .back{background:transparent url(/images/admin/icons/arrow_left.gif) no-repeat left;}
-
-
 
 ul ul{
   margin-left: 5px;
