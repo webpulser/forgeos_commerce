@@ -23,7 +23,7 @@
  *     ensure that you either have "example_alt_pagination" as a body class name, or better yet,
  *     modify that selector.
  *   Note that the path used for Images is relative. All images are by default located in
- *     ../images/ - relative to this CSS file.
+ *     /images/dataTables/ - relative to this CSS file.
  */
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -82,19 +82,19 @@
 }
 
 .paginate_disabled_previous {
-	background-image: url('../images/back_disabled.jpg');
+	background-image: url('/images/dataTables/back_disabled.jpg');
 }
 
 .paginate_enabled_previous {
-	background-image: url('../images/back_enabled.jpg');
+	background-image: url('/images/dataTables/back_enabled.jpg');
 }
 
 .paginate_disabled_next {
-	background-image: url('../images/forward_disabled.jpg');
+	background-image: url('/images/dataTables/forward_disabled.jpg');
 }
 
 .paginate_enabled_next {
-	background-image: url('../images/forward_enabled.jpg');
+	background-image: url('/images/dataTables/forward_enabled.jpg');
 }
 
 
@@ -141,15 +141,15 @@ table.display td.center {
  */
 
 .sorting_asc {
-	background: url('../images/sort_asc.jpg') no-repeat center right;
+	background: url('/images/dataTables/sort_asc.jpg') no-repeat center right;
 }
 
 .sorting_desc {
-	background: url('../images/sort_desc.jpg') no-repeat center right;
+	background: url('/images/dataTables/sort_desc.jpg') no-repeat center right;
 }
 
 .sorting {
-	background: url('../images/sort_both.jpg') no-repeat center right;
+	background: url('/images/dataTables/sort_both.jpg') no-repeat center right;
 }
 
 

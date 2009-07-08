@@ -1,6 +1,6 @@
 <%= display_standard_flashes %>
 <%= link_to_unless group.id.nil?, I18n.t('attribute.create.action').capitalize,
-  { :action => 'create_attribute', :id => group.id },
+  new_admin_attribute_path(:attribute => { :attributes_group_id => group.id }),
   :class => 'add' %>
 <table>
   <thead>
@@ -12,8 +12,8 @@
       <tr>
         <td><%= attribute.name %></td>
         <td>
-          <%= link_to I18n.t('edit').capitalize, :action => 'edit_attribute', :id => attribute.id %> -
-          <%= link_to_remote I18n.t('destroy').capitalize, :url => { :action => 'destroy_attribute', :id => attribute.id }, :update => 'attributes', :confirm => I18n.t('attribute.destroy.confirm').capitalize %>
+          <%= link_to I18n.t('edit').capitalize, [:edit, :admin, attribute] %> -
+          <%= link_to_remote I18n.t('destroy').capitalize, :url => [:admin, attribute],:method => 'delete', :update => 'attributes', :confirm => I18n.t('attribute.destroy.confirm').capitalize %>
         </td>
       </tr>
     <% end %>

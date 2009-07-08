@@ -1,4 +1,4 @@
-<% form_for :right, right, :url => (right.new_record? ? admin_rights_path : admin_right_path(right)), :html => { :method => (right.new_record? ? :post : :put ) }  do |f| %>
+<% form_for [:admin, right] do |f| %>
   <%= f.error_messages %>
 
   <p>

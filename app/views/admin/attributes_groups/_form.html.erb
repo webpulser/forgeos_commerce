@@ -15,9 +15,7 @@
   </ul>
 
   <div id="tabs-1">
-    <% form_for :attributes_group, attributes_group,
-      :url => (attributes_group.id.nil? ? admin_attributes_groups_path : admin_attributes_group_path(attributes_group)),
-      :html => { :method => (attributes_group.id.nil? ? :post : :put)} do |f| %>
+    <% form_for [:admin ,attributes_group] do |f| %>
       <p><b><%= f.label :name, I18n.t('name').capitalize %> : </b><%= f.text_field :name %></p>
       <p><b><%= f.label :dynamic, I18n.t('dynamic').capitalize %> : </b><%= f.check_box :dynamic %></p>
       <center><%= f.submit I18n.t('save').capitalize %></center>
@@ -26,7 +24,7 @@
 <% unless attributes_group.new_record? || attributes_group.dynamic? %>
   <div id="tabs-2">
     <div id="attributes">
-      <%= render :partial => 'list_attributes', :locals => { :group => attributes_group } %>
+      <%= render :partial => 'admin/attributes/list', :locals => { :group => attributes_group } %>
     </div>
   </div>
 <% end %>

@@ -1,5 +1,4 @@
-<% form_for :product_detail,
-    :url => { :id => (product_detail.id || product_detail.product_parent.id) } do |f| %>
+<% form_for [:admin, product_detail] do |f| %>
  <p><b><%= f.label :offer_month, I18n.t('offer_month').capitalize %> : </b><%= f.check_box :offer_month %></p>
  <p><b><%= f.label :on_first_page, I18n.t('on_first_page').capitalize %> : </b><%= f.check_box :on_first_page %></p>
  <p><b><%= f.label :stock, I18n.t('stock', :count => 1).capitalize %> : </b><%= f.text_field :stock %></p>

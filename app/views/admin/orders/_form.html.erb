@@ -1,8 +1,8 @@
 <%= display_standard_flashes %>
 <fieldset>
   <legend><%= link_to_effect_toggle(I18n.t('attribute', :count => 2).capitalize,'static_attributes') %></legend>
-  <% form_for :order, order, :url => (order.new_record? ? admin_orders_path : admin_order_path(order)),
-    :html => { :id => 'static_attributes', :method => (order.new_record? ? :post : :put) } do |f| %>
+  <% form_for [:admin, order], :html => { :id => 'static_attributes' } do |f| %>
+
       <p><b><%= f.label :user_id, I18n.t('user', :count => 1).capitalize %> : </b><%= f.collection_select :user_id, User.find_all_by_activation_code(nil), :id, :fullname, { :prompt => I18n.t('please_select').capitalize } %></p>
       <p><b><%= f.label :voucher, I18n.t('voucher',:count=>1).capitalize %> : </b><%= f.collection_select :voucher, Voucher.all, :value, :name, { :prompt => I18n.t('please_select').capitalize } %></p>
       <p><b><%= f.label :shipping_method, I18n.t('shipping_method',:count=>1).capitalize %> : </b><%= f.collection_select :shipping_method, ShippingMethod.all, :name, :name, { :prompt => I18n.t('please_select').capitalize } %></p>

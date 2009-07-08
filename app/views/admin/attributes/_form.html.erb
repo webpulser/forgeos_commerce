@@ -1,5 +1,5 @@
 <% content_for :tools do %>
-  <%= link_to(I18n.t('attributes_group.update.action').capitalize, edit_admin_attributes_group_path(attribute.attributes_group), :class => 'manage') %>
+  <%= link_to(I18n.t('attributes_group.update.action').capitalize, [:edit, :admin, attribute.attributes_group], :class => 'manage') %>
 <% end %>
 
 <div id="tabs">
@@ -11,8 +11,7 @@
   </ul>
 
   <div id="tabs-1">
-  <% form_for :attribute, :url => { :attr_id => attribute.id, :id => attribute.attributes_group.id }, :update => 'attributes',
-    :html => { :id => 'static_attributes' } do |f| %>
+    <% form_for [:admin, attribute], :html => { :id => 'static_attributes' } do |f| %>
       <p><b><%= f.label :name, I18n.t('name').capitalize %> : </b><%= f.text_field :name %></p>
     <center><%= f.submit I18n.t('save').capitalize %></center>
   <% end %>

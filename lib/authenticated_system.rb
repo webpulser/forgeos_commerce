@@ -36,6 +36,7 @@ module AuthenticatedSystem
     end
 
     def admin_authorized?(controller = controller_path, action = action_name, ressource = nil)
+      logger.debug action_name
       (logged_in? && current_user.is_a?(Admin) && current_user.rights.find_by_controller_name_and_action_name(controller, action)) || false
     end
 

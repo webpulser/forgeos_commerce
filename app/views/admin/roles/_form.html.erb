@@ -1,4 +1,4 @@
-<% form_for :role, @role, :url => (role.new_record? ? admin_roles_path : admin_role_path(role)), :html => { :method => (role.new_record? ? :post : :put) } do |f| %>
+<% form_for [:admin, role] do |f| %>
   <%= f.error_messages %>
   
   <p>

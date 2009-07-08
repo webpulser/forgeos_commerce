@@ -20,13 +20,13 @@
     <td><%=h product.stock %></td>
     <td><%= product.categories.collect{ |cat| cat.name }.join(', ') %></td>
     <td>
-      <% remote_form_for product, :url => {:controller => 'admin/products', :action => 'activate', :id => product.id} do |f| %>
+      <% remote_form_for product, :url => {:controller => 'admin/product_details', :action => 'activate', :id => product.id} do |f| %>
         <%= check_box_tag :product, :active, product.active, :onchange => "$(this.form).trigger('onsubmit')"%>
       <% end %></td>
     <td>
-      <%= link_to I18n.t('edit').capitalize, :action => 'edit_product_detail', :id => product.id %> -
-      <%= link_to_remote I18n.t('destroy').capitalize, :url => { :action => 'destroy_product_detail', :id => product.id }, :update => 'list', :confirm => I18n.t('product_detail.destroy.confirm').capitalize %> -
-      <%= link_to_remote I18n.t('quick_edit').capitalize, :url => { :action => 'quick_edit_product_detail', :id => product.id }, :method => 'get' %>
+      <%= link_to I18n.t('edit').capitalize, edit_admin_product_detail_path(product) %> -
+      <%= link_to_remote I18n.t('destroy').capitalize, :url => [:admin, product], :update => 'list', :confirm => I18n.t('product_detail.destroy.confirm').capitalize, :method => 'delete' %> -
+      <%= link_to_remote I18n.t('quick_edit').capitalize, :url => {:controller => 'admin/product_details', :action => 'quick_edit', :id => product.id }, :method => 'get' %>
     </td>
   </tr>
 <% end %>

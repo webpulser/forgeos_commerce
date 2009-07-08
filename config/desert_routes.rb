@@ -20,15 +20,17 @@ namespace :admin do |admin|
   admin.resources :categories
   admin.resources :users
   admin.resources :attributes_groups
+  admin.resources :attributes
   admin.resources :orders
   admin.resources :pictures
-  admin.resources :products
+  admin.resources :product_parents
+  admin.resources :product_details
   admin.resources :admins
   admin.resources :roles
   admin.resources :rights
+  admin.resources :tags
   admin.resource :session
   admin.resources :account
-  admin.resources :tags
   admin.root :controller => 'account'
 end
 

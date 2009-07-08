@@ -68,7 +68,7 @@ fr:
   deleted: 'supprimé'
   create: 'créer'
   new: 'créer'
-  products: 'produits'
+  product_parents: 'produits'
   orders: 'commandes'
   shipping_methods: "methodes d'expédition"
   pictures: 'images'

@@ -11,7 +11,7 @@
   </ul>
 
   <div id="tabs-1">
-  <% form_for :category, category, :url => (category.id.nil? ? admin_categories_path : admin_category_path(category)) , :html => { :method => (category.id.nil? ? :post : :put),:id => 'category_form' } do |f| %>
+  <% form_for [:admin, category], :html => { :id => 'category_form' } do |f| %>
     <p><b><%= f.label :parent_id, I18n.t('parent').capitalize %> : </b><%= f.collection_select :parent_id, Category.all, :id, :name, { :prompt => I18n.t('please_select').capitalize, :include_blank => 'None' }%></p>
     <p><b><%= f.label :name, I18n.t('name').capitalize %> : </b><%= f.text_field :name %></p>
     <%= f.submit I18n.t('save').capitalize %>

@@ -1,7 +1,7 @@
 <%= display_standard_flashes %>
 <%= image_tag picture.public_filename(:normal) unless picture.id.nil? %>
 <div id="fileUpload">
-  <% form_for picture, :url => new_admin_picture_path, :html => { :multipart => true } do |f| %>
+  <% form_for [:admin, picture], :html => { :multipart => true } do |f| %>
   <%= f.error_messages %>
   <%= f.file_field :uploaded_data %>
   <%= hidden_field_tag :target, params[:target] %>

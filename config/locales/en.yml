@@ -68,7 +68,7 @@ en:
   deleted: 'deleted'
   create: 'create'
   new: 'new'
-  products: 'products'
+  product_parents: 'products'
   orders: 'orders'
   shipping_methods: 'shipping methods'
   pictures: 'pictures'

@@ -104,5 +104,30 @@
         </div>
       </div>
     </div>
+<!-- Bco -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracker-bco.webpulser.com/" : "http://localhost:4567/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "bco.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+  function get_cookie ( cookie_name ) {
+  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+
+  if ( results )
+    return ( unescape ( results[2] ) );
+  else
+    return null;
+  }
+
+  var bcoTracker = Bco.getTracker(pkBaseURL + "bcodata", 1);
+  bcoTracker.setCustomData({
+      'ua' : navigator.userAgent,
+      'session_id' : bcoTracker.getCookie('_demo.rails-commerce_session')
+      });
+  bcoTracker.trackPageView();
+  bcoTracker.enableLinkTracking();
+} catch( err ) {}
+</script>
+<!– End Bco Tag –>
   </body>
 </html>

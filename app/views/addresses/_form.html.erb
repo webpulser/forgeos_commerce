@@ -1,4 +1,4 @@
-<% remote_form_for :address, address, :url => (address.new_record? ? addresses_path : address_path(address)), :html => { :method => (address.new_record? ? :post : :put)}, :update => 'addresses' do |f| %>
+<% remote_form_for [:admin, address], :update => 'addresses' do |f| %>
   <% civilities = Civility.all
      countries = Country.all %>
 
