@@ -49,7 +49,9 @@ class Admin::UsersController < Admin::BaseController
     @user = User.new(params[:user])
     @user.build_address_invoice(params[:address_invoice]) unless @user.address_invoice
     @user.build_address_delivery(params[:address_delivery]) unless @user.address_delivery
-    @user.build_avatar(params[:avatar]) unless @user.avatar
+    if @user.avatar.nil? && params[:avatar] && params[:avatar][:uploaded_data] && params[:avatar][:uploaded_data].blank?
+      @user.build_avatar(params[:avatar])
+    end
     if @user.save
       flash[:notice] = I18n.t('user.create.success').capitalize
       redirect_to(edit_admin_user_path(@user))
