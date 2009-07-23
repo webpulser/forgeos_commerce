@@ -1,4 +1,3 @@
-$currency = Currency.find_by_name('euro') if Currency.table_exists?
 
 locale_path = File.join(directory, 'config/locales')
 if File.exists?(locale_path)
@@ -10,15 +9,6 @@ if File.exists?(locale_path)
     I18n.load_path.insert(app_index, *locale_files)
   end
 end
-config.gem 'mime-types', :lib => 'mime/types'
-config.gem "mbleigh-acts-as-taggable-on", :source => "http://gems.github.com", :lib => "acts-as-taggable-on"
 config.gem "acts_as_ferret", :lib => "acts_as_ferret"
 config.gem "rubyist-aasm", :source => "http://gems.github.com", :lib => 'aasm'
-config.gem 'mislav-will_paginate', :source => "http://gems.github.com", :lib => "will_paginate"
-config.gem 'coupa-acts_as_list', :source => "http://gems.github.com"
-config.gem 'coupa-acts_as_tree', :source => "http://gems.github.com"
-config.gem 'jimiray-acts_as_commentable', :source => "http://gems.github.com", :lib => 'acts_as_commentable'
-config.gem 'haml'
-# Load Haml and Sass
-require 'haml'
-Haml.init_rails(binding)
+require 'rails_commerce'

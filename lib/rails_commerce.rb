@@ -21,3 +21,11 @@ module RailsCommerce
     :product_in_groups_of => 4
   }
 end
+
+Forgeos::AdminMenu['orders'] = { 'shipping_methods' => {'new' => { 'class' => 'add' } }, 'vouchers' => {'new'=>{'class'=>'add'} } }
+Forgeos::AdminMenu['product_parents'] = {'attributes_groups'=>{'new'=>{'class'=>'add'}}, 'categories'=>{'new'=>{'class'=>'add'}}}
+Forgeos::AdminMenu['users'] = {'new'=>{'class'=>'add'}, 'export_newsletter'=>{'class'=>'report_seo', 'id'=>0}}
+Forgeos::AdminMenu['pictures'] = {'new'=>{'class'=>'add'}}
+Forgeos::AdminMenu['admins'] = {'rights'=>{}, 'roles'=>{}}
+
+$currency = Currency.find_by_name('euro') if Currency.table_exists?

@@ -13,8 +13,6 @@ resources :addresses
 resources :orders
 
 namespace :admin do |admin|
-  admin.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  admin.login '/login', :controller => 'sessions', :action => 'new'
   admin.resources :shipping_methods
   admin.resources :vouchers
   admin.resources :categories
@@ -25,13 +23,7 @@ namespace :admin do |admin|
   admin.resources :pictures
   admin.resources :product_parents
   admin.resources :product_details
-  admin.resources :admins
-  admin.resources :roles
-  admin.resources :rights
   admin.resources :tags
-  admin.resource :session
-  admin.resources :account
-  admin.root :controller => 'account'
 end
 
 root :controller => 'home'

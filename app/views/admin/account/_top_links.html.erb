@@ -1,7 +1,0 @@
-<% if user %>
-  <% content_for :tools do %>
-    <%= link_to(I18n.t('show').capitalize, admin_account_path(self.current_user)) %>
-    <%= link_to(I18n.t('edit').capitalize, edit_admin_account_path(self.current_user)) %>
-    <%= link_to(I18n.t('destroy').capitalize, admin_account_path(self.current_user), :confirm => I18n.t('my_account.destroy.confirm').capitalize, :method => :delete) %>
-  <% end %>
-<% end %>

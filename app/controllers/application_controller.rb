@@ -1,16 +1,5 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
-  # Be sure to include AuthenticationSystem in Application Controller instead
-  include AuthenticatedSystem
-  
-  helper :all # include all helpers, all the time
-  # See ActionController::RequestForgeryProtection for details
-  # Uncomment the :secret if you're not using the cookie session store
-  protect_from_forgery
-
-  before_filter :set_locale, :set_currency, :get_cart, :get_wishlist
+  before_filter :set_currency, :get_cart, :get_wishlist
 
   # Change the currency
   def change_currency(currency_id)
@@ -82,16 +71,4 @@ private
       session[:currency] = $currency.id 
     end
   end
-
-  def set_locale
-    if !params[:locale].nil? && I18n.available_locales.include?(params[:locale].to_sym)
-      if session[:locale] != params[:locale]
-        session[:locale] = params[:locale]
-      end
-    elsif !session[:locale]
-      session[:locale] = I18n.default_locale
-    end
-    I18n.locale = session[:locale]
-  end
-
 end
