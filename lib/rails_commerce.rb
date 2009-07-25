@@ -28,4 +28,19 @@ Forgeos::AdminMenu['users'] = {'new'=>{'class'=>'add'}, 'export_newsletter'=>{'c
 Forgeos::AdminMenu['pictures'] = {'new'=>{'class'=>'add'}}
 Forgeos::AdminMenu['admins'] = {'rights'=>{}, 'roles'=>{}}
 
+Forgeos::Menu << { :title => 'home', :url => :root, :i18n => true }
+Forgeos::Menu << { :title => 'catalog', :url => { :controller => 'catalog' }, :i18n => true }
+Forgeos::Menu << { :title => ['cart', { :count => 1}], 
+  :html => { :id => 'rails_commerce_cart_link' },
+  :url => { :controller => 'cart' },
+  :helper => { :method => 'link_to_cart' },
+  :i18n => true
+} 
+Forgeos::Menu << { :title => ['wishlist',{ :count => 1}],
+  :html => { :id => 'rails_commerce_wishlist_link' },
+  :url => { :controller => 'wishlist' },
+  :helper => { :method => 'link_to_wishlist' },
+  :i18n => true 
+}
+
 $currency = Currency.find_by_name('euro') if Currency.table_exists?

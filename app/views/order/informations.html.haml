@@ -1,0 +1,10 @@
+= step_order(2)
+- if logged_in?
+  = render :partial => 'users/edit_form'
+- else
+  #login{ :style => "float: left;" }
+    = render :partial => 'sessions/new_form'
+  %div{ :style => "height: 200px; width: 100px; float: left;" }
+    = I18n.t('or').capitalize
+  #signin{ :style => "float: right;" }
+    = render :partial => 'users/new_form'

@@ -1,0 +1,35 @@
+%h1
+  = I18n.t('voucher', :count=>1).capitalize
+%p
+  %b
+    = I18n.t('name').capitalize
+    \:
+  = @voucher.name
+%p
+  %b
+    = I18n.t('code', :count=>1).capitalize
+    \:
+  = @voucher.code
+%p
+  %b
+    = I18n.t('value', :count=>1).capitalize
+    \:
+  = @voucher.value
+%p
+  %b
+    = I18n.t('total_min').capitalize
+    \:
+  = @voucher.total_min
+%p
+  %b
+    = I18n.t('date_start').capitalize
+    \:
+  = @voucher.date_start
+%p
+  %b
+    = I18n.t('date_end').capitalize
+    \:
+  = @voucher.date_end
+- content_for :tools do
+  = link_to(I18n.t('list').capitalize, admin_vouchers_path, :class => 'house' )
+  = link_to(I18n.t('voucher.update.action').capitalize, [:edit, :admin, @voucher], :class => 'manage' )

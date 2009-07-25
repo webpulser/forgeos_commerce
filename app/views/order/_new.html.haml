@@ -1,0 +1,23 @@
+- form_tag :controller => 'order', :action => 'valid_shipment' do
+  #order_addresses.addresses
+    %div{ :style => "float: left;" }
+      %b
+        = I18n.t('address.invoice').capitalize
+      = display_address current_user.address_invoice
+    %div{ :style => "float: left;" }
+      %b
+        = I18n.t('address.delivery').capitalize
+      = display_address current_user.address_delivery
+    .clear
+    %center
+      = link_to_remote(I18n.t('address.create.action').capitalize, :url => { :controller => 'order', :action => 'add_address' })
+  .clear
+    \&nbsp;
+  %div
+    = display_cart(current_user.cart, true)
+  %br
+  = display_shipping_methods
+  = display_voucher
+  = display_total
+  %center
+    = submit_tag I18n.t('make_order').capitalize

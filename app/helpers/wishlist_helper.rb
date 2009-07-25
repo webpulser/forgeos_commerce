@@ -119,12 +119,10 @@ module WishlistHelper
   # * <tt>:name</tt> - name, <i>"Wishlist"</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'wishlist'}</i> by default
   # * <tt>options</tt> the html options
-  def link_to_wishlist(name='wishlist', url={:controller => 'wishlist'}, options=nil)
+  def link_to_wishlist(name=I18n.t('wishlist',:count => 1), url={:controller => 'wishlist'}, options=nil)
     wishlist = Wishlist.find_by_id(session[:wishlist_id])
     unless wishlist.nil?
-      name = "#{I18n.t(name, :count=>1)} (#{wishlist.size} #{I18n.t('product', :count => wishlist.size)})"
-    else
-      name = I18n.t(name,:count=>1)
+      name = "#{name} (#{wishlist.size} #{I18n.t('product', :count => wishlist.size)})"
     end
     link_to name.capitalize, {:controller => 'wishlist'}, options
   end

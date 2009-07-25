@@ -1,0 +1,35 @@
+= display_standard_flashes
+- form_for [:admin, voucher] do |f|
+  %p
+    %b
+      = f.label :name, I18n.t('name').capitalize
+      \:
+    = f.text_field :name
+  %p
+    %b
+      = f.label :code, I18n.t('code', :count => 1).capitalize
+      \:
+    = f.text_field :code
+  %p
+    %b
+      = f.label :value, I18n.t('value', :count=>1).capitalize
+      \:
+    = f.text_field :value
+  %p
+    %b
+      = f.label :total_min, I18n.t('total_min').capitalize
+      \:
+    = f.text_field :total_min
+  %p
+    %b
+      = f.label :date_start, I18n.t('date_start').capitalize
+      \:
+    = f.date_select :date_start, :include_blank => true
+  %p
+    %b
+      = f.label :date_end, I18n.t('date_end').capitalize
+      \:
+    = f.date_select :date_end, :include_blank => true
+  = f.submit I18n.t('save').capitalize
+
+- content_for :tools, link_to(I18n.t('list').capitalize, admin_vouchers_path, :class => 'house')

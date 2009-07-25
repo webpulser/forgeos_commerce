@@ -1,0 +1,18 @@
+= display_standard_flashes
+= link_to_unless group.id.nil?, I18n.t('attribute.create.action').capitalize, new_admin_attribute_path(:attribute => { :attributes_group_id => group.id }), :class => 'add'
+%table
+  %thead
+    %tr
+      %th
+        = I18n.t('value', :count=>1).capitalize
+      %th
+        = I18n.t('action', :count=>2).capitalize
+  %tbody
+    - group.tattributes.each do |attribute|
+      %tr
+        %td
+          = attribute.name
+        %td
+          = link_to I18n.t('edit').capitalize, [:edit, :admin, attribute]
+          \-
+          = link_to_remote I18n.t('destroy').capitalize, :url => [:admin, attribute],:method => 'delete', :update => 'attributes', :confirm => I18n.t('attribute.destroy.confirm').capitalize

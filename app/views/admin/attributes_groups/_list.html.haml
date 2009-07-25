@@ -1,0 +1,23 @@
+- content_for :tools, link_to(I18n.t('attributes_group.create.action').capitalize, new_admin_attributes_group_path, :class => 'add' )
+= display_standard_flashes
+%table
+  %thead
+    %tr
+      %th
+        = I18n.t('name').capitalize
+      %th
+        = I18n.t('values_count').capitalize
+      %th
+        = I18n.t('action', :count=>2).capitalize
+  - unless groups.empty?
+    %tbody
+      - groups.each do |attr_group|
+        %tr
+          %td
+            = attr_group.name
+          %td
+            = (attr_group.dynamic? ? I18n.t('dynamic').capitalize : attr_group.tattributes.count)
+          %td
+            = link_to I18n.t('edit').capitalize, edit_admin_attributes_group_path(attr_group)
+            \-
+            = link_to I18n.t('destroy').capitalize, admin_attributes_group_path(attr_group), :method => 'delete', :confirm => I18n.t('attributes_group.destroy.confirm').capitalize

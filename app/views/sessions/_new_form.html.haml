@@ -1,0 +1,18 @@
+- form_tag session_path do
+  %p
+    %label{ :for => "email" }
+      = I18n.t('email').capitalize
+    %br
+    = text_field_tag 'email'
+  %p
+    %label{ :for => "password" }
+      = I18n.t('password').capitalize
+    %br
+    = password_field_tag 'password'
+  %p
+    %label{ :for => "remember_me" }
+      = I18n.t('remember_me').capitalize
+      \:
+    = check_box_tag 'remember_me'
+  %p
+    = submit_tag I18n.t('log_in').capitalize

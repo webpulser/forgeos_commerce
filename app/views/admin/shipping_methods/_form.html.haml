@@ -1,0 +1,25 @@
+= display_standard_flashes
+%fieldset
+  %legend
+    = link_to_effect_toggle(I18n.t('attribute', :count=>2).capitalize,'static_attributes')
+  - form_for [:admin, shipping_method], :html => { :id => 'static_attributes' } do |f|
+    %p
+      %b
+        = f.label :name, I18n.t('name').capitalize
+        \:
+      = f.text_field :name
+    %p
+      %b
+        = f.label :description, I18n.t('description').capitalize
+        \:
+      = f.text_area :description
+    = f.submit I18n.t('save').capitalize
+%fieldset
+  %legend
+    = link_to_effect_toggle(I18n.t('shipping_method_detail', :count=>2).capitalize,'details')
+  #details
+    = render :partial => 'list_details', :locals => { :shipping_method => shipping_method }
+
+= hide_html_elements_onload %w[details static_attributes]
+
+- content_for :tools, link_to(I18n.t('list').capitalize, admin_shipping_methods_path, :class => 'house' )

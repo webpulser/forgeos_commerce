@@ -1,0 +1,78 @@
+%h1
+  = I18n.t('picture.show.action').capitalize
+%p{ :style => "font-size: 16px;" }
+  %b
+    = I18n.t('filename').capitalize
+    \:
+  = @picture.filename
+  %b
+    = I18n.t('content_type').capitalize
+    \:
+  = @picture.content_type
+#tabs
+  %ul
+    %li
+      %a{ :href => "#tabs-1" }
+        = I18n.t('thumbnail', :count => 2).capitalize
+    %li
+      %a{ :href => "#tabs-2" }
+        = I18n.t('associated_element', :count => 2).capitalize
+    %li
+      %a{ :href => "#tabs-3" }
+        = I18n.t('comment', :count => 2).capitalize
+  #tabs-1
+    - thumbnail_names = %w[big normal small thumb] #@picture.attachment_options[:thumbnails].keys
+    %table#thumbnails
+      - thumbnail_names.each do |thumb|
+        %tr
+          %td
+            = image_tag @picture.public_filename(thumb)
+          %td
+            = thumb
+  #tabs-2
+    %ul#associated_elements.no-list-style-type
+      - products = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Product)}.compact
+      - unless products && products.empty?
+        %li
+          %h3
+            = I18n.t('product', :count => 2).capitalize
+            \:
+          %ul.no-list-style-type
+            - products.each do |product|
+              %li
+                = link_to product.name, edit_admin_product_path(product)
+     
+      - attributes_groups = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(AttributesGroup)}.compact
+      - unless attributes_groups && attributes_groups.empty?
+        %li
+          %h3
+            = I18n.t('attributes_group', :count => 2).capitalize
+            \:
+          %ul.no-list-style-type
+            - attributes_groups.each do |attributes_group|
+              %li
+                = link_to(attributes_group.name, :controller => 'attributes_groups', :action => 'edit', :id => attributes_group.id)
+      - tattributes = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Attribute)}.compact
+      - unless tattributes && tattributes.empty?
+        %li
+          %h3
+            = I18n.t('attribute', :count => 2).capitalize
+            \:
+          %ul.no-list-style-type
+            - tattributes.each do |tattribute|
+              %li
+                = link_to(tattribute.name, :controller => 'attributes_groups', :action => 'edit_attribute', :id => tattribute.id)
+      - categories = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Category)}.compact
+      - unless categories && categories.empty?
+        %li
+          %h3
+            = I18n.t('category', :count => 2).capitalize
+            \:
+          %ul.no-list-style-type
+            - categories.each do |category|
+              %li
+                = link_to category.name, edit_admin_category_path(category)
+  #tabs-3
+    #comments
+      = render :partial => 'list_comments', :locals => { :comments => @picture.comments }
+= javascript_tag "$(function(){ $('#tabs').tabs(); })"

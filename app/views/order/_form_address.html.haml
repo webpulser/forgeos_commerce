@@ -1,0 +1,57 @@
+- address = address || nil
+- form_remote_for :address, address, :url => { :controller => 'order', :action => 'create_address', :id => address } do |f|
+  %p
+    %b
+      %label
+        = I18n.t('type').capitalize
+      \:
+    = f.select :kind, [[I18n.t('address.delivery').capitalize, 'AddressDelivery'], [I18n.t('address.invoice').capitalize, 'AddressInvoice']]
+  %p
+    %b
+      %label
+        = I18n.t('civility').capitalize
+      \:
+    = f.collection_select :civility_id, Civility.all, :id, :name, { :prompt => I18n.t('please_select').capitalize }
+  %p
+    %b
+      %label
+        = I18n.t('lastname').capitalize
+      \:
+    = f.text_field :name
+  %p
+    %b
+      %label
+        = I18n.t('firstname').capitalize
+      \:
+    = f.text_field :firstname
+  %p
+    %b
+      %label
+        = I18n.t('address.one').capitalize
+      \:
+    = f.text_field :address
+  %p
+    %b
+      %label
+        = I18n.t('address.one').capitalize
+      \:
+    = f.text_field :address_2
+  %p
+    %b
+      %label
+        = I18n.t('zip_code').capitalize
+      \:
+    = f.text_field :zip_code
+  %p
+    %b
+      %label
+        = I18n.t('city').capitalize
+      \:
+    = f.text_field :city
+  %p
+    %b
+      %label
+        = I18n.t('country').capitalize
+      \:
+    = f.collection_select :country_id, Country.all, :id, :printable_name, { :prompt => I18n.t('please_select').capitalize }
+  = submit_tag I18n.t('save').capitalize

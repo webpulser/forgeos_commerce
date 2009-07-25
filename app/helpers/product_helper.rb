@@ -120,10 +120,6 @@ module ProductHelper
     return content
   end
   
-  def link_to_catalog(name=I18n.t('catalog').capitalize, url={:controller => 'catalog'}, options=nil)
-    link_to name, :controller => 'catalog'
-  end
-  
   def link_to_product(product, name=nil, url={:controller => 'product', :action => 'show'}, options=nil)
     name = product.name if name.nil?
     link_to name, url.merge(:id => ((product.is_a?(ProductDetail)) ? product.product_parent : product.id)), options

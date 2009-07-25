@@ -1,0 +1,30 @@
+- content_for :tools, link_to(I18n.t('list').capitalize, admin_categories_path, :class => 'house')
+#tabs
+  %ul
+    %li
+      %a{ :href => "#tabs-1" }
+        = I18n.t('information', :count =>2).capitalize
+    - unless category.new_record?
+      %li
+        %a{ :href => "#tabs-2" }
+          = I18n.t('picture', :count=>2).capitalize
+  #tabs-1
+    - form_for [:admin, category], :html => { :id => 'category_form' } do |f|
+      %p
+        %b
+          = f.label :parent_id, I18n.t('parent').capitalize
+          \:
+        = f.collection_select :parent_id, Category.all, :id, :name, { :prompt => I18n.t('please_select').capitalize, :include_blank => 'None' }
+      %p
+        %b
+          = f.label :name, I18n.t('name').capitalize
+          \:
+        = f.text_field :name
+      = f.submit I18n.t('save').capitalize
+  - unless category.new_record?
+    #tabs-2
+      #pictures
+        = link_to I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'category', :target_id => category.id), :class => 'add'
+        #list_pictures
+          = render :partial => 'admin/pictures/list', :locals => { :pictures => category.pictures, :target => 'category', :target_id => category.id }
+= javascript_tag "$(function(){ $('#tabs').tabs(); });"

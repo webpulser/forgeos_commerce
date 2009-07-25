@@ -1,0 +1,16 @@
+.form_group
+  - remote_form_for comment, :url => {:action => params[:action], :id => comment.commentable_id }, :update => 'comments', :html => { :id => 'form_comment'} do |f|
+    = f.error_messages
+    %p
+      %b
+        = label_tag :title, I18n.t('title').capitalize
+        \:
+      = f.text_field :title
+    %p
+      %b
+        = label_tag :comment, I18n.t('comment', :count => 1).capitalize
+        \:
+      = f.text_area :comment, :rows => 5
+    = hidden_field_tag :comment_id, comment.id
+    = f.submit I18n.t('save').capitalize
+    = link_to_function I18n.t('cancel').capitalize, "$('#comment_add').empty()"

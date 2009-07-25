@@ -22,7 +22,7 @@ class Admin::AttributesController < Admin::BaseController
   # * group_id = AttributesGroup's id
   # * attribute = Hash of Attribute's attributes
   def create
-    group = AttributesGroup.find_by_id(params[:attributes_group_id])
+    group = AttributesGroup.find_by_id(params[:attribute][:attributes_group_id])
 
     if group.dynamic
       flash[:warning] = I18n.t('attribute.create.dynamic').capitalize

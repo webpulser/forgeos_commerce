@@ -1,0 +1,26 @@
+= display_standard_flashes
+- form_for :shipping_method_detail do |f|
+  %p
+    %b
+      = f.label :name, I18n.t('name').capitalize
+      \:
+    = f.text_field :name
+  %p
+    %b
+      = f.label :price, I18n.t('price', :count => 1).capitalize
+      \:
+    = f.text_field :price
+  %p
+    %b
+      = f.label :weight_min, I18n.t('weight_min').capitalize
+      \:
+    = f.text_field :weight_min
+  %p
+    %b
+      = f.label :weight_max, I18n.t('weight_max').capitalize
+      \:
+    = f.text_field :weight_max
+  = hidden_field_tag :detail_id, shipping_method_detail.id
+  = f.submit I18n.t('save').capitalize
+
+- content_for :tools, link_to(I18n.t('shipping_method.update.action').capitalize,  edit_admin_shipping_method_path(shipping_method_detail.shipping_method), :class => 'manage' )

@@ -1,7 +1,0 @@
-<%= display_cart(@cart, false, true) %>
-<%= javascript_tag(render(:update){ |page|
-  page.replace_html("rails_commerce_cart_link", link_to_cart)
-  page.visual_effect(:pulsate, 'rails_commerce_cart_link')
-  page.visual_effect(:highlight, 'rails_commerce_cart')
-}) %>
-

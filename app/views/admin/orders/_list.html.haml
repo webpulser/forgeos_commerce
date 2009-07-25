@@ -1,0 +1,29 @@
+= display_standard_flashes
+%table
+  %thead
+    %tr
+      %th
+        = I18n.t('status', :count => 1).capitalize
+      %th
+        = I18n.t('user', :count => 1).capitalize
+      %th
+        = I18n.t('shipping_method', :count => 2).capitalize
+      %th
+        = I18n.t('action', :count => 2).capitalize
+  %tbody
+    - @orders.each do |order|
+      %tr
+        %td
+          = t order.status
+        %td
+          = order.user.fullname
+        %td
+          = order.shipping_method
+        %td
+          = link_to_remote(I18n.t('pay').capitalize, :url => { :controller => 'admin/orders', :action => 'pay', :id => order.id }, :update => 'orders' ) + ' -' if order.aasm_current_state == :unpaid
+          = link_to_remote(I18n.t('accept').capitalize, :url => { :controller => 'admin/orders', :action => 'accept', :id => order.id }, :update => 'orders' ) + ' -' if order.aasm_current_state == :paid
+          = link_to_remote(I18n.t('send').capitalize, :url => { :controller => 'admin/orders', :action => 'sent', :id => order.id }, :update => 'orders' ) + ' -' if order.aasm_current_state == :accepted
+          = link_to I18n.t('edit').capitalize, edit_admin_order_path(order)
+          \-
+          = link_to_remote(I18n.t('destroy').capitalize, :url => admin_order_path(order), :method => 'delete',:update => 'orders', :confirm => I18n.t('order.destroy.confirm').capitalize)
+- content_for :tools, link_to(I18n.t('order.create.action').capitalize, new_admin_order_path, :class => 'add' )

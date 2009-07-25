@@ -119,12 +119,10 @@ module CartHelper
   # * <tt>:name</tt> - name, <i>"Cart"</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'cart'}</i> by default
   # * <tt>options</tt> the html options
-  def link_to_cart(name='cart', url={:controller => 'cart'}, options=nil)
+  def link_to_cart(name=I18n.t('cart', :count => 1), url={:controller => 'cart'}, options=nil)
     cart = Cart.find_by_id(session[:cart_id])
     unless cart.nil?
-      name = "#{I18n.t(name, :count=>1)} (#{cart.size} #{I18n.t('product', :count => cart.size)})"
-    else
-      name = I18n.t(name,:count=>1)
+      name = "#{name} (#{cart.size} #{I18n.t('product', :count => cart.size)})"
     end
     link_to name.capitalize, {:controller => 'cart'}, options
   end
@@ -139,4 +137,19 @@ module CartHelper
   def link_to_add_cart(product, name='add_to_cart', url={:controller => 'cart', :action => 'add_product'}, options=nil)
     link_to I18n.t(name).capitalize, url.merge({:id => product.id}), options
   end
+
+  def step_order(index=1)
+    content = '<div class="step_order">'
+      content += link_to image_tag(step_order_image_filename(1,index)), :controller => 'cart'
+      content += link_to image_tag(step_order_image_filename(2,index)), :controller => 'order', :action => 'informations'
+      content += link_to image_tag(step_order_image_filename(3,index)), :controller => 'order', :action => 'new'
+      content += link_to image_tag(step_order_image_filename(4,index)), :controller => 'order', :action => 'payment'
+      content += link_to image_tag(step_order_image_filename(5,index)), :controller => 'order', :action => 'confirmation'
+    content += '</div>'
+  end
+
+  def step_order_image_filename(step,index)
+    "step#{step}_#{((index == step) ? 'on' : 'go')}_#{I18n.locale}.gif"
+  end
+
 end

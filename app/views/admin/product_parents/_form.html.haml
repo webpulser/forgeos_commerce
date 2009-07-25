@@ -1,0 +1,126 @@
+= display_standard_flashes
+- content_for :tools, link_to(I18n.t('list').capitalize, admin_product_parents_path, :class => 'house' )
+#tabs
+  %ul
+    %li
+      %a{ :href => "#tabs-1" }
+        = I18n.t('information', :count=>2).capitalize
+    - unless  product_parent.new_record?
+      %li
+        %a{ :href => "#tabs-2" }
+          = I18n.t('product_detail', :count => 2).capitalize
+      %li
+        %a{ :href => "#tabs-3" }
+          = I18n.t('picture', :count => 2).capitalize
+  #tabs-1
+    - form_for [:admin, product_parent], :html => { :id => 'static_attributes' } do |f|
+      %p
+        %b
+          = f.label :deleted, I18n.t('deleted').capitalize
+          \:
+        = f.check_box :deleted
+      %p
+        %b
+          = f.label :categories, I18n.t('category', :count => 2).capitalize
+          \:
+        #categories
+          %ul
+            = render :partial => 'admin/categories/list', :locals => { :categories => Category.find_all_by_parent_id(nil) }
+        = hidden_field_tag 'product_parent[category_ids][]'
+        = javascript_include_tag 'jstree/tree_component.min.js', 'jstree/css.js'
+        = stylesheet_link_tag 'jstree/tree_component.css'
+        - javascript_tag do
+          $(function() {
+          tree1 = $.tree_create(); tree1.init($('#categories'), {
+          ui: { theme_path : '/stylesheets/jstree/themes/', theme_name : 'rails-commerce', context : [] },
+          rules : { multiple : 'on' },
+          callback : {
+          onselect : function(NODE,TREE_OBJ) {
+          if (TREE_OBJ.get_type(NODE) == 'folder') {
+          $(NODE).children('ul').children().each( function(){TREE_OBJ.select_branch(this,true);})
+          } else {
+          cat_id = $(NODE).attr('id').replace('category_','');
+          if ($('#cat_'+cat_id).size() == 0) {
+          $('#categories').after('<input id=\"cat_'+cat_id+'\" name=\"product_parent[category_ids][]\" type=\"hidden\" value=\"'+cat_id+'\" />');
+          }
+          }
+          },
+          ondeselect : function(NODE,TREE_OBJ) {
+          if (TREE_OBJ.get_type(NODE) == 'folder') {
+          $(NODE).children('ul').children().each( function(){TREE_OBJ.deselect_branch(this,true);})
+          }
+          cat_id = $(NODE).attr('id').replace('category_','');
+          if ($('#cat_'+cat_id).size() != 0) { $('#cat_'+cat_id).remove(); }
+          }},
+          = "selected : ['#{product_parent.category_ids.collect{|cat| "category_#{cat}"}.join("','")}']"
+          });
+          });
+      %p
+        %b
+          = f.label :reference, I18n.t('reference').capitalize
+          \:
+        = f.text_field :reference
+      %p
+        %b
+          = f.label :name, I18n.t('name').capitalize
+          \:
+        = f.text_field :name
+      %p
+        %b
+          = f.label :description, I18n.t('description').capitalize
+          \:
+        = f.text_area :description
+      %p
+        %b
+          = f.label :rate_tax, I18n.t('rate_tax').capitalize
+          \:
+        = f.text_field :rate_tax
+      %p
+        %b
+          = f.label :selling_date, I18n.t('selling_date').capitalize
+          \:
+        = f.date_select :selling_date
+      %p
+        %b
+          = f.label :weight, I18n.t('weight').capitalize
+          \:
+        = f.text_field :weight
+      %p
+        %b
+          = f.label :keywords, I18n.t('keyword', :count => 2).capitalize
+          \:
+        = f.text_field :keywords
+      %p
+        %b
+          = f.label :stock, I18n.t('stock', :count => 1).capitalize
+          \:
+        = f.text_field :stock
+      - attributes_groups = AttributesGroup.all
+      - unless attributes_groups.empty?
+        %fieldset
+          %legend
+            = link_to_effect_toggle(I18n.t('attributes_group', :count => 2).capitalize,'attributes_groups')
+            |
+            = link_to_function(I18n.t('select_all').capitalize,"$('.attributes_groups').each(function(){this.checked=true;})")
+            |
+            = link_to_function(I18n.t('unselect_all').capitalize,"$('.attributes_groups').each(function(){this.checked=false;})")
+          %p#attributes_groups
+            - attributes_groups.each do |attr_group|
+              = check_box_tag 'product_parent[attributes_group_ids][]', attr_group.id, attr_group.products.include?(product_parent), :class => 'attributes_groups'
+              %b
+                = label_tag attr_group.name
+              %br
+      %center
+        = f.submit I18n.t('save').capitalize
+  - unless  product_parent.new_record?
+    #tabs-2
+      = link_to I18n.t('product_detail.create.action').capitalize, [:admin ,ProductDetail.new(:product_id => product_parent.id)], :class => 'add'
+      = link_to_remote I18n.t('show_deleted').capitalize, :url => { :controller => 'admin/product_details', :action => 'list', :id => product_parent }, :update => 'list'
+      #list
+        = render :partial => 'admin/product_details/list', :locals => { :product_details => product_parent.product_details.find_all_by_deleted(false) }
+    #tabs-3
+      #product_pictures
+        = link_to I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'product', :target_id => product_parent.id), :class => 'add'
+        #list_pictures
+          = render :partial => 'admin/pictures/list', :locals => { :pictures => product_parent.pictures, :target => 'product', :target_id => product_parent.id }
+= javascript_tag "$(function(){ $('#tabs').tabs(); })"

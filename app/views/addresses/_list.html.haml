@@ -1,0 +1,18 @@
+%table
+  %thead
+    %th
+      = I18n.t('type').capitalize
+    %th
+      = I18n.t('address', :count=>1).capitalize
+    %th
+      = I18n.t('action', :count=>2).capitalize
+  %tbody
+    - addresses.each do |address|
+      %tr
+        %td
+          = I18n.t(address.class == AddressInvoice ? 'address.invoice' : 'address.delivery', :count => 1).capitalize
+        %td
+          = render :partial => 'addresses/show', :locals => { :address => address }
+        %td
+          = link_to_remote I18n.t('edit').capitalize, :url => edit_address_path(address), :update => 'addresses', :method => 'get', :html => { :title => I18n.t('edit').capitalize,:class => 'ui-icon ui-icon-pencil' }
+          = link_to_remote I18n.t('destroy').capitalize, :url => address_path(address), :confirm => I18n.t('address.destroy.confirm').capitalize, :method => 'delete', :update => 'addresses', :html => { :title => I18n.t('destroy').capitalize, :class => 'ui-icon ui-icon-close' }

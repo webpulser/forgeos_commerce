@@ -1,0 +1,7 @@
+= step_order(1)
+- unless @cart.is_empty?
+  = display_cart(@cart)
+  .link_empty
+    = link_to_cart_empty
+  .link_order
+    = link_to I18n.t('make_order').capitalize, :controller => 'order', :action => 'new'

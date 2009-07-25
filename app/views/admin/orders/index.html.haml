@@ -1,0 +1,4 @@
+%h1
+  = I18n.t('order', :count => 2).capitalize
+#orders
+  = render :partial => 'list', :locals => {:orders => @orders}
