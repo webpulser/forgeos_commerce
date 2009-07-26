@@ -22,12 +22,25 @@ module RailsCommerce
   }
 end
 
-Forgeos::AdminMenu['orders'] = { 'shipping_methods' => {'new' => { 'class' => 'add' } }, 'vouchers' => {'new'=>{'class'=>'add'} } }
-Forgeos::AdminMenu['product_parents'] = {'attributes_groups'=>{'new'=>{'class'=>'add'}}, 'categories'=>{'new'=>{'class'=>'add'}}}
-Forgeos::AdminMenu['users'] = {'new'=>{'class'=>'add'}, 'export_newsletter'=>{'class'=>'report_seo', 'id'=>0}}
-Forgeos::AdminMenu['pictures'] = {'new'=>{'class'=>'add'}}
-Forgeos::AdminMenu['admins'] = {'rights'=>{}, 'roles'=>{}}
+# Set administration's menu
+Forgeos::AdminMenu << { :title => 'orders',
+  :url => { :controller => 'admin/orders' }, :i18n => true,
+  :children => [
+    { :title => 'shipping_methods', :url => { :controller => 'admin/shipping_methods' } , :i18n => true },
+    { :title => 'vouchers', :url => { :controller => 'admin/vouchers' }, :i18n => true }
+  ]
+}
+Forgeos::AdminMenu << { :title => 'product_parents',
+  :url => { :controller => 'admin/product_parents' }, :i18n => true,
+  :children => [
+    { :title => 'attributes_groups', :url => { :controller => 'admin/attributes_groups' }, :i18n => true },
+    { :title => 'categories', :url => { :controller => 'admin/categories' }, :i18n => true }
+  ]
+}
+Forgeos::AdminMenu << { :title => 'users', :url => { :controller => 'admin/users' }, :i18n => true }
+Forgeos::AdminMenu << { :title => 'pictures', :url => { :controller => 'admin/pictures' }, :i18n => true } 
 
+# Set site's menu
 Forgeos::Menu << { :title => 'home', :url => :root, :i18n => true }
 Forgeos::Menu << { :title => 'catalog', :url => { :controller => 'catalog' }, :i18n => true }
 Forgeos::Menu << { :title => ['cart', { :count => 1}], 
