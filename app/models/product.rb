@@ -18,6 +18,9 @@ class Product < ActiveRecord::Base
   sortable_pictures
   after_save :synchronize_stock
 
+  validates_presence_of :url
+  validates_uniqueness_of :url
+
   def synchronize_stock
     if active && stock < 1
       self.update_attribute('active', false)

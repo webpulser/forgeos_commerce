@@ -12,6 +12,8 @@ resource :session
 resources :addresses
 resources :orders
 
+connect '/product/:url', :controller => 'url_catcher', :action => 'product'
+
 namespace :admin do |admin|
   admin.resources :shipping_methods
   admin.resources :vouchers

@@ -54,21 +54,4 @@ private
     return redirect_to_home if @product.nil?
     init_session_for_product(@product)
   end
-
-  # Initialise une variable de session dedié à la dynamique des fiches produits
-  # Dynamique en fonction des attributs
-  # Selection automatique des attributs lorsqu'il n'y a qu'un seul choix / groupe d'attribut
-  def init_session_for_product(product, force=false)
-    if force || session["product_#{product.id}"].nil?
-      session["product_#{product.id}"] = Hash.new
-      session["product_#{product.id}"][:attributes] = {}
-    end
-
-    @product.attributes_groups.each do |attributes_group|
-      attributes = @product.product_details.collect { |product_detail| product_detail.attribute_of(attributes_group) }.uniq
-      if attributes.size == 1
-        session["product_#{@product.id}"][:attributes][attributes_group.id] = attributes.first
-      end
-    end
-  end
 end

@@ -67,6 +67,11 @@
         = f.text_field :name
       %p
         %b
+          = f.label :url, I18n.t('url').capitalize
+          \:
+        = f.text_field :url
+      %p
+        %b
           = f.label :description, I18n.t('description').capitalize
           \:
         = f.text_area :description
