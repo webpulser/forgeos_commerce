@@ -48,4 +48,4 @@
             \-
             = link_to I18n.t('destroy').capitalize, [:admin, product], :method => :delete, :confirm => I18n.t('product.destroy.confirm').capitalize
 
-= javascript_tag "$(function(){ $('#table').dataTable({ 'aoColumns': [ null, null, null, null, null, null, { 'bSearchable': false, 'bSortable': false }, { 'bSearchable': false, 'bSortable': false } ], 'oLanguage': {  'sProcessing':'#{I18n.t('jquery.dataTables.oLanguage.sProcessing')}', 'sLengthMenu':'#{I18n.t('jquery.dataTables.oLanguage.sLengthMenu')}', 'sZeroRecords':'#{I18n.t('jquery.dataTables.oLanguage.sZeroRecords')}', 'sInfo':'#{I18n.t('jquery.dataTables.oLanguage.sInfo')}', 'sInfoEmpty':'#{I18n.t('jquery.dataTables.oLanguage.sInfoEmpty')}', 'sSearch':'#{I18n.t('jquery.dataTables.oLanguage.sSearch')}' } } ); })"
+= dataTables_tag(8)
