@@ -132,9 +132,6 @@ fr:
   rate_tax: 'taxe'
   selling_date: 'date de mise en vente'
   weight: 'poid'
-  keyword:
-    one: 'mot clé'
-    other: 'mots clés'
   stock:
     one: 'stock'
     other : 'stocks'
