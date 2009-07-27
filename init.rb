@@ -11,4 +11,5 @@ if File.exists?(locale_path)
 end
 config.gem "acts_as_ferret", :lib => "acts_as_ferret"
 config.gem "rubyist-aasm", :source => "http://gems.github.com", :lib => 'aasm'
+
 require 'rails_commerce'

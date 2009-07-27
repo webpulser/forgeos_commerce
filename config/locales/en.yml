@@ -67,7 +67,6 @@ en:
   show_deleted: 'show deleted'
   deleted: 'deleted'
   create: 'create'
-  new: 'new'
   product_parents: 'products'
   orders: 'orders'
   shipping_methods: 'shipping methods'

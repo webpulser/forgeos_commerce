@@ -67,7 +67,6 @@ fr:
   show_deleted: 'voir les éléments supprimés'
   deleted: 'supprimé'
   create: 'créer'
-  new: 'créer'
   product_parents: 'produits'
   orders: 'commandes'
   shipping_methods: "methodes d'expédition"
