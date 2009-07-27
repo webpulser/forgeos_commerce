@@ -1,0 +1,8 @@
+storage: :file_system
+file_system_path: 'public/images/sortable_pictures'
+content_type: 'image'
+thumbnails: 
+  :big: '500x500' 
+  :normal: '200x200' 
+  :small: '100x100'
+  :thumb: '50x50'
