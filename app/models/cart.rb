@@ -139,7 +139,7 @@ class Cart < ActiveRecord::Base
   def get_shipping_method_details
     shipping_method_details = []
     ShippingMethod.find(:all).each do |shipping_method|
-      shipping_method_details += shipping_method.shipping_method_details.find(:all, :conditions => ["weight_min <= ? AND weight_max >= ?", weight, weight])
+      shipping_method_details += shipping_method.shipping_method_details.find(:all, :conditions => ["(weight_min <= ? AND weight_max >= ?) OR (price_min <= ? AND price_max >= ?)", weight, weight, total(true), total(true)])
     end
     shipping_method_details
   end

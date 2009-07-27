@@ -20,6 +20,17 @@
       = f.label :weight_max, I18n.t('weight_max').capitalize
       \:
     = f.text_field :weight_max
+  %p
+    %b
+      = f.label :price_min, I18n.t('price_min').capitalize
+      \:
+    = f.text_field :price_min
+  %p
+  %p
+    %b
+      = f.label :price_max, I18n.t('price_max').capitalize
+      \:
+    = f.text_field :price_max
   = hidden_field_tag :detail_id, shipping_method_detail.id
   = f.submit I18n.t('save').capitalize
 

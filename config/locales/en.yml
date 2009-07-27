@@ -158,6 +158,8 @@ en:
   please_select: 'please select'
   weight_max: 'max weight'
   weight_min: 'min weight'
+  price_max: 'max price'
+  price_min: 'min price'
   code:
    one: 'code'
    other: 'codes'
