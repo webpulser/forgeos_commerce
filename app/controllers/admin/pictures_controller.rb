@@ -32,28 +32,22 @@ class Admin::PicturesController < Admin::BaseController
           flash[:notice] = I18n.t('picture.create.success').capitalize
           case params[:target]
           when 'product'
-            product = Product.find_by_id(params[:target_id])
-            sortable_picture.picturable = product
-            sortable_picture.save
-            return redirect_to([:edit, :admin, product])
+            picturable = Product.find_by_id(params[:target_id])
+          when 'product_type'
+            picturable = ProductType.find_by_id(params[:target_id])
           when 'tattribute'
-            tattribute = Tattribute.find_by_id(params[:target_id])
-            sortable_picture.picturable = tattribute
-            sortable_picture.save
-            return redirect_to([:edit, :admin, tattribute])
+            picturable = Tattribute.find_by_id(params[:target_id])
           when 'tattribute_value'
-            tattribute_value = TattributeValue.find_by_id(params[:target_id])
-            sortable_picture.picturable = tattribute_value
-            sortable_picture.save
-            return redirect_to([:edit, :admin, tattribute_value])
+            picturable = TattributeValue.find_by_id(params[:target_id])
           when 'category'
-            category = Category.find_by_id(params[:target_id])
-            sortable_picture.picturable = category 
-            sortable_picture.save
-            return redirect_to([:edit, :admin, category])
+            picturable = Category.find_by_id(params[:target_id])
           else
             return redirect_to(:action => 'index')
           end
+          sortable_picture.picturable = picturable
+          sortable_picture.save
+          return redirect_to([:edit, :admin, picturable])
+
         else
           flash[:error] = I18n.t('picture.create.failed').capitalize
         end
@@ -71,17 +65,16 @@ class Admin::PicturesController < Admin::BaseController
             case params[:target]
             when 'product'
               sortable_picture.picturable = Product.find_by_id(params[:target_id])
-              sortable_picture.save
+            when 'product_type'
+              sortable_picture.picturable = ProductType.find_by_id(params[:target_id])
             when 'tattribute'
               sortable_picture.picturable = Tattribute.find_by_id(params[:target_id])
-              sortable_picture.save
             when 'tattribute_value'
               sortable_picture.picturable = TattributeValue.find_by_id(params[:target_id])
-              sortable_picture.save
             when 'category'
               sortable_picture.picturable = Category.find_by_id(params[:target_id])
-              sortable_picture.save
             end
+            sortable_picture.save if sortable_picture.picturable
             render :json => { :result => 'success', :asset => @picture.id}
           else
             logger.debug(@picture.errors.inspect)
@@ -101,21 +94,12 @@ class Admin::PicturesController < Admin::BaseController
     @picture = Picture.find_by_id(params[:id])
     @success = @picture.destroy
     case params[:target]
-    when 'product'
-      product = Product.find_by_id(params[:target_id])
-      @pictures = product.pictures
-    when 'attributes_group'
-      attributes_group = AttributesGroup.find_by_id(params[:target_id])
-      @pictures = attributes_group.pictures
-    when 'tattribute'
-      tattribute = Attribute.find_by_id(params[:target_id])
-      @pictures = tattribute.pictures
-    when 'category'
-      category = Category.find_by_id(params[:target_id])
-      @pictures = category.pictures
+
     else
       index
     end
+    
+    @pictures = picturable.pictures
 
     if @success
       flash[:notice] = I18n.t('picture.destroy.success').capitalize
@@ -172,20 +156,19 @@ class Admin::PicturesController < Admin::BaseController
     if params['picture_list']
       case params[:target]
       when 'product'
-        @target = Product.find_by_id(params[:id])
-        pictures = @target.sortable_pictures
+        @target = Product.find_by_id(params[:target_id])
+      when 'product_type'
+        @target = ProductType.find_by_id(params[:target_id])
       when 'tattribute'
-        @target = Attribute.find_by_id(params[:id])
-        pictures = @target.sortable_pictures
-      when 'attributes_group'
-        @target = AttributesGroup.find_by_id(params[:id])
-        pictures = @target.sortable_pictures
+        @target = Tattribute.find_by_id(params[:target_id])
+      when 'tattribute_value'
+        @target = TattributeValue.find_by_id(params[:target_id])
       when 'category'
-        @target = Category.find_by_id(params[:id])
-        pictures = @target.sortable_pictures
+        @target = Category.find_by_id(params[:target_id])
       else
         return render(:nothing => true)
       end
+      pictures = @target.sortable_pictures
 
       pictures.each do |picture|
         if index = params['picture_list'].index(picture.picture_id.to_s)

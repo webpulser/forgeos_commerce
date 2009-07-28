@@ -30,11 +30,12 @@ Forgeos::AdminMenu << { :title => 'orders',
     { :title => 'vouchers', :url => { :controller => 'admin/vouchers' }, :i18n => true }
   ]
 }
-Forgeos::AdminMenu << { :title => 'product_parents',
-  :url => { :controller => 'admin/product_parents' }, :i18n => true,
+Forgeos::AdminMenu << { :title => 'products',
+  :url => { :controller => 'admin/products' }, :i18n => true,
   :children => [
-    { :title => 'tattributes', :url => { :controller => 'admin/tattributes' }, :i18n => true },
-    { :title => 'categories', :url => { :controller => 'admin/categories' }, :i18n => true }
+    { :title => 'product_types', :url => { :controller => 'admin/product_types' }, :i18n => true },
+    { :title => 'categories', :url => { :controller => 'admin/categories' }, :i18n => true },
+    { :title => 'tattributes', :url => { :controller => 'admin/tattributes' }, :i18n => true }
   ]
 }
 Forgeos::AdminMenu << { :title => 'users', :url => { :controller => 'admin/users' }, :i18n => true }

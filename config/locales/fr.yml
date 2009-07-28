@@ -68,7 +68,7 @@ fr:
   show_deleted: 'voir les éléments supprimés'
   deleted: 'supprimé'
   create: 'créer'
-  product_parents: 'produits'
+  products: 'produits'
   orders: 'commandes'
   shipping_methods: "methodes d'expédition"
   pictures: 'images'
@@ -347,21 +347,22 @@ fr:
       success: 'le produit a bien été supprimé'
       failed: 'un problème est survenu lors de la suppression du produit'
       confirm: 'êtes-vous sûr de vouloir de supprimé ce produit ?'
-  product_detail:
-    one : 'produit fils'
-    other: 'produits fils'
+  product_types: 'types de produit'
+  product_type:
+    one : 'type de produit'
+    other: 'types de produit'
     create:
-      success: 'le produit a bien été créé'
-      failed: 'un problème est survenu lors de la création du produit'
-      action: 'créer un produit'
+      success: 'le type de produit a bien été créé'
+      failed: 'un problème est survenu lors de la création du type de produit'
+      action: 'créer un type de produit'
     update:
-      success: 'le produit a bien été mis à jour'
-      failed: 'un problème est survenu lors de la mise à jour du produit'
-      action: 'éditer produit'
+      success: 'le type de produit a bien été mis à jour'
+      failed: 'un problème est survenu lors de la mise à jour du type de produit'
+      action: 'éditer type de produit'
     destroy:
-      success: 'le produit a bien été supprimé'
-      failed: 'un problème est survenu lors de la suppression du produit'
-      confirm: 'êtes-vous sûr de vouloir de supprimé ce produit ?'
+      success: 'le type de produit a bien été supprimé'
+      failed: 'un problème est survenu lors de la suppression du type de produit'
+      confirm: 'êtes-vous sûr de vouloir de supprimé ce type de produit ?'
   picture:
     one: 'image'
     other: 'images'

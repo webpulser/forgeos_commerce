@@ -1,5 +1,3 @@
-= display_standard_flashes
-- content_for :tools, link_to(I18n.t('product.update.action').capitalize, edit_admin_product_parent_path(product_detail.product_parent), :class => 'manage' ) if product_detail.product_parent
 #tabs
   %ul
     %li
@@ -9,7 +7,8 @@
       %a{ :href => "#tabs-2" }
         = I18n.t('picture', :count => 2).capitalize
   #tabs-1
-    - form_for [:admin, product_detail], :html => { :id => 'static_attributes' } do |f|
+    - form_for [:admin, product], :html => { :id => 'static_attributes' } do |f|
+      = f.error_messages
       %p
         %b
           = f.label :deleted, I18n.t('deleted').capitalize
@@ -17,12 +16,17 @@
         = f.check_box :deleted
       %p
         %b
+          = f.label :product_type_id, I18n.t('product_type', :count => 1).capitalize
+          \:
+        = f.collection_select :product_type_id, ProductType.all, :id, :name, { :prompt => true }
+      %p
+        %b
           = f.label :categories, I18n.t('category', :count => 2).capitalize
           \:
         #categories
           %ul
             = render :partial => 'admin/categories/list', :locals => { :categories => Category.find_all_by_parent_id(nil) }
-        = hidden_field_tag 'product_parent[category_ids][]'
+        = hidden_field_tag 'product[category_ids][]'
         = javascript_include_tag 'jstree/tree_component.min.js', 'jstree/css.js'
         = stylesheet_link_tag 'jstree/tree_component.css'
         - javascript_tag do
@@ -37,7 +41,7 @@
           } else {
           cat_id = $(NODE).attr('id').replace('category_','');
           if ($('#cat_'+cat_id).size() == 0) { 
-          $('#categories').after('<input id=\"cat_'+cat_id+'\" name=\"product_detail[category_ids][]\" type=\"hidden\" value=\"'+cat_id+'\" /> '); } } },
+          $('#categories').after('<input id=\"cat_'+cat_id+'\" name=\"product[category_ids][]\" type=\"hidden\" value=\"'+cat_id+'\" /> '); } } },
           ondeselect : function(NODE,TREE_OBJ) {
           if (TREE_OBJ.get_type(NODE) == 'folder') {
           $(NODE).children('ul').children().each( function(){TREE_OBJ.deselect_branch(this,true);})
@@ -45,7 +49,7 @@
           cat_id = $(NODE).attr('id').replace('category_','');
           if ($('#cat_'+cat_id).size() != 0) { $('#cat_'+cat_id).remove(); }
           }},
-          = "selected : ['#{product_detail.category_ids.collect{|cat| "category_#{cat}"}.join('\',\'')}']"
+          = "selected : ['#{product.category_ids.collect{|cat| "category_#{cat}"}.join('\',\'')}']"
           });
           });
       %p
@@ -103,21 +107,27 @@
           = f.label :keywords, I18n.t('keyword', :count => 2).capitalize
           \:
         = f.text_field :keywords
-      - (product_detail.dynamic_tattributes + product_detail.product_parent.tattributes).each do |tattr|
-        %p
-          %b
-            = label_tag tattr.name
-            \:
-          - unless tattr.dynamic?
-            = select_tag "product_detail[tattribute_value_ids][]", options_from_collection_for_select(tattr.tattribute_values, :id, :name, (tattr.tattribute_value_ids & product_detail.tattribute_value_ids)), :multiple => true
-          - else
-            - dynamic_attribute = product_detail.dynamic_tattribute_values.find_by_tattribute_id(tattr.id)
-            = text_field "dynamic_attribute_values[#{tattr.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?)
+      %p
+        %b
+          = f.label :url, I18n.t('url', :count => 2).capitalize
+          \:
+        = f.text_field :url
+      - unless product.new_record? || product.product_type.nil?
+        - product.product_type.tattributes.each do |tattr|
+          %p
+            %b
+              = label_tag tattr.name
+              \:
+            - unless tattr.dynamic?
+              = select_tag "product[tattribute_value_ids][]", options_from_collection_for_select(tattr.tattribute_values, :id, :name, (tattr.tattribute_value_ids & product.tattribute_value_ids)), :multiple => true
+            - else
+              - dynamic_attribute = product.dynamic_tattribute_values.find_by_tattribute_id(tattr.id)
+              = text_field "dynamic_tattribute_values[#{tattr.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?)
       %center
         = f.submit I18n.t('save').capitalize
   #tabs-2
     #product_pictures
-      = link_to_unless product_detail.new_record?,I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'product', :target_id => product_detail.id), :class => 'add'
+      = link_to_unless product.new_record?,I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'product', :target_id => product.id), :class => 'add'
       #list_pictures
-        = render :partial => 'admin/pictures/list', :locals => { :pictures => product_detail.pictures, :target => 'product', :target_id => product_detail.id }
+        = render :partial => 'admin/pictures/list', :locals => { :pictures => product.pictures, :target => 'product', :target_id => product.id }
 = javascript_tag "$(function(){ $('#tabs').tabs(); })"

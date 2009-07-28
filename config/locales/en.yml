@@ -68,7 +68,7 @@ en:
   show_deleted: 'show deleted'
   deleted: 'deleted'
   create: 'create'
-  product_parents: 'products'
+  products: 'products'
   orders: 'orders'
   shipping_methods: 'shipping methods'
   pictures: 'pictures'
@@ -347,21 +347,22 @@ en:
       success: 'the product was successfully destroyed'
       failed: 'a problem occured during the product destroy'
       confirm: 'are you sure to delete this product ?'
-  product_detail:
-    one : 'product detail'
-    other: 'products details'
+  product_types: 'product types'
+  product_type:
+    one : 'product type'
+    other: 'product types'
     create:
-      success: 'the product detail was successfully created'
-      failed: 'a problem occured during the product detail creation'
-      action: 'create a product detail'
+      success: 'the product type was successfully created'
+      failed: 'a problem occured during the product type creation'
+      action: 'create a product type'
     update:
-      success: 'the product detail was successfully updated'
-      failed: 'a problem occured during the product detail update'
-      action: 'edit product detail'
+      success: 'the product type was successfully updated'
+      failed: 'a problem occured during the product type update'
+      action: 'edit product type'
     destroy:
-      success: 'the product detail was successfully destroyed'
-      failed: 'a problem occured during the product detail destroy'
-      confirm: 'are you sure to delete this product detail ?'
+      success: 'the product type was successfully destroyed'
+      failed: 'a problem occured during the product type destroy'
+      confirm: 'are you sure to delete this product type ?'
   picture:
     one: 'picture'
     other: 'pictures'

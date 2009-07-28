@@ -18,7 +18,7 @@ class Admin::TattributesController < Admin::BaseController
     @tattribute = Tattribute.new(params[:tattribute])
     if @tattribute.save
       flash[:notice] = I18n.t('tattribute.create.success').capitalize
-      redirect_to(edit_admin_tattribute_path(@tattribute))
+      redirect_to([:edit, :admin, @tattribute])
     else
       flash[:error] = I18n.t('tattribute.create.failed').capitalize
     end

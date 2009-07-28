@@ -1,16 +1,7 @@
 # A <i>Product</i> is an abstract class and can't be instanciable, use <i>ProductParent</i> or <i>ProductDetail</i>.
 # find's methods is already accepted
-#
-# ==== Subclasses
-# * <tt>ProductParent</tt>
-# * <tt>ProductDetail</tt>
+require 'rails_commerce/search'
 class Product < ActiveRecord::Base
-  # A <i>Product</i> is not instanciable, use <i>ProductParent</i> or <i>ProductDetail</i>.
-  # find's methods is already accepted
-  attr_accessor :is_instanciable
-
-#    translates :name, :text
-
   has_many :carts_products, :dependent => :destroy
   has_many :carts, :through => :carts_products
 
@@ -20,6 +11,42 @@ class Product < ActiveRecord::Base
 
   validates_presence_of :url
   validates_uniqueness_of :url
+
+  acts_as_ferret YAML.load_file(File.join(RAILS_ROOT, 'config', 'search.yml'))['product'].symbolize_keys
+
+  has_and_belongs_to_many :tattribute_values, :readonly => true
+  has_many :dynamic_tattribute_values, :dependent => :destroy
+  has_many :dynamic_tattributes, :through => :dynamic_tattribute_values, :class_name => 'Tattribute', :source => 'tattribute'
+
+  has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products'
+  belongs_to :product_type
+  validates_presence_of :product_type_id
+
+  before_save :clean_strings
+
+  # Returns month's offers
+  def self.get_offer_month
+    find_by_active_and_deleted_and_offer_month(true,false,true)
+  end
+
+  # Returns the first page products
+  def self.get_on_first_page
+    find_all_by_active_and_deleted_and_on_first_page(true,false,true)
+  end
+
+  def attribute_of(tattribute)
+    tattribute_values.find_by_tattribute_id(tattribute.id)
+  end
+
+
+  # Call by <i>before_save</i>
+  # convert all blank strings to nil for attribute inheritance save
+  def clean_strings
+    self.class.columns.find_all{ |column| column.type == :string }.each do |field|
+      send("#{field.name}=", nil) if self.attributes[field.name].blank?
+    end
+  end
+
 
   def synchronize_stock
     if active && stock < 1
@@ -33,16 +60,6 @@ class Product < ActiveRecord::Base
 
   def soft_delete
     self.update_attribute('deleted', !self.deleted )
-  end
-
-  # Constructor's overload.
-  #
-  # <i>Product</i> is not instanciable, use <i>ProductParent</i> or <i>ProductDetail</i>.
-  #
-  # <i>Product.new</i> raise <i>Exception</i> code 101
-  def initialize(options={})
- #   raise RailsCommerceException.new(:code => 101) if self.is_instanciable.nil? || !self.is_instanciable
-    super(options)
   end
 
   # Overload the description attribute.
@@ -85,5 +102,23 @@ class Product < ActiveRecord::Base
   # This method use <i>price</i> : <i>price(false, with_currency)</i>
   def tax(with_currency=true)
     return ("%01.2f" % (price(false, with_currency) * self.rate_tax/100)).to_f
+  end
+
+  # Returns an <i>Array</i> of <i>ProductDetail</i> who match gived keyword
+  # ==== Parameters
+  # * <tt>:keyword</tt> - a keyword
+  def self.search(keyword)
+    results = Product.find_with_ferret("%#{keyword}%", :limit => :all)
+  end
+
+  # Returns a <i>WillPaginate::Collection</i> of <i>ProductDetail</i> who match gived keyword
+  #
+  # ==== Parameters
+  # * <tt>:keyword</tt> - a keyword
+  # ==== paginate_options
+  # * <tt>:page</tt> - page number
+  # * <tt>:per_page</tt> - product's count by page
+  def self.search_paginate(keyword, page=1, per_page=8)
+    self.search(keyword).paginate(:page => page, :per_page => per_page)
   end
 end

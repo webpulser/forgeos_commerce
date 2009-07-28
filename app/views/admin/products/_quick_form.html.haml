@@ -1,4 +1,4 @@
-- form_for [:admin, product_detail] do |f|
+- form_for [:admin, product] do |f|
   %p
     %b
       = f.label :offer_month, I18n.t('offer_month').capitalize
@@ -24,14 +24,14 @@
       = f.label :deleted, I18n.t('deleted').capitalize
       \:
     = f.check_box :deleted
-    - (product_detail.dynamic_tattributes + product_detail.product_parent.tattributes).each do |tattr|
+    - (product.dynamic_tattributes + product.product_type.tattributes).each do |tattr|
       %p
         %b
           = label_tag tattr.name
           \:
         - unless tattr.dynamic?
-          = select_tag "product_detail[tattribute_value_ids][]", options_from_collection_for_select(tattr.tattribute_values, :id, :name, (tattr.tattribute_value_ids & product_detail.tattribute_value_ids)), :multiple => true
+          = select_tag "product[tattribute_value_ids][]", options_from_collection_for_select(tattr.tattribute_values, :id, :name, (tattr.tattribute_value_ids & product.tattribute_value_ids)), :multiple => true
         - else
-          - dynamic_attribute = product_detail.dynamic_tattribute_values.find_by_tattribute_id(tattr.id)
+          - dynamic_attribute = product.dynamic_tattribute_values.find_by_tattribute_id(tattr.id)
           = text_field "dynamic_attribute_values[#{tattr.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?)
   = f.submit I18n.t('save').capitalize

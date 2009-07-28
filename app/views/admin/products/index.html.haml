@@ -1,0 +1,7 @@
+%h1
+  = I18n.t('product', :count => 2).capitalize
+- content_for :tools do
+  = link_to(I18n.t('product.create.action').capitalize, new_admin_product_path, :class => 'add' )
+  = link_to(I18n.t('show_deleted'), admin_products_path(:deleted => true), :class => 'home')
+#list
+= render :partial => 'list', :locals => { :products => @products }

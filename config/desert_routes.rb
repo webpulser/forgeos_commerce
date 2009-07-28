@@ -24,8 +24,8 @@ namespace :admin do |admin|
   end
   admin.resources :orders
   admin.resources :pictures
-  admin.resources :product_parents
-  admin.resources :product_details
+  admin.resources :product_types
+  admin.resources :products, :member => { :quick_edit => :post }
   admin.resources :tags
 end
 

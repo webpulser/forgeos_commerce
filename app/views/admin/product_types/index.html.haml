@@ -1,0 +1,26 @@
+%h1
+  = I18n.t('product_type', :count => 2).capitalize
+- content_for :tools, link_to(I18n.t('product_type.create.action').capitalize, new_admin_product_type_path, :class => 'add' )
+#list
+  %table#table
+    %thead
+      %tr
+        %th
+          = I18n.t('name').capitalize
+        %th
+          = I18n.t('product', :count => 2).capitalize
+        %th
+          = I18n.t('action', :count => 2).capitalize
+    %tbody
+      - @product_types.each do |product_type|
+        %tr
+          %td
+            = h product_type.name
+          %td
+            = product_type.products.count
+          %td
+            = link_to I18n.t('edit').capitalize, edit_admin_product_type_path(product_type)
+            \-
+            = link_to I18n.t('destroy').capitalize, [:admin, product_type], :method => :delete, :confirm => I18n.t('product_type.destroy.confirm').capitalize
+
+= dataTables_tag(3)
