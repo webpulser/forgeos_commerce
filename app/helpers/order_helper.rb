@@ -39,12 +39,21 @@ module OrderHelper
       content += order.shipping_method
     content += '</div>'
     content += '<div class="order_shipping_method_price">'
-      content += order.shipping_method_price.to_s + ' ' + $currency.html
+      price = order.shipping_method_price.to_s
+      if session[:order_voucher_ids]
+        session[:order_voucher_ids].each do |voucher_id|
+          voucher = Voucher.find(voucher_id)
+          if voucher.offer_delivery
+            price = 0
+          end
+        end
+      end
+      content += price + ' ' + $currency.html
     content += '</div>'
     if order.voucher
       content += '<div class="order_voucher">'
-        content += I18n.t('voucher',:count=>1) + ': -'
-        content += order.voucher.to_s + ' ' + $currency.html
+        content += I18n.t('voucher', :count => 1) + ': -'
+        content += order.voucher.to_s + ' ' + (order.voucher.percent ? '%' : $currency.html)
       content += '</div>'
     end
     content += '<div class="order_total"><b>'+ I18n.t('total').capitalize + ': </b>'
@@ -82,7 +91,7 @@ module OrderHelper
 
   # Display all shipping methods available for cart
   def display_shipping_methods(cart=current_user.cart)
-    content = '<div class="order_shipping_methods">'
+    content = '<div class="order_shipping_methods" id="order_shipping_methods">'
     if cart.get_shipping_method_details.empty?
       content += I18n.t('can_not_place_order')
     else
@@ -100,7 +109,18 @@ module OrderHelper
             content += shipping_method_detail.fullname
           content += '</span>'
           content += '<span class="order_shipping_method_price">'
+          offer_delivery = false
+          if session[:order_voucher_ids]
+            session[:order_voucher_ids].each do |voucher_id|
+              voucher = Voucher.find(voucher_id)
+              offer_delivery ||= voucher.offer_delivery
+            end
+          end
+          unless offer_delivery
             content += "#{shipping_method_detail.price} #{$currency.html}"
+          else  
+            content += "<s>#{shipping_method_detail.price}</s> <b>0</b> #{$currency.html}"
+          end
           content += '</span>'
 
           content += '<div class="order_shipping_method_description">'
@@ -144,23 +164,25 @@ module OrderHelper
     content += '</div>'
   end
 
-  # Display the voucher's form_tag or the activate voucher <i>session[:order_voucher_id]</i>
+  # Display the voucher's form_tag or the activate voucher <i>session[:order_voucher_ids]</i>
   def display_voucher
     content = '<div class="order_voucher" id="order_voucher">'
-    if session[:order_voucher_id]
-      content += "#{I18n.t('voucher', :count=>1)} : -" + Voucher.find(session[:order_voucher_id]).value.to_s + 
-      " #{$currency.html} " + link_to_remove_voucher
-    else
-      content += "#{I18n.t('voucher', :count=>1)} : " + 
-      text_field_tag(:voucher_code, "", :id => 'voucher_code') + " " + 
-      button_to_function(
-        I18n.t('add').capitalize, 
-        remote_function(
-          :url => { :controller => 'order', :action => 'add_voucher' },
-          :with => "'voucher_code='+$('#voucher_code').val()"
-        )
-      )
+    if session[:order_voucher_ids]
+      session[:order_voucher_ids].each do |voucher_id|
+        voucher = Voucher.find(voucher_id)
+        content += "#{I18n.t('voucher', :count=>1)} #{voucher.name} : -" + voucher.value.to_s + 
+        " #{(voucher.percent ? '%' : $currency.html)} " + link_to_remove_voucher(voucher.id) + '<br />'
+      end
     end
+    content += "#{I18n.t('voucher', :count=>1)} : " + 
+    text_field_tag(:voucher_code, "", :id => 'voucher_code') + " " + 
+    button_to_function(
+      I18n.t('add').capitalize, 
+      remote_function(
+        :url => { :controller => 'order', :action => 'add_voucher' },
+        :with => "'voucher_code='+$('#voucher_code').val()"
+      )
+    )
     content += '</div>'
   end
 
@@ -178,7 +200,7 @@ module OrderHelper
   # * <tt>:name</tt> - name, <i>
   # * <tt>:url</tt> - url, <i>{:controller => 'order', :action => 'remove_voucher'}</i> by default
   # * <tt>options</tt> the html options
-  def link_to_remove_voucher(name='remove_voucher', url={:controller => 'order', :action => 'remove_voucher'}, options=nil)
-    link_to_remote I18n.t(name).capitalize, :url => url, :html => options
+  def link_to_remove_voucher(voucher_id, name='remove_voucher', url={:controller => 'order', :action => 'remove_voucher'}, options=nil)
+    link_to_remote( I18n.t(name).capitalize, :url => url, :with => "'voucher_id=#{voucher_id}'", :html => options)
   end
 end

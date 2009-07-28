@@ -15,6 +15,17 @@
       = f.label :value, I18n.t('value', :count=>1).capitalize
       \:
     = f.text_field :value
+    = f.select :percent, { Currency::default.name => false, '%' => true }
+  %p
+    %b
+      = f.label :cumulable, I18n.t('cumulable').capitalize
+      \:
+    = f.check_box :cumulable
+  %p
+    %b
+      = f.label :offer_delivery, I18n.t('offer_delivery').capitalize
+      \:
+    = f.check_box :offer_delivery
   %p
     %b
       = f.label :total_min, I18n.t('total_min').capitalize

@@ -1,5 +1,5 @@
 = display_standard_flashes
-- content_for :tools, link_to(I18n.t('product.update.action').capitalize, [:admin ,product_detail.product_parent], :class => 'manage' ) if product_detail.product_parent
+- content_for :tools, link_to(I18n.t('product.update.action').capitalize, edit_admin_product_parent_path(product_detail.product_parent), :class => 'manage' ) if product_detail.product_parent
 #tabs
   %ul
     %li

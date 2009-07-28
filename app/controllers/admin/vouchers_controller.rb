@@ -9,6 +9,7 @@ class Admin::VouchersController < Admin::BaseController
   end
 
   def create
+    params[:voucher]
     @voucher = Voucher.new(params[:voucher])
     if @voucher.save
       flash[:notice] = I18n.t('voucher.create.success').capitalize

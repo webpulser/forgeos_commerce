@@ -2,7 +2,7 @@
 #
 # ==== session's variables
 # * <tt>session[:order_shipping_method_detail_id]</tt> - an id of a <i>ShippingMethodDetail</i> choice by user
-# * <tt>session[:order_voucher_id]</tt> - an id of a <i>Voucher</i> using by user
+# * <tt>session[:order_voucher_ids]</tt> - an id of a <i>Voucher</i> using by user
 class OrderController < ApplicationController
 
   before_filter :can_create_order?, :only => :create
@@ -66,7 +66,7 @@ class OrderController < ApplicationController
     address_delivery = @address_delivery.clone
     shipping_method_detail = @shipping_method_detail
 
-    voucher = Voucher.find_by_id(session[:order_voucher_id])
+    voucher = Voucher.find_by_id(session[:order_voucher_ids])
 
     address_invoice.update_attribute(:user_id, nil)
     address_delivery.update_attribute(:user_id, nil)
@@ -106,16 +106,27 @@ class OrderController < ApplicationController
   end
 
   def update_total
+    vouchers = session[:order_voucher_ids].collect{|voucher_id| Voucher.find(voucher_id)} if session[:order_voucher_ids]
     total = current_user.cart.total(true)
     if session[:order_shipping_method_detail_id]
-      total += ShippingMethodDetail.find_by_id(session[:order_shipping_method_detail_id]).price
+      offer_delivery = false
+      if vouchers
+        vouchers.each do |voucher|
+          offer_delivery ||= voucher.offer_delivery
+        end
+      end
+      total += ShippingMethodDetail.find_by_id(session[:order_shipping_method_detail_id]).price unless offer_delivery
     end
-    if session[:order_voucher_id]
-      total -= Voucher.find(session[:order_voucher_id]).value
+    if vouchers
+      vouchers.each do |voucher|
+        total -= voucher.percent ? (voucher.value * total / 100) : voucher.value
+      end
     end
+    total = 0 if total < 0
 
     render(:update) do |page|
       page.replace_html('order_voucher', display_voucher)
+      page.replace_html('order_shipping_methods', display_shipping_methods)
       page.replace_html("order_total_price", total)
       page.visual_effect :highlight, 'order_total_price'
     end
@@ -123,12 +134,21 @@ class OrderController < ApplicationController
 
   def add_voucher
     voucher = Voucher.find_by_code(params[:voucher_code])
-    session[:order_voucher_id] = voucher.id if voucher && voucher.is_valid?(current_user.cart.total(true))
+    vouchers = session[:order_voucher_ids].collect{|voucher_id| Voucher.find(voucher_id)} if session[:order_voucher_ids] && session[:order_voucher_ids].count > 0
+    if voucher && voucher.is_valid?(current_user.cart.total(true))
+      unless vouchers && voucher.cumulable && vouchers.first.cumulable
+        session[:order_voucher_ids] = [voucher.id]
+      else
+        vouchers << voucher unless vouchers.include? voucher
+        vouchers = vouchers.sort_by{|voucher| (voucher.percent ? 100 : 0) + voucher.value}
+        session[:order_voucher_ids] = vouchers.collect{|voucher| voucher.id}
+      end
+    end
     update_total
   end
 
   def remove_voucher
-    session[:order_voucher_id] = nil
+    session[:order_voucher_ids].delete_if{|voucher_id| voucher_id.to_s == params[:voucher_id]}
     update_total
   end
 

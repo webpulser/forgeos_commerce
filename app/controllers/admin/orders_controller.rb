@@ -14,7 +14,16 @@ class Admin::OrdersController < Admin::BaseController
   
   def create
     @order = Order.new(params[:order])
-    create_addresses if @order.user
+    if params[:address_invoice] && address_invoice = AddressInvoice.create(params[:address_invoice])
+      @order.address_invoice = address_invoice
+    else
+      @order.address_invoice = @order.user.address_invoice
+    end
+    if params[:address_delivery] && address_delivery = AddressDelivery.create(params[:address_delivery])
+      @order.address_delivery = address_delivery
+    else
+      @order.address_delivery = @order.user.address_delivery
+    end
     if @order.save
       flash[:notice] = I18n.t('order.create.success').capitalize
     else
@@ -28,10 +37,17 @@ class Admin::OrdersController < Admin::BaseController
   
   def update
     @order = Order.find_by_id(params[:id])
-    create_addresses
-    if @order.update_attributes(params[:order]) &&
-      @order.address_invoice.update_attributes(params[:address_invoice]) &&
-      @order.address_delivery.update_attributes(params[:address_delivery])
+    if address_invoice = AddressInvoice.create(params[:address_invoice])
+      @order.address_invoice = address_invoice
+    else
+      @order.address_invoice = @order.user.address_invoice
+    end
+    if address_delivery = AddressDelivery.create(params[:address_delivery])
+      @order.address_delivery = address_delivery
+    else
+      @order.address_delivery = @order.user.address_delivery
+    end
+    if @order.update_attributes(params[:order])
       flash[:notice] = I18n.t('order.update.success').capitalize
     else
       flash[:error] = I18n.t('order.update.failed').capitalize
@@ -114,10 +130,10 @@ private
     @products = ProductDetail.all
   end
 
-  def create_addresses
-    @order.address_invoice = AddressInvoice.create(params[:address_invoice]) if @order.address_invoice_id == @order.user.address_invoice.id && params[:address_invoice]
-    @order.address_delivery = AddressDelivery.create(params[:address_delivery]) if @order.address_delivery_id == @order.user.address_delivery.id && params[:address_delivery]
-  end
+#  def create_addresses
+#    @order.address_invoice = AddressInvoice.create(params[:address_invoice]) if params[:address_invoice]
+#    @order.address_delivery = AddressDelivery.create(params[:address_delivery]) if params[:address_delivery]
+#  end
 
   def render_list
     index

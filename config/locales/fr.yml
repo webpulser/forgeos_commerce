@@ -23,6 +23,7 @@ fr:
   log_in: 'se connecter'
   sign_up: "s'inscrire"
   make_order: 'passer commande'
+  remove_voucher: 'enlever le code promo'
   disconnect: 'se déconnecter'
   cant_not_place_order: 'Nous sommes désolé, mais il est temporairement impossible de passer commande'
   remember_me: 'rester connecté'
@@ -167,6 +168,8 @@ fr:
     one: 'valeur'
     other:  'valeurs'
   total_min: 'somme minimale'
+  cumulable: 'cumulable'
+  offer_delivery: 'frais de livraison offerts'
   date_start: 'date de début'
   date_end: 'date de fin'
   parent: 'parent'

@@ -24,17 +24,17 @@
         \:
       = f.collection_select :shipping_method_price, ShippingMethodDetail.all, :price, :price, { :prompt => I18n.t('please_select').capitalize }
     - if order.user
-      %fieldset
+      %fieldset{:id => "address_invoice_fieldset"}
         %legend
           = link_to_effect_toggle(I18n.t('address.invoice').capitalize,'address_invoice')
         #address_invoice
-          - fields_for order.address_invoice do |fa|
+          - fields_for order.address_invoice || order.user.address_invoice || AddressInvoice.new do |fa|
             = render :partial => 'admin/addresses/form', :locals => { :f => fa }
-      %fieldset
+      %fieldset{:id => "address_delivery_fieldset"}
         %legend
           = link_to_effect_toggle(I18n.t('address.delivery').capitalize,'address_delivery')
         #address_delivery
-          - fields_for order.address_delivery do |fb|
+          - fields_for order.address_delivery || order.user.address_delivery || AddressDelivery.new do |fb|
             = render :partial => 'admin/addresses/form', :locals => { :f => fb }
     = f.submit I18n.t('save').capitalize
 

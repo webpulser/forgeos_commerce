@@ -18,7 +18,7 @@
         %td
           = voucher.code
         %td
-          = voucher.value
+          = "#{voucher.value} #{voucher.percent ? '%' : Currency::default.html}"
         %td
           = link_to I18n.t('show').capitalize, admin_voucher_path(voucher)
           \-
