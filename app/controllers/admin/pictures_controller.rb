@@ -94,7 +94,16 @@ class Admin::PicturesController < Admin::BaseController
     @picture = Picture.find_by_id(params[:id])
     @success = @picture.destroy
     case params[:target]
-
+    when 'product'
+      picturable = Product.find_by_id(params[:target_id])
+    when 'product_type'
+      picturable = ProductType.find_by_id(params[:target_id])
+    when 'tattribute'
+      picturable = Tattribute.find_by_id(params[:target_id])
+    when 'tattribute_value'
+      picturable = TattributeValue.find_by_id(params[:target_id])
+    when 'category'
+      picturable = Category.find_by_id(params[:target_id])
     else
       index
     end
