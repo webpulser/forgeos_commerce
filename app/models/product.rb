@@ -4,7 +4,8 @@ require 'rails_commerce/search'
 class Product < ActiveRecord::Base
   has_many :carts_products, :dependent => :destroy
   has_many :carts, :through => :carts_products
-
+  has_many :price_cuts
+  
   has_and_belongs_to_many :categories, :readonly => true
   sortable_pictures
   after_save :synchronize_stock

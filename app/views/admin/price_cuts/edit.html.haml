@@ -1,0 +1,5 @@
+= render :partial => 'top_links', :locals => { :price_cut => @price_cut }
+%h1
+  = I18n.t('price_cut.update.action').capitalize
+- if @price_cut
+  = render :partial => 'form', :locals => { :price_cut => @price_cut }

@@ -27,6 +27,7 @@ namespace :admin do |admin|
   admin.resources :product_types
   admin.resources :products, :member => { :quick_edit => :post }
   admin.resources :tags
+  admin.resources :price_cuts
 end
 
 root :controller => 'home'

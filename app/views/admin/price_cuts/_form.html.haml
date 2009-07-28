@@ -1,0 +1,38 @@
+- form_for [:admin, price_cut], :url => (price_cut.new_record? ? url_for(:action => :index) : admin_price_cut_path(price_cut)), :html => { :method => (price_cut.new_record? ? :post : :put), :multipart => true } do |f|
+  = f.error_messages
+  %p
+    %b
+      %label
+        = I18n.t('price_cut.product').capitalize
+        \:
+      = f.select("product_id", Product.all.collect {|p| [ p.name, p.id ] })
+  
+  %p
+    %b
+      %label
+        = f.label :old_price, I18n.t('price_cut.oldprice').capitalize
+        \:
+      = f.text_field :old_price
+  
+  %p
+    %b
+      %label
+        = f.label :new_price, I18n.t('price_cut.newprice').capitalize
+        \:
+      = f.text_field :new_price
+  
+  %p
+    %b
+      %label
+        = f.label :date_start, I18n.t('date_start').capitalize
+        \:
+      = f.date_select :date_start, :include_blank => true
+
+  %p
+    %b
+      %label
+        = f.label :date_end, I18n.t('date_end').capitalize
+        \:
+      = f.date_select :date_end, :include_blank => true  
+
+  = submit_tag I18n.t('save').capitalize

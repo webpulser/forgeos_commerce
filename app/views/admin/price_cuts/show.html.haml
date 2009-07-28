@@ -1,0 +1,30 @@
+= render :partial => 'top_links', :locals => { :price_cut => @price_cut }
+%h1
+  = I18n.t('price_cut.show').capitalize
+- if @price_cut
+  %table
+    %tr
+      %th
+        = I18n.t('price_cut.product').capitalize
+      %td
+        = h @price_cut.product.name
+    %tr
+      %th
+        = I18n.t('price_cut.oldprice').capitalize
+      %td
+        = h @price_cut.old_price
+    %tr
+      %th
+        = I18n.t('price_cut.newprice').capitalize
+      %td
+        = h @price_cut.new_price
+    %tr
+      %th
+        = I18n.t('date_start').capitalize
+      %td
+        = h @price_cut.date_start
+    %tr
+      %th
+        = I18n.t('date_end').capitalize
+      %td
+        = h @price_cut.date_end

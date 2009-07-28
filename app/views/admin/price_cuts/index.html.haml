@@ -1,0 +1,40 @@
+%h1
+  = I18n.t('price_cuts').capitalize
+- content_for :tools, link_to(I18n.t('price_cut.create.action').capitalize, new_admin_price_cut_path, :class => 'add')
+#price_cuts_list
+  %table#table
+    %thead
+      %tr
+        %th
+          = I18n.t('price_cut.product').capitalize
+        %th
+          = I18n.t('price_cut.oldprice').capitalize
+        %th
+          = I18n.t('price_cut.newprice').capitalize
+        %th
+          = I18n.t('date_start').capitalize
+        %th
+          = I18n.t('date_end').capitalize
+        %th
+          = I18n.t('action', :count => 2).capitalize
+    %tbody
+      - @price_cuts.each do |p|
+        %tr
+          %td
+            = p.product.name
+          %td
+            = p.old_price
+          %td
+            = p.new_price
+          %td
+            = p.date_start
+          %td
+            = p.date_end
+          %td
+            = link_to I18n.t('show').capitalize, admin_price_cut_path(p)
+            \-
+            = link_to I18n.t('edit').capitalize, edit_admin_price_cut_path(p)
+            \-
+            = link_to I18n.t('destroy').capitalize, admin_price_cut_path(p), :method => 'delete', :confirm => I18n.t('price_cut.destroy.confirm')
+
+= dataTables_tag(6)

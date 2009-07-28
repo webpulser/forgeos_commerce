@@ -453,6 +453,25 @@ en:
       failed: 'a problem occured during the right destroy'
       confirm: 'are you sure to delete this right ?'
 
+  price_cuts : 'price cuts'
+  price_cut:
+    product: 'product'
+    oldprice: 'old price'
+    newprice: 'new price'
+    show: 'show price cut'
+    date_error: 'The end date must be superior than the start date'
+    create:
+      success: 'the price cut was successfully created'
+      failed: 'a problem occured during the price cut creation'
+      action: 'create a price cut'
+    update:
+      success: 'the price cut was successfully updated'
+      failed: 'a problem occured during the price cut update'
+      action: 'edit price cut'
+    destroy:
+      success: 'the price cut was successfully destroyed'
+      failed: 'a problem occured during the price cut destroy'
+      confirm: 'are you sure to delete this price cut ?'
   jquery:
     dataTables:
       oLanguage:

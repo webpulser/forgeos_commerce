@@ -453,6 +453,25 @@ fr:
       failed: "un problème est survenu lors de la suppression du droit"
       confirm: "êtes-vous sûr de vouloir supprimer ce droit ?"
 
+  price_cuts : 'prix barrés'
+  price_cut:
+      product: 'produit'
+      oldprice: 'ancien prix'
+      newprice: 'nouveau prix'
+      show: 'voir le prix barré'
+      date_error: 'La date de fin doit être superieur à la date de début'
+      create:
+        success: "le prix barré a bien été créé"
+        failed: "un problème est survenu lors de la création du prix barré"
+        action: 'créer un prix barré'
+      update:
+        success: "le prix barré a bien été mis à jour"
+        failed: "un problème est survenu lors de la mise à jour du prix barré"
+        action: "éditer le prix barré"
+      destroy:
+        success: "le prix barré a bien été supprimé"
+        failed: "un problème est survenu lors de la suppression du prix barré"
+        confirm: "êtes-vous sûr de vouloir supprimer ce prix barré ?"
   jquery:
     dataTables:
       oLanguage:
