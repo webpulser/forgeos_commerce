@@ -12,6 +12,11 @@
     = f.text_field :code
   %p
     %b
+      = f.label :product_type_id, I18n.t('product_type.one').capitalize
+      \:
+    = f.select("product_type_id", ProductType.all.collect {|p| [ p.name, p.id ] }, {:include_blank => true})
+  %p
+    %b
       = f.label :value, I18n.t('value', :count=>1).capitalize
       \:
     = f.text_field :value

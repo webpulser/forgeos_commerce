@@ -1,5 +1,6 @@
 class ProductType < ActiveRecord::Base
   has_many :products
+  has_many :vouchers
   has_and_belongs_to_many :tattributes, :readonly => true
   has_and_belongs_to_many :dynamic_tattributes, :class_name => 'Tattribute', :readonly => true, :join_table => 'product_types_tattributes', :association_foreign_key => 'tattribute_id',
     :conditions => ['tattributes.dynamic IS TRUE']
