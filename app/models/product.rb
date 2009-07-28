@@ -1,5 +1,3 @@
-# A <i>Product</i> is an abstract class and can't be instanciable, use <i>ProductParent</i> or <i>ProductDetail</i>.
-# find's methods is already accepted
 require 'rails_commerce/search'
 class Product < ActiveRecord::Base
   has_many :carts_products, :dependent => :destroy
@@ -105,14 +103,14 @@ class Product < ActiveRecord::Base
     return ("%01.2f" % (price(false, with_currency) * self.rate_tax/100)).to_f
   end
 
-  # Returns an <i>Array</i> of <i>ProductDetail</i> who match gived keyword
+  # Returns an <i>Array</i> of <i>Product</i> who match gived keyword
   # ==== Parameters
   # * <tt>:keyword</tt> - a keyword
   def self.search(keyword)
     results = Product.find_with_ferret("%#{keyword}%", :limit => :all)
   end
 
-  # Returns a <i>WillPaginate::Collection</i> of <i>ProductDetail</i> who match gived keyword
+  # Returns a <i>WillPaginate::Collection</i> of <i>Product</i> who match gived keyword
   #
   # ==== Parameters
   # * <tt>:keyword</tt> - a keyword

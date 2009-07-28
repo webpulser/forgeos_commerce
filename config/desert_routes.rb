@@ -7,8 +7,9 @@ signup '/signup', :controller => 'users', :action => 'new'
 activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
  
 # resources :rails_commerces
-resources :users
 resource :session
+resources :users
+resources :products
 resources :addresses
 resources :orders
 

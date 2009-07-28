@@ -137,19 +137,4 @@ module CartHelper
   def link_to_add_cart(product, name='add_to_cart', url={:controller => 'cart', :action => 'add_product'}, options=nil)
     link_to I18n.t(name).capitalize, url.merge({:id => product.id}), options
   end
-
-  def step_order(index=1)
-    content = '<div class="step_order">'
-      content += link_to image_tag(step_order_image_filename(1,index)), :controller => 'cart'
-      content += link_to image_tag(step_order_image_filename(2,index)), :controller => 'order', :action => 'informations'
-      content += link_to image_tag(step_order_image_filename(3,index)), :controller => 'order', :action => 'new'
-      content += link_to image_tag(step_order_image_filename(4,index)), :controller => 'order', :action => 'payment'
-      content += link_to image_tag(step_order_image_filename(5,index)), :controller => 'order', :action => 'confirmation'
-    content += '</div>'
-  end
-
-  def step_order_image_filename(step,index)
-    "step#{step}_#{((index == step) ? 'on' : 'go')}_#{I18n.locale}.gif"
-  end
-
 end

@@ -44,7 +44,7 @@ class WishlistController < ApplicationController
   # * <tt>:quantity</tt> - a <i>Product</i> object
   def update_quantity
     reset_order_session
-    @wishlist.set_quantity ProductDetail.find(params[:product_id]), params[:quantity]
+    @wishlist.set_quantity Product.find(params[:product_id]), params[:quantity]
 
     if request.xhr?
       render(:update) do |page|

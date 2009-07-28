@@ -15,7 +15,7 @@ module ProductHelper
     return content
   end
 
-  def display_all_products(products=ProductDetail.find(:all), with_description=false)
+  def display_all_products(products=Product.find_all_by_active_and_deleted(true,false), with_description=false)
     content = '<div class="products">'
     products.each do |product|
       content += display_product(product, with_description)
@@ -74,19 +74,11 @@ module ProductHelper
             content += 'price:&nbsp;'
           content += '</div>'
           content += '<div class="product_price_value" id="display_product_page_price_' + product.id.to_s + '">'
-            if product.product_details.size == 1
-              content += product.product_details.first.price_to_s(true)
-            else
-              content += product.price_to_s(true)
-            end
+          content += product.price_to_s(true)
           content += '</div>'
         content += '</div>'
         content += '<div class="product_link_cart" id="display_product_link_cart_' + product.id.to_s + '">'
-          if product.product_details.size == 1
-            content += link_to_add_cart(product.product_details.first)
-          else
-            content += I18n.t('add_to_cart')
-          end
+          content += link_to_add_cart(product)
         content += '</div>'
       content += '</div>'
     content += '</div>'
@@ -94,34 +86,27 @@ module ProductHelper
     content += draggable_element("product_#{product.id}", :cursor => '"move"', :helper => "function(event) { return $('<div class=\"ui-widget-header\">#{escape_javascript(product.name)}</div>'); }" )
   end
   
-  def display_product_page_attributes(product, options_attributes=nil)
-    options_attributes = session["product_#{product.id}"][:tattribute_values] if options_attributes.nil? && session["product_#{product.id}"]
-
+  def display_product_page_attributes(product)
     content = ""
-    product.tattributes.each do |tattribute|
+    return content unless product && product.product_type
+    product.product_type.tattributes.each do |tattribute|
       content += "<div class='product_attribute_group_name'>"
         content += tattribute.name + "&nbsp;:&nbsp;"
       content += "</div>"
       content += '<div class="product_attributes">'
         tattribute.tattribute_values.each do |tattribute_value|
           content += '<div class="product_attribute">'
-            if product.product_details.find(:first, :conditions => ["#{TattributeValue.table_name}.id = ? AND products.deleted IS NOT TRUE AND products.active IS TRUE", tattribute_value.id], :include => 'tattribute_values')
-              if options_attributes && options_attributes[tattribute.id] && options_attributes[tattribute.id].id == tattribute_value.id
-                content += tattribute_value.name
-              else
-                content += link_to_remote(attribute.name, :url => { :controller => 'product', :action => 'update', :id => product.id, :tattribute_value_id => tattribute_value.id })
-              end
-            end
+            content += tattribute_value.name
           content += "</div>"
         end
       content += '</div>'
       content += "<div class='clear'></div>"
     end
-    return content
+    content
   end
   
   def link_to_product(product, name=nil, url={:controller => 'product', :action => 'show'}, options=nil)
     name = product.name if name.nil?
-    link_to name, url.merge(:id => ((product.is_a?(ProductDetail)) ? product.product_parent : product.id)), options
+    link_to name, product, options
   end
 end

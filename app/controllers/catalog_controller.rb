@@ -1,7 +1,7 @@
 class CatalogController < ApplicationController
   # Show all <i>ProductDetail</i>
   def index
-    @products = ProductDetail.paginate(:all, :per_page => 8, :page => params[:page], :conditions => { :active => true, :deleted => false })
+    @products = Product.paginate(:all, :per_page => 8, :page => params[:page], :conditions => { :active => true, :deleted => false })
   end
 
   # Show all <i>ProductDetail</i> by <i>Category</i>
@@ -11,8 +11,7 @@ class CatalogController < ApplicationController
   def category
     @category = Category.find_by_id(params[:id])
     return redirect_to_home unless @category
-    @products = []
-    @category.products.each { |products| @products += products.product_details unless products.is_a?(ProductDetail) }
+    @products = @category.products
 
     render :action => 'index'
   end
@@ -27,7 +26,7 @@ class CatalogController < ApplicationController
     keywords = params[:keywords] || session[:keywords]
     session[:keywords] = keywords
 
-    @products = ProductDetail.search_paginate(keywords, params[:page])
+    @products = Product.search_paginate(keywords, params[:page])
 
     render :action => 'index'
   end

@@ -43,7 +43,7 @@ class CartController < ApplicationController
   # * <tt>:quantity</tt> - a <i>Product</i> object
   def update_quantity
     reset_order_session
-    @cart.set_quantity ProductDetail.find(params[:product_id]), params[:quantity]
+    @cart.set_quantity Product.find(params[:product_id]), params[:quantity]
 
     if request.xhr?
       render(:update) do |page|

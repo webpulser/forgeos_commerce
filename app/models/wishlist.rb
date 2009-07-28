@@ -19,7 +19,7 @@ class Wishlist < ActiveRecord::Base
   # * <tt>:quantity</tt> - the quantity (1 by default)
   # If this product is already in this wishlist, the quantity is <b>add</b> with the actual quantity
   def add_product(product, quantity=1)
-    return false if product.nil? || product.is_a?(ProductParent) || product.new_record?
+    return false if product.nil? || product.new_record?
 
     # if wishlist include product : add quantity
     # else add product with set_quantity

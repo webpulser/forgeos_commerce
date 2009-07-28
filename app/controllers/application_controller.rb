@@ -71,21 +71,4 @@ private
       session[:currency] = $currency.id 
     end
   end
-
-  # Initialise une variable de session dedié à la dynamique des fiches produits
-  # Dynamique en fonction des attributs
-  # Selection automatique des attributs lorsqu'il n'y a qu'un seul choix / groupe d'attribut
-  def init_session_for_product(product, force=false)
-    if force || session["product_#{product.id}"].nil?
-      session["product_#{product.id}"] = Hash.new
-      session["product_#{product.id}"][:tattribute_values] = {}
-    end
-
-    @product.tattributes.each do |tattribute|
-      tattribute_values = @product.product_details.collect { |product_detail| product_detail.attribute_of(tattribute) }.uniq
-      if tattribute_values.size == 1
-        session["product_#{@product.id}"][:tattribute_values][tattribute.id] = tattribute_values.first
-      end
-    end
-  end
 end

@@ -1,5 +1,5 @@
 = display_standard_flashes
-%table
+%table#table
   %thead
     %tr
       %th
@@ -44,3 +44,5 @@
           \-
           = link_to_remote I18n.t('quick_edit').capitalize, :url => [:quick_edit, :admin, product], :method => 'get'
 #quick_edit
+
+= dataTables_tag 8

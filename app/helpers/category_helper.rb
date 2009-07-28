@@ -19,7 +19,7 @@ module CategoryHelper
       end
       unless category.children.empty?
         content += link_to_function category.name, visual_effect('appear', "category_#{category.id}")
-        content += '<div id="category_#{category.id}" ' + ((current_category && current_category.parent.eql?(category)) ? '' : 'style="display: none;"') + '>'
+        content += "<div id=\"category_#{category.id}\" " + ((current_category && current_category.parent.eql?(category)) ? '' : 'style="display: none;"') + '>'
           category.children.each do |subcategory|
             content += display_category(subcategory)
           end

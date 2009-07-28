@@ -6,12 +6,12 @@ class ProductType < ActiveRecord::Base
     :conditions => ['tattributes.dynamic IS TRUE']
   sortable_pictures
 
-  # Destroy all ProductDetails associated with this ProductParent
+  # Destroy all Product associated with this ProductType
   def after_destroy
     Product.destroy_all(['product_type_id = ?', self.id])
   end
 
-  # Set all ProductDetails dynamic_tattributes on save
+  # Set all Productsdynamic_tattributes on save
   def before_save
     self.products.each do |product|
       product.dynamic_tattributes = dynamic_tattributes
