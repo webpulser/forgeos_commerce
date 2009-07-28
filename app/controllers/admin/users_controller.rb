@@ -97,24 +97,51 @@ class Admin::UsersController < Admin::BaseController
     index
     render :partial => 'list', :locals => { :users => @users }
   end
-
-
+	
   # example action to return the contents
   # of a table in CSV format
   def export_newsletter
     require 'fastercsv'
-    users = User.all
     stream_csv do |csv|
-      csv << %w[name email]
-      users.each do |u|
+      csv << %w[name email]	
+      @users.each do |u|
         csv << [u.fullname,u.email]
       end
     end
   end
 
+	# filter users by something, only by gender & country for the moment
+	def filter
+
+		@gender = params[:filter][:gender]
+		@country = params[:filter][:country]
+
+		if @gender.to_i == 0
+				@users = @country.blank? ? User.all : User.find(:all, :include => :addresses, :conditions => ["addresses.country_id = ?", @country])
+		else
+			gender = case @gender
+			when "1"	then "736952967"										# works with the civility_id(fk) in the Addresses Table, have to try directly with iD(pk) in Namables Table ?
+			when "2"	then ['1172530090', '1558852113']
+			end
+			
+			conditions = @country.blank? ? [ "addresses.civility_id IN (?)", gender] : ["addresses.civility_id IN (?) AND addresses.country_id = ?", gender, @country]
+			@users = User.find(:all, :include => :addresses, :conditions => conditions )
+		end
+		flash[:error] = "No users found." if @users.empty?
+
+    if params[:commit] == 'Export'
+			if @users.empty?
+				flash[:error] = "Export failed, No users found."
+			else
+				export_newsletter
+			end	
+		end
+	end
+
 private
+
   def stream_csv
-     filename = params[:action] + ".csv"    
+     filename = params[:action] + ".csv"
       
      #this is required if you want this to work with IE		
      if request.env['HTTP_USER_AGENT'] =~ /msie/i
@@ -129,7 +156,10 @@ private
      end
 
     render :text => Proc.new { |response, output|
-      csv = FasterCSV.new(output, :row_sep => "\r\n") 
+			def output.<<(*args)
+				write(*args)
+			end
+      csv = FasterCSV.new(output, :row_sep => "\r\n")
       yield csv
     }
   end

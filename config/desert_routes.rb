@@ -18,7 +18,7 @@ namespace :admin do |admin|
   admin.resources :shipping_methods
   admin.resources :vouchers
   admin.resources :categories
-  admin.resources :users
+  admin.resources :users, :collection => { :filter => :post, :export_newsletter => :post }
   admin.resources :tattributes do |tattribute|
     tattribute.resources :values, :controller => 'tattribute_values'
   end

@@ -1,9 +1,10 @@
 = display_standard_flashes
-%table
+%table#table
   %thead
     %tr
       %th
         = I18n.t('avatar').capitalize
+      %th Civility
       %th
         = I18n.t('name').capitalize
       %th
@@ -24,6 +25,8 @@
           %td
             = image_tag(user.avatar.public_filename(:small)) if user.avatar
           %td
+            = h user.address_invoice.civility.name
+          %td
             = h user.fullname
           %td
             = h user.email
@@ -38,3 +41,5 @@
             \-
             = link_to_remote I18n.t('destroy').capitalize, :url => admin_user_path(user), :method => 'delete', :confirm => I18n.t('user.destroy.confirm').capitalize, :update => 'users'
 - content_for :tools, link_to(I18n.t('user.create.action').capitalize, new_admin_user_path, :class => 'add')
+
+/= dataTables_tag(6)
