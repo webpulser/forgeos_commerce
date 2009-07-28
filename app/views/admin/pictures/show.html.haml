@@ -42,26 +42,26 @@
               %li
                 = link_to product.name, edit_admin_product_path(product)
      
-      - attributes_groups = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(AttributesGroup)}.compact
-      - unless attributes_groups && attributes_groups.empty?
-        %li
-          %h3
-            = I18n.t('attributes_group', :count => 2).capitalize
-            \:
-          %ul.no-list-style-type
-            - attributes_groups.each do |attributes_group|
-              %li
-                = link_to(attributes_group.name, :controller => 'attributes_groups', :action => 'edit', :id => attributes_group.id)
-      - tattributes = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Attribute)}.compact
+      - tattributes = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Tattribute)}.compact
       - unless tattributes && tattributes.empty?
         %li
           %h3
-            = I18n.t('attribute', :count => 2).capitalize
+            = I18n.t('tattribute', :count => 2).capitalize
             \:
           %ul.no-list-style-type
             - tattributes.each do |tattribute|
               %li
-                = link_to(tattribute.name, :controller => 'attributes_groups', :action => 'edit_attribute', :id => tattribute.id)
+                = link_to tattribute.name, [:edit, :admin, tattribute]
+      - tattribute_values = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(TattributeValue)}.compact
+      - unless tattribute_values && tattribute_values.empty?
+        %li
+          %h3
+            = I18n.t('tattribute_value', :count => 2).capitalize
+            \:
+          %ul.no-list-style-type
+            - tattribute_values.each do |tattribute_value|
+              %li
+                = link_to tattribute_value.name, [:edit, :admin, tattribute_value]
       - categories = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Category)}.compact
       - unless categories && categories.empty?
         %li

@@ -7,15 +7,15 @@ class ProductController < ApplicationController
   def update
     return redirect_to_home unless request.xhr?
     # Sauvegarde de l'attribut (supplémentaire) selectionné
-    @attribute = Attribute.find_by_id(params[:attribute_id])
+    @tattribute_value = TattributeValue.find_by_id(params[:tattribute_value_id])
     return render(:nothing => true) unless @attribute
-    session["product_#{@product.id}"][:attributes][@attribute.attributes_group.id] = @attribute
+    session["product_#{@product.id}"][:tattribute_values][@tattribute_value.tattribute.id] = @tattribute_value
 
     # Recherche des correspondances avec les différents attributs selectionnés.
     @product_details = @product.product_details.reject do |product_detail|
       tmp = true
-      session["product_#{@product.id}"][:attributes].each do |key, attribute|
-        tmp &&= !product_detail.tattributes.find_by_id(attribute.id).nil? unless attribute.nil?
+      session["product_#{@product.id}"][:tattribute_values].each do |key, tattribute_value|
+        tmp &&= !product_detail.tattribute_values.find_by_id(tattribute_value.id).nil? unless tattribute_value.nil?
       end
       !tmp
     end
@@ -23,8 +23,8 @@ class ProductController < ApplicationController
     # Selection des attributs par défaut si un seul résultat
     if @product_details.size == 1
       @product_detail = @product_details.first
-      @product_detail.tattributes.each do |attribute|
-        session["product_#{@product.id}"][:attributes][attribute.attributes_group.id] = attribute
+      @product_detail.tattribute_values.each do |tattribute_value|
+        session["product_#{@product.id}"][:tattribute_values][tattribute_value.tattribute.id] = tattribute_value
       end
     end
 

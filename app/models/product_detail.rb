@@ -4,9 +4,9 @@ require 'rails_commerce/search'
 class ProductDetail < Product
   acts_as_ferret YAML.load_file(File.join(RAILS_ROOT, 'config', 'search.yml'))['product_detail'].symbolize_keys
 
-  has_and_belongs_to_many :tattributes, :join_table => 'attributes_product_details', :class_name => 'Attribute', :readonly => true
-  has_many :dynamic_attributes, :dependent => :destroy
-  has_many :dynamic_attributes_groups, :through => :dynamic_attributes, :class_name => 'AttributesGroup', :source => 'attributes_group'
+  has_and_belongs_to_many :tattribute_values, :readonly => true
+  has_many :dynamic_tattribute_values, :dependent => :destroy
+  has_many :dynamic_tattributes, :through => :dynamic_tattribute_values, :class_name => 'Tattribute', :source => 'tattribute'
 
   belongs_to :product_parent, :foreign_key => 'product_id'
 
@@ -33,7 +33,7 @@ class ProductDetail < Product
   # Call by <i>before_create</i>
   # * add ProductParent dynamic_attributes_groups in dynamic_attributes_groups list.
   def add_product_parent_dynamic_attributes_groups
-    self.dynamic_attributes_groups << product_parent.dynamic_attributes_groups
+    self.dynamic_tattributes << product_parent.dynamic_tattributes
   end
 
   def initialize(options={})
@@ -51,8 +51,8 @@ class ProductDetail < Product
     find_all_by_active_and_deleted_and_on_first_page(true,false,true)
   end
 
-  def attribute_of(attributes_group)
-    tattributes.find_by_attributes_group_id(attributes_group.id)
+  def attribute_of(tattribute)
+    tattribute_values.find_by_tattribute_id(tattribute.id)
   end
 
   # Overload the <i>name</i> attribute.

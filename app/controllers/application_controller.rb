@@ -78,13 +78,13 @@ private
   def init_session_for_product(product, force=false)
     if force || session["product_#{product.id}"].nil?
       session["product_#{product.id}"] = Hash.new
-      session["product_#{product.id}"][:attributes] = {}
+      session["product_#{product.id}"][:tattribute_values] = {}
     end
 
-    @product.attributes_groups.each do |attributes_group|
-      attributes = @product.product_details.collect { |product_detail| product_detail.attribute_of(attributes_group) }.uniq
-      if attributes.size == 1
-        session["product_#{@product.id}"][:attributes][attributes_group.id] = attributes.first
+    @product.tattributes.each do |tattribute|
+      tattribute_values = @product.product_details.collect { |product_detail| product_detail.attribute_of(tattribute) }.uniq
+      if tattribute_values.size == 1
+        session["product_#{@product.id}"][:tattribute_values][tattribute.id] = tattribute_values.first
       end
     end
   end

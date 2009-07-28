@@ -24,14 +24,14 @@
       = f.label :deleted, I18n.t('deleted').capitalize
       \:
     = f.check_box :deleted
-  - product_detail.attributes_groups.each do |attr_group|
-    %p
-      %b
-        = label_tag attr_group.name
-        \:
-      - unless attr_group.tattributes.empty?
-        = select_tag "product_detail[tattribute_ids][]", options_from_collection_for_select(attr_group.tattributes, :id, :name, (attr_group.tattribute_ids & product_detail.tattribute_ids)), :multiple => true
-      - else
-        - dynamic_attribute = product_detail.dynamic_attributes.find_by_attributes_group_id(attr_group.id)
-        = text_field "dynamic_attributes[#{attr_group.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?)
+    - (product_detail.dynamic_tattributes + product_detail.product_parent.tattributes).each do |tattr|
+      %p
+        %b
+          = label_tag tattr.name
+          \:
+        - unless tattr.dynamic?
+          = select_tag "product_detail[tattribute_value_ids][]", options_from_collection_for_select(tattr.tattribute_values, :id, :name, (tattr.tattribute_value_ids & product_detail.tattribute_value_ids)), :multiple => true
+        - else
+          - dynamic_attribute = product_detail.dynamic_tattribute_values.find_by_tattribute_id(tattr.id)
+          = text_field "dynamic_attribute_values[#{tattr.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?)
   = f.submit I18n.t('save').capitalize

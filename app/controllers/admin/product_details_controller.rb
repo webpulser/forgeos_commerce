@@ -95,10 +95,10 @@ protected
   # Update DynamicAttributes values
   # return false if one of update fail
   def manage_dynamic_attributes
-    return true unless params[:dynamic_attributes]
+    return true unless params[:dynamic_attribute_values]
     result = true
-    @product_detail.dynamic_attributes.each do |d|
-      result = result & d.update_attributes(params[:dynamic_attributes][d.attributes_group_id.to_s])
+    @product_detail.dynamic_attribute_values.each do |d|
+      result = result & d.update_attributes(params[:dynamic_attribute_values][d.tattribute_id.to_s])
     end
     return result
   end

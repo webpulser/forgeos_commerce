@@ -1,0 +1,3 @@
+%h1
+  = I18n.t('tattribute', :count=>2).capitalize
+= render :partial => 'list', :locals => { :tattributes => @tattributes }

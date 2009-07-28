@@ -71,8 +71,8 @@ fr:
   orders: 'commandes'
   shipping_methods: "methodes d'expédition"
   pictures: 'images'
-  attributes_groups: "groupes d'attributs"
-  attributes: 'attributs'
+  tattributes: attributs
+  tattribute_values: valeurs
   vouchers: 'codes promo'
   users: 'utilisateurs'
   categories: 'catégories'
@@ -175,37 +175,37 @@ fr:
   pay: 'valider le paiement'
   accept: 'valider la commande'
   send: "valider l'expédition"
-  attributes_group:
-    one: "groupe d'attributs"
-    other: "groupes d'attributs"
-    create:
-      success: "le groupe d'attributs a bien été créé"
-      failed: "un problème est survenu lors de la création du groupe d'attributs"
-      action: "créer un groupe d'attributs"
-    update:
-      success: "le groupe d'attributs a bien été mis à jour"
-      failed: "un problème est survenu lors de la mise à jour du groupe d'attributs"
-      action: "éditer le groupe d'attributs"
-    destroy:
-      success: "le groupe d'attributs a bien été supprimé"
-      failed: "un problème est survenu lors de la suppression du groupe d'attributs"
-      confirm: "êtes-vous sûr de vouloir supprimer ce groupe d'attributs ?" 
-  attribute:
-    one: 'attribut'
-    other: 'attributs'
+  tattribute:
+    one: attribut
+    other: attributs
     create:
       success: "l'attribut a bien été créé"
-      dynamic: "ce groupe est dynamique, il ne peut avoir d'attribut"
       failed: "un problème est survenu lors de la création de l'attribut"
       action: "créer un attribut"
     update:
-      success: "l' attribut a bien été mis à jour"
+      success: "l'attribut a bien été mis à jour"
       failed: "un problème est survenu lors de la mise à jour de l'attribut"
       action: "éditer l'attribut"
     destroy:
       success: "l'attribut a bien été supprimé"
       failed: "un problème est survenu lors de la suppression de l'attribut"
-      confirm: "êtes-vous sûr de vouloir supprimer cet attribut ?"
+      confirm: "êtes-vous sûr de vouloir supprimer cet attribut ?" 
+  tattribute_value:
+    one: 'valeur'
+    other: 'valeurs'
+    create:
+      success: "la valeur a bien été créé"
+      dynamic: "ce groupe est dynamique, il ne peut avoir de valeur"
+      failed: "un problème est survenu lors de la création de la valeur"
+      action: "créer une valeur"
+    update:
+      success: "l' valeur a bien été mis à jour"
+      failed: "un problème est survenu lors de la mise à jour de la valeur"
+      action: "éditer la valeur"
+    destroy:
+      success: "la valeur a bien été supprimé"
+      failed: "un problème est survenu lors de la suppression de la valeur"
+      confirm: "êtes-vous sûr de vouloir supprimer cette valeur ?"
   category:
     one: 'catégorie'
     other: 'catégories'

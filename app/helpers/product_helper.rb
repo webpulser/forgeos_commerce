@@ -95,21 +95,21 @@ module ProductHelper
   end
   
   def display_product_page_attributes(product, options_attributes=nil)
-    options_attributes = session["product_#{product.id}"][:attributes] if options_attributes.nil? && session["product_#{product.id}"]
+    options_attributes = session["product_#{product.id}"][:tattribute_values] if options_attributes.nil? && session["product_#{product.id}"]
 
     content = ""
-    product.attributes_groups.each do |attributes_group|
+    product.tattributes.each do |tattribute|
       content += "<div class='product_attribute_group_name'>"
-        content += attributes_group.name + "&nbsp;:&nbsp;"
+        content += tattribute.name + "&nbsp;:&nbsp;"
       content += "</div>"
       content += '<div class="product_attributes">'
-        attributes_group.tattributes.each do |attribute|
+        tattribute.tattribute_values.each do |tattribute_value|
           content += '<div class="product_attribute">'
-            if product.product_details.find(:first, :conditions => ["#{Attribute.table_name}.id = ? AND products.deleted IS NOT TRUE AND products.active IS TRUE", attribute.id], :include => 'tattributes')
-              if options_attributes && options_attributes[attributes_group.id] && options_attributes[attributes_group.id].id == attribute.id
-                content += attribute.name
+            if product.product_details.find(:first, :conditions => ["#{TattributeValue.table_name}.id = ? AND products.deleted IS NOT TRUE AND products.active IS TRUE", tattribute_value.id], :include => 'tattribute_values')
+              if options_attributes && options_attributes[tattribute.id] && options_attributes[tattribute.id].id == tattribute_value.id
+                content += tattribute_value.name
               else
-                content += link_to_remote(attribute.name, :url => { :controller => 'product', :action => 'update', :id => product.id, :attribute_id => attribute.id })
+                content += link_to_remote(attribute.name, :url => { :controller => 'product', :action => 'update', :id => product.id, :tattribute_value_id => tattribute_value.id })
               end
             end
           content += "</div>"

@@ -36,16 +36,16 @@ class Admin::PicturesController < Admin::BaseController
             sortable_picture.picturable = product
             sortable_picture.save
             return redirect_to([:edit, :admin, product])
-          when 'attributes_group'
-            attributes_group = AttributesGroup.find_by_id(params[:target_id])
-            sortable_picture.picturable = attributes_group
-            sortable_picture.save
-            return redirect_to([:edit, :admin, attributes_group])
           when 'tattribute'
-            tattribute = Attribute.find_by_id(params[:target_id])
+            tattribute = Tattribute.find_by_id(params[:target_id])
             sortable_picture.picturable = tattribute
             sortable_picture.save
             return redirect_to([:edit, :admin, tattribute])
+          when 'tattribute_value'
+            tattribute_value = TattributeValue.find_by_id(params[:target_id])
+            sortable_picture.picturable = tattribute_value
+            sortable_picture.save
+            return redirect_to([:edit, :admin, tattribute_value])
           when 'category'
             category = Category.find_by_id(params[:target_id])
             sortable_picture.picturable = category 
@@ -72,11 +72,11 @@ class Admin::PicturesController < Admin::BaseController
             when 'product'
               sortable_picture.picturable = Product.find_by_id(params[:target_id])
               sortable_picture.save
-            when 'attributes_group'
-              sortable_picture.picturable = AttributesGroup.find_by_id(params[:target_id])
-              sortable_picture.save
             when 'tattribute'
-              sortable_picture.picturable = Attribute.find_by_id(params[:target_id])
+              sortable_picture.picturable = Tattribute.find_by_id(params[:target_id])
+              sortable_picture.save
+            when 'tattribute_value'
+              sortable_picture.picturable = TattributeValue.find_by_id(params[:target_id])
               sortable_picture.save
             when 'category'
               sortable_picture.picturable = Category.find_by_id(params[:target_id])

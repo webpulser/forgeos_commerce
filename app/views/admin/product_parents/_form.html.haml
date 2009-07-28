@@ -100,20 +100,20 @@
           = f.label :stock, I18n.t('stock', :count => 1).capitalize
           \:
         = f.text_field :stock
-      - attributes_groups = AttributesGroup.all
-      - unless attributes_groups.empty?
+      - tattributes = Tattribute.all
+      - unless tattributes.empty?
         %fieldset
           %legend
             = link_to_effect_toggle(I18n.t('attributes_group', :count => 2).capitalize,'attributes_groups')
             |
-            = link_to_function(I18n.t('select_all').capitalize,"$('.attributes_groups').each(function(){this.checked=true;})")
+            = link_to_function(I18n.t('select_all').capitalize,"$('.tattributes').each(function(){this.checked=true;})")
             |
-            = link_to_function(I18n.t('unselect_all').capitalize,"$('.attributes_groups').each(function(){this.checked=false;})")
-          %p#attributes_groups
-            - attributes_groups.each do |attr_group|
-              = check_box_tag 'product_parent[attributes_group_ids][]', attr_group.id, attr_group.products.include?(product_parent), :class => 'attributes_groups'
+            = link_to_function(I18n.t('unselect_all').capitalize,"$('.tattributes').each(function(){this.checked=false;})")
+          %p#tattributes
+            - tattributes.each do |tattr|
+              = check_box_tag 'product_parent[tattribute_ids][]', tattr.id, tattr.products.include?(product_parent), :class => 'tattributes'
               %b
-                = label_tag attr_group.name
+                = label_tag tattr.name
               %br
       %center
         = f.submit I18n.t('save').capitalize

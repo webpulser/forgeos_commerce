@@ -19,8 +19,9 @@ namespace :admin do |admin|
   admin.resources :vouchers
   admin.resources :categories
   admin.resources :users
-  admin.resources :attributes_groups
-  admin.resources :attributes
+  admin.resources :tattributes do |tattribute|
+    tattribute.resources :values, :controller => 'tattribute_values'
+  end
   admin.resources :orders
   admin.resources :pictures
   admin.resources :product_parents

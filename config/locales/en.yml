@@ -71,8 +71,8 @@ en:
   orders: 'orders'
   shipping_methods: 'shipping methods'
   pictures: 'pictures'
-  attributes_groups: 'attributes groups'
-  attributes: 'attributes'
+  tattributes: 'attributes'
+  tattribute_values: 'attribute values'
   vouchers: 'vouchers'
   users: 'users'
   categories: 'categories'
@@ -175,27 +175,11 @@ en:
   pay: 'validate payment'
   accept: 'validate order'
   send: 'validate shipping'
-  attributes_group:
-    one: "attributes group"
-    other: "attributes groups"
-    create:
-      success: 'the attributes group was successfully created'
-      failed: 'a problem occured during the attributes group creation'
-      action: 'create an attributes group'
-    update:
-      success: 'the attributes group was successfully updated'
-      failed: 'a problem occured during the attributes group update'
-      action: 'edit attributes group'
-    destroy:
-      success: 'the attributes group was successfully destroyed'
-      failed: 'a problem occured during the attributes group destroy'
-      confirm: 'are you sure to delete this attributes group ?' 
-  attribute:
-    one: 'attribute'
-    other: 'attributes'
+  tattribute:
+    one: "attribute"
+    other: "attributes"
     create:
       success: 'the attribute was successfully created'
-      dynamic: "this group is dynamic, it can't have attributes"
       failed: 'a problem occured during the attribute creation'
       action: 'create an attribute'
     update:
@@ -205,7 +189,23 @@ en:
     destroy:
       success: 'the attribute was successfully destroyed'
       failed: 'a problem occured during the attribute destroy'
-      confirm: 'are you sure to delete this attribute ?'
+      confirm: 'are you sure to delete this attribute ?' 
+  tattribute value:
+    one: 'attribute value'
+    other: 'attribute values'
+    create:
+      success: 'the attribute value was successfully created'
+      dynamic: "this group is dynamic, it can't have attribute values"
+      failed: 'a problem occured during the attribute value creation'
+      action: 'create an attribute value'
+    update:
+      success: 'the attribute value was successfully updated'
+      failed: 'a problem occured during the attribute value update'
+      action: 'edit attribute value'
+    destroy:
+      success: 'the attribute value was successfully destroyed'
+      failed: 'a problem occured during the attribute value destroy'
+      confirm: 'are you sure to delete this attribute value ?'
   category:
     one: 'category'
     other: 'categories'

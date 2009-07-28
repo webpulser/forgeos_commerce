@@ -4,9 +4,9 @@ class ProductParent < Product
   has_many :product_details, :foreign_key => 'product_id', :dependent => :destroy, :order => 'active DESC'
   has_and_belongs_to_many :cross_sellings, :class_name => 'ProductParent', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_parent_id', :join_table => 'cross_sellings_product_parents'
 
-  has_and_belongs_to_many :attributes_groups, :readonly => true
-  has_and_belongs_to_many :dynamic_attributes_groups, :class_name => 'AttributesGroup', :readonly => true, :join_table => 'attributes_groups_product_parents', :association_foreign_key => 'attributes_group_id',
-    :conditions => ['attributes_groups.dynamic IS TRUE']
+  has_and_belongs_to_many :tattributes, :readonly => true
+  has_and_belongs_to_many :dynamic_tattributes, :class_name => 'Tattribute', :readonly => true, :join_table => 'product_parents_tattributes', :association_foreign_key => 'tattribute_id',
+    :conditions => ['tattributes.dynamic IS TRUE']
 
   def activate
     product_details.each do |product_detail|
@@ -36,10 +36,10 @@ class ProductParent < Product
     self.product_details.create
   end
 
-  # Set all ProductDetails dynamic_attributes_groups on save
+  # Set all ProductDetails dynamic_tattributes on save
   def before_save
     self.product_details.each do |product_detail|
-      product_detail.dynamic_attributes_groups = dynamic_attributes_groups
+      product_detail.dynamic_tattributes = dynamic_tattributes
     end
   end
 

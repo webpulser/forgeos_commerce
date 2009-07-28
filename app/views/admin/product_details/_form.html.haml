@@ -103,16 +103,16 @@
           = f.label :keywords, I18n.t('keyword', :count => 2).capitalize
           \:
         = f.text_field :keywords
-      - product_detail.attributes_groups.each do |attr_group|
+      - (product_detail.dynamic_tattributes + product_detail.product_parent.tattributes).each do |tattr|
         %p
           %b
-            = label_tag attr_group.name
+            = label_tag tattr.name
             \:
-          - unless attr_group.dynamic?
-            = select_tag "product_detail[tattribute_ids][]", options_from_collection_for_select(attr_group.tattributes, :id, :name, (attr_group.tattribute_ids & product_detail.tattribute_ids)), :multiple => true
+          - unless tattr.dynamic?
+            = select_tag "product_detail[tattribute_value_ids][]", options_from_collection_for_select(tattr.tattribute_values, :id, :name, (tattr.tattribute_value_ids & product_detail.tattribute_value_ids)), :multiple => true
           - else
-            - dynamic_attribute = product_detail.dynamic_attributes.find_by_attributes_group_id(attr_group.id)
-            = text_field "dynamic_attributes[#{attr_group.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?)
+            - dynamic_attribute = product_detail.dynamic_tattribute_values.find_by_tattribute_id(tattr.id)
+            = text_field "dynamic_attribute_values[#{tattr.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?)
       %center
         = f.submit I18n.t('save').capitalize
   #tabs-2

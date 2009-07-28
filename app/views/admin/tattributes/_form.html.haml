@@ -1,0 +1,40 @@
+= display_standard_flashes
+- content_for :tools, link_to(I18n.t('list').capitalize, admin_tattributes_path, :class => 'house' )
+#tabs
+  %ul
+    %li
+      %a{ :href => "#tabs-1" }
+        = I18n.t('information', :count =>2).capitalize
+    - unless tattribute.new_record? || tattribute.dynamic?
+      %li
+        %a{ :href => "#tabs-2" }
+          = I18n.t('tattribute_value', :count=>2).capitalize
+    - unless tattribute.new_record?
+      %li
+        %a{ :href => "#tabs-3" }
+          = I18n.t('picture', :count=>2).capitalize
+  #tabs-1
+    - form_for [:admin ,tattribute] do |f|
+      %p
+        %b
+          = f.label :name, I18n.t('name').capitalize
+          \:
+        = f.text_field :name
+      %p
+        %b
+          = f.label :dynamic, I18n.t('dynamic').capitalize
+          \:
+        = f.check_box :dynamic
+      %center
+        = f.submit I18n.t('save').capitalize
+  - unless tattribute.new_record? || tattribute.dynamic?
+    #tabs-2
+      #attributes
+        = render :partial => 'admin/tattribute_values/list', :locals => { :tattribute => tattribute }
+  - unless tattribute.new_record?
+    #tabs-3
+      #tattribute_pictures
+        = link_to_unless tattribute.new_record?, I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'tattribute', :target_id => tattribute.id ), :class => 'add'
+        #picture_list
+          = render :partial => 'admin/pictures/list', :locals => { :pictures => tattribute.pictures, :target => 'tattribute', :target_id => tattribute.id }
+= javascript_tag "$(function(){ $('#tabs').tabs(); })"
