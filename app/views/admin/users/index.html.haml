@@ -21,4 +21,4 @@
 #users
   = render :partial => 'list', :locals => { :users => @users }
 
-- content_for :tools, link_to(I18n.t('export_newsletter').capitalize, { :controller => 'admin/users', :action => 'export_newsletter', :id => 0}, :class => 'report_seo' )
+- content_for :tools, link_to(I18n.t('export_newsletter').capitalize, admin_users_path, :class => 'report_seo' )
