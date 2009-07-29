@@ -8,10 +8,14 @@
     %p
       = label_tag 'filter[gender]', I18n.t('gender').capitalize
       \:
-      = select_tag 'filter[gender]', options_for_select({I18n.t('all').capitalize => 0,I18n.t('men').capitalize => 1, I18n.t('women').capitalize => 2}, @gender.to_i)
+      - genders = []
+      - genders << [I18n.t('all').capitalize, Civility.all.collect(&:id).join(',')]
+      - genders << [I18n.t('women').capitalize, Civility.find_all_by_name(%w(Mses Miss)).collect(&:id).join(',')]
+      - genders << [I18n.t('men').capitalize, Civility.find_all_by_name('Mr').collect(&:id).join(',')]
+      = select 'filter', 'gender', genders, :selected => @gender
       = label_tag 'filter[country]', I18n.t('country').capitalize
       \:
-      = select_tag 'filter[country]', options_from_collection_for_select_with_include_blank(Country.find(:all, :order => "name"), :id, :printable_name, @country.to_i, :include_blank => true)
+      = collection_select 'filter', 'country', Country.find(:all, :order => "name"), :id, :printable_name, :selected => @country.to_i, :prompt => true
       = submit_tag I18n.t('search').capitalize
       = submit_tag I18n.t('export').capitalize
 #users

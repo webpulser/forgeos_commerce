@@ -102,6 +102,7 @@ class Admin::UsersController < Admin::BaseController
   # of a table in CSV format
   def export_newsletter
     require 'fastercsv'
+    return flash[:error] = I18n.t('user.export.failed').capitalize if @users.empty?
     stream_csv do |csv|
       csv << %w[name email]	
       @users.each do |u|
@@ -110,33 +111,20 @@ class Admin::UsersController < Admin::BaseController
     end
   end
 
-	# filter users by something, only by gender & country for the moment
-	def filter
+  # filter users by something, only by gender & country for the moment
+  def filter
+    return redirect_to(:action => 'index') unless params[:filter]
+    @gender = params[:filter][:gender]
+    @country = params[:filter][:country]
 
-		@gender = params[:filter][:gender]
-		@country = params[:filter][:country]
+    gender = @gender.chomp.split(',').collect(&:to_i)
+    conditions = @country.blank? ? [ 'addresses.civility_id IN (?)', gender] : ['addresses.civility_id IN (?) AND addresses.country_id = ?', gender, @country.to_i]
+    @users = User.all(:include => :addresses, :conditions => conditions )
+    flash[:error] = I18n.t('user.search.failed').capitalize if @users.empty?
 
-		if @gender.to_i == 0
-			@users = @country.blank? ? User.all : User.find(:all, :include => :addresses, :conditions => ["addresses.country_id = ?", @country])
-		else
-			gender = case @gender
-			when "1"	then "736952967"										# works with the civility_id(fk) in the Addresses Table, have to try directly with iD(pk) in Namables Table ?
-			when "2"	then ['1172530090', '1558852113']
-			end
-			
-			conditions = @country.blank? ? [ "addresses.civility_id IN (?)", gender] : ["addresses.civility_id IN (?) AND addresses.country_id = ?", gender, @country]
-			@users = User.find(:all, :include => :addresses, :conditions => conditions )
-		end
-		flash[:error] = I18n.t('user.search.failed').capitalize if @users.empty?
-
-    if params[:commit] == I18n.t('export').capitalize
-			if @users.empty?
-				flash[:error] = I18n.t('user.export.failed').capitalize
-			else
-				export_newsletter
-			end	
-		end
-	end
+    export_newsletter if params[:commit] == I18n.t('export').capitalize
+    render :template => 'admin/users/index'
+  end
 
 private
 
@@ -146,13 +134,13 @@ private
      #this is required if you want this to work with IE		
      if request.env['HTTP_USER_AGENT'] =~ /msie/i
        headers['Pragma'] = 'public'
-       headers["Content-type"] = "text/plain"
+       headers["Content-type"] = 'text/plain'
        headers['Cache-Control'] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
        headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
        headers['Expires'] = "0"
      else
-       headers["Content-Type"] ||= 'text/csv'
-       headers["Content-Disposition"] = "attachment; filename=\"#{filename}\"" 
+       headers['Content-Type'] ||= 'text/csv'
+       headers['Content-Disposition'] = "attachment; filename=\"#{filename}\"" 
      end
 
     render :text => Proc.new { |response, output|
