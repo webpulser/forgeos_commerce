@@ -1,7 +1,6 @@
 # Groups of <i>Attribute</i>
 class Tattribute < ActiveRecord::Base
-
-  sortable_pictures
+  sortable_attachments
   has_many :tattribute_values, :dependent => :destroy
   has_and_belongs_to_many :product_types, :readonly => true
   has_many :dynamic_tattribute_values, :dependent => :destroy

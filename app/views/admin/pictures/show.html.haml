@@ -9,6 +9,10 @@
     = I18n.t('content_type').capitalize
     \:
   = @picture.content_type
+  %b
+    = I18n.t('picture.alternative').capitalize
+    \:
+  = @picture.alternative ? @picture.alternative : '-'
 #tabs
   %ul
     %li
@@ -31,7 +35,7 @@
             = thumb
   #tabs-2
     %ul#associated_elements.no-list-style-type
-      - products = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Product)}.compact
+      - products = @picture.sortable_attachments.collect{ |sp| sp.attachable if sp.attachable.kind_of?(Product)}.compact
       - unless products && products.empty?
         %li
           %h3
@@ -42,7 +46,7 @@
               %li
                 = link_to product.name, edit_admin_product_path(product)
      
-      - tattributes = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Tattribute)}.compact
+      - tattributes = @picture.sortable_attachments.collect{ |sp| sp.attachable if sp.attachable.kind_of?(Tattribute)}.compact
       - unless tattributes && tattributes.empty?
         %li
           %h3
@@ -52,7 +56,7 @@
             - tattributes.each do |tattribute|
               %li
                 = link_to tattribute.name, [:edit, :admin, tattribute]
-      - tattribute_values = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(TattributeValue)}.compact
+      - tattribute_values = @picture.sortable_attachments.collect{ |sp| sp.attachable if sp.attachable.kind_of?(TattributeValue)}.compact
       - unless tattribute_values && tattribute_values.empty?
         %li
           %h3
@@ -62,7 +66,7 @@
             - tattribute_values.each do |tattribute_value|
               %li
                 = link_to tattribute_value.name, [:edit, :admin, tattribute_value]
-      - categories = @picture.sortable_pictures.collect{ |sp| sp.picturable if sp.picturable.kind_of?(Category)}.compact
+      - categories = @picture.sortable_attachments.collect{ |sp| sp.attachable if sp.attachable.kind_of?(Category)}.compact
       - unless categories && categories.empty?
         %li
           %h3
