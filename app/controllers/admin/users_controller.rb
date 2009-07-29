@@ -117,7 +117,7 @@ class Admin::UsersController < Admin::BaseController
 		@country = params[:filter][:country]
 
 		if @gender.to_i == 0
-				@users = @country.blank? ? User.all : User.find(:all, :include => :addresses, :conditions => ["addresses.country_id = ?", @country])
+			@users = @country.blank? ? User.all : User.find(:all, :include => :addresses, :conditions => ["addresses.country_id = ?", @country])
 		else
 			gender = case @gender
 			when "1"	then "736952967"										# works with the civility_id(fk) in the Addresses Table, have to try directly with iD(pk) in Namables Table ?
@@ -127,11 +127,11 @@ class Admin::UsersController < Admin::BaseController
 			conditions = @country.blank? ? [ "addresses.civility_id IN (?)", gender] : ["addresses.civility_id IN (?) AND addresses.country_id = ?", gender, @country]
 			@users = User.find(:all, :include => :addresses, :conditions => conditions )
 		end
-		flash[:error] = "No users found." if @users.empty?
+		flash[:error] = I18n.t('user.search.failed').capitalize if @users.empty?
 
-    if params[:commit] == 'Export'
+    if params[:commit] == I18n.t('export').capitalize
 			if @users.empty?
-				flash[:error] = "Export failed, No users found."
+				flash[:error] = I18n.t('user.export.failed').capitalize
 			else
 				export_newsletter
 			end	

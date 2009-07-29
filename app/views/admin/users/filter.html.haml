@@ -3,17 +3,17 @@
 - form_tag :controller => 'admin/users', :action => 'filter' do
   %p
     %b
-      = label_tag 'filter', 'Filters'
+      = label_tag 'filter', I18n.t('filter').capitalize
       \:
     %p
-      = label_tag 'filter[gender]', 'Genders'
+      = label_tag 'filter[gender]', I18n.t('gender').capitalize
       \:
-      = select_tag 'filter[gender]', options_for_select({"All" => 0,"Men" => 1, "Women" => 2}, @gender.to_i)
-      = label_tag 'filter', 'Filters'
+      = select_tag 'filter[gender]', options_for_select({I18n.t('all').capitalize => 0,I18n.t('men').capitalize => 1, I18n.t('women').capitalize => 2}, @gender.to_i)
+      = label_tag 'filter[country]', I18n.t('country').capitalize
       \:
       = select_tag 'filter[country]', options_from_collection_for_select_with_include_blank(Country.find(:all, :order => "name"), :id, :printable_name, @country.to_i, :include_blank => true)
-      = submit_tag 'Search'
-      = submit_tag 'Export'
+      = submit_tag I18n.t('search').capitalize
+      = submit_tag I18n.t('export').capitalize
 #users
   = render :partial => 'list', :locals => { :users => @users }
 

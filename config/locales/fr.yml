@@ -1,6 +1,7 @@
 fr:
 # FrontOffice
   or: 'ou'
+  all: 'Tous'
   add_to_cart: 'ajouter au panier'
   update: 'mettre à jour'
   cart:
@@ -18,7 +19,11 @@ fr:
   home: 'accueil'
   change_language: 'changer de langue'
   change_currency: 'changer de monnaie'
+  filter: 'filtrer'
   search: 'rechercher'
+  gender: 'sexe'
+  men: 'hommes'
+  women: 'femmes'
   catalog: 'catalogue'
   log_in: 'se connecter'
   sign_up: "s'inscrire"
@@ -82,6 +87,7 @@ fr:
   admins: 'administrateurs'
   controller_name: 'nom du contrôleur'
   action_name: "nom de l'action"
+  export: 'exporter'
   export_newsletter: 'exporter pour la newsletter'
   template_by: 'Thème par'
   avatar: 'avatar'
@@ -332,6 +338,10 @@ fr:
       success: "l'utilisateur a bien été désactivé"
       failed: "un problème est survenu lors de l'désactivation de l'utilisateur"
       action: "désactiver"
+    export:
+      failed: "échec de l'export, aucun utilisateur trouvé"
+    search:
+      failed: 'aucun utilisateur trouvé'
   product:
     one : 'produit'
     other: 'produits'

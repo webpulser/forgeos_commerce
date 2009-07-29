@@ -1,6 +1,7 @@
 en:
 # FrontOffice
   or: 'or'
+  all: 'all'
   add_to_cart: 'add to cart'
   update: 'update'
   cart:
@@ -18,7 +19,11 @@ en:
   home: 'home'
   change_language: 'change language'
   change_currency: 'change currency'
+  filter: 'filter'
   search: 'search'
+  gender: 'gender'
+  men: 'men'
+  women: 'women'
   catalog: 'catalog'
   log_in: 'log in'
   sign_up: 'sign up'
@@ -82,6 +87,7 @@ en:
   admins: 'administrators'
   controller_name: 'controller name'
   action_name: 'action name'
+  export: 'export'
   export_newsletter: 'export for newsletter'
   template_by: 'Template by'
   avatar: 'avatar'
@@ -332,6 +338,10 @@ en:
       success: 'the user was successfully disactivated'
       failed: 'a problem occured during the user disactivation'
       action: 'disactivate'
+    export:
+      failed: 'export failed, no users found'
+    search:
+      failed: 'no users found'
   product:
     one : 'product'
     other: 'products'
