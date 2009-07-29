@@ -391,7 +391,7 @@ fr:
       failed: "un problème est survenu lors de la suppression de l'image"
       confirm: 'êtes-vous sûr de vouloir supprimer cette image ?'
     upload:
-      start: "Commencer l'envoie"
+      start: "Commencer l'envoi"
       clear_queue: 'Vider la liste'
   comment:
     one: 'commentaire'

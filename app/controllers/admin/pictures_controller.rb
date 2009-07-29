@@ -108,7 +108,7 @@ class Admin::PicturesController < Admin::BaseController
       index
     end
     
-    @pictures = picturable.pictures
+    @pictures = picturable.pictures if picturable
 
     if @success
       flash[:notice] = I18n.t('picture.destroy.success').capitalize
