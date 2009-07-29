@@ -15,8 +15,8 @@ module CartHelper
         if static
           content += carts_product.quantity.to_s
         else
-          content += text_field_tag "quantity_#{carts_product.product_id}", carts_product.quantity.to_s, :size => 2
-          content += observe_field("quantity_#{carts_product.product_id}", :frequency => 1, :loading => "$('#spinner2').show()", :complete => "$('#spinner2').hide()", :url => { :controller => 'cart', :action => 'update_quantity', :mini => mini }, :with => "'quantity=' + escape(value) + '&product_id=#{carts_product.product_id}'")
+          content += text_field_tag "cart_quantity_#{carts_product.product_id}", carts_product.quantity.to_s, :size => 2
+          content += observe_field("cart_quantity_#{carts_product.product_id}", :frequency => 1, :loading => "$('#spinner2').show()", :complete => "$('#spinner2').hide()", :url => { :controller => 'cart', :action => 'update_quantity', :mini => mini }, :with => "'quantity=' + escape(value) + '&product_id=#{carts_product.product_id}'")
         end
       content += "</div>"
       unless mini

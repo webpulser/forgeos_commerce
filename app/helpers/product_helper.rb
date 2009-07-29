@@ -16,11 +16,11 @@ module ProductHelper
   end
 
   def display_all_products(products=Product.find_all_by_active_and_deleted(true,false), with_description=false)
-    content = '<div class="products">'
+    content = ''
     products.each do |product|
-      content += display_product(product, with_description)
+      content << display_product(product, with_description)
     end
-    content += '</div>'
+    content_tag :div, content, :class=>'products'
   end
 
   def display_product(product, with_description=false, options={})

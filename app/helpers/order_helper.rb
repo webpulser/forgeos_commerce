@@ -1,12 +1,12 @@
 module OrderHelper
   def step_order(index=1)
-    content_tag :div, :class => 'step_order' do
-      link_to(image_tag(step_order_image_filename(1,index)), :controller => 'cart') +
-      link_to(image_tag(step_order_image_filename(2,index)), :controller => 'order', :action => 'informations') +
-      link_to(image_tag(step_order_image_filename(3,index)), :controller => 'order', :action => 'new') +
-      link_to(image_tag(step_order_image_filename(4,index)), :controller => 'order', :action => 'payment') +
+    links = 
+      link_to(image_tag(step_order_image_filename(1,index)), :controller => 'cart') <<
+      link_to(image_tag(step_order_image_filename(2,index)), :controller => 'order', :action => 'informations') <<
+      link_to(image_tag(step_order_image_filename(3,index)), :controller => 'order', :action => 'new') <<
+      link_to(image_tag(step_order_image_filename(4,index)), :controller => 'order', :action => 'payment') <<
       link_to(image_tag(step_order_image_filename(5,index)), :controller => 'order', :action => 'confirmation')
-    end
+    content_tag :div, links, :class => 'step_order'
   end
 
   def step_order_image_filename(step,index)
@@ -35,34 +35,29 @@ module OrderHelper
   # * <tt>cart</tt> a <i>Cart</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_order_all_products_lines(order)
+    price = order.shipping_method_price.to_s
+    if session[:order_voucher_ids]
+      session[:order_voucher_ids].each do |voucher_id|
+        voucher = Voucher.find(voucher_id)
+        if voucher.offer_delivery
+          price = 0
+        end
+      end
+    end
     content = ""
     order.orders_details.each do |orders_detail|
       content += display_order_by_carts_product(order, orders_detail)
     end
-    content += '<div class="order_shipping_method">'
-      content += order.shipping_method
-    content += '</div>'
-    content += '<div class="order_shipping_method_price">'
-      price = order.shipping_method_price.to_s
-      if session[:order_voucher_ids]
-        session[:order_voucher_ids].each do |voucher_id|
-          voucher = Voucher.find(voucher_id)
-          if voucher.offer_delivery
-            price = 0
-          end
-        end
-      end
-      content += price + ' ' + $currency.html
-    content += '</div>'
+    content += content_tag :div, order.shipping_method, :class=>'order_shipping_method'
+    content += content_tag :div, "#{price} #{$currency.html}", :class=>'order_shipping_method_price'
     if order.voucher
-      content += '<div class="order_voucher">'
-        content += I18n.t('voucher', :count => 1) + ': -'
-        content += order.voucher.to_s + ' ' + (order.voucher.percent ? '%' : $currency.html)
-      content += '</div>'
+      content += content_tag :div,
+        "#{I18n.t('voucher', :count => 1)} : -#{order.voucher} #{order.voucher.percent} #{$currency.html}",
+        :class => 'order_voucher'
     end
-    content += '<div class="order_total"><b>'+ I18n.t('total').capitalize + ': </b>'
-    content += order.total(true).to_s + ' ' + $currency.html
-    content += '</div>'
+    content += content_tag :div, :class=>'order_total' do
+      content_tag :b, "#{I18n.t('total').capitalize} : #{order.total(true)} #{$currency.html}"
+    end
   end
   
 

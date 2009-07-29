@@ -15,8 +15,8 @@ module WishlistHelper
         if static
           content += wishlists_product.quantity.to_s
         else
-          content += text_field_tag "quantity_#{wishlists_product.product_id}", wishlists_product.quantity.to_s, :size => 2
-          content += observe_field("quantity_#{wishlists_product.product_id}", :frequency => 1, :loading => "$('#spinner2').show()", :complete => "$('#spinner2').hide()", :url => { :controller => 'wishlist', :action => 'update_quantity', :mini => mini }, :with => "'quantity=' + escape(value) + '&product_id=#{wishlists_product.product_id}'")
+          content += text_field_tag "wishlist_quantity_#{wishlists_product.product_id}", wishlists_product.quantity.to_s, :size => 2
+          content += observe_field("wishlist_quantity_#{wishlists_product.product_id}", :frequency => 1, :loading => "$('#spinner2').show()", :complete => "$('#spinner2').hide()", :url => { :controller => 'wishlist', :action => 'update_quantity', :mini => mini }, :with => "'quantity=' + escape(value) + '&product_id=#{wishlists_product.product_id}'")
         end
       content += "</div>"
       unless mini
