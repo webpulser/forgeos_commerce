@@ -41,8 +41,5 @@
           = link_to I18n.t('edit').capitalize, edit_admin_product_path(product)
           \-
           = link_to_remote I18n.t('destroy').capitalize, :url => [:admin, product], :update => 'list', :confirm => I18n.t('product.destroy.confirm').capitalize, :method => 'delete'
-          \-
-          = link_to_remote I18n.t('quick_edit').capitalize, :url => [:quick_edit, :admin, product], :method => 'get'
-#quick_edit
 
 = dataTables_tag 8

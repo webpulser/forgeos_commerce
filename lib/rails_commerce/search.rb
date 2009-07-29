@@ -19,11 +19,18 @@ end
 
 class String
   def normalize!
-    self.gsub!(/(é|è|ê)/,'e')
-    self.gsub!(/(ô|ö)/,'o')
-    self.gsub!(/(û|ü|ù)/,'u')
-    self.gsub!(/(â|ä|à)/,'a')
-    self.gsub!(/(î|ï)/,'i')
+    { %w(á à â ä ã Ã Ä Â À) => 'a',
+      %w(é è ê ë Ë É È Ê ) => 'e',
+      %w(í ì î ï I Î Ì) => 'i',
+      %w(ó ò ô ö õ Õ Ö Ô Ò) => 'o',
+      %w(œ) => 'oe',
+      %w(ß) => 'ss',
+      %w(ú ù û ü U Û Ù) => 'u',
+      %w(\s+) => ' '
+    }.each do |ac,rep|
+      self.gsub!(Regexp.new(ac.join('|')), rep)
+    end
+
     return self
   end
 

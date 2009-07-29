@@ -1,5 +1,5 @@
 class Admin::ProductsController < Admin::BaseController
-  before_filter :get_product, :except => [:index, :new, :create]
+  before_filter :get_product, :except => [:index, :new, :create, :url]
   before_filter :new_product, :only => [:new, :create]
 
   def index
@@ -35,30 +35,6 @@ class Admin::ProductsController < Admin::BaseController
     redirect_to([:edit, :admin, @product])
   end
 
-  # Edit quickly and remotely a Product
-  # ==== Params
-  # * id = Product's id
-  # * product = Hash of Product's attributes
-  def quick_edit
-    if request.post?
-      if @product.update_attributes(params[:product]) && manage_dynamic_attributes
-        flash[:notice] = I18n.t('product.update.success').capitalize
-        #return (render :update do |page|
-        #  page.replace_html 'list', :partial => 'list_products', :locals => { :product_parent => @product.product_parent }
-        #end)
-      else
-        flash[:error] = I18n.t('product.update.failed').capitalize
-      end
-    end
-    if request.xhr?
-      return (render :update do |page|
-        page.replace_html 'quick_edit', :partial => 'quick_form', :locals => { :product => @product }
-      end)
-    else
-      return redirect_to([:edit, :admin, @product])
-    end
-  end
-
   # Destroy a Product
   # ==== Params
   # * id = Product's id
@@ -73,6 +49,10 @@ class Admin::ProductsController < Admin::BaseController
       flash[:error] = I18n.t('product.destroy.failed').capitalize
     end
     return render(:partial => 'list', :locals => { :products => Product.all })
+  end
+
+  def url
+    render :text => url_generator(params[:url])
   end
 
 private
@@ -101,5 +81,23 @@ private
 
   def new_product
     @product = Product.new(params[:product])
+  end
+
+  def url_generator(phrase = '')
+    url = phrase.dup
+    { %w(á à â ä ã Ã Ä Â À) => 'a',
+      %w(é è ê ë Ë É È Ê €) => 'e',
+      %w(í ì î ï I Î Ì) => 'i',
+      %w(ó ò ô ö õ Õ Ö Ô Ò) => 'o',
+      %w(œ) => 'oe',
+      %w(ß) => 'ss',
+      %w(ú ù û ü U Û Ù) => 'u',
+      %w(\/ \| \\ \\& = #) => '',
+      %w(\s+) => '_'
+    }.each do |ac,rep|
+      url.gsub!(Regexp.new(ac.join('|')), rep)
+    end
+
+    url.underscore.gsub(/(^_+|_+$)/,'')
   end
 end
