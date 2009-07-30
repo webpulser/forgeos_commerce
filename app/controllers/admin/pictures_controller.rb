@@ -77,7 +77,6 @@ class Admin::PicturesController < Admin::BaseController
             sortable_picture.save if sortable_picture.attachable
             render :json => { :result => 'success', :asset => @picture.id}
           else
-            logger.debug(@picture.errors.inspect)
             render :json => { :result => 'error', :error => @picture.errors.first }
           end
         else

@@ -27,5 +27,4 @@
           \-
           = link_to_remote I18n.t('destroy').capitalize, :url => admin_picture_path(picture, :target => target, :target_id => target_id), :confirm => I18n.t('picture.destroy.confirm'), :method => 'delete'
 
-
 = sortable_element 'picture_list', :url => { :controller => 'admin/pictures', :action => 'sort', :id => target_id, :target => target }, :complete => visual_effect(:highlight, 'picture_list'), :tag => 'tr'

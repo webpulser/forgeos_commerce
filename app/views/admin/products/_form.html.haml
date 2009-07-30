@@ -6,6 +6,9 @@
     %li
       %a{ :href => "#tabs-2" }
         = I18n.t('picture', :count => 2).capitalize
+    %li
+      %a{ :href => "#tabs-3" }
+        = I18n.t('media.other').capitalize
   #tabs-1
     - form_for [:admin, product], :html => { :id => 'static_attributes' } do |f|
       = f.error_messages
@@ -107,4 +110,9 @@
       = link_to_unless product.new_record?,I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'product', :target_id => product.id), :class => 'add'
       #list_pictures
         = render :partial => 'admin/pictures/list', :locals => { :pictures => product.attachments.find_all_by_type('Picture'), :target => 'product', :target_id => product.id }
+  #tabs-3
+    #product_medias
+      = link_to_unless product.new_record?,I18n.t('media.create.action').capitalize, new_admin_media_path(:target => 'product', :target_id => product.id), :class => 'add'
+      #list_medias
+        = render :partial => 'admin/medias/list', :locals => { :medias => product.attachments, :target => 'product', :target_id => product.id, :remote => true }
 = javascript_tag "$(function(){ $('#tabs').tabs(); })"
