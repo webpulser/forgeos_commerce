@@ -1,0 +1,45 @@
+%h1 Create a special offer
+- form_tag 'rule_builder', :url => special_offer_admin_price_cuts_path do
+  %p
+    = label 'rule_builder', 'title'
+    = text_field 'rule_builder', 'title'
+  %p
+    = label 'rule_builder', 'description'
+    = text_area 'rule_builder', 'description', :rows => 2
+  %div{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
+    %h3 For
+    = select 'rule_builder', 'for', %w(Category ProductinShop ProductinCart Cart), { :prompt => true }, { :onchange => remote_function(:url => '', :with => "'target_type='+$(this).val()", :update => 'rule_builder_target') }
+    = select 'rule_builder', 'target', [], :prompt => true
+  %div{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
+    %h3 If
+    = select 'rule_builder', 'if', %w(Any All)
+    of these conditions are true
+    #rule-conditions
+      %p.rule-condition
+        = select 'rule', 'targets[]', %w(Weight Size Price Toto), { :prompt => true }
+        = select 'rule', 'conds[]', %w(is isnot isoneof isnotoneof containes), { :prompt => true }
+        = select 'rule', 'values[]', %w(eazea zaeaz e ze aze z eaze aze), { :prompt => true }
+        = link_to_function content_tag(:span, '&nbsp;', :class => 'icon1 moins disabled'), ''
+        = link_to_function content_tag(:span, '&nbsp', :class => 'icon1 plus'), "$('#rule-conditions').append($('#pattern').clone().show().attr('id',null))"
+
+  %div{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
+    %h3 Then
+    %p.rule-action
+      = select 'action_1', 'target', %w(Weight Size Price Toto), { :prompt => true }
+      = select 'action_1', 'cond', %w(is isnot isoneof isnotoneof containes), { :prompt => true }
+      = select 'action_1', 'value', %w(eazea zaeaz e ze aze z eaze aze), { :prompt => true }
+      = link_to_function '-', ""
+      = link_to_function '+', ""
+  %p
+    = check_box 'rule_builer', 'stop'
+    Stop futher rules processing
+  %p
+    = submit_tag 'Save'
+    or
+    = link_to 'Cancel', :back
+%p.rule-condition#pattern{ :style => 'display: none'}
+  = select 'rule', 'targets[]', %w(Weight Size Price Toto), { :prompt => true }
+  = select 'rule', 'conds[]', %w(is isnot isoneof isnotoneof containes), { :prompt => true }
+  = select 'rule', 'values[]', %w(eazea zaeaz e ze aze z eaze aze), { :prompt => true }
+  = link_to_function '&nbsp;', "$(this).parent().remove()", :class => 'icon1 moins'
+  = link_to_function '&nbsp;', "$('#rule-conditions').append($('#pattern').clone().show().attr('id',null))", :class => 'icon1 plus'
