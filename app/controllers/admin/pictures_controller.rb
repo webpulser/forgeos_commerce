@@ -178,15 +178,9 @@ class Admin::PicturesController < Admin::BaseController
         return render(:nothing => true)
       end
       pictures = @target.sortable_attachments
-
-      logger.debug '-'*400
-      logger.debug params['picture_list']
-
       pictures.each do |picture|
         if index = params['picture_list'].index(picture.attachment_id.to_s)
-          logger.debug "*"*400
-          logger.debug index
-          logger.debug picture.update_attribute(:position, index+1)
+          picture.update_attribute(:position, index+1)
         end
       end
     end
