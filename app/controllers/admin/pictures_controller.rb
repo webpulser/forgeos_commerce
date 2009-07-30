@@ -108,7 +108,7 @@ class Admin::PicturesController < Admin::BaseController
       index
     end
     
-    @pictures = picturable.attachments if picturable
+    @pictures = picturable.attachments.find_all_by_type('Picture') if picturable
 
     if @success
       flash[:notice] = I18n.t('picture.destroy.success').capitalize
@@ -165,27 +165,31 @@ class Admin::PicturesController < Admin::BaseController
     if params['picture_list']
       case params[:target]
       when 'product'
-        @target = Product.find_by_id(params[:target_id])
+        @target = Product.find_by_id(params[:id])
       when 'product_type'
-        @target = ProductType.find_by_id(params[:target_id])
+        @target = ProductType.find_by_id(params[:id])
       when 'tattribute'
-        @target = Tattribute.find_by_id(params[:target_id])
+        @target = Tattribute.find_by_id(params[:id])
       when 'tattribute_value'
-        @target = TattributeValue.find_by_id(params[:target_id])
+        @target = TattributeValue.find_by_id(params[:id])
       when 'category'
-        @target = Category.find_by_id(params[:target_id])
+        @target = Category.find_by_id(params[:id])
       else
         return render(:nothing => true)
       end
       pictures = @target.sortable_attachments
 
+      logger.debug '-'*400
+      logger.debug params['picture_list']
+
       pictures.each do |picture|
-        if index = params['picture_list'].index(picture.picture_id.to_s)
-          picture.update_attribute(:position,index+1)
+        if index = params['picture_list'].index(picture.attachment_id.to_s)
+          logger.debug "*"*400
+          logger.debug index
+          logger.debug picture.update_attribute(:position, index+1)
         end
       end
     end
     render(:nothing => true)
   end
-
 end

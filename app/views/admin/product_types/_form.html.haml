@@ -44,6 +44,6 @@
       #product_type_pictures
         = link_to I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'product_type', :target_id => product_type.id), :class => 'add'
         #list_pictures
-          = render :partial => 'admin/pictures/list', :locals => { :pictures => product_type.pictures, :target => 'product_type', :target_id => product_type.id }
+          = render :partial => 'admin/pictures/list', :locals => { :pictures => product_type.attachments.find_all_by_type('Picture'), :target => 'product_type', :target_id => product_type.id }
 
 = javascript_tag "$(function(){ $('#tabs').tabs(); })"

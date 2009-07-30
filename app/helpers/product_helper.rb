@@ -26,9 +26,9 @@ module ProductHelper
   def display_product(product, with_description=false, options={})
     return I18n.t('no_product') unless product
     content = "<div id=\"product_#{product.id}\" class=\"product\">"
-      if product.pictures.first
+      if product.attachments.find_all_by_type('Picture').first
         content += "<div class='product_picture'>"
-          content += image_tag(product.pictures.first.public_filename(options[:thumbnail_type] || :thumb))
+          content += image_tag(product.attachments.find_all_by_type('Picture').first.public_filename(options[:thumbnail_type] || :thumb))
         content += "</div>"
       end
       content += "<div class='product_name'>"
@@ -64,7 +64,7 @@ module ProductHelper
                content += product.description
               content += '</div>'
         content += '<div class="product_picture" id="display_product_pictures_'+product.id.to_s+'">'
-          content += image_tag(product.pictures.first.public_filename(:normal)) unless product.pictures.empty?
+          content += image_tag(product.attachments.find_all_by_type('Picture').first.public_filename(:normal)) unless product.attachments.find_all_by_type('Picture').empty?
         content += '</div>'
         content += '<div class="product_attributes_groups" id="product_attributes_groups_' + product.id.to_s + '">'
           content += display_product_page_attributes(product)

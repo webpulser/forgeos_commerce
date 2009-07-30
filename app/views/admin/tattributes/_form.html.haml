@@ -36,5 +36,5 @@
       #tattribute_pictures
         = link_to_unless tattribute.new_record?, I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'tattribute', :target_id => tattribute.id ), :class => 'add'
         #picture_list
-          = render :partial => 'admin/pictures/list', :locals => { :pictures => tattribute.pictures, :target => 'tattribute', :target_id => tattribute.id }
+          = render :partial => 'admin/pictures/list', :locals => { :pictures => tattribute.attachments.find_all_by_type('Picture'), :target => 'tattribute', :target_id => tattribute.id }
 = javascript_tag "$(function(){ $('#tabs').tabs(); })"

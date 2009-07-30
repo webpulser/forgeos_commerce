@@ -106,5 +106,5 @@
     #product_pictures
       = link_to_unless product.new_record?,I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'product', :target_id => product.id), :class => 'add'
       #list_pictures
-        = render :partial => 'admin/pictures/list', :locals => { :pictures => product.attachments, :target => 'product', :target_id => product.id }
+        = render :partial => 'admin/pictures/list', :locals => { :pictures => product.attachments.find_all_by_type('Picture'), :target => 'product', :target_id => product.id }
 = javascript_tag "$(function(){ $('#tabs').tabs(); })"

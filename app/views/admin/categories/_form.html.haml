@@ -26,5 +26,5 @@
       #pictures
         = link_to I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'category', :target_id => category.id), :class => 'add'
         #list_pictures
-          = render :partial => 'admin/pictures/list', :locals => { :pictures => category.pictures, :target => 'category', :target_id => category.id }
+          = render :partial => 'admin/pictures/list', :locals => { :pictures => category.attachments.find_all_by_type('Picture'), :target => 'category', :target_id => category.id }
 = javascript_tag "$(function(){ $('#tabs').tabs(); });"
