@@ -103,8 +103,6 @@
               = text_field "dynamic_tattribute_values[#{tattr.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?)
       %center
         = f.submit I18n.t('save').capitalize
-    - if product.new_record?
-      = observe_field('product_name', :frequency => 1, :loading => "$('#product_url').addClass('loading')", :complete => "$('#product_url').val(request.responseText); $('#product_url').removeClass('loading')", :url => url_admin_products_path, :with => "'url=' + value", :datatype => 'text')
   #tabs-2
     #product_pictures
       = link_to_unless product.new_record?,I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'product', :target_id => product.id), :class => 'add'

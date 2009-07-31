@@ -1,3 +1,4 @@
 %h1
   = I18n.t('product.create.action').capitalize
 = render :partial => 'form', :locals => { :product => @product }
+= observe_field('product_name', :frequency => 1, :loading => "$('#product_url').addClass('loading')", :success => "$('#product_url').val(request.responseText); $('#product_url').removeClass('loading')", :url => url_admin_products_path, :with => "'url=' + value", :datatype => 'text')

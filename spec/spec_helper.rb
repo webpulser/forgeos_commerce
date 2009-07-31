@@ -12,4 +12,5 @@ Spec::Runner.configure do |config|
   config.include ControllerHelpers::Uploader, :type => :controller
   config.include LoginHelpers, :type => :controller
   config.extend ControllerMacros, :type => :controller
+  config.global_fixtures = :all
 end

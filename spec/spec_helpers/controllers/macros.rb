@@ -92,11 +92,4 @@ module ControllerMacros
       end
     end
   end
-
-  def initialize_currency
-    before(:each) do
-      $currency = mock_model(Currency)
-      $currency.stub!(:find_by_code).and_return @currency
-    end
-  end
 end

@@ -75,7 +75,7 @@ private
   def get_product
     unless @product = Product.find_by_id(params[:id])
       flash[:error] = I18n.t('product.found.failed').capitalize
-      redirect_to([:admin, :root])
+      redirect_to(admin_root_path)
     end
   end
 
