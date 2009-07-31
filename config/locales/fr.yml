@@ -84,7 +84,6 @@ fr:
   categories: 'catégories'
   rights: 'droits'
   roles: 'roles'
-  admins: 'administrateurs'
   controller_name: 'nom du contrôleur'
   action_name: "nom de l'action"
   export: 'exporter'
@@ -409,21 +408,6 @@ fr:
       success: 'le commentaire a bien été supprimé'
       failed: 'un problème est survenu lors de la suppression du commentaire'
       confirm: 'êtes-vous sûr de vouloir supprimer ce commentaire ?'
-  admin:
-    one: 'administrateur'
-    other: 'administrateurs'
-    create:
-      success: "l'administrateur a bien été créé"
-      failed: "un problème est survenu lors de la création de l'administrateur"
-      action: 'créer un administrateur'
-    update:
-      success: "l'administrateur a bien été mis à jour"
-      failed: "un problème est survenu lors de la mise à jour de l'administrateur"
-      action: "éditer l'administrateur"
-    destroy:
-      success: "l'administrateur a bien été supprimé"
-      failed: "un problème est survenu lors de la suppression de l'administrateur"
-      confirm: "êtes-vous sûr de vouloir supprimer cet administrateur ?"
   my_account:
     update:
       success: 'votre compte à bien été mis à jours'

@@ -84,7 +84,6 @@ en:
   categories: 'categories'
   roles: 'roles'
   rights: 'rights'
-  admins: 'administrators'
   controller_name: 'controller name'
   action_name: 'action name'
   export: 'export'
@@ -409,21 +408,6 @@ en:
       success: 'the comment was successfully destroyed'
       failed: 'a problem occured during the comment destroy'
       confirm: 'are you sure to delete this comment ?'
-  admin:
-    one: 'administrator'
-    other: 'administrators'
-    create:
-      success: 'the administrator was successfully created'
-      failed: 'a problem occured during the administrator creation'
-      action: 'create an administrator'
-    update:
-      success: 'the administrator was successfully updated'
-      failed: 'a problem occured during the administrator update'
-      action: 'edit administrator'
-    destroy:
-      success: 'the administrator was successfully destroyed'
-      failed: 'a problem occured during the administrator destroy'
-      confirm: 'are you sure to delete this administrator ?'   
   my_account:
     update:
       success: 'you account was successfully updated'
