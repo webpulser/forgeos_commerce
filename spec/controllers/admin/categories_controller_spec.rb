@@ -1,7 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Admin::CategoriesController, "GET index" do
-  initialize_currency
   should_require_admin_login :get, :index
 
   describe "admin client" do
@@ -30,7 +29,6 @@ describe Admin::CategoriesController, "GET index" do
 end
 
 describe Admin::CategoriesController, "GET new" do
-  initialize_currency
   should_require_admin_login :get, :new
 
   describe "admin client" do
@@ -59,7 +57,6 @@ describe Admin::CategoriesController, "GET new" do
 end
 
 describe Admin::CategoriesController, "GET edit" do
-  initialize_currency
   should_require_admin_login :get, :edit
 
   describe "admin client" do
@@ -99,7 +96,6 @@ describe Admin::CategoriesController, "GET edit" do
 end
 
 describe Admin::CategoriesController, "POST create" do
-  initialize_currency
   should_require_admin_login :post, :create
   
   describe "admin client" do
@@ -160,7 +156,6 @@ describe Admin::CategoriesController, "POST create" do
 end
 
 describe Admin::CategoriesController, "PUT update" do
-  initialize_currency
   should_require_admin_login :put, :update
   
   describe "admin client" do
@@ -236,7 +231,6 @@ describe Admin::CategoriesController, "PUT update" do
 end
 
 describe Admin::CategoriesController, "DELETE destroy" do
-  initialize_currency
   should_require_admin_login :delete, :destroy
 
   describe "admin client" do
