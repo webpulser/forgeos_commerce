@@ -7,7 +7,6 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def new
-    render :create
   end
 
   # Create a Product
@@ -17,9 +16,10 @@ class Admin::ProductsController < Admin::BaseController
   def create
     if @product.save && manage_dynamic_attributes
       flash[:notice] = I18n.t('product.create.success').capitalize
-      redirect_to([:edit, :admin, @product])
+      redirect_to(admin_products_path)
     else
       flash[:error] = I18n.t('product.create.failed').capitalize
+      render :new
     end
   end
 
@@ -29,20 +29,19 @@ class Admin::ProductsController < Admin::BaseController
   def update
     if @product.update_attributes(params[:product]) && manage_dynamic_attributes
       flash[:notice] = I18n.t('product.update.success').capitalize
+      redirect_to(admin_products_path)
     else
       flash[:error] = I18n.t('product.update.failed').capitalize
+      render :edit
     end
-    redirect_to([:edit, :admin, @product])
   end
 
   # Destroy a Product
   # ==== Params
   # * id = Product's id
   def destroy
-    @deleted = case
-               when @product.deleted? then @product.destroy
-               else @product.update_attribute(:deleted, true)
-               end
+    @deleted = @product.deleted? ? @product.destroy : @product.update_attribute(:deleted, true)
+    
     if @deleted
       flash[:notice] = I18n.t('product.destroy.success').capitalize
     else
@@ -75,7 +74,7 @@ private
   def get_product
     unless @product = Product.find_by_id(params[:id])
       flash[:error] = I18n.t('product.found.failed').capitalize
-      redirect_to(admin_root_path)
+      redirect_to(admin_products_path)
     end
   end
 
