@@ -6,8 +6,7 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def new
-    @category = Category.new(params[:category])
-    render :action => 'create'
+    @category = Category.new
   end
   # Create a Category
   # ==== Params
@@ -18,9 +17,10 @@ class Admin::CategoriesController < Admin::BaseController
     @category = Category.new(params[:category])
     if @category.save
       flash[:notice] = I18n.t('category.create.success').capitalize
-      redirect_to(edit_admin_category_path @category )
+      redirect_to( edit_admin_category_path @category )
     else
       flash[:error] = I18n.t('category.create.failed').capitalize
+      render :action => 'new'
     end
   end
 
@@ -32,16 +32,22 @@ class Admin::CategoriesController < Admin::BaseController
   # The Category can be a child of another Category.
   def edit
     @category = Category.find_by_id(params[:id])
+    flash[:error] = I18n.t('category.not_exist').capitalize unless @category
   end
  
   def update
     @category = Category.find_by_id(params[:id])
-    if @category.update_attributes(params[:category])
-      flash[:notice] = I18n.t('category.update.success').capitalize
+    if @category && request.put?
+      if @category.update_attributes(params[:category])
+        flash[:notice] = I18n.t('category.update.success').capitalize
+      else
+        flash[:error] = I18n.t('category.update.failed').capitalize
+      end
+      render :action => 'edit'
     else
-      flash[:error] = I18n.t('category.update.failed').capitalize
+      flash[:error] = I18n.t('category.not_exist').capitalize
+      redirect_to admin_categories_path
     end
-    render :action => 'edit'
   end
   # Destroy a Category
   # ==== Params
@@ -50,10 +56,14 @@ class Admin::CategoriesController < Admin::BaseController
   #  if destroy succed, return the Categories list
   def destroy
     @category = Category.find_by_id(params[:id])
-    if @category.destroy
-      flash[:notice] = I18n.t('category.destroy.success').capitalize
+    if @category && request.delete?
+      if @category.destroy
+        flash[:notice] = I18n.t('category.destroy.success').capitalize
+      else
+        flash[:error] = I18n.t('category.destroy.failed').capitalize
+      end
     else
-      flash[:error] = I18n.t('category.destroy.failed').capitalize
+      flash[:error] = I18n.t('category.not_exist').capitalize
     end
     render(:update) do |page|
       display_standard_flashes

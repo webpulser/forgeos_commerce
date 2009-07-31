@@ -218,6 +218,7 @@ fr:
   category:
     one: 'catégorie'
     other: 'catégories'
+    not_exist: "la catégorie demandée n'existe pas"
     create:
       success: 'la catégorie a bien été créée'
       failed: 'un problème est survenu lors de la création de la catégorie'

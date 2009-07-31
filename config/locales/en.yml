@@ -218,6 +218,7 @@ en:
   category:
     one: 'category'
     other: 'categories'
+    not_exist: 'the requested category does not exist'
     create:
       success: 'the category was successfully created'
       failed: 'a problem occured during the category creation'
