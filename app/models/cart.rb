@@ -131,8 +131,14 @@ class Cart < ActiveRecord::Base
   end
 
   # Returns weight of this cart
-  def weight
-    products.inject(0) { |total, product| total + product.weight }
+  def weight(product=nil)
+    if product.nil?
+      return carts_products.inject(0) { |total, carts_product| total + carts_product.quantity * carts_product.product.weight }
+    else
+      carts_product = carts_products.find_by_product_id(product.id)
+      return carts_product.quantity * product.weight unless carts_product.nil?
+    end
+    return 0
   end
 
   # Returns all <i>ShippingMethodDetail</i> available for this cart
