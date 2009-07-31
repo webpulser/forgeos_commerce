@@ -58,4 +58,4 @@ Forgeos::Menu << { :title => ['wishlist',{ :count => 1}],
   :i18n => true 
 }
 
-$currency = Currency.find_by_name('euro') if Currency.table_exists?
+$currency = Currency.find_by_code('EUR') if Currency.table_exists?

@@ -65,7 +65,7 @@ module ControllerMacros
     end
   end
 	
-	def should_require_login(request_method, action)
+  def should_require_login(request_method, action)
     describe "unauthorized user" do
       it "should redirect to the login page" do
         send request_method, action
@@ -76,6 +76,27 @@ module ControllerMacros
         controller.should_not_receive(action)
         send request_method, action
       end
+    end
+  end
+
+  def should_require_admin_login(request_method, action)
+    describe "unauthorized user" do
+      it "should redirect to the admin login page" do
+        send request_method, action
+        response.should redirect_to(admin_login_path)
+      end
+  
+      it "should not call the #{action} action" do
+        controller.should_not_receive(action)
+        send request_method, action
+      end
+    end
+  end
+
+  def initialize_currency
+    before(:each) do
+      $currency = mock_model(Currency)
+      $currency.stub!(:find_by_code).and_return @currency
     end
   end
 end
