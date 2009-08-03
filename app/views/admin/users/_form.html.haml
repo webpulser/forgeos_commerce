@@ -1,53 +1,70 @@
-= display_standard_flashes
-- form_for [:admin, user], :html => { :multipart => true, :id => 'user_form' } do |f|
-  - fields_for :avatar, user.avatar do |avatar|
-    = image_tag(user.avatar.public_filename(:small)) if user.avatar && !user.avatar.filename.nil?
-    %p
-      %b
-        = avatar.label :uploaded_data, I18n.t('avatar').capitalize
-        \:
-      = avatar.file_field :uploaded_data
-  %p
-    %b
-      = f.label :firstname, I18n.t('firstname').capitalize
-      \:
-    = f.text_field :firstname
-  %p
-    %b
-      = f.label :lastname, I18n.t('lastname').capitalize
-      \:
-    = f.text_field :lastname
-  %p
-    %b
-      = f.label :email, I18n.t('email').capitalize
-      \:
-    = f.text_field :email
-  %p
-    %b
-      = f.label :password, I18n.t('password').capitalize
-      \:
-    = f.password_field :password
-  %p
-    %b
-      = f.label :password_confirmation, I18n.t('password_confirmation').capitalize
-      \:
-    = f.password_field :password_confirmation
-  - 
-  - civilities = Civility.all
-  - countries = Country.all
-  %fieldset
-    %legend
-      = link_to_effect_toggle(I18n.t('address.invoice').capitalize,'address_invoice')
-    #address_invoice
-      - fields_for user.address_invoice do |fa|
-        = render :partial => 'admin/addresses/form', :locals => { :f => fa }
-  %fieldset
-    %legend
-      = link_to_effect_toggle(I18n.t('address.delivery').capitalize,'address_delivery')
-    #address_delivery
-      - fields_for user.address_delivery do |fb|
-        = render :partial => 'admin/addresses/form', :locals => { :f => fb }
-  = f.submit I18n.t('save').capitalize
-= hide_html_elements_onload %w[address_invoice address_delivery]
-
 - content_for :tools, link_to(I18n.t('list').capitalize, admin_users_path, :class => 'house' )
+
+= display_standard_flashes
+
+#tabs
+  %ul
+    %li
+      %a{ :href => "#tabs-1" }
+        = I18n.t('information', :count=>2).capitalize
+    %li
+      %a{ :href => "#tabs-2" }
+        = I18n.t('media.other').capitalize
+  #tabs-1
+    - form_for [:admin, user], :html => { :multipart => true, :id => 'user_form' } do |f|
+      - fields_for :avatar, user.avatar do |avatar|
+        = image_tag(user.avatar.public_filename(:small)) if user.avatar && !user.avatar.filename.nil?
+        %p
+          %b
+            = avatar.label :uploaded_data, I18n.t('avatar').capitalize
+            \:
+          = avatar.file_field :uploaded_data
+      %p
+        %b
+          = f.label :firstname, I18n.t('firstname').capitalize
+          \:
+        = f.text_field :firstname
+      %p
+        %b
+          = f.label :lastname, I18n.t('lastname').capitalize
+          \:
+        = f.text_field :lastname
+      %p
+        %b
+          = f.label :email, I18n.t('email').capitalize
+          \:
+        = f.text_field :email
+      %p
+        %b
+          = f.label :password, I18n.t('password').capitalize
+          \:
+        = f.password_field :password
+      %p
+        %b
+          = f.label :password_confirmation, I18n.t('password_confirmation').capitalize
+          \:
+        = f.password_field :password_confirmation
+      - 
+      - civilities = Civility.all
+      - countries = Country.all
+      %fieldset
+        %legend
+          = link_to_effect_toggle(I18n.t('address.invoice').capitalize,'address_invoice')
+        #address_invoice
+          - fields_for user.address_invoice do |fa|
+            = render :partial => 'admin/addresses/form', :locals => { :f => fa }
+      %fieldset
+        %legend
+          = link_to_effect_toggle(I18n.t('address.delivery').capitalize,'address_delivery')
+        #address_delivery
+          - fields_for user.address_delivery do |fb|
+            = render :partial => 'admin/addresses/form', :locals => { :f => fb }
+      = f.submit I18n.t('save').capitalize
+    = hide_html_elements_onload %w[address_invoice address_delivery]
+  #tabs-2
+    #user_medias
+      = link_to_unless user.new_record?,I18n.t('media.create.action').capitalize, new_admin_media_path(:target => 'user', :target_id => user.id), :class => 'add'
+      #list_medias
+        = render :partial => 'admin/medias/list', :locals => { :medias => user.attachments, :target => 'user', :target_id => user.id, :remote => true }
+
+= javascript_tag "$(function(){ $('#tabs').tabs(); })"
