@@ -22,8 +22,12 @@ fr:
   filter: 'filtrer'
   search: 'rechercher'
   gender: 'sexe'
-  men: 'hommes'
-  women: 'femmes'
+  man:
+    one: 'homme'
+    other: 'hommes'
+  woman:
+    one: 'femme'
+    other: 'femmes'
   catalog: 'catalogue'
   log_in: 'se connecter'
   sign_up: "s'inscrire"

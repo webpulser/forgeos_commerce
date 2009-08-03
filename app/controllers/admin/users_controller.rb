@@ -122,8 +122,8 @@ class Admin::UsersController < Admin::BaseController
     @country = params[:filter][:country]
 
     gender = @gender.chomp.split(',').collect(&:to_i)
-    conditions = @country.blank? ? [ 'addresses.civility_id IN (?)', gender] : ['addresses.civility_id IN (?) AND addresses.country_id = ?', gender, @country.to_i]
-    @users = User.all(:include => :addresses, :conditions => conditions )
+    conditions = @country.blank? ? [ 'civility_id IN (?)', gender] : ['civility_id IN (?) AND country_id = ?', gender, @country.to_i]
+    @users = User.all(:conditions => conditions )
     flash[:error] = I18n.t('user.search.failed').capitalize if @users.empty?
 
     export_newsletter if params[:commit] == I18n.t('export').capitalize

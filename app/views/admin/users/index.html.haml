@@ -10,8 +10,8 @@
       \:
       - genders = []
       - genders << [I18n.t('all').capitalize, Civility.all.collect(&:id).join(',')]
-      - genders << [I18n.t('women').capitalize, Civility.find_all_by_name(%w(Mses Miss)).collect(&:id).join(',')]
-      - genders << [I18n.t('men').capitalize, Civility.find_all_by_name('Mr').collect(&:id).join(',')]
+      - genders << [I18n.t('woman.other').capitalize, Civility.find_all_by_name(%w(Mses Miss)).collect(&:id).join(',')]
+      - genders << [I18n.t('man.other').capitalize, Civility.find_all_by_name('Mr').collect(&:id).join(',')]
       = select 'filter', 'gender', genders, :selected => @gender
       = label_tag 'filter[country]', I18n.t('country').capitalize
       \:
