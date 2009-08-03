@@ -58,4 +58,9 @@ Forgeos::Menu << { :title => ['wishlist',{ :count => 1}],
   :i18n => true 
 }
 
+# Set attachable media types
+Forgeos::AttachableTypes << 'Product'
+Forgeos::AttachableTypes << 'ShippingMethod'
+Forgeos::AttachableTypes << 'User'
+
 $currency = Currency.find_by_code('EUR') if Currency.table_exists?
