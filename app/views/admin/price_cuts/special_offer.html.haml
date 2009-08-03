@@ -1,5 +1,5 @@
 %h1 Create a special offer
-- form_tag 'rule_builder', :url => special_offer_admin_price_cuts_path do
+- form_tag special_offer_admin_price_cuts_path do
   %p
     = label 'rule_builder', 'title'
     = text_field 'rule_builder', 'title'
@@ -16,30 +16,44 @@
     of these conditions are true
     #rule-conditions
       %p.rule-condition
-        = select 'rule', 'targets[]', %w(Weight Size Price Toto), { :prompt => true }
-        = select 'rule', 'conds[]', %w(is isnot isoneof isnotoneof containes), { :prompt => true }
-        = select 'rule', 'values[]', %w(eazea zaeaz e ze aze z eaze aze), { :prompt => true }
-        = link_to_function content_tag(:span, '&nbsp;', :class => 'icon1 moins disabled'), ''
-        = link_to_function content_tag(:span, '&nbsp', :class => 'icon1 plus'), "$('#rule-conditions').append($('#pattern').clone().show().attr('id',null))"
+        = select_tag 'rule[targets][]', options_for_select([[I18n.t(:please_select).capitalize, nil]]+%w(Weight Size Price Toto))
+        = select_tag 'rule[conds][]', options_for_select([[I18n.t(:please_select).capitalize, nil]]+%w(is isnot isoneof isnotoneof containes))
+        = select_tag 'rule[values][]', options_for_select([[I18n.t(:please_select).capitalize, nil]]+%w(eazea zaeaz e ze aze z eaze aze))
+        = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins disabled'
+        = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
 
   %div{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
     %h3 Then
-    %p.rule-action
-      = select 'action_1', 'target', %w(Weight Size Price Toto), { :prompt => true }
-      = select 'action_1', 'cond', %w(is isnot isoneof isnotoneof containes), { :prompt => true }
-      = select 'action_1', 'value', %w(eazea zaeaz e ze aze z eaze aze), { :prompt => true }
-      = link_to_function '-', ""
-      = link_to_function '+', ""
+    #action-conditions
+      %p.action-condition
+        = select_tag 'act[targets][]', options_for_select([[I18n.t(:please_select).capitalize, nil]]+['Discount price this product','Offer a product','Offer free delivery'])
+        = select_tag 'act[conds][]', options_for_select([[I18n.t(:please_select).capitalize, nil]]+['By percent','By fixed amount'])
+        = text_field_tag 'act[values][]'
+        = link_to_function 'del', "remove_rule(this,'action-condition')", :class => 'icon1 moins disabled'
+        = link_to_function 'add', "add_rule('action-condition')", :class => 'icon1 plus'
+
+
   %p
-    = check_box 'rule_builer', 'stop'
+    = check_box 'rule_builder', 'stop'
     Stop futher rules processing
   %p
     = submit_tag 'Save'
     or
     = link_to 'Cancel', :back
-%p.rule-condition#pattern{ :style => 'display: none'}
-  = select 'rule', 'targets[]', %w(Weight Size Price Toto), { :prompt => true }
-  = select 'rule', 'conds[]', %w(is isnot isoneof isnotoneof containes), { :prompt => true }
-  = select 'rule', 'values[]', %w(eazea zaeaz e ze aze z eaze aze), { :prompt => true }
-  = link_to_function '&nbsp;', "$(this).parent().remove()", :class => 'icon1 moins'
-  = link_to_function '&nbsp;', "$('#rule-conditions').append($('#pattern').clone().show().attr('id',null))", :class => 'icon1 plus'
+
+%p.rule-condition.pattern{ :style => 'display: none'}
+  = select_tag 'rule[targets][]', options_for_select([[I18n.t(:please_select).capitalize, nil]]+%w(Weight Size Price Toto))
+  = select_tag 'rule[conds][]', options_for_select([[I18n.t(:please_select).capitalize, nil]]+%w(is isnot isoneof isnotoneof containes))
+  = select_tag 'rule[values][]', options_for_select([[I18n.t(:please_select).capitalize, nil]]+%w(eazea zaeaz e ze aze z eaze aze))
+  = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
+  = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
+
+%p.action-condition.pattern{ :style => 'display: none' }
+  = select_tag 'act[targets][]', options_for_select([[I18n.t(:please_select).capitalize, nil]]+['Discount price this product','Offer a product','Offer free delivery'])
+  = select_tag 'act[conds][]', options_for_select([[I18n.t(:please_select).capitalize, nil]]+['By percent','By fixed amount'])
+  = text_field_tag 'act[values][]'
+  = link_to_function 'del', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
+  = link_to_function 'add', "add_rule('action-condition')", :class => 'icon1 plus'
+
+
+= javascript_include_tag 'special_offer'

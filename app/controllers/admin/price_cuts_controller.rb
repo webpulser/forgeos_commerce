@@ -1,4 +1,12 @@
 class Admin::PriceCutsController < Admin::BaseController
+  def special_offer
+    if params[:rule_builder]
+      build_offer
+    else
+      flash[:error] = 'Fields'
+    end
+  end
+
   # GET /price_cuts
   # GET /price_cuts.xml
   def index
@@ -85,6 +93,18 @@ class Admin::PriceCutsController < Admin::BaseController
     respond_to do |format|
       format.html { redirect_to url_for(:action => :index) }
       format.xml  { head :ok }
+    end
+  end
+
+  private
+  
+  def build_offer
+    case params[:for]
+    when 'Category'
+      rule = Rule.new
+      rule.conditions << Category
+      rule.save
+    when 'Cart'
     end
   end
 end
