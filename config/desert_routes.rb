@@ -26,7 +26,7 @@ namespace :admin do |admin|
   admin.resources :orders
   admin.resources :pictures
   admin.resources :product_types
-  admin.resources :products, :collection => { :url => :get }
+  admin.resources :products, :collection => { :url => :post }
   admin.resources :tags
   admin.resources :price_cuts, :collection => { :special_offer => [:get, :post] }
 end
