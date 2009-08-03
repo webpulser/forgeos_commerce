@@ -89,10 +89,14 @@ class Admin::UsersController < Admin::BaseController
   # return the list of all users
   def destroy
     @user = User.find_by_id(params[:id])
-    if @user.destroy
-      flash[:notice] = I18n.t('user.destroy.success').capitalize
+    if @user && request.delete?  
+      if @user.destroy
+        flash[:notice] = I18n.t('user.destroy.success').capitalize
+      else
+        flash[:error] = I18n.t('user.destroy.failed').capitalize
+      end
     else
-      flash[:error] = I18n.t('user.destroy.failed').capitalize
+      flash[:error] = "User does not exist"
     end
     index
     render :partial => 'list', :locals => { :users => @users }
