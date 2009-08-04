@@ -1,2 +1,2 @@
-class Country < ActiveRecord::Base
+class Country < GeoZone
 end

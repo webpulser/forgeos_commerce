@@ -1,0 +1,49 @@
+= display_standard_flashes
+%h1
+  = I18n.t('geo_zone', :count=>2).capitalize
+- content_for :tools, link_to(I18n.t('geo_zone.create.action').capitalize, new_admin_geo_zone_path, :class => 'add' )
+#geo_zones
+  %ul
+    = render :partial => 'list', :locals => { :geo_zones => @geo_zones }
+= javascript_include_tag 'jstree/tree_component.min.js', 'jstree/css.js'
+= stylesheet_link_tag 'jstree/tree_component.css'
+- javascript_tag do
+  $(function() {
+  tree1 = $.tree_create();
+  tree1.init($('#geo_zones'),
+  { ui: { theme_path : '/stylesheets/jstree/themes/', theme_name : 'rails-commerce', context : [
+  {
+  id: 'create',
+  = "label: '#{I18n.t('geo_zone.create.action')}',"
+  icon : 'create.png',
+  visible : function (NODE, TREE_OBJ) { if(NODE.length != 1) return false; return TREE_OBJ.check('creatable', NODE); },
+  = "action: function(NODE){ current_url = '#{new_admin_geo_zone_path}'; current_node = NODE; $('#dialog').dialog('open'); }"
+  },
+  {
+  id: 'edit',
+  = "label: '#{I18n.t('geo_zone.update.action')}',"
+  icon : 'rename.png',
+  visible : function (NODE, TREE_OBJ) { if(NODE.length != 1) return false; return TREE_OBJ.check('renameable', NODE); },
+  action: function(NODE){ current_url = '/admin/geo_zones/'+$(NODE).attr('id').replace('geo_zone_','')+'/edit'; current_node = NODE; $('#dialog').dialog('open'); }
+  },
+  {
+  id: 'delete',
+  = "label: '#{I18n.t('destroy')}',"
+  icon : 'remove.png',
+  visible : function (NODE, TREE_OBJ) { if(NODE.length != 1) return false; return TREE_OBJ.check('deletable', NODE); },
+  action: function(NODE, TREE_OBJ){
+  = remote_function(:url => { :controller => 'geo_zones', :action => 'destroy' }, :with => "'id=' + $(NODE).attr('id').replace('geo_zone_','')", :confirm => I18n.t('geo_zone.destroy.confirm'), :success => '$.each(NODE, function () { TREE_OBJ.remove(this); });' )
+  ; }
+  }
+  ] }
+  }
+  );
+  });
+
+#dialog
+- javascript_tag do
+  $(function(){ $('#dialog').dialog({
+  open: function(){
+  = remote_function(:url => "'+current_url+'", :with => "'geo_zone[parent_id]='+$(current_node).attr('id').replace('geo_zone_','')", :update => 'dialog', :method => 'get' )
+  },
+  modal: true, bgiframe: true, autoOpen: false, width: 500 }); })

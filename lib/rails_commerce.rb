@@ -27,7 +27,9 @@ Forgeos::AdminMenu << { :title => 'orders',
   :url => { :controller => 'admin/orders' }, :i18n => true,
   :children => [
     { :title => 'shipping_methods', :url => { :controller => 'admin/shipping_methods' } , :i18n => true },
-    { :title => 'vouchers', :url => { :controller => 'admin/vouchers' }, :i18n => true }
+    { :title => 'vouchers', :url => { :controller => 'admin/vouchers' }, :i18n => true },
+    { :title => 'price_cuts', :url => { :controller => 'admin/price_cuts'}, :i18n => true},
+    { :title => 'geo_zones', :url => { :controller => 'admin/geo_zones'}, :i18n => true}
   ]
 }
 Forgeos::AdminMenu << { :title => 'products',
@@ -36,7 +38,6 @@ Forgeos::AdminMenu << { :title => 'products',
     { :title => 'product_types', :url => { :controller => 'admin/product_types' }, :i18n => true },
     { :title => 'categories', :url => { :controller => 'admin/categories' }, :i18n => true },
     { :title => 'tattributes', :url => { :controller => 'admin/tattributes' }, :i18n => true },
-    { :title => 'price_cuts', :url => { :controller => 'admin/price_cuts'}, :i18n => true}
   ]
 }
 Forgeos::AdminMenu << { :title => 'users', :url => { :controller => 'admin/users' }, :i18n => true }

@@ -1,0 +1,20 @@
+#tabs
+  %ul
+    %li
+      %a{ :href => "#tabs-1" }
+        = I18n.t('information', :count =>2).capitalize
+  #tabs-1
+    - remote_form_for [:admin, geo_zone], :html => { :id => 'geo_zone_form' }, :complete => "$('#dialog').dialog('close')" do |f|
+      %p
+        %b
+          = f.label :parent_id, I18n.t('parent').capitalize
+          \:
+        = f.collection_select :parent_id, GeoZone.all, :id, :name, { :prompt => I18n.t('please_select').capitalize, :include_blank => 'None' }
+      %p
+        %b
+          = f.label :name, I18n.t('name').capitalize
+          \:
+        = f.text_field :name
+      = f.submit I18n.t('save').capitalize
+
+= javascript_tag "$(function(){ $('#tabs').tabs(); });"

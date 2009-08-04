@@ -85,7 +85,6 @@ en:
   tattribute_values: 'attribute values'
   vouchers: 'vouchers'
   users: 'users'
-  categories: 'categories'
   roles: 'roles'
   rights: 'rights'
   controller_name: 'controller name'
@@ -217,6 +216,7 @@ en:
       success: 'the attribute value was successfully destroyed'
       failed: 'a problem occured during the attribute value destroy'
       confirm: 'are you sure to delete this attribute value ?'
+  categories: 'categories'
   category:
     one: 'category'
     other: 'categories'
@@ -236,6 +236,26 @@ en:
     sub:
       create:
         action: 'create a subcategory'
+  geo_zones: 'geographic zones'
+  geo_zone:
+    one: 'geographic zone'
+    other: 'geographic zones'
+    not_exist: 'the requested geographic zone does not exist'
+    create:
+      success: 'the geographic zone was successfully created'
+      failed: 'a problem occured during the geographic zone creation'
+      action: 'create a geographic zone'
+    update:
+      success: 'the geographic zone was successfully updated'
+      failed: 'a problem occured during the geographic zone update'
+      action: 'edit geographic zone'
+    destroy:
+      success: 'the geographic zone was successfully destroyed'
+      failed: 'a problem occured during the geographic zone destroy'
+      confirm: 'are you sure to delete this geographic zone ?' 
+    sub:
+      create:
+        action: 'create a sub-geographic zone'
   order_detail:
     one: 'order detail'
     other: 'order details'

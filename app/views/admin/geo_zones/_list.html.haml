@@ -1,0 +1,9 @@
+- unless defined?(level)
+  - level = 0
+- geo_zones.each do |geo_zone|
+  %li{ :rel => geo_zone.children.empty? ? 'file' : 'folder', :id => "geo_zone_#{geo_zone.id}" }
+    = link_to geo_zone.name, '#'
+    - unless geo_zone.children.empty?
+      - content_tag :ul do
+        - geo_zone.children.each do |child|
+          = render :partial => 'admin/geo_zones/list', :locals => { :geo_zones => [child], :level => (level + 1) }

@@ -5,1350 +5,1575 @@ countries_075:
   iso: AN
   printable_name: Netherlands Antilles
   numcode: "530"
+  type: Country
 countries_076: 
   name: NEPAL
   iso3: NPL
   iso: NP
   printable_name: Nepal
   numcode: "524"
+  type: Country
 countries_077: 
   name: NAURU
   iso3: NRU
   iso: NR
   printable_name: Nauru
   numcode: "520"
+  type: Country
 countries_078: 
   name: MYANMAR
   iso3: MMR
   iso: MM
   printable_name: Myanmar
   numcode: "104"
+  type: Country
 countries_079: 
   name: NAMIBIA
   iso3: NAM
   iso: NA
   printable_name: Namibia
   numcode: "516"
+  type: Country
 countries_080: 
   name: MONTSERRAT
   iso3: MSR
   iso: MS
   printable_name: Montserrat
   numcode: "500"
+  type: Country
 countries_081: 
   name: MOROCCO
   iso3: MAR
   iso: MA
   printable_name: Morocco
   numcode: "504"
+  type: Country
 countries_082: 
   name: MOZAMBIQUE
   iso3: MOZ
   iso: MZ
   printable_name: Mozambique
   numcode: "508"
+  type: Country
 countries_083: 
   name: MONGOLIA
   iso3: MNG
   iso: MN
   printable_name: Mongolia
   numcode: "496"
+  type: Country
 countries_084: 
   name: MONACO
   iso3: MCO
   iso: MC
   printable_name: Monaco
   numcode: "492"
+  type: Country
 countries_085: 
   name: MOLDOVA, REPUBLIC OF
   iso3: MDA
   iso: MD
   printable_name: Moldova, Republic of
   numcode: "498"
+  type: Country
 countries_086: 
   name: MICRONESIA, FEDERATED STATES OF
   iso3: FSM
   iso: FM
   printable_name: Micronesia, Federated States of
   numcode: "583"
+  type: Country
 countries_087: 
   name: MEXICO
   iso3: MEX
   iso: MX
   printable_name: Mexico
   numcode: "484"
+  type: Country
 countries_088: 
   name: MAURITIUS
   iso3: MUS
   iso: MU
   printable_name: Mauritius
   numcode: "480"
+  type: Country
 countries_089: 
   name: MAURITANIA
   iso3: MRT
   iso: MR
   printable_name: Mauritania
   numcode: "478"
+  type: Country
 countries_090: 
   name: MARTINIQUE
   iso3: MTQ
   iso: MQ
   printable_name: Martinique
   numcode: "474"
+  type: Country
 countries_091: 
   name: MALTA
   iso3: MLT
   iso: MT
   printable_name: Malta
   numcode: "470"
+  type: Country
 countries_092: 
   name: MARSHALL ISLANDS
   iso3: MHL
   iso: MH
   printable_name: Marshall Islands
   numcode: "584"
+  type: Country
 countries_093: 
   name: MALI
   iso3: MLI
   iso: ML
   printable_name: Mali
   numcode: "466"
+  type: Country
 countries_094: 
   name: MALDIVES
   iso3: MDV
   iso: MV
   printable_name: Maldives
   numcode: "462"
+  type: Country
 countries_095: 
   name: MALAWI
   iso3: MWI
   iso: MW
   printable_name: Malawi
   numcode: "454"
+  type: Country
 countries_096: 
   name: MALAYSIA
   iso3: MYS
   iso: MY
   printable_name: Malaysia
   numcode: "458"
+  type: Country
 countries_097: 
   name: MADAGASCAR
   iso3: MDG
   iso: MG
   printable_name: Madagascar
   numcode: "450"
+  type: Country
 countries_098: 
   name: MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
   iso3: MKD
   iso: MK
   printable_name: Macedonia, the Former Yugoslav Republic of
   numcode: "807"
+  type: Country
 countries_099: 
   name: LUXEMBOURG
   iso3: LUX
   iso: LU
   printable_name: Luxembourg
   numcode: "442"
+  type: Country
 countries_200: 
   name: BANGLADESH
   iso3: BGD
   iso: BD
   printable_name: Bangladesh
   numcode: "50"
+  type: Country
 countries_201: 
   name: BAHRAIN
   iso3: BHR
   iso: BH
   printable_name: Bahrain
   numcode: "48"
+  type: Country
 countries_202: 
   name: BAHAMAS
   iso3: BHS
   iso: BS
   printable_name: Bahamas
   numcode: "44"
+  type: Country
 countries_203: 
   name: AZERBAIJAN
   iso3: AZE
   iso: AZ
   printable_name: Azerbaijan
   numcode: "31"
+  type: Country
 countries_204: 
   name: AUSTRIA
   iso3: AUT
   iso: AT
   printable_name: Austria
   numcode: "40"
+  type: Country
 countries_205: 
   name: AUSTRALIA
   iso3: AUS
   iso: AU
   printable_name: Australia
   numcode: "36"
+  type: Country
 countries_206: 
   name: ARUBA
   iso3: ABW
   iso: AW
   printable_name: Aruba
   numcode: "533"
+  type: Country
 countries_207: 
   name: ARMENIA
   iso3: ARM
   iso: AM
   printable_name: Armenia
   numcode: "51"
+  type: Country
 countries_208: 
   name: ARGENTINA
   iso3: ARG
   iso: AR
   printable_name: Argentina
   numcode: "32"
+  type: Country
 countries_209: 
   name: ANTIGUA AND BARBUDA
   iso3: ATG
   iso: AG
   printable_name: Antigua and Barbuda
   numcode: "28"
+  type: Country
 countries_210: 
   name: ANGUILLA
   iso3: AIA
   iso: AI
   printable_name: Anguilla
   numcode: "660"
+  type: Country
 countries_211: 
   name: ANGOLA
   iso3: AGO
   iso: AO
   printable_name: Angola
   numcode: "24"
+  type: Country
 countries_212: 
   name: ANDORRA
   iso3: AND
   iso: AD
   printable_name: Andorra
   numcode: "20"
+  type: Country
 countries_213: 
   name: AMERICAN SAMOA
   iso3: ASM
   iso: AS
   printable_name: American Samoa
   numcode: "16"
+  type: Country
 countries_214: 
   name: ALGERIA
   iso3: DZA
   iso: DZ
   printable_name: Algeria
   numcode: "12"
+  type: Country
 countries_215: 
   name: ALBANIA
   iso3: ALB
   iso: AL
   printable_name: Albania
   numcode: "8"
+  type: Country
 countries_216: 
   name: AFGHANISTAN
   iso3: AFG
   iso: AF
   printable_name: Afghanistan
   numcode: "4"
+  type: Country
 countries_217: 
   name: VANUATU
   iso3: VUT
   iso: VU
   printable_name: Vanuatu
   numcode: "548"
+  type: Country
 countries_218: 
   name: VENEZUELA
   iso3: VEN
   iso: VE
   printable_name: Venezuela
   numcode: "862"
+  type: Country
 countries_219: 
   name: VIET NAM
   iso3: VNM
   iso: VN
   printable_name: Viet Nam
   numcode: "704"
+  type: Country
 countries_220: 
   name: VIRGIN ISLANDS, BRITISH
   iso3: VGB
   iso: VG
   printable_name: Virgin Islands, British
   numcode: "92"
+  type: Country
 countries_221: 
   name: VIRGIN ISLANDS, U.S.
   iso3: VIR
   iso: VI
   printable_name: Virgin Islands, U.s.
   numcode: "850"
+  type: Country
 countries_222: 
   name: WALLIS AND FUTUNA
   iso3: WLF
   iso: WF
   printable_name: Wallis and Futuna
   numcode: "876"
+  type: Country
 countries_223: 
   name: WESTERN SAHARA
   iso3: ESH
   iso: EH
   printable_name: Western Sahara
   numcode: "732"
+  type: Country
 countries_224: 
   name: YEMEN
   iso3: YEM
   iso: YE
   printable_name: Yemen
   numcode: "887"
+  type: Country
 countries_225: 
   name: ZAMBIA
   iso3: ZMB
   iso: ZM
   printable_name: Zambia
   numcode: "894"
+  type: Country
 countries_226: 
   name: ZIMBABWE
   iso3: ZWE
   iso: ZW
   printable_name: Zimbabwe
   numcode: "716"
+  type: Country
 countries_100: 
   name: MACAO
   iso3: MAC
   iso: MO
   printable_name: Macao
   numcode: "446"
+  type: Country
 countries_101: 
   name: LITHUANIA
   iso3: LTU
   iso: LT
   printable_name: Lithuania
   numcode: "440"
+  type: Country
 countries_102: 
   name: LIECHTENSTEIN
   iso3: LIE
   iso: LI
   printable_name: Liechtenstein
   numcode: "438"
+  type: Country
 countries_103: 
   name: LIBYAN ARAB JAMAHIRIYA
   iso3: LBY
   iso: LY
   printable_name: Libyan Arab Jamahiriya
   numcode: "434"
+  type: Country
 countries_104: 
   name: LESOTHO
   iso3: LSO
   iso: LS
   printable_name: Lesotho
   numcode: "426"
+  type: Country
 countries_105: 
   name: LIBERIA
   iso3: LBR
   iso: LR
   printable_name: Liberia
   numcode: "430"
+  type: Country
 countries_106: 
   name: LATVIA
   iso3: LVA
   iso: LV
   printable_name: Latvia
   numcode: "428"
+  type: Country
 countries_107: 
   name: LEBANON
   iso3: LBN
   iso: LB
   printable_name: Lebanon
   numcode: "422"
+  type: Country
 countries_108: 
   name: LAO PEOPLE'S DEMOCRATIC REPUBLIC
   iso3: LAO
   iso: LA
   printable_name: Lao People's Democratic Republic
   numcode: "418"
+  type: Country
 countries_109: 
   name: KYRGYZSTAN
   iso3: KGZ
   iso: KG
   printable_name: Kyrgyzstan
   numcode: "417"
+  type: Country
 countries_110: 
   name: KUWAIT
   iso3: KWT
   iso: KW
   printable_name: Kuwait
   numcode: "414"
+  type: Country
 countries_111: 
   name: KOREA, REPUBLIC OF
   iso3: KOR
   iso: KR
   printable_name: Korea, Republic of
   numcode: "410"
+  type: Country
 countries_112: 
   name: KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF
   iso3: PRK
   iso: KP
   printable_name: Korea, Democratic People's Republic of
   numcode: "408"
+  type: Country
 countries_113: 
   name: KIRIBATI
   iso3: KIR
   iso: KI
   printable_name: Kiribati
   numcode: "296"
+  type: Country
 countries_114: 
   name: KENYA
   iso3: KEN
   iso: KE
   printable_name: Kenya
   numcode: "404"
+  type: Country
 countries_115: 
   name: KAZAKHSTAN
   iso3: KAZ
   iso: KZ
   printable_name: Kazakhstan
   numcode: "398"
+  type: Country
 countries_116: 
   name: JORDAN
   iso3: JOR
   iso: JO
   printable_name: Jordan
   numcode: "400"
+  type: Country
 countries_117: 
   name: JAPAN
   iso3: JPN
   iso: JP
   printable_name: Japan
   numcode: "392"
+  type: Country
 countries_118: 
   name: ISRAEL
   iso3: ISR
   iso: IL
   printable_name: Israel
   numcode: "376"
+  type: Country
 countries_119: 
   name: ITALY
   iso3: ITA
   iso: IT
   printable_name: Italy
   numcode: "380"
+  type: Country
 countries_120: 
   name: JAMAICA
   iso3: JAM
   iso: JM
   printable_name: Jamaica
   numcode: "388"
+  type: Country
 countries_121: 
   name: IRAQ
   iso3: IRQ
   iso: IQ
   printable_name: Iraq
   numcode: "368"
+  type: Country
 countries_122: 
   name: IRELAND
   iso3: IRL
   iso: IE
   printable_name: Ireland
   numcode: "372"
+  type: Country
 countries_123: 
   name: IRAN, ISLAMIC REPUBLIC OF
   iso3: IRN
   iso: IR
   printable_name: Iran, Islamic Republic of
   numcode: "364"
+  type: Country
 countries_124: 
   name: INDONESIA
   iso3: IDN
   iso: ID
   printable_name: Indonesia
   numcode: "360"
+  type: Country
 countries_125: 
   name: INDIA
   iso3: IND
   iso: IN
   printable_name: India
   numcode: "356"
+  type: Country
 countries_126: 
   name: ICELAND
   iso3: ISL
   iso: IS
   printable_name: Iceland
   numcode: "352"
+  type: Country
 countries_127: 
   name: HUNGARY
   iso3: HUN
   iso: HU
   printable_name: Hungary
   numcode: "348"
+  type: Country
 countries_128: 
   name: HONG KONG
   iso3: HKG
   iso: HK
   printable_name: Hong Kong
   numcode: "344"
+  type: Country
 countries_129: 
   name: HOLY SEE (VATICAN CITY STATE)
   iso3: VAT
   iso: VA
   printable_name: Holy See (Vatican City State)
   numcode: "336"
+  type: Country
 countries_130: 
   name: HONDURAS
   iso3: HND
   iso: HN
   printable_name: Honduras
   numcode: "340"
+  type: Country
 countries_131: 
   name: HAITI
   iso3: HTI
   iso: HT
   printable_name: Haiti
   numcode: "332"
+  type: Country
 countries_132: 
   name: GUYANA
   iso3: GUY
   iso: GY
   printable_name: Guyana
   numcode: "328"
+  type: Country
 countries_001: 
   name: UZBEKISTAN
   iso3: UZB
   iso: UZ
   printable_name: Uzbekistan
   numcode: "860"
+  type: Country
 countries_133: 
   name: GUATEMALA
   iso3: GTM
   iso: GT
   printable_name: Guatemala
   numcode: "320"
+  type: Country
 countries_002: 
   name: URUGUAY
   iso3: URY
   iso: UY
   printable_name: Uruguay
   numcode: "858"
+  type: Country
 countries_134: 
   name: GUINEA
   iso3: GIN
   iso: GN
   printable_name: Guinea
   numcode: "324"
+  type: Country
 countries_003: 
   name: UNITED KINGDOM
   iso3: GBR
   iso: GB
   printable_name: United Kingdom
   numcode: "826"
+  type: Country
 countries_135: 
   name: GUINEA-BISSAU
   iso3: GNB
   iso: GW
   printable_name: Guinea-Bissau
   numcode: "624"
+  type: Country
 countries_004: 
   name: UNITED STATES
   iso3: USA
   iso: US
   printable_name: United States
   numcode: "840"
+  type: Country
 countries_136: 
   name: GUAM
   iso3: GUM
   iso: GU
   printable_name: Guam
   numcode: "316"
+  type: Country
 countries_005: 
   name: UGANDA
   iso3: UGA
   iso: UG
   printable_name: Uganda
   numcode: "800"
+  type: Country
 countries_137: 
   name: GUADELOUPE
   iso3: GLP
   iso: GP
   printable_name: Guadeloupe
   numcode: "312"
+  type: Country
 countries_006: 
   name: UKRAINE
   iso3: UKR
   iso: UA
   printable_name: Ukraine
   numcode: "804"
+  type: Country
 countries_138: 
   name: GRENADA
   iso3: GRD
   iso: GD
   printable_name: Grenada
   numcode: "308"
+  type: Country
 countries_007: 
   name: UNITED ARAB EMIRATES
   iso3: ARE
   iso: AE
   printable_name: United Arab Emirates
   numcode: "784"
+  type: Country
 countries_139: 
   name: GREENLAND
   iso3: GRL
   iso: GL
   printable_name: Greenland
   numcode: "304"
+  type: Country
 countries_008: 
   name: TUVALU
   iso3: TUV
   iso: TV
   printable_name: Tuvalu
   numcode: "798"
+  type: Country
 countries_009: 
   name: TURKS AND CAICOS ISLANDS
   iso3: TCA
   iso: TC
   printable_name: Turks and Caicos Islands
   numcode: "796"
+  type: Country
 countries_140: 
   name: GHANA
   iso3: GHA
   iso: GH
   printable_name: Ghana
   numcode: "288"
+  type: Country
 countries_141: 
   name: GIBRALTAR
   iso3: GIB
   iso: GI
   printable_name: Gibraltar
   numcode: "292"
+  type: Country
 countries_142: 
   name: GREECE
   iso3: GRC
   iso: GR
   printable_name: Greece
   numcode: "300"
+  type: Country
 countries_010: 
   name: TURKMENISTAN
   iso3: TKM
   iso: TM
   printable_name: Turkmenistan
   numcode: "795"
+  type: Country
 countries_143: 
   name: GERMANY
   iso3: DEU
   iso: DE
   printable_name: Germany
   numcode: "276"
+  type: Country
 countries_011: 
   name: TRINIDAD AND TOBAGO
   iso3: TTO
   iso: TT
   printable_name: Trinidad and Tobago
   numcode: "780"
+  type: Country
 countries_144: 
   name: GEORGIA
   iso3: GEO
   iso: GE
   printable_name: Georgia
   numcode: "268"
+  type: Country
 countries_012: 
   name: TURKEY
   iso3: TUR
   iso: TR
   printable_name: Turkey
   numcode: "792"
+  type: Country
 countries_145: 
   name: GAMBIA
   iso3: GMB
   iso: GM
   printable_name: Gambia
   numcode: "270"
+  type: Country
 countries_013: 
   name: TUNISIA
   iso3: TUN
   iso: TN
   printable_name: Tunisia
   numcode: "788"
+  type: Country
 countries_146: 
   name: GABON
   iso3: GAB
   iso: GA
   printable_name: Gabon
   numcode: "266"
+  type: Country
 countries_014: 
   name: TOKELAU
   iso3: TKL
   iso: TK
   printable_name: Tokelau
   numcode: "772"
+  type: Country
 countries_147: 
   name: FRENCH POLYNESIA
   iso3: PYF
   iso: PF
   printable_name: French Polynesia
   numcode: "258"
+  type: Country
 countries_015: 
   name: TONGA
   iso3: TON
   iso: TO
   printable_name: Tonga
   numcode: "776"
+  type: Country
 countries_148: 
   name: FRENCH GUIANA
   iso3: GUF
   iso: GF
   printable_name: French Guiana
   numcode: "254"
+  type: Country
 countries_016: 
   name: TOGO
   iso3: TGO
   iso: TG
   printable_name: Togo
   numcode: "768"
+  type: Country
 countries_149: 
   name: FRANCE
   iso3: FRA
   iso: FR
   printable_name: France
   numcode: "250"
+  type: Country
 countries_017: 
   name: THAILAND
   iso3: THA
   iso: TH
   printable_name: Thailand
   numcode: "764"
+  type: Country
 countries_018: 
   name: TANZANIA, UNITED REPUBLIC OF
   iso3: TZA
   iso: TZ
   printable_name: Tanzania, United Republic of
   numcode: "834"
+  type: Country
 countries_019: 
   name: TAJIKISTAN
   iso3: TJK
   iso: TJ
   printable_name: Tajikistan
   numcode: "762"
+  type: Country
 countries_150: 
   name: FINLAND
   iso3: FIN
   iso: FI
   printable_name: Finland
   numcode: "246"
+  type: Country
 countries_151: 
   name: FIJI
   iso3: FJI
   iso: FJ
   printable_name: Fiji
   numcode: "242"
+  type: Country
 countries_020: 
   name: SYRIAN ARAB REPUBLIC
   iso3: SYR
   iso: SY
   printable_name: Syrian Arab Republic
   numcode: "760"
+  type: Country
 countries_152: 
   name: FAROE ISLANDS
   iso3: FRO
   iso: FO
   printable_name: Faroe Islands
   numcode: "234"
+  type: Country
 countries_021: 
   name: TAIWAN, PROVINCE OF CHINA
   iso3: TWN
   iso: TW
   printable_name: Taiwan, Province of China
   numcode: "158"
+  type: Country
 countries_153: 
   name: FALKLAND ISLANDS (MALVINAS)
   iso3: FLK
   iso: FK
   printable_name: Falkland Islands (Malvinas)
   numcode: "238"
+  type: Country
 countries_022: 
   name: SWITZERLAND
   iso3: CHE
   iso: CH
   printable_name: Switzerland
   numcode: "756"
+  type: Country
 countries_154: 
   name: ETHIOPIA
   iso3: ETH
   iso: ET
   printable_name: Ethiopia
   numcode: "231"
+  type: Country
 countries_023: 
   name: SWEDEN
   iso3: SWE
   iso: SE
   printable_name: Sweden
   numcode: "752"
+  type: Country
 countries_155: 
   name: ERITREA
   iso3: ERI
   iso: ER
   printable_name: Eritrea
   numcode: "232"
+  type: Country
 countries_024: 
   name: SWAZILAND
   iso3: SWZ
   iso: SZ
   printable_name: Swaziland
   numcode: "748"
+  type: Country
 countries_156: 
   name: ESTONIA
   iso3: EST
   iso: EE
   printable_name: Estonia
   numcode: "233"
+  type: Country
 countries_157: 
   name: EQUATORIAL GUINEA
   iso3: GNQ
   iso: GQ
   printable_name: Equatorial Guinea
   numcode: "226"
+  type: Country
 countries_025: 
   name: SVALBARD AND JAN MAYEN
   iso3: SJM
   iso: SJ
   printable_name: Svalbard and Jan Mayen
   numcode: "744"
+  type: Country
 countries_158: 
   name: EL SALVADOR
   iso3: SLV
   iso: SV
   printable_name: El Salvador
   numcode: "222"
+  type: Country
 countries_026: 
   name: SURINAME
   iso3: SUR
   iso: SR
   printable_name: Suriname
   numcode: "740"
+  type: Country
 countries_159: 
   name: EGYPT
   iso3: EGY
   iso: EG
   printable_name: Egypt
   numcode: "818"
+  type: Country
 countries_027: 
   name: SPAIN
   iso3: ESP
   iso: ES
   printable_name: Spain
   numcode: "724"
+  type: Country
 countries_028: 
   name: SRI LANKA
   iso3: LKA
   iso: LK
   printable_name: Sri Lanka
   numcode: "144"
+  type: Country
 countries_029: 
   name: SUDAN
   iso3: SDN
   iso: SD
   printable_name: Sudan
   numcode: "736"
+  type: Country
 countries_160: 
   name: ECUADOR
   iso3: ECU
   iso: EC
   printable_name: Ecuador
   numcode: "218"
+  type: Country
 countries_161: 
   name: DOMINICAN REPUBLIC
   iso3: DOM
   iso: DO
   printable_name: Dominican Republic
   numcode: "214"
+  type: Country
 countries_030: 
   name: SOMALIA
   iso3: SOM
   iso: SO
   printable_name: Somalia
   numcode: "706"
+  type: Country
 countries_162: 
   name: DENMARK
   iso3: DNK
   iso: DK
   printable_name: Denmark
   numcode: "208"
+  type: Country
 countries_031: 
   name: SOUTH AFRICA
   iso3: ZAF
   iso: ZA
   printable_name: South Africa
   numcode: "710"
+  type: Country
 countries_163: 
   name: DJIBOUTI
   iso3: DJI
   iso: DJ
   printable_name: Djibouti
   numcode: "262"
+  type: Country
 countries_032: 
   name: SOLOMON ISLANDS
   iso3: SLB
   iso: SB
   printable_name: Solomon Islands
   numcode: "90"
+  type: Country
 countries_164: 
   name: DOMINICA
   iso3: DMA
   iso: DM
   printable_name: Dominica
   numcode: "212"
+  type: Country
 countries_033: 
   name: SLOVENIA
   iso3: SVN
   iso: SI
   printable_name: Slovenia
   numcode: "705"
+  type: Country
 countries_165: 
   name: CZECH REPUBLIC
   iso3: CZE
   iso: CZ
   printable_name: Czech Republic
   numcode: "203"
+  type: Country
 countries_034: 
   name: SLOVAKIA
   iso3: SVK
   iso: SK
   printable_name: Slovakia
   numcode: "703"
+  type: Country
 countries_166: 
   name: CYPRUS
   iso3: CYP
   iso: CY
   printable_name: Cyprus
   numcode: "196"
+  type: Country
 countries_035: 
   name: SINGAPORE
   iso3: SGP
   iso: SG
   printable_name: Singapore
   numcode: "702"
+  type: Country
 countries_167: 
   name: CUBA
   iso3: CUB
   iso: CU
   printable_name: Cuba
   numcode: "192"
+  type: Country
 countries_036: 
   name: SIERRA LEONE
   iso3: SLE
   iso: SL
   printable_name: Sierra Leone
   numcode: "694"
+  type: Country
 countries_168: 
   name: CROATIA
   iso3: HRV
   iso: HR
   printable_name: Croatia
   numcode: "191"
+  type: Country
 countries_037: 
   name: SEYCHELLES
   iso3: SYC
   iso: SC
   printable_name: Seychelles
   numcode: "690"
+  type: Country
 countries_169: 
   name: COTE D'IVOIRE
   iso3: CIV
   iso: CI
   printable_name: Cote D'Ivoire
   numcode: "384"
+  type: Country
 countries_038: 
   name: SENEGAL
   iso3: SEN
   iso: SN
   printable_name: Senegal
   numcode: "686"
+  type: Country
 countries_039: 
   name: SAUDI ARABIA
   iso3: SAU
   iso: SA
   printable_name: Saudi Arabia
   numcode: "682"
+  type: Country
 countries_170: 
   name: COSTA RICA
   iso3: CRI
   iso: CR
   printable_name: Costa Rica
   numcode: "188"
+  type: Country
 countries_171: 
   name: COOK ISLANDS
   iso3: COK
   iso: CK
   printable_name: Cook Islands
   numcode: "184"
+  type: Country
 countries_172: 
   name: CONGO, THE DEMOCRATIC REPUBLIC OF THE
   iso3: COD
   iso: CD
   printable_name: Congo, the Democratic Republic of the
   numcode: "180"
+  type: Country
 countries_040: 
   name: SAMOA
   iso3: WSM
   iso: WS
   printable_name: Samoa
   numcode: "882"
+  type: Country
 countries_173: 
   name: CONGO
   iso3: COG
   iso: CG
   printable_name: Congo
   numcode: "178"
+  type: Country
 countries_041: 
   name: SAN MARINO
   iso3: SMR
   iso: SM
   printable_name: San Marino
   numcode: "674"
+  type: Country
 countries_174: 
   name: COLOMBIA
   iso3: COL
   iso: CO
   printable_name: Colombia
   numcode: "170"
+  type: Country
 countries_042: 
   name: SAO TOME AND PRINCIPE
   iso3: STP
   iso: ST
   printable_name: Sao Tome and Principe
   numcode: "678"
+  type: Country
 countries_175: 
   name: COMOROS
   iso3: COM
   iso: KM
   printable_name: Comoros
   numcode: "174"
+  type: Country
 countries_043: 
   name: SAINT VINCENT AND THE GRENADINES
   iso3: VCT
   iso: VC
   printable_name: Saint Vincent and the Grenadines
   numcode: "670"
+  type: Country
 countries_176: 
   name: CHINA
   iso3: CHN
   iso: CN
   printable_name: China
   numcode: "156"
+  type: Country
 countries_044: 
   name: SAINT LUCIA
   iso3: LCA
   iso: LC
   printable_name: Saint Lucia
   numcode: "662"
+  type: Country
 countries_177: 
   name: CHILE
   iso3: CHL
   iso: CL
   printable_name: Chile
   numcode: "152"
+  type: Country
 countries_045: 
   name: SAINT PIERRE AND MIQUELON
   iso3: SPM
   iso: PM
   printable_name: Saint Pierre and Miquelon
   numcode: "666"
+  type: Country
 countries_178: 
   name: CHAD
   iso3: TCD
   iso: TD
   printable_name: Chad
   numcode: "148"
+  type: Country
 countries_046: 
   name: SAINT KITTS AND NEVIS
   iso3: KNA
   iso: KN
   printable_name: Saint Kitts and Nevis
   numcode: "659"
+  type: Country
 countries_179: 
   name: CENTRAL AFRICAN REPUBLIC
   iso3: CAF
   iso: CF
   printable_name: Central African Republic
   numcode: "140"
+  type: Country
 countries_047: 
   name: RUSSIAN FEDERATION
   iso3: RUS
   iso: RU
   printable_name: Russian Federation
   numcode: "643"
+  type: Country
 countries_048: 
   name: SAINT HELENA
   iso3: SHN
   iso: SH
   printable_name: Saint Helena
   numcode: "654"
+  type: Country
 countries_049: 
   name: RWANDA
   iso3: RWA
   iso: RW
   printable_name: Rwanda
   numcode: "646"
+  type: Country
 countries_180: 
   name: CAYMAN ISLANDS
   iso3: CYM
   iso: KY
   printable_name: Cayman Islands
   numcode: "136"
+  type: Country
 countries_181: 
   name: CAPE VERDE
   iso3: CPV
   iso: CV
   printable_name: Cape Verde
   numcode: "132"
+  type: Country
 countries_050: 
   name: ROMANIA
   iso3: ROM
   iso: RO
   printable_name: Romania
   numcode: "642"
+  type: Country
 countries_182: 
   name: CANADA
   iso3: CAN
   iso: CA
   printable_name: Canada
   numcode: "124"
+  type: Country
 countries_183: 
   name: CAMBODIA
   iso3: KHM
   iso: KH
   printable_name: Cambodia
   numcode: "116"
+  type: Country
 countries_051: 
   name: REUNION
   iso3: REU
   iso: RE
   printable_name: Reunion
   numcode: "638"
+  type: Country
 countries_184: 
   name: CAMEROON
   iso3: CMR
   iso: CM
   printable_name: Cameroon
   numcode: "120"
+  type: Country
 countries_052: 
   name: QATAR
   iso3: QAT
   iso: QA
   printable_name: Qatar
   numcode: "634"
+  type: Country
 countries_185: 
   name: BURUNDI
   iso3: BDI
   iso: BI
   printable_name: Burundi
   numcode: "108"
+  type: Country
 countries_053: 
   name: PUERTO RICO
   iso3: PRI
   iso: PR
   printable_name: Puerto Rico
   numcode: "630"
+  type: Country
 countries_186: 
   name: BURKINA FASO
   iso3: BFA
   iso: BF
   printable_name: Burkina Faso
   numcode: "854"
+  type: Country
 countries_054: 
   name: PORTUGAL
   iso3: PRT
   iso: PT
   printable_name: Portugal
   numcode: "620"
+  type: Country
 countries_187: 
   name: BULGARIA
   iso3: BGR
   iso: BG
   printable_name: Bulgaria
   numcode: "100"
+  type: Country
 countries_055: 
   name: POLAND
   iso3: POL
   iso: PL
   printable_name: Poland
   numcode: "616"
+  type: Country
 countries_188: 
   name: BRUNEI DARUSSALAM
   iso3: BRN
   iso: BN
   printable_name: Brunei Darussalam
   numcode: "96"
+  type: Country
 countries_056: 
   name: PHILIPPINES
   iso3: PHL
   iso: PH
   printable_name: Philippines
   numcode: "608"
+  type: Country
 countries_189: 
   name: BRAZIL
   iso3: BRA
   iso: BR
   printable_name: Brazil
   numcode: "76"
+  type: Country
 countries_057: 
   name: PITCAIRN
   iso3: PCN
   iso: PN
   printable_name: Pitcairn
   numcode: "612"
+  type: Country
 countries_058: 
   name: PERU
   iso3: PER
   iso: PE
   printable_name: Peru
   numcode: "604"
+  type: Country
 countries_059: 
   name: PARAGUAY
   iso3: PRY
   iso: PY
   printable_name: Paraguay
   numcode: "600"
+  type: Country
 countries_190: 
   name: BOTSWANA
   iso3: BWA
   iso: BW
   printable_name: Botswana
   numcode: "72"
+  type: Country
 countries_191: 
   name: BOSNIA AND HERZEGOVINA
   iso3: BIH
   iso: BA
   printable_name: Bosnia and Herzegovina
   numcode: "70"
+  type: Country
 countries_060: 
   name: PAPUA NEW GUINEA
   iso3: PNG
   iso: PG
   printable_name: Papua New Guinea
   numcode: "598"
+  type: Country
 countries_192: 
   name: BOLIVIA
   iso3: BOL
   iso: BO
   printable_name: Bolivia
   numcode: "68"
+  type: Country
 countries_061: 
   name: PALAU
   iso3: PLW
   iso: PW
   printable_name: Palau
   numcode: "585"
+  type: Country
 countries_193: 
   name: BHUTAN
   iso3: BTN
   iso: BT
   printable_name: Bhutan
   numcode: "64"
+  type: Country
 countries_062: 
   name: PANAMA
   iso3: PAN
   iso: PA
   printable_name: Panama
   numcode: "591"
+  type: Country
 countries_194: 
   name: BERMUDA
   iso3: BMU
   iso: BM
   printable_name: Bermuda
   numcode: "60"
+  type: Country
 countries_063: 
   name: PAKISTAN
   iso3: PAK
   iso: PK
   printable_name: Pakistan
   numcode: "586"
+  type: Country
 countries_195: 
   name: BENIN
   iso3: BEN
   iso: BJ
   printable_name: Benin
   numcode: "204"
+  type: Country
 countries_064: 
   name: OMAN
   iso3: OMN
   iso: OM
   printable_name: Oman
   numcode: "512"
+  type: Country
 countries_196: 
   name: BELIZE
   iso3: BLZ
   iso: BZ
   printable_name: Belize
   numcode: "84"
+  type: Country
 countries_065: 
   name: NORWAY
   iso3: NOR
   iso: "NO"
   printable_name: Norway
   numcode: "578"
+  type: Country
 countries_197: 
   name: BELARUS
   iso3: BLR
   iso: BY
   printable_name: Belarus
   numcode: "112"
+  type: Country
 countries_066: 
   name: NORTHERN MARIANA ISLANDS
   iso3: MNP
   iso: MP
   printable_name: Northern Mariana Islands
   numcode: "580"
+  type: Country
 countries_198: 
   name: BELGIUM
   iso3: BEL
   iso: BE
   printable_name: Belgium
   numcode: "56"
+  type: Country
 countries_067: 
   name: NIGERIA
   iso3: NGA
   iso: NG
   printable_name: Nigeria
   numcode: "566"
+  type: Country
 countries_199: 
   name: BARBADOS
   iso3: BRB
   iso: BB
   printable_name: Barbados
   numcode: "52"
+  type: Country
 countries_068: 
   name: NIUE
   iso3: NIU
   iso: NU
   printable_name: Niue
   numcode: "570"
+  type: Country
 countries_069: 
   name: NORFOLK ISLAND
   iso3: NFK
   iso: NF
   printable_name: Norfolk Island
   numcode: "574"
+  type: Country
 countries_070: 
   name: NIGER
   iso3: NER
   iso: NE
   printable_name: Niger
   numcode: "562"
+  type: Country
 countries_071: 
   name: NICARAGUA
   iso3: NIC
   iso: NI
   printable_name: Nicaragua
   numcode: "558"
+  type: Country
 countries_072: 
   name: NEW ZEALAND
   iso3: NZL
   iso: NZ
   printable_name: New Zealand
   numcode: "554"
+  type: Country
 countries_073: 
   name: NEW CALEDONIA
   iso3: NCL
   iso: NC
   printable_name: New Caledonia
   numcode: "540"
+  type: Country
 countries_074: 
   name: NETHERLANDS
   iso3: NLD

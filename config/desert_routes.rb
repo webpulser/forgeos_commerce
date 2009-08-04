@@ -19,6 +19,8 @@ namespace :admin do |admin|
   admin.resources :shipping_methods
   admin.resources :vouchers
   admin.resources :categories
+  admin.resources :geo_zones
+  admin.resources :countries, :controller => 'geo_zones'
   admin.resources :users, :collection => { :filter => [:post, :get] }
   admin.resources :tattributes do |tattribute|
     tattribute.resources :values, :controller => 'tattribute_values'

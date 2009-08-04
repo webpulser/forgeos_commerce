@@ -85,7 +85,6 @@ fr:
   tattribute_values: valeurs
   vouchers: 'codes promo'
   users: 'utilisateurs'
-  categories: 'catégories'
   rights: 'droits'
   roles: 'roles'
   controller_name: 'nom du contrôleur'
@@ -217,6 +216,7 @@ fr:
       success: "la valeur a bien été supprimé"
       failed: "un problème est survenu lors de la suppression de la valeur"
       confirm: "êtes-vous sûr de vouloir supprimer cette valeur ?"
+  categories: 'catégories'
   category:
     one: 'catégorie'
     other: 'catégories'
@@ -236,6 +236,26 @@ fr:
     sub:
       create:
         action: 'créer une catégorie sous-jacente'
+  categories: 'zone géographiques'
+  category:
+    one: 'zone géographique'
+    other: 'zone géographiques'
+    not_exist: "la zone géographique demandée n'existe pas"
+    create:
+      success: 'la zone géographique a bien été créée'
+      failed: 'un problème est survenu lors de la création de la zone géographique'
+      action: 'créer une zone géographique'
+    update:
+      success: 'la zone géographique a bien été mise à jour'
+      failed: 'un problème est survenu lors de la mise à jour de la zone géographique'
+      action: 'éditer la zone géographique'
+    destroy:
+      success: 'la zone géographique a bien été supprimée'
+      failed: 'un problème est survenu lors de la suppression de la zone géographique'
+      confirm: 'êtes-vous sûr de vouloir supprimer cette zone géographique ?' 
+    sub:
+      create:
+        action: 'créer une zone géographique sous-jacente'
   order_detail:
     one: 'détail de commande'
     other: 'détails de commande'
