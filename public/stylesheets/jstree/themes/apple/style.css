@@ -1,57 +1,20 @@
-.tree .tree-apple { 
-	margin-left:0;
-	min-width:100%;
-	_width:100%;
-	float:left;
-}
-/*
-.tree .tree-apple {
-	font-family:"Lucida Grande";
-	font-size:14px;
-}
-*/
-.tree .tree-apple,
-.tree .tree-apple ul,
-.tree .tree-apple li.leaf {
-	background-image:none;
-}
-.tree .tree-apple {
-	background:url("bg.jpg") left top repeat;
-}
-.tree .tree-apple li.open {
-	background-image:url("minus.gif");
-}
-.tree .tree-apple li.closed,
-.tree .tree-apple #dragged li.open {
-	background-image:url("plus.gif");
-}
+.tree-apple li.open { background-image:url("minus.gif"); background-position:2px 5px; }
+.tree-apple li.closed, #jstree-dragged.tree-apple li li.open { background-image:url("plus.gif"); background-position:2px 5px; }
+.tree-apple li a, .tree-apple li span { background-image:url("folder.png"); }
+.tree-apple .rtl li.closed, #jstree-dragged.tree-apple .rtl li li.open { background-image:url("plus_rtl.gif"); }
+.tree-apple li a:hover { background-color:silver; border-color:silver; color:white; }
+.tree-apple li a.clicked, .tree-apple li a.clicked:hover, .tree-apple li span.clicked { background-color:#2E72DF; border-color:#2E72DF; color:white; }
+/* RIGHT TO LEFT SUPPORT */
+.tree-apple .rtl li.open { background:url("minus_rtl.gif") right 6px no-repeat;  }
+.tree-apple .rtl li.closed { background:url("plus_rtl.gif") right 4px no-repeat; }
+.tree-apple .rtl li li.open, .tree-apple .rtl li li.closed { padding-right:19px; margin-right:-3px; }
+#jstree-dragged.tree-apple .rtl li li.open { background:url("plus_rtl.gif") right 4px no-repeat; }
 
-.tree .tree-apple li a {
-	background-image:url("folder.png");
-}
+/* SCROLLING BACKGROUND */
+.tree-apple .ltr, .tree-apple .rtl { background:url("bg.jpg") left top repeat; min-width:100%; _width:100%; margin-left:0; margin-right:0; }
+.tree-apple .ltr > li.leaf, .tree-apple .rtl > li.leaf { background-image:none; }
+.tree-apple > ul > li.last { height:auto !important; margin-bottom:auto !important; background-image:none; }
+#jstree-dragged.tree-apple .rtl, #jstree-dragged.tree-apple .ltr { min-width:auto; _width:auto; }
 
-.rtl .tree-apple li.closed {
-	background-image:url("plus_rtl.gif");
-}
-.rtl .tree-apple #dragged li.open {
-	background-image:url("plus_rtl.gif");
-}
-/*
-.tree .tree-apple li a, 
-.tree .tree-apple li span {
-	border-radius:0px;
-	-moz-border-radius:0px;
-	-webkit-border-radius:0px;
-}
-*/
-.tree .tree-apple li a:hover {
-	background-color:silver;
-	border-color:silver;
-	color:white;
-}
-.tree .tree-apple li a.clicked,
-.tree .tree-apple li span.clicked {
-	background-color:#2E72DF;
-	border-color:#2E72DF;
-	color:white;
-}
+/* IE6 
+* html .tree-apple ul li.leaf { _background-image: expression(/DIV/.test(this.parentNode.parentNode.tagName) ? "none" : "inherit"); }*/
