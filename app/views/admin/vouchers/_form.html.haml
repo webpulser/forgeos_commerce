@@ -38,6 +38,11 @@
     = f.text_field :total_min
   %p
     %b
+      = f.label :max_use, I18n.t('max_use').capitalize
+      \:
+    = f.text_field :max_use
+  %p
+    %b
       = f.label :date_start, I18n.t('date_start').capitalize
       \:
     = f.date_select :date_start, :include_blank => true

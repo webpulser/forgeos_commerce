@@ -177,6 +177,7 @@ fr:
   total_min: 'somme minimale'
   cumulable: 'cumulable'
   offer_delivery: 'frais de livraison offerts'
+  max_use: "maximum d'utilisation"
   date_start: 'date de début'
   date_end: 'date de fin'
   parent: 'parent'

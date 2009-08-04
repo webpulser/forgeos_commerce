@@ -1,5 +1,5 @@
 = display_standard_flashes
-%table
+%table#table
   %thead
     %tr
       %th
@@ -8,6 +8,8 @@
         = I18n.t('code', :count=>1).capitalize
       %th
         = I18n.t('value', :count=>1).capitalize
+      %th
+        = I18n.t('max_use').capitalize
       %th
         = I18n.t('action', :count => 2).capitalize
   %tbody
@@ -20,9 +22,13 @@
         %td
           = "#{voucher.value} #{voucher.percent ? '%' : Currency::default.html}"
         %td
+          = voucher.max_use
+        %td
           = link_to I18n.t('show').capitalize, admin_voucher_path(voucher)
           \-
           = link_to I18n.t('edit').capitalize, edit_admin_voucher_path(voucher)
           \-
           = link_to_remote I18n.t('destroy').capitalize, :url => admin_voucher_path(voucher), :confirm => I18n.t('voucher.destroy.confirm').capitalize, :update => 'vouchers', :method => 'delete'
 - content_for :tools, link_to(I18n.t('voucher.create.action').capitalize, new_admin_voucher_path, :class => 'add')
+
+= dataTables_tag(5)

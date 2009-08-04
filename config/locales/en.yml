@@ -177,6 +177,7 @@ en:
   total_min: 'total min'
   cumulable: 'cumulable'
   offer_delivery: 'delivery offered'
+  max_use: 'maximum of use'
   date_start: 'start date'
   date_end: 'end date'
   parent: 'parent'
