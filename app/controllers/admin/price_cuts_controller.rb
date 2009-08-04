@@ -1,9 +1,57 @@
 class Admin::PriceCutsController < Admin::BaseController
   def special_offer
+    @products = Product.all
+    
     if params[:rule_builder]
       build_offer
     else
       flash[:error] = 'Fields'
+    end
+  end
+
+  def get_result
+    case "#{params[:target_type]}"
+      
+      when "Category"
+        @categories = Category.find(:all, :select => :name)
+        render :update do |page|
+          page.show 'rule_builder_target'
+          page.replace_html 'rule_builder_target', @categories.collect{ |r| "<option value='#{r.name.to_s}'>#{r.name.to_s}</option>"}
+        end
+        
+      when "Cart"
+        @rule_targets = ['Total items quantity', 'Total weight', 'Total amount', 'Shipping method']
+        render :update do |page|
+          page.hide 'rule_builder_target'
+          page.replace_html 'rule_targets_', @rule_targets.collect{ |t| "<option value='#{t}'>#{t}</option>"}
+        end
+      
+      when 'Product in Shop','Product in Cart'
+        @product_rule_targets = Product.find(:all).collect{|p| p.product_type.tattributes.collect{|t| t.name}}.uniq        
+        @rule_targets = ['Please select','Title','Price','Description','Weight','SKU','Stock']
+        @rule_targets += @product_rule_targets  
+        render :update do |page|
+          page.hide 'rule_builder_target'
+          page.replace_html 'rule_targets_', @rule_targets.collect{ |t| "<option value='#{t}'>#{t}</option>"}
+        end
+      else
+        render :nothing => true
+    end
+  end
+
+  def get_rules_values
+    case "#{params[:target_type]}"
+    
+      when 'Title'
+        @rule_values = Product.find(:all)
+        render :update do |page|
+          page.replace_html 'rule_values_', @rule_values.collect{ |v| "<option value='#{v.name}'>#{v.name}</option>"}
+        end
+         
+      when 'Price','Description','Weight','Stock'
+        render :nothing => true
+      else
+        render :nothing => true
     end
   end
 
