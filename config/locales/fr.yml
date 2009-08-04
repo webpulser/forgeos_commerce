@@ -123,7 +123,6 @@ fr:
   city: 'ville'
   country: 'pays'
   zip_code: 'code postale'
-  show: 'voir'
   back: 'retour'
   thumbnail:
     one: 'vignette'
@@ -523,3 +522,10 @@ fr:
           default: "%Y-%m-%dT%H:%M:%S%Z"
     am: 'am'
     pm: 'pm'
+
+# Active record
+  activerecord:
+    models:
+      product: 'produit'
+      shipping_method: "méthode d'envoi"
+      user: 'utilisateur'

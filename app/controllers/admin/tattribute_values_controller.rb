@@ -21,6 +21,9 @@ class Admin::TattributeValuesController < Admin::BaseController
     end
   end
 
+  def edit
+  end
+
   def update
     if @tattribute_value.update_attributes(params[:tattribute_value])
       flash[:notice] = I18n.t('tattribute_value.update.success').capitalize
