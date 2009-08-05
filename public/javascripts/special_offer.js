@@ -28,13 +28,29 @@ function change_rule(element, name){
 function change_select_for(element){
   if ($(element).val() != 'Category'){
     $('#rule_builder_target').hide()
+    if ($(element).val() == 'Cart'){
+      $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
+      $('#rule-conditions').append($('.rule-Totalitemsquantity.pattern').clone().removeClass('pattern').removeClass('rule-Totalitemsquantity').addClass('rule-condition')) 
+    }
+    else{
+      $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
+      $('#rule-conditions').append($('.rule-condition.pattern').clone().removeClass('pattern'))
+    }
   }
   else{
     $('#rule_builder_target').show()
+    $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
+    $('#rule-conditions').append($('.rule-condition.pattern').clone().removeClass('pattern'))
   }
+  check_remove_icon_status('rule-condition')
 }
 
 function change_action(element, name){
   $(element).parent().replaceWith($('.action-'+$(element).val().replace(/\s+/g,"")+'.pattern').clone().removeClass('pattern').removeClass('action-'+$(element).val().replace(/\s+/g,"")).addClass('action-condition'))
   check_remove_icon_status(name);
+}
+
+function add_cart_rule(){
+  $('#rule-conditions').append($('.rule-Totalitemsquantity.pattern').clone().removeClass('pattern').removeClass('rule-Totalitemsquantity').addClass('rule-condition')) 
+  check_remove_icon_status('rule-condition')
 }
