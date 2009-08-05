@@ -21,6 +21,20 @@ function check_remove_icon_status(name){
 }
 
 function change_rule(element, name){
-  $(element).parent().replaceWith($('.rule-'+$(element).val()+'.pattern').clone().removeClass('pattern').removeClass('rule-'+$(element).val()).addClass('rule-condition'))
+  $(element).parent().replaceWith($('.rule-'+$(element).val().replace(/\s+/g,"")+'.pattern').clone().removeClass('pattern').removeClass('rule-'+$(element).val().replace(/\s+/g,"")).addClass('rule-condition'))
+  check_remove_icon_status(name);
+}
+
+function change_select_for(element){
+  if ($(element).val() != 'Category'){
+    $('#rule_builder_target').hide()
+  }
+  else{
+    $('#rule_builder_target').show()
+  }
+}
+
+function change_action(element, name){
+  $(element).parent().replaceWith($('.action-'+$(element).val().replace(/\s+/g,"")+'.pattern').clone().removeClass('pattern').removeClass('action-'+$(element).val().replace(/\s+/g,"")).addClass('action-condition'))
   check_remove_icon_status(name);
 }

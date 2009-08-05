@@ -1,6 +1,7 @@
-- @default_options = ['Title', 'Price', 'Description', 'Weight', 'SKU', 'Stock']
+- @default_options = ['Price','Title','Description', 'Weight', 'SKU', 'Stock']
 - @options = Tattribute.all.collect(&:name)
-- @default_options += @options
+- @cart_options = ['Total items quantity', 'Total weight', 'Total amount', 'Shipping method']
+
 
 %h1 Create a special offer
 - form_tag special_offer_admin_price_cuts_path do
@@ -12,17 +13,17 @@
     = text_area 'rule_builder', 'description', :rows => 2
   %div{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
     %h3 For
-    = select 'rule_builder', 'for', ['Category', 'Product in Shop', 'Product in Cart', 'Cart'], { :prompt => true }, { :onchange => remote_function(:url => 'get_result', :with => "'target_type='+$(this).val().removeClass('pattern')") }
-    = select 'rule_builder', 'target', [], :prompt => true
+    = select_tag 'rule_builder', options_for_select(['Category', 'Product in Shop', 'Product in Cart', 'Cart']), {:onchange => "change_select_for(this)"} 
+    = select 'rule_builder', 'target', Category.all.collect(&:name)
   %div{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
     %h3 If
     = select 'rule_builder', 'if', %w(Any All)
     of these conditions are true
     #rule-conditions
       %p.rule-condition
-        = select_tag 'rule[targets][]', options_for_select(@default_options),{ :onchange => "$(this).parent().replaceWith($('.rule-'+$(this).val()+'.pattern').clone().removeClass('pattern'));" } 
+        = select_tag 'rule[targets][]', options_for_select(@default_options + @options),{ :onchange => "change_rule(this,'rule-condition')" } 
         = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
-        = select_tag 'rule[values][]', options_for_select(%w(eazea zaeaz e ze aze z eaze aze))
+        = text_field_tag 'rule[values][]'
         = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins disabled'
         = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
 
@@ -30,7 +31,7 @@
     %h3 Then
     #action-conditions
       %p.action-condition
-        = select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product','Offer free delivery'])
+        = select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product','Offer free delivery']), {:onchange => "change_action(this,'action-condition')"}
         = select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
         = text_field_tag 'act[values][]'
         = link_to_function 'del', "remove_rule(this,'action-condition')", :class => 'icon1 moins disabled'
@@ -45,58 +46,54 @@
     or
     = link_to 'Cancel', :back
 
-%p.rule-condition.pattern{ :style => 'display: none'}
-  = select_tag 'rule[targets][]', options_for_select(@default_options),{ :onchange => "$(this).parent().replaceWith($('.rule-'+$(this).val()+'.pattern').clone().removeClass('pattern'));" } 
-  = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
-  = select_tag 'rule[values][]', options_for_select(%w(eazea zaeaz e ze aze z eaze aze))
-  = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
-  = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
 
-%p.action-condition.pattern{ :style => 'display: none' }
-  = select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product','Offer free delivery'])
-  = select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
-  = text_field_tag 'act[values][]'
-  = link_to_function 'del', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
-  = link_to_function 'add', "add_rule('action-condition')", :class => 'icon1 plus'
+%div.action-conditions{ :style => 'display: none' }
+  - @actions = ['Discount price this product','Offer a product','Offer free delivery']
+  %p.action-condition.pattern
+    = select_tag 'act[targets][]', options_for_select(@actions), {:onchange => "change_action(this,'action-condition')"}
+    = select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
+    = text_field_tag 'act[values][]'
+    = link_to_function 'del', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
+    = link_to_function 'add', "add_rule('action-condition')", :class => 'icon1 plus'
+
+  %p.action-Discountpricethisproduct.pattern
+    = select_tag 'act[targets][]', options_for_select(@actions), {:onchange => "change_action(this,'action-condition')"}
+    = select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
+    = text_field_tag 'act[values][]'
+    = link_to_function 'del', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
+    = link_to_function 'add', "add_rule('action-condition')", :class => 'icon1 plus'
+
+  %p.action-Offeraproduct.pattern
+    = select_tag 'act[targets][]', options_for_select(@actions, 'Offer a product'), {:onchange => "change_action(this,'action-condition')"}
+    = select_tag 'act[values][]', options_for_select(Product.all.collect(&:name)) 
+    = link_to_function 'del', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
+    = link_to_function 'add', "add_rule('action-condition')", :class => 'icon1 plus'
+
+  %p.action-Offerfreedelivery.pattern
+    = select_tag 'act[targets][]', options_for_select(@actions,'Offer free delivery'), {:onchange => "change_action(this,'action-condition')"}
+    = link_to_function 'del', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
+    = link_to_function 'add', "add_rule('action-condition')", :class => 'icon1 plus'
+
 
 %div.rule-conditions{ :style => 'display: none'}
-  %p.rule-Price.pattern
-    = select_tag 'rule[targets][]', options_for_select(@default_options, 'Price'),{ :onchange => "$(this).parent().replaceWith($('.rule-'+$(this).val()+'.pattern').clone().removeClass('pattern'));" } 
-    = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
-    = text_field_tag 'rule[values][]'
-    = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
-    = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
-  
-  %p.rule-Description.pattern
-    = select_tag 'rule[targets][]', options_for_select(@default_options, 'Description'),{ :onchange => "$(this).parent().replaceWith($('.rule-'+$(this).val()+'.pattern').clone().removeClass('pattern'));" } 
+
+  %p.rule-condition.pattern
+    = select_tag 'rule[targets][]', options_for_select(@default_options + @options),{ :onchange => "change_rule(this,'rule-condition')" } 
     = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
     = text_field_tag 'rule[values][]'
     = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
     = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
 
-  %p.rule-Weight.pattern
-    = select_tag 'rule[targets][]', options_for_select(@default_options, 'Weight'),{ :onchange => "$(this).parent().replaceWith($('.rule-'+$(this).val()+'.pattern').clone().removeClass('pattern'));" } 
-    = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
-    = text_field_tag 'rule[values][]'
-    = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
-    = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
-
-  %p.rule-SKU.pattern
-    = select_tag 'rule[targets][]', options_for_select(@default_options, 'SKU'),{ :onchange => "$(this).parent().replaceWith($('.rule-'+$(this).val()+'.pattern').clone().removeClass('pattern'));" } 
-    = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
-    = text_field_tag 'rule[values][]'
-    = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
-    = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
-
-  %p.rule-Stock.pattern
-    = select_tag 'rule[targets][]', options_for_select(@default_options, 'Stock'),{ :onchange => "$(this).parent().replaceWith($('.rule-'+$(this).val()+'.pattern').clone().removeClass('pattern'));" } 
-    = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
-    = text_field_tag 'rule[values][]'
-    = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
-    = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
+  - ['Price','Description', 'Weight', 'SKU', 'Stock'].each do |option|
+    %p{:class => "rule-#{option} pattern"}
+      = select_tag 'rule[targets][]', options_for_select(@default_options + @options, option),{ :onchange => "change_rule(this,'rule-condition')" } 
+      = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
+      = text_field_tag 'rule[values][]'
+      = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
+      = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
 
   %p.rule-Title.pattern
-    = select_tag 'rule[targets][]', options_for_select(@default_options, 'Title'),{ :onchange => "$(this).parent().replaceWith($('.rule-'+$(this).val()+'.pattern').clone().removeClass('pattern'));" } 
+    = select_tag 'rule[targets][]', options_for_select(@default_options + @options, 'Title'),{ :onchange => "change_rule(this,'rule-condition')" } 
     = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
     = select_tag 'rule[values][]', options_for_select(Product.all.collect {|p| [p.name, p.name]})
     = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
@@ -104,7 +101,7 @@
 
   -@options.each do |option|
     %p{:class => "rule-#{option} pattern"}
-      = select_tag 'rule[targets][]', options_for_select(@default_options, option),{ :onchange => "$(this).parent().replaceWith($('.rule-'+$(this).val()+'.pattern').clone().removeClass('pattern'));" } 
+      = select_tag 'rule[targets][]', options_for_select(@default_options + @options, option),{ :onchange => "change_rule(this,'rule-condition')" } 
       = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
       -if Tattribute.find_by_name(option).dynamic
         = text_field_tag 'rule[values][]'
@@ -112,5 +109,14 @@
         = select_tag 'rule[values][]', options_for_select(Tattribute.find_by_name(option).tattribute_values.collect(&:name))
       = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
       = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
+
+  -['Totalitemsquantity', 'Totalweight', 'Totalamount', 'Shippingmethod'].each do |option|
+    %p{:class => "rule-#{option} pattern"}
+      = select_tag 'rule[targets][]', options_for_select(@default_options + @options, option),{ :onchange => "change_rule(this,'rule-condition')" } 
+      = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
+      = text_field_tag 'rule[values][]'
+      = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
+      = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
+
 = javascript_include_tag 'special_offer'
 
