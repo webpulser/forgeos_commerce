@@ -19,3 +19,8 @@ function check_remove_icon_status(name){
     $(icon).removeClass('disabled');
   }
 }
+
+function change_rule(element, name){
+  $(element).parent().replaceWith($('.rule-'+$(element).val()+'.pattern').clone().removeClass('pattern').removeClass('rule-'+$(element).val()).addClass('rule-condition'))
+  check_remove_icon_status(name);
+}

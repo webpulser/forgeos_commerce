@@ -1,7 +1,5 @@
 class Admin::PriceCutsController < Admin::BaseController
   def special_offer
-    @products = Product.all
-    
     if params[:rule_builder]
       build_offer
     else
