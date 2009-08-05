@@ -548,5 +548,5 @@ fr:
   activerecord:
     models:
       product: 'produit'
-      shipping_method: "méthode d'envoi"
+      shipping_method: "méthode d'expédition"
       user: 'utilisateur'
