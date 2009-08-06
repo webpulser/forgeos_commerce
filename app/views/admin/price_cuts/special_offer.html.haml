@@ -1,7 +1,7 @@
 - @default_options = ['Price','Title','Description', 'Weight', 'SKU', 'Stock']
 - @options = Tattribute.all.collect(&:name)
 - @cart_options = ['Total items quantity', 'Total weight', 'Total amount', 'Shipping method']
-
+- @disable_options = ['MAIN SETTINGS','ATTRIBUTES']
 
 %h1 Create a special offer
 - form_tag special_offer_admin_price_cuts_path do
@@ -21,7 +21,7 @@
     of these conditions are true
     #rule-conditions
       %p.rule-condition
-        = select_tag 'rule[targets][]', options_for_select(@default_options + @options),{ :onchange => "change_rule(this,'rule-condition')" } 
+        = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options}),{ :onchange => "change_rule(this,'rule-condition')" } 
         = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
         = text_field_tag 'rule[values][]'
         = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins disabled'
@@ -98,7 +98,7 @@
 %div.rule-conditions{ :style => 'display: none'}
 
   %p.rule-condition.pattern
-    = select_tag 'rule[targets][]', options_for_select(@default_options + @options),{ :onchange => "change_rule(this,'rule-condition')" } 
+    = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options}),{ :onchange => "change_rule(this,'rule-condition')" } 
     = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
     = text_field_tag 'rule[values][]'
     = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
@@ -106,14 +106,14 @@
 
   - ['Price','Description', 'Weight', 'SKU', 'Stock'].each do |option|
     %p{:class => "rule-#{option} pattern"}
-      = select_tag 'rule[targets][]', options_for_select(@default_options + @options, option),{ :onchange => "change_rule(this,'rule-condition')" } 
+      = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options, :selected => option}),{ :onchange => "change_rule(this,'rule-condition')" } 
       = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
       = text_field_tag 'rule[values][]'
       = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
       = link_to_function 'add', "add_rule('rule-condition')", :class => 'icon1 plus'
 
   %p.rule-Title.pattern
-    = select_tag 'rule[targets][]', options_for_select(@default_options + @options, 'Title'),{ :onchange => "change_rule(this,'rule-condition')" } 
+    = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options, :selected => 'Title'}),{ :onchange => "change_rule(this,'rule-condition')" } 
     = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
     = select_tag 'rule[values][]', options_for_select(Product.all.collect {|p| [p.name, p.name]})
     = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
@@ -121,7 +121,7 @@
 
   -@options.each do |option|
     %p{:class => "rule-#{option.delete " "} pattern"}
-      = select_tag 'rule[targets][]', options_for_select(@default_options + @options, option),{ :onchange => "change_rule(this,'rule-condition')" } 
+      = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options, :selected => option}),{ :onchange => "change_rule(this,'rule-condition')" } 
       = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
       -if Tattribute.find_by_name(option).dynamic
         = text_field_tag 'rule[values][]'
