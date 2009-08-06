@@ -37,6 +37,18 @@
         = link_to_function 'del', "remove_rule(this,'action-condition')", :class => 'icon1 moins disabled'
         = link_to_function 'add', "add_rule('action-condition')", :class => 'icon1 plus'
 
+  %div{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
+    = check_box_tag 'end_offer'
+    End offer if
+    = select_tag 'end_offer_if', options_for_select(%w(Any All))
+    of these conditions are true
+    #end-conditions
+      %p.end-condition
+        = select_tag 'end[targets][]', options_for_select(['Date','Total number of offer use','Customer number of offer use'])
+        = select_tag 'end[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than'])
+        = text_field_tag 'end[values][]'
+        = link_to_function 'del', "remove_rule(this,'end-condition')", :class => 'icon1 moins disabled'
+        = link_to_function 'add', "add_rule('end-condition')", :class => 'icon1 plus'
 
   %p
     = check_box 'rule_builder', 'stop'
@@ -46,6 +58,14 @@
     or
     = link_to 'Cancel', :back
 
+
+%div.end-conditions{ :style => 'display : none'}
+  %p.end-condition.pattern
+    = select_tag 'end[targets][]', options_for_select(['Date','Total number of offer use','Customer number of offer use'])
+    = select_tag 'end[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than'])
+    = text_field_tag 'end[values][]'
+    = link_to_function 'del', "remove_rule(this,'end-condition')", :class => 'icon1 moins'
+    = link_to_function 'add', "add_rule('end-condition')", :class => 'icon1 plus'
 
 %div.action-conditions{ :style => 'display: none' }
   - @actions = ['Discount price this product','Offer a product','Offer free delivery']
@@ -114,7 +134,10 @@
     %p{:class => "rule-#{option.delete " "} pattern"}
       = select_tag 'rule[targets][]', options_for_select(@cart_options, option),{ :onchange => "change_rule(this,'rule-condition')" } 
       = select_tag 'rule[conds][]', options_for_select(['Is', 'Is not','Equals or greater than','Equals or less than','Greater than','Less than','Is one of', 'Is not one of', 'Contains','Does not contains'])
-      = text_field_tag 'rule[values][]'
+      - if option == 'Shipping method'
+        = select_tag 'rule[values][]', options_for_select(ShippingMethodDetail.all.collect(&:name))
+      - else
+        = text_field_tag 'rule[values][]'
       = link_to_function 'del', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
       = link_to_function 'add', "add_cart_rule()", :class => 'icon1 plus'
 
