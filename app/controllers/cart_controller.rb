@@ -1,5 +1,7 @@
+require 'ruleby'
 class CartController < ApplicationController
-  before_filter :get_cart
+  include Ruleby
+  before_filter :get_cart, :special_offer
   # Show <i>Cart</i>
   def index
     flash[:notice] = I18n.t(:your_cart_is_empty).capitalize if @cart.is_empty?
@@ -11,7 +13,7 @@ class CartController < ApplicationController
   # * <tt>:id</tt> - a <i>Product</i> object
   def add_product
     reset_order_session
-    flash[:notice] = I18n.t(:product_added).capitalize if get_cart.add_product_id(params[:id])
+    flash[:notice] = I18n.t(:product_added).capitalize if @cart.add_product_id(params[:id])
     redirect_or_update
   end
 
@@ -74,5 +76,19 @@ protected
     else
       render :action => 'update_cart', :layout => false
     end
+  end
+
+  def special_offer
+  # SpecialOffers
+    engine :special_offer_engine do |e|
+      rule_builder = SpecialOffer.new(e)
+      rule_builder.cart = @cart
+      rule_builder.rules
+      @cart.carts_products.each do |cart_product|
+        e.assert cart_product.product
+      end
+      e.match
+    end
+    logger.debug(@cart.carts_products.collect{ |cp| cp.product.price }.inspect+'**'*50)
   end
 end
