@@ -23,6 +23,11 @@
     = f.select :percent, { Currency::default.name => false, '%' => true }
   %p
     %b
+      = f.label :geo_zone_id, I18n.t('geo_zone.one').capitalize
+      \:
+    = f.collection_select :geo_zone_id, GeoZone.all(:order => 'name'), :id, :printable_name,{:include_blank => true}
+  %p
+    %b
       = f.label :cumulable, I18n.t('cumulable').capitalize
       \:
     = f.check_box :cumulable
@@ -41,6 +46,11 @@
       = f.label :max_use, I18n.t('max_use').capitalize
       \:
     = f.text_field :max_use
+  %p
+    %b
+      = f.label :using_after, I18n.t('using_after').capitalize
+      \:
+    = f.text_field :using_after
   %p
     %b
       = f.label :date_start, I18n.t('date_start').capitalize

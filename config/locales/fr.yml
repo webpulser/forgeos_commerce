@@ -178,6 +178,7 @@ fr:
   cumulable: 'cumulable'
   offer_delivery: 'frais de livraison offerts'
   max_use: "maximum d'utilisation"
+  using_after: 'utilisatable après # commandes'
   date_start: 'date de début'
   date_end: 'date de fin'
   parent: 'parent'

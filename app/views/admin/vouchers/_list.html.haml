@@ -9,7 +9,7 @@
       %th
         = I18n.t('value', :count=>1).capitalize
       %th
-        = I18n.t('max_use').capitalize
+        = I18n.t('geo_zone.one').capitalize
       %th
         = I18n.t('action', :count => 2).capitalize
   %tbody
@@ -22,7 +22,7 @@
         %td
           = "#{voucher.value} #{voucher.percent ? '%' : Currency::default.html}"
         %td
-          = voucher.max_use
+          = voucher.geo_zone.nil? ? I18n.t('none').capitalize : voucher.geo_zone.printable_name
         %td
           = link_to I18n.t('show').capitalize, admin_voucher_path(voucher)
           \-
