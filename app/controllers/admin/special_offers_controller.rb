@@ -1,8 +1,6 @@
 class Admin::SpecialOffersController < Admin::BaseController
   def special_offer
     return flash[:error] = 'Fields' unless params[:rule_builder]
-
-    #build_offer
     
     # GENERATE RULE !!!!!!!
     # Parameters: {"commit"=>"Save", "rule_builder"=>{"stop"=>"0",   "title"=>"", "if"=>"Any", "target"=>"Computer", "description"=>"", "for"=>["Product"]}, 
@@ -13,7 +11,7 @@ class Admin::SpecialOffersController < Admin::BaseController
     
     
     @main_attributes = %w(price title description weight sKU stock)
-
+    
     @rule_condition = []
     @rule_condition << params[:rule_builder]['for'] << ':product'
     
@@ -29,72 +27,70 @@ class Admin::SpecialOffersController < Admin::BaseController
       when "Offer free delivery"
         variables[:shipping_ids] = params[:act][:values][index]
       end
-    end     
-
-    if params[:rule_builder]['if'] == 'All'
+    end
+    
+    if params[:rule_builder][:if] == 'All'
       @rule = SpecialOfferRule.new
       @rule.name = params[:rule_builder][:name]
       @rule.description = params[:rule_builder][:description]
-
       
       params[:rule][:targets].each_with_index do |rule_target, index|
-        rule_target.downcase!
-        if @main_attributes.include?(rule_target)
-          target = "m.#{rule_target}"
-        else
-          case "#{rule_target}"
-          when "Total items quantity"
-            target = "m.carts_products.count.count"
-          when "Total weight"
-            target = "m.weight"
-          when "Total amount"
-            target = "m.total"
-          when "Shipping method"
-            target = "m.ShippingMethodDetail"
-          else
-            target = "m.get_attribute(#{rule_target})"
-          end
-        end
-
-        if params[:rule][:values][index].to_i == 0
-          value = "'#{params[:rule][:values][index]}'"
-        else
-          value = params[:rule][:values][index]
-        end
-
-        @rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
+        build_a_rule(rule_target, index)
       end
-     
+      
+      if params[:rule_builder]['for'] == 'Category'
+        @rule_condition << "m.category.=(#{params[:rule_builder][:target]})"
+      end
+      
       @rule.conditions = "[#{@rule_condition.join(', ')}]" 
       @rule.variables = variables
       @rule.save
     else
       params[:rule][:targets].each_with_index do |rule_target, index|
+        @rule_condition = []
+        @rule_condition << params[:rule_builder]['for'] << ':product'
         @rule = SpecialOfferRule.new
         @rule.name = params[:rule_builder][:name]
         @rule.description = params[:rule_builder][:description]
-
-        rule_condition = @rule_condition
         
-        rule_target.downcase!
-        if @main_attributes.include?(rule_target)
-          target = "m.#{rule_target}"
-        else  
-          target = "m.get_attribute(#{rule_target})"
+        build_a_rule(rule_target, index)
+        
+        if params[:rule_builder]['for'] == 'Category'
+          @rule_condition << "m.category.=(#{params[:rule_builder][:target]})"
         end
-
-        if params[:rule][:values][index].to_i == 0
-          value = "'#{params[:rule][:values][index]}'"
-        else
-          value = params[:rule][:values][index]
-        end
-
-        rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
-       
-        @rule.conditions = "[#{rule_condition.join(', ')}]" 
+        
+        @rule.conditions = "[#{@rule_condition.join(', ')}]" 
         @rule.variables = variables
         @rule.save
       end
     end
   end
+  
+  def build_a_rule(rule_target, index)
+    rule_target.downcase!
+    if @main_attributes.include?(rule_target)
+      target = "m.#{rule_target}"
+    else
+      case "#{rule_target}"
+      when "Total items quantity"
+        target = "m.carts_products.count"
+      when "Total weight"
+        target = "m.weight"
+      when "Total amount"
+        target = "m.total"
+      when "Shipping method"
+        target = "m.ShippingMethodDetail"
+      else
+        target = "m.get_attribute(#{rule_target})"
+      end
+    end
+
+    if params[:rule][:values][index].to_i == 0
+      value = "'#{params[:rule][:values][index]}'"
+    else
+      value = params[:rule][:values][index]
+    end
+    @rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
+  end
+  
 end
