@@ -88,23 +88,53 @@ function change_select_for(element){
     if ($(element).val() == 'Cart'){
       $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
       $('#rule-conditions').append($('.rule-Totalitemsquantity.pattern').clone().removeClass('pattern').removeClass('rule-Totalitemsquantity').addClass('rule-condition')) 
+    
+      // then actions only => Offer a product and Offer free delivery
+      
+      $('#action-conditions').html('')
+      $('#action-conditions').append($('.action-Offeraproduct-cart.pattern').clone().removeClass('pattern').removeClass('action-Offeraproduct-cart').addClass('action-condition'))
+    
     }
     else{
-      $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
-      $('#rule-conditions').append($('.rule-condition.pattern').clone().removeClass('pattern'))
+      if ($('#rule_builder_for :selected').text() == 'Product in Cart'){
+        $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
+        $('#rule-conditions').append($('.rule-condition.pattern').clone().removeClass('pattern'))
+      
+        $('#action-conditions').html('')
+        $('#action-conditions').append($('.action-Discountpricethisproduct-productincart.pattern').clone().removeClass('pattern').removeClass('action-Discountpricethisproduct-productincart').addClass('action-condition'))
+      } else {
+        $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
+        $('#rule-conditions').append($('.rule-condition.pattern').clone().removeClass('pattern'))
+      
+        $('#action-conditions').html('')
+        $('#action-conditions').append($('.action-Discountpricethisproduct-productinshop.pattern').clone().removeClass('pattern').removeClass('action-Discountpricethisproduct-productinshop').addClass('action-condition'))
+        
+      }
     }
   }
   else{
     $('#rule_builder_target').show()
     $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
     $('#rule-conditions').append($('.rule-condition.pattern').clone().removeClass('pattern'))
+    
+    $('#action-conditions').html('')
+    $('#action-conditions').append($('.action-Discountpricethisproduct-category.pattern').clone().removeClass('pattern').removeClass('action-Discountpricethisproduct-category').addClass('action-condition'))
+    
   }
   check_remove_icon_status('rule-condition')
+  check_remove_icon_status('action-condition')
 }
 
-function change_action(element, name){
-  $(element).parent().replaceWith($('.action-'+$(element).val().replace(/\s+/g,"")+'.pattern').clone().removeClass('pattern').removeClass('action-'+$(element).val().replace(/\s+/g,"")).addClass('action-condition'))
+function change_action(element, name, type){
+  $(element).parent().replaceWith($('.action-'+$(element).val().replace(/\s+/g,"")+'-'+type+'.pattern').clone().removeClass('pattern').removeClass('action-'+$(element).val().replace(/\s+/g,"")+'-'+type).addClass('action-condition'))
   check_remove_icon_status(name);
+}
+
+function add_action(name){
+  var action = $('p.'+name+'.pattern').clone().removeClass('pattern');
+  $('#action-conditions').append(action);
+  check_remove_icon_status('action-condition');
+  
 }
 
 function add_cart_rule(){

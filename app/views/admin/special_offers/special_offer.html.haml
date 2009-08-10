@@ -3,7 +3,7 @@
 - @cart_options = ['Total items quantity', 'Total weight', 'Total amount', 'Shipping method']
 - @disable_options = ['MAIN SETTINGS','ATTRIBUTES']
 
-- @for = Hash["Product in Shop", "ProductS", "Product in Cart", "ProductC", "Cart", "Cart"]
+- @for = Hash["Product in Shop", "Product", "Product in Cart", "Product", "Cart", "Cart"]
 
 - @condition_is = Hash["Is", "=="]
 - @conditions =  Hash["Is not", "not==","Equals or greater than",">=","Equals or less than","<=", "Greater than", ">", "Less than","<"]
@@ -38,6 +38,8 @@
     #action-conditions
       %p.action-condition
         = select_tag 'act[targets][]', options_for_select(['Discount price this product'], 'Discount price this product')
+        = select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
+        = text_field_tag 'act[values][]'
     
   %div{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
     = check_box_tag 'end_offer'
@@ -97,14 +99,20 @@
 
   %p.action-Discountpricethisproduct-productincart.pattern
     = select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product', 'Offer free delivery'], 'Discount price this product'), {:onchange => "change_action(this,'action-condition','productincart')"}
+    = select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
+    = text_field_tag 'act[values][]'
     = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
     = link_to_function ' ', "add_action('action-Offerfreedelivery-productincart')", :class => 'icon1 plus'
 
   %p.action-Discountpricethisproduct-productinshop.pattern
     = select_tag 'act[targets][]', options_for_select(['Discount price this product'], 'Discount price this product')
+    = select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
+    = text_field_tag 'act[values][]'
 
   %p.action-Discountpricethisproduct-category.pattern
     = select_tag 'act[targets][]', options_for_select(['Discount price this product'], 'Discount price this product')
+    = select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
+    = text_field_tag 'act[values][]'
 
 
 %div.rule-conditions{ :style => 'display: none'}
