@@ -1,55 +1,117 @@
 class Admin::PriceCutsController < Admin::BaseController
   def special_offer
     if params[:rule_builder]
-      build_offer
-    else
-      flash[:error] = 'Fields'
-    end
-  end
-
-  def get_result
-    case "#{params[:target_type]}"
+      #build_offer
       
-      when "Category"
-        @categories = Category.find(:all, :select => :name)
-        render :update do |page|
-          page.show 'rule_builder_target'
-          page.replace_html 'rule_builder_target', @categories.collect{ |r| "<option value='#{r.name.to_s}'>#{r.name.to_s}</option>"}
+      # GENERATE RULE !!!!!!!
+      # Parameters: {"commit"=>"Save", "rule_builder"=>{"stop"=>"0",   "title"=>"", "if"=>"Any", "target"=>"Computer", "description"=>"", "for"=>["Product"]}, 
+      #             "authenticity_token"=>"JZ3F3oEKmMB0rhQf6xHljskHTDH2aPP53unToh3SLwU=", "end_offer"=>"1", 
+      #             "end"=>{"targets"=>["Total number of offer use"], "values"=>["324"], "conds"=>["Is"]}, 
+      #             "end_offer_if"=>"Any", "act"=>{"targets"=>["Offer a product"], "values"=>["Macbook"]}, 
+      #             "rule"=>{"targets"=>["Price", "Stock"], "values"=>["24", "100"], "conds"=>["==", "=="]}}
+      
+      
+      @main_attributes = ['price','title','description', 'weight', 'sKU', 'stock']
+
+      @rule_condition = "[#{params[:rule_builder]['for']}, :p, "    
+      @count = 0
+      @nb_rules = params[:rule][:targets].count
+      if params[:rule_builder]['if'] == 'All'
+        @rule = Rule.new
+        params[:rule][:targets].each do |rule_target|
+          rule_target.downcase!
+          if @main_attributes.include?(rule_target)
+            @rule_condition += "m.#{rule_target}"
+          else  
+             @rule_condition += "m.get_attribute(#{rule_target})"
+          end
+
+         
+          @rule_condition += params[:rule][:conds][@count]
+          if params[:rule][:values][@count].to_i == 0
+            @rule_condition += "'#{params[:rule][:values][@count]}'"
+          else
+            @rule_condition += params[:rule][:values][@count]
+          end
+          @rule_condition += "," if @count != @nb_rules-1
+          @count += 1
+        end
+        @rule_condition += "]"
+        @rule.conditions = @rule_condition
+        @rule.name = params[:rule_builder][:title]
+        @rule.description = params[:rule_builder][:description]
+        
+        
+        @nb=0
+        @action =""
+        params[:act][:targets].each do |action|
+        
+          case "#{action}"
+            when "Discount price this product"
+            @action += "Discount_product"
+            if params[:act][:conds][@nb] == "By percent"
+              @action += "(#{params[:act][:values][@nb]},'percent')"
+            else
+              @action += "(#{params[:act][:values][@nb]})"
+            end
+            when "Offer a product"
+             @action += "Offer_product(#{params[:act][:values][@nb]})"
+            when "Offer free delivery"
+             @action += "Offer_delivery"
+          end
+        @nb +=1
         end
         
-      when "Cart"
-        @rule_targets = ['Total items quantity', 'Total weight', 'Total amount', 'Shipping method']
-        render :update do |page|
-          page.hide 'rule_builder_target'
-          page.replace_html 'rule_targets_', @rule_targets.collect{ |t| "<option value='#{t}'>#{t}</option>"}
-        end
-      
-      when 'Product in Shop','Product in Cart'
-        @product_rule_targets = Product.find(:all).collect{|p| p.product_type.tattributes.collect{|t| t.name}}.uniq        
-        @rule_targets = ['Please select','Title','Price','Description','Weight','SKU','Stock']
-        @rule_targets += @product_rule_targets  
-        render :update do |page|
-          page.hide 'rule_builder_target'
-          page.replace_html 'rule_targets_', @rule_targets.collect{ |t| "<option value='#{t}'>#{t}</option>"}
-        end
+        
+        @rule.save
       else
-        render :nothing => true
-    end
-  end
+        params[:rule][:targets].each do |rule_target|
+          rule_target.downcase!
+          @rule = Rule.new
+          @rule_condition2 = @rule_condition 
+          if @main_attributes.include?(rule_target)
+            @rule_condition2 += "m.#{rule_target}"
+          else  
+             @rule_condition2 += "m.get_attribute('#{rule_target}')"
+          end
+          @rule_condition2 += params[:rule][:conds][@count]
+          if params[:rule][:values][@count].to_i == 0
+            @rule_condition2 += "'#{params[:rule][:values][@count]}'"
+          else
+            @rule_condition2 += params[:rule][:values][@count]
+          end
+          @rule_condition2 += "]"
+          
+           @nb=0
+            @action =""
+            params[:act][:targets].each do |action|
 
-  def get_rules_values
-    case "#{params[:target_type]}"
-    
-      when 'Title'
-        @rule_values = Product.find(:all)
-        render :update do |page|
-          page.replace_html 'rule_values_', @rule_values.collect{ |v| "<option value='#{v.name}'>#{v.name}</option>"}
+              case "#{action}"
+                when "Discount price this product"
+                @action += "Discount_product"
+                if params[:act][:conds][@nb] == "By percent"
+                  @action += "(#{params[:act][:values][@nb]},'percent')"
+                else
+                  @action += "(#{params[:act][:values][@nb]})"
+                end
+                when "Offer a product"
+                 @action += "Offer_product(#{params[:act][:values][@nb]})"
+                when "Offer free delivery"
+                 @action += "Offer_delivery"
+              end
+            @nb +=1
+            end
+          
+          @rule.conditions = @rule_condition2
+          @rule.name = params[:rule_builder][:title]
+          @rule.description = params[:rule_builder][:description]
+
+          @rule.save
+          @count +=1
         end
-         
-      when 'Price','Description','Weight','Stock'
-        render :nothing => true
-      else
-        render :nothing => true
+      end
+    else
+      flash[:error] = 'Fields'
     end
   end
 
