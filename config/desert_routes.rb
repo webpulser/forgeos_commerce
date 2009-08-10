@@ -30,7 +30,7 @@ namespace :admin do |admin|
   admin.resources :product_types
   admin.resources :products, :collection => { :url => :post }
   admin.resources :tags
-  admin.resources :price_cuts, :collection => { :special_offer => [:get, :post] }
+  admin.resources :special_offers, :collection => { :special_offer => [:get, :post] }
 end
 
 root :controller => 'home'
