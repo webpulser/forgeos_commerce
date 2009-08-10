@@ -5,12 +5,12 @@
 
 - @for = Hash["Product in Shop", "Product", "Product in Cart", "Product", "Cart", "Cart"]
 
-- @condition_is = Hash["Is", " == "]
-- @conditions =  Hash["Is not", " not== ","Equals or greater than"," >= ","Equals or less than"," <= ", "Greater than", " > ", "Less than"," < "]
+- @condition_is = Hash["Is", "=="]
+- @conditions =  Hash["Is not", "not==","Equals or greater than",">=","Equals or less than","<=", "Greater than", ">", "Less than","<"]
 
 
 %h1 Create a special offer
-- form_tag special_offer_admin_price_cuts_path do
+- form_tag special_offer_admin_special_offers_path do
   %p
     = label 'rule_builder', 'name'
     = text_field 'rule_builder', 'name'
