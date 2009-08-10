@@ -13,22 +13,22 @@
     #informations
       = link_to_remote I18n.t('edit').capitalize, :url => edit_user_path(current_user), :update => 'informations', :method => 'get'
       - if current_user.avatar
-      %p
-        %b
-          = I18n.t('avatar').capitalize
-          \:
-        = image_tag(current_user.avatar.public_filename(:thumb))
-      - end
-      %p
-        %b
-          = I18n.t('name').capitalize
-          \:
-        = current_user.fullname
-      %p
-        %b
-          = I18n.t('email').capitalize
-          \:
-        = current_user.email
+        %p
+          %b
+            = I18n.t('avatar').capitalize
+            \:
+          = image_tag(current_user.avatar.public_filename(:thumb))
+        %p
+          %b
+            = I18n.t('name').capitalize
+            \:
+          = current_user.fullname
+        %p
+          %b
+            = I18n.t('email').capitalize
+            \:
+          = current_user.email
+
   #tabs-2
     #orders
       = render :partial => 'orders/list', :locals => { :orders => current_user.orders }
