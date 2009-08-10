@@ -41,8 +41,19 @@ class Admin::SpecialOffersController < Admin::BaseController
         rule_target.downcase!
         if @main_attributes.include?(rule_target)
           target = "m.#{rule_target}"
-        else  
-          target = "m.get_attribute(#{rule_target})"
+        else
+          case "#{rule_target}"
+          when "Total items quantity"
+            target = "m.carts_products.count.count"
+          when "Total weight"
+            target = "m.weight"
+          when "Total amount"
+            target = "m.total"
+          when "Shipping method"
+            target = "m.ShippingMethodDetail"
+          else
+            target = "m.get_attribute(#{rule_target})"
+          end
         end
 
         if params[:rule][:values][index].to_i == 0

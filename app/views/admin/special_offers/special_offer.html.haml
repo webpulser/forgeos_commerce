@@ -3,7 +3,7 @@
 - @cart_options = ['Total items quantity', 'Total weight', 'Total amount', 'Shipping method']
 - @disable_options = ['MAIN SETTINGS','ATTRIBUTES']
 
-- @for = Hash["Product in Shop", "Product", "Product in Cart", "Product", "Cart", "Cart"]
+- @for = Hash["Product in Shop", "ProductS", "Product in Cart", "ProductC", "Cart", "Cart"]
 
 - @condition_is = Hash["Is", "=="]
 - @conditions =  Hash["Is not", "not==","Equals or greater than",">=","Equals or less than","<=", "Greater than", ">", "Less than","<"]
@@ -37,12 +37,8 @@
     %h3 Then
     #action-conditions
       %p.action-condition
-        = select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product','Offer free delivery']), {:onchange => "change_action(this,'action-condition')"}
-        = select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
-        = text_field_tag 'act[values][]'
-        = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins disabled'
-        = link_to_function ' ', "add_rule('action-condition')", :class => 'icon1 plus'
-
+        = select_tag 'act[targets][]', options_for_select(['Discount price this product'], 'Discount price this product')
+    
   %div{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
     = check_box_tag 'end_offer'
     End offer if
@@ -75,30 +71,40 @@
 
 %div.action-conditions{ :style => 'display: none' }
   - @actions = ['Discount price this product','Offer a product','Offer free delivery']
-  %p.action-condition.pattern
-    = select_tag 'act[targets][]', options_for_select(@actions), {:onchange => "change_action(this,'action-condition')"}
-    = select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
-    = text_field_tag 'act[values][]'
+ 
+  %p.action-Offeraproduct-cart.pattern
+    = select_tag 'act[targets][]', options_for_select(['Offer a product', 'Offer free delivery'], 'Offer a product'), {:onchange => "change_action(this,'action-condition','cart')"}
+    = select_tag 'act[values][]', options_from_collection_for_select(Product.all, :id, :name)
     = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
-    = link_to_function ' ', "add_rule('action-condition')", :class => 'icon1 plus'
+    = link_to_function ' ', "add_action('action-Offeraproduct-cart')", :class => 'icon1 plus'
 
-  %p.action-Discountpricethisproduct.pattern
-    = select_tag 'act[targets][]', options_for_select(@actions), {:onchange => "change_action(this,'action-condition')"}
-    = select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
-    = text_field_tag 'act[values][]'
+  %p.action-Offerfreedelivery-cart.pattern
+    = select_tag 'act[targets][]', options_for_select(['Offer a product', 'Offer free delivery'],'Offer free delivery'), {:onchange => "change_action(this,'action-condition','cart')"}
     = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
-    = link_to_function ' ', "add_rule('action-condition')", :class => 'icon1 plus'
+    = link_to_function ' ', "add_action('action-Offeraproduct-cart')", :class => 'icon1 plus'  
 
-  %p.action-Offeraproduct.pattern
-    = select_tag 'act[targets][]', options_for_select(@actions, 'Offer a product'), {:onchange => "change_action(this,'action-condition')"}
-    = select_tag 'act[values][]', options_from_collection_for_select(Product.all, :id, :name) 
-    = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
-    = link_to_function ' ', "add_rule('action-condition')", :class => 'icon1 plus'
 
-  %p.action-Offerfreedelivery.pattern
-    = select_tag 'act[targets][]', options_for_select(@actions,'Offer free delivery'), {:onchange => "change_action(this,'action-condition')"}
+  %p.action-Offeraproduct-productincart.pattern
+    = select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product', 'Offer free delivery'], 'Offer a product'), {:onchange => "change_action(this,'action-condition','productincart')"}
+    = select_tag 'act[values][]', options_from_collection_for_select(Product.all, :id, :name)
     = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
-    = link_to_function ' ', "add_rule('action-condition')", :class => 'icon1 plus'
+    = link_to_function ' ', "add_action('action-Offeraproduct-productincart')", :class => 'icon1 plus'
+
+  %p.action-Offerfreedelivery-productincart.pattern
+    = select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product', 'Offer free delivery'], 'Offer free delivery'), {:onchange => "change_action(this,'action-condition','productincart')"}
+    = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
+    = link_to_function ' ', "add_action('action-Offerfreedelivery-productincart')", :class => 'icon1 plus'
+
+  %p.action-Discountpricethisproduct-productincart.pattern
+    = select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product', 'Offer free delivery'], 'Discount price this product'), {:onchange => "change_action(this,'action-condition','productincart')"}
+    = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
+    = link_to_function ' ', "add_action('action-Offerfreedelivery-productincart')", :class => 'icon1 plus'
+
+  %p.action-Discountpricethisproduct-productinshop.pattern
+    = select_tag 'act[targets][]', options_for_select(['Discount price this product'], 'Discount price this product')
+
+  %p.action-Discountpricethisproduct-category.pattern
+    = select_tag 'act[targets][]', options_for_select(['Discount price this product'], 'Discount price this product')
 
 
 %div.rule-conditions{ :style => 'display: none'}
