@@ -28,7 +28,6 @@ Forgeos::AdminMenu << { :title => 'orders',
   :children => [
     { :title => 'shipping_methods', :url => { :controller => 'admin/shipping_methods' } , :i18n => true },
     { :title => 'vouchers', :url => { :controller => 'admin/vouchers' }, :i18n => true },
-    { :title => 'price_cuts', :url => { :controller => 'admin/price_cuts'}, :i18n => true},
     { :title => 'geo_zones', :url => { :controller => 'admin/geo_zones'}, :i18n => true}
   ]
 }
@@ -58,6 +57,8 @@ Forgeos::Menu << { :title => ['wishlist',{ :count => 1}],
   :helper => { :method => 'link_to_wishlist' },
   :i18n => true 
 }
+
+Forgeos::AdminMenu << {:title => 'special offer', :url => { :controller => 'admin/special_offers'}}
 
 # Set attachable media types
 Forgeos::AttachableTypes << 'Product'

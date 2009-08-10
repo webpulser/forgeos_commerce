@@ -1,5 +1,5 @@
 class Admin::SpecialOffersController < Admin::BaseController
-  def special_offer
+  def create
     return flash[:error] = 'Fields' unless params[:rule_builder]
     
     # GENERATE RULE !!!!!!!
@@ -8,7 +8,6 @@ class Admin::SpecialOffersController < Admin::BaseController
     #             "end"=>{"targets"=>["Total number of offer use"], "values"=>["324"], "conds"=>["Is"]}, 
     #             "end_offer_if"=>"Any", "act"=>{"targets"=>["Offer a product"], "values"=>["Macbook"]}, 
     #             "rule"=>{"targets"=>["Price", "Stock"], "values"=>["24", "100"], "conds"=>["==", "=="]}}
-    
     
     @main_attributes = %w(price title description weight sKU stock)
     
@@ -64,6 +63,7 @@ class Admin::SpecialOffersController < Admin::BaseController
         @rule.save
       end
     end
+    redirect_to :action => 'index'
   end
   
   def build_a_rule(rule_target, index)
@@ -91,6 +91,32 @@ class Admin::SpecialOffersController < Admin::BaseController
       value = params[:rule][:values][index]
     end
     @rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
+  end
+  
+  def index
+    @special_offers = SpecialOfferRule.all
+  end
+  
+  def show
+    
+  end
+  
+  def new
+  
+  end
+  
+  def destroy
+    @special_offer = SpecialOfferRule.find_by_id(params[:id])
+    if @special_offer && request.delete?  
+      if @special_offer.destroy
+        flash[:notice] = "Special offer destroy"
+      else
+        flash[:error] = "Special offer not destroy"
+      end
+    else
+      flash[:error] = "Special offer does not exist"
+    end
+    redirect_to :action => 'index'
   end
   
 end
