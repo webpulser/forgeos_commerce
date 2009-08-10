@@ -89,6 +89,5 @@ protected
       end
       e.match
     end
-    logger.debug(@cart.carts_products.collect{ |cp| cp.product.price }.inspect+'**'*50)
   end
 end

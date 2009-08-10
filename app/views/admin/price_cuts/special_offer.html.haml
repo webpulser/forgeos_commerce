@@ -12,8 +12,8 @@
 %h1 Create a special offer
 - form_tag special_offer_admin_price_cuts_path do
   %p
-    = label 'rule_builder', 'title'
-    = text_field 'rule_builder', 'title'
+    = label 'rule_builder', 'name'
+    = text_field 'rule_builder', 'name'
   %p
     = label 'rule_builder', 'description'
     = text_area 'rule_builder', 'description', :rows => 2
@@ -91,7 +91,7 @@
 
   %p.action-Offeraproduct.pattern
     = select_tag 'act[targets][]', options_for_select(@actions, 'Offer a product'), {:onchange => "change_action(this,'action-condition')"}
-    = select_tag 'act[values][]', options_for_select(Product.all.collect(&:name)) 
+    = select_tag 'act[values][]', options_from_collection_for_select(Product.all, :id, :name) 
     = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
     = link_to_function ' ', "add_rule('action-condition')", :class => 'icon1 plus'
 
