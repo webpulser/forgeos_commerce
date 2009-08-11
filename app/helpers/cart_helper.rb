@@ -11,14 +11,6 @@ module CartHelper
       content += "<div class='cart_name'>"
         content += link_to_product(carts_product.product)
       content += "</div>"
-      content += "<div class='cart_quantity'>"
-        if static
-          content += carts_product.quantity.to_s
-        else
-          content += text_field_tag "cart_quantity_#{carts_product.product_id}", carts_product.quantity.to_s, :size => 2
-          content += observe_field("cart_quantity_#{carts_product.product_id}", :frequency => 1, :loading => "$('#spinner2').show()", :complete => "$('#spinner2').hide()", :url => { :controller => 'cart', :action => 'update_quantity', :mini => mini }, :with => "'quantity=' + escape(value) + '&product_id=#{carts_product.product_id}'")
-        end
-      content += "</div>"
       unless mini
         content += "<div class='cart_price'>"
           content += carts_product.product.price.to_s
@@ -63,7 +55,6 @@ module CartHelper
   def display_cart(cart, static=false, mini=false)
     content = '<div class="cart'+(mini ? ' mini' : '')+'" id="rails_commerce_cart">'
       content += "<div class='cart_name'>#{I18n.t('name').capitalize}</div>"
-      content += "<div class='cart_name'>#{I18n.t('quantity', :count=>1).capitalize}</div>"
     unless mini
       content += "<div class='cart_name'>#{I18n.t('unit_price').capitalize}</div>"
       content += "<div class='cart_name'>#{I18n.t('tax', :count=>1).capitalize}</div>"
@@ -121,9 +112,9 @@ module CartHelper
   # * <tt>options</tt> the html options
   def link_to_cart(name=I18n.t('cart', :count => 1), url={:controller => 'cart'}, options=nil)
     cart = Cart.find_by_id(session[:cart_id])
-    unless cart.nil?
-      name = "#{name} (#{cart.size} #{I18n.t('product', :count => cart.size)})"
-    end
+    #unless cart.nil?
+    #  name = "#{name} (#{cart.size} #{I18n.t('product', :count => cart.size)})"
+    #end
     link_to name.capitalize, {:controller => 'cart'}, options
   end
 

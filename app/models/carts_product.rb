@@ -3,14 +3,12 @@
 # ==== belongs_to
 # * <tt>product</tt> - <i>Product</i>
 # * <tt>cart</tt> - <i>Cart</i>
-#
-# ==== attributes
-# * <tt>quantity</tt>
+
 class CartsProduct < ActiveRecord::Base
   
   belongs_to :product
   belongs_to :cart
-  validates_presence_of :cart_id, :product_id, :quantity
+  validates_presence_of :cart_id, :product_id
 
   # Return total price of this <i>Product</i>
   #
@@ -18,7 +16,7 @@ class CartsProduct < ActiveRecord::Base
   # * <tt>:with_tax</tt> - false by default, returns total price <b>with tax</b> if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def total(with_tax=false, with_currency=true)
-    ("%01.2f" % (product.price(with_tax, with_currency) * quantity)).to_f
+    ("%01.2f" % (product.price(with_tax, with_currency))).to_f
   end
 
   # Returns total tax for this <i>Product</i>

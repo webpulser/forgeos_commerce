@@ -1,7 +1,7 @@
 %h1
-  = I18n.t('price_cuts').capitalize
+  Special offer
 - content_for :tools, link_to('Create a special offer', new_admin_special_offer_path, :class => 'add')
-#price_cuts_list
+#special_offers_list
   %table#table
     %thead
       %tr
@@ -19,10 +19,8 @@
           %td
             = s.description
           %td
-            = link_to I18n.t('show').capitalize, admin_special_offer_path(s)
-            \-
             = link_to I18n.t('edit').capitalize, edit_admin_special_offer_path(s)
             \-
-            = link_to I18n.t('destroy').capitalize, admin_special_offer_path(s), :method => 'delete', :confirm => I18n.t('price_cut.destroy.confirm')
+            = link_to I18n.t('destroy').capitalize, admin_special_offer_path(s), :method => 'delete', :confirm => 'Delete this speciam offer ?'
 
 = dataTables_tag(3)

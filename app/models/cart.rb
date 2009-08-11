@@ -18,18 +18,9 @@ class Cart < ActiveRecord::Base
   #
   # ==== Parameters
   # * <tt>:product</tt> - a <i>Product</i> object
-  # * <tt>:quantity</tt> - the quantity (1 by default)
-  # If this product is already in this cart, the quantity is <b>add</b> with the actual quantity
-  def add_product(product, quantity=1)
+  def add_product(product)
     return false if product.nil? || product.new_record?
-
-    # if cart include product : add quantity
-    # else add product with set_quantity
-    unless products.include? product
-      carts_products << CartsProduct.create(:product_id => product.id, :quantity => quantity)
-    else
-      set_quantity(product, size(product) + quantity)
-    end
+    carts_products << CartsProduct.create(:product_id => product.id)
   end
 
   def destroy_duplicates
@@ -41,10 +32,9 @@ class Cart < ActiveRecord::Base
   #
   # ==== Parameters
   # * <tt>:product_id</tt> - an <i>id</i> of a <i>Product</i>
-  # * <tt>:quantity</tt> - the quantity (1 by default)
   # This method use <i>add_product</i>
-  def add_product_id(product_id, quantity=1)
-    add_product(Product.find_by_id(product_id), quantity)
+  def add_product_id(product_id)
+    add_product(Product.find_by_id(product_id))
   end
 
   # Remove a product of this cart
