@@ -8,8 +8,12 @@ class SpecialOffer < Ruleby::Rulebook
         # Discount product price
         product = context[:product]
         
-        rate = special_offer.variables[:discount]
-        product.price -= (special_offer.variables[:fixed_discount] ? rate : ((product.price * rate) / 100)) if special_offer.variables[:fixed_discount]
+        if special_offer.variables[:fixed_discount]
+          rate = special_offer.variables[:discount]
+          new_price = product.price - (special_offer.variables[:fixed_discount] ? rate : ((product.price * rate) / 100))
+          puts 'ok'*10
+          puts @cart.add_new_price(product, new_price)
+        end
         
         return true unless @cart
         

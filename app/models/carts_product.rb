@@ -16,7 +16,11 @@ class CartsProduct < ActiveRecord::Base
   # * <tt>:with_tax</tt> - false by default, returns total price <b>with tax</b> if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def total(with_tax=false, with_currency=true)
-    ("%01.2f" % (product.price(with_tax, with_currency))).to_f
+    if new_price.nil?
+      return ("%01.2f" % (product.price(with_tax, with_currency))).to_f
+    else
+      return ("%01.2f" % (with_tax ? (new_price + (new_price * product.rate_tax / 100)) : new_price )).to_f
+    end 
   end
 
   # Returns total tax for this <i>Product</i>

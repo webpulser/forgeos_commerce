@@ -24,7 +24,11 @@ class Cart < ActiveRecord::Base
   end
 
   def has_free_product?(product_id)
-    return !CartsProduct.find(:all, :conditions => ['cart_id = ? and free = 1 and product_id = ?', self, product_id]).blank?
+    return !carts_products.find_by_product_id(product_id, :conditions => ['free = 1']).blank?
+  end
+
+  def add_new_price(product, new_price)
+    carts_products.find_by_product_id(product.id).update_attributes!(:new_price => new_price)
   end
 
   def destroy_duplicates
@@ -121,7 +125,7 @@ class Cart < ActiveRecord::Base
   # * <tt>:product</tt> - a <i>Product</i> object
   def total(with_tax=false, product=nil)
     if product.nil?
-      CartsProduct.find_all_by_cart_id(id).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
+      CartsProduct.find_all_by_cart_id(id, :conditions => ['free != 1']).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
     else
       CartsProduct.find_all_by_cart_id_and_product_id(id, product.id).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
     end

@@ -9,25 +9,17 @@ module CartHelper
   def display_cart_by_carts_product(cart, carts_product, static=false, mini=false)
     content = "<div class='cart_product_line' id='rails_commerce_cart_product_line_#{carts_product.product_id}'>"
       content += "<div class='cart_name'>"
-      if carts_product.free == 1  
-        content += "Free : #{carts_product.product.name}"
-      else  
-        content += link_to_product(carts_product.product) 
-      end
+        content += carts_product.free == 1 ? "Free : #{carts_product.product.name}" : link_to_product(carts_product.product)
       content += "</div>"
       unless mini
         content += "<div class='cart_price'>"
-          content += carts_product.product.price.to_s
+          content +=  carts_product.new_price ? carts_product.new_price.to_s : carts_product.product.price.to_s
         content += "</div>"
         content += "<div class='cart_tax'>"
           content += carts_product.tax.to_s
         content += "</div>"
         content += "<div class='cart_price'>"
-        if carts_product.free == 1
-          content += "free"
-        else
-          content += carts_product.total(carts_product.product).to_s + " " + $currency.html
-        end
+          content += carts_product.free == 1 ? "Free" : carts_product.total(carts_product.product).to_s + " " + $currency.html
         content += "</div>"
       end
       content += "<div class='cart_remove'>"

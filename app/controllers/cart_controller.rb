@@ -85,7 +85,7 @@ protected
       rule_builder.cart = @cart
       rule_builder.rules
       @cart.carts_products.each do |cart_product|
-        e.assert cart_product.product
+        e.assert cart_product.product if cart_product.free != 1
       end
       e.match
     end
