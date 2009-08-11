@@ -18,9 +18,13 @@ class Cart < ActiveRecord::Base
   #
   # ==== Parameters
   # * <tt>:product</tt> - a <i>Product</i> object
-  def add_product(product)
+  def add_product(product,free=false)
     return false if product.nil? || product.new_record?
-    carts_products << CartsProduct.create(:product_id => product.id)
+    carts_products << CartsProduct.create(:product_id => product.id, :free => free)
+  end
+
+  def has_free_product?(product_id)
+    return !CartsProduct.find(:all, :conditions => ['cart_id = ? and free = 1 and product_id = ?', self, product_id]).blank?
   end
 
   def destroy_duplicates
@@ -33,7 +37,7 @@ class Cart < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:product_id</tt> - an <i>id</i> of a <i>Product</i>
   # This method use <i>add_product</i>
-  def add_product_id(product_id)
+  def add_product_id(product_id, free=false)
     add_product(Product.find_by_id(product_id))
   end
 
@@ -47,6 +51,7 @@ class Cart < ActiveRecord::Base
   def remove_product(product)
     return false if product.nil?
     carts_products.find_by_product_id(product.id).destroy
+    carts_products.find_by_free(1).destroy
     carts_products.reject! { |carts_product| carts_product.product_id == product.id }
   end
 
