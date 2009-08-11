@@ -52,9 +52,6 @@ Forgeos::Menu << { :title => ['wishlist',{ :count => 1}],
   :i18n => true 
 }
 
-Forgeos::AdminMenu << {:title => 'special offer', :url => { :controller => 'admin/special_offers'}}
-Forgeos::AdminMenu << {:title => 'shipping rule', :url => { :controller => 'admin/shipping_rules'}}
-
 # Set attachable media types
 Forgeos::AttachableTypes << 'Product'
 Forgeos::AttachableTypes << 'ShippingMethod'
