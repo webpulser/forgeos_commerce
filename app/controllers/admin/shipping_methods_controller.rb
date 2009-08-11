@@ -17,7 +17,7 @@ class Admin::ShippingMethodsController < Admin::BaseController
       flash[:error] = I18n.t('shipping_method.create.failed').capitalize
     end
   end
-
+  
   def show
     @shipping_method = ShippingMethod.find_by_id(params[:id])
   end

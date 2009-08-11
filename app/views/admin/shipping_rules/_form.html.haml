@@ -1,0 +1,70 @@
+- @products_types = ProductType.find(:all, :order => 'name').collect{ |p| [p.name, p.id] }
+- @countries = Country.find(:all, :order => 'name').collect{ |c| [c.printable_name, c.id] }
+- @shipping_methods = ShippingMethod.all.collect{ |s| s.name }
+
+- @for = Hash[ 'Weight', '0' , 'Type', '1', 'Country', '2']
+
+- @condition_is = Hash["Is", "=="]
+- @conditions_is = Hash[ "Is", "==", "Is not", "not=="]
+- @conditions =  Hash["Is not", "not==","Equals or greater than",">=","Equals or less than","<=", "Greater than", ">", "Less than","<"]
+
+= display_standard_flashes
+- form_tag :action => 'create' do
+  %p
+    %b
+      = label 'rule_builder', 'name' , I18n.t('name').capitalize
+      \:
+    = text_field 'rule_builder', 'name'
+  %p
+    %b
+      = label 'rule_builder', 'description', I18n.t('description').capitalize
+      \:
+    = text_field 'rule_builder', 'description'
+  %br
+  #rule-for{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
+    %h3 For
+    = select_tag 'rule_builder[for]', options_for_select(@shipping_methods)
+
+  %div{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
+    %h3 If
+    = select 'rule_builder', 'if', %w(All Any)
+    of these conditions are true
+    
+    #rule-conditions
+      %p.rule-condition
+        = select_tag 'rule[targets][]', options_for_select(@for.collect{|c| [c[0], c[1]] }.reverse), {:onchange => "change_rule(this,'rule-condition')" }
+        = select_tag 'rule[conds][]', options_for_select(@conditions_is.collect{|c| [c[0], c[1]] }.reverse)
+        = select_tag 'rule[values][]', options_for_select(@products_types)
+        = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins disabled'
+        = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
+
+  %p
+    = submit_tag I18n.t('save').capitalize
+    or
+    = link_to I18n.t('cancel').capitalize, :back
+
+%div.rule-conditions{:style => 'display: none;'}
+  %p.rule-condition.pattern
+    = select_tag 'rule[targets][]', options_for_select(@for.collect{|c| [c[0], c[1]] }.reverse), {:onchange => "change_rule(this,'rule-condition')" }
+    = select_tag 'rule[conds][]', options_for_select(@conditions_is.collect{|c| [c[0], c[1]] }.reverse)
+    = select_tag 'rule[values][]', options_for_select(@products_types)
+    = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
+    = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
+  %p.rule-0.pattern
+    = select_tag 'rule[targets][]', options_for_select(@for.collect{|c| [c[0], c[1]] }.reverse, '0'), {:onchange => "change_rule(this,'rule-condition')" }
+    = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+    = text_field_tag 'rule[values][]'
+    = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
+    = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
+  %p.rule-1.pattern
+    = select_tag 'rule[targets][]', options_for_select(@for.collect{|c| [c[0], c[1]] }.reverse, '1'), {:onchange => "change_rule(this,'rule-condition')" }
+    = select_tag 'rule[conds][]', options_for_select(@conditions_is.collect{|c| [c[0], c[1]] }.reverse)
+    = select_tag 'rule[values][]', options_for_select(@products_types)
+    = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
+    = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
+  %p.rule-2.pattern
+    = select_tag 'rule[targets][]', options_for_select(@for.collect{|c| [c[0], c[1]] }.reverse, '2'), {:onchange => "change_rule(this,'rule-condition')" }
+    = select_tag 'rule[conds][]', options_for_select(@conditions_is.collect{|c| [c[0], c[1]] }.reverse)
+    = select_tag 'rule[values][]', options_for_select(@countries)
+    = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
+    = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'

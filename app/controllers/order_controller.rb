@@ -88,8 +88,8 @@ class OrderController < ApplicationController
                                    :description => product.description,
                                    :price => product.price(false, false),
                                    :rate_tax => product.rate_tax,
-                                   :quantity => cart_product.quantity,
-                                   :product_detail_id => cart_product.product_id
+                                   :quantity => cart_product.quantity
+#                                   :product_detail_id => cart_product.product_id
                                   )
     end
     @cart.destroy
