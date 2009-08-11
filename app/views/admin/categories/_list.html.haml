@@ -3,7 +3,9 @@
 - categories.each do |category|
   %li{ :rel => category.children.empty? ? 'file' : 'folder', :id => "category_#{category.id}" }
     - picture = category.attachments.find_all_by_type('Picture').first
-    = link_to category.name, '#', :style => (picture ? "background-image : url('#{picture.public_filename(:icon)}');" : '')
+    - link_to '#', :style => (picture ? "background-image : url('#{picture.public_filename(:icon)}');" : '') do
+      = category.name
+      %span= ([category] + category.children).collect{ |c| c.products.count}.inject(:+)
     = "<ul>" unless category.children.empty?
     - category.children.each do |child|
       = render :partial => 'admin/categories/list', :locals => { :categories => [child], :level => (level + 1) }

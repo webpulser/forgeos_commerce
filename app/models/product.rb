@@ -1,4 +1,3 @@
-require 'rails_commerce/search'
 class Product < ActiveRecord::Base
   has_many :carts_products, :dependent => :destroy
   has_many :carts, :through => :carts_products
@@ -11,7 +10,17 @@ class Product < ActiveRecord::Base
   validates_presence_of :url
   validates_uniqueness_of :url
 
-  acts_as_ferret YAML.load_file(File.join(RAILS_ROOT, 'config', 'search.yml'))['product'].symbolize_keys
+  define_index do
+    indexes reference, :sortable => true
+    indexes name, :sortable => true
+    indexes url, :sortable => true
+    indexes stock, :sortable => true
+    indexes price, :sortable => true
+    indexes description, :sortable => true
+
+    has active, deleted
+  end
+  #acts_as_ferret YAML.load_file(File.join(RAILS_ROOT, 'config', 'search.yml'))['product'].symbolize_keys
 
   has_and_belongs_to_many :tattribute_values, :readonly => true
   has_many :dynamic_tattribute_values, :dependent => :destroy
@@ -106,9 +115,9 @@ class Product < ActiveRecord::Base
   # Returns an <i>Array</i> of <i>Product</i> who match gived keyword
   # ==== Parameters
   # * <tt>:keyword</tt> - a keyword
-  def self.search(keyword)
-    results = Product.find_with_ferret("%#{keyword}%", :limit => :all)
-  end
+#  def self.search(keyword, options = { :limit => :all })
+#    Product.find_with_ferret("%#{keyword}%",options)
+#  end
 
   # Returns a <i>WillPaginate::Collection</i> of <i>Product</i> who match gived keyword
   #
@@ -117,7 +126,7 @@ class Product < ActiveRecord::Base
   # ==== paginate_options
   # * <tt>:page</tt> - page number
   # * <tt>:per_page</tt> - product's count by page
-  def self.search_paginate(keyword, page=1, per_page=8)
-    self.search(keyword).paginate(:page => page, :per_page => per_page)
-  end
+#  def self.search_paginate(keyword, page=1, per_page=8)
+#    self.search(keyword).paginate(:page => page, :per_page => per_page)
+#  end
 end

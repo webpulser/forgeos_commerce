@@ -1,7 +1,21 @@
-%h1
-  = I18n.t('product', :count => 2).capitalize
-- content_for :tools do
-  = link_to(I18n.t('product.create.action').capitalize, new_admin_product_path, :class => 'add' )
-  = link_to(I18n.t('show_deleted'), admin_products_path(:deleted => true), :class => 'home')
-#list
-  = render :partial => 'list', :locals => { :products => @products }
+#sidebar.grid_4.omega.alpha
+  .backgrounds.header
+    %a.backgrounds.action-button{ :href => "#" }
+      %span.big-icons.new-category
+      %span.small-icons.arrow
+  .backgrounds.sidebar-background
+  .sidebar-content
+    %h2.small-icons.all-products
+      All Products
+    #product-tree
+      %ul
+        = render :partial => 'admin/categories/list', :locals => { :categories => Category.find_all_by_parent_id(nil) }
+#content.grid_12.alpha.omega
+  .backgrounds.header
+    #search.right
+      = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
+      .search-form
+  .content-background
+  = render :partial => 'list', :locals => { :products => @products } 
+
+= dataTables_tag 6, :url => admin_products_path(:format => :json)

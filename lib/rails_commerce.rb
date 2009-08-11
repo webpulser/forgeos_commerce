@@ -25,22 +25,16 @@ end
 # Set administration's menu
 Forgeos::AdminMenu << { :title => 'orders',
   :url => { :controller => 'admin/orders' }, :i18n => true,
-  :children => [
-    { :title => 'shipping_methods', :url => { :controller => 'admin/shipping_methods' } , :i18n => true },
-    { :title => 'vouchers', :url => { :controller => 'admin/vouchers' }, :i18n => true },
-    { :title => 'geo_zones', :url => { :controller => 'admin/geo_zones'}, :i18n => true}
-  ]
+  :html => { :class => 'left'}
 }
-Forgeos::AdminMenu << { :title => 'products',
+Forgeos::AdminMenu << { :title => 'catalog',
   :url => { :controller => 'admin/products' }, :i18n => true,
-  :children => [
-    { :title => 'product_types', :url => { :controller => 'admin/product_types' }, :i18n => true },
-    { :title => 'categories', :url => { :controller => 'admin/categories' }, :i18n => true },
-    { :title => 'tattributes', :url => { :controller => 'admin/tattributes' }, :i18n => true },
-  ]
+  :html => { :class => 'left'}
 }
-Forgeos::AdminMenu << { :title => 'users', :url => { :controller => 'admin/users' }, :i18n => true }
-Forgeos::AdminMenu << { :title => 'pictures', :url => { :controller => 'admin/pictures' }, :i18n => true } 
+Forgeos::AdminMenu << { :title => 'users',
+  :url => { :controller => 'admin/users' }, :i18n => true,
+  :html => { :class => 'left'}
+}
 
 # Set site's menu
 Forgeos::Menu << { :title => 'home', :url => :root, :i18n => true }

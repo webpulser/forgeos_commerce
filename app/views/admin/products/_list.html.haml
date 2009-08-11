@@ -1,5 +1,5 @@
 = display_standard_flashes
-%table#table
+%table#table.datatable
   %thead
     %tr
       %th
@@ -13,33 +13,6 @@
       %th
         = I18n.t('stock', :count=>1).capitalize
       %th
-        = I18n.t('category', :count => 2).capitalize
-      %th
         = I18n.t('active').capitalize
         ?
-      %th
-        = I18n.t('action', :count => 2).capitalize
   %tbody
-    - products.each do |product|
-      %tr
-        %td
-          = h product.reference
-        %td
-          = h product.name
-        %td
-          = h truncate(product.description, :length => 230)
-        %td
-          = h product.price
-        %td
-          = h product.stock
-        %td
-          = product.categories.collect{ |cat| cat.name }.join(', ')
-        %td
-          - remote_form_for product, :url => {:controller => 'admin/products', :action => 'activate', :id => product.id} do |f|
-            = check_box_tag :product, :active, product.active, :onchange => "$(this.form).trigger('onsubmit')"
-        %td
-          = link_to I18n.t('edit').capitalize, edit_admin_product_path(product)
-          \-
-          = link_to_remote I18n.t('destroy').capitalize, :url => [:admin, product], :update => 'list', :confirm => I18n.t('product.destroy.confirm').capitalize, :method => 'delete'
-
-= dataTables_tag 8

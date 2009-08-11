@@ -3,7 +3,27 @@ class Admin::ProductsController < Admin::BaseController
   before_filter :new_product, :only => [:new, :create]
 
   def index
-    @products = Product.all(:conditions => { :deleted => !params[:deleted].nil? })
+    respond_to do |format|
+      format.html
+      format.json do
+        sort
+        products_to_json = []
+        @products.each do |product|
+          products_to_json << "[
+            '#{product.reference}',
+            '#{product.name}',
+            '#{product.description}',
+            '#{product.price}',
+            '#{product.stock}',
+            '#{product.active}'
+          ]"
+        end
+        render :json => "{
+        'iTotalDisplayRecords': #{@products.total_entries || 0},
+        'aaData': [#{ products_to_json.join(', ') }]
+        }"
+      end
+    end
   end
 
   def new
@@ -54,6 +74,10 @@ class Admin::ProductsController < Admin::BaseController
     render :text => Forgeos::url_generator(params[:url])
   end
 
+  def activate
+    render :text => @product.activate
+  end
+
 private
   
   # Called by :
@@ -80,5 +104,26 @@ private
 
   def new_product
     @product = Product.new(params[:product])
+  end
+
+  def sort
+    columns = %w(reference name description price stock active)
+    conditions = []
+    per_page = params[:iDisplayLength].to_i
+    offset =  params[:iDisplayStart].to_i
+    page = (offset / per_page) + 1
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    if params[:sSearch] && !params[:sSearch].blank?
+      @products = Product.search(params[:sSearch],
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    else
+      @products = Product.paginate(:all,
+        :conditions => conditions,
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    end
   end
 end
