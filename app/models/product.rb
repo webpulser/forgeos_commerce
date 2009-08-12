@@ -139,4 +139,11 @@ class Product < ActiveRecord::Base
    return value
   end
 
+  def method_missing(method)
+   
+   tattribute = Tattribute.find_by_name(method.to_s)
+   value = tattribute.dynamic ? self.dynamic_tattribute_values.find_by_tattribute_id(tattribute.id).value : self.tattribute_values.find_by_tattribute_id(tattribute.id).name
+   return value 
+  end
+
 end
