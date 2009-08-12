@@ -1,7 +1,7 @@
 class Admin::ShippingRulesController < Admin::BaseController
 
   def index
-
+    @shipping_rules = ShippingRule.all
   end
 
   def show
@@ -12,70 +12,85 @@ class Admin::ShippingRulesController < Admin::BaseController
 
   end
 
-
-#  {"commit"=>"Save",
-#    "rule_builder"=>{
-#        "name"=>"",
-#        "if"=>"All",
-#        "description"=>"",
-#        "for"=>"UPS"},
-#    "authenticity_token"=>"T5WU8BL28py4ncG1kcqiiAUvQUiEpLZIiVilgmAn1+s=",
-#    "act"=>{
-#        "targets"=>["Discount price"],
-#        "values"=>["100"],
-#        "conds"=>["By percent"]},
-#    "rule"=>{
-#          "targets"=>["1"],
-#          "values"=>["1"],
-#          "conds"=>["=="]}
-#  }
-
-  
-
   def create
 
-    #action
-    variables = {}
+    @variables = {}
+
+    # Action
     case "#{params[:act][:targets]}"
       when "Discount price"
-        variables[:discount] = params[:act][:values].to_i
-        variables[:fixed_discount] = (params[:act][:conds] == "By percent" ? false : true)
+        @variables[:discount] = params[:act][:values].to_i
+        @variables[:fixed_discount] = (params[:act][:conds] == "By percent" ? false : true)
       when "Increase price"
-        variables[:increase] = params[:act][:values].to_i
-        variables[:fixed_increase] = (params[:act][:conds] == "By percent" ? false : true)
+        @variables[:increase] = params[:act][:values].to_i
+        @variables[:fixed_increase] = (params[:act][:conds] == "By percent" ? false : true)
       when "Offer free delivery"
-        variables[:shipping_ids] = params[:act][:values]
+        @variables[:free_delivery] = true
     end
 
-    #conditions
+    # Conditions
     @rule_condition = []
     @rule_condition << 'ShippingMethod' << ':shipping_method'
 
+    # If All conditions should be true
     if params[:rule_builder][:if] == 'All'
-      @rule = ShippingRule.new
-      @rule.name = params[:rule_builder][:name]
-      @rule.description = params[:rule_builder][:description]
 
       params[:rule][:targets].each_with_index do |rule_target, index|
         build_a_rule(rule_target, index)
       end
 
-      @rule.conditions = "[#{@rule_condition.join(', ')}]"
-      @rule.variables = variables
-      @rule.save
+      # End of Rule
+      if params[:end_offer].to_i == 1
+        # If All ending conditions should be true
+        if params[:end_offer_if] == 'All'
+          params[:end][:targets].each_with_index do |e, i|
+            case "#{e}"
+              when "Date"
+                @rule_condition << "m.date.#{params[:end][:conds][i]}#{params[:end][:values][i]}"
+              when "Total number of offer use"
+                @rule.max_use = params[:end][:values][i]
+            end
+          end
+          save_rule
+        # If Any ending conditions should be true
+        else
+          # TODO ANY
+        end
+
+      else
+        save_rule
+      end
+    # If Any Conditions should be true
     else
       params[:rule][:targets].each_with_index do |rule_target, index|
         @rule_condition = []
         @rule_condition << 'ShippingMethod' << ':shipping_method'
-        @rule = ShippingRule.new
-        @rule.name = params[:rule_builder][:name]
-        @rule.description = params[:rule_builder][:description]
 
         build_a_rule(rule_target, index)
 
-        @rule.conditions = "[#{@rule_condition.join(', ')}]"
-        @rule.variables = variables
-        @rule.save
+        # End of Rule
+        if params[:end_offer].to_i == 1
+          # If All ending conditions should be true
+          if params[:end_offer_if] == 'All'
+            params[:end][:targets].each_with_index do |e, i|
+              case "#{e}"
+                when "Date"
+                  @rule_condition << "m.date.#{params[:end][:conds][i]}#{params[:end][:values][i]}"
+                when "Total number of offer use"
+                  @rule.max_use = params[:end][:values][i]
+              end
+            end
+
+            save_rule
+          # If Any ending conditions should be true
+          else
+            # TODO ANY
+          end
+
+        # If there are any ending conditions
+        else
+          save_rule
+        end
       end
     end
 
@@ -114,6 +129,15 @@ private
       value = params[:rule][:values][index]
     end
     @rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
+  end
+
+  def save_rule
+    rule = ShippingRule.new
+    rule.name = params[:rule_builder][:name]
+    rule.description = params[:rule_builder][:description]
+    rule.conditions = "[#{@rule_condition.join(', ')}]"
+    rule.variables = @variables
+    rule.save
   end
 
 end
