@@ -1,5 +1,5 @@
 class Admin::ProductsController < Admin::BaseController
-  before_filter :get_product, :except => [:index, :new, :create, :url]
+  before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate]
   before_filter :new_product, :only => [:new, :create]
 
   def index
