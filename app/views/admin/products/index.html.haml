@@ -14,8 +14,23 @@
   .backgrounds.header
     #search.right
       = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
-      .search-form
+      .backgrounds.search-form
   .content-background
-  = render :partial => 'list', :locals => { :products => @products } 
+  %table#table.datatable
+    %thead
+      %tr
+        %th
+        %th
+          = I18n.t('name').capitalize
+        %th
+          = I18n.t('price', :count => 1).capitalize
+        %th
+          = I18n.t('stock', :count=>1).capitalize
+        %th
+          = I18n.t('product_type', :count => 1).capitalize
+        %th
+          = I18n.t('active').capitalize
+          ?
+    %tbody
 
 = dataTables_tag 6, :url => admin_products_path(:format => :json)

@@ -1,0 +1,34 @@
+{
+'iTotalDisplayRecords': <%= @products.total_entries || 0 %>,
+'aaData': [
+<% @products.each do |product| %>
+  <% 
+    picture = product.pictures.first.public_filename(:thumb) if product.pictures.first
+    klass = product.active? ? 'see-on' : 'see-off'
+    link_id = "product_#{product.id}"
+  %>
+  [
+  '<%= image_tag(picture || 'admin/bouteille-vin.png') %>',
+  '<%= escape_javascript content_tag(:div, link_to(product.name, [:admin, product]), :class => 'product-name') %>',
+  '<%= product.price %> <%= $currency.html %>',
+  '<%= escape_javascript content_tag(:div, product.stock, :class => 'stocks' )%>',
+  '<%= product.product_type.name %>',
+  '<%= escape_javascript link_to_remote('', :url => activate_admin_product_path(product),
+     :complete => "toggleActivate('#show_#{link_id}')",
+     :html => { 
+       :class => "small-icons #{klass}",
+       :id => "show_#{link_id}"
+   }) -%>
+    <%= escape_javascript link_to('', [:edit, :admin, product], :class => 'small-icons edit-link') -%>
+    <%= escape_javascript link_to_remote('', :url => [:admin, product],
+      :method => :delete,
+      :confirm => I18n.t('product.destroy.confirm').capitalize,
+      :success => "removedataTablesRow('#destroy_#{link_id}')", 
+      :html => {
+      :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
+    })
+    -%>'
+    ] <%= ',' unless @products.last == product %>
+<% end %>
+]
+}

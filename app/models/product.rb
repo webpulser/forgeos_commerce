@@ -1,14 +1,24 @@
 class Product < ActiveRecord::Base
-  has_many :carts_products, :dependent => :destroy
-  has_many :carts, :through => :carts_products
-  has_many :price_cuts, :dependent => :destroy
-  
+  has_and_belongs_to_many :carts
   has_and_belongs_to_many :categories, :readonly => true
+  
   sortable_attachments
+  has_many :pictures, :conditions => { :type => 'Picture' }, :source => :attachment, :through => :sortable_attachments, :readonly => true, :order => 'sortable_attachments.position'
+  
+  has_and_belongs_to_many :tattribute_values, :readonly => true
+  has_many :dynamic_tattribute_values, :dependent => :destroy
+  has_many :dynamic_tattributes, :through => :dynamic_tattribute_values, :class_name => 'Tattribute', :source => 'tattribute'
+
+  has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products'
+  belongs_to :product_type
+
+  before_save :clean_strings
   after_save :synchronize_stock
 
+  validates_presence_of :product_type_id
   validates_presence_of :url
   validates_uniqueness_of :url
+
 
   define_index do
     indexes reference, :sortable => true
@@ -22,15 +32,6 @@ class Product < ActiveRecord::Base
   end
   #acts_as_ferret YAML.load_file(File.join(RAILS_ROOT, 'config', 'search.yml'))['product'].symbolize_keys
 
-  has_and_belongs_to_many :tattribute_values, :readonly => true
-  has_many :dynamic_tattribute_values, :dependent => :destroy
-  has_many :dynamic_tattributes, :through => :dynamic_tattribute_values, :class_name => 'Tattribute', :source => 'tattribute'
-
-  has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products'
-  belongs_to :product_type
-  validates_presence_of :product_type_id
-
-  before_save :clean_strings
 
   # Returns month's offers
   def self.get_offer_month

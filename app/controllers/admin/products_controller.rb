@@ -7,21 +7,7 @@ class Admin::ProductsController < Admin::BaseController
       format.html
       format.json do
         sort
-        products_to_json = []
-        @products.each do |product|
-          products_to_json << "[
-            '#{product.reference}',
-            '#{product.name}',
-            '#{product.description}',
-            '#{product.price}',
-            '#{product.stock}',
-            '#{product.active}'
-          ]"
-        end
-        render :json => "{
-        'iTotalDisplayRecords': #{@products.total_entries || 0},
-        'aaData': [#{ products_to_json.join(', ') }]
-        }"
+        render :layout => false
       end
     end
   end
@@ -67,7 +53,7 @@ class Admin::ProductsController < Admin::BaseController
     else
       flash[:error] = I18n.t('product.destroy.failed').capitalize
     end
-    return render(:partial => 'list', :locals => { :products => Product.all })
+    render :nothing => true
   end
 
   def url
