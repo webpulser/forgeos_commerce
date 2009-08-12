@@ -38,6 +38,14 @@
         = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins disabled'
         = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
 
+  %div{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
+    %h3 Then
+    #action-conditions
+      %p.action-condition
+        = select_tag 'act[targets]', options_for_select(['Discount price', 'Increase price', 'Offer free delivery'], 'Discount price'), {:onchange => "change_action(this,'action-condition')"}
+        = select_tag 'act[conds]', options_for_select(['By percent','By fixed amount'])
+        = text_field_tag 'act[values]'
+
   %p
     = submit_tag I18n.t('save').capitalize
     or
@@ -68,3 +76,16 @@
     = select_tag 'rule[values][]', options_for_select(@countries)
     = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
     = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
+
+
+  %div.actions-conditions{ :style => 'display: none;' }
+    %p.action-Offerfreedelivery.pattern
+      = select_tag 'act[targets]', options_for_select(['Discount price', 'Increase price', 'Offer free delivery'], 'Offer free delivery'), {:onchange => "change_action(this,'action-condition')"}
+    %p.action-Discountprice.pattern
+      = select_tag 'act[targets]', options_for_select(['Discount price', 'Increase price', 'Offer free delivery'], 'Discount price'), {:onchange => "change_action(this,'action-condition')"}
+      = select_tag 'act[conds]', options_for_select(['By percent','By fixed amount'])
+      = text_field_tag 'act[values]'
+    %p.action-Increaseprice.pattern
+      = select_tag 'act[targets]', options_for_select(['Discount price', 'Increase price', 'Offer free delivery'], 'Increase price'), {:onchange => "change_action(this,'action-condition')"}
+      = select_tag 'act[conds]', options_for_select(['By percent','By fixed amount'])
+      = text_field_tag 'act[values]'

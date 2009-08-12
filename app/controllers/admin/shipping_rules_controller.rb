@@ -12,23 +12,42 @@ class Admin::ShippingRulesController < Admin::BaseController
 
   end
 
-  
-#  0 = Weight / 1 = Type / 2 = Country
-#  {"commit"=>"Save",
-#   "rule_builder"=>{
-#       "name"=>"",
-#       "targets"=>["UPS"],
-#       "description"=>""},
-#   "authenticity_token"=>"D87xRei3O4/zDjqEyvjJq9KNaS7mAxvjGy7jEygavUY=",
-#   "rule"=>{
-#       "value"=>["1", "406850150"],
-#       "target"=>["1",  "2"],
-#       "conds"=>["==",  "=="]}
-#   }
 
+#  {"commit"=>"Save",
+#    "rule_builder"=>{
+#        "name"=>"",
+#        "if"=>"All",
+#        "description"=>"",
+#        "for"=>"UPS"},
+#    "authenticity_token"=>"T5WU8BL28py4ncG1kcqiiAUvQUiEpLZIiVilgmAn1+s=",
+#    "act"=>{
+#        "targets"=>["Discount price"],
+#        "values"=>["100"],
+#        "conds"=>["By percent"]},
+#    "rule"=>{
+#          "targets"=>["1"],
+#          "values"=>["1"],
+#          "conds"=>["=="]}
+#  }
+
+  
 
   def create
 
+    #action
+    variables = {}
+    case "#{params[:act][:targets]}"
+      when "Discount price"
+        variables[:discount] = params[:act][:values].to_i
+        variables[:fixed_discount] = (params[:act][:conds] == "By percent" ? false : true)
+      when "Increase price"
+        variables[:increase] = params[:act][:values].to_i
+        variables[:fixed_increase] = (params[:act][:conds] == "By percent" ? false : true)
+      when "Offer free delivery"
+        variables[:shipping_ids] = params[:act][:values]
+    end
+
+    #conditions
     @rule_condition = []
     @rule_condition << 'ShippingMethod' << ':shipping_method'
 
@@ -42,7 +61,7 @@ class Admin::ShippingRulesController < Admin::BaseController
       end
 
       @rule.conditions = "[#{@rule_condition.join(', ')}]"
-      #@rule.variables = variables
+      @rule.variables = variables
       @rule.save
     else
       params[:rule][:targets].each_with_index do |rule_target, index|
@@ -55,7 +74,7 @@ class Admin::ShippingRulesController < Admin::BaseController
         build_a_rule(rule_target, index)
 
         @rule.conditions = "[#{@rule_condition.join(', ')}]"
-        #@rule.variables = variables
+        @rule.variables = variables
         @rule.save
       end
     end
