@@ -81,7 +81,7 @@ class Admin::SpecialOffersController < Admin::BaseController
       when "Shipping method"
         target = "m.ShippingMethodDetail"
       else
-        target = "m.get_attribute(&condition{ |s| s + ‘attribut’ = #{rule_target}})"
+        target = "m.get_attribute_value(&condition{ |s| s + ‘tattribute_id’ = #{rule_target}})"
       end
     end
 

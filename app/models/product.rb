@@ -130,4 +130,13 @@ class Product < ActiveRecord::Base
 #  def self.search_paginate(keyword, page=1, per_page=8)
 #    self.search(keyword).paginate(:page => page, :per_page => per_page)
 #  end
+
+  def get_attribute_value(tattribute_id)
+    dynamic = Tattribute.find_by_id(tattribute_id).dynamic
+    puts dynamic
+    value = dynamic ? self.dynamic_tattribute_values.find_by_tattribute_id(tattribute_id).value : self.tattribute_values.find_by_tattribute_id(tattribute_id).name 
+    puts value
+   return value
+  end
+
 end
