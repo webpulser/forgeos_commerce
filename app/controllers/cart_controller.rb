@@ -73,7 +73,7 @@ protected
 
   def redirect_or_update
     unless request.xhr?
-      redirect_to(:action => 'index') 
+      redirect_to(:action => 'index')
     else
       render :action => 'update_cart', :layout => false
     end
@@ -89,8 +89,11 @@ protected
         ## set the new_price to product price
         cart_product.update_attributes!(:new_price => cart_product.product.price)
         
+        ## barcode is not save!!, it's only to have the carts_products_id in the rule 
+        cart_product.product.barcode = cart_product.id
         e.assert cart_product.product if cart_product.free != 1
       end
+      e.assert @cart
       e.match
     end
   end

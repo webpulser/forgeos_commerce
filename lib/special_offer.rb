@@ -3,10 +3,12 @@ class SpecialOffer < Ruleby::Rulebook
   attr_writer :cart
   def rules
     SpecialOfferRule.find_all_by_activated(true).each do |special_offer|
+      puts special_offer.conditions
       rule eval(special_offer.conditions) do |context|
         
         puts "test"*20
         product = context[:product]
+        
         
         ## Product in Shop
         if @cart.nil?
@@ -22,9 +24,11 @@ class SpecialOffer < Ruleby::Rulebook
           if special_offer.variables[:fixed_discount]
             rate = special_offer.variables[:discount]
             
-            price = @cart.get_new_price(product)          
+            # product.barcode is the carts_product_id in the cart of the product 
+            price = @cart.get_new_price(product.barcode.to_i)          
+            
             new_price = price - (special_offer.variables[:fixed_discount] ? rate : ((price * rate) / 100))
-            @cart.add_new_price(product, new_price)
+            @cart.add_new_price(product.barcode.to_i, new_price)
 
           end
         

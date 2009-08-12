@@ -27,12 +27,12 @@ class Cart < ActiveRecord::Base
     return !carts_products.find_by_product_id(product_id, :conditions => ['free = 1']).blank?
   end
 
-  def add_new_price(product, new_price)
-    carts_products.find_by_product_id(product.id).update_attributes!(:new_price => new_price)
+  def add_new_price(carts_product_id, new_price)
+    carts_products.find_by_id(carts_product_id).update_attributes!(:new_price => new_price)
   end
  
-  def get_new_price(product)
-    return carts_products.find_by_product_id(product.id).new_price
+  def get_new_price(carts_product_id)
+    return carts_products.find_by_id(carts_product_id).new_price
   end
 
   def destroy_duplicates
@@ -138,10 +138,10 @@ class Cart < ActiveRecord::Base
   # Returns weight of this cart
   def weight(product=nil)
     if product.nil?
-      return carts_products.inject(0) { |total, carts_product| total + carts_product.quantity * carts_product.product.weight }
+      return carts_products.inject(0) { |total, carts_product| total + carts_product.product.weight }
     else
       carts_product = carts_products.find_by_product_id(product.id)
-      return carts_product.quantity * product.weight unless carts_product.nil?
+      return product.weight unless carts_product.nil?
     end
     return 0
   end
@@ -154,4 +154,9 @@ class Cart < ActiveRecord::Base
     end
     shipping_method_details
   end
+  
+  def total_items
+    return carts_products.length
+  end
+  
 end

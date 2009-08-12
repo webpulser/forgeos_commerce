@@ -73,15 +73,15 @@ class Admin::SpecialOffersController < Admin::BaseController
     else
       case "#{rule_target}"
       when "Total items quantity"
-        target = "m.carts_products.count"
+        target = "m.total_items"
       when "Total weight"
         target = "m.weight"
       when "Total amount"
-        target = "m.total"
+        target = "m.total(&condition{ |s| s + ‘tax’ = true})"
       when "Shipping method"
         target = "m.ShippingMethodDetail"
       else
-        target = "m.get_attribute(#{rule_target})"
+        target = "m.get_attribute(&condition{ |s| s + ‘attribut’ = #{rule_target}})"
       end
     end
 
