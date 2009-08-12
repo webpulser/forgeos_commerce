@@ -36,6 +36,7 @@ module ProductHelper
       content += "</div>"
       content += "<div class='product_price'>"
         content += product.price_to_s(true)
+        #content += product.price.to_s
       content += "</div>"
       content += "<div class='product_add_cart'>"
         content += link_to_add_cart(product)

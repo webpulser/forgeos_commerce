@@ -1,7 +1,8 @@
 require 'ruleby'
 class CartController < ApplicationController
   include Ruleby
-  before_filter :get_cart, :special_offer
+  before_filter :get_cart
+  after_filter :special_offer
   # Show <i>Cart</i>
   def index
     flash[:notice] = I18n.t(:your_cart_is_empty).capitalize if @cart.is_empty?
@@ -85,6 +86,9 @@ protected
       rule_builder.cart = @cart
       rule_builder.rules
       @cart.carts_products.each do |cart_product|
+        ## set the new_price to product price
+        cart_product.update_attributes!(:new_price => cart_product.product.price)
+        
         e.assert cart_product.product if cart_product.free != 1
       end
       e.match

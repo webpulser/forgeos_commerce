@@ -1,7 +1,21 @@
+require 'ruleby'
 class CatalogController < ApplicationController
+  include Ruleby
+  
   # Show all <i>ProductDetail</i>
   def index
     @products = Product.paginate(:all, :per_page => 8, :page => params[:page], :conditions => { :active => true, :deleted => false })
+    
+    # rules
+    engine :special_offer_engine do |e|
+      rule_builder = SpecialOffer.new(e)
+      rule_builder.rules
+      @products.each do |product|
+        e.assert product
+      end
+      e.match
+    end
+  
   end
 
   # Show all <i>ProductDetail</i> by <i>Category</i>
@@ -30,4 +44,5 @@ class CatalogController < ApplicationController
 
     render :action => 'index'
   end
+  
 end

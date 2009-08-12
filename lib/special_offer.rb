@@ -5,26 +5,41 @@ class SpecialOffer < Ruleby::Rulebook
     SpecialOfferRule.find_all_by_activated(true).each do |special_offer|
       rule eval(special_offer.conditions) do |context|
         
-        # Discount product price
+        puts "test"*20
         product = context[:product]
         
-        if special_offer.variables[:fixed_discount]
-          rate = special_offer.variables[:discount]
-          new_price = product.price - (special_offer.variables[:fixed_discount] ? rate : ((product.price * rate) / 100))
-          puts @cart.add_new_price(product, new_price)
-        end
+        ## Product in Shop
+        if @cart.nil?
+          # Discount product price
+          if special_offer.variables[:fixed_discount] and special_offer.variables[:for] == 'product_in_shop'
+             rate = special_offer.variables[:discount]
+             product.price-= special_offer.variables[:fixed_discount] ? rate : ((product.price * rate) / 100)
+          end
         
-        return true unless @cart
+        ## Product in cart
+        else
+          # Discount product price
+          if special_offer.variables[:fixed_discount]
+            rate = special_offer.variables[:discount]
+            
+            price = @cart.get_new_price(product)          
+            new_price = price - (special_offer.variables[:fixed_discount] ? rate : ((price * rate) / 100))
+            @cart.add_new_price(product, new_price)
+
+          end
         
-        # Free shippment
-        @cart.free_shipping_method_detail_ids += special_offer.variables[:shipping_ids] if special_offer.variables[:shipping_ids]
+          return true unless @cart
         
-        # Free products
-        special_offer.variables[:product_ids].each do |product_id|
-          @cart.add_product(Product.find(product_id),true) unless @cart.has_free_product?(product_id)
-        end if special_offer.variables[:product_ids]
+          # Free shippment
+          @cart.free_shipping_method_detail_ids += special_offer.variables[:shipping_ids] if special_offer.variables[:shipping_ids]
         
-        retract product
+          # Free products
+          special_offer.variables[:product_ids].each do |product_id|
+            @cart.add_product(Product.find(product_id),true) unless @cart.has_free_product?(product_id)
+          end if special_offer.variables[:product_ids]
+        
+       end
+       #retract product
       end
     end
   end

@@ -30,6 +30,10 @@ class Cart < ActiveRecord::Base
   def add_new_price(product, new_price)
     carts_products.find_by_product_id(product.id).update_attributes!(:new_price => new_price)
   end
+ 
+  def get_new_price(product)
+    return carts_products.find_by_product_id(product.id).new_price
+  end
 
   def destroy_duplicates
     Cart.destroy_all(:user_id => user_id) unless user_id.nil?
