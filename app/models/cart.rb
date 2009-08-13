@@ -59,7 +59,7 @@ class Cart < ActiveRecord::Base
   def remove_product(product)
     return false if product.nil?
     carts_products.find_by_product_id(product.id).destroy
-    carts_products.find_by_free(1).destroy
+    #carts_products.find_by_free(1).destroy
     carts_products.reject! { |carts_product| carts_product.product_id == product.id }
   end
 
