@@ -24,7 +24,7 @@ module CartHelper
       end
       content += "<div class='cart_remove'>"
         unless static
-          content += link_to_cart_remove_product(carts_product.product, mini) unless carts_product.free == 1
+          content += link_to_cart_remove_product(carts_product, mini) unless carts_product.free == 1
         end
       content += "</div>"
     content += "</div>"
@@ -83,11 +83,11 @@ module CartHelper
   # * <tt>:name</tt> - name, <i>image_tag('rails_commerce/remove_product.gif')</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'cart', :action => 'empty'}</i> by default
   # * <tt>options</tt> the html options, <i>{:confirm => RailsCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart]}</i> by default
-  def link_to_cart_remove_product(product, mini=false, name=image_tag('rails_commerce/remove_product.gif'), options={:confirm => I18n.t(:confirm_remove_product)})
+  def link_to_cart_remove_product(carts_product, mini=false, name=image_tag('rails_commerce/remove_product.gif'), options={:confirm => I18n.t(:confirm_remove_product)})
     if mini
-      link_to_remote(name,{ :url=>{:controller => 'cart', :action => 'remove_product', :id => product}, :update => 'cart' }.merge(options))
+      link_to_remote(name,{ :url=>{:controller => 'cart', :action => 'remove_product', :id => carts_product}, :update => 'cart' }.merge(options))
     else
-      link_to(name, {:controller => 'cart', :action => 'remove_product', :id => product}, options)
+      link_to(name, {:controller => 'cart', :action => 'remove_product', :id => carts_product}, options)
     end
   end
 

@@ -33,7 +33,9 @@ class CartController < ApplicationController
   # * <tt>:id</tt> - a <i>Product</i> object
   def remove_product
     reset_order_session
-    flash[:notice] = I18n.t(:product_has_been_remove).capitalize if @cart.remove_product_id(params[:id])
+    puts "pouf"*10
+    puts params[:id]
+    flash[:notice] = I18n.t(:product_has_been_remove).capitalize if @cart.remove_product(params[:id])
     redirect_or_update
   end
 

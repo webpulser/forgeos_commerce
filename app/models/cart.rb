@@ -12,6 +12,7 @@ class Cart < ActiveRecord::Base
 
   belongs_to :user
   before_save :destroy_duplicates
+  
   # Add a <i>product</i> in this cart
   #
   # Returns false if <i>product</i> is <i>nil</i> or not recorded
@@ -38,6 +39,7 @@ class Cart < ActiveRecord::Base
   def destroy_duplicates
     Cart.destroy_all(:user_id => user_id) unless user_id.nil?
   end
+  
   # Add a <i>product</i> in this cart
   #
   # Returns false if <i>product</i> is <i>nil</i> or not recorded
@@ -50,64 +52,14 @@ class Cart < ActiveRecord::Base
   end
 
   # Remove a product of this cart
-  #
-  # Returns false if <i>product</i> is <i>nil</i>
-  #
-  # ==== Parameters
-  #
-  # * <tt>:product</tt> - a <i>Product</i> object
-  def remove_product(product)
-    return false if product.nil?
-    carts_products.find_by_product_id(product.id).destroy
-    #carts_products.find_by_free(1).destroy
-    carts_products.reject! { |carts_product| carts_product.product_id == product.id }
-  end
-
-  # Remove a product of this cart
-  #
-  # Returns false if <i>product</i> is <i>nil</i>
-  #
-  # ==== Parameters
-  # * <tt>:product_id</tt> - an <i>id</i> of a <i>Product</i>
-  # This method use <i>remove_product</i>
-  def remove_product_id(product_id)
-    remove_product(Product.find_by_id(product_id))
-  end
-
-  # Update quantity of a <i>Product</i>
-  #
-  # ==== Parameters
-  # * <tt>:product</tt> - a <i>Product</i> object
-  # * <tt>:quantity</tt> - the new quantity
-  def set_quantity(product, quantity)
-    quantity = quantity.to_i
-    carts_products.each do |carts_product|
-       if carts_product.product_id == product.id
-         return remove_product(product) if quantity == 0
-         carts_product.update_attribute(:quantity, quantity)
-       end
-     end
-  end
-
-  # Returns the total quantity of this cart by default
-  #
-  # Returns the product's quantity if you precise a <i>Product</i> object in parameters
-  #
-  # ==== Parameters
-  # * <tt>:product</tt> - a <i>Product</i> object
-  def size(product=nil)
-    if product.nil?
-      return carts_products.inject(0) { |total, carts_product| total + carts_product.quantity }
-    else
-      carts_product = carts_products.find_by_product_id(product.id)
-      return carts_product.quantity unless carts_product.nil?
-    end
-    return 0
-  end
-
-  # Returns product's count of this cart
-  def count_products
-    products.size
+  def remove_product(carts_product_id)
+    return false if carts_products.nil?
+    # destroy the product
+    cart_product = carts_products.find_by_id(carts_product_id)
+    cart_product.destroy if cart_product
+    # destroy free product
+    free_products = carts_products.find_by_free(1)
+    free_products.destroy if free_products
   end
 
   # Empty this cart
@@ -117,7 +69,7 @@ class Cart < ActiveRecord::Base
 
   # Returns true if cart is empty, returns false else
   def is_empty?
-    count_products == 0
+    total_items == 0
   end
 
   # Returns total price of this cart by default
