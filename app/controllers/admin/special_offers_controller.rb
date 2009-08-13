@@ -25,6 +25,9 @@ class Admin::SpecialOffersController < Admin::BaseController
         variables[:product_ids] = [params[:act][:values][index].to_i]
       when "Offer free delivery"
         variables[:shipping_ids] = params[:act][:values][index]
+      when "Discount cart"
+        variables[:cart_discount] = params[:act][:values][index]
+        variable[:percent] = (params[:act][:conds][index] == "By percent" ? false : true)
       end
     end
     

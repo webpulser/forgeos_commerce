@@ -127,9 +127,13 @@ class Cart < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_tax</tt> - add tax of price if true, false by default
   # * <tt>:product</tt> - a <i>Product</i> object
-  def total(with_tax=false, product=nil)
+  def total(with_tax=false, product=nil, with_discount=false)
     if product.nil?
-      CartsProduct.find_all_by_cart_id(id, :conditions => ['free != 1']).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
+      total = CartsProduct.find_all_by_cart_id(id, :conditions => ['free != 1']).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
+      if with_discount and !self.discount.nil? 
+        self.percent.nil? ? total-=self.discount : total-= (total*self.discount)/100
+      end
+      return total
     else
       CartsProduct.find_all_by_cart_id_and_product_id(id, product.id).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
     end
@@ -161,6 +165,10 @@ class Cart < ActiveRecord::Base
   
   def total_items
     return carts_products.length
+  end
+  
+  def discount_cart(discount, percent=nil)
+    percent.nil? ? self.update_attributes(:discount => discount) : self.update_attributes(:discount => discount, :percent => 1)
   end
   
 end

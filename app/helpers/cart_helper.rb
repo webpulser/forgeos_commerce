@@ -43,6 +43,7 @@ module CartHelper
     end
     content += "<div class='cart_total'><b>#{I18n.t('total').capitalize} : </b>"
       content += cart.total(true).to_s + " " + $currency.html
+      content += " with special discount : "+ cart.total(true,nil,true).to_s + " " + $currency.html + " !!" if cart.discount
     content += "</div>"
   end
   

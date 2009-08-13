@@ -81,6 +81,10 @@ protected
 
   def special_offer
   # SpecialOffers
+    # delete free product already in cart and cart discount
+    @cart.update_attributes!(:discount => nil, :percent => nil)
+    free_products = @cart.carts_products.find_by_free(1)
+    free_products.destroy if free_products
     engine :special_offer_engine do |e|
       rule_builder = SpecialOffer.new(e)
       rule_builder.cart = @cart
