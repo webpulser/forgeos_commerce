@@ -8,9 +8,7 @@ class SpecialOffer < Ruleby::Rulebook
         
         puts "test"*20
         product = context[:product]
-        
-        
-        
+                
         ## Product in Shop
         if @cart.nil?
           # Discount product price

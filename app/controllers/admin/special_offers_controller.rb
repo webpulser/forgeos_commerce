@@ -77,11 +77,9 @@ class Admin::SpecialOffersController < Admin::BaseController
       when "Total weight"
         target = "m.weight"
       when "Total amount"
-        target = "m.total(&condition{ |s| s + ‘tax’ = true})"
-      when "Shipping method"
-        target = "m.ShippingMethodDetail"
+        target = "m.total_with_tax)"
       else
-        target = "m.get_attribute_value(&condition{ |s| s + ‘tattribute_id’ = #{rule_target}})"
+        target = "m.#{rule_target})"
       end
     end
 

@@ -139,18 +139,6 @@ class Product < ActiveRecord::Base
    return value
   end
 
-  #alias_method :old_method_missing, :method_missing
-#
- # def method_missing(method, *args)
-  #  tattribute = Tattribute.find_by_name(method.to_s)
-   # if tattribute.nil?
-  #    super
-  #  else
-  #    value = tattribute.dynamic ? self.dynamic_tattribute_values.find_by_tattribute_id(tattribute.id).value : self.tattribute_values.find_by_tattribute_id(tattribute.id).name
-  #    return value
-  #  end 
-  #end
-
   def method_missing_with_attribute(method, *args, &block)
     tattribute = Tattribute.find_by_name(method.to_s)
     if tattribute.nil?

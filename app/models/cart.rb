@@ -135,6 +135,10 @@ class Cart < ActiveRecord::Base
     end
   end
 
+  def total_with_tax
+    total(true)
+  end
+
   # Returns weight of this cart
   def weight(product=nil)
     if product.nil?
