@@ -75,8 +75,12 @@ private
   def manage_dynamic_attributes
     return true unless params[:dynamic_tattribute_values]
     result = true
-    @product.dynamic_tattribute_values.each do |d|
-      result = result & d.update_attributes(params[:dynamic_tattribute_values][d.tattribute_id.to_s])
+    @product.product_type.dynamic_tattribute_ids.each do |d|
+      if attr_value = @product.dynamic_tattribute_values.find_by_tattribute_id(d)
+        result = result & attr_value.update_attributes(params[:dynamic_tattribute_values][d.to_s])
+      else
+        result = result & @product.dynamic_tattribute_values.create(params[:dynamic_tattribute_values][d.to_s].merge(:tattribute_id => d))
+      end
     end
     return result
   end

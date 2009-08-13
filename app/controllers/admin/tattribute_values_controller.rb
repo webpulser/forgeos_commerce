@@ -27,7 +27,7 @@ class Admin::TattributeValuesController < Admin::BaseController
   def update
     if @tattribute_value.update_attributes(params[:tattribute_value])
       flash[:notice] = I18n.t('tattribute_value.update.success').capitalize
-      return redirect_to([:edit, :admin, @tattribute_value.attributes_tattribute])
+      return redirect_to([:edit, :admin, @tattribute])
     else
       flash[:error] = I18n.t('tattribute_value.update.failed').capitalize
     end

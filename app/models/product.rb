@@ -131,21 +131,19 @@ class Product < ActiveRecord::Base
 #    self.search(keyword).paginate(:page => page, :per_page => per_page)
 #  end
 
-  def get_attribute_value(tattribute_id)
-    dynamic = Tattribute.find_by_id(tattribute_id).dynamic
-    puts dynamic
-    value = dynamic ? self.dynamic_tattribute_values.find_by_tattribute_id(tattribute_id).value : self.tattribute_values.find_by_tattribute_id(tattribute_id).name 
-    puts value
-   return value
-  end
-
   def method_missing_with_attribute(method, *args, &block)
-    tattribute = Tattribute.find_by_name(method.to_s)
-    if tattribute.nil?
-        method_missing_without_attribute(method, *args, &block)
+    unless self.product_type && tattribute = self.product_type.tattributes.find_by_name(method.to_s)
+      method_missing_without_attribute(method, *args, &block)
     else
-      value = tattribute.dynamic ? self.dynamic_tattribute_values.find_by_tattribute_id(tattribute.id).value : self.tattribute_values.find_by_tattribute_id(tattribute.id).name
-      return value
+      if tattribute.dynamic
+        if attr_value = self.dynamic_tattribute_values.find_by_tattribute_id(tattribute.id)
+          return attr_value.value
+        else
+          method_missing_without_attribute(method, *args, &block)
+        end
+      else
+        self.tattribute_values.find_all_by_tattribute_id(tattribute.id).collect(&:name)
+      end
     end
   end
 
