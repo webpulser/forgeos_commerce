@@ -58,6 +58,8 @@ class OrderController < ApplicationController
     return redirect_to(:action => 'informations') unless current_user
   end
 
+
+  ## TODO - check special offer !!! 
   def create
     valid = valid_shipment(false)
     return false unless valid
@@ -87,9 +89,7 @@ class OrderController < ApplicationController
       @order.orders_details.create(:name => product.name,
                                    :description => product.description,
                                    :price => product.price(false, false),
-                                   :rate_tax => product.rate_tax,
-                                   :quantity => cart_product.quantity
-#                                   :product_detail_id => cart_product.product_id
+                                   :rate_tax => product.rate_tax
                                   )
     end
     @cart.destroy

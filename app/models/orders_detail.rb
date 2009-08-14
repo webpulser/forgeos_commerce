@@ -10,9 +10,9 @@
 class OrdersDetail < ActiveRecord::Base
   
   belongs_to :order
-  belongs_to :product_detail
+  belongs_to :product
 
-  validates_presence_of :name, :price, :rate_tax, :order_id, :quantity
+  validates_presence_of :name, :price, :rate_tax, :order_id
 
   # Returns price's string with currency symbol
   #
@@ -44,7 +44,7 @@ class OrdersDetail < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def total_tax(with_currency=true)
-    tax(with_currency) * quantity
+    tax(with_currency)
   end
 
   # Returns price * quantity
@@ -53,6 +53,6 @@ class OrdersDetail < ActiveRecord::Base
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def total(with_tax=false, with_currency=true)
-    price(with_tax, with_currency) * quantity
+    price(with_tax, with_currency)
   end
 end
