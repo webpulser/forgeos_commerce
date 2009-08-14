@@ -26,9 +26,5 @@
       \:
     = f.text_field :rate_tax
   %p
-    %b
-      = f.label :quantity, I18n.t('quantity', :count => 1).capitalize
-      \:
-    = f.text_field :quantity
   = f.submit I18n.t('save').capitalize
 - content_for :tools, link_to(I18n.t('order.update.action').capitalize, [:admin, orders_detail.order], :class => 'manage')

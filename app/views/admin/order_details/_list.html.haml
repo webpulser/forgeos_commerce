@@ -1,5 +1,5 @@
 = display_standard_flashes
-= link_to_unless order.new_record?, I18n.t('order_detail.create.action').capitalize, { :controller => 'admin/orders', :action => 'create_detail', :id => order.id }, :class => 'add'
+= link_to_unless order.new_record?, I18n.t('order_detail.create.action').capitalize, { :controller => 'admin/order_details', :action => 'new', :id => order.id }, :class => 'add'
 %table
   %thead
     %tr
@@ -7,8 +7,6 @@
         = I18n.t('name').capitalize
       %th
         = I18n.t('price', :count => 1).capitalize
-      %th
-        = I18n.t('quantity', :count => 1).capitalize
       %th
         = I18n.t('action', :count => 2).capitalize
   %tbody
@@ -18,8 +16,6 @@
           = orders_detail.name
         %td
           = orders_detail.price
-        %td
-          = orders_detail.quantity
         %td
           = link_to I18n.t('edit').capitalize, { :controller => 'admin/orders', :action => 'edit_detail', :id => order.id, :detail_id => orders_detail.id }
           \-

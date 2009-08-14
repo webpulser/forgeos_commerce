@@ -42,6 +42,6 @@
   %legend
     = link_to_effect_toggle(I18n.t('order_detail', :count=>2).capitalize,'orders_details')
   #orders_details
-    = render :partial => 'list_details', :locals => { :order => order }
+    = render :partial => 'order_details/list', :locals => { :order => order }
 = hide_html_elements_onload %w[address_invoice address_delivery static_attributes orders_details]
 - content_for :tools, link_to(I18n.t('list').capitalize, admin_orders_path, :class => 'house')

@@ -5,7 +5,8 @@ class Admin::OrderDetailsController < Admin::BaseController
   after_filter :get_products, :only => [:create, :update]
   
   def new
-    render('create')
+    @products = Product.all
+    render 'create'
   end
   
   def create
