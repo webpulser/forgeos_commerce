@@ -48,10 +48,12 @@ class Admin::SpecialOffersController < Admin::BaseController
       @rule.variables = variables
       @rule.save
     else
+      rule_parent = nil
       params[:rule][:targets].each_with_index do |rule_target, index|
         @rule_condition = []
         @rule_condition << params[:rule_builder]['for'] << ':product'
         @rule = SpecialOfferRule.new
+        @rule.parent = rule_parent
         @rule.name = params[:rule_builder][:name]
         @rule.description = params[:rule_builder][:description]
         
@@ -64,6 +66,7 @@ class Admin::SpecialOffersController < Admin::BaseController
         @rule.conditions = "[#{@rule_condition.join(', ')}]" 
         @rule.variables = variables
         @rule.save
+        rule_parent = @rule if index == 0
       end
     end
     redirect_to :action => 'index'
@@ -95,7 +98,7 @@ class Admin::SpecialOffersController < Admin::BaseController
   end
   
   def index
-    @special_offers = SpecialOfferRule.all
+    @special_offers = SpecialOfferRule.find_all_by_parent_id(nil)
   end
   
   def show

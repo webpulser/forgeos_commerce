@@ -30,8 +30,8 @@
         = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options}),{ :onchange => "change_rule(this,'rule-condition')" } 
         = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
         = text_field_tag 'rule[values][]'
-        = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins disabled'
-        = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
+        = link_to_function '--', "remove_rule(this,'rule-condition')", :class => 'icon1 moins disabled'
+        = link_to_function '++', "add_rule('rule-condition')", :class => 'icon1 plus'
 
   %div{:style => 'margin : 1em; padding:  3em; border : 1px solid #000000', :class => 'ui-corner-all'}
     %h3 Then
@@ -51,8 +51,8 @@
         = select_tag 'end[targets][]', options_for_select(['Date','Total number of offer use','Customer number of offer use'])
         = select_tag 'end[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
         = text_field_tag 'end[values][]'
-        = link_to_function ' ', "remove_rule(this,'end-condition')", :class => 'icon1 moins disabled'
-        = link_to_function ' ', "add_rule('end-condition')", :class => 'icon1 plus'
+        = link_to_function '--', "remove_rule(this,'end-condition')", :class => 'icon1 moins disabled'
+        = link_to_function '++', "add_rule('end-condition')", :class => 'icon1 plus'
   
   %p
     = check_box 'rule_builder', 'stop'
@@ -68,8 +68,8 @@
     = select_tag 'end[targets][]', options_for_select(['Date','Total number of offer use','Customer number of offer use'])
     = select_tag 'end[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
     = text_field_tag 'end[values][]'
-    = link_to_function ' ', "remove_rule(this,'end-condition')", :class => 'icon1 moins'
-    = link_to_function ' ', "add_rule('end-condition')", :class => 'icon1 plus'
+    = link_to_function '--', "remove_rule(this,'end-condition')", :class => 'icon1 moins'
+    = link_to_function '++', "add_rule('end-condition')", :class => 'icon1 plus'
 
 %div.action-conditions{ :style => 'display: none' }
   - @actions = ['Discount price this product','Offer a product','Offer free delivery']
@@ -77,32 +77,32 @@
   %p.action-Offeraproduct-cart.pattern
     = select_tag 'act[targets][]', options_for_select(['Offer a product', 'Offer free delivery'], 'Offer a product'), {:onchange => "change_action(this,'action-condition','cart')"}
     = select_tag 'act[values][]', options_from_collection_for_select(Product.all, :id, :name)
-    = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
-    = link_to_function ' ', "add_action('action-Offeraproduct-cart')", :class => 'icon1 plus'
+    = link_to_function '--', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
+    = link_to_function '++', "add_action('action-Offeraproduct-cart')", :class => 'icon1 plus'
 
   %p.action-Offerfreedelivery-cart.pattern
     = select_tag 'act[targets][]', options_for_select(['Offer a product', 'Offer free delivery'],'Offer free delivery'), {:onchange => "change_action(this,'action-condition','cart')"}
-    = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
-    = link_to_function ' ', "add_action('action-Offeraproduct-cart')", :class => 'icon1 plus'  
+    = link_to_function '--', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
+    = link_to_function '++', "add_action('action-Offeraproduct-cart')", :class => 'icon1 plus'  
 
 
   %p.action-Offeraproduct-productincart.pattern
     = select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product', 'Offer free delivery'], 'Offer a product'), {:onchange => "change_action(this,'action-condition','productincart')"}
     = select_tag 'act[values][]', options_from_collection_for_select(Product.all, :id, :name)
-    = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
-    = link_to_function ' ', "add_action('action-Offeraproduct-productincart')", :class => 'icon1 plus'
+    = link_to_function '--', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
+    = link_to_function '++', "add_action('action-Offeraproduct-productincart')", :class => 'icon1 plus'
 
   %p.action-Offerfreedelivery-productincart.pattern
     = select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product', 'Offer free delivery'], 'Offer free delivery'), {:onchange => "change_action(this,'action-condition','productincart')"}
-    = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
-    = link_to_function ' ', "add_action('action-Offerfreedelivery-productincart')", :class => 'icon1 plus'
+    = link_to_function '--', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
+    = link_to_function '++', "add_action('action-Offerfreedelivery-productincart')", :class => 'icon1 plus'
 
   %p.action-Discountpricethisproduct-productincart.pattern
     = select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product', 'Offer free delivery'], 'Discount price this product'), {:onchange => "change_action(this,'action-condition','productincart')"}
     = select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
     = text_field_tag 'act[values][]'
-    = link_to_function ' ', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
-    = link_to_function ' ', "add_action('action-Offerfreedelivery-productincart')", :class => 'icon1 plus'
+    = link_to_function '--', "remove_rule(this,'action-condition')", :class => 'icon1 moins'
+    = link_to_function '++', "add_action('action-Offerfreedelivery-productincart')", :class => 'icon1 plus'
 
   %p.action-Discountpricethisproduct-productinshop.pattern
     = select_tag 'act[targets][]', options_for_select(['Discount price this product'], 'Discount price this product')
@@ -121,23 +121,23 @@
     = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options}),{ :onchange => "change_rule(this,'rule-condition')" } 
     = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
     = text_field_tag 'rule[values][]'
-    = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
-    = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
+    = link_to_function '--', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
+    = link_to_function '++', "add_rule('rule-condition')", :class => 'icon1 plus'
 
   - ['Price','Description', 'Weight', 'SKU', 'Stock'].each do |option|
     %p{:class => "rule-#{option} pattern"}
       = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options, :selected => option}),{ :onchange => "change_rule(this,'rule-condition')" } 
       = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
       = text_field_tag 'rule[values][]'
-      = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
-      = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
+      = link_to_function '--', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
+      = link_to_function '++', "add_rule('rule-condition')", :class => 'icon1 plus'
 
   %p.rule-Title.pattern
     = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options, :selected => 'Title'}),{ :onchange => "change_rule(this,'rule-condition')" } 
     = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
     = select_tag 'rule[values][]', options_for_select(Product.all.collect {|p| [p.name, p.name]})
-    = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
-    = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
+    = link_to_function '--', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
+    = link_to_function '++', "add_rule('rule-condition')", :class => 'icon1 plus'
 
   -@options.each do |option|
     %p{:class => "rule-#{option.delete " "} pattern"}
@@ -147,8 +147,8 @@
         = text_field_tag 'rule[values][]'
       -else
         = select_tag 'rule[values][]', options_for_select(Tattribute.find_by_name(option).tattribute_values.collect(&:name))
-      = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
-      = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
+      = link_to_function '--', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
+      = link_to_function '++', "add_rule('rule-condition')", :class => 'icon1 plus'
 
   -@cart_options.each do |option|
     %p{:class => "rule-#{option.delete " "} pattern"}
@@ -158,8 +158,8 @@
         = select_tag 'rule[values][]', options_for_select(ShippingMethodDetail.all.collect(&:name))
       - else
         = text_field_tag 'rule[values][]'
-      = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
-      = link_to_function ' ', "add_cart_rule()", :class => 'icon1 plus'
+      = link_to_function '--', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
+      = link_to_function '++', "add_cart_rule()", :class => 'icon1 plus'
 
 
 = javascript_include_tag 'special_offer'

@@ -1,4 +1,5 @@
 class Rule < ActiveRecord::Base
+  acts_as_tree
   before_save :usage
   serialize :variables
 
