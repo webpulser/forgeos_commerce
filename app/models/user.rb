@@ -2,6 +2,8 @@
 class User < Person
   sortable_attachments
 
+  validates_presence_of :civility_id, :country_id, :birthday
+
   has_one :cart
   has_one :wishlist
   has_one :address_delivery, :order => 'id desc'
@@ -12,4 +14,8 @@ class User < Person
   has_many :address_invoices, :order => 'id desc'
 
   has_many :orders, :order => 'id desc'
+
+  def age
+    ((Date.today - self.birthday) / 365).floor
+  end
 end

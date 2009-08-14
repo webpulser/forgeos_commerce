@@ -3,7 +3,11 @@
 # ==== session's variables
 # * <tt>session[:order_shipping_method_detail_id]</tt> - an id of a <i>ShippingMethodDetail</i> choice by user
 # * <tt>session[:order_voucher_ids]</tt> - an id of a <i>Voucher</i> using by user
+
+require 'ruleby'
 class OrderController < ApplicationController
+
+  include Ruleby
 
   before_filter :can_create_order?, :only => :create
   before_filter :get_cart, :only => :new
@@ -222,4 +226,17 @@ private
       redirect_to(:action => 'informations')
     end
   end
+
+  protected
+    def shipping_rule
+      engine :shipping_rule_engine do |e|
+        rule_builder = ShippingRule.new(e)
+        rule_builder.cart = @cart
+        rule_builder.rules
+
+          
+      end
+    end
+
+
 end

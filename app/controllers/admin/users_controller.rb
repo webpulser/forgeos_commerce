@@ -126,7 +126,7 @@ class Admin::UsersController < Admin::BaseController
     @users = User.all(:conditions => conditions )
     flash[:error] = I18n.t('user.search.failed').capitalize if @users.empty?
 
-    export_newsletter if params[:commit] == I18n.t('export').capitalize
+    return export_newsletter if params[:commit] == I18n.t('export').capitalize
     render :template => 'admin/users/index'
   end
 

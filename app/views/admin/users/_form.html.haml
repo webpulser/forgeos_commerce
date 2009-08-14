@@ -31,6 +31,11 @@
         = f.text_field :lastname
       %p
         %b
+          = f.label :birthday, I18n.t('birthday').capitalize
+          \:
+          = f.date_select :birthday, :start_year => 1900, :prompt => true
+      %p
+        %b
           = f.label :civility_id, I18n.t('civility').capitalize
           \:
         = f.select :civility_id, Civility.all.collect{ |c| [c.name,c.id] }
