@@ -1,9 +1,9 @@
 class Admin::TattributeValuesController < Admin::BaseController
   before_filter :get_tattribute
-  before_filter :get_tattribute_value, :except => [:new, :create, :index]
+  before_filter :get_tattribute_value, :only => [:edit, :update, :destroy, :show]
+  before_filter :new_tatttribute_value, :only => [:new, :create]
  
   def new
-    @tattribute_value = @tattribute.tattribute_values.new(params[:tattribute_value])
     render('create')
   end
 
@@ -12,7 +12,6 @@ class Admin::TattributeValuesController < Admin::BaseController
   # * tattribute_id = Tattribute's id
   # * attribute = Hash of Attribute's attributes
   def create
-    @tattribute_value = @tattribute.tattribute_values.new(params[:tattribute_value])
     if @tattribute_value.save
       flash[:notice] = I18n.t('tattribute_value.create.success').capitalize
       redirect_to([:edit, :admin , @tattribute])
@@ -50,7 +49,10 @@ class Admin::TattributeValuesController < Admin::BaseController
 private
   def get_tattribute
     @tattribute = Tattribute.find_by_id(params[:id]) || Tattribute.find_by_id(params[:tattribute_id])
-
+    unless @tattribute
+      flash[:error] = I18n.t('tattribute.not_found').capitalize
+      return redirect_to(admin_tattributes_path)
+    end
     if @tattribute.dynamic
       flash[:warning] = I18n.t('tattribute.create.dynamic').capitalize
       return redirect_to([:edit, :admin, tattribute])
@@ -60,5 +62,8 @@ private
   def get_tattribute_value
     @tattribute_value = @tattribute.tattribute_values.find_by_id(params[:tattribute_id])
   end
-
+  
+  def new_tattribute_value
+    @tattribute_value = @tattribute.tattribute_values.new(params[:tattribute_value])
+  end
 end

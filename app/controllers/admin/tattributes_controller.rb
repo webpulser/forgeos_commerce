@@ -1,13 +1,15 @@
 # This Controller Manage Tattributes and his association with
 # Attributes
 class Admin::TattributesController < Admin::BaseController
+  before_filter :get_tattributes, :only => [:index]
+  before_filter :get_tattribute, :only => [:edit, :update, :destroy, :show]
+  before_filter :new_tattribute, :only => [:new, :create]
+  
   # List Tattribute
   def index
-    @tattributes = Tattribute.all
   end
 
   def new
-    @tattribute = Tattribute.new(params[:tattribute])
     render :action => 'create'
   end
 
@@ -15,7 +17,6 @@ class Admin::TattributesController < Admin::BaseController
   # ==== Params
   # * tattribute = Hash of Tattribute's attributes
   def create
-    @tattribute = Tattribute.new(params[:tattribute])
     if @tattribute.save
       flash[:notice] = I18n.t('tattribute.create.success').capitalize
       redirect_to([:edit, :admin, @tattribute])
@@ -28,11 +29,9 @@ class Admin::TattributesController < Admin::BaseController
   # ==== Params
   # * id = Tattribute's id
   def edit
-    @tattribute = Tattribute.find_by_id(params[:id])
   end
 
   def update
-    @tattribute = Tattribute.find_by_id(params[:id])
     if @tattribute.update_attributes(params[:tattribute])
       flash[:notice] = I18n.t('tattribute.update.success').capitalize
     else
@@ -45,7 +44,6 @@ class Admin::TattributesController < Admin::BaseController
   # ==== Params
   # * id = Tattribute's id
   def destroy
-    @tattribute = Tattribute.find_by_id(params[:id])
     if @tattribute.destroy
       flash[:notice] = I18n.t('tattribute.destroy.success').capitalize
     else
@@ -54,4 +52,16 @@ class Admin::TattributesController < Admin::BaseController
     return redirect_to(:action => 'index')
   end
 
+private
+  def get_tattributes
+    @tattributes = Tattribute.all
+  end
+  
+  def get_tattribute
+    @tattribute = Tattribute.find_by_id(params[:id])
+  end
+  
+  def new_tattribute
+    @tattribute = Tattribute.new(params[:tattribute])
+  end
 end
