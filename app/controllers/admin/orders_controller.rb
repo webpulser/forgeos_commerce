@@ -3,6 +3,7 @@ class Admin::OrdersController < Admin::BaseController
   before_filter :get_order, :only => [:show, :edit, :update, :destroy, :pay, :accept, :sent]
   before_filter :new_order, :only => [:new, :create]
   after_filter :render_list, :only => [:destroy, :pay, :accept, :sent]
+  before_filter :build_addresses, :only => [:create, :update]
   
   def index
   end
@@ -15,16 +16,6 @@ class Admin::OrdersController < Admin::BaseController
   end
   
   def create
-    if params[:address_invoice] && address_invoice = AddressInvoice.create(params[:address_invoice])
-      @order.address_invoice = address_invoice
-    else
-      @order.address_invoice = @order.user.address_invoice
-    end
-    if params[:address_delivery] && address_delivery = AddressDelivery.create(params[:address_delivery])
-      @order.address_delivery = address_delivery
-    else
-      @order.address_delivery = @order.user.address_delivery
-    end
     if @order.save
       flash[:notice] = I18n.t('order.create.success').capitalize
     else
@@ -36,16 +27,6 @@ class Admin::OrdersController < Admin::BaseController
   end
   
   def update
-    if address_invoice = AddressInvoice.create(params[:address_invoice])
-      @order.address_invoice = address_invoice
-    else
-      @order.address_invoice = @order.user.address_invoice
-    end
-    if address_delivery = AddressDelivery.create(params[:address_delivery])
-      @order.address_delivery = address_delivery
-    else
-      @order.address_delivery = @order.user.address_delivery
-    end
     if @order.update_attributes(params[:order])
       flash[:notice] = I18n.t('order.update.success').capitalize
     else
@@ -92,6 +73,15 @@ private
   
   def new_order
     @order = Order.new(params[:order])
+  end
+  
+  def build_addresses
+    unless @order.build_address_invoice(params[:address_invoice])
+      @order.address_invoice = @order.user.address_invoice
+    end
+    unless @order.build_address_delivery(params[:address_delivery])
+      @order.address_delivery = @order.user.address_delivery
+    end
   end
   
   def render_list
