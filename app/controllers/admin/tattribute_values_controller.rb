@@ -1,7 +1,7 @@
 class Admin::TattributeValuesController < Admin::BaseController
   before_filter :get_tattribute
   before_filter :get_tattribute_value, :only => [:edit, :update, :destroy, :show]
-  before_filter :new_tatttribute_value, :only => [:new, :create]
+  before_filter :new_tattribute_value, :only => [:new, :create]
  
   def new
     render('create')
