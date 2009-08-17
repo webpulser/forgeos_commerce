@@ -1,5 +1,10 @@
 # This controller Manage Users
 class Admin::UsersController < Admin::BaseController
+
+  before_filter :get_user, :only => [:show, :activate, :edit, :update, :destroy]
+  before_filter :new_user, :only => [:new, :create]
+  before_filter :get_addresses, :only => [:create, :update]
+
   # List all users
   def index
     @users = User.all
@@ -9,55 +14,9 @@ class Admin::UsersController < Admin::BaseController
   # ==== Params 
   # * <i>id</i> = User's id
   def show
-    @user = User.find_by_id(params[:id])
-  end
-
-  def activate
-    @user = User.find_by_id(params[:id])
-    unless @user.active?
-      if @user.activate
-        flash[:notice] = I18n.t('user.activation.success').capitalize
-      else
-        flash[:error] = I18n.t('user.activation.failed').capitalize
-      end
-    else
-      if @user.disactivate
-        flash[:notice] = I18n.t('user.disactivation.success').capitalize
-      else
-        flash[:error] = I18n.t('user.disactivation.failed').capitalize
-      end
-    end
-    if request.xhr? 
-      index
-      return render(:partial => 'list', :locals => { :users => @users })
-    else
-      return redirect_to(:back)
-    end
   end
 
   def new
-    @user = User.new(params[:user])
-    render :action => 'create'
-  end
-
-  # Create an User
-  # ==== Params
-  # * <i>user</i> = Hash of User attributes
-  # * <i>address_invoice</i> = Hash of Railscommerce::AddressInvoice attributes
-  # * <i>address_delivery</i> = Hash of Railscommerce::AddressDelivery attributes
-  def create
-    @user = User.new(params[:user])
-    @user.build_address_invoice(params[:address_invoice]) unless @user.address_invoice
-    @user.build_address_delivery(params[:address_delivery]) unless @user.address_delivery
-    if @user.avatar.nil? && params[:avatar] && params[:avatar][:uploaded_data] && params[:avatar][:uploaded_data].blank?
-      @user.build_avatar(params[:avatar])
-    end
-    if @user.save
-      flash[:notice] = I18n.t('user.create.success').capitalize
-      redirect_to(edit_admin_user_path(@user))
-    else
-      flash[:error] = I18n.t('user.create.failed').capitalize
-    end
   end
 
   # Edit an User
@@ -67,13 +26,26 @@ class Admin::UsersController < Admin::BaseController
   # * <i>address_invoice</i> = Hash of Railscommerce::AddressInvoice attributes
   # * <i>address_delivery</i> = Hash of Railscommerce::AddressDelivery attributes
   def edit
-    @user = User.find_by_id(params[:id])
+  end
+
+  # Create an User
+  # ==== Params
+  # * <i>user</i> = Hash of User attributes
+  # * <i>address_invoice</i> = Hash of Railscommerce::AddressInvoice attributes
+  # * <i>address_delivery</i> = Hash of Railscommerce::AddressDelivery attributes
+  def create
+    if @user.avatar.nil? && params[:avatar] && params[:avatar][:uploaded_data] && params[:avatar][:uploaded_data].blank?
+      @user.build_avatar(params[:avatar])
+    end
+    if @user.save
+      flash[:notice] = I18n.t('user.create.success').capitalize
+      return redirect_to([:admin, @user])
+    else
+      flash[:error] = I18n.t('user.create.failed').capitalize
+    end
   end
 
   def update
-    @user = User.find_by_id(params[:id])
-    @user.build_address_invoice(params[:address_invoice]) unless @user.address_invoice
-    @user.build_address_delivery(params[:address_delivery]) unless @user.address_delivery
     upload_avatar 
     if @user.update_attributes(params[:user]) &&
       @user.address_invoice.update_attributes(params[:address_invoice]) &&
@@ -88,20 +60,38 @@ class Admin::UsersController < Admin::BaseController
   # Remotly Destroy an User
   # return the list of all users
   def destroy
-    @user = User.find_by_id(params[:id])
-    if @user && request.delete?  
-      if @user.destroy
-        flash[:notice] = I18n.t('user.destroy.success').capitalize
-      else
-        flash[:error] = I18n.t('user.destroy.failed').capitalize
-      end
+    if @user.destroy
+      flash[:notice] = I18n.t('user.destroy.success').capitalize
     else
-      flash[:error] = "User does not exist"
+      flash[:error] = I18n.t('user.destroy.failed').capitalize
     end
+
     index
     render :partial => 'list', :locals => { :users => @users }
   end
 	
+  def activate
+    unless @user.active?
+      if @user.activate
+        flash[:notice] = I18n.t('user.activation.success').capitalize
+      else
+        flash[:error] = I18n.t('user.activation.failed').capitalize
+      end
+    else
+      if @user.disactivate
+        flash[:notice] = I18n.t('user.disactivation.success').capitalize
+      else
+        flash[:error] = I18n.t('user.disactivation.failed').capitalize
+      end
+    end
+    if request.xhr?
+      index
+      render(:partial => 'list', :locals => { :users => @users })
+    else
+      return redirect_to(:back)
+    end
+  end
+
   # example action to return the contents
   # of a table in CSV format
   def export_newsletter
@@ -115,7 +105,7 @@ class Admin::UsersController < Admin::BaseController
     end
   end
 
-  # filter users by something, only by gender & country for the moment
+  # Filter users by something, only by gender & country for the moment
   def filter
     return redirect_to(:action => 'index') unless params[:filter]
     @gender = params[:filter][:gender]
@@ -131,6 +121,22 @@ class Admin::UsersController < Admin::BaseController
   end
 
 private
+
+  def get_user
+    unless @user = User.find_by_id(params[:id])
+      flash[:notice] = I18n.t('user.not_exist').capitalize
+      return redirect_to(admin_users_path)
+    end
+  end
+
+  def new_user
+    @user = User.new(params[:user])
+  end
+
+  def get_addresses
+    @user.build_address_invoice(params[:address_invoice]) unless @user.address_invoice
+    @user.build_address_delivery(params[:address_delivery]) unless @user.address_delivery
+  end
 
   def stream_csv
      filename = params[:action] + ".csv"
