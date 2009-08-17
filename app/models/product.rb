@@ -19,6 +19,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :url
   validates_uniqueness_of :url
   has_one :meta_info, :as => :target
+  accepts_nested_attributes_for :meta_info
 
 
   define_index do

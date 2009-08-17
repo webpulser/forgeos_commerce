@@ -164,23 +164,25 @@
             \&nbsp;
     .step.open
       %a.small-icons.step-title{ :href => "#" }
-        Meta description
+        = I18n.t('meta_description').capitalize
       .inner-step.meta
-        %p
-          %span
-            Title :
-          %textarea.text
-            Our company
-        %p
-          %span
-            Description :
-          %textarea.text
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
-        %p
-          %span
-            Keywords :
-          %textarea.text
-            company, business, design, internet
+        - product.build_meta_info unless product.meta_info
+        - f.fields_for :meta_info do |meta_info|
+          %p
+            %span
+              = I18n.t('title').capitalize
+              \:
+            = meta_info.text_area :title, :class => 'text'
+          %p
+            %span
+              = I18n.t('description').capitalize
+              \:
+            = meta_info.text_area :description, :class => 'text'
+          %p
+            %span
+              = I18n.t('keyword', :count => 2).capitalize
+              \:
+            = meta_info.text_area :keywords, :class => 'text'
     .step.disabled
       %a.small-icons.step-title{ :href => "#" }
         Graphic template
