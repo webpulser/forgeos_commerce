@@ -17,6 +17,6 @@
         %td
           = orders_detail.price
         %td
-          = link_to I18n.t('edit').capitalize, { :controller => 'admin/orders', :action => 'edit_detail', :id => order.id, :detail_id => orders_detail.id }
+          = link_to I18n.t('edit').capitalize, { :controller => 'admin/order_details', :action => 'edit', :id => orders_detail.id, :order_id => order.id }
           \-
-          = link_to_remote I18n.t('destroy').capitalize, :url => { :controller => 'admin/orders', :action => 'destroy_detail', :id => order.id, :detail_id => orders_detail.id }, :update => 'orders_details', :confirm => I18n.t('order_detail.destroy.confirm').capitalize
+          = link_to_remote I18n.t('destroy').capitalize, :url => { :controller => 'admin/order_details', :action => 'destroy', :id => order.id, :detail_id => orders_detail.id }, :update => 'orders_details', :confirm => I18n.t('order_detail.destroy.confirm').capitalize

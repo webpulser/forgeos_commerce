@@ -2,10 +2,9 @@ class Admin::OrderDetailsController < Admin::BaseController
   before_filter :get_order
   before_filter :get_order_detail, :only => [:edit, :update, :destroy, :show]
   before_filter :new_order_detail, :only => [:new, :create]
-  after_filter :get_products, :only => [:create, :update]
+  before_filter :get_products, :only => [:new, :edit, :create, :update]
   
   def new
-    @products = Product.all
     render 'create'
   end
   
@@ -24,13 +23,14 @@ class Admin::OrderDetailsController < Admin::BaseController
   end
   
   def update
-    if request.post?
-      if @orders_detail.update_attributes(params[:orders_detail])
-        flash[:notice] = I18n.t('order_detail.update.success').capitalize
-      else
-        flash[:error] = I18n.t('order_detail.update.failed').capitalize
-      end
+    if @orders_detail.update_attributes(params[:orders_detail])
+      puts "cool"*20
+      flash[:notice] = I18n.t('order_detail.update.success').capitalize
+    else
+      puts "fuck"*20
+      flash[:error] = I18n.t('order_detail.update.failed').capitalize
     end
+    render 'edit'
   end
   
   def destroy
@@ -42,7 +42,7 @@ class Admin::OrderDetailsController < Admin::BaseController
   
 private
   def get_order
-    @order = Order.find_by_id(params[:id]) || Order.find_by_id(params[:order_id])
+    @order = Order.find_by_id(params[:order_id]) || Order.find_by_id(params[:id])
     unless @order
       flash[:error] = I18n.t('order.not_found').capitalize
       return redirect_to(admin_orders_path)
@@ -54,7 +54,7 @@ private
   end
  
   def get_order_detail
-    @orders_detail = @order.orders_details.find_by_id(params[:detail_id])
+    @orders_detail = @order.orders_details.find_by_id(params[:id])
   end
  
   def get_products

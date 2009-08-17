@@ -1,10 +1,11 @@
-- form_for :orders_detail, orders_detail, :url => { :id => orders_detail.order_id , :detail_id => orders_detail.id }, :html => { :id => 'detail_form' } do |f|
+- form_for :order_details, order_details, :html => { :id => 'detail_form' } do |f|
+  = f.hidden_field :order_id
   = f.error_messages
   %p
     %b
       = I18n.t('product', :count => 1).capitalize
       \:
-    = collection_select 'product', 'id', products, :id, :name, { :prompt => I18n.t('please_select').capitalize}, :onchange => remote_function(:url => { :controller => 'admin/orders', :action => "get_product", :id => orders_detail.order_id }, :with => "'product_id=' + this.value", :update => 'detail_form' )
+    = collection_select 'product', 'id', products, :id, :name, { :prompt => I18n.t('please_select').capitalize}, :onchange => remote_function(:url => { :controller => 'admin/orders', :action => "get_product", :id => order_details.order_id }, :with => "'product_id=' + this.value", :update => 'detail_form' )
   %p
     %b
       = f.label :name, I18n.t('name').capitalize
@@ -27,4 +28,4 @@
     = f.text_field :rate_tax
   %p
   = f.submit I18n.t('save').capitalize
-- content_for :tools, link_to(I18n.t('order.update.action').capitalize, [:admin, orders_detail.order], :class => 'manage')
+- content_for :tools, link_to(I18n.t('order.update.action').capitalize, [:admin, order_details.order], :class => 'manage')

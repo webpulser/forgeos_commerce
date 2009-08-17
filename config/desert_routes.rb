@@ -25,7 +25,11 @@ namespace :admin do |admin|
   admin.resources :tattributes do |tattribute|
     tattribute.resources :values, :controller => 'tattribute_values'
   end
-  admin.resources :orders
+
+  admin.resources :orders do |order|
+    order.resources :details, :controller => 'order_details'
+  end
+
   admin.resources :pictures
   admin.resources :product_types
   admin.resources :products, :collection => { :url => :post }, :member => { :activate => :post }
