@@ -60,7 +60,7 @@ class Product < ActiveRecord::Base
 
 
   def synchronize_stock
-    if active && stock < 1
+    if active && stock.to_i < 1
       self.update_attribute('active', false)
     end
   end

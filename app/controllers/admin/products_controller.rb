@@ -102,6 +102,7 @@ private
       flash[:error] = I18n.t('product.found.failed').capitalize
       redirect_to(admin_products_path)
     end
+    params[:product] = params[:pack] if params[:pack]
   end
 
   def new_product
