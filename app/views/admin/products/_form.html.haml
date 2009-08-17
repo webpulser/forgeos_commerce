@@ -1,116 +1,194 @@
-#tabs
-  %ul
-    %li
-      %a{ :href => "#tabs-1" }
-        = I18n.t('information', :count=>2).capitalize
-    %li
-      %a{ :href => "#tabs-2" }
-        = I18n.t('picture', :count => 2).capitalize
-    %li
-      %a{ :href => "#tabs-3" }
-        = I18n.t('media.other').capitalize
-  #tabs-1
-    - form_for [:admin, product], :html => { :id => 'static_attributes' } do |f|
-      = f.error_messages
-      %p
-        %b
-          = f.label :deleted, I18n.t('deleted').capitalize
-          \:
-        = f.check_box :deleted
-      %p
-        %b
-          = f.label :product_type_id, I18n.t('product_type', :count => 1).capitalize
-          \:
-        = f.collection_select :product_type_id, ProductType.all, :id, :name, { :prompt => true }
-      %p
-        %b
-          = f.label :categories, I18n.t('category', :count => 2).capitalize
-          \:
-        #categories
-          %ul
-            = render :partial => 'admin/categories/list', :locals => { :categories => Category.find_all_by_parent_id(nil) }
-        = product_categories_tree(product.category_ids)
-      %p
-        %b
-          = f.label :reference, I18n.t('reference').capitalize
-          \:
-        = f.text_field :reference
-      %p
-        %b
-          = f.label :name, I18n.t('name').capitalize
-          \:
-        = f.text_field :name
-      %p
-        %b
-          = f.label :description, I18n.t('description').capitalize
-          \:
-        = f.text_area :description
-      %p
-        %b
-          = f.label :selling_date, I18n.t('selling_date').capitalize
-          \:
-        = f.date_select :selling_date, :include_blank => true
-      %p
-        %b
-          = f.label :offer_month, I18n.t('offer_month').capitalize
-          \:
-        = f.check_box :offer_month
-      %p
-        %b
-          = f.label :on_first_page, I18n.t('on_first_page').capitalize
-          \:
-        = f.check_box :on_first_page
-      %p
-        %b
-          = f.label :stock, I18n.t('stock', :count => 1).capitalize
-          \:
-        = f.text_field :stock
-      %p
-        %b
-          = f.label :price, I18n.t('price', :count => 1).capitalize
-          \:
-        = f.text_field :price
-      %p
-        %b
-          = f.label :rate_tax, I18n.t('rate_tax').capitalize
-          \:
-        = f.text_field :rate_tax
-      %p
-        %b
-          = f.label :weight, I18n.t('weight').capitalize
-          \:
-        = f.text_field :weight
-      %p
-        %b
-          = f.label :keywords, I18n.t('keyword', :count => 2).capitalize
-          \:
-        = f.text_field :keywords
-      %p
-        %b
-          = f.label :url, I18n.t('url', :count => 2).capitalize
-          \:
-        = f.text_field :url
-      - unless product.new_record? || product.product_type.nil?
-        - product.product_type.tattributes.each do |tattr|
-          %p
-            %b
-              = label_tag tattr.name
-              \:
-            - unless tattr.dynamic?
-              = select_tag "product[tattribute_value_ids][]", options_from_collection_for_select(tattr.tattribute_values, :id, :name, (tattr.tattribute_value_ids & product.tattribute_value_ids)), :multiple => true
-            - else
-              - dynamic_attribute = product.dynamic_tattribute_values.find_by_tattribute_id(tattr.id)
-              = text_field "dynamic_tattribute_values[#{tattr.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?)
-      %center
-        = f.submit I18n.t('save').capitalize
-  #tabs-2
-    #product_pictures
-      = link_to_unless product.new_record?,I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'product', :target_id => product.id), :class => 'add'
-      #list_pictures
-        = render :partial => 'admin/pictures/list', :locals => { :pictures => product.attachments.find_all_by_type('Picture'), :target => 'product', :target_id => product.id }
-  #tabs-3
-    #product_medias
-      = link_to_unless product.new_record?,I18n.t('media.create.action').capitalize, new_admin_media_path(:target => 'product', :target_id => product.id), :class => 'add'
-      #list_medias
-        = render :partial => 'admin/medias/list', :locals => { :medias => product.attachments, :target => 'product', :target_id => product.id, :remote => true }
-= javascript_tag "$(function(){ $('#tabs').tabs(); })"
+- form_for [:admin ,product], :html => { :id => 'wrap' } do |f|
+  .backgrounds.big-header
+    = f.text_field :name
+    .interact-links
+      = fg_submit_tag 'save_changes'
+      = I18n.t('or')
+      = link_to I18n.t('cancel').capitalize, admin_products_path, :class => 'back-link'
+  #content.grid_12.alpha.omega
+    #product
+      .grid_9.omega
+        .grid_4.alpha.omega
+          = f.label :price, "#{I18n.t('price', :count => 1).capitalize}<sup class=\"required\">*</sup>"
+          = f.text_field :price, :class => 'backgrounds grid_2 alpha omega', :id => 'price'
+          %span.currency
+            = $currency.html
+        = f.label :product_type_id, "#{I18n.t('product_type', :count => 1).capitalize}<sup class=\"required\">*</sup>"
+        %div
+          = f.collection_select :product_type_id, ProductType.all, :id, :name, { :prompt => I18n.t('please_select') }
+        .tool-tip-me
+          .stock
+            %label{ :for => "product-stock" }
+              Stock
+            %div
+              %select#product-stock{ :name => "product-stock" }
+                %option{ :selected => "selected", :value => "default" }
+                  Track low stock level
+          #product-in-stock.tool-tip-content
+            .content
+              %label{ :for => "in-stock" }
+                Products in stock
+              %input#in-stock.backgrounds{ :name => "in-stock", :type => "text" }
+              %label{ :for => "out-stock-action" }
+                if out of sotck
+              %div
+                %select
+                  %option{ :selected => "selected", :value => "0" }
+                    stop sales
+              .clear
+          .clear
+        %label{ :for => "stock-keeping" }
+          Stock keeping unit
+        %input#stock-keeping.backgrounds{ :name => "tock-keeping", :type => "text" }
+      #product-images.grid_3.omega
+        #featured-picture
+          Featured picture
+        = hidden_field_tag 'product[attachment_ids][]'
+        %ul.sortable
+          - product.pictures.each do |picture|
+            %li
+              = link_to_function '', "$(this).parents('li').remove()", :title => I18n.t('picture.destroy.confirm').capitalize, :class => 'big-icons trash'
+              = link_to '', [:edit, :admin, picture], :class => 'big-icons edit'
+              = hidden_field_tag 'product[attachment_ids][]', picture.id
+              = image_tag picture.public_filename('')
+              .handler
+                .inner
+          %li.clear
+        %a.backgrounds.button{ :href => "#" }
+          %span.big-icons.add-picture
+            Add picture
+      .clear
+      .grid_12.omega
+        = f.label :description, I18n.t('description').capitalize
+        %div{ :style => 'clear: left;'}
+          = f.text_area :description, :cols => 80, :class => 'mceEditor'
+      .option-panel
+        .backgrounds.content-header
+        %a.small-icons.panel{ :href => "#" }
+          linked files
+        .option-panel-content
+          %a.backgrounds.button.right{ :href => "#" }
+            %span.small-icons.add-file
+              Add file
+          .grid_9.sortable
+            - product.attachments.all(:conditions => ['type != "Picture"']).each do |attachment|
+              = block_container :product, :attachment, attachment
+          .clear
+      - if product.product_type
+        .option-panel
+          .backgrounds.content-header
+          %a.small-icons.panel{ :href => "#" }
+            attributes
+          .option-panel-content
+            - product.product_type.tattributes.each do |option|
+              .fake-hr
+                %span.option-second-title
+                  =  option.name
+              - if option.dynamic?
+                - dynamic_attribute = product.dynamic_tattribute_values.find_by_tattribute_id(option.id)
+                = text_field "dynamic_tattribute_values[#{option.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?)
+              - else
+                -  option.tattribute_values.each do |value|
+                  .grid_3.omega
+                    = check_box_tag 'product[tattribute_value_ids][]', value.id, product.tattribute_value_ids.include?(value.id) 
+                    = value.name
+              .clear
+      .option-panel.disabled
+        .backgrounds.content-header
+        %a.small-icons.panel{ :href => "#" }
+          variants
+        .option-panel-content
+          %a.backgrounds.button.right{ :href => "#" }
+            %span.small-icons.add-variant
+              Create a variant
+          .block-container
+            %span.block-type
+            %span.block-name
+              %a.small-icons.panel{ :href => "#" }
+                Domaine de Villemont 2008 37cl
+            .variant
+  #right-sidebar.grid_4.alpha.omega
+    .step.status.open
+      %div
+        %select.unpublished{ :name => "status" }
+          %option{ :selected => "selected", :value => "published" }
+            published
+          %option{ :value => "unpublished" }
+            unpublished
+      .clear
+      = f.check_box :on_first_page
+      = I18n.t('on_first_page').capitalize
+      %br
+      %input#limited-time-offer.check-me-it-appears{ :name => "limited-time-offer", :type => "checkbox" }
+      Limited time offer
+      .i-will-appear
+        Stop after
+        %input#limited-time-offer-end{ :name => "limited-time-offer-end", :type => "text" }
+      %br
+      %input#limited-sales-offer.check-me-it-appears{ :name => "limited-sales-offer", :type => "checkbox" }
+      Limited sales offer
+      .i-will-appear
+        Stop after
+        %input#limited-sales-offer-end{ :name => "limited-sales-offer-end", :type => "text" }
+        sales
+    .step
+      = link_to I18n.t('product.duplicate.action'), '#', :class => 'small-icons duplicate' 
+      = link_to I18n.t('product.destroy.action'), '#', :class => 'small-icons delete' 
+    .step.open
+      %a.small-icons.step-title{ :href => "#" }
+        Associated to collection
+      #association-tree.inner-step
+        %ul 
+          = render :partial => 'admin/categories/list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
+        .clear
+    .step.open
+      %a.small-icons.step-title{ :href => "#" }
+        Tags
+      .inner-step.tags
+        %input#tag.backgrounds{ :name => "tag", :type => "text" }
+        %span
+          Tag name
+          %a.big-icons.gray-destroy{ :href => "#" }
+            \&nbsp;
+        %span
+          Tag name
+          %a.big-icons.gray-destroy{ :href => "#" }
+            \&nbsp;
+        %span
+          Tag name
+          %a.big-icons.gray-destroy{ :href => "#" }
+            \&nbsp;
+        %span
+          Tag name
+          %a.big-icons.gray-destroy{ :href => "#" }
+            \&nbsp;
+    .step.open
+      %a.small-icons.step-title{ :href => "#" }
+        Meta description
+      .inner-step.meta
+        %p
+          %span
+            Title :
+          %textarea.text
+            Our company
+        %p
+          %span
+            Description :
+          %textarea.text
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
+        %p
+          %span
+            Keywords :
+          %textarea.text
+            company, business, design, internet
+    .step.disabled
+      %a.small-icons.step-title{ :href => "#" }
+        Graphic template
+      .inner-step.glossy
+        %select{ :name => "design" }
+          %option{ :selected => "selected", :value => "default" }
+            Corporate blue design
+          %option{ :value => "no" }
+            Corporate green design
+      .clear
+  .clear

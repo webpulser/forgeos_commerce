@@ -1,3 +1,2 @@
-%h1
-  = I18n.t('product.update.action').capitalize
 = render :partial => 'form', :locals => { :product => @product }
+= include_tiny_mce_if_needed

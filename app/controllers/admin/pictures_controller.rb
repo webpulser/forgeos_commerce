@@ -26,28 +26,25 @@ class Admin::PicturesController < Admin::BaseController
   def create
     respond_to do |format|
       format.html do
-        @picture = Picture.new(params[:picture])
-        if @picture.save
-          sortable_picture = @picture.sortable_attachments.new
-          flash[:notice] = I18n.t('picture.create.success').capitalize
-          case params[:target]
-          when 'product'
-            picturable = Product.find_by_id(params[:target_id])
-          when 'product_type'
-            picturable = ProductType.find_by_id(params[:target_id])
-          when 'tattribute'
-            picturable = Tattribute.find_by_id(params[:target_id])
-          when 'tattribute_value'
-            picturable = TattributeValue.find_by_id(params[:target_id])
-          when 'category'
-            picturable = Category.find_by_id(params[:target_id])
-          else
-            return redirect_to(:action => 'index')
-          end
-          sortable_picture.attachable = picturable
-          sortable_picture.save
-          return redirect_to([:edit, :admin, picturable])
+        case params[:target]
+        when 'product'
+          picturable = Product.find_by_id(params[:target_id])
+        when 'product_type'
+          picturable = ProductType.find_by_id(params[:target_id])
+        when 'tattribute'
+          picturable = Tattribute.find_by_id(params[:target_id])
+        when 'tattribute_value'
+          picturable = TattributeValue.find_by_id(params[:target_id])
+        when 'category'
+          picturable = Category.find_by_id(params[:target_id])
+        else
+          return redirect_to(:action => 'index')
+        end
 
+        if picturable && @picture = Picture.create(params[:picture])
+          picture.attachments << @picture
+          flash[:notice] = I18n.t('picture.create.success').capitalize
+          return redirect_to([:edit, :admin, picturable])
         else
           flash[:error] = I18n.t('picture.create.failed').capitalize
         end
@@ -56,25 +53,25 @@ class Admin::PicturesController < Admin::BaseController
       format.json do
         if params[:Filedata]
           require 'mime/types'
+          case params[:target]
+          when 'product'
+            attachable = Product.find_by_id(params[:target_id])
+          when 'product_type'
+            attachable = ProductType.find_by_id(params[:target_id])
+          when 'tattribute'
+            attachable = Tattribute.find_by_id(params[:target_id])
+          when 'tattribute_value'
+            attachable = TattributeValue.find_by_id(params[:target_id])
+          when 'category'
+            attachable = Category.find_by_id(params[:target_id])
+          end
+
           @picture = Picture.new
           @picture.uploaded_data = { 'tempfile' => params[:Filedata], 'content_type' => 'none', 'filename' => params[:Filename] }
           @picture.content_type = MIME::Types.type_for(@picture.filename).to_s
           if @picture.save
-            sortable_picture = @picture.sortable_attachments.new
+            attachable.attachments << @picture
             flash[:notice] = I18n.t('picture.create.success').capitalize
-            case params[:target]
-            when 'product'
-              sortable_picture.attachable = Product.find_by_id(params[:target_id])
-            when 'product_type'
-              sortable_picture.attachable = ProductType.find_by_id(params[:target_id])
-            when 'tattribute'
-              sortable_picture.attachable = Tattribute.find_by_id(params[:target_id])
-            when 'tattribute_value'
-              sortable_picture.attachable = TattributeValue.find_by_id(params[:target_id])
-            when 'category'
-              sortable_picture.attachable = Category.find_by_id(params[:target_id])
-            end
-            sortable_picture.save if sortable_picture.attachable
             render :json => { :result => 'success', :asset => @picture.id}
           else
             render :json => { :result => 'error', :error => @picture.errors.first }

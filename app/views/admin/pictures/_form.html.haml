@@ -9,13 +9,13 @@
     = f.submit I18n.t('save').capitalize
 - content_for :tools, link_to(I18n.t('list').capitalize, admin_pictures_path, :class => 'house' )
 
-= javascript_include_tag 'jquery.uploadify'
+= javascript_include_tag %w(jquery.uploadify swfobject)
 = stylesheet_link_tag 'admin/uploadify'
 - session_key = ActionController::Base.session_options[:key]
 - javascript_tag do
   $(function(){
-  $('#fileUpload').fileUpload({
-  'uploader': '/images/uploadify/uploader.swf',
+  $('#fileUpload').uploadify({
+  'uploader': '/images/uploadify/uploadify.swf',
   = "'cancelImg': '#{image_path('uploadify/cancel.png')}',"
   = "'script': '#{picture.new_record? ? admin_pictures_path : admin_picture_path(picture)}',"
   'scriptData': { 
@@ -35,6 +35,6 @@
   }
   });});
 
-= link_to_function I18n.t('picture.upload.start').capitalize, "$('#fileUpload').fileUploadStart()"
+= link_to_function I18n.t('picture.upload.start').capitalize, "$('#fileUpload').uploadifyUpload()"
 |
-= link_to_function I18n.t('picture.upload.clear_queue').capitalize,"$('#fileUpload').fileUploadClearQueue()"
+= link_to_function I18n.t('picture.upload.clear_queue').capitalize,"$('#fileUpload').uploadifyClearQueue()"

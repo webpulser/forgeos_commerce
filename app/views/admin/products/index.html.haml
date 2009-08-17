@@ -9,7 +9,7 @@
       All Products
     #product-tree
       %ul
-        = render :partial => 'admin/categories/list', :locals => { :categories => Category.find_all_by_parent_id(nil) }
+        = render :partial => 'admin/categories/list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
 #content.grid_12.alpha.omega
   .backgrounds.header
     #search.right

@@ -1,9 +1,9 @@
 class Product < ActiveRecord::Base
   has_and_belongs_to_many :carts
-  has_and_belongs_to_many :categories, :readonly => true
+  has_and_belongs_to_many :product_categories, :readonly => true
   
-  sortable_attachments
-  has_many :pictures, :conditions => { :type => 'Picture' }, :source => :attachment, :through => :sortable_attachments, :readonly => true, :order => 'sortable_attachments.position'
+  has_and_belongs_to_many :attachments, :list => true, :order => 'position'
+  has_and_belongs_to_many :pictures, :association_foreign_key => 'attachment_id', :join_table => 'attachments_products', :class_name => 'Picture', :order => 'position'
   
   has_and_belongs_to_many :tattribute_values, :readonly => true
   has_many :dynamic_tattribute_values, :dependent => :destroy
@@ -18,6 +18,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :product_type_id
   validates_presence_of :url
   validates_uniqueness_of :url
+  has_one :meta_info, :as => :target
 
 
   define_index do
