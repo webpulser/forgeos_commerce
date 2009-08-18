@@ -189,6 +189,7 @@ en:
   send: 'validate shipping'
   tattribute:
     one: "attribute"
+    all: "all attribute"
     other: "attributes"
     create:
       success: 'the attribute was successfully created'

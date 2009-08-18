@@ -1,0 +1,14 @@
+{
+'iTotalDisplayRecords': <%= @tattributes.total_entries || 0 %>,
+'aaData': [
+<% @tattributes.each do |tattribute| %>
+  <% 
+    link_id = "tattribute_#{tattribute.id}"
+  %>
+  [
+  '<%= escape_javascript content_tag(:div, "", :class => 'product-name') %>',
+  '<%= escape_javascript content_tag(:div, link_to(tattribute.name, [:admin, tattribute]), :class => 'product-name') %>'
+    ] <%= ',' unless @tattributes.last == tattribute %>
+<% end %>
+]
+}

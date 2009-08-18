@@ -7,6 +7,13 @@ class Admin::TattributesController < Admin::BaseController
   
   # List Tattribute
   def index
+    respond_to do |format|
+      format.html
+      format.json do
+        sort
+        render :layout => false
+      end
+    end
   end
 
   def new
@@ -63,5 +70,26 @@ private
   
   def new_tattribute
     @tattribute = Tattribute.new(params[:tattribute])
+  end
+  
+  def sort
+    columns = %w(name)
+    conditions = []
+    per_page = params[:iDisplayLength].to_i
+    offset =  params[:iDisplayStart].to_i
+    page = (offset / per_page) + 1
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    if params[:sSearch] && !params[:sSearch].blank?
+      @tattributes = Tattribute.search(params[:sSearch],
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    else
+      @tattributes = Tattribute.paginate(:all,
+        :conditions => conditions,
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    end
   end
 end
