@@ -108,12 +108,50 @@ class Admin::UsersController < Admin::BaseController
   # Filter users by something, only by gender & country for the moment
   def filter
     return redirect_to(:action => 'index') unless params[:filter]
+
     @gender = params[:filter][:gender]
     @country = params[:filter][:country]
 
+    @v_age = params[:filter][:age][:values].to_i
+    @c_age = params[:filter][:age][:conds]
+
     gender = @gender.chomp.split(',').collect(&:to_i)
-    conditions = @country.blank? ? [ 'civility_id IN (?)', gender] : ['civility_id IN (?) AND country_id = ?', gender, @country.to_i]
-    @users = User.all(:conditions => conditions )
+    conditions_ini = [[]]
+    if @country.blank?
+      conditions_ini[0] <<  'civility_id IN (?)'
+      conditions_ini << gender
+    else
+      conditions_ini[0] << 'civility_id IN (?) AND country_id = ?'
+      conditions_ini << gender
+      conditions_ini <<@country.to_i
+    end
+
+    unless @v_age.nil? && @c_age.nil?
+
+      old_date = (Date.today << @v_age*12)
+      
+      case @c_age
+        when '=='
+          conditions_ini[0] << 'birthday BETWEEN ? AND ?'
+          conditions_ini << (old_date << 12)
+        when '!='
+          conditions_ini[0] << 'birthday NOT BETWEEN ? AND ?'
+          conditions_ini << (old_date << 12)
+        when '>='
+          conditions_ini[0] << 'birthday <= ?'
+        when '<='
+          conditions_ini[0] << 'birthday >= ?'
+        when '<'
+          conditions_ini[0] << 'birthday > ?'
+        when '>'
+          conditions_ini[0] << 'birthday < ?'
+      end
+      conditions_ini << old_date
+    end
+
+    conditions_ini[0] = conditions_ini[0].join(' AND ')
+    @users = User.all( :conditions => conditions_ini )
+    
     flash[:error] = I18n.t('user.search.failed').capitalize if @users.empty?
 
     return export_newsletter if params[:commit] == I18n.t('export').capitalize

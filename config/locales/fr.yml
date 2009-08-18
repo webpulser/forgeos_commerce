@@ -91,6 +91,7 @@ fr:
   action_name: "nom de l'action"
   export: 'exporter'
   export_newsletter: 'exporter pour la newsletter'
+  age: 'âge'
   template_by: 'Thème par'
   avatar: 'avatar'
   created_on: 'créé le'

@@ -1,3 +1,6 @@
+- @condition_is = Hash["Is", "=="]
+- @conditions =  Hash["Is not", "!=","Equals or greater than",">=","Equals or less than","<=", "Greater than", ">", "Less than","<"]
+
 %h1
   = I18n.t('user', :count => 2).capitalize
 - form_tag :controller => 'admin/users', :action => 'filter' do
@@ -16,6 +19,12 @@
       = label_tag 'filter[country]', I18n.t('country').capitalize
       \:
       = collection_select 'filter', 'country', Country.find(:all, :order => "name"), :id, :printable_name, :selected => @country.to_i, :prompt => true
+      %br
+      = label_tag 'filter[age]', I18n.t('age').capitalize
+      \:
+      = select_tag 'filter[age][conds]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] } + @conditions.collect{|c| [c[0], c[1]] }, :selected => @c_age)
+      = text_field_tag 'filter[age][values]', @v_age
+
       = submit_tag I18n.t('search').capitalize
       = submit_tag I18n.t('export').capitalize
 #users
