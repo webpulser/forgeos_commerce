@@ -4,8 +4,15 @@ class Admin::ProductTypesController < Admin::BaseController
   # List ProductType
   before_filter :get_product_type, :except => [:index, :new, :create]
   before_filter :new_product_type, :only => [:new, :create]
+  
   def index
-    @product_types = ProductType.all
+    respond_to do |format|
+      format.html
+      format.json do
+        sort
+        render :layout => false
+      end
+    end
   end
 
   def new
@@ -61,5 +68,26 @@ private
 
   def new_product_type
     @product_type = ProductType.new(params[:product_type])
+  end
+  
+  def sort
+    columns = %w(name)
+    conditions = []
+    per_page = params[:iDisplayLength].to_i
+    offset =  params[:iDisplayStart].to_i
+    page = (offset / per_page) + 1
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    if params[:sSearch] && !params[:sSearch].blank?
+      @product_types = ProductType.search(params[:sSearch],
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    else
+      @product_types = ProductType.paginate(:all,
+        :conditions => conditions,
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    end
   end
 end

@@ -1,26 +1,29 @@
-%h1
-  = I18n.t('product_type', :count => 2).capitalize
-- content_for :tools, link_to(I18n.t('product_type.create.action').capitalize, new_admin_product_type_path, :class => 'add' )
-#list
-  %table#table
+= render :partial => 'tabs'
+#sidebar.grid_4.omega.alpha
+  .backgrounds.header
+    %a.backgrounds.action-button{ :href => '#' }
+      %span.big-icons.new-category
+      %span.small-icons.arrow
+  .backgrounds.sidebar-background
+  .sidebar-content
+    %h5.small-icons.pages
+      = link_to I18n.t('product_type.all').capitalize, admin_product_types_path
+    #product-tree
+      %ul
+        = render :partial => 'admin/categories/list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
+
+#content.grid_12.alpha.omega
+  .backgrounds.header
+    #search.right
+      = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
+    .backgrounds.search-form
+  .content-background
+  %table#table.datatable
     %thead
       %tr
         %th
+        %th
           = I18n.t('name').capitalize
-        %th
-          = I18n.t('product', :count => 2).capitalize
-        %th
-          = I18n.t('action', :count => 2).capitalize
     %tbody
-      - @product_types.each do |product_type|
-        %tr
-          %td
-            = h product_type.name
-          %td
-            = product_type.products.count
-          %td
-            = link_to I18n.t('edit').capitalize, edit_admin_product_type_path(product_type)
-            \-
-            = link_to I18n.t('destroy').capitalize, [:admin, product_type], :method => :delete, :confirm => I18n.t('product_type.destroy.confirm').capitalize
 
-= dataTables_tag(3)
+= dataTables_tag 2, :url => admin_product_types_path(:format => :json)

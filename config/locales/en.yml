@@ -384,6 +384,7 @@ en:
       confirm: 'are you sure to delete this product ?'
   product_types: 'product types'
   product_type:
+    all: 'all products type'
     one : 'product type'
     other: 'product types'
     create:

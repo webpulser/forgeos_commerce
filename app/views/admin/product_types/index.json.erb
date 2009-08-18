@@ -1,0 +1,14 @@
+{
+'iTotalDisplayRecords': <%= @product_types.total_entries || 0 %>,
+'aaData': [
+<% @product_types.each do |product_type| %>
+  <% 
+    link_id = "product_type_#{product_type.id}"
+  %>
+  [
+  '<%= escape_javascript content_tag(:div, "", :class => 'product-name') %>',
+  '<%= escape_javascript content_tag(:div, link_to(product_type.name, [:admin, product_type]), :class => 'product-name') %>'
+    ] <%= ',' unless @product_types.last == product_type %>
+<% end %>
+]
+}
