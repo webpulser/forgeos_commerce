@@ -16,6 +16,9 @@ class Admin::TattributesController < Admin::BaseController
     end
   end
 
+  def show
+  end
+
   def new
     render :action => 'create'
   end

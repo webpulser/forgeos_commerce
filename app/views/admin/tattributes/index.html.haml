@@ -10,7 +10,7 @@
       = link_to I18n.t('tattribute.all').capitalize, admin_tattributes_path
     #product-tree
       %ul
-        = render :partial => 'admin/categories/list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
+        = render :partial => 'admin/product_types/list', :locals => { :product_types => ProductType.all }
 
 #content.grid_12.alpha.omega
   .backgrounds.header

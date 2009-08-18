@@ -1,0 +1,6 @@
+- product_types.each do |product_type|
+  %li{ 'folder', :id => "product_type_#{product_type.id}" }
+    %span{:class => 'big-icons big-icons-verti-folder'}
+    - link_to '#', :style => 'width:50%' do
+      = product_type.name
+      %span= product_type.tattributes.count
