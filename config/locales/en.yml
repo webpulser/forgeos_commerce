@@ -442,37 +442,6 @@ en:
       success: 'your account was successfully destroyed'
       failed: 'a problem occured during your account destroy'
       confirm: 'are you sure that you want to delete your account?'
-  role:
-    one: 'role'
-    other: 'roles'
-    create:
-      success: 'the role was successfully created'
-      failed: 'a problem occured during the role creation'
-      action: 'create a role'
-    update:
-      success: 'the role was successfully updated'
-      failed: 'a problem occured during the role update'
-      action: 'edit role'
-    destroy:
-      success: 'the role was successfully destroyed'
-      failed: 'a problem occured during the role destroy'
-      confirm: 'are you sure to delete this role ?'
-  right:
-    one: 'right'
-    other: 'rights'
-    create:
-      success: 'the right was successfully created'
-      failed: 'a problem occured during the right creation'
-      action: 'create a right'
-    update:
-      success: 'the right was successfully updated'
-      failed: 'a problem occured during the right update'
-      action: 'edit right'
-    destroy:
-      success: 'the right was successfully destroyed'
-      failed: 'a problem occured during the right destroy'
-      confirm: 'are you sure to delete this right ?'
-
   price_cuts : 'price cuts'
   price_cut:
     product: 'product'

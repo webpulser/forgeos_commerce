@@ -442,37 +442,6 @@ fr:
       success: 'votre compte à bien été supprimé'
       failed: 'un problème est survenu lors de la suppression de votre compte'
       confirm: "êtes-vous sûr de vouloir supprimer votre compte ?"
-  role:
-    one: 'role'
-    other: 'roles'
-    create:
-      success: "le role a bien été créé"
-      failed: "un problème est survenu lors de la création du role"
-      action: 'créer un role'
-    update:
-      success: "le role a bien été mis à jour"
-      failed: "un problème est survenu lors de la mise à jour du role"
-      action: "éditer le role"
-    destroy:
-      success: "le role a bien été supprimé"
-      failed: "un problème est survenu lors de la suppression du role"
-      confirm: "êtes-vous sûr de vouloir supprimer ce role ?"
-  right:
-    one: 'droit'
-    other: 'droits'
-    create:
-      success: "le droit a bien été créé"
-      failed: "un problème est survenu lors de la création du droit"
-      action: 'créer un droit'
-    update:
-      success: "le droit a bien été mis à jour"
-      failed: "un problème est survenu lors de la mise à jour du droit"
-      action: "éditer le droit"
-    destroy:
-      success: "le droit a bien été supprimé"
-      failed: "un problème est survenu lors de la suppression du droit"
-      confirm: "êtes-vous sûr de vouloir supprimer ce droit ?"
-
   price_cuts : 'prix barrés'
   price_cut:
       product: 'produit'
