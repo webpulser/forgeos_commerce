@@ -7,7 +7,13 @@ class Admin::UsersController < Admin::BaseController
 
   # List all users
   def index
-    @users = User.all
+    respond_to do |format|
+      format.html
+      format.json do
+        sort
+        render :layout => false
+      end
+    end
   end
 
   # Display an User
@@ -205,6 +211,27 @@ private
       @avatar = @user.create_avatar(params[:avatar])
       flash[:error] = @avatar.errors unless @avatar.save
       params[:user].update(:avatar_id => @avatar.id)
+    end
+  end
+
+  def sort
+    columns = %w(lastname email order total last_order joined_on)
+    conditions = []
+    per_page = params[:iDisplayLength].to_i
+    offset =  params[:iDisplayStart].to_i
+    page = (offset / per_page) + 1
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    if params[:sSearch] && !params[:sSearch].blank?
+      @users = User.search(params[:sSearch],
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    else
+      @users = User.paginate(:all,
+        :conditions => conditions,
+        :order => order,
+        :page => page,
+        :per_page => per_page)
     end
   end
 

@@ -95,6 +95,8 @@ fr:
   template_by: 'Thème par'
   avatar: 'avatar'
   created_on: 'créé le'
+  joined_on: 'inscrit le'
+  last_order: 'dernière commande'
   active: 'activé'
   actions: 'actions'
   edit: 'éditer'

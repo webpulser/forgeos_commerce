@@ -95,6 +95,8 @@ en:
   template_by: 'Template by'
   avatar: 'avatar'
   created_on: 'created on'
+  joined_on: 'joined on'
+  last_order: 'last order'
   active: 'active'
   actions: 'actions'
   edit: 'edit'

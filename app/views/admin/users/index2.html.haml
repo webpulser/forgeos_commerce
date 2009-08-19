@@ -1,0 +1,33 @@
+- @condition_is = Hash["Is", "=="]
+- @conditions =  Hash["Is not", "!=","Equals or greater than",">=","Equals or less than","<=", "Greater than", ">", "Less than","<"]
+
+%h1
+  = I18n.t('user', :count => 2).capitalize
+- form_tag :controller => 'admin/users', :action => 'filter' do
+  %p
+    %b
+      = label_tag 'filter', I18n.t('filter').capitalize
+      \:
+    %p
+      = label_tag 'filter[gender]', I18n.t('gender').capitalize
+      \:
+      - genders = []
+      - genders << [I18n.t('all').capitalize, Civility.all.collect(&:id).join(',')]
+      - genders << [I18n.t('woman.other').capitalize, Civility.find_all_by_name(%w(Mses Miss)).collect(&:id).join(',')]
+      - genders << [I18n.t('man.other').capitalize, Civility.find_all_by_name('Mr').collect(&:id).join(',')]
+      = select 'filter', 'gender', genders, :selected => @gender
+      = label_tag 'filter[country]', I18n.t('country').capitalize
+      \:
+      = collection_select 'filter', 'country', Country.find(:all, :order => "name"), :id, :printable_name, :selected => @country.to_i, :prompt => true
+      %br
+      = label_tag 'filter[age]', I18n.t('age').capitalize
+      \:
+      = select_tag 'filter[age][conds]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] } + @conditions.collect{|c| [c[0], c[1]] }, :selected => @c_age)
+      = text_field_tag 'filter[age][values]', @v_age
+
+      = submit_tag I18n.t('search').capitalize
+      = submit_tag I18n.t('export').capitalize
+#users
+  = render :partial => 'list', :locals => { :users => @users }
+
+- content_for :tools, link_to(I18n.t('export_newsletter').capitalize, admin_users_path, :class => 'report_seo' )

@@ -2,6 +2,8 @@
 class User < Person
   validates_presence_of :civility_id, :country_id, :birthday
 
+  belongs_to :civility
+
   has_one :cart
   has_one :wishlist
   has_one :address_delivery, :order => 'id desc'

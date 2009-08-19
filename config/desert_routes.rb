@@ -21,7 +21,7 @@ namespace :admin do |admin|
   admin.resources :categories
   admin.resources :geo_zones
   admin.resources :countries, :controller => 'geo_zones'
-  admin.resources :users, :collection => { :filter => [:post, :get] }
+  admin.resources :users, :collection => { :filter => [:post, :get] }, :member => { :activate => :post }
   admin.resources :tattributes, :collection => { :access_method => :post } do |tattribute|
     tattribute.resources :values, :controller => 'tattribute_values'
   end

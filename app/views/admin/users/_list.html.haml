@@ -1,4 +1,5 @@
-%table#table
+= display_standard_flashes
+%table#table.datatable
   %thead
     %tr
       %th
@@ -10,35 +11,8 @@
       %th
         = I18n.t('email').capitalize
       %th
-        = I18n.t('created_on').capitalize
+        = I18n.t('joined_on').capitalize
       %th
         = I18n.t('active').capitalize
         ?
-      %th
-        = I18n.t('actions').capitalize
   %tbody
-    - users.each do |user|
-      %tr
-        %td
-          = image_tag(user.avatar.public_filename(:small)) if user.avatar
-        %td
-          -#= h user.civility.name
-        %td
-          = h user.fullname
-        %td
-          = h user.email
-        %td
-          = user.created_at
-        %td
-          - form_tag :controller => 'admin/users', :action => 'activate', :id => user.id do |f|
-            = check_box_tag :user, :active, user.active?, :onchange => "$(this.form).trigger('submit')"
-        %td
-          = link_to_remote(I18n.t('user.activation.action').capitalize, :url => { :controller => 'admin/users', :action => 'activate', :id => user.id }, :update => 'users')+ ' -' unless user.active?
-          = link_to I18n.t('edit').capitalize, edit_admin_user_path(user)
-          \-
-          = link_to_remote I18n.t('destroy').capitalize, :url => admin_user_path(user), :method => 'delete', :confirm => I18n.t('user.destroy.confirm').capitalize, :update => 'users'
-
-- content_for :tools, link_to(I18n.t('user.create.action').capitalize, new_admin_user_path, :class => 'add')
-
-= dataTables_tag(7)
-= display_standard_flashes
