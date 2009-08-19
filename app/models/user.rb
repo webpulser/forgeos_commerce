@@ -19,4 +19,9 @@ class User < Person
   def age
     ((Date.today - self.birthday) / 365).floor
   end
+
+  def total_orders
+    total = 0
+    self.orders.collect { |o| total += o.total }
+  end
 end

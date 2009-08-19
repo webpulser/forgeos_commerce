@@ -7,9 +7,9 @@
   .sidebar-content
     %h2.small-icons.all-products
       All customers
-    #role-tree
+    #customer-tree
       %ul
-        /= render :partial => 'admin/roles/list', :locals => { :roles => Role.all }
+        /= render :partial => 'admin/customer/list', :locals => { :categories => Category.all }
 #content.grid_12.alpha.omega
   .backgrounds.header
     #search.right

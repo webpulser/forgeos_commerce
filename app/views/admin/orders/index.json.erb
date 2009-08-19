@@ -1,0 +1,27 @@
+{
+'iTotalDisplayRecords': <%= @orders.total_entries || 0 %>,
+'aaData': [
+<% @orders.each do |order| %>
+  <% link_id = "order_#{order.id}" %>
+  <%  status = [['unpaid', 'unpaid'], ['paid', 'paid'], ['accepted', 'accepted'], ['sended', 'sended'], ['closed', 'closed']] %>
+  [
+  '<%= order.orders_details.count <= 1 ? content_tag(:div, '&nbsp') : escape_javascript(content_tag(:div, '<div class="image">&nbsp;</div>',:class => 'some-variants plus')) %>',
+  '<%= order.id %>',
+  '<%= content_tag(:div, "#{order.total} #{$currency.html}" )%>',
+  '<%= order.orders_details.empty? ? I18n.t('none').capitalize : content_tag(:div, order.get_products, :class => 'order-name') %> ',
+  '<%= order.created_at.to_s(:slashed_fr) %>',
+  '<%= escape_javascript content_tag(:div, link_to(order.user.fullname, [:admin, order.user], :target => '_blank'), :class => 'username') %>',
+  '<%= escape_javascript(select_tag :status, options_for_select(status, order.status), :class => 'published') %>',
+  '<%= escape_javascript link_to('', [:edit, :admin, order], :class => 'small-icons edit-link') -%>
+   <%= escape_javascript link_to_remote('', :url => [:admin, order],
+     :method => :delete,
+     :confirm => I18n.t('user.destroy.confirm').capitalize,
+     :success => "removedataTablesRow('#destroy_#{link_id}')",
+     :html => {
+       :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
+   })
+   -%>'
+    ] <%= ',' unless @orders.last == order %>
+<% end %>
+]
+}

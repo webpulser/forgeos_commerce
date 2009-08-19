@@ -19,6 +19,7 @@ class Order < ActiveRecord::Base
   aasm_state :paid
   aasm_state :accepted
   aasm_state :sended
+  aasm_state :closed
 
   aasm_event :paid do
     transitions :from => :unpaid, :to => :paid
@@ -31,6 +32,10 @@ class Order < ActiveRecord::Base
 
   aasm_event :sended do
     transitions :from => :accepted, :to => :sended
+  end
+
+  aasm_event :sended do
+    transitions :from => :sended, :to => :closed
   end
 
   has_many :orders_details, :dependent => :destroy
@@ -55,5 +60,14 @@ class Order < ActiveRecord::Base
   def shipping_method_price(with_currency=true)
     return super if Currency::is_default? || !with_currency || super.nil?
     ("%01.2f" % (super * $currency.to_exchanges_rate(Currency::default).rate)).to_f
+  end
+
+  def get_products
+    count = self.orders_details.product.count
+    if count == 1
+      return "#{self.orders_details.product.first.first.name}"
+    else
+      return count.to_s + ' ' + I18n.t('product', :count => 2)
+    end
   end
 end

@@ -1,0 +1,26 @@
+{
+'iTotalDisplayRecords': <%= @users.total_entries || 0 %>,
+'aaData': [
+<% @users.each do |user| %>
+  <% link_id = "user_#{user.id}" %>
+  [
+  '<%= content_tag(:div, '&nbsp;',:class => 'small-icons users')%>',
+  '<%= escape_javascript content_tag(:div, link_to(user.fullname, [:admin, user], :target => '_blank'), :class => 'user-name') %>',
+  '<%= mail_to user.email, user.email, :class => 'email' %>',
+  '<%= user.orders.empty? ? I18n.t('none').capitalize : user.orders.count %>',
+  '<%= user.total_orders.blank? ? I18n.t('none').capitalize : content_tag(:div, "#{user.total_orders} #{$currency.html}") %>  ',
+  '<%= content_tag( :div, (user.orders.empty? ? "N/A" : user.orders.last.created_at.to_s(:slashed_fr)), :class => 'last-date') %> ',
+  '<%= user.created_at.to_s(:slashed_fr) %>',
+  '<%= escape_javascript link_to('', [:edit, :admin, user], :class => 'small-icons edit-link') -%>
+   <%= escape_javascript link_to_remote('', :url => [:admin, user],
+     :method => :delete,
+     :confirm => I18n.t('user.destroy.confirm').capitalize,
+     :success => "removedataTablesRow('#destroy_#{link_id}')",
+     :html => {
+       :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
+   })
+   -%>'
+    ] <%= ',' unless @users.last == user %>
+<% end %>
+]
+}
