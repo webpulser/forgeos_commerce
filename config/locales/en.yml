@@ -71,6 +71,7 @@ en:
   sended: 'sended'
 
 # Admin
+  id: 'id'
   information:
     one: 'information'
     other: 'informations'
@@ -85,6 +86,9 @@ en:
   tattribute_values: 'attribute values'
   vouchers: 'vouchers'
   users: 'users'
+  customer:
+    one: 'customer'
+    other: 'customers'
   roles: 'roles'
   rights: 'rights'
   controller_name: 'controller name'

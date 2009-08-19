@@ -1,4 +1,38 @@
-%h1
-  = I18n.t('order', :count => 2).capitalize
-#orders
-  = render :partial => 'list', :locals => {:orders => @orders}
+#sidebar.grid_4.omega.alpha
+  .backgrounds.header
+    %a.backgrounds.action-button{ :href => "#" }
+      %span.big-icons.new-category
+      %span.small-icons.arrow
+  .backgrounds.sidebar-background
+  .sidebar-content
+    %h2.small-icons.all-products
+      All Orders
+    #order-tree
+      %ul
+        /= render :partial => 'admin/orders/list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
+#content.grid_12.alpha.omega
+  .backgrounds.header
+    #search.right
+      = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
+    .backgrounds.search-form
+  .content-background
+  %table#table.datatable
+    %thead
+      %tr
+        %th
+        %th
+          = I18n.t('id').capitalize
+        %th
+          = I18n.t('total').capitalize
+        %th
+          = I18n.t('product', :count => 1).capitalize
+        %th
+          Date
+        %th
+          = I18n.t('customer', :count => 1).capitalize
+        %th
+          = I18n.t('status', :count => 1).capitalize
+        %th
+    %tbody
+
+= dataTables_tag 8, :url => admin_orders_path(:format => :json)

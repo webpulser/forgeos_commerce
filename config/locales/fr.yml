@@ -71,6 +71,7 @@ fr:
   sended: 'expédié'
 
 # Admin
+  id: 'id'
   information:
     one: 'information'
     other: 'informations'
@@ -85,6 +86,9 @@ fr:
   tattribute_values: valeurs
   vouchers: 'codes promo'
   users: 'utilisateurs'
+  customer:
+    one: 'client'
+    other: 'clients'
   rights: 'droits'
   roles: 'roles'
   controller_name: 'nom du contrôleur'

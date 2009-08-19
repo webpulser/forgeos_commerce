@@ -6,6 +6,13 @@ class Admin::OrdersController < Admin::BaseController
   before_filter :build_addresses, :only => [:create, :update]
   
   def index
+    respond_to do |format|
+      format.html
+      format.json do
+        sort
+        render :layout => false
+      end
+    end
   end
 
   def show
@@ -87,6 +94,28 @@ private
   def render_list
     index
     render :partial => 'list', :locals => { :orders => @orders } 
+  end
+
+
+  def sort
+    columns = %w(id total product date customer state)
+    conditions = []
+    per_page = params[:iDisplayLength].to_i
+    offset =  params[:iDisplayStart].to_i
+    page = (offset / per_page) + 1
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    if params[:sSearch] && !params[:sSearch].blank?
+      @orders = Order.search(params[:sSearch],
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    else
+      @orders = Order.paginate(:all,
+        :conditions => conditions,
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    end
   end
 
 end
