@@ -5,3 +5,12 @@
       = fg_submit_tag 'save_changes'
       = I18n.t('or')
       = link_to I18n.t('cancel').capitalize, admin_tattributes_path, :class => 'back-link'
+  #content.grid_12.alpha.omega
+    ahahahhahahahah
+  #right-sidebar.grid_4.alpha.omega
+    .step
+      = link_to I18n.t('tattribute.duplicate.action'), '#', :class => 'small-icons duplicate' 
+      = link_to I18n.t('tattribute.destroy.action'), '#', :class => 'small-icons delete'
+    .step
+      = I18n.t('tattribute.name')
+      = f.text_field :access_method, :class => 'field'

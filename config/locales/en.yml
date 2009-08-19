@@ -192,6 +192,7 @@ en:
     one: "attribute"
     all: "all attribute"
     other: "attributes"
+    name: "attribute name"
     create:
       success: 'the attribute was successfully created'
       failed: 'a problem occured during the attribute creation'
@@ -201,9 +202,12 @@ en:
       failed: 'a problem occured during the attribute update'
       action: 'edit attribute'
     destroy:
+      action: 'delete attribute'
       success: 'the attribute was successfully destroyed'
       failed: 'a problem occured during the attribute destroy'
-      confirm: 'are you sure to delete this attribute ?' 
+      confirm: 'are you sure to delete this attribute ?'
+    duplicate:
+      action: 'duplicate attribute'
   tattribute value:
     one: 'attribute value'
     other: 'attribute values'

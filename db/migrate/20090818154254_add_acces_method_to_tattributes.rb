@@ -4,6 +4,6 @@ class AddAccesMethodToTattributes < ActiveRecord::Migration
   end
 
   def self.down
-    drop_column :tattributes, :access_method
+    remove_column :tattributes, :access_method
   end
 end

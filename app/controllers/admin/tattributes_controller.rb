@@ -20,7 +20,6 @@ class Admin::TattributesController < Admin::BaseController
   end
 
   def new
-    render :action => 'create'
   end
 
   # Create a Tattribute
@@ -73,6 +72,10 @@ private
   
   def new_tattribute
     @tattribute = Tattribute.new(params[:tattribute])
+  end
+  
+  def access_method
+    render :text => Forgeos::url_generator(params[:name])
   end
   
   def sort

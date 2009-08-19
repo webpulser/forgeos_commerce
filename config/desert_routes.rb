@@ -22,7 +22,7 @@ namespace :admin do |admin|
   admin.resources :geo_zones
   admin.resources :countries, :controller => 'geo_zones'
   admin.resources :users, :collection => { :filter => [:post, :get] }
-  admin.resources :tattributes do |tattribute|
+  admin.resources :tattributes, :collection => { :access_method => :post } do |tattribute|
     tattribute.resources :values, :controller => 'tattribute_values'
   end
 
