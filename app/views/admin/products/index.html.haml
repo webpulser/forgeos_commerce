@@ -3,6 +3,9 @@
     %a.backgrounds.action-button{ :href => "#" }
       %span.big-icons.new-category
       %span.small-icons.arrow
+    %a.backgrounds.action-button{ :href => '#' }
+      %span.small-icons.more-actions
+      %span.small-icons.arrow
   .backgrounds.sidebar-background
   .sidebar-content
     %h2.small-icons.all-products
@@ -12,6 +15,7 @@
         = render :partial => 'admin/categories/list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
 #content.grid_12.alpha.omega
   .backgrounds.header
+    = link_to content_tag(:span,I18n.t('product.create.action').capitalize, :class=>'big-icons create-product'), new_admin_product_path, :class=>'backgrounds action-button'
     #search.right
       = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
     .backgrounds.search-form
@@ -29,8 +33,11 @@
         %th
           = I18n.t('product_type', :count => 1).capitalize
         %th
-          = I18n.t('active').capitalize
-          ?
+          = I18n.t('show').capitalize
     %tbody
+
+  #add-product-link.backgrounds.header.add-products
+    = link_to content_tag(:span, 'Add existing products to this collection', :class => 'big-icons'),'#'
+
 
 = dataTables_tag 6, :url => admin_products_path(:format => :json)

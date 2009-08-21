@@ -9,6 +9,11 @@
     #product
       .grid_9.omega
         .grid_4.alpha.omega
+          %h2.permalink
+            = I18n.t('permalink').capitalize
+            \:
+            = "#{request.protocol}#{request.host}/"
+          = f.text_field :url
           = f.label :price, "#{I18n.t('price', :count => 1).capitalize}<sup class=\"required\">*</sup>"
           = f.text_field :price, :class => 'backgrounds grid_2 alpha omega', :id => 'price'
           %span.currency
@@ -39,7 +44,7 @@
           .clear
         %label{ :for => "stock-keeping" }
           Stock keeping unit
-        %input#stock-keeping.backgrounds{ :name => "tock-keeping", :type => "text" }
+        = f.text_field 'stock', :class => 'background', :id => 'stock'
       #product-images.grid_3.omega
         #featured-picture
           Featured picture
