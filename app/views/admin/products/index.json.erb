@@ -8,25 +8,44 @@
     link_id = "product_#{product.id}"
   %>
   [
+<% if product.kind_of? Pack -%>
+  '<%= content_tag(:div, '<div class="image">&nbsp'+ image_tag(picture || 'admin/bouteille-vin.png') +'</div>', :class => 'some-variants') %>',
+  '<%= escape_javascript(content_tag(:div, link_to(product.name, [:admin, product]) + content_tag(:span, product.products.count), :class => 'product-name')) -%>
+   <%= escape_javascript('<br /><p style="display:none">') -%>
+   <% product.products.each do |p| -%>
+     <%= escape_javascript("#{p.name}<br />") -%>
+   <% end %>',
+  '<%= escape_javascript(content_tag(:div, product.price.to_s + " " + ($currency.html), :class => 'prices')) -%>
+   <%= escape_javascript('<br /><p style="display:none">') -%>
+   <% product.products.each do |p| -%>
+     <%= escape_javascript("#{p.price}<br />") -%>
+   <% end %>',
+  '<%= escape_javascript content_tag(:div, product.stock, :class => 'stocks' ) -%>
+   <%= escape_javascript('<br /><p style="display:none">') -%>
+   <% product.products.each do |p| -%>
+     <%= escape_javascript "#{p.stock}<br />" -%>
+   <% end %>',
+<% else -%>
   '<%= image_tag(picture || 'admin/bouteille-vin.png') %>',
-  '<%= escape_javascript content_tag(:div, link_to(product.name, [:admin, product]), :class => 'product-name') %>',
-  '<%= product.price %> <%= $currency.html %>',
-  '<%= escape_javascript content_tag(:div, product.stock, :class => 'stocks' )%>',
+  '<%= escape_javascript(content_tag(:div, link_to(product.name, [:admin, product]), :class => 'product-name')) %>',
+  '<%= escape_javascript(content_tag(:div, product.price.to_s + " " + ($currency.html), :class => 'prices')) %>',
+  '<%= escape_javascript(content_tag(:div, product.stock, :class => 'stocks' )) %>',
+<% end -%>
   '<%= product.product_type.name %>',
-  '<%= escape_javascript link_to_remote('', :url => activate_admin_product_path(product),
+  '<%= escape_javascript(link_to_remote('', :url => activate_admin_product_path(product),
      :complete => "toggleActivate('#show_#{link_id}')",
      :html => { 
        :class => "small-icons #{klass}",
        :id => "show_#{link_id}"
-   }) -%>
-    <%= escape_javascript link_to('', [:edit, :admin, product], :class => 'small-icons edit-link') -%>
-    <%= escape_javascript link_to_remote('', :url => [:admin, product],
+   })) -%>
+    <%= escape_javascript(link_to('', [:edit, :admin, product], :class => 'small-icons edit-link')) -%>
+    <%= escape_javascript(link_to_remote('', :url => [:admin, product],
       :method => :delete,
       :confirm => I18n.t('product.destroy.confirm').capitalize,
       :success => "removedataTablesRow('#destroy_#{link_id}')", 
       :html => {
       :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-    })
+    }))
     -%>'
     ] <%= ',' unless @products.last == product %>
 <% end %>
