@@ -389,6 +389,9 @@ fr:
       success: 'le produit a bien été supprimé'
       failed: 'un problème est survenu lors de la suppression du produit'
       confirm: 'êtes-vous sûr de vouloir de supprimé ce produit ?'
+      action: 'supprimer produit'
+    duplicate:
+      action: 'dupliquer produit'
   product_types: 'types de produit'
   product_type:
     one : 'type de produit'

@@ -394,6 +394,9 @@ en:
       success: 'the product was successfully destroyed'
       failed: 'a problem occured during the product destroy'
       confirm: 'are you sure to delete this product ?'
+      action: 'delete product'
+    duplicate:
+      action: 'duplicate product'
   product_types: 'product types'
   product_type:
     all: 'all products type'
