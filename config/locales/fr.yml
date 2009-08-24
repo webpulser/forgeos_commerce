@@ -89,6 +89,7 @@ fr:
   customer:
     one: 'client'
     other: 'clients'
+  delivery: 'livraison'
   rights: 'droits'
   roles: 'roles'
   controller_name: 'nom du contrôleur'
@@ -141,6 +142,7 @@ fr:
     other: 'éléments associés'
   title: 'titre'
   filename: 'nom de fichier'
+  add_file: 'ajouter fichier'
   content_type: 'type de contenu'
   reference: 'référence'
   description: 'description'
@@ -150,6 +152,7 @@ fr:
   stock:
     one: 'stock'
     other : 'stocks'
+  weight: 'poids'
   select_all: 'sélectionner tout'
   unselect_all: 'désélectionner tout'
   price:
@@ -428,6 +431,8 @@ fr:
     upload:
       start: "Commencer l'envoi"
       clear_queue: 'Vider la liste'
+    add: 'ajouter photo'
+    featured: 'photo principale'
   comment:
     one: 'commentaire'
     other: 'commentaires'

@@ -43,12 +43,12 @@
                       stop sales
                 .clear
             .clear
-        %label{ :for => "stock-keeping" }
-          Stock keeping unit
+        %label{ :for => "stock" }
+          = I18n.t('stock', :count => 1).capitalize
         = f.text_field 'stock', :class => 'background', :id => 'stock'
       #product-images.grid_3.omega
         #featured-picture
-          Featured picture
+          = I18n.t('picture.featured').capitalize
         = hidden_field_tag 'product[attachment_ids][]'
         %ul.sortable
           - product.pictures.each do |picture|
@@ -62,7 +62,7 @@
           %li.clear
         %a.backgrounds.button{ :href => "#" }
           %span.big-icons.add-picture
-            Add picture
+            = I18n.t('picture.add').capitalize
       .clear
       .grid_12.omega
         = f.label :description, I18n.t('description').capitalize
@@ -74,22 +74,32 @@
           linked files
         .option-panel-content
           %a.backgrounds.button.right{ :href => "#" }
-            %span.small-icons.add-file
-              Add file
+            %span.big-icons.add-file
+              = I18n.t('add_file').capitalize
           .grid_9.sortable
             - product.attachments.all(:conditions => ['type != "Picture"']).each do |attachment|
-              = block_container :product, :attachment, attachment
+              .block-container
+                %span.block-type
+                  %span.handler
+                    %span.inner
+                      &nbsp;
+                  = attachment.type.to_s.upcase
+                %span.block-name
+                  = attachment.filename
+                  %span.file-size
+                    = "- #{attachment.size} Ko"
+                %a.big-icons.gray-destroy{:href => '#'}
           .clear
       - if product.product_type
         .option-panel
           .backgrounds.content-header
           %a.small-icons.panel{ :href => "#" }
-            attributes
+            = I18n.t('attributes')
           .option-panel-content
             - product.product_type.tattributes.each do |option|
               .fake-hr
                 %span.option-second-title
-                  =  option.name
+                  = option.name
               - if option.dynamic?
                 - dynamic_attribute = product.dynamic_tattribute_values.find_by_tattribute_id(option.id)
                 = text_field "dynamic_tattribute_values[#{option.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?)
@@ -146,8 +156,19 @@
         Associated to collection
       #association-tree.inner-step
         %ul 
-          = render :partial => 'admin/categories/list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
+          = render :partial => 'admin/categories/associated_list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
         .clear
+    .step
+      %a.small-icons.step-title{ :href => "#" }
+        = I18n.t('delivery').capitalize
+      .inner-step
+        %label{ :for => "weight" }
+          = I18n.t('weight').capitalize
+          %br
+        = f.text_field 'weight', :class => 'product_weight', :id => 'weight'
+        KG
+        %a.add_size.right{ :href => "#"}
+          Add Size
     .step.open
       %a.small-icons.step-title{ :href => "#" }
         Tags

@@ -1,13 +1,13 @@
 - unless defined?(level)
   - level = 0
 - categories.each do |category|
-  %li{ :rel => category.children.empty? ? 'file' : 'folder', :id => "category_#{category.id}" }
+  %li{:id => "category_#{category.id}" }
     - picture = category.attachments.find_all_by_type('Picture').first
     - link_to '#', :style => (picture ? "background-image : url('#{picture.public_filename(:icon)}');" : '') do
       = category.name
-      - if category.is_a?(ProductCategory)
+      - if category.children.empty?
         %span= category.total_products_count
     - unless category.children.empty?
       %ul
         - category.children.each do |child|
-          = render :partial => 'admin/categories/list', :locals => { :categories => [child], :level => (level + 1) }
+          = render :partial => 'admin/categories/associated_list', :locals => { :categories => [child], :level => (level + 1) }

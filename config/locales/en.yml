@@ -89,6 +89,7 @@ en:
   customer:
     one: 'customer'
     other: 'customers'
+  delivery: 'delivery'
   roles: 'roles'
   rights: 'rights'
   controller_name: 'controller name'
@@ -141,6 +142,7 @@ en:
     other: 'associated elements'
   title: 'title'
   filename: 'file name'
+  add_file: 'add file'
   content_type: 'content type'
   reference: 'reference'
   description: 'description'
@@ -150,6 +152,7 @@ en:
   stock:
     one: 'stock'
     other : 'stocks'
+  weight: 'weight'
   select_all: 'select all'
   unselect_all: 'unselect all'
   price:
@@ -434,6 +437,8 @@ en:
     upload:
       start: 'Start Upload'
       clear_queue: 'Clear Queue'
+    add: 'add picture'
+    featured: 'featured picture'
   comment:
     one: 'comment'
     other: 'comments'

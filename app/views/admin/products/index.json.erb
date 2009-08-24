@@ -20,13 +20,13 @@
    <% product.products.each do |p| -%>
      <%= escape_javascript("#{p.price} #{$currency.html}<br />") -%>
    <% end %>',
-  '<%= escape_javascript(content_tag(:div, (product.stock <= 600 ? content_tag(:span, product.stock, :class => 'low_stock') : product.stock), :class => 'stocks' )) -%>
-   <%= escape_javascript('<br /><p style="display:none">') -%>
+  '<%= escape_javascript(content_tag(:div,  product.stock, :class => 'stocks' )) -%>
+   <%= escape_javascript('<br /><p class="stocks" style="display:none">') -%>
    <% product.products.each do |p| -%>
      <%= escape_javascript("#{p.stock}<br />") -%>
    <% end %>',
 <% else -%>
-  '<%= image_tag(picture || 'admin/bouteille-vin.png') %>',
+  '<%= content_tag(:div, image_tag(picture || 'admin/bouteille-vin.png'), :class => 'one-product') %>',
   '<%= escape_javascript(content_tag(:div, link_to(product.name, [:admin, product]), :class => 'product-name')) %>',
   '<%= escape_javascript(content_tag(:div, product.price.to_s + " " + ($currency.html), :class => 'prices')) %>',
   '<%= escape_javascript(content_tag(:div, product.stock, :class => 'stocks' )) %>',
