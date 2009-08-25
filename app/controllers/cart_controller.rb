@@ -2,7 +2,7 @@ require 'ruleby'
 class CartController < ApplicationController
   include Ruleby
   before_filter :get_cart
-  after_filter :special_offer
+  #after_filter :special_offer 
   # Show <i>Cart</i>
   def index
     flash[:notice] = I18n.t(:your_cart_is_empty).capitalize if @cart.is_empty?
@@ -15,7 +15,9 @@ class CartController < ApplicationController
   def add_product
     reset_order_session
     flash[:notice] = I18n.t(:product_added).capitalize if @cart.add_product_id(params[:id])
-    redirect_or_update
+    redirect_to(:action => 'index')
+    #dd
+    #redirect_or_update
   end
 
   # Empty the <i>Cart</i>

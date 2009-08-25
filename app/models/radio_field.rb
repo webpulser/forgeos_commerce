@@ -1,0 +1,3 @@
+class RadioField < Tattribute
+
+end
