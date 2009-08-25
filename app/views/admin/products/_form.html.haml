@@ -79,6 +79,7 @@
           .grid_9.sortable
             - product.attachments.all(:conditions => ['type != "Picture"']).each do |attachment|
               .block-container
+                = hidden_field_tag 'product[attachment_ids][]', attachment.id
                 %span.block-type
                   %span.handler
                     %span.inner
@@ -133,35 +134,38 @@
             unpublished
       .clear
       = f.check_box :on_first_page
-      = I18n.t('on_first_page').capitalize
+      = I18n.t('show_on_homepage').capitalize
       %br
       %input#limited-time-offer.check-me-it-appears{ :name => "limited-time-offer", :type => "checkbox" }
       Limited time offer
       .i-will-appear
-        Stop after
-        %input#limited-time-offer-end{ :name => "limited-time-offer-end", :type => "text" }
+        %span
+          Stop after
+          %input#limited-time-offer-end{ :name => "limited-time-offer-end", :type => "text" , :value => 'dd/mm/yyyy'}
       %br
       %input#limited-sales-offer.check-me-it-appears{ :name => "limited-sales-offer", :type => "checkbox" }
       Limited sales offer
       .i-will-appear
-        Stop after
-        %input#limited-sales-offer-end{ :name => "limited-sales-offer-end", :type => "text" }
-        sales
+        %span
+          Stop after
+          %input#limited-sales-offer-end{ :name => "limited-sales-offer-end", :type => "text" }
+          sales
     .step
       - unless product.new_record?
         = link_to I18n.t('product.duplicate.action').capitalize, '#', :class => 'small-icons duplicate'
-      = link_to I18n.t('product.destroy.action').capitalize, '#', :class => 'small-icons delete'
+      = link_to I18n.t('product.destroy.action').capitalize, [:admin, @product], :confirm => I18n.t('product.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
     .step.open
       %a.small-icons.step-title{ :href => "#" }
         Associated to collection
       #association-tree.inner-step
+        = f.hidden_field 'product_category_ids'
         %ul 
-          = render :partial => 'admin/categories/associated_list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
+          = render :partial => 'admin/categories/associated_list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil)}
         .clear
-    .step
+    .step.open
       %a.small-icons.step-title{ :href => "#" }
         = I18n.t('delivery').capitalize
-      .inner-step
+      .inner-step.weight
         %label{ :for => "weight" }
           = I18n.t('weight').capitalize
           %br
@@ -174,22 +178,13 @@
         Tags
       .inner-step.tags
         %input#tag.backgrounds{ :name => "tag", :type => "text" }
-        %span
-          Tag name
-          %a.big-icons.gray-destroy{ :href => "#" }
-            \&nbsp;
-        %span
-          Tag name
-          %a.big-icons.gray-destroy{ :href => "#" }
-            \&nbsp;
-        %span
-          Tag name
-          %a.big-icons.gray-destroy{ :href => "#" }
-            \&nbsp;
-        %span
-          Tag name
-          %a.big-icons.gray-destroy{ :href => "#" }
-            \&nbsp;
+        - product.tags.each do |tag|
+          %span
+            = hidden_field_tag 'product[tag_ids][]', tag.id
+            = hidden_field_tag 'tags[]', tag.name
+            = tag.name
+            %a.big-icons.gray-destroy{ :href => '#' }
+              \&nbsp;
     .step.open
       %a.small-icons.step-title{ :href => "#" }
         = I18n.t('meta_description').capitalize

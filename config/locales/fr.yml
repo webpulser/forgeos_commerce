@@ -159,7 +159,7 @@ fr:
     one: 'prix'
     other: 'prix'
   offer_month: 'offre du mois ?'
-  on_first_page: 'sur la première page ?'
+  show_on_homepage: "afficher sur la page d'accueil ?"
   action:
     one: 'action'
     other: 'actions'

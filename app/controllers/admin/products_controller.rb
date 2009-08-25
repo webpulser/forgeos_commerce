@@ -34,7 +34,7 @@ class Admin::ProductsController < Admin::BaseController
   def create
     if @product.save && manage_dynamic_attributes
       flash[:notice] = I18n.t('product.create.success').capitalize
-      redirect_to(admin_products_path)
+      return redirect_to(admin_products_path)
     else
       flash[:error] = I18n.t('product.create.failed').capitalize
       render :new
@@ -45,12 +45,12 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def update
-    if @product.update_attributes(params[:product]) && manage_dynamic_attributes
+    if @product.update_attributes(params[:product]) && manage_dynamic_attributes && manage_tags
       flash[:notice] = I18n.t('product.update.success').capitalize
-      redirect_to(admin_products_path)
+      return redirect_to(admin_products_path)
     else
       flash[:error] = I18n.t('product.update.failed').capitalize
-      render :edit
+      render :action => 'edit'
     end
   end
 
@@ -62,6 +62,7 @@ class Admin::ProductsController < Admin::BaseController
     
     if @deleted
       flash[:notice] = I18n.t('product.destroy.success').capitalize
+      return redirect_to(admin_products_path) if !request.xhr?
     else
       flash[:error] = I18n.t('product.destroy.failed').capitalize
     end
@@ -96,11 +97,38 @@ private
     end
     return result
   end
+
+  def manage_tags
+
+    tags = params[:tags]
+    result = true
+    array_ids = []
+    array_ids << params[:product][:tag_ids]
+
+    tags.each do |tag_name|
+      unless get_tag(tag_name)
+        new_tag = Tag.new
+        new_tag.name = tag_name
+        result = new_tag.save
+        array_ids << Tag.last.id
+      else
+        array_ids << @tag.id if array_ids.include?(@tag.id) # /!\ will destroy only the association if tag is unassociated with the product /!\
+      end
+    end
+
+    result = @product.update_attribute('tag_ids', array_ids)
+
+    return result
+  end
+
+  def get_tag(name)
+    return @tag = Tag.find_by_name(name) ? true : false
+  end
   
   def get_product
     unless @product = Product.find_by_id(params[:id])
       flash[:error] = I18n.t('product.found.failed').capitalize
-      redirect_to(admin_products_path)
+      return redirect_to(admin_products_path)
     end
     params[:product] = params[:pack] if params[:pack]
   end
