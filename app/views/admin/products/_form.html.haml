@@ -5,8 +5,8 @@
       = fg_submit_tag 'save_changes'
       = I18n.t('or')
       = link_to I18n.t('cancel').capitalize, admin_products_path, :class => 'back-link'
-  #content.grid_12.alpha.omega
-    #product
+  #content.grid_16.alpha.omega
+    #product.grid_12.alpha
       .grid_9.omega
         .grid_4.alpha.omega
           %h2.permalink
@@ -124,96 +124,96 @@
               %a.small-icons.panel{ :href => "#" }
                 Domaine de Villemont 2008 37cl
             .variant
-  #right-sidebar.grid_4.alpha.omega
-    .step.status.open
-      %div
-        %select.unpublished{ :name => "status" }
-          %option{ :selected => "selected", :value => "published" }
-            published
-          %option{ :value => "unpublished" }
-            unpublished
-      .clear
-      = f.check_box :on_first_page
-      = I18n.t('show_on_homepage').capitalize
-      %br
-      %input#limited-time-offer.check-me-it-appears{ :name => "limited-time-offer", :type => "checkbox" }
-      Limited time offer
-      .i-will-appear
-        %span
-          Stop after
-          %input#limited-time-offer-end{ :name => "limited-time-offer-end", :type => "text" , :value => 'dd/mm/yyyy'}
-      %br
-      %input#limited-sales-offer.check-me-it-appears{ :name => "limited-sales-offer", :type => "checkbox" }
-      Limited sales offer
-      .i-will-appear
-        %span
-          Stop after
-          %input#limited-sales-offer-end{ :name => "limited-sales-offer-end", :type => "text" }
-          sales
-    .step
-      - unless product.new_record?
-        = link_to I18n.t('product.duplicate.action').capitalize, '#', :class => 'small-icons duplicate'
-      = link_to I18n.t('product.destroy.action').capitalize, [:admin, @product], :confirm => I18n.t('product.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
-    .step.open
-      %a.small-icons.step-title{ :href => "#" }
-        Associated to collection
-      #association-tree.inner-step
-        = f.hidden_field 'product_category_ids'
-        %ul 
-          = render :partial => 'admin/categories/associated_list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil)}
+    #right-sidebar.grid_4.omega
+      .step.status.open
+        %div
+          %select.unpublished{ :name => "status" }
+            %option{ :selected => "selected", :value => "published" }
+              published
+            %option{ :value => "unpublished" }
+              unpublished
         .clear
-    .step.open
-      %a.small-icons.step-title{ :href => "#" }
-        = I18n.t('delivery').capitalize
-      .inner-step.weight
-        %label{ :for => "weight" }
-          = I18n.t('weight').capitalize
-          %br
-        = f.text_field 'weight', :class => 'product_weight', :id => 'weight'
-        KG
-        %a.add_size.right{ :href => "#"}
-          Add Size
-    .step.open
-      %a.small-icons.step-title{ :href => "#" }
-        Tags
-      .inner-step.tags
-        %input#tag.backgrounds{ :name => "tag", :type => "text" }
-        - product.tags_on(:tags).each do |tag|
+        = f.check_box :on_first_page
+        = I18n.t('show_on_homepage').capitalize
+        %br
+        %input#limited-time-offer.check-me-it-appears{ :name => "limited-time-offer", :type => "checkbox" }
+        Limited time offer
+        .i-will-appear
           %span
-            = hidden_field_tag 'product[tag_ids][]', tag.id
-            = hidden_field_tag 'tags[]', tag.name
-            = tag.name
-            %a.big-icons.gray-destroy{ :href => '#' }
-              \&nbsp;
-    .step.open
-      %a.small-icons.step-title{ :href => "#" }
-        = I18n.t('meta_description').capitalize
-      .inner-step.meta
-        - product.build_meta_info unless product.meta_info
-        - f.fields_for :meta_info do |meta_info|
-          %p
+            Stop after
+            %input#limited-time-offer-end{ :name => "limited-time-offer-end", :type => "text" , :value => 'dd/mm/yyyy'}
+        %br
+        %input#limited-sales-offer.check-me-it-appears{ :name => "limited-sales-offer", :type => "checkbox" }
+        Limited sales offer
+        .i-will-appear
+          %span
+            Stop after
+            %input#limited-sales-offer-end{ :name => "limited-sales-offer-end", :type => "text" }
+            sales
+      .step
+        - unless product.new_record?
+          = link_to I18n.t('product.duplicate.action').capitalize, '#', :class => 'small-icons duplicate'
+        = link_to I18n.t('product.destroy.action').capitalize, [:admin, @product], :confirm => I18n.t('product.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+      .step.open
+        %a.small-icons.step-title{ :href => "#" }
+          Associated to collection
+        #association-tree.inner-step
+          = f.hidden_field 'product_category_ids'
+          %ul
+            = render :partial => 'admin/categories/associated_list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil)}
+          .clear
+      .step.open
+        %a.small-icons.step-title{ :href => "#" }
+          = I18n.t('delivery').capitalize
+        .inner-step.weight
+          %label{ :for => "weight" }
+            = I18n.t('weight').capitalize
+            %br
+          = f.text_field 'weight', :class => 'product_weight', :id => 'weight'
+          KG
+          %a.add_size.right{ :href => "#"}
+            Add Size
+      .step.open
+        %a.small-icons.step-title{ :href => "#" }
+          Tags
+        .inner-step.tags
+          %input#tag.backgrounds{ :name => "tag", :type => "text" }
+          - product.tags_on(:tags).each do |tag|
             %span
-              = I18n.t('title').capitalize
-              \:
-            = meta_info.text_area :title, :class => 'text'
-          %p
-            %span
-              = I18n.t('description').capitalize
-              \:
-            = meta_info.text_area :description, :class => 'text'
-          %p
-            %span
-              = I18n.t('keyword', :count => 2).capitalize
-              \:
-            = meta_info.text_area :keywords, :class => 'text'
-    .step.disabled
-      %a.small-icons.step-title{ :href => "#" }
-        Graphic template
-      .inner-step.glossy
-        %select{ :name => "design" }
-          %option{ :selected => "selected", :value => "default" }
-            Corporate blue design
-          %option{ :value => "no" }
-            Corporate green design
-      .clear
-  .clear
+              = hidden_field_tag 'product[tag_ids][]', tag.id
+              = hidden_field_tag 'tags[]', tag.name
+              = tag.name
+              %a.big-icons.gray-destroy{ :href => '#' }
+                \&nbsp;
+      .step.open
+        %a.small-icons.step-title{ :href => "#" }
+          = I18n.t('meta_description').capitalize
+        .inner-step.meta
+          - product.build_meta_info unless product.meta_info
+          - f.fields_for :meta_info do |meta_info|
+            %p
+              %span
+                = I18n.t('title').capitalize
+                \:
+              = meta_info.text_area :title, :class => 'text'
+            %p
+              %span
+                = I18n.t('description').capitalize
+                \:
+              = meta_info.text_area :description, :class => 'text'
+            %p
+              %span
+                = I18n.t('keyword', :count => 2).capitalize
+                \:
+              = meta_info.text_area :keywords, :class => 'text'
+      .step.disabled
+        %a.small-icons.step-title{ :href => "#" }
+          Graphic template
+        .inner-step.glossy
+          %select{ :name => "design" }
+            %option{ :selected => "selected", :value => "default" }
+              Corporate blue design
+            %option{ :value => "no" }
+              Corporate green design
+        .clear
+    .clear

@@ -5,12 +5,55 @@
       = fg_submit_tag 'save_changes'
       = I18n.t('or')
       = link_to I18n.t('cancel').capitalize, admin_tattributes_path, :class => 'back-link'
-  #content.grid_12.alpha.omega
-    ahahahhahahahah
-  #right-sidebar.grid_4.alpha.omega
-    .step
-      = link_to I18n.t('tattribute.duplicate.action'), '#', :class => 'small-icons duplicate' 
-      = link_to I18n.t('tattribute.destroy.action'), '#', :class => 'small-icons delete'
-    .step
-      = I18n.t('tattribute.name')
-      = f.text_field :access_method, :class => 'field'
+  #content.grid_16.alpha.omega
+    .grid_12.alpha
+      .inner-content
+        .tattribute-type
+          %span.small-icons.tattribute-checkbox
+            ="checkbox field"
+        .choices
+          %h2
+            ="Choices"
+          %ul.sortable.sortable-choices.grid_10.omega.alpha
+            %li.block-container
+              %span.block-type
+                %span.handler
+                  %span.inner
+              %span.block-name
+                %input
+                .image-attribute
+                  ='<img src="/images/admin/bouteille-vin.png"/>'
+                  = link_to "add image", '#'
+              %span.small-icons.red-delete-icon
+            %li.block-container
+              %span.block-type
+                %span.handler
+                  %span.inner
+              %span.block-name
+                %input
+                .image-attribute
+                  ='<img src="/images/admin/bouteille-vin.png"/>'
+                  = link_to "edit image", '#'
+              %span.small-icons.red-delete-icon
+            %li.block-container
+              %span.block-type
+                %span.handler
+                  %span.inner
+              %span.block-name
+                %input
+                .image-attribute
+                  ='<img src="/images/admin/bouteille-vin.png"/>'
+                  = link_to "edit image", '#'
+              %span.small-icons.red-delete-icon
+          .clear
+          = link_to 'add a choice', '#', :class => 'small-icons add-link'
+        .legend
+          %label legend for field
+          %textarea.grid_10.omega.alpha
+    #right-sidebar.grid_4.omega
+      .step
+        = link_to I18n.t('tattribute.duplicate.action'), '#', :class => 'small-icons duplicate'
+        = link_to I18n.t('tattribute.destroy.action'), '#', :class => 'small-icons delete'
+      .step
+        = I18n.t('tattribute.name')
+        = f.text_field :access_method, :class => 'field'
