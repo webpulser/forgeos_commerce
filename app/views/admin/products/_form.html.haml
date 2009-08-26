@@ -178,7 +178,7 @@
         Tags
       .inner-step.tags
         %input#tag.backgrounds{ :name => "tag", :type => "text" }
-        - product.tags.each do |tag|
+        - product.tags_on(:tags).each do |tag|
           %span
             = hidden_field_tag 'product[tag_ids][]', tag.id
             = hidden_field_tag 'tags[]', tag.name

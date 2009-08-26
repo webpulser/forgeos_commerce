@@ -45,7 +45,8 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def update
-    if @product.update_attributes(params[:product]) && manage_dynamic_attributes && manage_tags
+    manage_tags
+    if @product.update_attributes(params[:product]) && manage_dynamic_attributes
       flash[:notice] = I18n.t('product.update.success').capitalize
       return redirect_to(admin_products_path)
     else
@@ -101,24 +102,14 @@ private
   def manage_tags
 
     tags = params[:tags]
-    result = true
-    array_ids = []
-    array_ids << params[:product][:tag_ids]
+    tags_list = ''
 
-    tags.each do |tag_name|
-      unless get_tag(tag_name)
-        new_tag = Tag.new
-        new_tag.name = tag_name
-        result = new_tag.save
-        array_ids << Tag.last.id
-      else
-        array_ids << @tag.id if array_ids.include?(@tag.id) # /!\ will destroy only the association if tag is unassociated with the product /!\
-      end
+    unless tags.nil?
+      tags.collect{|t| tags_list += t}
+      @product.set_tag_list_on(:tags, tags_list)
+      current_user.tag(@product, :with => tags_list, :on => :tags)
     end
 
-    result = @product.update_attribute('tag_ids', array_ids)
-
-    return result
   end
 
   def get_tag(name)
