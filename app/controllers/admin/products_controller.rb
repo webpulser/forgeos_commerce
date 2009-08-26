@@ -32,6 +32,7 @@ class Admin::ProductsController < Admin::BaseController
   # * id = ProductParent's id
   # * product = Hash of Product's attributes
   def create
+    manage_tags
     if @product.save && manage_dynamic_attributes
       flash[:notice] = I18n.t('product.create.success').capitalize
       return redirect_to(admin_products_path)
