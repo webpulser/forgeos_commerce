@@ -106,7 +106,7 @@ private
     tags_list = ''
 
     unless tags.nil?
-      tags.collect{|t| tags_list += t}
+      tags.collect{|t| tags_list += (t+',')}
       @product.set_tag_list_on(:tags, tags_list)
       current_user.tag(@product, :with => tags_list, :on => :tags)
     end
