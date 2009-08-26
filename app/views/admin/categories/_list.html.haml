@@ -3,7 +3,7 @@
 - categories.each do |category|
   %li{ :rel => category.children.empty? ? 'file' : 'folder', :id => "category_#{category.id}" }
     - picture = category.attachments.find_all_by_type('Picture').first
-    - link_to '#', :style => (picture ? "background-image : url('#{picture.public_filename(:icon)}');" : '') do
+    - link_to '#', :style => (picture ? "background-image : url('#{picture.public_filename(:icon)}');" : ''), :class => 'big-icons' do
       = category.name
       - if category.is_a?(ProductCategory)
         %span= category.total_products_count
