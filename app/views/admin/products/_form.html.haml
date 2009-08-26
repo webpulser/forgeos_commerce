@@ -60,9 +60,7 @@
               .handler
                 .inner
           %li.clear
-        %a.backgrounds.button{ :href => "#" }
-          %span.big-icons.add-picture
-            = I18n.t('picture.add').capitalize
+        = link_to content_tag(:span, I18n.t('picture.add').capitalize, :class=>'big-icons add-picture'), {:controller => 'admin/medias', :action => 'new', :target => 'Product', :target_id => product.id}, :class=>'backgrounds button'
       .clear
       .grid_12.omega
         = f.label :description, I18n.t('description').capitalize
