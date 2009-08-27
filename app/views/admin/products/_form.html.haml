@@ -1,3 +1,10 @@
+= include_tiny_mce_if_needed
+- if product
+  - product_clone = product.clone.attributes
+  - product_clone[:meta_info_attributes] = product.meta_info.clone.attributes if product.meta_info
+- else
+  - product_clone = Product.new.attributes
+
 - form_for [:admin ,product], :html => { :id => 'wrap' } do |f|
   .backgrounds.big-header
     = f.text_field :name
@@ -21,6 +28,11 @@
         = f.label :product_type_id, "#{I18n.t('product_type', :count => 1).capitalize}<sup class=\"required\">*</sup>"
         %div
           = f.collection_select :product_type_id, ProductType.all, :id, :name, { :prompt => I18n.t('please_select') }
+          = observe_field("product_product_type_id", |
+           :frequency => 0.25, |
+           :update => "product-types-panel", |
+           :url => { :action => :update_tattributes_list }, |
+           :with => "'product_type_id='+value") |
         /
           .tool-tip-me
             .stock
@@ -95,18 +107,8 @@
           %a.small-icons.panel{ :href => "#" }
             = I18n.t('attributes')
           .option-panel-content
-            - product.product_type.tattributes.each do |option|
-              .fake-hr
-                %span.option-second-title
-                  = option.name
-              - if option.dynamic?
-                - dynamic_attribute = product.dynamic_tattribute_values.find_by_tattribute_id(option.id)
-                = text_field "dynamic_tattribute_values[#{option.id}]", 'value', :value => (dynamic_attribute.value unless dynamic_attribute.nil?)
-              - else
-                -  option.tattribute_values.each do |value|
-                  .grid_3.omega
-                    = check_box_tag 'product[tattribute_value_ids][]', value.id, product.tattribute_value_ids.include?(value.id) 
-                    = value.name
+            #product-types-panel
+              = render :partial => 'admin/tattributes/list_form', :locals => { :product_type => product.product_type, :product => product }
               .clear
       .option-panel.disabled
         .backgrounds.content-header
@@ -125,38 +127,35 @@
     #right-sidebar.grid_4.omega
       .step.status.open
         %div
-          %select.unpublished{ :name => "status" }
-            %option{ :selected => "selected", :value => "published" }
-              published
-            %option{ :value => "unpublished" }
-              unpublished
+          - status = [[I18n.t('unpublished'), 0], [I18n.t('published'), 1]]
+          = select_tag 'product[active]', options_for_select(status, product.active ? 1 : 0 ), :class => 'published'
         .clear
         = f.check_box :on_first_page
         = I18n.t('show_on_homepage').capitalize
         %br
-        %input#limited-time-offer.check-me-it-appears{ :name => "limited-time-offer", :type => "checkbox" }
-        Limited time offer
-        .i-will-appear
-          %span
-            Stop after
-            %input#limited-time-offer-end{ :name => "limited-time-offer-end", :type => "text" , :value => 'dd/mm/yyyy'}
-        %br
-        %input#limited-sales-offer.check-me-it-appears{ :name => "limited-sales-offer", :type => "checkbox" }
-        Limited sales offer
-        .i-will-appear
-          %span
-            Stop after
-            %input#limited-sales-offer-end{ :name => "limited-sales-offer-end", :type => "text" }
-            sales
+        /
+          %input#limited-time-offer.check-me-it-appears{ :name => "limited-time-offer", :type => "checkbox" }
+          Limited time offer
+          .i-will-appear
+            %span
+              Stop after
+              %input#limited-time-offer-end{ :name => "limited-time-offer-end", :type => "text" , :value => 'dd/mm/yyyy'}
+          %br
+          %input#limited-sales-offer.check-me-it-appears{ :name => "limited-sales-offer", :type => "checkbox" }
+          Limited sales offer
+          .i-will-appear
+            %span
+              Stop after
+              %input#limited-sales-offer-end{ :name => "limited-sales-offer-end", :type => "text" }
+              sales
       .step
         - unless product.new_record?
-          = link_to I18n.t('product.duplicate.action').capitalize, '#', :class => 'small-icons duplicate'
-        = link_to I18n.t('product.destroy.action').capitalize, [:admin, @product], :confirm => I18n.t('product.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+          = link_to I18n.t('product.duplicate').capitalize, new_admin_product_path(:product => product_clone), :class => 'small-icons duplicate'
+          = link_to I18n.t('product.destroy.action').capitalize, [:admin, product], :confirm => I18n.t('product.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
       .step.open
         %a.small-icons.step-title{ :href => "#" }
           Associated to collection
         #association-tree.inner-step
-          = f.hidden_field 'product_category_ids'
           %ul
             = render :partial => 'admin/categories/associated_list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil)}
           .clear
@@ -169,7 +168,7 @@
             %br
           = f.text_field 'weight', :class => 'product_weight', :id => 'weight'
           KG
-          %a.add_size.right{ :href => "#"}
+          %a.add_size.right.disabled{ :href => "#"}
             Add Size
       .step.open
         %a.small-icons.step-title{ :href => "#" }

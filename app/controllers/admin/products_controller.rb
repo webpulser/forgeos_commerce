@@ -11,7 +11,7 @@ class Admin::ProductsController < Admin::BaseController
     :valid_elements => TMCEVALID
   }
 
-  before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate]
+  before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate, :update_tattributes_list]
   before_filter :new_product, :only => [:new, :create]
 
   def index
@@ -77,6 +77,13 @@ class Admin::ProductsController < Admin::BaseController
 
   def activate
     render :text => @product.activate
+  end
+
+  def update_tattributes_list
+    if request.xhr?
+      @product_type = ProductType.find_by_id(params[:product_type_id])
+      render :partial => 'admin/tattributes/list_form', :locals => { :product_type => @product_type, :product => @product }
+    end
   end
 
 private

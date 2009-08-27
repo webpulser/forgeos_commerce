@@ -1,0 +1,28 @@
+.backgrounds.big-header
+  %h1
+    = @product.name
+  .interact-links
+    .borders.interact-button-left
+    %a.backgrounds.interact-button{ :href => '#' }
+      Modify Product
+    .borders.interact-button-right
+    or
+    %a.back-link
+      Cancel
+
+#content.grid_16.alpha.omega
+  #product-see.grid_12.alpha
+    .grid_8.omega
+      .prices
+        .normal-price
+          = @product.price.to_s + " " + ($currency.html)
+        .stock
+          = @product.stock.to_s + "in stock"
+      .description
+        %em
+          = I18n.t('description').capitalize + " : " + @product.description
+      %p
+        %em
+          Product-type:
+        %a.product-type-link{:href => '#' }
+          = @product.type

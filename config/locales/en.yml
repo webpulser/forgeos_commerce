@@ -164,6 +164,8 @@ en:
     one: 'action'
     other: 'actions'
   quick_edit: 'quick edit'
+  published: 'published'
+  unpublished: 'unpublished'
   status:
     one: 'status'
     other: 'statuses'
@@ -398,8 +400,7 @@ en:
       failed: 'a problem occured during the product destroy'
       confirm: 'are you sure to delete this product ?'
       action: 'delete product'
-    duplicate:
-      action: 'duplicate product'
+    duplicate: 'duplicate product'
   product_types: 'product types'
   product_type:
     all: 'all products type'

@@ -6,8 +6,7 @@
     - link_to '#', :style => (picture ? "background-image : url('#{picture.public_filename(:icon)}');" : '') do
       = category.name
       - if category.children.empty?
-        %span= category.total_products_count
-
+        %span
     - unless category.children.empty?
       %ul
         - category.children.each do |child|

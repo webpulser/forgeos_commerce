@@ -164,6 +164,8 @@ fr:
     one: 'action'
     other: 'actions'
   quick_edit: 'édition rapide'
+  published: 'publié'
+  unpublished: 'non publié'
   status:
     one: 'status'
     other: 'status'
@@ -393,8 +395,7 @@ fr:
       failed: 'un problème est survenu lors de la suppression du produit'
       confirm: 'êtes-vous sûr de vouloir de supprimé ce produit ?'
       action: 'supprimer produit'
-    duplicate:
-      action: 'dupliquer produit'
+    duplicate: 'dupliquer produit'
   product_types: 'types de produit'
   product_type:
     one : 'type de produit'

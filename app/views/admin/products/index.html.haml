@@ -37,7 +37,7 @@
     %tbody
 
   #add-product-link.backgrounds.header.add-products
-    = link_to content_tag(:span, 'Add existing products to this collection', :class => 'big-icons'),'#'
+    /= link_to content_tag(:span, 'Add existing products to this collection', :class => 'big-icons'),'#'
 
 
 = dataTables_tag 6, :url => admin_products_path(:format => :json)
