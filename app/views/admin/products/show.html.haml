@@ -1,14 +1,18 @@
+- if @product
+  - product_clone = @product.clone.attributes
+  - product_clone[:meta_info_attributes] = @product.meta_info.clone.attributes if @product.meta_info
+- else
+  - product_clone = Product.new.attributes
+
 .backgrounds.big-header
   %h1
     = @product.name
   .interact-links
     .borders.interact-button-left
-    %a.backgrounds.interact-button{ :href => '#' }
-      Modify Product
+    = link_to I18n.t('product.update.action').capitalize, [:edit, :admin, @product], :class => 'backgrounds interact-button'
     .borders.interact-button-right
     or
-    %a.back-link
-      Cancel
+    = link_to I18n.t('back_to_catalog').capitalize, admin_products_path, :class => 'back-link'
 
 #content.grid_16.alpha.omega
   #product-see.grid_12.alpha
@@ -16,13 +20,112 @@
       .prices
         .normal-price
           = @product.price.to_s + " " + ($currency.html)
+        .promo
+          &nbsp;
         .stock
-          = @product.stock.to_s + "in stock"
+          = @product.stock.to_s + " in stock"
       .description
         %em
-          = I18n.t('description').capitalize + " : " + @product.description
+          = I18n.t('description').capitalize + " : " |
+        = @product.description
       %p
         %em
           Product-type:
         %a.product-type-link{:href => '#' }
-          = @product.type
+          = @product.product_type.name
+    #product-images.grid_4.omega
+      %ul
+        - @product.pictures.each do |picture|
+          - if picture == @product.pictures.first
+            %li.first-image
+              = image_tag picture.public_filename('')
+              .featured
+              = I18n.t('picture.featured').capitalize
+          - else
+            %li
+              = image_tag picture.public_filename('')
+        %li.clear
+          &nbsp;
+    .clear
+    
+    .option-panel.open
+      .backgrounds.content-header
+        &nbsp;
+      %span.panel
+        linked files
+      .option-panel-content
+        .grid_9.sortable
+          - @product.attachments.all(:conditions => ['type != "Picture"']).each do |attachment|
+            .block-container
+              %span.block-type
+                = attachment.type.to_s.upcase
+              %span.block-name
+                = attachment.filename
+                %span.file-size
+                  = "- #{attachment.size} Ko"
+              - unless attachment == @product.attachments.last
+                %hr.block-separator 
+        .clear
+
+    .option-panel.open
+      .backgrounds.content-header
+        &nbsp;
+    %span.panel
+      = I18n.t('attributes')
+
+  #right-sidebar.grid_4.omega
+    .step.status.open
+      %div
+        - status = [[I18n.t('unpublished'), 0], [I18n.t('published'), 1]]
+        = select_tag 'product[active]', options_for_select(status, @product.active ? 1 : 0 ), :class => 'published'
+        .clear
+      - if @product.on_first_page
+        = I18n.t('show_on_homepage').capitalize
+
+    .step
+      = link_to I18n.t('product.create.action').capitalize, new_admin_product_path, :class => 'small-icons new'
+      = link_to I18n.t('product.duplicate').capitalize, new_admin_product_path(:product => product_clone), :class => 'small-icons duplicate'
+      = link_to I18n.t('product.destroy.action').capitalize, [:admin, @product], :confirm => I18n.t('product.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+
+    .step.open
+      %a.small-icons.step-title{ :href => '#' }
+        Associated to collection
+      #association-tree.inner-step
+        Coming Soon
+
+    .step.open
+      %a.small-icons.step-title
+        Tags
+      .inner-step.tags
+        - @product.tags.each do |tag|
+          %span
+            = tag.name
+
+    .step.open
+      %a.small-icons.step-title{ :href => '#' }
+        = I18n.t('meta_description').capitalize
+      .inner-step.meta
+        %p
+          %span
+            Title:
+          = @product.meta_info.title
+        %p
+          %span
+            Description:
+          = @product.meta_info.description
+        %p
+          %span
+            Keywords:
+          = @product.meta_info.keywords
+  
+    .step.disabled
+      %a.small-icons.step-title{ :href => "#" }
+        Graphic template
+      .inner-step.glossy
+        %select{ :name => "design" }
+          %option{ :selected => "selected", :value => "default" }
+            Corporate blue design
+          %option{ :value => "no" }
+            Corporate green design
+      .clear
+  .clear

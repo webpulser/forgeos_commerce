@@ -111,6 +111,7 @@ fr:
   email: 'email'
   _yes: 'oui'
   _no: 'non'
+  back_to_catalog: 'retour au catalogue'
   firstname: 'prénom'
   lastname: 'nom'
   password: 'mot de passe'
