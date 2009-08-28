@@ -24,6 +24,9 @@ class Admin::ProductsController < Admin::BaseController
     end
   end
 
+  def show
+  end
+
   def new
   end
 
