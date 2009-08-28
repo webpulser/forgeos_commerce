@@ -101,15 +101,14 @@
                     = "- #{attachment.size} Ko"
                 %a.big-icons.gray-destroy{:href => '#'}
           .clear
-      - if product.product_type
-        .option-panel
-          .backgrounds.content-header
-          %a.small-icons.panel{ :href => "#" }
-            = I18n.t('attributes')
-          .option-panel-content
-            #product-types-panel
-              = render :partial => 'admin/tattributes/list_form', :locals => { :product_type => product.product_type, :product => product }
-              .clear
+      .option-panel
+        .backgrounds.content-header
+        %a.small-icons.panel{ :href => "#" }
+          = I18n.t('attributes')
+        .option-panel-content
+          #product-types-panel
+            = render :partial => 'admin/tattributes/list_form', :locals => { :product_type => product.product_type, :product => product }
+            .clear
       .option-panel.disabled
         .backgrounds.content-header
         %a.small-icons.panel{ :href => "#" }

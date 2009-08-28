@@ -62,7 +62,7 @@ private
   def get_product_type
     unless @product_type = ProductType.find_by_id(params[:id])
       flash[:error] = I18n.t('product_type.found.failed').capitalize
-      redirect_to([:admin, :root])
+      redirect_to(admin_product_types_path)
     end
   end
 

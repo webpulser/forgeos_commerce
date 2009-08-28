@@ -1,49 +1,27 @@
-- content_for :tools, link_to(I18n.t('list').capitalize, admin_product_types_path, :class => 'house' )
-#tabs
-  %ul
-    %li
-      %a{ :href => "#tabs-1" }
-        = I18n.t('information', :count=>2).capitalize
-    - unless  product_type.new_record?
-      %li
-        %a{ :href => "#tabs-2" }
-          = I18n.t('product', :count => 2).capitalize
-      %li
-        %a{ :href => "#tabs-3" }
-          = I18n.t('picture', :count => 2).capitalize
-  #tabs-1
-    - form_for [:admin, product_type], :html => { :id => 'static_attributes' } do |f|
-      %p
-        %b
-          = f.label :name, I18n.t('name').capitalize
-          \:
-        = f.text_field :name
-      - tattributes = Tattribute.all
-      - unless tattributes.empty?
-        %fieldset
-          %legend
-            = link_to_effect_toggle(I18n.t('tattribute', :count => 2).capitalize,'tattributes')
-            |
-            = link_to_function(I18n.t('select_all').capitalize,"$('.tattributes').each(function(){this.checked=true;})")
-            |
-            = link_to_function(I18n.t('unselect_all').capitalize,"$('.tattributes').each(function(){this.checked=false;})")
-          %p#tattributes
-            - tattributes.each do |tattr|
-              = check_box_tag 'product_type[tattribute_ids][]', tattr.id, tattr.product_types.include?(product_type), :class => 'tattributes'
-              %b
-                = label_tag tattr.name
-              %br
-      %center
-        = f.submit I18n.t('save').capitalize
-  - unless  product_type.new_record?
-    #tabs-2
-      = link_to I18n.t('product.create.action').capitalize, [:admin ,Product.new(:product_type_id => product_type.id)], :class => 'add'
-      #list
-        = render :partial => 'admin/products/list', :locals => { :products => Product.find_all_by_deleted(false) }
-    #tabs-3
-      #product_type_pictures
-        = link_to I18n.t('picture.create.action').capitalize, new_admin_picture_path(:target => 'product_type', :target_id => product_type.id), :class => 'add'
-        #list_pictures
-          = render :partial => 'admin/pictures/list', :locals => { :pictures => product_type.attachments.find_all_by_type('Picture'), :target => 'product_type', :target_id => product_type.id }
+- form_for [:admin , product_type], :html => { :id => 'wrap' } do |f|
+  .backgrounds.big-header
+    = f.text_field :name
+    .interact-links
+      = fg_submit_tag 'save_changes'
+      = I18n.t('or')
+      = link_to I18n.t('cancel').capitalize, admin_product_types_path, :class => 'back-link'
 
-= javascript_tag "$(function(){ $('#tabs').tabs(); })"
+  #content.grid_12.alpha.omega
+    .grid_12.alpha
+      #product-types-selected-tree.a-tree
+        %ul
+          - product_type.tattributes.each do |tattribute|
+            %li{ :rel => 'attribute' }
+              %a{ :href => '#' }
+                = tattribute.name
+                %span.big-icons.gray-destroy
+                  &nbsp;
+        .clear
+  #yellow-sidebar.grid_4.alpha.omega.yellow
+    #product-types-all-tree.a-tree
+      %ul
+        = render :partial => 'admin/categories/list_tattributes', :locals => { :categories => TattributeCategory.find_all_by_parent_id(nil) }
+      .clear
+    %a.small-icons.small-icons-verti-small-blue-plus.attribute-new{ :href => '#' }
+      Create Attribute
+  .clear
