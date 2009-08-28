@@ -1,0 +1,11 @@
+- unless defined?(level)
+  - level = 0
+
+- unless categories.nil? or categories.blank?
+  - categories.each do |category|
+    %li{ :rel => ( category.parent_id.nil? ? 'attribute' : 'attribute-category' ), :id => "category_#{category.id}" }
+      = link_to((category.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy')), '#')
+      - unless category.children.empty? && category.product_types.blank?
+        %ul
+          - category.children.each do |child|
+            = render :partial => 'admin/categories/list_product_types', :locals => { :categories => [child], :level => (level + 1) }
