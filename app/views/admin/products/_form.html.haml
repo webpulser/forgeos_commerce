@@ -13,20 +13,20 @@
       = I18n.t('or')
       = link_to I18n.t('cancel').capitalize, admin_products_path, :class => 'back-link'
   #content.grid_16.alpha.omega
+    %h2.permalink
+      = I18n.t('permalink').capitalize
+      \:
+      = "#{request.protocol}#{request.host}/"
+      = f.text_field :url
     #product.grid_12.alpha
       .grid_9.omega
         .grid_4.alpha.omega
-          %h2.permalink
-            = I18n.t('permalink').capitalize
-            \:
-            = "#{request.protocol}#{request.host}/"
-          = f.text_field :url
           = f.label :price, "#{I18n.t('price', :count => 1).capitalize}<sup class=\"required\">*</sup>"
           = f.text_field :price, :class => 'backgrounds grid_2 alpha omega', :id => 'price'
           %span.currency
             = $currency.html
         = f.label :product_type_id, "#{I18n.t('product_type', :count => 1).capitalize}<sup class=\"required\">*</sup>"
-        %div
+        .enhanced
           = f.collection_select :product_type_id, ProductType.all, :id, :name, { :prompt => I18n.t('please_select') }
           = observe_field("product_product_type_id", |
            :frequency => 0.25, |
@@ -156,7 +156,7 @@
           Associated to collection
         #association-tree.inner-step
           %ul
-            = render :partial => 'admin/categories/associated_list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil)}
+            = render :partial => 'admin/categories/list_products', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil)}
           .clear
       .step.open
         %a.small-icons.step-title{ :href => "#" }

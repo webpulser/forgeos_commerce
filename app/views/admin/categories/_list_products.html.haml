@@ -1,5 +1,6 @@
 - unless defined?(level)
   - level = 0
+
 - categories.each do |category|
   %li{:id => "#{category.id}" }
     - picture = category.attachments.find_all_by_type('Picture').first
@@ -10,4 +11,4 @@
     - unless category.children.empty?
       %ul
         - category.children.each do |child|
-          = render :partial => 'admin/categories/associated_list', :locals => { :categories => [child], :level => (level + 1) }
+          = render :partial => 'admin/categories/list_products', :locals => { :categories => [child], :level => (level + 1) }
