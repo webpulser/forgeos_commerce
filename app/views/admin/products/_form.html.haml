@@ -1,17 +1,13 @@
 = include_tiny_mce_if_needed
-- if product
-  - product_clone = product.clone.attributes
-  - product_clone[:meta_info_attributes] = product.meta_info.clone.attributes if product.meta_info
-- else
-  - product_clone = Product.new.attributes
 
-- form_for [:admin ,product], :html => { :id => 'wrap' } do |f|
+- form_for [:admin, product], :html => { :id => 'wrap' } do |f|
   .backgrounds.big-header
     = f.text_field :name
     .interact-links
       = fg_submit_tag 'save_changes'
       = I18n.t('or')
       = link_to I18n.t('cancel').capitalize, admin_products_path, :class => 'back-link'
+
   #content.grid_16.alpha.omega
     #product.grid_12.alpha
       %h2.permalink
@@ -123,6 +119,7 @@
               %a.small-icons.panel{ :href => "#" }
                 Domaine de Villemont 2008 37cl
             .variant
+
     #right-sidebar.grid_4.omega
       .step.status.open
         %div
@@ -149,7 +146,7 @@
               sales
       .step
         - unless product.new_record?
-          = link_to I18n.t('product.duplicate').capitalize, new_admin_product_path(:product => product_clone), :class => 'small-icons duplicate'
+          = link_to I18n.t('page.duplicate').capitalize, [:duplicate, :admin, product], :class => 'small-icons duplicate'
           = link_to I18n.t('product.destroy.action').capitalize, [:admin, product], :confirm => I18n.t('product.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
       .step.open
         %a.small-icons.step-title{ :href => "#" }

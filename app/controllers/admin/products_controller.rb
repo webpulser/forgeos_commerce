@@ -1,5 +1,5 @@
 class Admin::ProductsController < Admin::BaseController
-  uses_tiny_mce :only => [:new, :create, :edit, :update], :options => {
+  uses_tiny_mce :only => [:new, :create, :edit, :update, :duplicate], :options => {
     :theme => 'advanced',
     :skin => 'forgeos',
     :theme_advanced_toolbar_location => 'top',
@@ -11,7 +11,7 @@ class Admin::ProductsController < Admin::BaseController
     :valid_elements => TMCEVALID
   }
 
-  before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate, :update_tattributes_list]
+  before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate, :update_tattributes_list, :duplicate]
   before_filter :new_product, :only => [:new, :create]
   before_filter :manage_tags, :only => [:create, :update]
 
@@ -29,6 +29,14 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def new
+  end
+
+  def duplicate
+    @product_cloned = @product.clone
+    @product_cloned.meta_info = @product.meta_info.clone
+    @product_cloned.tags = @product.tags
+    @product = @product_cloned
+    render :action => 'new'
   end
 
   # Create a Product
