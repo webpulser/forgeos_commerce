@@ -33,7 +33,7 @@ namespace :admin do |admin|
   admin.resources :pictures
   admin.resources :product_types
   admin.resources :products, :collection => { :url => :post }, :member => { :activate => :post, :update_tattributes_list => :post, :duplicate => :get }
-  admin.resources :packs, :controller => :products,  :collection => { :url => :post }, :member => { :activate => :post }
+  admin.resources :packs, :controller => :products,  :collection => { :url => :post }, :member => { :activate => :post, :duplicate => :get }
   admin.resources :tags
   admin.resources :special_offers, :collection => { :special_offer => [:get, :post] }
   admin.resources :shipping_rules
