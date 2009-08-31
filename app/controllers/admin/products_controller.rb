@@ -13,6 +13,7 @@ class Admin::ProductsController < Admin::BaseController
 
   before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate, :update_tattributes_list]
   before_filter :new_product, :only => [:new, :create]
+  before_filter :manage_tags, :only => [:create, :update]
 
   def index
     respond_to do |format|
@@ -35,7 +36,6 @@ class Admin::ProductsController < Admin::BaseController
   # * id = ProductParent's id
   # * product = Hash of Product's attributes
   def create
-    manage_tags
     if @product.save && manage_dynamic_attributes
       flash[:notice] = I18n.t('product.create.success').capitalize
       return redirect_to(admin_products_path)
@@ -49,7 +49,6 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def update
-    manage_tags
     if @product.update_attributes(params[:product]) && manage_dynamic_attributes
       flash[:notice] = I18n.t('product.update.success').capitalize
       return redirect_to(admin_products_path)
@@ -111,18 +110,7 @@ private
   end
 
   def manage_tags
-
-    tags = params[:tags]
-    tags_list = ''
-
-    unless tags.nil?
-      tags.collect{ |tag| tags_list += ( tag + ',' ) }
-      @product.set_tag_list_on(:tags, tags_list)
-      current_user.tag(@product, :with => tags_list, :on => :tags)
-    else
-      @product.set_tag_list_on(:tags, nil)
-    end
-
+    params[:product][:tag_list] = params[:tag_list].join(',')
   end
 
   def get_tag(name)

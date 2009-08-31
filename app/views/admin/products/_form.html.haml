@@ -174,13 +174,11 @@
           Tags
         .inner-step.tags
           %input#tag.backgrounds{ :name => "tag", :type => "text" }
-          - product.tags_on(:tags).each do |tag|
+          - product.tag_list.each do |tag|
             %span
-              = hidden_field_tag 'product[tag_ids][]', tag.id
-              = hidden_field_tag 'tags[]', tag.name
-              = tag.name
-              %a.big-icons.gray-destroy{ :href => '#' }
-                \&nbsp;
+              = tag
+              = hidden_field_tag 'tag_list[]', tag
+              = link_to '&nbsp;', '#', :class => 'big-icons gray-destroy'
       .step.open
         %a.small-icons.step-title{ :href => "#" }
           = I18n.t('meta_description').capitalize
