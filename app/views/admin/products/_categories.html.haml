@@ -1,0 +1,20 @@
+= hidden_field_tag 'product[product_category_ids][]'
+
+- unless defined?(level)
+  - level = 0
+
+- unless categories.nil? or categories.blank?
+  - categories.each do |category|
+    %li{ :rel => 'folder', :id => "category_#{category.id}", :class => ( product.product_category_ids.include?(category.id) ? 'clicked' : '' ) }
+      - if product.product_category_ids.include?(category.id)
+        - link_to '#', :class => 'clicked' do
+          = category.name + content_tag(:span)
+        - if product.product_category_ids.include?(category.id)
+          = hidden_field_tag 'product[product_category_ids][]', category.id, :id => 'product_category_'+category.id.to_s
+      - else
+        - link_to '#' do
+          = category.name + content_tag(:span)
+      - unless category.children.empty?
+        %ul
+          - category.children.each do |child|
+            = render :partial => 'categories', :locals => { :categories => [child], :level => (level + 1), :product => product }
