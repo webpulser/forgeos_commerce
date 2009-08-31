@@ -61,6 +61,10 @@ class Admin::TattributesController < Admin::BaseController
     return redirect_to(:action => 'index')
   end
 
+  def access_method
+    render :text => Forgeos::url_generator(params[:access_method])
+  end
+
 private
   def get_tattributes
     @tattributes = Tattribute.all
@@ -72,10 +76,6 @@ private
   
   def new_tattribute
     @tattribute = Tattribute.new(params[:tattribute])
-  end
-  
-  def access_method
-    render :text => Forgeos::url_generator(params[:name])
   end
   
   def sort
