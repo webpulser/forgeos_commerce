@@ -4,7 +4,7 @@
   .backgrounds.big-header
     = f.text_field :name
     .interact-links
-      = fg_submit_tag 'save_changes'
+      = fg_submit_tag (product.new_record? ? 'product.create.action' :'save_changes')
       = I18n.t('or')
       = link_to I18n.t('cancel').capitalize, admin_products_path, :class => 'back-link'
 

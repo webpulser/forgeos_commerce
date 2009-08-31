@@ -117,6 +117,7 @@ fr:
   password: 'mot de passe'
   password_confirmation: 'vérification du mot de passe'
   save: 'sauvegarder'
+  save_changes: 'sauvegarder modifications'
   list: 'lister'
   civility: 'civilité'
   address: 
@@ -386,7 +387,7 @@ fr:
     create:
       success: 'le produit a bien été créé'
       failed: 'un problème est survenu lors de la création du produit'
-      action: 'créer un produit'
+      action: 'créer le produit'
     update:
       success: 'le produit a bien été mis à jour'
       failed: 'un problème est survenu lors de la mise à jour du produit'
