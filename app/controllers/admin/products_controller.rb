@@ -91,7 +91,8 @@ class Admin::ProductsController < Admin::BaseController
 
   def update_tattributes_list
     @product_type = ProductType.find(params[:product_type_id])
-    render :partial => 'tattributes', :locals => { :product_type => @product_type, :product => Product.find(params[:id]) }
+    product = Product.find(params[:id]) if params[:id].nil?;
+    render :partial => 'tattributes', :locals => { :product_type => @product_type, :product => product }
   end
 
 private
@@ -136,7 +137,7 @@ private
   end
 
   def sort
-    columns = %w(reference name description price stock active)
+    columns = %w(reference name price stock product_type_id active)
     conditions = []
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i

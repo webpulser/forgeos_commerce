@@ -15,7 +15,7 @@
    <% product.products.each do |p| -%>
      <%= escape_javascript("#{p.name}<br />") -%>
    <% end %>',
-  '<%= escape_javascript(content_tag(:div, product.price.to_s + " " + ($currency.html), :class => 'prices')) -%>
+  '<%= escape_javascript(content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price')) -%>
    <%= escape_javascript('<br /><p style="display:none">') -%>
    <% product.products.each do |p| -%>
      <%= escape_javascript("#{p.price} #{$currency.html}<br />") -%>
@@ -28,7 +28,7 @@
 <% else -%>
   '<%= content_tag(:div, image_tag(picture || 'admin/bouteille-vin.png'), :class => 'one-product') %>',
   '<%= escape_javascript(content_tag(:div, link_to(product.name, [:admin, product]), :class => 'product-name')) %>',
-  '<%= escape_javascript(content_tag(:div, product.price.to_s + " " + ($currency.html), :class => 'prices')) %>',
+  '<%= escape_javascript(content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price')) %>',
   '<%= escape_javascript(content_tag(:div, product.stock, :class => 'stocks' )) %>',
 <% end -%>
   '<%= product.product_type.name %>',
