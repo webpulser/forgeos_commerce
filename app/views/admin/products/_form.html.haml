@@ -24,7 +24,7 @@
         = f.label :product_type_id, "#{I18n.t('product_type', :count => 1).capitalize}<sup class=\"required\">*</sup>"
         .enhanced
           = f.collection_select :product_type_id, ProductType.all, :id, :name, { :prompt => I18n.t('please_select') }
-          = observe_field("product_product_type_id", |
+          = observe_field("#{f.object_name}_product_type_id", |
            :frequency => 0.25, |
            :update => "product-types-panel", |
            :url => { :action => :update_tattributes_list }, |
@@ -57,13 +57,13 @@
       #product-images.grid_3.omega
         #featured-picture
           = I18n.t('picture.featured').capitalize
-        = hidden_field_tag 'product[attachment_ids][]'
+        = hidden_field_tag "#{f.object_name}[attachment_ids][]"
         %ul.sortable
           - product.pictures.each do |picture|
             %li
               = link_to_function '', "$(this).parents('li').remove()", :title => I18n.t('picture.destroy.confirm').capitalize, :class => 'big-icons trash'
               = link_to '', [:edit, :admin, picture], :class => 'big-icons edit'
-              = hidden_field_tag 'product[attachment_ids][]', picture.id
+              = hidden_field_tag "#{f.object_name}[attachment_ids][]", picture.id
               = image_tag picture.public_filename('')
               .handler
                 .inner
@@ -85,7 +85,7 @@
           .grid_9.sortable
             - product.attachments.all(:conditions => ['type != "Picture"']).each do |attachment|
               .block-container
-                = hidden_field_tag 'product[attachment_ids][]', attachment.id
+                = hidden_field_tag "#{f.object_name}[attachment_ids][]", attachment.id
                 %span.block-type
                   %span.handler
                     %span.inner
@@ -123,8 +123,7 @@
     #right-sidebar.grid_4.omega
       .step.status.open
         %div
-          - status = [[I18n.t('unpublished'), 0], [I18n.t('published'), 1]]
-          = select_tag 'product[active]', options_for_select(status, product.active ? 1 : 0 ), :class => 'published'
+          = f.select :active, [[I18n.t('unpublished'), 0], [I18n.t('published'), 1]], :selected => product.active ? 1 : 0, :class => 'published'
         .clear
         = f.check_box :on_first_page
         = I18n.t('show_on_homepage').capitalize
@@ -170,6 +169,7 @@
         %a.small-icons.step-title{ :href => "#" }
           Tags
         .inner-step.tags
+          = hidden_field_tag 'tag_list[]', ''
           %input#tag.backgrounds{ :name => "tag", :type => "text" }
           - product.tag_list.each do |tag|
             %span
