@@ -17,7 +17,10 @@ class Admin::CategoriesController < Admin::BaseController
     @category = Category.new(params[:category])
     if @category.save
       flash[:notice] = I18n.t('category.create.success').capitalize
-      redirect_to( edit_admin_category_path @category )
+      respond_to do |format|
+        format.html { redirect_to([:edit, :admin, @category]) }
+        format.json { render :text => @category.id }
+      end
     else
       flash[:error] = I18n.t('category.create.failed').capitalize
       render :action => 'new'
@@ -43,7 +46,11 @@ class Admin::CategoriesController < Admin::BaseController
       else
         flash[:error] = I18n.t('category.update.failed').capitalize
       end
-      render :action => 'edit'
+
+      respond_to do |format|
+        format.html { render :action => 'edit' }
+        format.json { render :text => @category.id }
+      end
     else
       flash[:error] = I18n.t('category.not_exist').capitalize
       redirect_to admin_categories_path
