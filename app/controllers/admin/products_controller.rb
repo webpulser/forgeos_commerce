@@ -11,7 +11,7 @@ class Admin::ProductsController < Admin::BaseController
     :valid_elements => TMCEVALID
   }
 
-  before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate, :update_tattributes_list, :duplicate]
+  before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate, :duplicate]
   before_filter :new_product, :only => [:new, :create]
   before_filter :manage_tags, :only => [:create, :update]
 
@@ -90,10 +90,8 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def update_tattributes_list
-    if request.xhr?
-      @product_type = ProductType.find_by_id(params[:product_type_id])
-      render :partial => 'admin/tattributes/list_form', :locals => { :product_type => @product_type, :product => @product }
-    end
+    @product_type = ProductType.find(params[:product_type_id])
+    render :partial => 'tattributes', :locals => { :product_type => @product_type, :product => Product.find(params[:id]) }
   end
 
 private
