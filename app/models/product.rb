@@ -137,7 +137,7 @@ class Product < ActiveRecord::Base
 #  end
 
   def method_missing_with_attribute(method, *args, &block)
-    unless self.product_type && tattribute = self.product_type.tattributes.find_by_name(method.to_s)
+    unless self.product_type && tattribute = self.product_type.tattributes.find_by_access_method(method.to_s)
       method_missing_without_attribute(method, *args, &block)
     else
       if tattribute.dynamic
