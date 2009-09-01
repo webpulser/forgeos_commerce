@@ -6,7 +6,7 @@
 
 - unless categories.nil? or categories.blank?
   - categories.each do |category|
-    %li{ :rel => 'folder', :id => "#{object_name}_category_#{category.id}" }
+    %li{ :rel => 'folder', :id => "#{object_name}_category_#{category.id}", :class => product.product_category_ids.include?(category.id) ? 'clicked' : ''}
       - if product.product_category_ids.include?(category.id)
         - link_to '#', :class => 'clicked' do
           = category.name + content_tag(:span)
