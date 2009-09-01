@@ -22,38 +22,28 @@
           %span.currency
             = $currency.html
         = f.label :product_type_id, "#{I18n.t('product_type', :count => 1).capitalize}<sup class=\"required\">*</sup>"
-        .enhanced
-          = f.collection_select :product_type_id, ProductType.all, :id, :name, { :prompt => I18n.t('please_select') }
-          = observe_field("#{f.object_name}_product_type_id", |
-           :frequency => 0.25, |
-           :update => "product-types-panel", |
-           :url => { :action => :update_tattributes_list }, |
-           :with => "'product_type_id='+value") |
-        /
-          .tool-tip-me
-            .stock
-              %label{ :for => "product-stock" }
-                Stock
+        %div
+          = f.collection_select :product_type_id, ProductType.all, :id, :name, { :prompt => I18n.t('please_select') }, :onchange => remote_function(:url => [:update_tattributes_list, :admin, product], :update => "product-types-panel", :with => "'product_type_id='+value")
+        .tool-tip-me
+          .stock
+            %label{ :for => "product-stock" }
+              Stock
+            %div
+              %select#product-stock{ :name => "product-stock" }
+                %option{ :selected => "selected", :value => "default" }
+                  Track low stock level
+          #product-in-stock.tool-tip-content
+            .content
+              = f.label :stock, I18n.t('stock', :count => 1).capitalize
+              = f.text_field :stock, :class => 'background'
+              %label{ :for => "out-stock-action" }
+                if out of sotck
               %div
-                %select#product-stock{ :name => "product-stock" }
-                  %option{ :selected => "selected", :value => "default" }
-                    Track low stock level
-            #product-in-stock.tool-tip-content
-              .content
-                %label{ :for => "in-stock" }
-                  Products in stock
-                %input#in-stock.backgrounds{ :name => "in-stock", :type => "text" }
-                %label{ :for => "out-stock-action" }
-                  if out of sotck
-                %div
-                  %select
-                    %option{ :selected => "selected", :value => "0" }
-                      stop sales
-                .clear
-            .clear
-        %label{ :for => "stock" }
-          = I18n.t('stock', :count => 1).capitalize
-        = f.text_field 'stock', :class => 'background', :id => 'stock'
+                %select
+                  %option{ :selected => "selected", :value => "0" }
+                    stop sales
+              .clear
+          .clear
       #product-images.grid_3.omega
         #featured-picture
           = I18n.t('picture.featured').capitalize

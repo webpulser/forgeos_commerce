@@ -3,9 +3,5 @@
 
 - unless categories.nil? or categories.blank?
   - categories.each do |category|
-    %li{ :rel => ( category.parent_id.nil? ? 'attribute' : 'attribute-category' ), :id => "category_#{category.id}" }
-      = link_to((category.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy')), '#')
-      - unless category.children.empty? && category.tattributes.blank?
-        %ul
-          - category.children.each do |child|
-            = render :partial => 'categories', :locals => { :categories => [child], :level => (level + 1) }
+    %li{ :rel => 'folder', :id => "category_#{category.id}" }
+      = link_tocategory.name + content_tag(:span, category.tattributes.count), '#')
