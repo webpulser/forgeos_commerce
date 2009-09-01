@@ -19,9 +19,13 @@ class Cart < ActiveRecord::Base
   #
   # ==== Parameters
   # * <tt>:product</tt> - a <i>Product</i> object
-  def add_product(product,free=false)
+  def add_product(product,free=false,quantity=1)
     return false if product.nil? || product.new_record?
-    carts_products << CartsProduct.create(:product_id => product.id, :free => free)
+    unless products.include? product
+      carts_products << CartsProduct.create(:product_id => product.id, :free => free, :quantity => quantity)
+    else
+      set_quantity(product, size(product) + quantity)
+    end
   end
 
   def has_free_product?(product_id)
@@ -47,8 +51,8 @@ class Cart < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:product_id</tt> - an <i>id</i> of a <i>Product</i>
   # This method use <i>add_product</i>
-  def add_product_id(product_id, free=false)
-    add_product(Product.find_by_id(product_id))
+  def add_product_id(product_id,quantity=1,free=false)
+    add_product(Product.find_by_id(product_id),free,quantity.to_i)
   end
 
   # Remove a product of this cart
@@ -81,11 +85,12 @@ class Cart < ActiveRecord::Base
   # * <tt>:product</tt> - a <i>Product</i> object
   def total(with_tax=false, product=nil, with_discount=false)
     if product.nil?
-      total = CartsProduct.find_all_by_cart_id(id, :conditions => ['free != 1']).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
-      if with_discount and !self.discount.nil? 
-        self.percent.nil? ? total-=self.discount : total-= (total*self.discount)/100
-      end
-      return total
+      #total = CartsProduct.find_all_by_cart_id(id, :conditions => ['free != 1']).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
+      #if with_discount and !self.discount.nil? 
+      #  self.percent.nil? ? total-=self.discount : total-= (total*self.discount)/100
+      #end
+      #return total
+      CartsProduct.find_all_by_cart_id(id).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
     else
       CartsProduct.find_all_by_cart_id_and_product_id(id, product.id).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
     end
@@ -121,6 +126,34 @@ class Cart < ActiveRecord::Base
   
   def discount_cart(discount, percent=nil)
     percent.nil? ? self.update_attributes(:discount => discount) : self.update_attributes(:discount => discount, :percent => 1)
+  end
+  
+  
+  ### old methods
+  
+  def set_quantity(product, quantity)
+    quantity = quantity.to_i
+    carts_products.each do |carts_product|
+       if carts_product.product_id == product.id
+         return remove_product(product) if quantity == 0
+         carts_product.update_attribute(:quantity, quantity)
+       end
+     end
+  end
+  
+  def size(product=nil)
+    if product.nil?
+      return carts_products.inject(0) { |total, carts_product| total + carts_product.quantity }
+    else
+      carts_product = carts_products.find_by_product_id(product.id)
+      return carts_product.quantity unless carts_product.nil?
+    end
+    return 0
+  end
+
+  # Returns product's count of this cart
+  def count_products
+    products.size
   end
   
 end
