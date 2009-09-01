@@ -14,7 +14,11 @@ class CartController < ApplicationController
   # * <tt>:id</tt> - a <i>Product</i> object
   def add_product
     reset_order_session
-    flash[:notice] = I18n.t(:product_added).capitalize if @cart.add_product_id(params[:id],params[:quantity])
+    if params[:quantity]
+      params[:quantity].to_i.times do 
+        flash[:notice] = I18n.t(:product_added).capitalize if @cart.add_product_id(params[:id])
+      end
+    end
     redirect_to(:action => 'index')
     #dd
     #redirect_or_update
