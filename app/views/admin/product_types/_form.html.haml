@@ -9,6 +9,7 @@
   #content.grid_12.alpha.omega
     .grid_12.alpha
       #product-types-selected-tree.a-tree
+        = I18n.t('drag_attributes').capitalize
         %ul
           - product_type.tattributes.each do |tattribute|
             %li{ :rel => 'attribute' }
@@ -20,7 +21,7 @@
   #yellow-sidebar.grid_4.alpha.omega.yellow
     #product-types-all-tree.a-tree
       %ul
-        = render :partial => 'admin/categories/list_tattributes', :locals => { :categories => TattributeCategory.find_all_by_parent_id(nil) }
+        = render :partial => 'categories', :locals => { :categories => TattributeCategory.find_all_by_parent_id(nil) }
       .clear
     %a.small-icons.small-icons-verti-small-blue-plus.attribute-new{ :href => '#' }
       Create Attribute

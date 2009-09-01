@@ -201,6 +201,7 @@ en:
   pay: 'validate payment'
   accept: 'validate order'
   send: 'validate shipping'
+  drag_attributes: 'drag attributes from the right column to this product type:'
   tattribute:
     one: "attribute"
     all: "all attribute"

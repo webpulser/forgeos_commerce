@@ -16,7 +16,6 @@ class Admin::ProductTypesController < Admin::BaseController
   end
 
   def new
-    render :create
   end
 
   # Create a ProductType
@@ -71,7 +70,7 @@ private
   end
   
   def sort
-    columns = %w(name name)
+    columns = %w(name name actions)
     conditions = []
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i

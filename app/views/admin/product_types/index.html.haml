@@ -25,6 +25,7 @@
         %th
         %th
           = I18n.t('name').capitalize
+        %th
     %tbody
 
-= dataTables_tag 2, :url => admin_product_types_path(:format => :json)
+= dataTables_tag 3, :url => admin_product_types_path(:format => :json)

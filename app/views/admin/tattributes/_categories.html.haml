@@ -4,4 +4,4 @@
 - unless categories.nil? or categories.blank?
   - categories.each do |category|
     %li{ :rel => 'folder', :id => "category_#{category.id}" }
-      = link_tocategory.name + content_tag(:span, category.tattributes.count), '#')
+      = link_to(category.name + content_tag(:span, category.tattributes.count), '#')

@@ -3,9 +3,15 @@
 
 - unless categories.nil? or categories.blank?
   - categories.each do |category|
-    %li{ :rel => ( category.parent_id.nil? ? 'attribute' : 'attribute-category' ), :id => "category_#{category.id}" }
+    %li{ :rel => 'attribute-category', :id => "attribute_category_#{category.id}" }
       = link_to((category.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy')), '#')
-      - unless category.children.empty? && category.product_types.blank?
+      - unless category.tattributes.empty?
         %ul
-          - category.children.each do |child|
-            = render :partial => 'categories', :locals => { :categories => [child], :level => (level + 1) }
+          - category.tattributes.each do |tattribute|
+            %li{ :rel => 'attribute', :id => "tattribute_#{tattribute.id}" }
+              = link_to((tattribute.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy')), '#')
+        - unless category.children.empty?
+          %ul
+            - category.children.each do |child|
+              = render :partial => 'categories', :locals => { :categories => [child], :level => (level + 1) }
+

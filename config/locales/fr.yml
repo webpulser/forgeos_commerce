@@ -201,6 +201,7 @@ fr:
   pay: 'valider le paiement'
   accept: 'valider la commande'
   send: "valider l'expédition"
+  drag_attributes: 'Glisser les attributs depuis la colonne de droite pour les ajouter au type de produit'
   tattribute:
     one: attribut
     other: attributs
