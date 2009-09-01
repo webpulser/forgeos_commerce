@@ -10,6 +10,7 @@ activate '/activate/:activation_code', :controller => 'users', :action => 'activ
 resource :session
 resources :users
 resources :products
+resources :packs, :controller => :products
 resources :addresses
 resources :orders
 
