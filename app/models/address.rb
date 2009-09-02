@@ -22,7 +22,7 @@ class Address < ActiveRecord::Base
   belongs_to :country
   has_one :order
 
-  validates_presence_of :country_id, :civility_id, :address, :city
+  validates_presence_of :country_id, :civility_id, :address, :city, :designation
 
   # Returns address in a string <i>#{firstname} #{name} #{address} #{zip_code} #{city}</i>
   def to_s
