@@ -1,0 +1,24 @@
+- form_for [:admin , option], :html => { :id => 'wrap' } do |f|
+  = f.hidden_field :type
+  .backgrounds.big-header
+    = f.text_field :name
+    .interact-links
+      = fg_submit_tag 'save_changes'
+      = I18n.t('or')
+      = link_to I18n.t('cancel').capitalize, admin_tattributes_path, :class => 'back-link'
+  #content.grid_16.alpha.omega
+    .grid_12.alpha
+      .inner-content
+        .tattribute-type
+          %span.small-icons.tattribute-checkbox
+            ="checkbox field"
+        .choices
+          = render :partial => 'checkbox'
+    #right-sidebar.grid_4.omega
+      - unless option.new_record?
+        .step
+          = link_to I18n.t('tattribute.duplicate.action'), '#', :class => 'small-icons duplicate'
+          = link_to I18n.t('tattribute.destroy.action'), '#', :class => 'small-icons delete'
+        .step
+          = I18n.t('tattribute.name')
+          = f.text_field :access_method, :class => 'field'

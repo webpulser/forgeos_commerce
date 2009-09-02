@@ -1,11 +1,11 @@
-# This Controller Manage Tattributes and his association with
+# This Controller Manage Options and his association with
 # Attributes
-class Admin::TattributesController < Admin::BaseController
-  before_filter :get_tattributes, :only => [:index]
-  before_filter :get_tattribute, :only => [:edit, :update, :destroy, :show]
-  before_filter :new_tattribute, :only => [:new, :create]
+class Admin::OptionsController < Admin::BaseController
+  before_filter :get_options, :only => [:index]
+  before_filter :get_option, :only => [:edit, :update, :destroy, :show]
+  before_filter :new_option, :only => [:new, :create]
   
-  # List Tattribute
+  # List Options
   def index
     respond_to do |format|
       format.html
@@ -22,26 +22,26 @@ class Admin::TattributesController < Admin::BaseController
   def new
   end
 
-  # Create a Tattribute
+  # Create an Option
   # ==== Params
-  # * tattribute = Hash of Tattribute's attributes
+  # * option = Hash of Option's attributes
   def create
-    if @tattribute.save
+    if @option.save
       flash[:notice] = I18n.t('tattribute.create.success').capitalize
-      redirect_to([:edit, :admin, @tattribute])
+      redirect_to([:edit, :admin, @option])
     else
       flash[:error] = I18n.t('tattribute.create.failed').capitalize
     end
   end
 
-  # Edit a Tattribute
+  # Edit an Option
   # ==== Params
-  # * id = Tattribute's id
+  # * id = Option's id
   def edit
   end
 
   def update
-    if @tattribute.update_attributes(params[:tattribute])
+    if @option.update_attributes(params[:option])
       flash[:notice] = I18n.t('tattribute.update.success').capitalize
     else
       flash[:error] = I18n.t('tattribute.update.failed').capitalize
@@ -49,16 +49,16 @@ class Admin::TattributesController < Admin::BaseController
     render :action => 'edit'
   end
 
-  # Destroy a Tattribute
+  # Destroy an Option
   # ==== Params
-  # * id = Tattribute's id
+  # * id = Option's id
   def destroy
-    if @tattribute.destroy
+    if @option.destroy
       flash[:notice] = I18n.t('tattribute.destroy.success').capitalize
     else
       flash[:error] = I18n.t('tattribute.destroy.failed').capitalize
     end
-    return redirect_to(:action => 'index')
+    return redirect_to(admin_options_path)
   end
 
   def access_method
@@ -66,32 +66,40 @@ class Admin::TattributesController < Admin::BaseController
   end
 
 private
-  def get_tattributes
-    @tattributes = Tattribute.all
+  def get_options
+    @options = Tattribute.all
   end
   
-  def get_tattribute
-    @tattribute = Tattribute.find_by_id(params[:id])
+  def get_option
+    unless @option = Tattribute.find_by_id(params[:id])
+      flash[:error] = I18n.t('tattribute.not_exist').capitalize
+      return redirect_to(admin_options_path)
+    end
+    params[:option] = params[:checkbox] if params[:checkbox]
   end
   
-  def new_tattribute
-    @tattribute = Tattribute.new(params[:tattribute])
+  def new_option
+    params[:option] = params[:checkbox_option] if params[:checkbox_option]
+    case params[:option][:type]
+       when 'CheckboxOption'
+         @option = CheckboxOption.new(params[:option])
+    end
   end
   
   def sort
-    columns = %w(name)
+    columns = %w(id name actions)
     conditions = []
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
     if params[:sSearch] && !params[:sSearch].blank?
-      @tattributes = Tattribute.search(params[:sSearch],
+      @options = Tattribute.search(params[:sSearch],
         :order => order,
         :page => page,
         :per_page => per_page)
     else
-      @tattributes = Tattribute.paginate(:all,
+      @options = Tattribute.paginate(:all,
         :conditions => conditions,
         :order => order,
         :page => page,

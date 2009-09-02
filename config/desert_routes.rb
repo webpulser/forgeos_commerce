@@ -23,9 +23,13 @@ namespace :admin do |admin|
   admin.resources :geo_zones
   admin.resources :countries, :controller => 'geo_zones'
   admin.resources :users, :collection => { :filter => [:post, :get] }, :member => { :activate => :post }
-  admin.resources :tattributes, :collection => { :access_method => :post } do |tattribute|
+  admin.resources :tattributes, :controller => 'options', :collection => { :access_method => :post } do |tattribute|
     tattribute.resources :values, :controller => 'tattribute_values'
   end
+  admin.resources :options, :collection => { :access_method => :post } do |option|
+    option.resources :option_values, :controller => 'tattribute_values'
+  end
+  admin.resources :checkbox_options, :controller => 'options', :path_prefix => '/admin/options'
 
   admin.resources :orders do |order|
     order.resources :details, :controller => 'order_details'

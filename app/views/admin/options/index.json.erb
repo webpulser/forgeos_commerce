@@ -1,0 +1,23 @@
+{
+'iTotalDisplayRecords': <%= @options.total_entries || 0 %>,
+'aaData': [
+<% @options.each do |option| %>
+  <% 
+    link_id = "tattribute_#{option.id}"
+  %>
+  [
+  '<%= escape_javascript content_tag(:div, "", :class => 'product-name') %>',
+  '<%= escape_javascript content_tag(:div, link_to(option.name, admin_option_path(option)), :class => 'product-name') -%>
+   <%= escape_javascript link_to('', edit_admin_option_path(option), :class => 'small-icons edit-link') -%>
+   <%= escape_javascript link_to_remote('', :url => admin_option_path(option),
+         :method => :delete,
+         :confirm => I18n.t('tattribute.destroy.confirm').capitalize,
+         :success => "removedataTablesRow('#destroy_#{link_id}')", 
+         :html => {
+         :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
+       })
+   %>'
+    ] <%= ',' unless @options.last == option %>
+<% end %>
+]
+}

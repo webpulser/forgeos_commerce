@@ -1,0 +1,3 @@
+class CheckboxOption < Tattribute
+
+end

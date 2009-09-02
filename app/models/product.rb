@@ -7,10 +7,15 @@ class Product < ActiveRecord::Base
   
   has_and_belongs_to_many :attachments, :list => true, :order => 'position'
   has_and_belongs_to_many :pictures, :association_foreign_key => 'attachment_id', :join_table => 'attachments_products', :class_name => 'Picture', :order => 'position'
-  
+
   has_and_belongs_to_many :tattribute_values, :readonly => true
   has_many :dynamic_tattribute_values, :dependent => :destroy
   has_many :dynamic_tattributes, :through => :dynamic_tattribute_values, :class_name => 'Tattribute', :source => 'tattribute'
+
+  # TODO rename all tattribute to option
+  has_and_belongs_to_many :options_values, :class_name => 'TattributeValue', :readonly => true
+  has_many :dynamic_option_values, :class_name => 'DynamicTattributeValue', :dependent => :destroy
+  has_many :dynamic_options, :through => :dynamic_option_values, :class_name => 'Tattribute', :source => 'tattribute'
 
   has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products'
   belongs_to :product_type

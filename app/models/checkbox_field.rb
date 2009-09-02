@@ -1,3 +1,0 @@
-class CheckboxField < Tattribute
-
-end

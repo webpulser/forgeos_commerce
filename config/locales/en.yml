@@ -207,6 +207,7 @@ en:
     all: "all attribute"
     other: "attributes"
     name: "attribute name"
+    not_exist: 'the requested tattribute does not exist'
     create:
       success: 'the attribute was successfully created'
       failed: 'a problem occured during the attribute creation'

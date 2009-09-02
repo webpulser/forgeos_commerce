@@ -203,8 +203,9 @@ fr:
   send: "valider l'expédition"
   drag_attributes: 'Glisser les attributs depuis la colonne de droite pour les ajouter au type de produit'
   tattribute:
-    one: attribut
-    other: attributs
+    one: 'attribut'
+    other: 'attributs'
+    not_exist: "l'attribut demandé n'existe pas"
     create:
       success: "l'attribut a bien été créé"
       failed: "un problème est survenu lors de la création de l'attribut"

@@ -1,0 +1,19 @@
+%h2
+  ="Choices"
+%ul.sortable.sortable-choices.grid_10.omega.alpha
+  %li.block-container
+    %span.block-type
+      %span.handler
+        %span.inner
+    %span.block-name
+      %input
+      /
+        .image-attribute
+          ='<img src="/images/admin/bouteille-vin.png"/>'
+          = link_to "add image", '#'
+    %span.small-icons.red-delete-icon
+.clear
+= link_to 'Add a choice', '#', :class => 'small-icons add-choice'
+.legend
+%label Legend for field
+%textarea.grid_10.omega.alpha
