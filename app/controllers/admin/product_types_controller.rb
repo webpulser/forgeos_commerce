@@ -39,10 +39,11 @@ class Admin::ProductTypesController < Admin::BaseController
   def update
     if @product_type.update_attributes(params[:product_type])
       flash[:notice] = I18n.t('product.update.success').capitalize
+      return redirect_to(admin_product_types_path)
     else
       flash[:error] = I18n.t('product.update.failed').capitalize
+      render :action => 'edit'
     end
-    render :action => 'edit'
   end
 
   # Destroy a ProductType
@@ -54,14 +55,14 @@ class Admin::ProductTypesController < Admin::BaseController
     else
       flash[:error] = I18n.t('product.destroy.failed').capitalize
     end
-    return redirect_to(:action => 'index' )
+    return redirect_to(admin_product_types_path)
   end
 
 private
   def get_product_type
     unless @product_type = ProductType.find_by_id(params[:id])
       flash[:error] = I18n.t('product_type.found.failed').capitalize
-      redirect_to(admin_product_types_path)
+      return redirect_to(admin_product_types_path)
     end
   end
 

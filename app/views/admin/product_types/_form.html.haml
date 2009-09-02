@@ -10,6 +10,7 @@
     .grid_12.alpha
       #product-types-selected-tree.a-tree
         = I18n.t('drag_attributes').capitalize
+        = hidden_field_tag 'product_type[tattribute_ids][]'
         %ul
           - product_type.tattributes.each do |tattribute|
             %li{ :rel => 'attribute' }

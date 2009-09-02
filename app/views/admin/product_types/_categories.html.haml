@@ -9,9 +9,10 @@
         %ul
           - category.tattributes.each do |tattribute|
             %li{ :rel => 'attribute', :id => "tattribute_#{tattribute.id}" }
-              = link_to((tattribute.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy')), '#')
+              = link_to((tattribute.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-tattribute')), '#')
         - unless category.children.empty?
           %ul
             - category.children.each do |child|
-              = render :partial => 'categories', :locals => { :categories => [child], :level => (level + 1) }
+              - unless child.tattributes.empty?
+                = render :partial => 'categories', :locals => { :categories => [child], :level => (level + 1) }
 
