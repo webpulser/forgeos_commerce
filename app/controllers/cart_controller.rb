@@ -18,7 +18,9 @@ class CartController < ApplicationController
       params[:quantity].to_i.times do 
         flash[:notice] = I18n.t(:product_added).capitalize if @cart.add_product_id(params[:id])
       end
-    end
+    else
+      flash[:notice] = I18n.t(:product_added).capitalize if @cart.add_product_id(params[:id])
+    end 
     redirect_to(:action => 'index')
     #dd
     #redirect_or_update
@@ -39,8 +41,8 @@ class CartController < ApplicationController
   # * <tt>:id</tt> - a <i>Product</i> object
   def remove_product
     reset_order_session
-    puts "pouf"*10
-    puts params[:id]
+    #p "pouf"*10
+    #puts params[:id]
     flash[:notice] = I18n.t(:product_has_been_remove).capitalize if @cart.remove_product(params[:id])
     redirect_or_update
   end
@@ -109,4 +111,5 @@ protected
       e.match
     end
   end
+  
 end

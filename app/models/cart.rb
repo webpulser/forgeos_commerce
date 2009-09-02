@@ -55,8 +55,11 @@ class Cart < ActiveRecord::Base
   def remove_product(carts_product_id)
     return false if carts_products.nil?
     # destroy the product
-    cart_product = carts_products.find_by_id(carts_product_id)
-    cart_product.destroy if cart_product
+    #cart_product = carts_products.find_by_product_id(carts_product_id)
+    cart_product = carts_products.all(:conditions => ["product_id = #{carts_product_id}"])
+    cart_product.each do |product|
+      product.destroy if cart_product
+    end
     # destroy free product
     free_products = carts_products.find_by_free(1)
     free_products.destroy if free_products

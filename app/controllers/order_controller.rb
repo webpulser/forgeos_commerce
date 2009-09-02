@@ -10,7 +10,7 @@ class OrderController < ApplicationController
   include Ruleby
 
   before_filter :can_create_order?, :only => :create
-  before_filter :get_cart, :only => :new
+  before_filter :get_cart, :only => [:new,:informations,:paye]
   # Save in session <i>address_invoice_id</i> and <i>address_delivery_id</i>.
   # Returns false if miss an address or if <i>shipping_method_detail</i> is not validate by user, returns true else
   def valid_shipment(action=true)
