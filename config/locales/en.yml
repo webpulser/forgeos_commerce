@@ -390,6 +390,7 @@ en:
   product:
     one : 'product'
     other: 'products'
+    all: 'all products'
     create:
       success: 'the product was successfully created'
       failed: 'a problem occured during the product creation'

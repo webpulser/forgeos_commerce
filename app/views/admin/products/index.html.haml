@@ -1,16 +1,28 @@
 #sidebar.grid_4.omega.alpha
   .backgrounds.header
-    %span.backgrounds.action-button
+    %span.backgrounds.action-button.create-action
       %span.big-icons.new-category
       %span.small-icons.arrow
-    %span.backgrounds.action-button
+      %span.create-list
+        %span.big-icons.create-folder
+          = "create a folder"
+        -#%span.small-icons.create-smart-folder
+          -#= "create a smart folder "
+    %span.backgrounds.action-button.update-action
       %span.small-icons.more-actions
       %span.small-icons.arrow
+      %span.update-list
+        %span.small-icons.modify-folder
+          = "modify a folder"
+        %span.small-icons.duplicate-folder
+          = "duplicate a folder "
+        %span.small-icons.delete-folder
+          = "delete a folder "
   .backgrounds.sidebar-background
   .sidebar-content
     %h2.small-icons.products
-      All Products
-    #product-tree
+      = link_to I18n.t('product.all').capitalize, admin_products_path
+    #product-tree.a-tree
       %ul
         = render :partial => 'admin/categories/list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
 #content.grid_12.alpha.omega

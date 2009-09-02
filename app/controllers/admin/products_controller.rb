@@ -138,19 +138,22 @@ private
 
   def sort
     columns = %w(reference name price stock product_type_id active)
-    conditions = []
+    conditions = params[:category_id] ? ['product_categories_products.product_category_id = ? ', params[:category_id]] : []
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
     if params[:sSearch] && !params[:sSearch].blank?
       @products = Product.search(params[:sSearch],
+        :conditions => conditions,
+        :include => ['product_categories'],
         :order => order,
         :page => page,
         :per_page => per_page)
     else
       @products = Product.paginate(:all,
         :conditions => conditions,
+        :include => ['product_categories'],
         :order => order,
         :page => page,
         :per_page => per_page)
