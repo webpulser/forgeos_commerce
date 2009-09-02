@@ -7,9 +7,9 @@
   %>
   [
   '<%= escape_javascript content_tag(:div, "", :class => 'product-name') %>',
-  '<%= escape_javascript content_tag(:div, link_to(tattribute.name, [:admin, tattribute]), :class => 'product-name') -%>
-   <%= escape_javascript link_to('', [:edit, :admin, tattribute], :class => 'small-icons edit-link') -%>
-   <%= escape_javascript link_to_remote('', :url => [:admin, tattribute],
+  '<%= escape_javascript content_tag(:div, link_to(tattribute.name, admin_tattribute_path(tattribute)), :class => 'product-name') -%>
+   <%= escape_javascript link_to('', edit_admin_tattribute_path(tattribute), :class => 'small-icons edit-link') -%>
+   <%= escape_javascript link_to_remote('', :url => admin_tattribute_path(tattribute),
          :method => :delete,
          :confirm => I18n.t('tattribute.destroy.confirm').capitalize,
          :success => "removedataTablesRow('#destroy_#{link_id}')", 
