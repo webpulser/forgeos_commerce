@@ -10,6 +10,44 @@
 
   #content.grid_16.alpha.omega
     #product.grid_12.alpha
+      .upload-lightbox-container.white
+        #fileUpload
+          = f.error_messages
+          = f.file_field :uploaded_data
+          = hidden_field_tag :target, params[:target]
+          = hidden_field_tag :target_id, params[:target_id]
+          = f.submit I18n.t('save').capitalize
+          - content_for :tools, link_to(I18n.t('list').capitalize, admin_medias_path, :class => 'house' )
+
+          = javascript_include_tag %w(jquery.uploadify swfobject)
+          = stylesheet_link_tag 'admin/uploadify'
+          - session_key = ActionController::Base.session_options[:key]
+          - javascript_tag do
+            $(function(){
+            $('#fileUpload').uploadify({
+            'uploader': '/images/uploadify/uploadify.swf',
+            = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
+            = "'script': '#{admin_medias_path}',"
+            = "'buttonText': 'Upload a picture',"
+            = "'buttonImg' :'#{image_path('uploadify/upload-button_en.png')}',"
+            = "'width' :'154',"
+            = "'height' :'24',"
+            'scriptData': {
+            = "'target': '#{params[:target]}',"
+            = "'target_id': '#{params[:target_id]}', "
+            'format': 'json',
+            = "'authenticity_token': encodeURIComponent('#{form_authenticity_token}'),"
+            = "'#{session_key}': encodeURIComponent('#{cookies[session_key]}')"
+            },
+            'ScriptAccess': 'always',
+            'multi': 'true',
+            'displayData': 'speed',
+            'onAllComplete': function(){
+            = display_standard_flashes(I18n.t('media.create.success').capitalize,false)
+            }
+            });});
+        = link_to_function I18n.t('media.upload.clear_queue').capitalize,"$('#fileUpload').uploadifyClearQueue()", :class=>'clear-queue'
+
       %h2.permalink
         = I18n.t('permalink').capitalize
         \:
@@ -58,7 +96,7 @@
               .handler
                 .inner
           %li.clear
-        = link_to content_tag(:span, I18n.t('picture.add').capitalize, :class=>'big-icons add-picture'), {:controller => 'admin/medias', :action => 'new', :target => 'Product', :target_id => product.id}, :class=>'backgrounds button'
+        = link_to content_tag(:span, I18n.t('picture.add').capitalize, :class=>'big-icons add-picture'), '#', :class=>'backgrounds button'
       .clear
       .grid_12.omega
         = f.label :description, I18n.t('description').capitalize
