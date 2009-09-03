@@ -1,0 +1,234 @@
+#dashboard.grid_16.alpha.omega
+  .left-dashboard.grid_12.omega
+    %br
+    /
+      %p.summary
+        Welcome,
+        %br
+        Today,
+        %em
+          589 visitors
+        see
+        %em
+          3456
+        pages on your website.
+        %br
+        %em
+          340 customers
+        visit your shop and bought
+        %em
+          7 products
+        for a
+        total of
+        %em
+          95.34$
+        %br
+        Be careful, you have
+        %a{ :href => "#" }
+          1 product out of stock
+    
+    .quick-actions
+      - link_to new_admin_page_path, :class => 'backgrounds quick-action-button' do
+        %span.big-icons.create-page
+          = I18n.t('page.create.action').capitalize
+      - link_to new_admin_product_path, :class => 'backgrounds quick-action-button' do
+        %span.big-icons.create-product
+          = I18n.t('product.create.action').capitalize
+      - link_to new_admin_special_offer_path, :class => 'backgrounds quick-action-button' do
+        %span.big-icons.create-offer
+          = I18n.t('special_offer_rule.create.action').capitalize
+      - link_to '#', :class => 'backgrounds quick-action-button' do
+        %span.small-icons.see-stats
+          = I18n.t('statistic.show.all').capitalize
+    .clear
+
+    - pending_orders = Order.all(:order => 'created_at DESC', :conditions => { :status => %w(unpaid accepted)})
+    - lastest_orders_count = 5
+    - lastest_orders = Order.all(:order => 'created_at DESC', :limit => lastest_orders_count)
+    %h2.small-icons.orders
+      = I18n.t('order', :count => 2).capitalize
+    #to-tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
+      %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
+        %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active
+          %a{ :href => "#last-orders" }
+            = lastest_orders_count
+            = I18n.t('order.lastest', :count => lastest_orders_count).capitalize
+        %li.ui-state-default.ui-corner-top
+          %a{ :href => "#pending-orders" }
+            = pending_orders.count
+            = I18n.t('order.pendings', :count => pending_orders.count).capitalize
+      #last-orders.ui-tabs-panel.ui-widget-content.ui-corner-bottom
+        %table
+          %tbody
+            - lastest_orders.each do |order|
+              %tr{ :class => cycle('','even')}
+                %td.table-price
+                  = order.total
+                  = $currency.html
+                %td.table-product
+                  = order.orders_details.count
+                  = I18n.t(:product, :count => order.orders_details.count).capitalize
+                %td{ :class => "table-state #{order.status}"}
+                  = I18n.t(order.status, :scope => [:order,:status]).capitalize
+                %td.table-customer
+                  = order.user.fullname
+                %td.table-time
+                  = order.created_at
+        = link_to I18n.t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
+      #pending-orders.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide
+        %table
+          %tbody
+            - pending_orders.each do |order|
+              %tr{ :class => cycle('','even')}
+                %td.table-price
+                  = order.total
+                  = $currency.html
+                %td.table-product
+                %td.table-product
+                  = order.orders_details.count
+                  = I18n.t(:product, :count => order.orders_details.count).capitalize
+                %td{ :class => "table-state #{order.status}"}
+                  = I18n.t(order.status, :scope => [:order,:status]).capitalize
+                %td.table-customer
+                  = order.user.fullname
+                %td.table-time
+                  = order.created_at
+        = link_to I18n.t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
+
+    /
+      %h2.small-icons.activity
+        Latest activity
+      .latest-activity
+        %table
+          %tbody
+            %tr
+              %td.table-product
+                %span.big-icons.create-page
+                  Page "About us" created
+              %td
+                by Quentin Tousart
+              %td
+                2 hours before
+            %tr.even
+              %td
+                %span.big-icons.create-page
+                  Page "About us" created
+              %td
+                by Quentin Tousart
+              %td
+                2 hours before
+            %tr
+              %td
+                %span.big-icons.create-page
+                  Page "About us" created
+              %td
+                by Quentin Tousart
+              %td
+                2 hours before
+            %tr.even
+              %td
+                %span.big-icons.create-product
+                  Page "About us" created
+              %td
+                by Quentin Tousart
+              %td
+                2 hours before
+            %tr
+              %td
+                %span.big-icons.create-page
+                  Page "About us" created
+              %td
+                by Quentin Tousart
+              %td
+                2 hours before
+  .right-dahsboard.grid_4.alpha
+    - currency = $currency.code.upcase
+    - total_for_today = Forgeos::Commerce::Statistics.total_of_sales_for_day(Date.current).to_f
+    - total_for_yesterday = Forgeos::Commerce::Statistics.total_of_sales_for_day(Date.current.yesterday).to_f
+    - total_for_week = Forgeos::Commerce::Statistics.total_of_sales_for_week(Date.current).to_f
+    - total_for_last_week = Forgeos::Commerce::Statistics.total_of_sales_for_week(Date.current.ago(1.week)).to_f
+    - week_diff = (((total_for_week - total_for_last_week) / total_for_last_week) * 100).round
+    - total_for_month = Forgeos::Commerce::Statistics.total_of_sales_for_month(Date.current).to_f
+    - total_for_last_month = Forgeos::Commerce::Statistics.total_of_sales_for_month(Date.current.ago(1.month)).to_f
+    - month_diff = (((total_for_month - total_for_last_month) / total_for_last_month)* 100).round
+    - lifetime_sales = Forgeos::Commerce::Statistics.total_of_sales.to_f
+    %h2.small-icons.sales
+      = I18n.t(:sale, :count => 2).capitalize
+    .sales-info-block
+      .today-sales.first-block
+        = I18n.t('sale.day.current').capitalize
+        %span
+          = total_for_today.floor
+          %sup
+            = total_for_today.decimal
+            = currency
+      .yesterday-sales.second-block
+        = I18n.t('sale.day.previous').capitalize
+        %span
+          = total_for_yesterday.floor
+          %sup
+            = total_for_yesterday.decimal
+            = currency
+    .sales-info-block
+      .week-sales.first-block
+        = I18n.t('sale.week.current').capitalize
+        %span
+          = total_for_week.floor
+          %sup
+            = total_for_week.decimal
+            = currency
+      .last-week-sales.second-block
+        = I18n.t('sale.week.previous').capitalize
+        %span
+          = total_for_last_week.floor
+          %sup
+            = total_for_last_week.decimal
+            = currency
+      - if week_diff >= 0
+        %div{ :class => 'diff-positive' }
+          = "+#{week_diff}%"
+      - else
+        %div{ :class => 'diff-negative' }
+          = "#{week_diff}%"
+    .sales-info-block
+      .month-sales.first-block
+        = I18n.t('sale.month.current').capitalize
+        %span
+          = total_for_month.floor
+          %sup
+            = total_for_month.decimal
+            = currency
+      .last-month-sales.second-block
+        = I18n.t('sale.month.previous').capitalize
+        %span
+          = total_for_last_month.floor
+          %sup
+            = total_for_last_month.decimal
+            = currency
+      - if month_diff >= 0
+        %div{ :class => 'diff-positive' }
+          = "+#{month_diff}%"
+      - else
+        %div{ :class => 'diff-negative' }
+          = "#{month_diff}%"
+    .sales-info-block
+      .life-time-sales
+        = I18n.t('sale.lifetime').capitalize
+        %span
+          = lifetime_sales.floor
+          %sup
+            = lifetime_sales.decimal
+            = currency
+    %h2.small-icons.live-stats
+      = I18n.t('statistic.live', :count => 2).capitalize
+    .live-stats-content
+      %span
+        = User.count(:conditions => ['updated_at > ?',Time.now - 10.minutes]) 
+        visitors online
+      %span
+        = User.count(:conditions => ['updated_at > ?',Time.now - 10.minutes]) 
+        customers connected
+      %span
+        = Cart.count
+        shopping cart created
+  .clear

@@ -1,3 +1,5 @@
+require 'forgeos/commerce/statistics'
+require 'forgeos/commerce/float'
 module RailsCommerce
   OPTIONS = {
     :text => {

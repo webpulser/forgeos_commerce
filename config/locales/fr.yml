@@ -311,6 +311,20 @@ fr:
       success: 'la commande a bien été acceptée'
     send:
       success: 'la commande a bien été envoyée'
+    status:
+      payed: 'payé'
+      accepted: 'en attente'
+      sended: 'expédiée'
+      unpaid: 'en attente de paiement'
+    lastest:
+      one: 'la dernière commande'
+      other: 'les dernières commandes'
+    pendings: 
+      one: 'commande en attente'
+      other: 'commandes en attentes'
+    show:
+      all: 'voir toutes les commandes'
+
   voucher:
     one: 'code promo'
     other: 'codes promo'
@@ -507,6 +521,45 @@ fr:
       success: "le tag a bien été supprimé"
       failed: "un problème est survenu lors de la suppression du tag"
       confirm: "êtes-vous sûr de vouloir supprimer ce tag ?"
+
+  special_offer_rule:
+    one: 'offre speciale'
+    other: 'offre speciales'
+    create:
+      success: "l' offre speciale a bien été créé"
+      failed: "un problème est survenu lors de la création de l'offre speciale"
+      action: 'créer une offre speciale'
+    update:
+      success: "l'offre speciale a bien été mis à jour"
+      failed: "un problème est survenu lors de la mise à jour de l'offre speciale"
+      action: "éditer l'offre speciale"
+    destroy:
+      success: "l'offre speciale a bien été supprimé"
+      failed: "un problème est survenu lors de la suppression de l'offre speciale"
+      confirm: "êtes-vous sûr de vouloir supprimer cette offre speciale ?"
+
+  statistic:
+    one: 'statistique'
+    other: 'statistiques'
+    show:
+      all: 'voir les statistiques'
+    live:
+      one: 'statistique temps réel'
+      other: 'statistiques temps réel'
+  sale:
+    one: 'vente'
+    other: 'ventes'
+    day:
+      current: "aujourd'hui"
+      previous: 'hier'
+    week:
+      current: 'cette semaine'
+      previous: 'semaine dernière'
+    month:
+      current: 'ce moi ci'
+      previous: 'le moi dernier'
+    lifetime: 'total des ventes'
+
 # Date formats
   date:
     formats:

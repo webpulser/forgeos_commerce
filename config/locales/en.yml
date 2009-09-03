@@ -316,6 +316,19 @@ en:
       success: 'the order was successfully accepted'
     send:
       success: 'the order was successfully sent'
+    status:
+      payed: 'payed'
+      accepted: 'pending'
+      sended: 'shipped'
+      unpaid: 'unpaid'
+    lastest:
+      one: 'last order'
+      other: 'last orders'
+    pendings: 
+      one: 'pending order'
+      other: 'pending orders'
+    show:
+      all: 'see all orders'
   voucher:
     one: 'voucher'
     other: 'vouchers'
@@ -513,6 +526,44 @@ en:
       success: 'the tag was successfully destroyed'
       failed: 'a problem occured during the tag destroy'
       confirm: 'are you sure to delete this tag ?'
+
+  special_offer_rule:
+    one: 'special offer'
+    other: 'special offers'
+    create:
+      success: 'the special offer was successfully created'
+      failed: 'a problem occured during the special offer creation'
+      action: 'create a special offer'
+    update:
+      success: 'the special offer was successfully updated'
+      failed: 'a problem occured during the special offer update'
+      action: 'edit special offer'
+    destroy:
+      success: 'the special offer was successfully destroyed'
+      failed: 'a problem occured during the special offer destroy'
+      confirm: 'are you sure to delete this special offer ?'
+
+  statistic:
+    one: 'statistic'
+    other: 'statistics'
+    show:
+      all: 'see statistics'
+    live:
+      one: 'live statistic'
+      other: 'live statistics'
+  sale:
+    one: 'sale'
+    other: 'sales'
+    day:
+      current: 'today'
+      previous: 'yesterday'
+    week:
+      current: 'this week'
+      previous: 'last week'
+    month:
+      current: 'this month'
+      previous: 'last month'
+    lifetime: 'lifetime sales'
 
 # Active record
   activerecord:
