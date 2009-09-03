@@ -42,7 +42,7 @@
       #page
         #content
           .display_categories
-            = display_categories
+            = display_categories(ProductCategory.find_all_by_parent_id(nil))
           .yield= yield
         - unless %w(cart order wishlist).include?(@controller.controller_name)
           #cart

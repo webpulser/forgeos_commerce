@@ -24,30 +24,32 @@ module ProductHelper
   end
 
   def display_product(product, with_description=false, options={})
-    return I18n.t('no_product') unless product
-    content = "<div id=\"product_#{product.id}\" class=\"product\">"
-      if product.attachments.find_all_by_type('Picture').first
-        content += "<div class='product_picture'>"
-          content += image_tag(product.attachments.find_all_by_type('Picture').first.public_filename(options[:thumbnail_type] || :thumb))
+    #return I18n.t('no_product') unless product
+    if product
+      content = "<div id=\"product_#{product.id}\" class=\"product\">"
+        if product.attachments.find_all_by_type('Picture').first
+          content += "<div class='product_picture'>"
+            content += image_tag(product.attachments.find_all_by_type('Picture').first.public_filename(options[:thumbnail_type] || :thumb))
+          content += "</div>"
+        end
+        content += "<div class='product_name'>"
+          content += link_to_product product
         content += "</div>"
-      end
-      content += "<div class='product_name'>"
-        content += link_to_product product
-      content += "</div>"
-      content += "<div class='product_price'>"
-        content += product.price_to_s(true)
-        #content += product.price.to_s
-      content += "</div>"
-      content += "<div class='product_add_cart'>"
-        content += link_to_add_cart(product)
-      content += "</div>"
-      if with_description
-        content += "<div class='product_description'>"
-          content += product.description
+        content += "<div class='product_price'>"
+          content += product.price_to_s(true)
+          #content += product.price.to_s
         content += "</div>"
-      end
-    content += "</div>"
-    content += draggable_element("product_#{product.id}", :helper => '"clone"')
+        content += "<div class='product_add_cart'>"
+          content += link_to_add_cart(product)
+        content += "</div>"
+        if with_description
+          content += "<div class='product_description'>"
+            content += product.description
+          content += "</div>"
+        end
+      content += "</div>"
+      content += draggable_element("product_#{product.id}", :helper => '"clone"')
+    end
   end
   
   def display_product_page(product)
