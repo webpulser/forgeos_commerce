@@ -15,7 +15,7 @@ class CartController < ApplicationController
   def add_product
     reset_order_session
     if params[:quantity]
-      params[:quantity].to_i.times do 
+      params[:quantity].first.to_i.times do 
         flash[:notice] = I18n.t(:product_added).capitalize if @cart.add_product_id(params[:id])
       end
     else
