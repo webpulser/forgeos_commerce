@@ -1,7 +1,4 @@
 class ProductCategory < Category
   has_and_belongs_to_many :products
-
-  def total_products_count
-    ([self.products.count] + children.collect(&:total_products_count)).inject(:+)
-  end
+  has_and_belongs_to_many :elements, :class_name => 'Product'
 end

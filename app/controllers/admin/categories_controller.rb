@@ -49,7 +49,8 @@ class Admin::CategoriesController < Admin::BaseController
 
       respond_to do |format|
         format.html { render :action => 'edit' }
-        format.json { render :text => @category.id }
+        #format.json { render :text => @category.id }
+        format.json { render :text => @category.total_elements_count }
       end
     else
       flash[:error] = I18n.t('category.not_exist').capitalize
