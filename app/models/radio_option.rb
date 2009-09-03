@@ -1,0 +1,3 @@
+class RadioOption < Tattribute
+
+end

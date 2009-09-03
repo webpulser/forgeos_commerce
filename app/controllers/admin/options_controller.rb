@@ -75,7 +75,7 @@ private
       flash[:error] = I18n.t('tattribute.not_exist').capitalize
       return redirect_to(admin_options_path)
     end
-    params[:option] = params[:checkbox] if params[:checkbox]
+    params[:option] = params[:checkbox_option] if params[:checkbox_option]
   end
   
   def new_option

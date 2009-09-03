@@ -9,11 +9,14 @@
   #content.grid_16.alpha.omega
     .grid_12.alpha
       .inner-content
-        .tattribute-type
-          %span.small-icons.tattribute-checkbox
-            ="checkbox field"
-        .choices
-          = render :partial => 'checkbox'
+        - case option.type
+          - when 'CheckboxOption'
+            .tattribute-type
+              %span.small-icons.tattribute-checkbox
+                ="checkbox field"
+            .choices
+              = render :partial => 'checkbox'
+
     #right-sidebar.grid_4.omega
       - unless option.new_record?
         .step
