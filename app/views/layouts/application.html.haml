@@ -63,7 +63,7 @@
               | Demos :
               = link_to 'Book', "http://book.rails-commerce.com"
               = link_to 'Flower', "http://flower.rails-commerce.com"
-      = javascript_include_tag %w(jquery-ui jrails jquery.droppy application), :cache => 'base'
+      = javascript_include_tag %w(jquery-ui jrails), :cache => 'base'
       = drop_receiving_element('cart', :accept=> '.product,.product_show', :url => {:controller => 'cart', :action => 'add_product'}, :with => "'id='+($(ui.draggable).attr('id').split('_')[1])", :update => 'cart', :hoverClass => 'hover' )
       = drop_receiving_element('wishlist', :accept=> '.product,.product_show', :url => {:controller => 'wishlist', :action => 'add_product'}, :with => "'id='+($(ui.draggable).attr('id').split('_')[1])", :update => 'wishlist', :hoverClass => 'hover' )
       = display_standard_flashes
