@@ -65,7 +65,10 @@ module ProductHelper
                content += product.description
               content += '</div>'
         content += '<div class="product_picture" id="display_product_pictures_'+product.id.to_s+'">'
-          content += image_tag(product.attachments.find_all_by_type('Picture').first.public_filename(:normal)) unless product.attachments.find_all_by_type('Picture').empty?
+          product.pictures.each do |picture|
+            content += (picture == product.pictures.first ? image_tag(picture.public_filename('')) : image_tag(picture.public_filename(:small)))
+          end
+          #content += image_tag(product.attachments.find_all_by_type('Picture').first.public_filename(:normal)) unless product.attachments.find_all_by_type('Picture').empty?
         content += '</div>'
         content += '<div class="product_attributes_groups" id="product_attributes_groups_' + product.id.to_s + '">'
           content += display_product_page_attributes(product)
