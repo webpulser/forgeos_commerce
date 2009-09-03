@@ -7,7 +7,7 @@
   .backgrounds.sidebar-background
   .sidebar-content
     %h2.small-icons.pages
-      = link_to I18n.t('tattribute.all').capitalize, admin_options_path
+      = link_to_function I18n.t('tattribute.all').capitalize, "select_all_elements('/admin/options.json')"
     #product-tree
       %ul
         = render :partial => 'categories', :locals => { :categories => ProductType.all }

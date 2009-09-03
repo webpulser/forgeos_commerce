@@ -21,7 +21,7 @@
   .backgrounds.sidebar-background
   .sidebar-content
     %h2.small-icons.products
-      = link_to I18n.t('product.all').capitalize, admin_products_path
+      = link_to_function I18n.t('product.all').capitalize, "select_all_elements('/admin/products.json')"
     #product-tree.a-tree
       %ul
         = render :partial => 'admin/categories/list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
