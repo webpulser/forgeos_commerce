@@ -13,7 +13,7 @@ class Product < ActiveRecord::Base
   has_many :dynamic_tattributes, :through => :dynamic_tattribute_values, :class_name => 'Tattribute', :source => 'tattribute'
 
   # TODO rename all tattribute to option
-  has_and_belongs_to_many :options_values, :class_name => 'TattributeValue', :readonly => true
+  has_and_belongs_to_many :option_values, :class_name => 'TattributeValue', :readonly => true
   has_many :dynamic_option_values, :class_name => 'DynamicTattributeValue', :dependent => :destroy
   has_many :dynamic_options, :through => :dynamic_option_values, :class_name => 'Tattribute', :source => 'tattribute'
 
@@ -66,6 +66,15 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def clone
+    product_cloned = super
+    product_cloned.meta_info = meta_info.clone
+    product_cloned.dynamic_option_values = dynamic_option_values.collect(&:clone)
+    %w(attachment_ids picture_ids tag_list product_category_ids option_value_ids).each do |assoc|
+      product_cloned.send(assoc+'=', self.send(assoc))
+    end
+    return product_cloned
+  end
 
   def synchronize_stock
     if active && stock.to_i < 1

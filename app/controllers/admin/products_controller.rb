@@ -32,10 +32,7 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def duplicate
-    @product_cloned = @product.clone
-    @product_cloned.meta_info = @product.meta_info.clone
-    @product_cloned.tags = @product.tags
-    @product = @product_cloned
+    @product = @product.clone
     render :action => 'new'
   end
 
@@ -90,9 +87,9 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def update_tattributes_list
-    @product_type = ProductType.find(params[:product_type_id])
-    product = Product.find(params[:id]) if params[:id].nil?;
-    render :partial => 'tattributes', :locals => { :product_type => @product_type, :product => product }
+    product_type = ProductType.find_by_id(params[:product_type_id])
+    product = Product.find_by_id(params[:id])
+    render :partial => 'options', :locals => { :product_type => product_type, :product => product }
   end
 
 private
@@ -104,13 +101,13 @@ private
   # Update DynamicAttributes values
   # return false if one of update fail
   def manage_dynamic_attributes
-    return true unless params[:dynamic_tattribute_values]
+    return true unless params[:dynamic_option_values]
     result = true
-    @product.product_type.dynamic_tattribute_ids.each do |d|
-      if attr_value = @product.dynamic_tattribute_values.find_by_tattribute_id(d)
-        result = result & attr_value.update_attributes(params[:dynamic_tattribute_values][d.to_s])
+    @product.product_type.dynamic_option_ids.each do |d|
+      if option_value = @product.dynamic_option_values.find_by_option_id(d)
+        result = result & option_value.update_attributes(params[:dynamic_option_values][d.to_s])
       else
-        result = result & @product.dynamic_tattribute_values.create(params[:dynamic_tattribute_values][d.to_s].merge(:tattribute_id => d))
+        result = result & @product.dynamic_option_values.create(params[:dynamic_option_values][d.to_s].merge(:option_id => d))
       end
     end
     return result
