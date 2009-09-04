@@ -35,7 +35,7 @@
           #product-in-stock.tool-tip-content
             .content
               = f.label :stock, I18n.t('stock', :count => 1).capitalize
-              = f.text_field :stock, :class => 'background'
+              = f.text_field(:stock, :class => 'background')
               %label{ :for => "out-stock-action" }
                 if out of sotck
               %div
@@ -230,12 +230,17 @@
         'displayData': 'speed',
         'onComplete': function(e,queueID,fileObj,response,data){
         result = JSON.parse(response);
+        if (result.result == 'success'){
         image_path = result.path;
         image_id = result.id;
         = "object_name='#{f.object_name}';"
         $('#product-images ul.sortable li.clear').before('<li><a href="#" onclick="$(this).parents(\'li\').remove(); return false;" title="" class="big-icons trash"></a><a class="big-icons edit" href="#"></a><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+image_id+'"/><img src="'+image_path+'" alt="'+fileObj.name+'"/><div class="handler"><div class="inner"></div></div></li>');
+        } else {
+        display_notification_message('error',result.error)
+        }
         },
         'onAllComplete': function(){
+        $('#product-images .sortable li:eq(0)').addClass('first-image');
         $('.upload-lightbox-container').dialog('close');
         }
         });}
