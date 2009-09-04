@@ -26,7 +26,7 @@
      <%= escape_javascript("#{p.stock}<br />") -%>
    <% end %>',
 <% else -%>
-  '<%= content_tag(:div, image_tag(picture || 'admin/no-image.png'), :class => 'one-product') %>',
+  '<%= content_tag(:div, image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product') %>',
   '<%= escape_javascript(content_tag(:div, link_to(product.name, [:admin, product]), :class => 'product-name')) %>',
   '<%= escape_javascript(content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price')) %>',
   '<%= escape_javascript(content_tag(:div, product.stock, :class => 'stocks' )) %>',

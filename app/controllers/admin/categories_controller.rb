@@ -83,7 +83,11 @@ class Admin::CategoriesController < Admin::BaseController
       return flash[:error] = I18n.t('category.not_exist').capitalize
     end
 
-    @category.update_attribute('element_ids', @category.element_ids << params[:element_id])
+    element_ids = @category.element_ids
+    element_ids << params[:element_id].to_i
+    element_ids.uniq!
+
+    @category.update_attribute('element_ids', element_ids)
     return render :text => @category.total_elements_count
   end
 
