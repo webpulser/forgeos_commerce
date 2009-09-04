@@ -10,44 +10,6 @@
 
   #content.grid_16.alpha.omega
     #product.grid_12.alpha
-      .upload-lightbox-container.white
-        #fileUpload
-          = f.error_messages
-          = f.file_field :uploaded_data
-          = hidden_field_tag :target, params[:target]
-          = hidden_field_tag :target_id, params[:target_id]
-          = f.submit I18n.t('save').capitalize
-          - content_for :tools, link_to(I18n.t('list').capitalize, admin_medias_path, :class => 'house' )
-
-          = javascript_include_tag %w(jquery.uploadify swfobject)
-          = stylesheet_link_tag 'admin/uploadify'
-          - session_key = ActionController::Base.session_options[:key]
-          - javascript_tag do
-            $(function(){
-            $('#fileUpload').uploadify({
-            'uploader': '/images/uploadify/uploadify.swf',
-            = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
-            = "'script': '#{admin_medias_path}',"
-            = "'buttonText': 'Upload a picture',"
-            = "'buttonImg' :'#{image_path('uploadify/upload-button_en.png')}',"
-            = "'width' :'154',"
-            = "'height' :'24',"
-            'scriptData': {
-            = "'target': '#{params[:target]}',"
-            = "'target_id': '#{params[:target_id]}', "
-            'format': 'json',
-            = "'authenticity_token': encodeURIComponent('#{form_authenticity_token}'),"
-            = "'#{session_key}': encodeURIComponent('#{cookies[session_key]}')"
-            },
-            'ScriptAccess': 'always',
-            'multi': 'true',
-            'displayData': 'speed',
-            'onAllComplete': function(){
-            = display_standard_flashes(I18n.t('media.create.success').capitalize,false)
-            }
-            });});
-        = link_to_function I18n.t('media.upload.clear_queue').capitalize,"$('#fileUpload').uploadifyClearQueue()", :class=>'clear-queue'
-
       %h2.permalink
         = I18n.t('permalink').capitalize
         \:
@@ -82,6 +44,7 @@
                     stop sales
               .clear
           .clear
+
       #product-images.grid_3.omega
         #featured-picture
           = I18n.t('picture.featured').capitalize
@@ -234,3 +197,50 @@
               Corporate green design
         .clear
     .clear
+  .upload-lightbox-container.white
+    #fileUpload
+      = f.error_messages
+      = f.file_field :uploaded_data
+      = hidden_field_tag :target, params[:target]
+      = hidden_field_tag :target_id, params[:target_id]
+      = f.submit I18n.t('save').capitalize
+      - content_for :tools, link_to(I18n.t('list').capitalize, admin_medias_path, :class => 'house' )
+
+      = javascript_include_tag %w(jquery.uploadify swfobject)
+      = stylesheet_link_tag 'admin/uploadify'
+      - session_key = ActionController::Base.session_options[:key]
+      - javascript_tag do
+        function initUploadify(){
+        if (typeof(uploadify_inited) == 'undefined') {
+        $('#fileUpload').uploadify({
+        'uploader': '/images/uploadify/uploadify.swf',
+        = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
+        = "'script': '#{admin_medias_path}',"
+        = "'buttonText': 'Upload a picture',"
+        = "'buttonImg' :'#{image_path('uploadify/upload-button_en.png')}',"
+        = "'width' :'154',"
+        = "'height' :'24',"
+        'scriptData': {
+        'format': 'json',
+        = "'authenticity_token': encodeURIComponent('#{form_authenticity_token}'),"
+        = "'#{session_key}': encodeURIComponent('#{cookies[session_key]}')"
+        },
+        'ScriptAccess': 'always',
+        'multi': 'true',
+        'displayData': 'speed',
+        'onComplete': function(e,queueID,fileObj,response,data){
+        result = JSON.parse(response);
+        image_path = result.path;
+        image_id = result.id;
+        = "object_name='#{f.object_name}';"
+        $('#product-images ul.sortable li.clear').before('<li><a href="#" onclick="$(this).parents(\'li\').remove(); return false;" title="" class="big-icons trash"></a><a class="big-icons edit" href="#"></a><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+image_id+'"/><img src="'+image_path+'" alt="'+fileObj.name+'"/><div class="handler"><div class="inner"></div></div></li>');
+        },
+        'onAllComplete': function(){
+        $('.upload-lightbox-container').dialog('close');
+        }
+        });}
+        uploadify_inited = true;
+        }
+    = link_to_function I18n.t('media.upload.clear_queue').capitalize,"$('#fileUpload').uploadifyClearQueue()", :class=>'clear-queue'
+
+
