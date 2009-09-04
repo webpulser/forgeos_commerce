@@ -222,7 +222,7 @@
         = "'height' :'24',"
         'scriptData': {
         'format': 'json',
-        = "'authenticity_token': encodeURIComponent('#{form_authenticity_token}'),"
+        = "'authenticity_token': encodeURIComponent('#{u form_authenticity_token}')," if protect_against_forgery?
         = "'#{session_key}': encodeURIComponent('#{cookies[session_key]}')"
         },
         'ScriptAccess': 'always',
