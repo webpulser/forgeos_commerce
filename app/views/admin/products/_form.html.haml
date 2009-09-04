@@ -204,7 +204,7 @@
       = hidden_field_tag :target, params[:target]
       = hidden_field_tag :target_id, params[:target_id]
       = f.submit I18n.t('save').capitalize
-      - content_for :tools, link_to(I18n.t('list').capitalize, admin_medias_path, :class => 'house' )
+      - content_for :tools, link_to(I18n.t('list').capitalize, admin_medias_path(:file_type => 'picture'), :class => 'house' )
 
       = javascript_include_tag %w(jquery.uploadify swfobject)
       = stylesheet_link_tag 'admin/uploadify'
@@ -215,7 +215,7 @@
         $('#fileUpload').uploadify({
         'uploader': '/images/uploadify/uploadify.swf',
         = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
-        = "'script': '#{admin_medias_path}',"
+        = "'script': '#{admin_medias_path(:file_type => 'picture')}',"
         = "'buttonText': 'Upload a picture',"
         = "'buttonImg' :'#{image_path('uploadify/upload-button_en.png')}',"
         = "'width' :'154',"
