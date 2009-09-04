@@ -6,7 +6,7 @@
     link_id = "tattribute_#{option.id}"
   %>
   [
-  '<%= escape_javascript content_tag(:div, "", :class => 'product-name') %>',
+  '<%= escape_javascript content_tag(:div, "", :id => link_id, :class => 'product-name') %>',
   '<%= escape_javascript content_tag(:div, link_to(option.name, admin_option_path(option)), :class => 'product-name') -%>
    <%= escape_javascript link_to('', edit_admin_option_path(option), :class => 'small-icons edit-link') -%>
    <%= escape_javascript link_to_remote('', :url => admin_option_path(option),

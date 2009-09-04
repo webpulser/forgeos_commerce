@@ -13,4 +13,4 @@
         - category.children.each do |child|
           = render :partial => 'admin/categories/list', :locals => { :categories => [child], :level => (level + 1) }
 
-  = drop_receiving_element("link_#{li_id}", :url => {:action => 'add_category'}, :update => "span_#{li_id}", :with => "'id='+get_rails_element_id($(ui.draggable))+'&category_id=#{category.id}'", :complete => "update_parent_categories_count($('##{li_id}'))")
+  = drop_receiving_element("link_#{li_id}", :url => add_element_admin_category_path(category), :update => "span_#{li_id}", :with => "'element_id='+get_rails_element_id($(ui.draggable))+'&type=#{category.class}'", :complete => "update_parent_categories_count($('##{li_id}'))")

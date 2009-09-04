@@ -9,7 +9,7 @@
   %>
   [
 <% if product.kind_of? Pack -%>
-  '<%= content_tag(:div, '<div class="image">&nbsp'+ image_tag(picture || 'admin/no-image.png') +'</div>', :class => 'some-variants plus') %>',
+  '<%= content_tag(:div, '<div class="image">&nbsp'+ image_tag(picture || 'admin/no-image.png') +'</div>', :id => link_id, :class => 'some-variants plus') %>',
   '<%= escape_javascript(content_tag(:div, link_to(product.name, [:admin, product]) + content_tag(:span, product.products.count), :class => 'product-name')) -%>
    <%= escape_javascript('<br /><br /><p class="product-name" style="display:none">') -%>
    <% product.products.each do |p| -%>

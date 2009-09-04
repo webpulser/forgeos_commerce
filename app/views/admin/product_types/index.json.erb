@@ -6,7 +6,7 @@
     link_id = "product_type_#{product_type.id}"
   %>
   [
-  '<%= escape_javascript content_tag(:div, "", :class => 'product-name') %>',
+  '<%= escape_javascript content_tag(:div, "", :id => link_id, :class => 'product-name') %>',
   '<%= escape_javascript content_tag(:div, link_to(product_type.name, [:admin, product_type]), :class => 'product-name') %>',
   '<%= escape_javascript(link_to('', [:edit, :admin, product_type], :class => 'small-icons edit-link')) -%>
    <%= escape_javascript(link_to_remote('', :url => [:admin, product_type],

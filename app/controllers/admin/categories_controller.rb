@@ -1,20 +1,22 @@
 # This Controller Manage Categories
 class Admin::CategoriesController < Admin::BaseController
+  before_filter :get_category, :only => [:edit, :update, :destroy]
+  before_filter :new_category, :only => [:new, :create]
+  
   # List Categories like a Tree.
   def index
     @categories = Category.find_all_by_parent_id(nil)
   end
 
   def new
-    @category = Category.new
   end
+
   # Create a Category
   # ==== Params
   # * category = Hash of Category's attributes
   #
   # The Category can be a child of another Category.
   def create
-    @category = Category.new(params[:category])
     if @category.save
       flash[:notice] = I18n.t('category.create.success').capitalize
       respond_to do |format|
@@ -34,12 +36,10 @@ class Admin::CategoriesController < Admin::BaseController
   #
   # The Category can be a child of another Category.
   def edit
-    @category = Category.find_by_id(params[:id])
     flash[:error] = I18n.t('category.not_exist').capitalize unless @category
   end
  
   def update
-    @category = Category.find_by_id(params[:id])
     if @category && request.put?
       if @category.update_attributes(params[:category])
         flash[:notice] = I18n.t('category.update.success').capitalize
@@ -57,13 +57,13 @@ class Admin::CategoriesController < Admin::BaseController
       redirect_to admin_categories_path
     end
   end
+
   # Destroy a Category
   # ==== Params
-  # * id = ProductCategory's id
+  # * id = Category's id
   # ==== Output
   #  if destroy succed, return the Categories list
   def destroy
-    @category = Category.find_by_id(params[:id])
     if @category && request.delete?
       if @category.destroy
         flash[:notice] = I18n.t('category.destroy.success').capitalize
@@ -78,4 +78,24 @@ class Admin::CategoriesController < Admin::BaseController
     end
   end
 
+  def add_element
+    unless @category = Category.find_by_id_and_type(params[:id], params[:type])
+      return flash[:error] = I18n.t('category.not_exist').capitalize
+    end
+
+    @category.update_attribute('element_ids', @category.element_ids << params[:element_id])
+    return render :text => @category.total_elements_count
+  end
+
+private
+
+  def get_category
+    unless @category = Category.find_by_id(params[:id])
+      flash[:error] = I18n.t('category.found.failed').capitalize
+    end
+  end
+
+  def new_category
+    @category = Category.new(params[:category])
+  end
 end

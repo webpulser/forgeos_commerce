@@ -4,7 +4,7 @@
 <% @users.each do |user| %>
   <% link_id = "user_#{user.id}" %>
   [
-  '<%= content_tag(:div, '&nbsp;',:class => 'small-icons users')%>',
+  '<%= content_tag(:div, '&nbsp;', :id => link_id, :class => 'small-icons users')%>',
   '<%= escape_javascript content_tag(:div, link_to(user.fullname, [:admin, user], :target => '_blank'), :class => 'user-name') %>',
   '<%= mail_to user.email, user.email, :class => 'email' %>',
   '<%= user.orders.empty? ? I18n.t('none').capitalize : user.orders.count %>',

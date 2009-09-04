@@ -19,7 +19,7 @@ connect '/product/:url', :controller => 'url_catcher', :action => 'product'
 namespace :admin do |admin|
   admin.resources :shipping_methods
   admin.resources :vouchers
-  admin.resources :categories
+  admin.resources :categories, :member => { :add_element => :post }
   admin.resources :geo_zones
   admin.resources :countries, :controller => 'geo_zones'
   admin.resources :users, :collection => { :filter => [:post, :get] }, :member => { :activate => :post }
