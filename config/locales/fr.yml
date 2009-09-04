@@ -293,6 +293,7 @@ fr:
     zero: 'pas de commande'
     one: 'commande'
     other: 'commandes'
+    all: 'toutes les commandes'
     create:
       success: 'la commande a bien été créée'
       failed: 'un problème est survenu lors de la création de la commande'

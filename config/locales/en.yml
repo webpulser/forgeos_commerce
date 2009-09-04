@@ -298,6 +298,7 @@ en:
     zero: 'no orders'
     one: 'order'
     other: 'orders'
+    all: 'all orders'
     create:
       success: 'the order was successfully created'
       failed: 'a problem occured during the order creation'
