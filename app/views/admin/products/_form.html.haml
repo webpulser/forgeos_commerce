@@ -70,10 +70,10 @@
         %a.small-icons.panel{ :href => "#" }
           linked files
         .option-panel-content
-          %a.backgrounds.button.right{ :href => "#" }
+          %a#add-file.backgrounds.button.right{ :href => "#" }
             %span.big-icons.add-file
               = I18n.t('add_file').capitalize
-          .grid_9.sortable
+          #product-files.grid_9.sortable
             - product.attachments.all(:conditions => ['type != "Picture"']).each do |attachment|
               .block-container
                 = hidden_field_tag "#{f.object_name}[attachment_ids][]", attachment.id
@@ -197,55 +197,93 @@
               Corporate green design
         .clear
     .clear
-  .upload-lightbox-container.white
-    #fileUpload
-      = f.error_messages
+  #imageUploadDialog.upload-lightbox-container.white
+    #imageUpload
       = f.file_field :uploaded_data
       = hidden_field_tag :target, params[:target]
       = hidden_field_tag :target_id, params[:target_id]
       = f.submit I18n.t('save').capitalize
-      - content_for :tools, link_to(I18n.t('list').capitalize, admin_medias_path(:file_type => 'picture'), :class => 'house' )
 
-      = javascript_include_tag %w(jquery.uploadify swfobject)
-      = stylesheet_link_tag 'admin/uploadify'
-      - session_key = ActionController::Base.session_options[:key]
-      - javascript_tag do
-        function initUploadify(){
-        if (typeof(uploadify_inited) == 'undefined') {
-        $('#fileUpload').uploadify({
-        'uploader': '/images/uploadify/uploadify.swf',
-        = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
-        = "'script': '#{admin_medias_path(:file_type => 'picture')}',"
-        = "'buttonText': 'Upload a picture',"
-        = "'buttonImg' :'#{image_path('uploadify/upload-button_en.png')}',"
-        = "'width' :'154',"
-        = "'height' :'24',"
-        'scriptData': {
-        'format': 'json',
-        = "'authenticity_token': encodeURIComponent('#{u form_authenticity_token}')," if protect_against_forgery?
-        = "'#{session_key}': encodeURIComponent('#{cookies[session_key]}')"
-        },
-        'ScriptAccess': 'always',
-        'multi': 'true',
-        'displayData': 'speed',
-        'onComplete': function(e,queueID,fileObj,response,data){
-        result = JSON.parse(response);
-        if (result.result == 'success'){
-        image_path = result.path;
-        image_id = result.id;
-        = "object_name='#{f.object_name}';"
-        $('#product-images ul.sortable li.clear').before('<li><a href="#" onclick="$(this).parents(\'li\').remove(); return false;" title="" class="big-icons trash"></a><a class="big-icons edit" href="#"></a><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+image_id+'"/><img src="'+image_path+'" alt="'+fileObj.name+'"/><div class="handler"><div class="inner"></div></div></li>');
-        } else {
-        display_notification_message('error',result.error)
-        }
-        },
-        'onAllComplete': function(){
-        $('#product-images .sortable li:eq(0)').addClass('first-image');
-        $('.upload-lightbox-container').dialog('close');
-        }
-        });}
-        uploadify_inited = true;
-        }
-    = link_to_function I18n.t('media.upload.clear_queue').capitalize,"$('#fileUpload').uploadifyClearQueue()", :class=>'clear-queue'
+  - session_key = ActionController::Base.session_options[:key]
+  - javascript_tag do
+    function initImageUpload(){
+    $('#imageUploadDialog').html('<div id="imageUpload"></div>');
+    $('#imageUpload').uploadify({
+    'uploader': '/images/uploadify/uploadify.swf',
+    = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
+    = "'script': '#{admin_medias_path(:file_type => 'picture')}',"
+    = "'buttonImg' :'#{image_path("uploadify/upload-button_#{I18n.locale}.png")}',"
+    'width' :'154',
+    'height' :'24',
+    'scriptData': {
+    'format': 'json',
+    = "'authenticity_token': encodeURIComponent('#{u form_authenticity_token}')," if protect_against_forgery?
+    = "'#{session_key}': encodeURIComponent('#{cookies[session_key]}')"
+    },
+    'ScriptAccess': 'always',
+    'multi': 'true',
+    'displayData': 'speed',
+    'onComplete': function(e,queueID,fileObj,response,data){
+    result = JSON.parse(response);
+    if (result.result == 'success'){
+    image_path = result.path;
+    image_id = result.id;
+    = "object_name='#{f.object_name}';"
+    $('#product-images ul.sortable li.clear').before('<li><a href="#" onclick="$(this).parents(\'li\').remove(); return false;" title="" class="big-icons trash"></a><a class="big-icons edit" href="#"></a><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+image_id+'"/><img src="'+image_path+'" alt="'+fileObj.name+'"/><div class="handler"><div class="inner"></div></div></li>');
+    } else {
+    display_notification_message('error',result.error)
+    }
+    },
+    'onAllComplete': function(){
+    $('#product-images .sortable li:eq(0)').addClass('first-image');
+    $('#imageUploadDialog').dialog('close');
+    }
+    });}
 
+  #fileUploadDialog.upload-lightbox-container.white
+    #fileUpload
+      = f.file_field :uploaded_data
+      = hidden_field_tag :target, params[:target]
+      = hidden_field_tag :target_id, params[:target_id]
+      = f.submit I18n.t('save').capitalize
 
+  - session_key = ActionController::Base.session_options[:key]
+  - javascript_tag do
+    function initFileUpload(){
+    $('#fileUploadDialog').html('<div id="fileUpload"></div>');
+    $('#fileUpload').uploadify({
+    'uploader': '/images/uploadify/uploadify.swf',
+    = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
+    = "'script': '#{admin_medias_path(:file_type => 'picture')}',"
+    = "'buttonImg' :'#{image_path("uploadify/upload-button_#{I18n.locale}.png")}',"
+    'width' :'154',
+    'height' :'24',
+    'scriptData': {
+    'format': 'json',
+    = "'authenticity_token': encodeURIComponent('#{u form_authenticity_token}')," if protect_against_forgery?
+    = "'#{session_key}': encodeURIComponent('#{cookies[session_key]}')"
+    },
+    'ScriptAccess': 'always',
+    'multi': 'true',
+    'displayData': 'speed',
+    'onComplete': function(e,queueID,fileObj,response,data){
+    result = JSON.parse(response);
+    if (result.result == 'success'){
+    file_path = result.path;
+    file_id = result.id;
+    file_type = result.type;
+    file_size = result.size;
+    = "object_name='#{f.object_name}';"
+    $('#product-files').append('<div class="block-container"><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+file_id+'" /><span class="block-type"><span class="handler"><span class="inner">&nbsp;</span></span>'+file_type+'</span><span class="block-name">'+fileObj.name+'<span class="file-size">- '+file_size+' Ko</span></span><a href="#" class="big-icons gray-destroy"></a></div>');
+    } else {
+    display_notification_message('error',result.error)
+    }
+    },
+    'onAllComplete': function(){
+    $('#fileUploadDialog').dialog('close');
+    }
+    });
+    }
+
+= stylesheet_link_tag 'admin/uploadify'
+= javascript_include_tag %w(swfobject jquery.uploadify)

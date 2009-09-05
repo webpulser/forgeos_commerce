@@ -28,16 +28,16 @@
           1 product out of stock
     
     .quick-actions
-      - link_to new_admin_page_path, :class => 'backgrounds quick-action-button' do
+      - link_to new_admin_page_path, :class => 'quick-action-button' do
         %span.big-icons.create-page
           = I18n.t('page.create.action').capitalize
-      - link_to new_admin_product_path, :class => 'backgrounds quick-action-button' do
+      - link_to new_admin_product_path, :class => 'quick-action-button' do
         %span.big-icons.create-product
           = I18n.t('product.create.action').capitalize
-      - link_to new_admin_special_offer_path, :class => 'backgrounds quick-action-button' do
+      - link_to new_admin_special_offer_path, :class => 'quick-action-button' do
         %span.big-icons.create-offer
           = I18n.t('special_offer_rule.create.action').capitalize
-      - link_to '#', :class => 'backgrounds quick-action-button' do
+      - link_to '#', :class => 'quick-action-button' do
         %span.small-icons.see-stats
           = I18n.t('statistic.show.all').capitalize
     .clear
