@@ -112,7 +112,7 @@
     #right-sidebar.grid_4.omega
       .step.status.open
         %div
-          = f.select :active, [[I18n.t('unpublished'), 0], [I18n.t('published'), 1]], :selected => product.active ? 1 : 0, :class => 'published'
+          = f.select :active, [[I18n.t('unpublished'), 0], [I18n.t('published'), 1]], :selected => product.active ? 1 : 0
         .clear
         = f.check_box :on_first_page
         = I18n.t('show_on_homepage').capitalize

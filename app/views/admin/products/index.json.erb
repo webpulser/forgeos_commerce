@@ -14,7 +14,7 @@
    <%= escape_javascript('<br /><br /><p class="product-name" style="display:none">') -%>
    <% product.products.each do |p| -%>
      <%= escape_javascript("#{p.name}<br />") -%>
-   <% end %>',
+   <% end %></p>',
   '<%= escape_javascript(content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price')) -%>
    <%= escape_javascript('<br /><p style="display:none">') -%>
    <% product.products.each do |p| -%>
