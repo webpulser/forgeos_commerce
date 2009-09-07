@@ -313,10 +313,11 @@ fr:
     send:
       success: 'la commande a bien été envoyée'
     status:
-      payed: 'payé'
-      accepted: 'en attente'
-      sended: 'expédiée'
       unpaid: 'en attente de paiement'
+      paid: 'payé'
+      canceled: 'annulée'
+      shipped: 'expédiée'
+      closed: 'fermé'
     lastest:
       one: 'la dernière commande'
       other: 'les dernières commandes'

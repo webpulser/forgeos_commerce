@@ -17,25 +17,24 @@ class Order < ActiveRecord::Base
   aasm_initial_state :unpaid
   aasm_state :unpaid
   aasm_state :paid
-  aasm_state :accepted
-  aasm_state :sended
+  aasm_state :shipped
+  aasm_state :canceled
   aasm_state :closed
 
-  aasm_event :paid do
-    transitions :from => :unpaid, :to => :paid
+  aasm_event :pay do
+    transitions :to => :paid, :from => :unpaid
   end
 
-  aasm_event :accepted do
-    #transitions :from => :unpaid, :to => :accepted
-    transitions :from => :paid, :to => :accepted
+  aasm_event :start_shipping do
+    transitions :to => :shipped, :from => :paid 
   end
 
-  aasm_event :sended do
-    transitions :from => :accepted, :to => :sended
+  aasm_event :cancel do
+    transitions :to => :cancel, :from => [:unpaid, :shipped, :paid]
   end
 
-  aasm_event :sended do
-    transitions :from => :sended, :to => :closed
+  aasm_event :close do
+    transitions :to => :closed, :from => [:shipped, :canceled]
   end
 
   has_many :orders_details, :dependent => :destroy
@@ -62,12 +61,12 @@ class Order < ActiveRecord::Base
     ("%01.2f" % (super * $currency.to_exchanges_rate(Currency::default).rate)).to_f
   end
 
-  def get_products
-    count = self.orders_details.product.count
+  def product_names
+    count = self.orders_details.count
     if count == 1
-      return "#{self.orders_details.product.first.first.name}"
+      return self.orders_details.first.name
     else
-      return count.to_s + ' ' + I18n.t('product', :count => 2)
+      return "#{count} #{I18n.t('product', :count => 2)}"
     end
   end
 end

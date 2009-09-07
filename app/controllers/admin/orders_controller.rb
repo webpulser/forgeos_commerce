@@ -49,15 +49,15 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def pay
-    flash[:notice] = I18n.t('order.pay.success').capitalize if @order.paid! == true
+    flash[:notice] = I18n.t('order.pay.success').capitalize if @order.pay! == true
   end
 
   def accept
-    flash[:notice] = I18n.t('order.accept.success').capitalize if @order.accepted! == true
+    flash[:notice] = I18n.t('order.accept.success').capitalize if @order.accept! == true
   end
 
   def sent
-    flash[:notice] = I18n.t('order.send.success').capitalize if @order.sended! == true
+    flash[:notice] = I18n.t('order.send.success').capitalize if @order.start_shipping! == true
   end
 
   def get_product
@@ -99,7 +99,13 @@ private
 
   def sort
     columns = %w(id total product date customer state)
-    conditions = []
+    conditions = [[]]
+    case params[:filter]
+    when 'status'
+      conditions[0] << 'status = ?'
+      conditions << params[:status]
+    end
+    conditions[0] = conditions[0].join(' AND ')
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1

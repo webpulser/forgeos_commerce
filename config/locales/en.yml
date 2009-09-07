@@ -318,10 +318,11 @@ en:
     send:
       success: 'the order was successfully sent'
     status:
-      payed: 'payed'
-      accepted: 'pending'
-      sended: 'shipped'
       unpaid: 'unpaid'
+      paid: 'paid'
+      canceled: 'canceled'
+      shipped: 'shipped'
+      closed: 'closed'
     lastest:
       one: 'last order'
       other: 'last orders'

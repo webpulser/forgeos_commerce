@@ -1,55 +1,29 @@
 #sidebar.grid_4.omega.alpha
   .backgrounds.header
-    %span.backgrounds.action-button.create-action
-      %span.big-icons.new-category
-      %span.small-icons.arrow
-      %span.create-list
-        %span.big-icons.create-folder
-          = I18n.t('folder.create')
-        -#%span.small-icons.create-smart-folder
-          -#= I18n.t('folder.smart')
-    %span.backgrounds.action-button.update-action
-      %span.small-icons.more-actions
-      %span.small-icons.arrow
-      %span.update-list
-        %span.small-icons.modify-folder
-          = I18n.t('folder.edit')
-        %span.small-icons.duplicate-folder
-          = I18n.t('folder.duplicate')
-        %span.small-icons.delete-folder
-          = I18n.t('folder.destroy')
   .backgrounds.sidebar-background
   .sidebar-content
-    %h2.small-icons.orders
-      = link_to_function I18n.t('order.all').capitalize, "select_all_elements('/admin/orders.json')"
-    #product-tree.a-tree
+    %h2.small-icons.orders= link_to_function I18n.t('order.all').capitalize, "select_all_elements('/admin/orders.json')"
+    #orders-tree.a-tree
       %ul
-        /= render :partial => 'admin/categories/list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
+        - Order.aasm_states.each do |state|
+          - state_name = state.name.to_s
+          %li= link_to_function "#{I18n.t(state_name, :scope => [:order, :status])}#{content_tag(:span, Order.count(:conditions => { :status => state_name }))}","select_all_elements('/admin/orders.json?filter=status&status=#{state_name}')"
 
 #content.grid_12.alpha.omega
   .backgrounds.header
-    = link_to content_tag(:span,I18n.t('order.create.action').capitalize, :class=>'big-icons create-order disabled'), '#', :class=>'backgrounds action-button'
-    #search.right
-      = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
+    - link_to new_admin_order_path, :class=>'backgrounds action-button' do
+      %span.big-icons.create-order= I18n.t('order.create.action').capitalize
+    #search.right= fg_search
     .backgrounds.search-form
   .content-background
-  %table#table.datatable
-    %thead
-      %tr
-        %th
-        %th
-          = I18n.t('id').capitalize
-        %th
-          = I18n.t('total').capitalize
-        %th
-          = I18n.t('product', :count => 1).capitalize
-        %th
-          Date
-        %th
-          = I18n.t('customer', :count => 1).capitalize
-        %th
-          = I18n.t('status', :count => 1).capitalize
-        %th
-    %tbody
+    %table#table.datatable
+      %thead
+        %tr
+          %th= I18n.t('id').capitalize
+          %th= I18n.t('total').capitalize
+          %th= I18n.t('product', :count => 1).capitalize
+          %th Date
+          %th= I18n.t('customer', :count => 1).capitalize
+          %th= I18n.t('status', :count => 1).capitalize
 
-= dataTables_tag 8, :url => admin_orders_path(:format => :json)
+= dataTables_tag 6, :url => admin_orders_path(:format => :json)
