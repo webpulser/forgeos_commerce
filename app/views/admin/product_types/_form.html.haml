@@ -10,20 +10,21 @@
     .grid_12.alpha
       #product-types-selected-tree.a-tree
         = I18n.t('drag_attributes').capitalize
-        = hidden_field_tag 'product_type[tattribute_ids][]'
+        = hidden_field_tag 'product_type[option_ids][]'
         %ul
-          - product_type.tattributes.each do |tattribute|
+          - product_type.options.each do |option|
             %li{ :rel => 'attribute' }
+              = hidden_field_tag 'product_type[option_ids][]', option.id, :id => "product_type_option_ids_#{option.id}"
               %a{ :href => '#' }
-                = tattribute.name
+                = option.name
                 %span.big-icons.gray-destroy
                   &nbsp;
         .clear
   #yellow-sidebar.grid_4.alpha.omega.yellow
     #product-types-all-tree.a-tree
       %ul
-        = render :partial => 'categories', :locals => { :categories => TattributeCategory.find_all_by_parent_id(nil) }
+        = render :partial => 'options_categories', :locals => { :categories => TattributeCategory.find_all_by_parent_id(nil) }
       .clear
     %a.small-icons.small-icons-verti-small-blue-plus.attribute-new{ :href => '#' }
-      Create Attribute
+      = I18n.t('tattribute.create.action').capitalize
   .clear
