@@ -406,6 +406,11 @@ en:
     one : 'product'
     other: 'products'
     all: 'all products'
+    in_stock: 'in stock'
+    showed_on_homepage: 'showed on homepage'
+    associated_collection:
+      one: 'associated collection'
+      other: 'associated collections'
     create:
       success: 'the product was successfully created'
       failed: 'a problem occured during the product creation'

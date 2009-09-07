@@ -402,6 +402,11 @@ fr:
     one : 'produit'
     other: 'produits'
     all: 'tous les produits'
+    in_stock: 'en stock'
+    showed_on_homepage: "Affiché sur la page d'acceuil"
+    associated_collection:
+      one: 'collection associée'
+      other: 'collections associées'
     create:
       success: 'le produit a bien été créé'
       failed: 'un problème est survenu lors de la création du produit'

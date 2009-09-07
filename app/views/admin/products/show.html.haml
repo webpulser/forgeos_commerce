@@ -1,49 +1,42 @@
-- if @product
-  - product_clone = @product.clone.attributes
-  - product_clone[:meta_info_attributes] = @product.meta_info.clone.attributes if @product.meta_info
-- else
-  - product_clone = Product.new.attributes
-
 .backgrounds.big-header
-  %h1
-    = @product.name
+  %h1= @product.name
   .interact-links
     .borders.interact-button-left
     = link_to I18n.t('product.update.action').capitalize, [:edit, :admin, @product], :class => 'backgrounds interact-button'
     .borders.interact-button-right
-    or
+    = I18n.t('or')
     = link_to I18n.t('back_to_catalog').capitalize, admin_products_path, :class => 'back-link'
 
 #content.grid_16.alpha.omega
   #product-see.grid_12.alpha
     .grid_8.omega
       .prices
-        .normal-price
-          = @product.price.to_s + " " + ($currency.html)
+        .normal-price= "#{@product.price} #{$currency.html}"
         .promo
           &nbsp;
         .stock
-          = @product.stock.to_s + " in stock"
+          = @product.stock
+          &nbsp;
+          = I18n.t('product.in_stock')
       .description
         %em
-          = I18n.t('description').capitalize + " : " |
+          = I18n.t('description').capitalize
+          \:
         = @product.description
       %p
         %em
-          Product-type:
-        %a.product-type-link{:href => '#' }
-          = @product.product_type.name
+          = I18n.t('product_type', :count => 1).capitalize
+          \:
+        = link_to @product.product_type.name, [:admin,@product.product_type], :class => 'product-type-link'
     #product-images.grid_4.omega
       %ul
         - @product.pictures.each do |picture|
           - if picture == @product.pictures.first
             %li.first-image
               = image_tag picture.public_filename('')
-              .featured
-              = I18n.t('picture.featured').capitalize
+              .featured= I18n.t('picture.featured')
           - else
-            %li
-              = image_tag picture.public_filename('')
+            %li= image_tag picture.public_filename('')
         %li.clear
           &nbsp;
     .clear
@@ -51,18 +44,15 @@
     .option-panel.open
       .backgrounds.content-header
         &nbsp;
-      %span.panel
-        linked files
+      %span.panel= I18n.t('media.linked', :count => 2)
       .option-panel-content
         .grid_9.sortable
           - @product.attachments.all(:conditions => ['type != "Picture"']).each do |attachment|
             .block-container
-              %span.block-type
-                = attachment.type.to_s.upcase
+              %span.block-type= attachment.type.to_s.upcase
               %span.block-name
                 = attachment.filename
-                %span.file-size
-                  = "- #{attachment.size} Ko"
+                %span.file-size= "- #{attachment.size / 1024} Ko"
               - unless attachment == @product.attachments.last
                 %hr.block-separator 
         .clear
@@ -77,26 +67,23 @@
   #right-sidebar.grid_4.omega
     .step.status.open
       %div
-        - status = [[I18n.t('unpublished'), 0], [I18n.t('published'), 1]]
-        = select_tag 'product[active]', options_for_select(status, @product.active ? 1 : 0 ), :class => 'published'
+        - status = [[I18n.t('unpublished'), 'draft'], [I18n.t('published'), 'active']]
+        = select_tag 'product[active]', options_for_select(status, @product.active ? 'active' : 'draft' )
         .clear
       - if @product.on_first_page
-        = I18n.t('show_on_homepage').capitalize
+        = I18n.t('product.showed_on_homepage').capitalize
 
     .step
-      = link_to I18n.t('product.create.action').capitalize, new_admin_product_path, :class => 'small-icons new'
-      = link_to I18n.t('product.duplicate').capitalize, new_admin_product_path(:product => product_clone), :class => 'small-icons duplicate'
-      = link_to I18n.t('product.destroy.action').capitalize, [:admin, @product], :confirm => I18n.t('product.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+      = link_to I18n.t('product.create.action').capitalize, new_admin_product_path, :class => 'small-icons plus'
+      = link_to I18n.t('product.duplicate').capitalize, duplicate_admin_product_path(@product), :class => 'small-icons duplicate'
 
     .step.open
-      %a.small-icons.step-title{ :href => '#' }
-        Associated to collection
+      %a.small-icons.step-title{:href => '#'}= I18n.t('product.associated_collection', :count => 2).capitalize
       #association-tree.inner-step
         Coming Soon
 
     .step.open
-      %a.small-icons.step-title
-        Tags
+      %a.small-icons.step-title{:href => '#'}= I18n.t('tag', :count => 2).capitalize
       .inner-step.tags
         - @product.tags.each do |tag|
           %span
@@ -108,15 +95,18 @@
       .inner-step.meta
         %p
           %span
-            Title:
+            = I18n.t('title').capitalize
+            \:
           = @product.meta_info.title
         %p
           %span
-            Description:
+            = I18n.t('description').capitalize
+            \:
           = @product.meta_info.description
         %p
           %span
-            Keywords:
+            = I18n.t('keyword', :count => 2).capitalize
+            \:
           = @product.meta_info.keywords
   
     .step.disabled
