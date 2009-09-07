@@ -31,6 +31,8 @@
         %th
           = I18n.t('name').capitalize
         %th
+          = I18n.t('type').capitalize
+        %th
     %tbody
 
-= dataTables_tag 2, :url => admin_tattributes_path(:format => :json)
+= dataTables_tag 4, :url => admin_tattributes_path(:format => :json)

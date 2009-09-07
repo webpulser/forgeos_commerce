@@ -1,19 +1,14 @@
 %h2
   ="Choices"
 %ul.sortable.sortable-choices.grid_10.omega.alpha
-  %li.block-container
-    %span.block-type
-      %span.handler
-        %span.inner
-    %span.block-name
-      = text_field 'option[tattribute_ids][]'
-      /
-        .image-attribute
-          ='<img src="/images/admin/no-image.png"/>'
-          = link_to "add image", '#'
-    %span.small-icons.red-delete-icon
+  - option.option_values.each do |option_value|
+    %li.block-container
+      %span.block-type
+        %span.handler
+          %span.inner
+      %span.block-name
+        = text_field "option_values[#{option_value.id}]", 'name', :value => option_value.name
+      %span.small-icons.red-delete-icon
+
 .clear
 = link_to 'Add a choice', '#', :class => 'small-icons add-choice'
-.legend
-%label Legend for field
-%textarea.grid_10.omega.alpha

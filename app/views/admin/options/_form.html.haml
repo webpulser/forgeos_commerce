@@ -15,7 +15,7 @@
               %span.small-icons.tattribute-checkbox
                 ="checkbox field"
             .choices
-              = render :partial => 'checkbox'
+              = render :partial => 'checkbox', :locals => { :option => option }
 
     #right-sidebar.grid_4.omega
       - unless option.new_record?

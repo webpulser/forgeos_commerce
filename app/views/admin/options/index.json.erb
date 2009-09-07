@@ -7,8 +7,9 @@
   %>
   [
   '<%= escape_javascript content_tag(:div, "", :id => link_id, :class => 'product-name') %>',
-  '<%= escape_javascript content_tag(:div, link_to(option.name, admin_option_path(option)), :class => 'product-name') -%>
-   <%= escape_javascript link_to('', edit_admin_option_path(option), :class => 'small-icons edit-link') -%>
+  '<%= escape_javascript content_tag(:div, link_to(option.name, admin_option_path(option)), :class => 'product-name') -%>',
+  '<%= option.type %> ',
+  '<%= escape_javascript link_to('', edit_admin_option_path(option), :class => 'small-icons edit-link') -%>
    <%= escape_javascript link_to_remote('', :url => admin_option_path(option),
          :method => :delete,
          :confirm => I18n.t('tattribute.destroy.confirm').capitalize,

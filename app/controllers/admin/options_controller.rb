@@ -26,12 +26,13 @@ class Admin::OptionsController < Admin::BaseController
   # ==== Params
   # * option = Hash of Option's attributes
   def create
-    if @option.save
+    if @option.save && manage_option_values
       flash[:notice] = I18n.t('tattribute.create.success').capitalize
       redirect_to([:edit, :admin, @option])
     else
       flash[:error] = I18n.t('tattribute.create.failed').capitalize
     end
+    return redirect_to(admin_options_path)
   end
 
   # Edit an Option
@@ -41,12 +42,12 @@ class Admin::OptionsController < Admin::BaseController
   end
 
   def update
-    if @option.update_attributes(params[:option])
+    if @option.update_attributes(params[:option]) && manage_option_values
       flash[:notice] = I18n.t('tattribute.update.success').capitalize
     else
       flash[:error] = I18n.t('tattribute.update.failed').capitalize
     end
-    render :action => 'edit'
+    return redirect_to(admin_options_path)
   end
 
   # Destroy an Option
@@ -85,9 +86,28 @@ private
          @option = CheckboxOption.new(params[:option])
     end
   end
-  
+
+  def manage_option_values
+    return true unless params[:option_values]
+    result = true
+
+    params[:option_values].each do |option_value|
+      
+      if option_value_db = @option.option_values.find_by_id(option_value[0])
+        option_value_db.update_attribute('name', option_value[1][:name])
+      else
+        @option.option_values.create(:name => option_value[1][:name])
+      end
+    end
+
+    options_value_ids = params[:option_values].collect { |op| op[0] }.join(', ')
+    @option.option_values.destroy_all("id NOT IN (#{options_value_ids})" )
+    
+    return result
+  end
+
   def sort
-    columns = %w(id name actions)
+    columns = %w(id name type actions)
     conditions = []
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
