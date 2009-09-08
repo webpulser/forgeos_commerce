@@ -20,8 +20,8 @@
     #right-sidebar.grid_4.omega
       - unless option.new_record?
         .step
-          = link_to I18n.t('tattribute.duplicate.action'), '#', :class => 'small-icons duplicate'
-          = link_to I18n.t('tattribute.destroy.action'), '#', :class => 'small-icons delete'
-        .step
-          = I18n.t('tattribute.name')
-          = f.text_field :access_method, :class => 'field'
+          = link_to I18n.t('tattribute.duplicate.action'), '#', :class => 'small-icons duplicate disabled'
+          = link_to I18n.t('tattribute.destroy.action').capitalize, [:admin, option], :confirm => I18n.t('option.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+      .step
+        = I18n.t('tattribute.name')
+        = f.text_field :access_method, :class => 'field'

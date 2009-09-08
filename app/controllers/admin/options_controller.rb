@@ -34,7 +34,7 @@ class Admin::OptionsController < Admin::BaseController
       render :action => :new
     end
   end
-
+  
   # Edit an Option
   # ==== Params
   # * id = Option's id
@@ -83,7 +83,7 @@ private
   def new_option
     params[:option] = params[:checkbox_option] if params[:checkbox_option]
     case params[:option].delete(:type)
-       when 'checkbox'
+       when 'CheckboxOption'
          @option = CheckboxOption.new(params[:option])
     end
   end
