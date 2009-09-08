@@ -134,7 +134,7 @@ private
   end
 
   def sort
-    columns = %w(reference products.name price stock product_type_id active)
+    columns = %w(sku products.name price stock product_type_id active)
     conditions = [[]]
     if params[:category_id]
       conditions[0] << 'product_categories_products.product_category_id = ?'

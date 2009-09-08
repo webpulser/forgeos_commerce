@@ -31,7 +31,7 @@ class Product < ActiveRecord::Base
 
 
   define_index do
-    indexes reference, :sortable => true
+    indexes sku, :sortable => true
     indexes name, :sortable => true
     indexes url, :sortable => true
     indexes stock, :sortable => true
