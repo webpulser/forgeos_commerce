@@ -10,7 +10,7 @@
       = link_to_function I18n.t('tattribute.all').capitalize, "select_all_elements('/admin/options.json')"
     #product-tree
       %ul
-        = render :partial => 'categories', :locals => { :categories => ProductType.all }
+        = render :partial => 'categories', :locals => { :categories => TattributeCategory.find_all_by_parent_id(nil) }
 
 #content.grid_12.alpha.omega
   .backgrounds.header

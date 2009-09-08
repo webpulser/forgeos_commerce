@@ -1,13 +1,15 @@
 %h2
   ="Choices"
 %ul.sortable.sortable-choices.grid_10.omega.alpha
-  - option.option_values.each do |option_value|
+  - f.fields_for :option_values  do |option_value|
     %li.block-container
       %span.block-type
         %span.handler
           %span.inner
       %span.block-name
-        = text_field "option_values[#{option_value.id}]", 'name', :value => option_value.name
+        = option_value.text_field :name
+        = option_value.hidden_field :id
+        = option_value.hidden_field :_delete, :class => 'delete'
       %span.small-icons.red-delete-icon
 
 .clear
