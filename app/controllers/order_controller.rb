@@ -91,8 +91,8 @@ class OrderController < ApplicationController
       @order.orders_details.create(:name => product.name,
                                    :description => product.description,
                                    :price => product.price(false, false),
-                                   :rate_tax => product.rate_tax
-                                   :sku => product.sku
+                                   :rate_tax => product.rate_tax,
+                                   :sku => product.sku,
                                    :product_id => product.id
                                   )
     end

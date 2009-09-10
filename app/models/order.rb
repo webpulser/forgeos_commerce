@@ -30,7 +30,7 @@ class Order < ActiveRecord::Base
   end
 
   aasm_event :cancel do
-    transitions :to => :cancel, :from => [:unpaid, :shipped, :paid]
+    transitions :to => :canceled, :from => [:unpaid, :shipped, :paid]
   end
 
   aasm_event :close do
