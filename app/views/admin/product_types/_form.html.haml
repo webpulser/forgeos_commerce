@@ -22,7 +22,7 @@
                   &nbsp;
         .clear
   #yellow-sidebar.grid_4.alpha.omega.yellow
-    #product-types-all-tree.a-tree
+    #product-types-all-tree.init-tree.a-tree
       %ul
         = render :partial => 'options_categories', :locals => { :categories => TattributeCategory.find_all_by_parent_id(nil) }
       .clear

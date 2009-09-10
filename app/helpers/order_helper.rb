@@ -48,7 +48,7 @@ module OrderHelper
     order.orders_details.each do |orders_detail|
       content += display_order_by_carts_product(order, orders_detail)
     end
-    content += content_tag :div, order.shipping_method, :class=>'order_shipping_method'
+    content += content_tag :div, order.order_shipping.name, :class=>'order_shipping_method'
     content += content_tag :div, "#{price} #{$currency.html}", :class=>'order_shipping_method_price'
     if order.voucher
       content += content_tag :div,

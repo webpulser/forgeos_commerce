@@ -38,27 +38,28 @@ class Order < ActiveRecord::Base
   end
 
   has_many :orders_details, :dependent => :destroy
+  has_one :order_shipping, :dependent => :destroy
+  accepts_nested_attributes_for :order_shipping
 
   belongs_to :address_delivery
   belongs_to :address_invoice
   belongs_to :user
 
-  validates_presence_of :user_id, :address_invoice_id, :address_delivery_id, :shipping_method, :shipping_method_price
+  validates_presence_of :user_id, :address_invoice_id, :address_delivery_id
 
   # Returns order's amount
-  def total(with_tax=false, with_currency=true)
-    orders_details.inject(0) { |total, orders_detail| total += orders_detail.total(with_tax, with_currency) } + shipping_method_price - voucher.to_f
+  def total(with_tax=false, with_currency=true,with_shipping=true, with_vouchers=true )
+    amount = 0
+    orders_details.each do |orders_detail|
+      amount += orders_detail.total(with_tax, with_currency)
+    end
+    amount += order_shipping.price if with_shipping && order_shipping
+    amount -= voucher.to_f if with_vouchers
+    return amount
   end
 
-  # Returns shipping_method_price
-  #
-  # This method is an overload of <i>shipping_method_price</i> attribute.
-  #
-  # ==== Parameters
-  # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def shipping_method_price(with_currency=true)
-    return super if Currency::is_default? || !with_currency || super.nil?
-    ("%01.2f" % (super * $currency.to_exchanges_rate(Currency::default).rate)).to_f
+  def taxes
+    total(true) - total
   end
 
   def product_names

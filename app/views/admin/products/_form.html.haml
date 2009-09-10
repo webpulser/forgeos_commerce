@@ -44,6 +44,9 @@
                     stop sales
               .clear
           .clear
+        = f.label :sku, I18n.t('sku')
+        %div
+          = f.text_field :sku
 
       #product-images.grid_3.omega
         #featured-picture
@@ -51,15 +54,15 @@
         = hidden_field_tag "#{f.object_name}[attachment_ids][]"
         %ul.sortable
           - product.pictures.each do |picture|
-            %li
-              = link_to_function '', "$(this).parents('li').remove()", :title => I18n.t('picture.destroy.confirm').capitalize, :class => 'big-icons trash'
+            %li{ :class => (picture.id == product.picture_ids.first) ? 'first-image' : ''}
+              = link_to_function '', "$(this).parents('li').remove(); check_product_first_image() ", :title => I18n.t('picture.destroy.confirm').capitalize, :class => 'big-icons trash'
               = link_to '', [:edit, :admin, picture], :class => 'big-icons edit'
               = hidden_field_tag "#{f.object_name}[attachment_ids][]", picture.id
               = image_tag picture.public_filename('')
               .handler
                 .inner
           %li.clear
-        = link_to content_tag(:span, I18n.t('picture.add').capitalize, :class=>'big-icons add-picture'), '#', :class=>'backgrounds button'
+        = link_to content_tag(:span, I18n.t('picture.add').capitalize, :class=>'big-icons add-picture'), '#', :class=>'backgrounds button', :id => 'add-picture'
       .clear
       .grid_12.omega
         = f.label :description, I18n.t('description').capitalize
@@ -229,13 +232,13 @@
     image_path = result.path;
     image_id = result.id;
     = "object_name='#{f.object_name}';"
-    $('#product-images ul.sortable li.clear').before('<li><a href="#" onclick="$(this).parents(\'li\').remove(); return false;" title="" class="big-icons trash"></a><a class="big-icons edit" href="#"></a><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+image_id+'"/><img src="'+image_path+'" alt="'+fileObj.name+'"/><div class="handler"><div class="inner"></div></div></li>');
+    $('#product-images ul.sortable li.clear').before('<li><a href="#" onclick="$(this).parents(\'li\').remove(); check_product_first_image(); return false;" title="" class="big-icons trash"></a><a class="big-icons edit" href="#"></a><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+image_id+'"/><img src="'+image_path+'" alt="'+fileObj.name+'"/><div class="handler"><div class="inner"></div></div></li>');
     } else {
     display_notification_message('error',result.error)
     }
     },
     'onAllComplete': function(){
-    $('#product-images .sortable li:eq(0)').addClass('first-image');
+    check_product_first_image();
     $('#imageUploadDialog').dialog('close');
     }
     });}

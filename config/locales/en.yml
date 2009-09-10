@@ -1,51 +1,51 @@
 en:
 # FrontOffice
-  or: 'or'
-  all: 'all'
+  or: or
+  all: all
   add_to_cart: 'add to cart'
-  update: 'update'
+  update: update
   cart:
-    one: 'cart'
-    other: 'carts'
+    one: cart
+    other: carts
   empty_cart: 'empty cart'
   add_to_wishlist: 'add to wishlist'
   wishlist:
-    one: 'wishlist'
-    other: 'wishlists'
+    one: wishlist
+    other: wishlists
     send:
       friend: 'send to a friend'
       email: 'send by mail'
   empty_wishlist: 'empty wishlist'
-  home: 'home'
+  home: home
   change_language: 'change language'
   change_currency: 'change currency'
-  filter: 'filter'
-  search: 'search'
-  gender: 'gender'
+  filter: filter
+  search: search
+  gender: gender
   man:
-    one: 'man'
-    other: 'men'
+    one: man
+    other: men
   woman:
-    one: 'woman'
-    other: 'women'
-  catalog: 'catalog'
+    one: woman
+    other: women
+  catalog: catalog
   log_in: 'log in'
   sign_up: 'sign up'
   make_order: 'Make order'
   remove_voucher: 'remove voucher'
-  disconnect: 'disconnect'
+  disconnect: disconnect
   cant_not_place_order: 'We are sorry, but it is temporarily impossible to place order'
   remember_me: 'remember me'
   thank_you_to_place_order: 'Thank you for your order'
   remove_this_voucher: 'remove this voucher'
-  add: 'add'
+  add: add
   free_payment: "it's free!!!"
   no_product: 'no product'
-  total: 'total'
+  total: total
   unit_price: 'unit price' 
   tax:
-    one: 'tax'
-    other: 'taxes'
+    one: tax
+    other: taxes
   product_added: 'product successfully added'
   your_cart_is_empty: 'your cart is empty'
   cart_is_empty: 'the cart is empty'
@@ -58,145 +58,146 @@ en:
   log_in_ok: 'you are successfully connected'
   log_in_failed: 'connexion failed, check your email and password' 
   log_out_ok: 'you have been successfully disconnected'
-  hello: 'hello'
+  hello: hello
   confirm_empty_cart: 'are you sure to wipe your cart ?'
   confirm_empty_wishlist: 'are you sure to wipe your wishlist ?'
   confirm_remove_product: 'are you sure to remove this product from your cart ?'
-  type: 'type'
+  type: type
   your_account: 'your account'
-  cancel: 'cancel'
+  cancel: cancel
   unaccessible_function: 'unaccessible function'
   my_informations: 'my informations'
-  unpaid: 'unpaid'
-  sended: 'sended'
+  unpaid: unpaid
+  sended: sended
 
 # Admin
-  id: 'id'
+  id: id
+  since: since
   information:
-    one: 'information'
-    other: 'informations'
+    one: information
+    other: informations
   show_deleted: 'show deleted'
-  deleted: 'deleted'
-  create: 'create'
-  products: 'products'
-  orders: 'orders'
+  deleted: deleted
+  create: create
+  products: products
+  orders: orders
   shipping_methods: 'shipping methods'
-  pictures: 'pictures'
-  tattributes: 'attributes'
+  pictures: pictures
+  tattributes: attributes
   tattribute_values: 'attribute values'
-  vouchers: 'vouchers'
-  users: 'users'
+  vouchers: vouchers
+  users: users
   customer:
-    one: 'customer'
-    other: 'customers'
-  delivery: 'delivery'
-  roles: 'roles'
-  rights: 'rights'
+    one: customer
+    other: customers
+  delivery: delivery
+  roles: roles
+  rights: rights
   controller_name: 'controller name'
   action_name: 'action name'
-  export: 'export'
+  export: export
   export_newsletter: 'export for newsletter'
-  age: 'age'
+  age: age
   template_by: 'Template by'
-  avatar: 'avatar'
+  avatar: avatar
   created_on: 'created on'
   joined_on: 'joined on'
   last_order: 'last order'
-  active: 'active'
-  actions: 'actions'
-  edit: 'edit'
-  destroy: 'destroy'
-  activate: 'activate'
-  name: 'name'
-  email: 'email'
-  _yes: 'yes'
-  _no: 'no'
+  active: active
+  actions: actions
+  edit: edit
+  destroy: destroy
+  activate: activate
+  name: name
+  email: email
+  _yes: yes
+  _no: no
   back_to_catalog: 'back to catalog'
-  firstname: 'firstname'
-  lastname: 'lastname'
-  password: 'password'
+  firstname: firstname
+  lastname: lastname
+  password: password
   password_confirmation: 'password confirmation'
-  save: 'save'
+  save: save
   save_changes: 'save changes'
-  list: 'list'
-  civility: 'civility'
+  list: list
+  civility: civility
   address: 
-    one: 'address'
-    other:  'addresses'
-    invoice: 'Address invoice'
-    delivery: 'Address delivery'
+    one: address
+    other:  addresses
+    invoice: 'invoice address'
+    delivery: 'delivery address'
     create:
       action: 'add an address'
     destroy:
       confirm: 'are you sure to remove this address ?'
-  city: 'city'
-  country: 'country'
+  city: city
+  country: country
   zip_code: 'zip code'
-  back: 'back'
+  back: back
   thumbnail:
-    one: 'thumbnail'
-    other: 'thumbnails'
+    one: thumbnail
+    other: thumbnails
   comment:
-    one: 'comment'
-    other: 'comments'
+    one: comment
+    other: comments
   associated_element:
     one: 'associated element'
     other: 'associated elements'
-  title: 'title'
+  title: title
   filename: 'file name'
   add_file: 'add file'
   content_type: 'content type'
-  reference: 'reference'
-  description: 'description'
-  rate_tax: 'taxe'
+  reference: reference
+  description: description
+  rate_tax: taxe
   selling_date: 'selling date'
-  weight: 'weight'
+  weight: weight
   stock:
-    one: 'stock'
-    other : 'stocks'
-  weight: 'weight'
+    one: stock
+    other : stocks
+  weight: weight
   select_all: 'select all'
   unselect_all: 'unselect all'
   price:
-    one: 'price'
-    other: 'prices'
+    one: price
+    other: prices
   offer_month: 'month offer ?'
   show_on_homepage: 'show on homepage?'
   action:
-    one: 'action'
-    other: 'actions'
+    one: action
+    other: actions
   quick_edit: 'quick edit'
-  published: 'published'
-  unpublished: 'unpublished'
+  published: published
+  unpublished: unpublished
   status:
-    one: 'status'
-    other: 'statuses'
+    one: status
+    other: statuses
   shipping_method_price:
     one: "shipping method price"
     other: "shipping method prices"
   quantity:
-    one: 'quantity'
-    other: 'quantities'
+    one: quantity
+    other: quantities
   please_select: 'please select'
   weight_max: 'max weight'
   weight_min: 'min weight'
   price_max: 'max price'
   price_min: 'min price'
   code:
-   one: 'code'
-   other: 'codes'
+   one: code
+   other: codes
   value:
-    one: 'value'
-    other:  'values'
+    one: value
+    other:  values
   total_min: 'total min'
-  cumulable: 'cumulable'
+  cumulable: cumulable
   offer_delivery: 'delivery offered'
   max_use: 'maximum of use'
   using_after: 'using after (price)'
   date_start: 'start date'
   date_end: 'end date'
-  parent: 'parent'
-  dynamic: 'dynamic'
+  parent: parent
+  dynamic: dynamic
   values_count: 'values count'
   pay: 'validate payment'
   accept: 'validate order'
@@ -239,10 +240,10 @@ en:
       success: 'the attribute value was successfully destroyed'
       failed: 'a problem occured during the attribute value destroy'
       confirm: 'are you sure to delete this attribute value ?'
-  categories: 'categories'
+  categories: categories
   category:
-    one: 'category'
-    other: 'categories'
+    one: category
+    other: categories
     not_exist: 'the requested category does not exist'
     create:
       success: 'the category was successfully created'
@@ -296,8 +297,8 @@ en:
       confirm: 'are you sure to delete this order detail ?'
   order:
     zero: 'no orders'
-    one: 'order'
-    other: 'orders'
+    one: order
+    other: orders
     all: 'all orders'
     create:
       success: 'the order was successfully created'
@@ -311,6 +312,7 @@ en:
       success: 'the order was successfully destroyed'
       failed: 'a problem occured during the order destroy'
       confirm: 'are you sure to delete this order ?'
+      action: 'delete order'
     pay:
       success: 'the order was successfully paid'
     accept:
@@ -318,11 +320,11 @@ en:
     send:
       success: 'the order was successfully sent'
     status:
-      unpaid: 'unpaid'
-      paid: 'paid'
-      canceled: 'canceled'
-      shipped: 'shipped'
-      closed: 'closed'
+      unpaid: unpaid
+      paid: paid
+      canceled: canceled
+      shipped: shipped
+      closed: closed
     lastest:
       one: 'last order'
       other: 'last orders'
@@ -331,9 +333,23 @@ en:
       other: 'pending orders'
     show:
       all: 'see all orders'
+    main_infos: 'main infos'
+    subtotal: subtotal
+    total: total
+    user_note: note from the customer
+    invoice:
+      one: 'bill'
+      other: 'bills'
+      show: 'see bill'
+    delivery: 'delivery'
+  shipping: shipping
+  sku: 'sku'
+  special_offer:
+    one: 'special offer'
+    other: 'specials offers'
   voucher:
-    one: 'voucher'
-    other: 'vouchers'
+    one: voucher
+    other: vouchers
     create:
       success: 'the voucher was successfully created'
       failed: 'a problem occured during the voucher creation'
@@ -377,8 +393,8 @@ en:
       failed: 'a problem occured during the shipping method detail destroy'
       confirm: 'are you sure to delete this shipping method detail ?'
   user:
-    one: 'user'
-    other: 'users'
+    one: user
+    other: users
     create:
       success: 'the user was successfully created'
       failed: 'a problem occured during the user creation'
@@ -394,18 +410,18 @@ en:
     activation:
       success: 'the user was successfully activated'
       failed: 'a problem occured during the user activation'
-      action: 'activate'
+      action: activate
     disactivation:
       success: 'the user was successfully disactivated'
       failed: 'a problem occured during the user disactivation'
-      action: 'disactivate'
+      action: disactivate
     export:
       failed: 'export failed, no users found'
     search:
       failed: 'no users found'
   product:
-    one : 'product'
-    other: 'products'
+    one : product
+    other: products
     all: 'all products'
     in_stock: 'in stock'
     showed_on_homepage: 'showed on homepage'
@@ -444,8 +460,8 @@ en:
       failed: 'a problem occured during the product type destroy'
       confirm: 'are you sure to delete this product type ?'
   picture:
-    one: 'picture'
-    other: 'pictures'
+    one: picture
+    other: pictures
     show:
       action: 'show picture'
     create:
@@ -466,8 +482,8 @@ en:
     add: 'add picture'
     featured: 'featured picture'
   comment:
-    one: 'comment'
-    other: 'comments'
+    one: comment
+    other: comments
     create:
       success: 'the comment was successfully created'
       failed: 'a problem occured during the comment creation'
@@ -491,7 +507,7 @@ en:
       confirm: 'are you sure that you want to delete your account?'
   price_cuts : 'price cuts'
   price_cut:
-    product: 'product'
+    product: product
     oldprice: 'old price'
     newprice: 'new price'
     show: 'show price cut'
@@ -519,8 +535,8 @@ en:
         sSearch: 'Search:'
 
   tag:
-    one: 'tag'
-    other: 'tags'
+    one: tag
+    other: tags
     create:
       success: 'the tag was successfully created'
       failed: 'a problem occured during the tag creation'
@@ -551,19 +567,19 @@ en:
       confirm: 'are you sure to delete this special offer ?'
 
   statistic:
-    one: 'statistic'
-    other: 'statistics'
+    one: statistic
+    other: statistics
     show:
       all: 'see statistics'
     live:
       one: 'live statistic'
       other: 'live statistics'
   sale:
-    one: 'sale'
-    other: 'sales'
+    one: sale
+    other: sales
     day:
-      current: 'today'
-      previous: 'yesterday'
+      current: today
+      previous: yesterday
     week:
       current: 'this week'
       previous: 'last week'
@@ -575,6 +591,6 @@ en:
 # Active record
   activerecord:
     models:
-      product: 'product'
+      product: product
       shipping_method: 'shipping method'
-      user: 'user'
+      user: user

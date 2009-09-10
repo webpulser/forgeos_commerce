@@ -1,17 +1,120 @@
 .backgrounds.big-header
-  %span.order-price
-    454 $
+  %span.order-price= "#{@order.total} #{$currency.html}"
   %span.header-separator
   %span
-    Order n°458
+    = I18n.t('order',:count =>1).capitalize
+    n°
+    = @order.id
   %span.header-separator
-  %span
-    12/05/09
-
+  %span= @order.created_at.to_s(:slashed_fr)
   .interact-links
     .borders.interact-button-left
-      %a.backgrounds.interact-button{ :href => '#' }
-        Save Changes
-     = I18n.t('or')
-     %a.back-link{ :href => '#' }
-      Cancel
+    = link_to I18n.t('order.update.action'), [:edit, :admin, @order], :class => 'backgrounds interact-button'
+    .borders.interact-button-right
+    = I18n.t('or')
+    = link_to I18n.t('cancel').capitalize, admin_orders_path, :class => 'back-link'
+#content.grid_16.alpha.omega
+  #order-see.grid_12.alpha
+    .order-see-wrap
+      .fieldset
+        %h3= I18n.t('order.main_infos')
+        .main-infos
+          - user = @order.user
+          .main-infos-cutomer
+            %h4.small-icons= I18n.t('user', :count => 1)
+            = link_to user.fullname, [:admin, user]
+            %p= "#{user.orders.count} #{I18n.t('order', :count => user.orders.count)} #{I18n.t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
+            %p= user.tel1
+            %p.customer-email= user.email
+          .main-info-separation
+          .main-infos-payment
+            %h4.small-icons
+              Payment method
+            %p
+              Credit card Mastercard
+            %p
+              6565-9878-XXXX
+            %p.payment-checked
+              payment checked
+          .main-info-separation
+          .main-infos-note
+            %h4.small-icons= I18n.t('order.user_note')
+            =# @order.user_note
+        .clear
+      %table.datatable
+        %thead
+          %tr
+            %th &nbsp;
+            %th.product-th= I18n.t('product', :count => 1)
+            %th= I18n.t('sku')
+            %th= I18n.t('price', :count => 1)
+            %th= I18n.t('quantity', :count => 1)
+            %th= I18n.t('order.total')
+        %tbody
+          - @order.orders_details.all(:group => 'name').each do |detail|
+            %tr
+              - product = detail.product
+              - if product && picture = product.pictures.first
+                %td= image_tag(picture.public_filename(:thumb))
+              - else
+                %td= image_tag('admin/no-image.png')
+              %td.product-name= detail.name
+              %td= detail.sku
+              %td= detail.price
+              %td= @order.orders_details.count('sku',:conditions => { :sku => detail.sku })
+              %td.total= detail.total
+                
+      .order-totals
+        .order-subtotal= I18n.t('order.subtotal')
+        %span.order-subtotal= "#{@order.total(false,true,false,false)} #{$currency.html}"
+        - if @order.order_shipping
+          %div= I18n.t('shipping')
+          %span= "#{@order.order_shipping.price} #{$currency.html}"
+      .order-totals
+        %div= I18n.t('special_offer', :count => 2)
+        -# @order.special_offers.each do |offer|
+          %div= offer.name
+          %span= "- #{offer.total} #{$currency.html}"
+      .order-totals
+        %div= I18n.t('tax', :count => 2)
+        %span= "#{@order.taxes} #{$currency.html}"
+      .order-totals.total-block
+        .order-total= I18n.t('order.total')
+        %span.order-total= "#{@order.total(true)} #{$currency.html}"
+      .fieldset
+        %h3= I18n.t('order.delivery')
+        .order-delivery
+          .order-delivery-adress
+            %h4.small-icons= I18n.t('address.delivery')
+            %p= @order.address_delivery.address
+            %p
+              = @order.address_delivery.zip_code
+              = @order.address_delivery.city
+            %p= @order.address_delivery.country.name
+          .main-info-separation
+          .order-billing-adress
+            %h4.small-icons= I18n.t('address.invoice')
+            %p= @order.address_invoice.address
+            %p
+              = @order.address_invoice.zip_code
+              = @order.address_invoice.city
+            %p= @order.address_invoice.country.name
+          .main-info-separation
+          .order-delivery-method
+            %h4.small-icons= I18n.t('shipping_method', :count => 1)
+            - if @order.order_shipping
+              %p= @order.order_shipping.name
+              %p= @order.order_shipping.track_number
+        .clear
+  #right-sidebar.grid_4.omega
+    .step.status.open
+      %div
+        %dl{ :class => "dropdown #{@order.status} disabled"}
+          %dt
+            %a.dropdown_toggle{ :href => '#'}
+              %span= @order.status
+      .clear
+    .step
+      = link_to I18n.t('order.invoice.show'), [:bill, :admin, @order], :class => 'small-icons preview'
+      = link_to I18n.t('order.destroy.action'), [:admin, @order], :method => :delete, :confirm => I18n.t('order.destroy.confirm'), :class => 'small-icons delete'
+  .clear

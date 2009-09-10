@@ -1,12 +1,12 @@
 fr:
 # FrontOffice
-  or: 'ou'
-  all: 'Tous'
+  or: ou
+  all: Tous
   add_to_cart: 'ajouter au panier'
   update: 'mettre à jour'
   cart:
-    one: 'panier'
-    other: 'paniers'
+    one: panier
+    other: paniers
   empty_cart: 'vider le panier'
   add_to_wishlist: 'ajouter à la séléction'
   wishlist:
@@ -16,19 +16,19 @@ fr:
       friend: 'envoyer à un ami'
       email: 'envoyer par courriel'
   empty_wishlist: 'vider la sélection'
-  home: 'accueil'
+  home: accueil
   change_language: 'changer de langue'
   change_currency: 'changer de monnaie'
-  filter: 'filtrer'
-  search: 'rechercher'
-  gender: 'sexe'
+  filter: filtrer
+  search: rechercher
+  gender: sexe
   man:
-    one: 'homme'
-    other: 'hommes'
+    one: homme
+    other: hommes
   woman:
-    one: 'femme'
-    other: 'femmes'
-  catalog: 'catalogue'
+    one: femme
+    other: femmes
+  catalog: catalogue
   log_in: 'se connecter'
   sign_up: "s'inscrire"
   make_order: 'passer commande'
@@ -38,14 +38,14 @@ fr:
   remember_me: 'rester connecté'
   thank_you_to_place_order: "Merci d'avoir passé commande"
   remove_this_voucher: 'enlever ce code promo'
-  add: 'ajouter'
+  add: ajouter
   free_payment: "gratuit !!!"
   no_product: 'aucun produit'
-  total: 'total'
+  total: total
   unit_price: "prix à l'unité" 
   tax:
-    one: 'taxe'
-    other: 'taxes'
+    one: taxe
+    other: taxes
   product_added: 'le produit à bien été ajouté au panier'
   your_cart_is_empty: 'votre panier est vide'
   cart_is_empty: 'le panier est vide'
@@ -58,119 +58,120 @@ fr:
   log_in_ok: 'connection réussie, bienvenue !'
   log_in_failed: 'connection échouée, veuillez vérifier votre email et votre mot de passe' 
   log_out_ok: 'déconnection réussie, à bientôt !'
-  hello: 'bienvenue'
+  hello: bienvenue
   confirm_empty_cart: 'êtes-vous sûr de vouloir vider votre panier ?'
   confirm_empty_wishlist: 'êtes-vous sûr de vouloir vider votre sélection ?'
   confirm_remove_product: 'êtes-vous sûr de vouloir supprimer ce produit de votre panier ?'
-  type: 'type'
+  type: type
   your_account: 'votre compte'
-  cancel: 'annuler'
+  cancel: annuler
   unaccessible_function: 'fonction inaccessible'
   my_informations: 'mes informations'
   unpaid: 'impayé'
   sended: 'expédié'
 
 # Admin
-  id: 'id'
+  id: id
+  since: depuis
   information:
-    one: 'information'
-    other: 'informations'
+    one: information
+    other: informations
   show_deleted: 'voir les éléments supprimés'
   deleted: 'supprimé'
   create: 'créer'
-  products: 'produits'
-  orders: 'commandes'
+  products: produits
+  orders: commandes
   shipping_methods: "methodes d'expédition"
-  pictures: 'images'
+  pictures: images
   tattributes: attributs
   tattribute_values: valeurs
   vouchers: 'codes promo'
-  users: 'utilisateurs'
+  users: utilisateurs
   customer:
-    one: 'client'
-    other: 'clients'
-  delivery: 'livraison'
-  rights: 'droits'
-  roles: 'roles'
+    one: client
+    other: clients
+  delivery: livraison
+  rights: droits
+  roles: roles
   controller_name: 'nom du contrôleur'
   action_name: "nom de l'action"
-  export: 'exporter'
+  export: exporter
   export_newsletter: 'exporter pour la newsletter'
   age: 'âge'
   template_by: 'Thème par'
-  avatar: 'avatar'
+  avatar: avatar
   created_on: 'créé le'
   joined_on: 'inscrit le'
   last_order: 'dernière commande'
   active: 'activé'
-  actions: 'actions'
+  actions: actions
   edit: 'éditer'
-  destroy: 'supprimer'
-  activate: 'activer'
-  name: 'nom'
-  email: 'email'
-  _yes: 'oui'
-  _no: 'non'
+  destroy: supprimer
+  activate: activer
+  name: nom
+  email: email
+  _yes: oui
+  _no: non
   back_to_catalog: 'retour au catalogue'
   firstname: 'prénom'
-  lastname: 'nom'
+  lastname: nom
   password: 'mot de passe'
   password_confirmation: 'vérification du mot de passe'
-  save: 'sauvegarder'
+  save: sauvegarder
   save_changes: 'sauvegarder modifications'
-  list: 'lister'
+  list: lister
   civility: 'civilité'
   address: 
-    one: 'adresse'
-    other:  'adresses'
+    one: adresse
+    other:  adresses
     invoice: 'adresse de facturation'
     delivery: 'adresse de livraison'
     create:
       action: 'ajouter une addresse'
     destroy:
       confirm: 'êtes-vous sûr de vouloir supprimer cette adresse ?'
-  city: 'ville'
-  country: 'pays'
+  city: ville
+  country: pays
   zip_code: 'code postale'
-  back: 'retour'
+  back: retour
   thumbnail:
-    one: 'vignette'
-    other: 'vignettes'
+    one: vignette
+    other: vignettes
   comment:
-    one: 'commentaire'
-    other: 'commentaires'
+    one: commentaire
+    other: commentaires
   associated_element:
     one: 'élément associé'
     other: 'éléments associés'
-  title: 'titre'
+  title: titre
   filename: 'nom de fichier'
   add_file: 'ajouter fichier'
   content_type: 'type de contenu'
   reference: 'référence'
-  description: 'description'
-  rate_tax: 'taxe'
+  description: description
+  rate_tax: taxe
   selling_date: 'date de mise en vente'
-  weight: 'poid'
+  weight: poid
   stock:
-    one: 'stock'
-    other : 'stocks'
-  weight: 'poids'
+    one: stock
+    other : stocks
+  weight: poids
   select_all: 'sélectionner tout'
   unselect_all: 'désélectionner tout'
   price:
-    one: 'prix'
-    other: 'prix'
+    one: prix
+    other: prix
   offer_month: 'offre du mois ?'
   show_on_homepage: "afficher sur la page d'accueil ?"
   action:
-    one: 'action'
-    other: 'actions'
+    one: action
+    other: actions
   quick_edit: 'édition rapide'
   published: 'publié'
   unpublished: 'non publié'
   status:
-    one: 'status'
-    other: 'status'
+    one: status
+    other: status
   shipping_method_price:
     one: "frai d'expédition"
     other: "frais d'expédition"
@@ -183,28 +184,28 @@ fr:
   price_max: 'prix max'
   price_min: 'prix min'
   code:
-   one: 'code'
-   other: 'codes'
+   one: code
+   other: codes
   value:
-    one: 'valeur'
-    other:  'valeurs'
+    one: valeur
+    other:  valeurs
   total_min: 'somme minimale'
-  cumulable: 'cumulable'
+  cumulable: cumulable
   offer_delivery: 'frais de livraison offerts'
   max_use: "maximum d'utilisation"
   using_after: 'utilisatable après (prix)'
   date_start: 'date de début'
   date_end: 'date de fin'
-  parent: 'parent'
-  dynamic: 'dynamique'
+  parent: parent
+  dynamic: dynamique
   values_count: 'nombre de valeurs'
   pay: 'valider le paiement'
   accept: 'valider la commande'
   send: "valider l'expédition"
   drag_attributes: 'Glisser les attributs depuis la colonne de droite pour les ajouter au type de produit'
   tattribute:
-    one: 'attribut'
-    other: 'attributs'
+    one: attribut
+    other: attributs
     not_exist: "l'attribut demandé n'existe pas"
     create:
       success: "l'attribut a bien été créé"
@@ -219,8 +220,8 @@ fr:
       failed: "un problème est survenu lors de la suppression de l'attribut"
       confirm: "êtes-vous sûr de vouloir supprimer cet attribut ?" 
   tattribute_value:
-    one: 'valeur'
-    other: 'valeurs'
+    one: valeur
+    other: valeurs
     create:
       success: "la valeur a bien été créé"
       dynamic: "ce groupe est dynamique, il ne peut avoir de valeur"
@@ -291,8 +292,8 @@ fr:
       confirm: 'êtes-vous sûr de vouloir supprimer ce détail de commande ?'
   order:
     zero: 'pas de commande'
-    one: 'commande'
-    other: 'commandes'
+    one: commande
+    other: commandes
     all: 'toutes les commandes'
     create:
       success: 'la commande a bien été créée'
@@ -306,6 +307,7 @@ fr:
       success: 'la commande a bien été supprimée'
       failed: 'un problème est survenu lors de la suppression de la commande'
       confirm: 'êtes-vous sûr de vouloir supprimer cette commande ?'
+      action: 'supprimer la commande'
     pay:
       success: 'la commande a bien été payé'
     accept:
@@ -326,7 +328,20 @@ fr:
       other: 'commandes en attentes'
     show:
       all: 'voir toutes les commandes'
-
+    main_infos: 'informations principales'
+    subtotal: 'sous-total'
+    total: total
+    user_note: "note de l'utilisateur"
+    invoice:
+      one: facture
+      other: factures
+      show: voir la facture
+    delivery: expédition
+  sku: 'sku'
+  special_offer:
+    one: 'offre spéciale'
+    other: 'offres spéciales'
+  shipping: ports
   voucher:
     one: 'code promo'
     other: 'codes promo'
@@ -373,8 +388,8 @@ fr:
       failed: "un problème est survenu lors de la suppression du détail de méthode d'expédition"
       confirm: "êtes-vous sûr de vouloir supprimer ce détail de méthode d'expédition ?"
   user:
-    one: 'utilisateur'
-    other: 'utilisateurs'
+    one: utilisateur
+    other: utilisateurs
     create:
       success: "l'utilisateur a bien été créé"
       failed: "un problème est survenu lors de la création de l'utilisateur"
@@ -400,8 +415,8 @@ fr:
     search:
       failed: 'aucun utilisateur trouvé'
   product:
-    one : 'produit'
-    other: 'produits'
+    one : produit
+    other: produits
     all: 'tous les produits'
     in_stock: 'en stock'
     showed_on_homepage: "Affiché sur la page d'acceuil"
@@ -439,8 +454,8 @@ fr:
       failed: 'un problème est survenu lors de la suppression du type de produit'
       confirm: 'êtes-vous sûr de vouloir de supprimé ce type de produit ?'
   picture:
-    one: 'image'
-    other: 'images'
+    one: image
+    other: images
     show:
       action: "voir l'image"
     create:
@@ -461,8 +476,8 @@ fr:
     add: 'ajouter photo'
     featured: 'photo principale'
   comment:
-    one: 'commentaire'
-    other: 'commentaires'
+    one: commentaire
+    other: commentaires
     create:
       success: 'le commentaire a bien été créé'
       failed: 'un problème est survenu lors de la création du commentaire'
@@ -486,7 +501,7 @@ fr:
       confirm: "êtes-vous sûr de vouloir supprimer votre compte ?"
   price_cuts : 'prix barrés'
   price_cut:
-      product: 'produit'
+      product: produit
       oldprice: 'ancien prix'
       newprice: 'nouveau prix'
       show: 'voir le prix barré'
@@ -514,8 +529,8 @@ fr:
         sSearch: 'Rechercher:'
 
   tag:
-    one: 'tag'
-    other: 'tags'
+    one: tag
+    other: tags
     create:
       success: "le tag a bien été créé"
       failed: "un problème est survenu lors de la création du tag"
@@ -546,19 +561,19 @@ fr:
       confirm: "êtes-vous sûr de vouloir supprimer cette offre speciale ?"
 
   statistic:
-    one: 'statistique'
-    other: 'statistiques'
+    one: statistique
+    other: statistiques
     show:
       all: 'voir les statistiques'
     live:
       one: 'statistique temps réel'
       other: 'statistiques temps réel'
   sale:
-    one: 'vente'
-    other: 'ventes'
+    one: vente
+    other: ventes
     day:
       current: "aujourd'hui"
-      previous: 'hier'
+      previous: hier
     week:
       current: 'cette semaine'
       previous: 'semaine dernière'
@@ -592,12 +607,12 @@ fr:
       datetime:
         formats:
           default: "%Y-%m-%dT%H:%M:%S%Z"
-    am: 'am'
-    pm: 'pm'
+    am: am
+    pm: pm
 
 # Active record
   activerecord:
     models:
-      product: 'produit'
+      product: produit
       shipping_method: "méthode d'expédition"
-      user: 'utilisateur'
+      user: utilisateur

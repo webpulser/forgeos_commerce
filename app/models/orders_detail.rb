@@ -12,7 +12,7 @@ class OrdersDetail < ActiveRecord::Base
   belongs_to :order
   belongs_to :product
 
-  validates_presence_of :name, :price, :rate_tax, :order_id
+  validates_presence_of :name, :price, :rate_tax, :order_id, :sku
 
   # Returns price's string with currency symbol
   #

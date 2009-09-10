@@ -107,7 +107,7 @@ private
       if option_value = @product.dynamic_option_values.find_by_tattribute_id(d)
         result = result & option_value.update_attributes(params[:dynamic_option_values][d.to_s])
       else
-        result = result & @product.dynamic_option_values.create(params[:dynamic_option_values][d.to_s].merge(:option_id => d))
+        result = result & @product.dynamic_option_values.create(params[:dynamic_option_values][d.to_s].merge(:tattribute_id => d))
       end
     end
     return result

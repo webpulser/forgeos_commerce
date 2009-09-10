@@ -13,16 +13,17 @@
         = f.label :voucher, I18n.t('voucher',:count=>1).capitalize
         \:
       = f.collection_select :voucher, Voucher.all, :value, :name, { :prompt => I18n.t('please_select').capitalize }
-    %p
-      %b
-        = f.label :shipping_method, I18n.t('shipping_method',:count=>1).capitalize
-        \:
-      = f.collection_select :shipping_method, ShippingMethod.all, :name, :name, { :prompt => I18n.t('please_select').capitalize }
-    %p
-      %b
-        = f.label :shipping_method_price, I18n.t('shipping_method_price',:count=>1).capitalize
-        \:
-      = f.collection_select :shipping_method_price, ShippingMethodDetail.all, :price, :price, { :prompt => I18n.t('please_select').capitalize }
+    - f.fields_for :order_shipping do |order_shipping_form|
+      %p
+        %b
+          = order_shipping_form.label :name, I18n.t('shipping_method',:count=>1).capitalize
+          \:
+        = order_shipping_form.collection_select :name, ShippingMethod.all, :name, :name, { :prompt => I18n.t('please_select').capitalize }
+      %p
+        %b
+          = order_shipping_form.label :price, I18n.t('shipping_method_price',:count=>1).capitalize
+          \:
+        = order_shipping_form.collection_select :price, ShippingMethodDetail.all, :price, :price, { :prompt => I18n.t('please_select').capitalize }
     - if order.user
       %fieldset{:id => "address_invoice_fieldset"}
         %legend
