@@ -48,19 +48,19 @@ class Order < ActiveRecord::Base
   validates_presence_of :user_id, :address_invoice_id, :address_delivery_id
 
   # Returns order's amount
-  #def total(with_tax=false, with_currency=true,with_shipping=true, with_vouchers=true )
-  #  amount = 0
-  #  orders_details.each do |orders_detail|
-  #    amount += orders_detail.total(with_tax, with_currency)
-  #  end
-  #  amount += order_shipping.price if with_shipping && order_shipping
-  #  amount -= voucher.to_f if with_vouchers
-  #  return amount
-  #end
-
-  def total(with_tax=false, with_currency=true)
-    orders_details.inject(0) { |total, orders_detail| total += orders_detail.total(with_tax, with_currency) } + shipping_method_price - voucher.to_f
+  def total(with_tax=false, with_currency=true,with_shipping=true, with_vouchers=true )
+    amount = 0
+    orders_details.each do |orders_detail|
+      amount += orders_detail.total(with_tax, with_currency)
+    end
+    amount += order_shipping.price if with_shipping && order_shipping
+    amount -= voucher.to_f if with_vouchers
+    return amount
   end
+
+  #def total(with_tax=false, with_currency=true)
+  #  orders_details.inject(0) { |total, orders_detail| total += orders_detail.total(with_tax, with_currency) } + shipping_method_price - voucher.to_f
+  #end
 
   def taxes
     total(true) - total
