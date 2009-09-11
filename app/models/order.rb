@@ -39,10 +39,14 @@ class Order < ActiveRecord::Base
 
   has_many :orders_details, :dependent => :destroy
   has_one :order_shipping, :dependent => :destroy
+  accepts_nested_attributes_for :orders_details, :allow_destroy => true
   accepts_nested_attributes_for :order_shipping
 
   belongs_to :address_delivery
   belongs_to :address_invoice
+  accepts_nested_attributes_for :address_delivery
+  accepts_nested_attributes_for :address_invoice
+
   belongs_to :user
 
   validates_presence_of :user_id, :address_invoice_id, :address_delivery_id

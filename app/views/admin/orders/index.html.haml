@@ -19,6 +19,7 @@
     %table#table.datatable
       %thead
         %tr
+          %th
           %th= I18n.t('id').capitalize
           %th= I18n.t('total').capitalize
           %th= I18n.t('product', :count => 1).capitalize
@@ -26,4 +27,4 @@
           %th= I18n.t('customer', :count => 1).capitalize
           %th= I18n.t('status', :count => 1).capitalize
 
-= dataTables_tag 6, :url => admin_orders_path(:format => :json)
+= dataTables_tag 7, :url => admin_orders_path(:format => :json)

@@ -86,7 +86,7 @@ en:
   tattributes: attributes
   tattribute_values: 'attribute values'
   vouchers: vouchers
-  users: users
+  users: customers
   customer:
     one: customer
     other: customers
@@ -124,8 +124,9 @@ en:
   address: 
     one: address
     other:  addresses
-    invoice: 'invoice address'
+    invoice: 'billing address'
     delivery: 'delivery address'
+    designation: 'designation'
     create:
       action: 'add an address'
     destroy:
@@ -133,6 +134,7 @@ en:
   city: city
   country: country
   zip_code: 'zip code'
+  track_number: 'tracking number'
   back: back
   thumbnail:
     one: thumbnail
@@ -300,6 +302,7 @@ en:
     one: order
     other: orders
     all: 'all orders'
+    history: 'order history'
     create:
       success: 'the order was successfully created'
       failed: 'a problem occured during the order creation'
@@ -363,8 +366,8 @@ en:
       failed: 'a problem occured during the voucher destroy'
       confirm: 'are you sure to delete this voucher ?'
   shipping_method:
-    one: "shipping method"
-    other: "shipping methods"
+    one: "delivery method"
+    other: "delivery methods"
     create:
       success: 'the shipping method was successfully created'
       failed: 'a problem occured during the shipping method creation'
@@ -393,32 +396,32 @@ en:
       failed: 'a problem occured during the shipping method detail destroy'
       confirm: 'are you sure to delete this shipping method detail ?'
   user:
-    one: user
-    other: users
+    one: customer
+    other: customers
     create:
-      success: 'the user was successfully created'
-      failed: 'a problem occured during the user creation'
-      action: 'create an user'
+      success: 'the customer was successfully created'
+      failed: 'a problem occured during the customer creation'
+      action: 'create a customer'
     update:
-      success: 'the user was successfully updated'
-      failed: 'a problem occured during the user update'
-      action: 'edit user'
+      success: 'the customer was successfully updated'
+      failed: 'a problem occured during the customer update'
+      action: 'edit customer'
     destroy:
-      success: 'the user was successfully destroyed'
-      failed: 'a problem occured during the user destroy'
-      confirm: 'are you sure to delete this user ?'
+      success: 'the customer was successfully destroyed'
+      failed: 'a problem occured during the customer destroy'
+      confirm: 'are you sure to delete this customer?'
     activation:
-      success: 'the user was successfully activated'
-      failed: 'a problem occured during the user activation'
+      success: 'the customer was successfully activated'
+      failed: 'a problem occured during the customer activation'
       action: activate
     disactivation:
-      success: 'the user was successfully disactivated'
-      failed: 'a problem occured during the user disactivation'
-      action: disactivate
+      success: 'the customer was successfully disactivated'
+      failed: 'a problem occured during the customer deactivation'
+      action: deactivate
     export:
-      failed: 'export failed, no users found'
+      failed: 'export failed, no customers found'
     search:
-      failed: 'no users found'
+      failed: 'no customers found'
   product:
     one : product
     other: products

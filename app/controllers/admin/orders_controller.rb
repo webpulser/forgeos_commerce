@@ -96,9 +96,8 @@ private
     render :partial => 'list', :locals => { :orders => @orders } 
   end
 
-
   def sort
-    columns = %w(id total product date customer state)
+    columns = %w(id id sum(orders_details.price) count(orders_details.id) created_at people.lastname status)
     conditions = [[]]
     case params[:filter]
     when 'status'
@@ -109,19 +108,37 @@ private
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
-    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+
+    order_column = columns[params[:iSortCol_0].to_i]
+    include_models = []
+    group_by = ['orders.id']
+
+    case order_column
+    when 'count(orders_details.id)', 'sum(orders_details.price)'
+      group_by << 'orders_details.id'
+      include_models << 'orders_details'
+    when 'people.lastname'
+      group_by << 'people.id'
+      include_models << 'user'
+    end
+    group_by = group_by.join(',')
+        
+    order = "#{order_column} #{params[:iSortDir_0].upcase}"
     if params[:sSearch] && !params[:sSearch].blank?
       @orders = Order.search(params[:sSearch],
+        :include => include_models,
+        :group => group_by,
         :order => order,
         :page => page,
         :per_page => per_page)
     else
       @orders = Order.paginate(:all,
         :conditions => conditions,
+        :include => include_models,
+        :group => group_by,
         :order => order,
         :page => page,
         :per_page => per_page)
     end
   end
-
 end

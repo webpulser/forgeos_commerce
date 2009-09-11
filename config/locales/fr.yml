@@ -126,6 +126,7 @@ fr:
     other:  adresses
     invoice: 'adresse de facturation'
     delivery: 'adresse de livraison'
+    designation: 'désignation'
     create:
       action: 'ajouter une addresse'
     destroy:
@@ -133,6 +134,7 @@ fr:
   city: ville
   country: pays
   zip_code: 'code postale'
+  track_number: 'numéro de suivi'
   back: retour
   thumbnail:
     one: vignette
@@ -295,6 +297,7 @@ fr:
     one: commande
     other: commandes
     all: 'toutes les commandes'
+    history: 'historique de la commande'
     create:
       success: 'la commande a bien été créée'
       failed: 'un problème est survenu lors de la création de la commande'
