@@ -20,7 +20,7 @@ class Address < ActiveRecord::Base
   belongs_to :civility
   belongs_to :user
   belongs_to :country
-  has_one :order
+  belongs_to :order
 
   validates_presence_of :country_id, :civility_id, :address, :city, :designation
 
