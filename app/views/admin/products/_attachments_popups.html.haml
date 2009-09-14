@@ -1,0 +1,141 @@
+#imageUploadDialog.upload-lightbox-container.white
+  #imageUpload
+    = form.file_field :uploaded_data
+    = hidden_field_tag :target, params[:target]
+    = hidden_field_tag :target_id, params[:target_id]
+    = form.submit I18n.t('save').capitalize
+  %span= I18n.t('or')
+  = link_to_function I18n.t('media.add_form_library'), "$('#imageSelectDialog').dialog('open');"
+
+#imageSelectDialog.media-hoverlay
+  .media-hoverlay-header
+    = link_to_function content_tag(:span, I18n.t('picture.add').capitalize, :class=>'big-icons add-picture'), "$(\'#imageUploadDialog\').dialog(\'open\'); $(\'#imageSelectDialog\').dialog(\'close\')", :class=>'backgrounds button'
+    .display-mode
+      .heading-separator
+      .display-thumbnails.off
+      .display-list
+    #search.right
+      %a.small-icons.left.search-link{ :href => "#" }
+        %span.small-icons.search-span
+          Search
+    .backgrounds.search-form
+  .media-hoverlay-sidebar.grid_3.omega.alpha
+    .sidebar-content
+      %h2{ :class => 'small-icons picture'}
+        = link_to_function I18n.t('media.picture.all').capitalize, "select_all_elements('#{escape_javascript(admin_attachments_url :format => :json, :file_type => 'picture')}')"
+      .init-tree.a-tree{:id => 'picture-attachment-tree'}
+        %ul#root-tree
+          = render :partial => 'admin/categories/list', :locals => { :categories => PictureCategory.find_all_by_parent_id(nil) }
+  .media-hoverlay-content
+    %table#table.datatable.media
+  .media-hoverlay-content.thumbnails
+    %table#thumbnail-table.datatable.media
+
+#fileUploadDialog.upload-lightbox-container.white
+  #fileUpload
+    = form.file_field :uploaded_data
+    = hidden_field_tag :target, params[:target]
+    = hidden_field_tag :target_id, params[:target_id]
+    = form.submit I18n.t('save').capitalize
+
+#fileSelectDialog.media-hoverlay
+  #inner-lightbox.backgrounds
+    - %w(pdf video doc media).each do |file_type|
+      = link_to_function I18n.t(:other, :scope => [:media,file_type]), "update_current_dataTable_source('#{escape_javascript(admin_attachments_path(:format => :json, :file_type => file_type))}')", :class => "small-icons #{file_type}"
+  .media-hoverlay-header
+    = link_to_function content_tag(:span, I18n.t('media.upload.action').capitalize, :class=>'big-icons add-file'), "$(\'#fileUploadDialog\').dialog(\'open\'); $(\'#fileSelectDialog\').dialog(\'close\')", :class=>'backgrounds button'
+    .display-mode
+    #search.right
+      = fg_search
+    .backgrounds.search-form
+  .media-hoverlay-sidebar.grid_3.omega.alpha
+    .sidebar-content
+      %h2{ :class => 'small-icons picture'}
+        = link_to_function I18n.t('media.picture.all').capitalize, "select_all_elements('#{escape_javascript(admin_attachments_url :format => :json, :file_type => 'picture')}')"
+      .init-tree.a-tree{:id => 'picture-attachment-tree'}
+        %ul#root-tree
+          = render :partial => 'admin/categories/list', :locals => { :categories => PictureCategory.find_all_by_parent_id(nil) }
+  .media-hoverlay-content
+    %table#table-files.datatable.media
+      
+= dataTables_tag 8, :url => admin_attachments_path(:format => :json, :file_type => 'picture'), :columns => ['{ "bSortable": false }',"{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
+= dataTables_tag 8, :url => admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture'), :columns => [ '{ "bSortable": false, "bSearchable": false}','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}'], :id => 'thumbnail-table'
+= dataTables_tag 8, :id => 'table-files', :url => admin_attachments_path(:format => :json, :file_type => 'pdf'), :columns => ['{ "bSortable": false }',"{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
+
+-# TODO move to base.js
+- session_key = ActionController::Base.session_options[:key]
+- javascript_tag do
+  function initImageUpload(){
+  $('#imageUploadDialog').html('<div id="imageUpload"></div><div class="library-add"><span>or</span><a href="#" onclick="$(\'#imageUploadDialog\').dialog(\'close\'); $(\'#imageSelectDialog\').dialog(\'open\'); return false;">add from library</a></div>');
+  $('#imageUpload').uploadify({
+  'uploader': '/images/uploadify/uploadify.swf',
+  = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
+  = "'script': '#{admin_medias_path(:file_type => 'picture')}',"
+  = "'buttonImg' :'#{image_path("uploadify/upload-button_#{I18n.locale}.png")}',"
+  'width' :'154',
+  'height' :'24',
+  'scriptData': {
+  'format': 'json',
+  = "'authenticity_token': encodeURIComponent('#{u form_authenticity_token}')," if protect_against_forgery?
+  = "'#{session_key}': encodeURIComponent('#{cookies[session_key]}')"
+  },
+  'ScriptAccess': 'always',
+  'multi': 'true',
+  'displayData': 'speed',
+  'onComplete': function(e,queueID,fileObj,response,data){
+  result = JSON.parse(response);
+  if (result.result == 'success'){
+  add_picture_to_product(result.path,result.id, fileObj.name);
+  } else {
+  display_notification_message('error',result.error)
+  }
+  },
+  'onAllComplete': function(){
+  check_product_first_image();
+  $('#imageUploadDialog').dialog('close');
+  }
+  });}
+  function add_picture_to_product(path,id,name){
+  = "object_name='#{form.object_name}';"
+  $('#product-images ul.sortable li.clear').before('<li><a href="#" onclick="$(this).parents(\'li\').remove(); check_product_first_image(); return false;" class="big-icons trash"></a><a class="big-icons edit" href="#"></a><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+id+'"/><img src="'+path+'" alt="'+name+'"/><div class="handler"><div class="inner"></div></div></li>');
+  }
+
+
+-# TODO move to base.js
+- javascript_tag do
+  function initFileUpload(){
+  $('#fileUploadDialog').html('<div id="fileUpload"></div><div class="library-add"><span>or</span><a href="#" onclick="$(\'#fileUploadDialog\').dialog(\'close\'); $(\'#fileSelectDialog\').dialog(\'open\'); return false;">add from library</a></div>');
+  $('#fileUpload').uploadify({
+  'uploader': '/images/uploadify/uploadify.swf',
+  = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
+  = "'script': '#{admin_medias_path(:file_type => 'picture')}',"
+  = "'buttonImg' :'#{image_path("uploadify/upload-button_#{I18n.locale}.png")}',"
+  'width' :'154',
+  'height' :'24',
+  'scriptData': {
+  'format': 'json',
+  = "'authenticity_token': encodeURIComponent('#{u form_authenticity_token}')," if protect_against_forgery?
+  = "'#{session_key}': encodeURIComponent('#{cookies[session_key]}')"
+  },
+  'ScriptAccess': 'always',
+  'multi': 'true',
+  'displayData': 'speed',
+  'onComplete': function(e,queueID,fileObj,response,data){
+  result = JSON.parse(response);
+  if (result.result == 'success'){
+  add_attachment_to_product(result.id,fileObj.name,result.size,result.type);
+  } else {
+  display_notification_message('error',result.error);
+  }
+  },
+  'onAllComplete': function(){
+  $('#fileUploadDialog').dialog('close');
+  }
+  });
+  }
+  function add_attachment_to_product(id,name,size,type){
+  = "object_name='#{form.object_name}';"
+  $('#product-files').append('<div class="block-container"><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+id+'" /><span class="block-type"><span class="handler"><span class="inner">&nbsp;</span></span>'+type+'</span><span class="block-name">'+name+'<span class="file-size">- '+size+'</span></span><a href="#" class="big-icons gray-destroy"></a></div>');
+  }
+= stylesheet_link_tag 'admin/uploadify'
+= javascript_include_tag %w(swfobject jquery.uploadify)
