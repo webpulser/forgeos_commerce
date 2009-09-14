@@ -102,7 +102,10 @@
           %span.order-subtotal= "#{order.total(false,true,false,false)} #{$currency.html}"
           - if order.order_shipping
             %div= I18n.t('shipping').capitalize
-            %span.order_shipping= "#{order.order_shipping.price} #{$currency.html}"
+            %span.order_shipping
+              = content_tag(:span, order.order_shipping.price, :class => 'order_shipping_price')
+              = " #{$currency.html}"
+
         .order-totals
           %div= I18n.t('special_offer', :count => 2).capitalize
           %span.voucher{:style => order.voucher.blank? ? 'display: none' : ''}
@@ -197,7 +200,7 @@
         .fieldset
           - f.fields_for :order_shipping do |order_shipping_form|
             = link_to I18n.t('delivery').capitalize, '#', :class => "small-icons panel"
-            .option-panel-content{:style => 'display: block'}
+            .option-panel-content
               .delivery-method
                 - shipping_grouped_options = grouped_options_for_select(ShippingMethod.all.collect{ |shipping_method|
                 -   [shipping_method.name, shipping_method.shipping_method_details.collect{ |detail|
@@ -209,12 +212,12 @@
 
               .name-input
                 = label_tag I18n.t('name').capitalize
-                %span.order_shipping_name= order_shipping_form.object.name
+                %span.order_shipping_name= order.order_shipping.name
                 = order_shipping_form.hidden_field :name
               .price-input
                 = label_tag I18n.t('price.one').capitalize
                 %span
-                  = content_tag(:span, order_shipping_form.object.price, :class => 'order_shipping_price')
+                  = content_tag(:span, order.order_shipping.price, :class => 'order_shipping_price')
                   = " #{$currency.html}"
                 = order_shipping_form.hidden_field :price
               .street-input
