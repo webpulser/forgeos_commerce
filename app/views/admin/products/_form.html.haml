@@ -50,19 +50,19 @@
 
       #product-images.grid_3.omega
         #featured-picture
-          = I18n.t('picture.featured').capitalize
+          = I18n.t('media.picture.featured').capitalize
         = hidden_field_tag "#{f.object_name}[attachment_ids][]"
         %ul.sortable
           - product.pictures.each do |picture|
             %li{ :class => (picture.id == product.picture_ids.first) ? 'first-image' : ''}
-              = link_to_function '', "$(this).parents('li').remove(); check_product_first_image() ", :title => I18n.t('picture.destroy.confirm').capitalize, :class => 'big-icons trash'
+              = link_to_function '', "$(this).parents('li').remove(); check_product_first_image() ", :title => I18n.t('media.picture.destroy.confirm').capitalize, :class => 'big-icons trash'
               = link_to '', [:edit, :admin, picture], :class => 'big-icons edit'
               = hidden_field_tag "#{f.object_name}[attachment_ids][]", picture.id
               = image_tag picture.public_filename('')
               .handler
                 .inner
           %li.clear
-        = link_to content_tag(:span, I18n.t('picture.add').capitalize, :class=>'big-icons add-picture'), '#', :class=>'backgrounds button', :id => 'add-picture'
+        = link_to content_tag(:span, I18n.t('media.picture.add').capitalize, :class=>'big-icons add-picture'), '#', :class=>'backgrounds button', :id => 'add-picture'
       .clear
       .grid_12.omega
         = f.label :description, I18n.t('description').capitalize
