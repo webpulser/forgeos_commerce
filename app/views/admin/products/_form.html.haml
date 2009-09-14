@@ -74,7 +74,7 @@
           linked files
         .option-panel-content
           %a#add-file.backgrounds.button.right{ :href => "#" }
-            %span.big-icons.add-file
+            %span.big-icons.add-media
               = I18n.t('add_file').capitalize
           #product-files.grid_9.sortable
             - product.attachments.all(:conditions => ['type != "Picture"']).each do |attachment|

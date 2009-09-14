@@ -9,7 +9,7 @@
 
 #imageSelectDialog.media-hoverlay
   .media-hoverlay-header
-    = link_to_function content_tag(:span, I18n.t('picture.add').capitalize, :class=>'big-icons add-picture'), "$(\'#imageUploadDialog\').dialog(\'open\'); $(\'#imageSelectDialog\').dialog(\'close\')", :class=>'backgrounds button'
+    = link_to_function content_tag(:span, I18n.t('picture.upload.action').capitalize, :class=>'big-icons add-picture'), "$(\'#imageUploadDialog\').dialog(\'open\'); $(\'#imageSelectDialog\').dialog(\'close\')", :class=>'backgrounds button'
     .display-mode
       .heading-separator
       .display-thumbnails.off
@@ -44,7 +44,6 @@
       = link_to_function I18n.t(:other, :scope => [:media,file_type]), "update_current_dataTable_source('#{escape_javascript(admin_attachments_path(:format => :json, :file_type => file_type))}')", :class => "small-icons #{file_type}"
   .media-hoverlay-header
     = link_to_function content_tag(:span, I18n.t('media.upload.action').capitalize, :class=>'big-icons add-file'), "$(\'#fileUploadDialog\').dialog(\'open\'); $(\'#fileSelectDialog\').dialog(\'close\')", :class=>'backgrounds button'
-    .display-mode
     #search.right
       = fg_search
     .backgrounds.search-form

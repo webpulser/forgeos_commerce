@@ -458,28 +458,6 @@ fr:
       success: 'le type de produit a bien été supprimé'
       failed: 'un problème est survenu lors de la suppression du type de produit'
       confirm: 'êtes-vous sûr de vouloir de supprimé ce type de produit ?'
-  picture:
-    one: image
-    other: images
-    show:
-      action: "voir l'image"
-    create:
-      success: "l'image a bien été créée"
-      failed: "un problème est survenu lors de la création de l'image"
-      action: 'créer une image'
-    update:
-      success: "l'image a bien été mise à jour"
-      failed: "un problème est survenu lors de la mise à jour de l'image"
-      action: "éditer l'image"
-    destroy:
-      success: "l'image a bien été supprimée"
-      failed: "un problème est survenu lors de la suppression de l'image"
-      confirm: 'êtes-vous sûr de vouloir supprimer cette image ?'
-    upload:
-      start: "Commencer l'envoi"
-      clear_queue: 'Vider la liste'
-    add: 'ajouter photo'
-    featured: 'photo principale'
   comment:
     one: commentaire
     other: commentaires
