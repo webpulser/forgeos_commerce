@@ -44,12 +44,11 @@ class Order < ActiveRecord::Base
 
   has_one :address_delivery
   has_one :address_invoice
-  accepts_nested_attributes_for :address_delivery, :allow_destroy => true
-  accepts_nested_attributes_for :address_invoice, :allow_destroy => true
+  accepts_nested_attributes_for :address_delivery
+  accepts_nested_attributes_for :address_invoice
 
   belongs_to :user
-
-  validates_presence_of :user_id, :address_invoice_id, :address_delivery_id
+  validates_presence_of :user_id, :address_delivery, :address_invoice, :order_shipping
 
   # Returns order's amount
   def total(with_tax=false, with_currency=true,with_shipping=true, with_vouchers=true )

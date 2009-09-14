@@ -353,6 +353,7 @@ en:
   voucher:
     one: voucher
     other: vouchers
+    change: 'change voucher'
     create:
       success: 'the voucher was successfully created'
       failed: 'a problem occured during the voucher creation'
@@ -368,6 +369,7 @@ en:
   shipping_method:
     one: "delivery method"
     other: "delivery methods"
+    change: 'change shipping method'
     create:
       success: 'the shipping method was successfully created'
       failed: 'a problem occured during the shipping method creation'

@@ -72,6 +72,9 @@
           %span= "#{@order.order_shipping.price} #{$currency.html}"
       .order-totals
         %div= I18n.t('special_offer', :count => 2).capitalize
+        - if @order.voucher
+          %div= "&nbsp;"
+          %span= "- #{@order.voucher} #{$currency.html}"
         -# @order.special_offers.each do |offer|
           %div= offer.name
           %span= "- #{offer.total} #{$currency.html}"
@@ -104,6 +107,7 @@
             %h4.small-icons= I18n.t('shipping_method', :count => 1).capitalize
             - if @order.order_shipping
               %p= @order.order_shipping.name
+              %p= "#{@order.order_shipping.price} #{$currency.html}"
               %p= @order.order_shipping.track_number
         .clear
   #right-sidebar.grid_4.omega

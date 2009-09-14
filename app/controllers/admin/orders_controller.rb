@@ -1,9 +1,10 @@
 class Admin::OrdersController < Admin::BaseController
   before_filter :get_orders, :only => [:index]
-  before_filter :get_order, :only => [:show, :edit, :update, :destroy, :pay, :accept, :sent]
   before_filter :new_order, :only => [:new, :create]
+  before_filter :get_order, :only => [:show, :edit, :update, :destroy, :pay, :accept, :sent]
+  before_filter :get_civilities_and_countries, :only => [:new, :edit, :create, :update]
+
   after_filter :render_list, :only => [:destroy, :pay, :accept, :sent]
-  before_filter :build_addresses, :only => [:create, :update]
   
   def index
     respond_to do |format|
@@ -38,8 +39,12 @@ class Admin::OrdersController < Admin::BaseController
       flash[:notice] = I18n.t('order.update.success').capitalize
     else
       flash[:error] = I18n.t('order.update.failed').capitalize
+      logger.debug "*"*400
+      logger.debug @order.errors.collect{ |e, m| "- #{e.humanize unless e == 'base'} #{m}\n" }.to_s
+      #render :action => 'edit'
     end
     render :action => 'edit'
+    #redirect_to(admin_orders_path) # FIXME
   end
 
   def destroy
@@ -81,16 +86,12 @@ private
   def new_order
     @order = Order.new(params[:order])
   end
-  
-  def build_addresses
-    unless @order.build_address_invoice(params[:address_invoice])
-      @order.address_invoice = @order.user.address_invoice
-    end
-    unless @order.build_address_delivery(params[:address_delivery])
-      @order.address_delivery = @order.user.address_delivery
-    end
+
+  def get_civilities_and_countries
+    @civilities = Civility.all :order => 'name ASC'
+    @countries = Country.all :order => 'name ASC'
   end
-  
+    
   def render_list
     index
     render :partial => 'list', :locals => { :orders => @orders } 

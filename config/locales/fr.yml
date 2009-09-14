@@ -348,6 +348,7 @@ fr:
   voucher:
     one: 'code promo'
     other: 'codes promo'
+    change: 'autre code promo'
     create:
       success: 'le code promo a bien été créé'
       failed: 'un problème est survenu lors de la création du code promo'
@@ -363,6 +364,7 @@ fr:
   shipping_method:
     one: "méthode d'expédition"
     other: "méthodes d'expédition"
+    change: "changer de méthode d'expédition"
     create:
       success: "la méthode d'expédition a bien été créée"
       failed: "un problème est survenu lors de la création de la méthode d'expédition"
