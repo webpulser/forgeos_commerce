@@ -31,7 +31,7 @@ namespace :admin do |admin|
   end
   admin.resources :checkbox_options, :controller => 'options', :path_prefix => '/admin/options'
 
-  admin.resources :orders, :member => { :bill => :get } do |order|
+  admin.resources :orders, :member => { :bill => :get, :total => :put } do |order|
     order.resources :details, :controller => 'order_details'
   end
 

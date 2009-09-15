@@ -1,7 +1,7 @@
 class Admin::OrdersController < Admin::BaseController
   before_filter :get_orders, :only => [:index]
   before_filter :new_order, :only => [:new, :create]
-  before_filter :get_order, :only => [:show, :edit, :update, :destroy, :pay, :accept, :sent]
+  before_filter :get_order, :only => [:show, :edit, :update, :destroy, :pay, :accept, :sent, :total]
   before_filter :get_civilities_and_countries, :only => [:new, :edit, :create, :update]
 
   after_filter :render_list, :only => [:destroy, :pay, :accept, :sent]
@@ -39,9 +39,7 @@ class Admin::OrdersController < Admin::BaseController
       flash[:notice] = I18n.t('order.update.success').capitalize
     else
       flash[:error] = I18n.t('order.update.failed').capitalize
-      logger.debug "*"*400
-      logger.debug @order.errors.collect{ |e, m| "- #{e.humanize unless e == 'base'} #{m}\n" }.to_s
-      #render :action => 'edit'
+      render :action => 'edit'
     end
     render :action => 'edit'
     #redirect_to(admin_orders_path) # FIXME
@@ -71,6 +69,30 @@ class Admin::OrdersController < Admin::BaseController
     render :partial => 'form_details', :locals => { :orders_detail => OrdersDetail.new(
       { :name => product.name, :description => product.description, :price => product.price, :rate_tax => product.rate_tax }),
     :products => @products }
+  end
+
+  def total
+    # clone order and order_shipping
+    editing_order = @order.clone
+    editing_order.order_shipping = @order.order_shipping.clone
+
+    # get order_details ids
+    if order_details = params[:order][:orders_details_attributes]
+      detail_ids = order_details.values.collect{ |detail| detail['id'].to_i if detail['_delete'].to_i != 1 }
+      detail_ids.compact!
+      editing_order.orders_detail_ids = detail_ids
+    end
+
+    # update attributes for order and order_shipping
+    editing_order.attributes = params[:order]
+    editing_order.order_shipping.attributes = params[:order][:order_shipping_attributes]
+
+    # calculate total, subtotal and taxes
+    total = editing_order.total(true)
+    subtotal = editing_order.total(false,true,false,false)
+    taxes = editing_order.taxes
+
+    return render :json => { :result => 'success', :id => @order.id, :total => total, :subtotal => subtotal, :taxes => taxes}
   end
 
 private

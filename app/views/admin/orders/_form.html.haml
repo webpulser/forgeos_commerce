@@ -1,6 +1,7 @@
 - form_for [:admin, order], :html => { :id => 'wrap' } do |f|
   .backgrounds.big-header
-    %span.order-price= "#{order.total(true)} #{$currency.html}"
+    %span.order-price= order.total(true)
+    %span.order-currency= $currency.html
     %span.header-separator
     %span
       = I18n.t('order',:count =>1).capitalize
@@ -80,7 +81,8 @@
 
         .order-totals
           .order-subtotal= I18n.t('order.subtotal').capitalize
-          %span.order-subtotal= "#{order.total(false,true,false,false)} #{$currency.html}"
+          %span.order-subtotal= order.total(false,true,false,false)
+          %span.order-subtotal-currency= $currency.html
           - if order.order_shipping
             %div= I18n.t('shipping').capitalize
             %span.order_shipping
@@ -104,10 +106,12 @@
             %span= "-#{offer.total} #{$currency.html}"
         .order-totals
           %div= I18n.t('tax', :count => 2).capitalize
-          %span= "#{order.taxes} #{$currency.html}"
+          %span.order-taxes= order.taxes
+          %span= $currency.html
         .order-totals.total-block
           .order-total= I18n.t('order.total').capitalize
-          %span.order-total= "#{order.total(true)} #{$currency.html}"
+          %span.order-total= order.total(true)
+          %span.order-currency= $currency.html
 
         .fieldset
           - f.fields_for :address_delivery do |delivery_address_form|
@@ -219,7 +223,7 @@
           = I18n.t('order.history').capitalize
     .clear
 
-= dataTables_tag 7, :columns => ['{ "bSortable": false }', '{ "sType": "html"}', '', '{ "sType": "numeric"}', '', '{ "sType": "currency"}', '{ "bSortable": false }']
+= dataTables_tag :columns => ['{ "bSortable": false }', '{ "sType": "html"}', '', '{ "sType": "numeric"}', '', '{ "sType": "currency"}', '{ "bSortable": false }']
 
 
 
