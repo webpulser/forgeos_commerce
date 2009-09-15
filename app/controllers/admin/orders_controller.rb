@@ -39,10 +39,9 @@ class Admin::OrdersController < Admin::BaseController
       flash[:notice] = I18n.t('order.update.success').capitalize
     else
       flash[:error] = I18n.t('order.update.failed').capitalize
-      render :action => 'edit'
+      return render :action => 'edit'
     end
-    render :action => 'edit'
-    #redirect_to(admin_orders_path) # FIXME
+    return redirect_to(admin_orders_path)
   end
 
   def destroy
