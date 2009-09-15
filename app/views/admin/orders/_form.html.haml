@@ -44,7 +44,7 @@
               %h4.small-icons= I18n.t('order.user_note').capitalize
               =# order.user_note
           .clear
-        %table.datatable
+        %table#table.datatable
           %thead
             %tr
               %th &nbsp;
@@ -55,8 +55,7 @@
               %th= I18n.t('order.total').capitalize
               %th.actions &nbsp;
           %tbody
-            - f.fields_for :orders_details do |detail_form|
-              - detail = detail_form.object
+            - order.orders_details.each do |detail|
               %tr
                 - product = detail.product
                 %td
@@ -69,33 +68,15 @@
                     = link_to detail.name, [:admin, detail.product]
                   - else
                     = detail.name
-                %td
-                  = detail_form.text_field :sku, :class => 'sku-input'
-                %td
-                  = detail_form.text_field :price, :class => 'price-input'
-                %td
-                  -#= order.orders_details.count('sku',:conditions => { :sku => detail.sku })
-                  = 1
+                %td = detail.sku
+                %td = detail.price
+                %td= 1
                 %td.total= "#{detail.total} #{$currency.html}"
-                %td
-                  = detail_form.hidden_field :id
-                  = detail_form.hidden_field :_delete, :class => 'delete'
-                  = link_to_function '', "remove_order_detail($(this));", :class => 'small-icons destroy-link'
+                %td= link_to_function '', "remove_order_detail($(this));", :class => 'small-icons destroy-link', :id => "order_detail_#{detail.id}"
 
-            -# order.orders_details.all(:group => 'name').each do |detail|
-              %tr
-                - product = detail.product
-                - if product && picture = product.pictures.first
-                  %td= image_tag(picture.public_filename(:thumb))
-                - else
-                  %td= image_tag('admin/no-image.png')
-                %td.product-name= detail.name
-                %td= detail.sku
-                %td= detail.price
-                %td= order.orders_details.count('sku',:conditions => { :sku => detail.sku })
-                %td.total= detail.total
-                %td
-                  = link_to '', '#', :class => "small-icons destroy-link"
+        %order_details
+          - f.fields_for :orders_details do |detail_form|
+            = detail_form.hidden_field :_delete, :class => 'delete', :id => "_delete_order_detail_#{detail_form.object.id}"
 
         .order-totals
           .order-subtotal= I18n.t('order.subtotal').capitalize
@@ -238,24 +219,8 @@
           = I18n.t('order.history').capitalize
     .clear
 
+= dataTables_tag 7, :columns => ['{ "bSortable": false }', '{ "sType": "html"}', '', '{ "sType": "numeric"}', '', '{ "sType": "currency"}', '{ "bSortable": false }']
 
--#.fieldset
-  %legend
-    = link_to_effect_toggle(I18n.t('attribute', :count => 2).capitalize,'static_attributes')
-  - form_for [:admin, order], :html => { :id => 'static_attributes' } do |f|
-    %p
-      %b
-        = f.label :voucher, I18n.t('voucher',:count=>1).capitalize
-        \:
-      = f.collection_select :voucher, Voucher.all, :value, :name, { :prompt => I18n.t('please_select').capitalize }
-    - f.fields_for :order_shipping do |order_shipping_form|
-      %p
-        %b
-          = order_shipping_form.label :name, I18n.t('shipping_method',:count=>1).capitalize
-          \:
-        = order_shipping_form.collection_select :name, ShippingMethod.all, :name, :name, { :prompt => I18n.t('please_select').capitalize }
-      %p
-        %b
-          = order_shipping_form.label :price, I18n.t('shipping_method_price',:count=>1).capitalize
-          \:
-        = order_shipping_form.collection_select :price, ShippingMethodDetail.all, :price, :price, { :prompt => I18n.t('please_select').capitalize }
+
+
+
