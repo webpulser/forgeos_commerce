@@ -78,18 +78,10 @@
               = I18n.t('add_file').capitalize
           #product-files.grid_9.sortable
             - product.attachments.all(:conditions => ['type != "Picture"']).each do |attachment|
-              .block-container
-                = hidden_field_tag "#{f.object_name}[attachment_ids][]", attachment.id
-                %span.block-type
-                  %span.handler
-                    %span.inner
-                      &nbsp;
-                  = attachment.type.to_s.upcase
-                %span.block-name
-                  = attachment.filename
-                  %span.file-size
-                    = "- #{attachment.size} Ko"
-                %a.big-icons.gray-destroy{:href => '#'}
+              = block_container f.object_name, 'attachment', attachment do
+                = attachment.filename
+                %span.file-size
+                  = "- #{attachment.size} Ko"
           .clear
       .option-panel
         .backgrounds.content-header

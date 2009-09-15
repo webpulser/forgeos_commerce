@@ -11,15 +11,16 @@
   '<%= user.total_orders.blank? ? I18n.t('none').capitalize : content_tag(:div, "#{user.total_orders} #{$currency.html}") %>  ',
   '<%= content_tag( :div, (user.orders.empty? ? "N/A" : user.orders.last.created_at.to_s(:slashed_fr)), :class => 'last-date') %> ',
   '<%= user.created_at.to_s(:slashed_fr) %>',
-  '<%= escape_javascript link_to('', [:edit, :admin, user], :class => 'small-icons edit-link') -%>
-   <%= escape_javascript link_to_remote('', :url => [:admin, user],
+  '<%= escape_javascript(
+    link_to('', [:edit, :admin, user], :class => 'small-icons edit-link') +
+    link_to_remote('', :url => [:admin, user],
      :method => :delete,
      :confirm => I18n.t('user.destroy.confirm').capitalize,
      :success => "removedataTablesRow('#destroy_#{link_id}')",
      :html => {
        :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-   })
-   -%>'
+    })
+  ) -%>'
     ] <%= ',' unless @users.last == user %>
 <% end %>
 ]

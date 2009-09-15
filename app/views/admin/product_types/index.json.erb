@@ -1,23 +1,26 @@
 {
-'iTotalDisplayRecords': <%= @product_types.total_entries || 0 %>,
+'iTotalDisplayRecords': <%= @product_types.total_entries || 0 -%>,
 'aaData': [
-<% @product_types.each do |product_type| %>
+<% @product_types.each do |product_type| -%>
   <% 
     link_id = "product_type_#{product_type.id}"
-  %>
+    products_count = product_type.products.count
+  -%>
   [
-  '<%= escape_javascript content_tag(:div, "&nbsp;", :id => link_id, :class => 'small-icons product-types') %>',
-  '<%= escape_javascript content_tag(:div, link_to(product_type.name, [:admin, product_type]), :class => 'product-name') %>',
-  '<%= escape_javascript(link_to('', [:edit, :admin, product_type], :class => 'small-icons edit-link')) -%>
-   <%= escape_javascript(link_to_remote('', :url => [:admin, product_type],
+  '<%= escape_javascript content_tag(:div, "&nbsp;", :id => link_id, :class => 'small-icons product-types') -%>',
+  '<%= escape_javascript content_tag(:div, link_to(product_type.name, [:admin, product_type]), :class => 'product-name') -%>',
+  '<%= "#{products_count} #{I18n.t :product, :count => products_count}" %>',
+  '<%= escape_javascript(
+    link_to('', [:edit, :admin, product_type], :class => 'small-icons edit-link') +
+    link_to_remote('', :url => [:admin, product_type],
      :method => :delete,
      :confirm => I18n.t('product.destroy.confirm').capitalize,
      :success => "removedataTablesRow('#destroy_#{link_id}')",
      :html => {
      :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-   }))
-   -%>'
-    ] <%= ',' unless @product_types.last == product_type %>
-<% end %>
+    })
+  ) -%>'
+    ] <%= ',' unless @product_types.last == product_type -%>
+<% end -%>
 ]
 }

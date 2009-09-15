@@ -25,14 +25,5 @@
     .backgrounds.search-form
   .content-background
   %table#table.datatable
-    %thead
-      %tr
-        %th
-        %th
-          = I18n.t('name').capitalize
-        %th
-          = I18n.t('type').capitalize
-        %th
-    %tbody
 
-= dataTables_tag 4, :url => admin_tattributes_path(:format => :json)
+= dataTables_tag :url => admin_options_path(:format => :json), :columns => ["{'bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'#{I18n.t :type}'}","{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]

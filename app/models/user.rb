@@ -20,7 +20,6 @@ class User < Person
   end
 
   def total_orders
-    total = 0
-    self.orders.collect { |o| total += o.total }
+    self.orders.collect(&:total).sum
   end
 end

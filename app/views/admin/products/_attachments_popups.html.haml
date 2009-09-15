@@ -57,9 +57,9 @@
   .media-hoverlay-content
     %table#table-files.datatable.media
       
-= dataTables_tag 0, :url => admin_attachments_path(:format => :json, :file_type => 'picture'), :columns => ['{ "bSortable": false }',"{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
-= dataTables_tag 0, :url => admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture'), :columns => [ '{ "bSortable": false, "bSearchable": false}','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}'], :id => 'thumbnail-table'
-= dataTables_tag 0, :id => 'table-files', :url => admin_attachments_path(:format => :json, :file_type => 'pdf'), :columns => ['{ "bSortable": false }',"{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
+= dataTables_tag :url => admin_attachments_path(:format => :json, :file_type => 'picture'), :columns => ['{ "bSortable": false }',"{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
+= dataTables_tag :url => admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture'), :columns => [ '{ "bSortable": false, "bSearchable": false}','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}'], :id => 'thumbnail-table'
+= dataTables_tag :id => 'table-files', :url => admin_attachments_path(:format => :json, :file_type => 'pdf'), :columns => ['{ "bSortable": false }',"{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
 
 -# TODO move to base.js
 - session_key = ActionController::Base.session_options[:key]

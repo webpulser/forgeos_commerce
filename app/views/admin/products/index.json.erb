@@ -10,21 +10,21 @@
   [
 <% if product.kind_of? Pack -%>
   '<%= content_tag(:div, '<div class="image">&nbsp'+ image_tag(picture || 'admin/no-image.png') +'</div>', :id => link_id, :class => 'some-variants plus') %>',
-  '<%= escape_javascript(content_tag(:div, link_to(product.name, [:admin, product]) + content_tag(:span, product.products.count), :class => 'product-name')) -%>
-   <%= escape_javascript('<br /><br /><p class="product-name" style="display:none">') -%>
-   <% product.products.each do |p| -%>
-     <%= escape_javascript("#{p.name}<br />") -%>
-   <% end %></p>',
-  '<%= escape_javascript(content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price')) -%>
-   <%= escape_javascript('<br /><p style="display:none">') -%>
-   <% product.products.each do |p| -%>
-     <%= escape_javascript("#{p.price} #{$currency.html}<br />") -%>
-   <% end %>',
-  '<%= escape_javascript(content_tag(:div,  product.stock, :class => 'stocks' )) -%>
-   <%= escape_javascript('<br /><p class="stocks" style="display:none">') -%>
-   <% product.products.each do |p| -%>
-     <%= escape_javascript("#{p.stock}<br />") -%>
-   <% end %>',
+  '<%= escape_javascript(
+    content_tag(:div, link_to(product.name, [:admin, product]) + content_tag(:span, product.products.count), :class => 'product-name') +
+    '<br /><br /><p class="product-name" style="display:none">' +
+    product.products.collect(&:name).join('<br />')
+  ) -%></p>',
+   '<%= escape_javascript(
+     content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price') +
+     '<br /><p style="display:none">' +
+     product.products.collect{ |p| "#{p.price} #{$currency.html}"}.join('<br />')
+   ) -%>',
+   '<%= escape_javascript(
+     content_tag(:div, product.stock, :class => 'stocks' ) +
+     '<br /><p class="stocks" style="display:none">' + 
+     product.products.collect(&:stock).join('<br />')
+   ) -%>',
 <% else -%>
   '<%= content_tag(:div, image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product') %>',
   '<%= escape_javascript(content_tag(:div, link_to(product.name, [:admin, product]), :class => 'product-name')) %>',
@@ -32,22 +32,23 @@
   '<%= escape_javascript(content_tag(:div, product.stock, :class => 'stocks' )) %>',
 <% end -%>
   '<%= product.product_type.name %>',
-  '<%= escape_javascript(link_to_remote('', :url => activate_admin_product_path(product),
+  '<%= escape_javascript(
+    link_to_remote('', :url => activate_admin_product_path(product),
      :complete => "toggleActivate('#show_#{link_id}')",
      :html => { 
        :class => "small-icons #{klass}",
        :id => "show_#{link_id}"
-   })) -%>
-    <%= escape_javascript link_to('', [:duplicate, :admin, product], :class => 'small-icons duplicate-link') -%>
-    <%= escape_javascript(link_to('', [:edit, :admin, product], :class => 'small-icons edit-link')) -%>
-    <%= escape_javascript(link_to_remote('', :url => [:admin, product],
+    }) +
+    link_to('', [:duplicate, :admin, product], :class => 'small-icons duplicate-link') +
+    link_to('', [:edit, :admin, product], :class => 'small-icons edit-link') +
+    link_to_remote('', :url => [:admin, product],
       :method => :delete,
       :confirm => I18n.t('product.destroy.confirm').capitalize,
       :success => "removedataTablesRow('#destroy_#{link_id}')", 
       :html => {
       :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-    }))
-    -%>'
+    })
+  ) -%>'
     ] <%= ',' unless @products.last == product %>
 <% end %>
 ]
