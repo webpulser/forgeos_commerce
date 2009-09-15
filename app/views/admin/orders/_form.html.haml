@@ -68,8 +68,8 @@
                     = link_to detail.name, [:admin, detail.product]
                   - else
                     = detail.name
-                %td = detail.sku
-                %td = detail.price
+                %td= detail.sku
+                %td= detail.price
                 %td= 1
                 %td.total= "#{detail.total} #{$currency.html}"
                 %td= link_to_function '', "remove_order_detail($(this));", :class => 'small-icons destroy-link', :id => "order_detail_#{detail.id}"
