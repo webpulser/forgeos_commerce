@@ -1,0 +1,2 @@
+class LongtextOption < DynamicOption
+end

@@ -1,0 +1,2 @@
+class UrlOption < DynamicOption
+end

@@ -1,0 +1,2 @@
+class TextOption < DynamicOption
+end
