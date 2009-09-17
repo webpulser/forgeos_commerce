@@ -34,7 +34,7 @@
           - if picture == @product.pictures.first
             %li.first-image
               = image_tag picture.public_filename('')
-              .featured= I18n.t('picture.featured')
+              .featured= I18n.t('media.picture.featured')
           - else
             %li= image_tag picture.public_filename('')
         %li.clear

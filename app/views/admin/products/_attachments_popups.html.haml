@@ -94,6 +94,17 @@
   $('#imageUploadDialog').dialog('close');
   }
   });}
+  function add_picture_to_element(){
+  var current_table = oTables[current_table_index];
+  indexes = current_table.fnGetSelectedIndexes();
+  for(var i=0; i<indexes.length; i++){
+  path = current_table.fnGetData(indexes[i]).slice(-3,-2);
+  id = current_table.fnGetData(indexes[i]).slice(-2,-1);
+  name = current_table.fnGetData(indexes[i]).slice(-1);
+  add_picture_to_product(path,id,name);
+  }
+  $(current_table.fnGetSelectedNodes()).toggleClass('row_selected');
+  }
   function add_picture_to_product(path,id,name){
   = "object_name='#{form.object_name}';"
   $('#product-images ul.sortable li.clear').before('<li><a href="#" onclick="$(this).parents(\'li\').remove(); check_product_first_image(); return false;" class="big-icons trash"></a><a class="big-icons edit" href="#"></a><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+id+'"/><img src="'+path+'" alt="'+name+'"/><div class="handler"><div class="inner"></div></div></li>');

@@ -129,7 +129,7 @@
               sales
       .step
         - unless product.new_record?
-          = link_to I18n.t('page.duplicate').capitalize, [:duplicate, :admin, product], :class => 'small-icons duplicate'
+          = link_to I18n.t('product.duplicate').capitalize, [:duplicate, :admin, product], :class => 'small-icons duplicate'
           = link_to I18n.t('product.destroy.action').capitalize, [:admin, product], :confirm => I18n.t('product.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
       .step.open
         %a.small-icons.step-title{ :href => "#" }
