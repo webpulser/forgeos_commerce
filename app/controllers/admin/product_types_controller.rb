@@ -2,7 +2,7 @@
 # ProductDetail
 class Admin::ProductTypesController < Admin::BaseController
   # List ProductType
-  before_filter :get_product_type, :except => [:index, :show, :new, :create]
+  before_filter :get_product_type, :only => [:show, :edit, :update, :destroy]
   before_filter :new_product_type, :only => [:new, :create]
   
   def index
