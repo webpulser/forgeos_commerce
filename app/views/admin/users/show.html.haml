@@ -29,14 +29,22 @@
           %th.actions &nbsp;
       %tbody
         -@user.orders.each do |order|
-          %tr
+          %tr{:id => "row_order_#{order.id}"}
             %td
-              = order.orders_details.length > 1 ? content_tag(:div, '<div class="image">&nbsp;</div>', :id => "order_#{order.id}", :class => 'some-variants plus') : content_tag(:div, '', :id => "order_#{order.id}")
+              - if order.orders_details.length > 1 
+                .some-variants.plus{:id => "order_#{order.id}"}
+                  .image
+                    &nbsp;
+              - else
+                %div{:id => "order_#{order.id}"}  
             %td= order.id
             %td= "#{order.total} #{$currency.html}"
             %td
               - product_names = order.orders_details.length > 1 ? '<br/><p class="product-name" style="display:none">'+order.orders_details.collect(&:name).join('<br />')+'</p>' : ''
-              = content_tag(:div, link_to(order.orders_details.length != 1 ? "#{order.orders_details.length} #{I18n.t('product', :count => order.orders_details.length)}" : order.orders_details.first.name.capitalize,[:admin,order]), :class => 'product-name') + product_names
+              .product-name
+                = link_to(order.orders_details.length != 1 ? "#{order.orders_details.length} #{I18n.t('product', :count => order.orders_details.length)}" : order.orders_details.first.name.capitalize,[:admin,order])
+              =product_names
+
             %td= order.created_at.to_s(:slashed_fr)
             %td= select_tag(:status, options_for_select(order_states_for_select, order.status))
             %td= link_to('', [:edit, :admin, order], :class => 'small-icons edit-link')
