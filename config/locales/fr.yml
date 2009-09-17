@@ -448,6 +448,7 @@ fr:
   product_type:
     one : 'type de produit'
     other: 'types de produit'
+    back: retour aux types
     create:
       success: 'le type de produit a bien été créé'
       failed: 'un problème est survenu lors de la création du type de produit'

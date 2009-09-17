@@ -454,6 +454,7 @@ en:
     all: 'all products type'
     one : 'product type'
     other: 'product types'
+    back: back to types
     create:
       success: 'the product type was successfully created'
       failed: 'a problem occured during the product type creation'
