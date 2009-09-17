@@ -10,7 +10,7 @@
   '<%= escape_javascript content_tag(:div, link_to(option.name, admin_option_path(option)), :class => 'product-name') -%>',
   '<%= option.access_method %> ',
   '<%= escape_javascript(
-    link_to I18n.t('tattribute.duplicate.action'), duplicate_admin_option_path(option), :class => 'small-icons duplicate'
+    link_to(I18n.t('tattribute.duplicate.action'), duplicate_admin_option_path(option), :class => 'small-icons duplicate') +
     link_to('', [:edit, :admin, option], :class => 'small-icons edit-link') +
     link_to_remote('', :url => [:admin, option],
          :method => :delete,
