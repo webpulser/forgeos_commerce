@@ -1,0 +1,21 @@
+= render :partial => 'tabs'
+#wrap
+  .backgrounds.big-header
+    %h1= @product_type.name
+    .interact-links
+      = link_to I18n.t('product_type.update.action').capitalize, [:edit, :admin, @product_type ], :class => 'backgrounds interact-button'
+      = I18n.t('or')
+      = link_to I18n.t('product_type.back').capitalize, admin_product_types_path, :class => 'back-link'
+
+  #content.grid_12.alpha.omega
+    .grid_12.alpha
+      #product-types-options-tree.a-tree
+        %ul
+          - @product_type.options.each do |option|
+            - id = "option_#{option.id}"
+            %li{ :id => id, :rel => 'attribute' }
+              %a{ :href => '#' }
+                = option.name
+        .clear
+  .clear
+
