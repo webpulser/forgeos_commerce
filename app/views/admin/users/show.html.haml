@@ -1,0 +1,110 @@
+- order_states_for_select = Order.aasm_states.collect{ |state| [state.name, I18n.t(state.name, :scope => [:order,:status])] }
+.backgrounds.big-header
+  %h1
+    =@user.fullname
+  .interact-links
+    .borders.interact-button-left
+    = link_to I18n.t('user.update.action'), [:edit, :admin, @user], :class => 'backgrounds interact-button'
+    .borders.interact-button-right
+    or
+    %a.back-link{ :href => "#" }
+      =link_to I18n.t('user.back'), admin_users_path, :class => 'back-link'
+#content.grid_16.alpha.omega
+  #customer-see.grid_12.alpha.omega
+    .customer-header.backgrounds
+      %span.small-icons.order
+        =@user.orders.all.sum(&:total)
+        €
+      = "#{I18n.t('user.spent_on')} #{@user.orders.length}"
+      = @user.orders.length > 1 ? I18n.t('order.other') : I18n.t('order.one')
+    %table#table.datatable
+      %thead
+        %tr
+          %th &nbsp;
+          %th= I18n.t('id').capitalize
+          %th= I18n.t('order.total').capitalize
+          %th= I18n.t('product.one').capitalize
+          %th= 'Date'
+          %th= I18n.t('status', :count => 1).capitalize
+          %th.actions &nbsp;
+      %tbody
+        -@user.orders.each do |order|
+          %tr
+            %td
+              = order.orders_details.length > 1 ? content_tag(:div, '<div class="image">&nbsp;</div>', :id => "order_#{order.id}", :class => 'some-variants plus') : content_tag(:div, '', :id => "order_#{order.id}")
+            %td= order.id
+            %td= "#{order.total} #{$currency.html}"
+            %td
+              - product_names = order.orders_details.length > 1 ? '<br/><p class="product-name" style="display:none">'+order.orders_details.collect(&:name).join('<br />')+'</p>' : ''
+              = content_tag(:div, link_to(order.orders_details.length != 1 ? "#{order.orders_details.length} #{I18n.t('product', :count => order.orders_details.length)}" : order.orders_details.first.name.capitalize,[:admin,order]), :class => 'product-name') + product_names
+            %td= order.created_at.to_s(:slashed_fr)
+            %td= select_tag(:status, options_for_select(order_states_for_select, order.status))
+            %td= link_to('', [:edit, :admin, order], :class => 'small-icons edit-link')
+            
+
+    .padding-wrap
+      .fieldset
+        %h3
+          Customer infos
+        .main-infos
+          .main-infos-cutomer
+            %h4.small-icons
+              Contact information
+            %p
+              =@user.tel1
+            %p.customer-email
+              =@user.email
+          .main-info-separation.big-separation
+          .order-delivery-adress
+            %h4.small-icons
+              Delivery adress
+            -@user.address_deliveries.each do |address_delivery|
+              %p= address_delivery.address
+              %p= address_delivery.address_2 if address_delivery.address_2
+              %p
+                = address_delivery.zip_code
+                = address_delivery.city
+              %p= address_delivery.country.name
+              %br
+              -if address_delivery == @user.address_deliveries.first and @user.address_deliveries.length > 1
+                %h4
+                  Others delivery address
+          .main-info-separation.big-separation
+          .order-billing-adress
+            %h4.small-icons
+              Billing adress
+            %p= @user.address_invoice.address
+            %p= @user.address_invoice.address_2 if @user.address_invoice.address_2
+            %p
+              = @user.address_invoice.zip_code
+              = @user.address_invoice.city
+            %p= @user.address_invoice.country.name
+        .clear
+      .fieldset.messages-fieldset
+        %h3
+          Messages
+        .received-message
+          %a.small-icons{ :href => "#" }
+            Colis non recu !!
+          %span
+            Received on 12/08/09
+        .sent-message
+          %a.small-icons{ :href => "#" }
+            Colis non recu !!
+          %span
+            Sent on 12/08/09
+        %a.send-message-link{ :href => "#" }
+          Send a message
+        .clear
+  #right-sidebar.grid_4.omega.alpha
+    .step
+      %a.small-icons.contact{ :href => "#" }
+        Contact customer
+      %a.small-icons.duplicate{ :href => "#" }
+        duplicate page
+      %a.small-icons.delete{ :href => "#" }
+        delete page
+    
+  .clear
+
+= dataTables_tag :columns => ['{ "bSortable": false }', '{ "sType": "numeric"}', '', '{ "sType": "currency"}', '', '{ "bSortable": false}', '{ "bSortable": "date" }']

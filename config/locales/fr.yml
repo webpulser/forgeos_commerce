@@ -395,6 +395,8 @@ fr:
   user:
     one: utilisateur
     other: utilisateurs
+    back: 'retours aux utilisateurs'
+    spent_on: 'depensé en'
     create:
       success: "l'utilisateur a bien été créé"
       failed: "un problème est survenu lors de la création de l'utilisateur"

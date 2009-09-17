@@ -400,6 +400,8 @@ en:
   user:
     one: customer
     other: customers
+    back: 'back to customer list'
+    spent_on: 'spent on'
     create:
       success: 'the customer was successfully created'
       failed: 'a problem occured during the customer creation'
