@@ -75,7 +75,7 @@
                 %td.total= "#{detail.total} #{$currency.html}"
                 %td= link_to_function '', "remove_order_detail($(this));", :class => 'small-icons destroy-link', :id => "order_detail_#{detail.id}"
 
-        %order_details
+        .order_details
           - f.fields_for :orders_details do |detail_form|
             = detail_form.hidden_field :_delete, :class => 'delete', :id => "_delete_order_detail_#{detail_form.object.id}"
 
@@ -116,71 +116,11 @@
         .fieldset
           - f.fields_for :address_delivery do |delivery_address_form|
             = link_to I18n.t('address.delivery').capitalize, '#', :class => "small-icons panel"
-            .option-panel-content
-              .address-designation
-                = label_tag I18n.t('address.designation').capitalize
-                = delivery_address_form.text_field :designation
-              .civility-select
-                = label_tag I18n.t('civility').capitalize
-                = delivery_address_form.collection_select :civility_id, civilities, :id, :name, {:prompt => true}
-              .firstname-input
-                = label_tag I18n.t('firstname').capitalize
-                = delivery_address_form.text_field :firstname
-              .lastname-input
-                = label_tag I18n.t('lastname').capitalize
-                = delivery_address_form.text_field :name
-              .street-input
-                = label_tag I18n.t('address.one').capitalize
-                = delivery_address_form.text_field :address
-              .street-input
-                = label_tag I18n.t('address.one').capitalize
-                = delivery_address_form.text_field :address_2
-              .zip-code-input
-                = label_tag I18n.t('zip_code').capitalize
-                = delivery_address_form.text_field :zip_code
-              .town-input
-                = label_tag I18n.t('city').capitalize
-                = delivery_address_form.text_field :city
-              .country-select
-                = label_tag I18n.t('country').capitalize
-                = delivery_address_form.collection_select :country_id, countries, :id, :name, {:prompt => true}
-              .clear
-
+            = render :partial => 'address_form', :locals => {:form => delivery_address_form, :civilities => civilities, :countries => countries}
         .fieldset
           - f.fields_for :address_invoice do |invoice_address_form|
             = link_to I18n.t('address.invoice').capitalize, "#", :class => "small-icons panel"
-            .option-panel-content
-              -#.different-address-checkbox
-                = check_box_tag 'different_address', 'different-address', false, :class => 'different-adress'
-                = label_tag 'different_address', 'Different from the delivery adress', :class => 'different-adress'
-              .address-designation
-                = label_tag I18n.t('address.designation').capitalize
-                = invoice_address_form.text_field :designation
-              .civility-select
-                = label_tag I18n.t('civility').capitalize
-                = invoice_address_form.collection_select :civility_id, civilities, :id, :name, {:prompt => true}
-              .firstname-input
-                = label_tag I18n.t('firstname').capitalize
-                = invoice_address_form.text_field :firstname
-              .lastname-input
-                = label_tag I18n.t('lastname').capitalize
-                = invoice_address_form.text_field :name
-              .street-input
-                = label_tag I18n.t('address.one').capitalize
-                = invoice_address_form.text_field :address
-              .street-input
-                = label_tag I18n.t('address.one').capitalize
-                = invoice_address_form.text_field :address_2
-              .zip-code-input
-                = label_tag I18n.t('zip_code').capitalize
-                = invoice_address_form.text_field :zip_code
-              .town-input
-                = label_tag I18n.t('city').capitalize
-                = invoice_address_form.text_field :city
-              .country-select
-                = label_tag I18n.t('country').capitalize
-                = invoice_address_form.collection_select :country_id, countries, :id, :name, {:prompt => true}
-              .clear
+            = render :partial => 'address_form', :locals => {:form => invoice_address_form, :civilities => civilities, :countries => countries}
 
         .fieldset
           - f.fields_for :order_shipping do |order_shipping_form|
@@ -196,17 +136,17 @@
               .clear
 
               .name-input
-                = label_tag I18n.t('name').capitalize
+                = order_shipping_form.label :name, I18n.t('name').capitalize
                 %span.order_shipping_name= order.order_shipping.name
                 = order_shipping_form.hidden_field :name
               .price-input
-                = label_tag I18n.t('price.one').capitalize
+                = order_shipping_form.label :price, I18n.t('price.one').capitalize
                 %span
                   = content_tag(:span, order.order_shipping.price, :class => 'order_shipping_price')
                   = " #{$currency.html}"
                 = order_shipping_form.hidden_field :price
               .street-input
-                = label_tag I18n.t('track_number').capitalize
+                = order_shipping_form.label :track_number,I18n.t('track_number').capitalize
                 = order_shipping_form.text_field :track_number
               .clear
 

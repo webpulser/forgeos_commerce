@@ -1,0 +1,29 @@
+.option-panel-content
+  .address-designation
+    = form.label :designation, I18n.t('address.designation').capitalize
+    = form.text_field :designation
+  .civility-select
+    = form.label :civility_id, I18n.t('civility').capitalize
+    = form.collection_select :civility_id, civilities, :id, :name, {:prompt => true}
+  .firstname-input
+    = form.label :firstname , I18n.t('firstname').capitalize
+    = form.text_field :firstname
+  .lastname-input
+    = form.label :name , I18n.t('lastname').capitalize
+    = form.text_field :name
+  .street-input
+    = form.label :address , I18n.t('address.one').capitalize
+    = form.text_field :address
+  .street-input
+    = form.label :address_2 , I18n.t('address.one').capitalize
+    = form.text_field :address_2
+  .zip-code-input
+    = form.label :zip_code , I18n.t('zip_code').capitalize
+    = form.text_field :zip_code
+  .town-input
+    = form.label :city , I18n.t('city').capitalize
+    = form.text_field :city
+  .country-select
+    = form.label :country_id , I18n.t('country').capitalize
+    = form.collection_select :country_id, countries, :id, :name, {:prompt => true}
+  .clear
