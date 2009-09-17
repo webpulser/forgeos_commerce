@@ -566,6 +566,50 @@ fr:
       current: 'ce moi ci'
       previous: 'le moi dernier'
     lifetime: 'total des ventes'
+  option:
+    value:
+      one: choix
+      other: choix
+  text_option:
+    one: text option
+    other: text options
+    field: text field
+    preview: preview
+  longtext_option:
+    one: longtext option
+    other: longtext options
+    field: longtext field
+    preview: preview
+  picklist_option:
+    one: picklist option
+    other: picklist options
+    field: picklist field
+    preview: preview
+  checkbox_option:
+    one: checkbox option
+    other: checkbox options
+    field: checkbox field
+    preview: preview
+  date_option:
+    one: date option
+    other: date options
+    field: date field
+    preview: preview
+  number_option:
+    one: number option
+    other: number options
+    field: number field
+    preview: preview
+  url_option:
+    one: url option
+    other: url options
+    field: url field
+    preview: preview
+  radiobutton_option:
+    one: radiobutton option
+    other: radiobutton options
+    field: radiobutton field
+    preview: preview
 
 # Date formats
   date:

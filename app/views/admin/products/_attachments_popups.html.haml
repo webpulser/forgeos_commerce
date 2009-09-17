@@ -27,9 +27,9 @@
         %ul#root-tree
           = render :partial => 'admin/categories/list', :locals => { :categories => PictureCategory.find_all_by_parent_id(nil) }
   .media-hoverlay-content
-    %table#table.datatable.media
+    %table#table.datatable.media.selectable_rows
   .media-hoverlay-content.thumbnails
-    %table#thumbnail-table.datatable.media
+    %table#thumbnail-table.datatable.media.selectable_rows
 
 #fileUploadDialog.upload-lightbox-container.white
   #fileUpload
@@ -55,7 +55,7 @@
         %ul#root-tree
           = render :partial => 'admin/categories/list', :locals => { :categories => PictureCategory.find_all_by_parent_id(nil) }
   .media-hoverlay-content
-    %table#table-files.datatable.media
+    %table#table-files.datatable.media.selectable_rows
       
 = dataTables_tag :url => admin_attachments_path(:format => :json, :file_type => 'picture'), :columns => ['{ "bSortable": false }',"{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
 = dataTables_tag :url => admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture'), :columns => [ '{ "bSortable": false, "bSearchable": false}','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}'], :id => 'thumbnail-table'

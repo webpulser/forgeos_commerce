@@ -15,8 +15,8 @@
           - product_type.options.each do |option|
             - id = "option_#{option.id}"
             %li{ :id => id, :rel => 'attribute' }
-              = hidden_field_tag 'product_type[option_ids][]', option.id, :id => "product_type_option_ids_#{option.id}"
               %a{ :href => '#' }
+                = hidden_field_tag 'product_type[option_ids][]', option.id, :id => "product_type_option_ids_#{option.id}"
                 = option.name
                 %span.big-icons.gray-destroy
                   &nbsp;
@@ -25,6 +25,10 @@
     #product-types-all-tree.init-tree.a-tree
       %ul
         = render :partial => 'options_categories', :locals => { :categories => TattributeCategory.find_all_by_parent_id(nil) }
+        - Tattribute.all(:include => :tattribute_categories, :conditions => { :categories => { :id => nil }}).each do |orphan_option|
+          - unless orphan_option.product_types.include? @product_type
+            %li{ :rel => 'attribute', :id => "option_#{orphan_option.id}" }
+              = link_to((orphan_option.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-tattribute')), '#') 
       .clear
     = link_to I18n.t('tattribute.create.action').capitalize, admin_options_path, :class => 'small-icons small-icons-verti-small-blue-plus attribute-new'
   .clear

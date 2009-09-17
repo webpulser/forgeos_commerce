@@ -23,14 +23,18 @@ namespace :admin do |admin|
   admin.resources :geo_zones
   admin.resources :countries, :controller => 'geo_zones'
   admin.resources :users, :collection => { :filter => [:post, :get] }, :member => { :activate => :post }
+
+  admin.resources :options, :collection => { :access_method => :post }, :member => { :duplicate => :get} do |option|
+    option.resources :option_values, :controller => 'tattribute_values'
+  end
   admin.resources :tattributes, :controller => 'options', :collection => { :access_method => :post } do |tattribute|
     tattribute.resources :values, :controller => 'tattribute_values'
   end
-  admin.resources :options, :collection => { :access_method => :post } do |option|
-    option.resources :option_values, :controller => 'tattribute_values'
-  end
-  admin.resources :checkbox_options, :controller => 'options', :path_prefix => '/admin/options'
 
+  %w(checkbox radiobutton picklist text longtext number date url).each do |option_type|
+    admin.resources "#{option_type}_options", :controller => 'options', :requirements => { :type => option_type }
+  end
+  
   admin.resources :orders, :member => { :bill => :get, :total => :put } do |order|
     order.resources :details, :controller => 'order_details'
   end

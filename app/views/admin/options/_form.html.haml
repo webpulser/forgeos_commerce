@@ -1,27 +1,39 @@
 - form_for [:admin , option], :html => { :id => 'wrap' } do |f|
-  = f.hidden_field :type
   .backgrounds.big-header
     = f.text_field :name
     .interact-links
       = fg_submit_tag 'save_changes'
       = I18n.t('or')
-      = link_to I18n.t('cancel').capitalize, admin_tattributes_path, :class => 'back-link'
+      = link_to I18n.t('cancel').capitalize, admin_options_path, :class => 'back-link'
   #content.grid_16.alpha.omega
     .grid_12.alpha
       .inner-content
-        - case option.type
+        - case option.class.to_s
           - when 'CheckboxOption'
-            .tattribute-type
-              %span.small-icons.tattribute-checkbox
-                ="checkbox field"
-            .choices
-              = render :partial => 'checkbox', :locals => { :option => option, :f => f }
+            = render :partial => 'checkbox', :locals => { :option => option, :form => f }
+          - when 'PicklistOption'
+            = render :partial => 'picklist', :locals => { :option => option, :form => f }
+          - when 'RadiobuttonOption'
+            = render :partial => 'radiobutton', :locals => { :option => option, :form => f }
+          - when 'TextOption'
+            = render :partial => 'text', :locals => { :option => option, :form => f }
+          - when 'LongtextOption'
+            = render :partial => 'longtext', :locals => { :option => option, :form => f }
+          - when 'DateOption'
+            = render :partial => 'date', :locals => { :option => option, :form => f }
+          - when 'UrlOption'
+            = render :partial => 'url', :locals => { :option => option, :form => f }
+          - when 'NumberOption'
+            = render :partial => 'number', :locals => { :option => option, :form => f }
+
+
 
     #right-sidebar.grid_4.omega
       - unless option.new_record?
         .step
-          = link_to I18n.t('tattribute.duplicate.action'), '#', :class => 'small-icons duplicate disabled'
+          = link_to I18n.t('tattribute.duplicate.action'), duplicate_admin_option_path(option), :class => 'small-icons duplicate'
           = link_to I18n.t('tattribute.destroy.action').capitalize, [:admin, option], :confirm => I18n.t('option.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
       .step
         = I18n.t('tattribute.name')
         = f.text_field :access_method, :class => 'field'
+  = javascript_tag "object_name = '#{f.object_name}'"

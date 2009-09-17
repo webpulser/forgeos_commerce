@@ -5,10 +5,29 @@
         = option.name
     - if option.dynamic?
       - dynamic_option_value = product.dynamic_option_values.find_by_tattribute_id(option.id) if product
-      = text_field "dynamic_option_values[#{option.id}]", 'value', :value => (dynamic_option_value.value unless dynamic_option_value.nil?)
+      - case option.class.to_s
+      - when 'TextOption'
+        = text_field "dynamic_option_values[#{option.id}]", 'value', :value => (dynamic_option_value.value unless dynamic_option_value.nil?)
+      - when 'NumberOption'
+        = text_field "dynamic_option_values[#{option.id}]", 'value', :value => (dynamic_option_value.value unless dynamic_option_value.nil?)
+      - when 'DateOption'
+        = text_field "dynamic_option_values[#{option.id}]", 'value', :value => (dynamic_option_value.value unless dynamic_option_value.nil?), :class => 'date-picker'
+      - when 'UrlOption'
+        = text_field "dynamic_option_values[#{option.id}]", 'value', :value => (dynamic_option_value.value unless dynamic_option_value.nil?)
+      - when 'LongtextOption'
+        = text_area "dynamic_option_values[#{option.id}]", 'value', :value => (dynamic_option_value.value unless dynamic_option_value.nil?), :class => 'mceEditor'
     - else
-      -  option.option_values.each do |value|
-        .grid_3.omega
-          = check_box_tag 'product[option_value_ids][]', value.id, product ? product.option_value_ids.include?(value.id) : false
-          = value.name
+      - case option.class.to_s
+      - when 'CheckboxOption'
+        - option.option_values.each do |value|
+          .grid_3.omega
+            = check_box_tag 'product[option_value_ids][]', value.id, product ? product.option_value_ids.include?(value.id) : false
+            = value.name
+      - when 'RadiobuttonOption'
+        -  option.option_values.each do |value|
+          .grid_3.omega
+            = radio_button_tag 'product[option_value_ids][]', value.id, product ? product.option_value_ids.include?(value.id) : false
+            = value.name
+      - when 'PicklistOption'
+        = collection_select '','product[option_value_ids][]', option.option_values, :id, :name, :prompt => I18n.t('please_select')
     .clear

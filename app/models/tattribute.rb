@@ -17,6 +17,15 @@ class Tattribute < ActiveRecord::Base
   
   before_save :clear_attributes
 
+  def clone
+    option = super
+    option.option_values = self.option_values.collect(&:clone)
+    %w(tattribute_category_ids attachment_ids).each do |method|
+      option.send("#{method}=",self.send(method))
+    end
+    option
+  end
+
 private
   def clear_attributes
     self.tattribute_values.destroy_all if self.dynamic?

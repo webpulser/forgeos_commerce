@@ -572,6 +572,50 @@ en:
       current: 'this month'
       previous: 'last month'
     lifetime: 'lifetime sales'
+  option:
+    value:
+      one: choice
+      other: choices
+  text_option:
+    one: text
+    other: texts
+    field: text field
+    preview: preview
+  longtext_option:
+    one: longtext
+    other: longtexts
+    field: longtext field
+    preview: preview
+  picklist_option:
+    one: picklist
+    other: picklists
+    field: picklist field
+    preview: preview
+  checkbox_option:
+    one: checkbox
+    other: checkboxes
+    field: checkbox field
+    preview: preview
+  date_option:
+    one: date
+    other: dates
+    field: date field
+    preview: preview
+  number_option:
+    one: number
+    other: numbers
+    field: number field
+    preview: preview
+  url_option:
+    one: url
+    other: urls
+    field: url field
+    preview: preview
+  radiobutton_option:
+    one: choice
+    other: choices
+    field: radiobutton field
+    preview: preview
 
 # Active record
   activerecord:
