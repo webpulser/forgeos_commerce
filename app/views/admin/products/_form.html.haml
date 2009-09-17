@@ -153,13 +153,15 @@
         %a.small-icons.step-title{ :href => "#" }
           Tags
         .inner-step.tags
-          = hidden_field_tag 'tag_list[]', ''
-          %input#tag.backgrounds{ :name => "tag", :type => "text" }
-          - product.tag_list.each do |tag|
-            %span
-              = tag
-              = hidden_field_tag 'tag_list[]', tag
-              = link_to '&nbsp;', '#', :class => 'big-icons gray-destroy'
+          .wrap_tags
+            = hidden_field_tag 'tag_list[]', ''
+            %input#tag.backgrounds{ :name => "tag", :type => "text" }
+            - product.tag_list.each do |tag|
+              %span
+                = tag
+                = hidden_field_tag 'tag_list[]', tag
+                = link_to '&nbsp;', '#', :class => 'big-icons gray-destroy'
+          .clear
       .step.open
         %a.small-icons.step-title{ :href => "#" }
           = I18n.t('meta_description').capitalize
