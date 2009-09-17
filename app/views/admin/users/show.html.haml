@@ -88,31 +88,30 @@
               = @user.address_invoice.city
             %p= @user.address_invoice.country.name
         .clear
-      .fieldset.messages-fieldset
-        %h3
-          Messages
-        .received-message
-          %a.small-icons{ :href => "#" }
-            Colis non recu !!
-          %span
-            Received on 12/08/09
-        .sent-message
-          %a.small-icons{ :href => "#" }
-            Colis non recu !!
-          %span
-            Sent on 12/08/09
-        %a.send-message-link{ :href => "#" }
-          Send a message
-        .clear
+      
   #right-sidebar.grid_4.omega.alpha
     .step
-      %a.small-icons.contact{ :href => "#" }
-        Contact customer
+      =mail_to @user.email, 'Contact customer', :class => 'small-icons contact'
       %a.small-icons.duplicate{ :href => "#" }
-        duplicate page
+        Create order
       %a.small-icons.delete{ :href => "#" }
-        delete page
-    
+        Delete customer
+    .step.open
+      %a.small-icons.step-title{ :href => '#' }
+        Special offers
+    .step.open
+      %a.small-icons.step-title{ :href => '#' }
+        Newsletter
+    .step.open
+      %a.small-icons.step-title{ :href => '#' }
+        Account history
+      .inner-step
+        %p
+          Created on
+          =@user.created_at.to_date
+          %br
+          by
+          =@user.fullname
   .clear
 
 = dataTables_tag :columns => ['{ "bSortable": false }', '{ "sType": "numeric"}', '', '{ "sType": "currency"}', '', '{ "bSortable": false}', '{ "bSortable": "date" }']
