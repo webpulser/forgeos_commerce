@@ -8,7 +8,7 @@
       n°
       = order.id
     %span.header-separator
-    %span= order.created_at.to_s(:slashed_fr)
+    %span= order.created_at.to_s(:slashed_fr) unless order.created_at.nil?
     %span.header-separator
     .interact-links
       .borders.interact-button-left
@@ -20,30 +20,31 @@
   #content.grid_16.alpha.omega
     #order-see.grid_12.alpha
       .order-see-wrap
-        .fieldset
-          %h3= I18n.t('order.main_infos')
-          .main-infos
-            - user = order.user
-            .main-infos-cutomer
-              %h4.small-icons= I18n.t('user', :count => 1).capitalize
-              = link_to user.fullname, [:admin, user]
-              %p= "#{user.orders.count} #{I18n.t('order', :count => user.orders.count)} #{I18n.t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
-              %p= user.tel1
-              %p.customer-email= user.email
-            .main-info-separation
-            .main-infos-payment
-              %h4.small-icons
-                Payment method
-              %p
-                Credit card Mastercard
-              %p
-                6565-9878-XXXX
-              %p.payment-checked
-                payment checked
-            .main-info-separation
-            .main-infos-note
-              %h4.small-icons= I18n.t('order.user_note').capitalize
-              =# order.user_note
+        - unless order.new_record?
+          .fieldset
+            %h3= I18n.t('order.main_infos')
+            .main-infos
+              - user = order.user
+              .main-infos-cutomer
+                %h4.small-icons= I18n.t('user', :count => 1).capitalize
+                = link_to user.fullname, [:admin, user]
+                %p= "#{user.orders.count} #{I18n.t('order', :count => user.orders.count)} #{I18n.t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
+                %p= user.tel1
+                %p.customer-email= user.email
+              .main-info-separation
+              .main-infos-payment
+                %h4.small-icons
+                  Payment method
+                %p
+                  Credit card Mastercard
+                %p
+                  6565-9878-XXXX
+                %p.payment-checked
+                  payment checked
+              .main-info-separation
+              .main-infos-note
+                %h4.small-icons= I18n.t('order.user_note').capitalize
+                =# order.user_note
           .clear
         %table#table.datatable
           %thead
@@ -114,15 +115,18 @@
           %span.order-currency= $currency.html
 
         .fieldset
+          - order.build_address_delivery if order.address_delivery.nil?
           - f.fields_for :address_delivery do |delivery_address_form|
             = link_to I18n.t('address.delivery').capitalize, '#', :class => "small-icons panel"
             = render :partial => 'address_form', :locals => {:form => delivery_address_form, :civilities => civilities, :countries => countries}
         .fieldset
+          - order.build_address_invoice if order.address_invoice.nil?
           - f.fields_for :address_invoice do |invoice_address_form|
             = link_to I18n.t('address.invoice').capitalize, "#", :class => "small-icons panel"
             = render :partial => 'address_form', :locals => {:form => invoice_address_form, :civilities => civilities, :countries => countries}
 
         .fieldset
+          - order.build_order_shipping if order.order_shipping.nil?
           - f.fields_for :order_shipping do |order_shipping_form|
             = link_to I18n.t('delivery').capitalize, '#', :class => "small-icons panel"
             .option-panel-content
@@ -155,12 +159,13 @@
         - order_states_for_select = Order.aasm_states.collect{ |state| [state.name, I18n.t(state.name, :scope => [:order,:status])] }
         = f.select :status, options_for_select(order_states_for_select, order.status)
         .clear
-      .step
-        = link_to I18n.t('order.invoice.show'), [:bill, :admin, order], :class => 'small-icons preview'
-        = link_to I18n.t('order.destroy.action'), [:admin, order], :method => :delete, :confirm => I18n.t('order.destroy.confirm'), :class => 'small-icons delete'
-      .step.disabled
-        %a.small-icons.step-title{ :href => "#" }
-          = I18n.t('order.history').capitalize
+      - unless order.new_record?
+        .step
+          = link_to I18n.t('order.invoice.show'), [:bill, :admin, order], :class => 'small-icons preview'
+          = link_to I18n.t('order.destroy.action'), [:admin, order], :method => :delete, :confirm => I18n.t('order.destroy.confirm'), :class => 'small-icons delete'
+        .step.disabled
+          %a.small-icons.step-title{ :href => "#" }
+            = I18n.t('order.history').capitalize
     .clear
 
 = dataTables_tag :columns => ['{ "bSortable": false }', '{ "sType": "html"}', '', '{ "sType": "numeric"}', '', '{ "sType": "currency"}', '{ "bSortable": false }']

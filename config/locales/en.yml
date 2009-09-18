@@ -577,6 +577,8 @@ en:
     value:
       one: choice
       other: choices
+      new: add choice
+    access_method: access method
   text_option:
     one: text
     other: texts

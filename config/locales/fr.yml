@@ -571,6 +571,8 @@ fr:
     value:
       one: choix
       other: choix
+      new: ajouter un choix
+    access_method: "méthode d'accès"
   text_option:
     one: text option
     other: text options
