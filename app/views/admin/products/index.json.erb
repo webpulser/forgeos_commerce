@@ -12,17 +12,17 @@
   '<%= content_tag(:div, '<div class="image">&nbsp'+ image_tag(picture || 'admin/no-image.png') +'</div>', :id => link_id, :class => 'some-variants plus') %>',
   '<%= escape_javascript(
     content_tag(:div, link_to(product.name, [:admin, product]) + content_tag(:span, product.products.count), :class => 'product-name') +
-    '<br /><br /><p class="product-name" style="display:none">' +
+    '<br /><br /><p class="product-name">' +
     product.products.collect(&:name).join('<br />')
   ) -%></p>',
    '<%= escape_javascript(
      content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price') +
-     '<br /><p style="display:none">' +
+     '<br /><p>' +
      product.products.collect{ |p| "#{p.price} #{$currency.html}"}.join('<br />')
    ) -%>',
    '<%= escape_javascript(
      content_tag(:div, product.stock, :class => 'stocks' ) +
-     '<br /><p class="stocks" style="display:none">' + 
+     '<br /><p class="stocks">' + 
      product.products.collect(&:stock).join('<br />')
    ) -%>',
 <% else -%>
