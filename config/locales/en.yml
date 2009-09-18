@@ -209,6 +209,7 @@ en:
     one: "attribute"
     all: "all attributes"
     other: "attributes"
+    back: back to attributes
     name: "attribute name"
     not_exist: 'the requested attribute does not exist'
     create:

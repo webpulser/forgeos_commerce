@@ -209,6 +209,7 @@ fr:
     one: attribut
     all: tous les attributs
     other: attributs
+    back: retour aux attributs
     not_exist: "l'attribut demandé n'existe pas"
     create:
       success: "l'attribut a bien été créé"
