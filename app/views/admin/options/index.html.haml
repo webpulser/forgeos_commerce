@@ -8,7 +8,7 @@
   .sidebar-content
     %h2.small-icons.pages
       = link_to_function I18n.t('tattribute.all').capitalize, "select_all_elements('/admin/options.json')"
-    #product-tree
+    #product-tree.init-tree
       %ul
         = render :partial => 'categories', :locals => { :categories => TattributeCategory.find_all_by_parent_id(nil) }
 
@@ -22,8 +22,13 @@
     = link_to content_tag(:span,I18n.t(:radiobutton_option, :count => 1), :class=>'small-icons radiobutton_option'),new_admin_radiobutton_option_path, :class=>'backgrounds action-button tattributes'
     = link_to content_tag(:span,I18n.t(:date_option, :count => 1), :class=>'small-icons date_option'),new_admin_date_option_path, :class=>'backgrounds action-button tattributes'
     = link_to content_tag(:span,I18n.t(:url_option, :count => 1), :class=>'small-icons url_option'),new_admin_url_option_path, :class=>'backgrounds action-button tattributes'
+    #search.right
+      = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
+    .backgrounds.search-form
+
     .backgrounds.search-form
   .content-background
   %table#table.datatable
 
 = dataTables_tag :url => admin_options_path(:format => :json), :columns => ["{'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'#{I18n.t 'option.access_method'}'}","{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]
+

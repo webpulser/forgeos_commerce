@@ -207,6 +207,7 @@ fr:
   drag_attributes: 'Glisser les attributs depuis la colonne de droite pour les ajouter au type de produit'
   tattribute:
     one: attribut
+    all: tous les attributs
     other: attributs
     not_exist: "l'attribut demandé n'existe pas"
     create:

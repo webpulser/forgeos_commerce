@@ -207,7 +207,7 @@ en:
   drag_attributes: 'drag attributes from the right column to this product type:'
   tattribute:
     one: "attribute"
-    all: "all attribute"
+    all: "all attributes"
     other: "attributes"
     name: "attribute name"
     not_exist: 'the requested attribute does not exist'

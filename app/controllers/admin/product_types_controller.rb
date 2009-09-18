@@ -82,6 +82,7 @@ private
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
     if params[:sSearch] && !params[:sSearch].blank?
       @product_types = ProductType.search(params[:sSearch],
+        :conditions => conditions,
         :order => order,
         :page => page,
         :per_page => per_page)

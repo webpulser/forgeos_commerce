@@ -121,7 +121,7 @@ private
   end
 
   def sort
-    columns = %w(type name acces_method)
+    columns = %w(type name access_method)
     conditions = []
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i

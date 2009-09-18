@@ -8,7 +8,7 @@
   .sidebar-content
     %h2.small-icons.product-types
       = link_to_function I18n.t('product_type.all').capitalize, "select_all_elements('/admin/product_types.json')"
-    #product-tree
+    #product-type-tree.init-tree
       %ul
         = render :partial => 'admin/categories/list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
 

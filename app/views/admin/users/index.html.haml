@@ -7,7 +7,7 @@
   .sidebar-content
     %h2.small-icons.all-products
       All customers
-    #customer-tree
+    #customer-tree.init-tree
       %ul
         /= render :partial => 'admin/customer/list', :locals => { :categories => Category.all }
 #content.grid_12.alpha.omega
