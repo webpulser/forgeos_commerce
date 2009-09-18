@@ -74,8 +74,14 @@ private
   end
   
   def sort
-    columns = %w(name name actions)
-    conditions = []
+    columns = %w(product_types.name product_types.name actions)
+    conditions = [[]]
+    if params[:category_id]
+      conditions[0] << 'product_type_categories_product_types.product_type_category_id = ?'
+      conditions << params[:category_id]
+    end
+    conditions[0] = conditions[0].join(' AND ')
+
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
@@ -83,12 +89,14 @@ private
     if params[:sSearch] && !params[:sSearch].blank?
       @product_types = ProductType.search(params[:sSearch],
         :conditions => conditions,
+        :include => ['product_type_categories'],
         :order => order,
         :page => page,
         :per_page => per_page)
     else
       @product_types = ProductType.paginate(:all,
         :conditions => conditions,
+        :include => ['product_type_categories'],
         :order => order,
         :page => page,
         :per_page => per_page)
