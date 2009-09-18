@@ -58,7 +58,7 @@ class Order < ActiveRecord::Base
     end
     amount += order_shipping.price if with_shipping && order_shipping
     amount -= voucher.to_f if with_vouchers
-    return amount
+    return ("%01.2f" % amount).to_f
   end
 
   #def total(with_tax=false, with_currency=true)
@@ -66,7 +66,7 @@ class Order < ActiveRecord::Base
   #end
 
   def taxes
-    total(true) - total
+    ("%01.2f" % (total(true) - total)).to_f
   end
 
   def product_names
