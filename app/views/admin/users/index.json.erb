@@ -5,7 +5,7 @@
   <% link_id = "user_#{user.id}" %>
   [
   '<%= content_tag(:div, '&nbsp;', :id => link_id, :class => 'small-icons users')%>',
-  '<%= escape_javascript content_tag(:div, link_to(user.fullname, [:admin, user], :target => '_blank'), :class => 'user-name') %>',
+  '<%= escape_javascript content_tag(:div, link_to(user.fullname, [:admin, user]), :class => 'user-name') %>',
   '<%= mail_to user.email, user.email, :class => 'email' %>',
   '<%= user.orders.empty? ? I18n.t('none').capitalize : user.orders.count %>',
   '<%= user.total_orders.blank? ? I18n.t('none').capitalize : content_tag(:div, "#{user.total_orders} #{$currency.html}") %>  ',
