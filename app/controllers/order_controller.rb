@@ -81,21 +81,22 @@ class OrderController < ApplicationController
       :user_id                => current_user.id,
       :address_invoice_id     => address_invoice.id, 
       :address_delivery_id    => address_delivery.id,
-      :order_shipping_attributes    => { :name => shipping_method_detail.name, :price => shipping_method_detail.price(false) },
+      :order_shipping_attributes => { :name => shipping_method_detail.name, :price => shipping_method_detail.price(false) },
       :voucher                => (voucher) ? voucher.value : nil,
       :transaction_number     => params[:trans],
       :reference              => @cart.id
+      :orders_details_attributes => @cart.products.collect do |product|
+        {
+          :name => product.name,
+          :description => product.description,
+          :price => product.price(false, false),
+          :rate_tax => product.rate_tax,
+          :sku => product.sku,
+          :product_id => product.id
+        }
+      }
     )
 
-    @cart.products.each do |product|
-      @order.orders_details.create(:name => product.name,
-                                   :description => product.description,
-                                   :price => product.price(false, false),
-                                   :rate_tax => product.rate_tax,
-                                   :sku => product.sku,
-                                   :product_id => product.id
-                                  )
-    end
     @cart.destroy
     @order.pay! if params[:trans] && !params[:trans].blank?
     flash[:notice] = I18n.t('thank_you').capitalize

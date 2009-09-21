@@ -111,8 +111,8 @@ module ProductHelper
     content
   end
   
-  def link_to_product(product, name=nil, url={:controller => 'product', :action => 'show'}, options=nil)
+  def link_to_product(product, name=nil, options=nil)
     name = product.name if name.nil?
-    link_to name, product, options
+    link_to name, "/product/#{product.url}", options
   end
 end

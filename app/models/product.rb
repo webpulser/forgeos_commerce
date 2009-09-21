@@ -20,6 +20,8 @@ class Product < ActiveRecord::Base
 
   has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products'
   belongs_to :product_type
+  has_many :product_viewed_counters, :as => :element
+  has_many :product_sold_counters, :as => :element
 
   before_save :clean_strings
   after_save :synchronize_stock

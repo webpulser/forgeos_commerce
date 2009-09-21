@@ -433,6 +433,18 @@ en:
     all: 'all products'
     in_stock: 'in stock'
     showed_on_homepage: 'showed on homepage'
+    sold:
+      one: "{{count}} sale"
+      other: "{{count}} sales"
+    viewed:
+      one: "viewed {{count}} time"
+      other: "viewed {{count}} times"
+    best_seller:
+      one: best seller
+      other: best sellers
+    most_viewed:
+      one: most viewed
+      other: most viewed
     associated_collection:
       one: 'associated collection'
       other: 'associated collections'

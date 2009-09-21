@@ -429,6 +429,19 @@ fr:
     all: 'tous les produits'
     in_stock: 'en stock'
     showed_on_homepage: "Affiché sur la page d'acceuil"
+    sold:
+      one: "{{count}} vente"
+      other: "{{count}} ventes"
+    viewed:
+      one: "vu {{count}} fois"
+      other: "vu {{count}} fois"
+
+    best_seller:
+      one: meilleur vente
+      other: meilleurs ventes
+    most_viewed:
+      one: plus vue
+      other: plus vues
     associated_collection:
       one: 'collection associée'
       other: 'collections associées'

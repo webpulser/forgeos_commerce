@@ -13,6 +13,7 @@ class OrdersDetail < ActiveRecord::Base
   belongs_to :product
 
   validates_presence_of :name, :price, :rate_tax, :order_id, :sku
+  after_create :increment_product_sold_counter
 
   # Returns price's string with currency symbol
   #
@@ -54,5 +55,13 @@ class OrdersDetail < ActiveRecord::Base
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def total(with_tax=false, with_currency=true)
     price(with_tax, with_currency)
+  end
+private
+  
+  def increment_product_sold_counter
+    counter = product.product_sold_counters.new
+    unless counter.increment_counter
+      counter.save
+    end
   end
 end

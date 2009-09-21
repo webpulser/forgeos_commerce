@@ -1,0 +1,2 @@
+class ProductViewedCounter < StatisticCounter
+end

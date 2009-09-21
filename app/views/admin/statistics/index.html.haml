@@ -16,49 +16,38 @@
         Products
       .to-tab
         %ul
-          %li
-            %a{ :href => "#best-sellers" }
-              Best sellers
-          %li
-            %a{ :href => "#most-viewed" }
-              Most viewed
-          %li
-            %a{ :href => "#low-stock" }
-              Low stock
+          %li= link_to I18n.t('product.best_seller', :count => @products_most_sold.count), '#best-sellers'
+          %li= link_to I18n.t('product.most_viewed', :count => @products_most_viewed.count), '#most-viewed'
         #best-sellers
-          .stat-product-container
-            %img{ :src => "/images/admin/no-image.png", :alt => "product name" }
-            %span.stat-product-sells
-              45 sales
-            %a.product-name{ :href => "#" }
-              Côtes du Rhône Village
-            %span.stat-prodcut-title
-              34 $
+          - @products_most_sold.each do |product|
+            .stat-product-container
+              - if picture = product.pictures.first
+                = image_tag(picture.public_filename(:thumb))
+              - else
+                = image_tag('admin/no-image.png')
+              %span.stat-product-sells
+                = I18n.t('product.sold', :count => product.product_sold_counters.find_by_date(@date).counter)
+              = link_to product.name, [:admin, product], :class => 'product-name'
+              %span.stat-prodcut-title
+                = "#{product.price} #{$currency.html}"
           .clear
           %a.see-all-orders{ :href => "#" }
             See all products
         #most-viewed
-          .stat-product-container
-            %img{ :src => "/images/admin/no-image.png", :alt => "product name" }
-            %span.stat-product-sells
-              45 sales
-            %a.product-name{ :href => "#" }
-              Côtes du Rhône Village
-            %span.stat-prodcut-title
-              34 $
-          %a.see-all-orders{ :href => "#" }
-            See all products
-        #low-stock
-          .stat-product-container
-            %img{ :src => "/images/admin/no-image.png", :alt => "product name" }
-            %span.stat-product-sells
-              45 sales
-            %a.product-name{ :href => "#" }
-              Côtes du Rhône Village
-            %span.stat-prodcut-title
-              34 $
-          %a.see-all-orders{ :href => "#" }
-            See all products
+          - @products_most_viewed.each do |product|
+            .stat-product-container
+              - if picture = product.pictures.first
+                = image_tag(picture.public_filename(:thumb))
+              - else
+                = image_tag('admin/no-image.png')
+              %span.stat-product-sells
+                = I18n.t('product.viewed', :count => product.product_viewed_counters.find_by_date(@date).counter)
+              = link_to product.name, [:admin, product], :class => 'product-name'
+              %span.stat-product-title
+                = "#{product.price} #{$currency.html}"
+            .clear
+            %a.see-all-orders{ :href => "#" }
+              See all products
       %h2.small-icons.page
         Pages
       .to-tab
@@ -74,11 +63,8 @@
             %tbody
               - @pages_most_viewed.each do |page|
                 %tr{ :class => cycle('odd','even') }
-                  %td.table-product
-                    Page
-                    = page.title
-                    created
-                  %td by Quentin Tousart
+                  %td.table-product= "#{I18n.t(:page, :count => 1).capitalize} \"#{page.title}\""
+                  %td= I18n.t('page.viewed', :count => page.page_viewed_counters.find_by_date(@date).counter)
           .clear
           %a.see-all-orders{ :href => "#" }
             See all pages
