@@ -25,7 +25,7 @@
             = render :partial => 'url', :locals => { :option => option, :form => f }
           - when 'NumberOption'
             = render :partial => 'number', :locals => { :option => option, :form => f }
-        - if option.dynamic?
+        - unless option.kind_of?(DynamicOption)
           %span.small-icons.add-choice= I18n.t('option.value.new')
     #right-sidebar.grid_4.omega
       - unless option.new_record?
