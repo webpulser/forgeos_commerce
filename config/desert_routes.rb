@@ -20,6 +20,9 @@ namespace :admin do |admin|
   admin.resources :shipping_methods
   admin.resources :vouchers
   admin.resources :categories, :member => { :add_element => :post }
+  %w(product product_type option).each do |category|
+    admin.resources "#{category}_categories", :controller => 'categories', :requirements => { :type => "#{category}_category" }
+  end
   admin.resources :geo_zones
   admin.resources :countries, :controller => 'geo_zones'
   admin.resources :users, :collection => { :filter => [:post, :get] }, :member => { :activate => :post }
@@ -30,6 +33,7 @@ namespace :admin do |admin|
   admin.resources :tattributes, :controller => 'options', :collection => { :access_method => :post } do |tattribute|
     tattribute.resources :values, :controller => 'tattribute_values'
   end
+
 
   %w(checkbox radiobutton picklist text longtext number date url).each do |option_type|
     admin.resources "#{option_type}_options", :controller => 'options', :requirements => { :type => option_type }

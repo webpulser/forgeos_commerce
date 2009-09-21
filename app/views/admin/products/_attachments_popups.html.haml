@@ -24,8 +24,6 @@
       %h2{ :class => 'small-icons picture'}
         = link_to_function I18n.t('media.picture.all').capitalize, "select_all_elements('#{escape_javascript(admin_attachments_url :format => :json, :file_type => 'picture')}')"
       .init-tree.a-tree{:id => 'picture-attachment-tree'}
-        %ul#root-tree
-          = render :partial => 'admin/categories/list', :locals => { :categories => PictureCategory.find_all_by_parent_id(nil) }
   .media-hoverlay-content
     %table#table.datatable.media.selectable_rows
   .media-hoverlay-content.thumbnails
@@ -43,17 +41,10 @@
     - %w(pdf video doc media).each do |file_type|
       = link_to_function I18n.t(:other, :scope => [:media,file_type]), "update_current_dataTable_source('#{escape_javascript(admin_attachments_path(:format => :json, :file_type => file_type))}')", :class => "small-icons #{file_type}"
   .media-hoverlay-header
-    = link_to_function content_tag(:span, I18n.t('media.upload.action').capitalize, :class=>'big-icons add-file'), "$(\'#fileUploadDialog\').dialog(\'open\'); $(\'#fileSelectDialog\').dialog(\'close\')", :class=>'backgrounds button'
+    = link_to_function content_tag(:span, I18n.t('media.upload.action').capitalize, :class=>'big-icons add-media'), "$(\'#fileUploadDialog\').dialog(\'open\'); $(\'#fileSelectDialog\').dialog(\'close\')", :class=>'backgrounds button'
     #search.right
       = fg_search
     .backgrounds.search-form
-  .media-hoverlay-sidebar.grid_3.omega.alpha
-    .sidebar-content
-      %h2{ :class => 'small-icons picture'}
-        = link_to_function I18n.t('media.picture.all').capitalize, "select_all_elements('#{escape_javascript(admin_attachments_url :format => :json, :file_type => 'picture')}')"
-      .init-tree.a-tree{:id => 'picture-attachment-tree'}
-        %ul#root-tree
-          = render :partial => 'admin/categories/list', :locals => { :categories => PictureCategory.find_all_by_parent_id(nil) }
   .media-hoverlay-content
     %table#table-files.datatable.media.selectable_rows
       
@@ -119,7 +110,7 @@
   'uploader': '/images/uploadify/uploadify.swf',
   = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
   = "'script': '#{admin_medias_path(:file_type => 'picture')}',"
-  = "'buttonImg' :'#{image_path("uploadify/upload-button_#{I18n.locale}.png")}',"
+  = "'buttonImg' :'#{image_path("uploadify/choose-file_#{I18n.locale}.png")}',"
   'width' :'154',
   'height' :'24',
   'scriptData': {

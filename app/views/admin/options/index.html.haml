@@ -24,9 +24,6 @@
     %h2.small-icons.tattributes
       = link_to_function I18n.t('tattribute.all').capitalize, "select_all_elements('/admin/options.json')"
     #option-tree.init-tree
-      %ul
-        = render :partial => 'admin/categories/list', :locals => { :categories => TattributeCategory.find_all_by_parent_id(nil) }
-
 #content.grid_12.alpha.omega
   .backgrounds.header
     = link_to content_tag(:span,I18n.t(:text_option, :count => 1), :class=>'small-icons text_option'),new_admin_text_option_path, :class=>'backgrounds action-button tattributes first'

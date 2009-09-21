@@ -1,11 +1,17 @@
 # This Controller Manage Categories
 class Admin::CategoriesController < Admin::BaseController
-  before_filter :get_category, :only => [:edit, :update, :destroy]
+  before_filter :get_category, :only => [:edit, :update, :destroy, :add_element]
   before_filter :new_category, :only => [:new, :create]
+  skip_before_filter :login_required, :only => [:index]
+  skip_before_filter :set_currency, :only => [:index]
   
   # List Categories like a Tree.
   def index
-    @categories = Category.find_all_by_parent_id(nil)
+    klass = params[:type].camelize.constantize
+    @categories = klass.find_all_by_parent_id(nil)
+    respond_to do |format|
+      format.json{ render :json => @categories.collect(&:to_jstree).to_json }
+    end
   end
 
   def new
@@ -36,25 +42,18 @@ class Admin::CategoriesController < Admin::BaseController
   #
   # The Category can be a child of another Category.
   def edit
-    flash[:error] = I18n.t('category.not_exist').capitalize unless @category
   end
  
   def update
-    if @category && request.put?
-      if @category.update_attributes(params[:category])
-        flash[:notice] = I18n.t('category.update.success').capitalize
-      else
-        flash[:error] = I18n.t('category.update.failed').capitalize
-      end
-
-      respond_to do |format|
-        format.html { render :action => 'edit' }
-        #format.json { render :text => @category.id }
-        format.json { render :text => @category.total_elements_count }
-      end
+    if @category.update_attributes(params[:category])
+      flash[:notice] = I18n.t('category.update.success').capitalize
     else
-      flash[:error] = I18n.t('category.not_exist').capitalize
-      redirect_to admin_categories_path
+      flash[:error] = I18n.t('category.update.failed').capitalize
+    end
+
+    respond_to do |format|
+      format.html { render :action => 'edit' }
+      format.json { render :text => @category.total_elements_count }
     end
   end
 
@@ -64,31 +63,16 @@ class Admin::CategoriesController < Admin::BaseController
   # ==== Output
   #  if destroy succed, return the Categories list
   def destroy
-    if @category && request.delete?
-      if @category.destroy
-        flash[:notice] = I18n.t('category.destroy.success').capitalize
-      else
-        flash[:error] = I18n.t('category.destroy.failed').capitalize
-      end
+    if @category.destroy
+      flash[:notice] = I18n.t('category.destroy.success').capitalize
     else
-      flash[:error] = I18n.t('category.not_exist').capitalize
+      flash[:error] = I18n.t('category.destroy.failed').capitalize
     end
-    render(:update) do |page|
-      display_standard_flashes
-    end
+    render :text => true
   end
 
   def add_element
-    unless @category = Category.find_by_id_and_type(params[:id], params[:type])
-      return flash[:error] = I18n.t('category.not_exist').capitalize
-    end
-
-    element_ids = @category.element_ids
-    element_ids << params[:element_id].to_i
-    element_ids.uniq!
-
-    @category.update_attribute('element_ids', element_ids)
-    return render :text => @category.total_elements_count
+    render :text => @category.update_attribute(:element_ids, @category.element_ids << params[:element_id].to_i)
   end
 
 private

@@ -23,8 +23,6 @@
     %h2.small-icons.products
       = link_to_function I18n.t('product.all').capitalize, "select_all_elements('/admin/products.json')"
     #product-tree.init-tree.a-tree
-      %ul
-        = render :partial => 'admin/categories/list', :locals => { :categories => ProductCategory.find_all_by_parent_id(nil) }
 #content.grid_12.alpha.omega
   .backgrounds.header
     = link_to content_tag(:span,I18n.t('product.create.action').capitalize, :class=>'big-icons create-product'), new_admin_product_path, :class=>'backgrounds action-button'

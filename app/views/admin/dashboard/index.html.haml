@@ -37,7 +37,7 @@
         - link_to new_admin_special_offer_path, :class => 'quick-action-button' do
           %span.big-icons.create-offer
             = I18n.t('special_offer_rule.create.action').capitalize
-        - link_to '#', :class => 'quick-action-button' do
+        - link_to admin_statistics_path, :class => 'quick-action-button' do
           %span.small-icons.see-stats
             = I18n.t('statistic.show.all').capitalize
       .clear
