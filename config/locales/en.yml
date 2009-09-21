@@ -349,8 +349,13 @@ en:
   shipping: shipping
   sku: 'sku'
   special_offer:
-    one: 'special offer'
-    other: 'specials offers'
+    one: special offer
+    other: specials offers
+    for: for
+    this_condition: these conditions are
+    than: than
+    if: if
+    then: then
   voucher:
     one: voucher
     other: vouchers
