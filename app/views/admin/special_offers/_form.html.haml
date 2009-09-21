@@ -13,7 +13,7 @@
     = text_field 'rule_builder', 'name', :id => 'special_offer_title'
     .interact-links
       .borders.interact-button-left
-      = submit_tag 'Save special offer', :class => 'backgrounds interact-button'
+      /= submit_tag 'Save special offer', :class => 'backgrounds interact-button'
       .borders.interact-button-right
       or
       %a.back-link{ :href => "#" }
@@ -58,7 +58,7 @@
               = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
             = text_field_tag 'rule[values][]'
             = link_to_function '', "add_rule('rule-condition')", :class => 'small-icons green-add-icon'
-            = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon'
+            = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon', :style => 'display : none'
             .clear
         .specialOffers_bottom_arrow
 
@@ -91,13 +91,17 @@
             %div= select_tag 'end[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
             = text_field_tag 'end[values][]'
             = link_to_function '', "add_rule('end-condition')", :class => 'small-icons green-add-icon'
-            = link_to_function '', "remove_rule(this,'end-condition')", :class => 'small-icons red-delete-icon'
+            = link_to_function '', "remove_rule(this,'end-condition')", :class => 'small-icons red-delete-icon', :style => 'display : none'
             .clear
 
 
         .specialOffers_bottom_arrow
 
-
+      %br
+      .borders.interact-button-left
+      = submit_tag 'Save special offer', :class => 'backgrounds interact-button'
+      %br
+      %br
 
       .specialOffers_products
         .specialOffers_products_header
@@ -355,4 +359,6 @@
         = text_field_tag 'rule[values][]'
       = link_to_function '', "add_cart_rule()", :class => 'small-icons green-add-icon'
       = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon'
+      - if option == 'Shipping method'
+        %br
       .clear
