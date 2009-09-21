@@ -135,18 +135,12 @@ private
 
   def sort
     columns = %w(sku products.name price stock product_type_id active)
-    conditions = [[]]
+    conditions = {}
     if params[:category_id]
-      conditions[0] << 'product_categories_products.product_category_id = ?'
-      conditions << params[:category_id]
+      conditions[:product_category_id] = params[:category_id]
     end
     
-    if params[:deleted]
-      conditions[0] << 'deleted IS TRUE'
-    else
-      conditions[0] << 'deleted IS NOT TRUE'
-    end
-    conditions[0] = conditions[0].join(' AND ')
+    conditions[:deleted] = params[:deleted] ? true : [false,nil]
 
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
