@@ -1,4 +1,15 @@
 class Admin::SpecialOffersController < Admin::BaseController
+  
+  def index
+    respond_to do |format|
+      format.html
+      format.json do
+        sort
+        render :layout => false
+      end
+    end
+  end
+  
   def create
     return flash[:error] = 'Fields' unless params[:rule_builder]
     
@@ -97,10 +108,10 @@ class Admin::SpecialOffersController < Admin::BaseController
     @rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
   end
   
-  def index
-    @special_offers = SpecialOfferRule.find_all_by_parent_id(nil)
-  end
-  
+  #def index
+  #  @special_offers = SpecialOfferRule.find_all_by_parent_id(nil)
+  #end
+
   def show
     
   end
@@ -121,6 +132,37 @@ class Admin::SpecialOffersController < Admin::BaseController
       flash[:error] = "Special offer does not exist"
     end
     redirect_to :action => 'index'
+  end
+  
+private
+
+  def sort
+    columns = %w(name activated use)
+    #if params[:category_id]
+    #  conditions[:product_category_id] = params[:category_id]
+    #end
+    #conditions = 'parent_id = NULL'
+    #conditions[:deleted] = params[:deleted] ? true : [false,nil]
+
+    per_page = params[:iDisplayLength].to_i
+    offset =  params[:iDisplayStart].to_i
+    page = (offset / per_page) + 1
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    if params[:sSearch] && !params[:sSearch].blank?
+      @special_offers = SpecialOfferRule.search(params[:sSearch],
+        :conditions => ["rules.parent_id is NULL"],
+        #:include => ['product_categories'],
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    else
+      @special_offers = SpecialOfferRule.paginate(:all,
+        :conditions => ["rules.parent_id is NULL"],
+        #:include => ['product_categories'],
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    end
   end
   
 end

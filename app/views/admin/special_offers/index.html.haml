@@ -1,26 +1,38 @@
-%h1
-  Special offer
-- content_for :tools, link_to('Create a special offer', new_admin_special_offer_path, :class => 'add')
-#special_offers_list
-  %table#table
-    %thead
-      %tr
-        %th
-          Name
-        %th
-          Description
-        %th
-          = I18n.t('action', :count => 2).capitalize
-    %tbody
-      - @special_offers.each do |s|
-        %tr
-          %td
-            = s.name
-          %td
-            = s.description
-          %td
-            = link_to I18n.t('edit').capitalize, edit_admin_special_offer_path(s)
-            \-
-            = link_to I18n.t('destroy').capitalize, admin_special_offer_path(s), :method => 'delete', :confirm => 'Delete this speciam offer ?'
+= render :partial => 'tabs'
 
-= dataTables_tag(3)
+#sidebar.grid_4.omega.alpha
+  .backgrounds.header
+    %span.backgrounds.action-button.create-action
+      %span.big-icons.new-category
+      %span.small-icons.arrow
+      %span.create-list
+        %span.big-icons.create-folder
+          = I18n.t('folder.create')
+        -#%span.small-icons.create-smart-folder
+          -#= I18n.t('folder.smart')
+    %span.backgrounds.action-button.update-action
+      %span.small-icons.more-actions
+      %span.small-icons.arrow
+      %span.update-list
+        %span.small-icons.modify-folder
+          = I18n.t('folder.edit')
+        %span.small-icons.duplicate-folder
+          = I18n.t('folder.duplicate')
+        %span.small-icons.delete-folder
+          = I18n.t('folder.destroy')
+  .backgrounds.sidebar-background
+  .sidebar-content
+
+
+#content.grid_12.alpha.omega
+  .backgrounds.header
+    = link_to content_tag(:span,I18n.t('special_offer.create.action').capitalize, :class=>'big-icons create-product'), new_admin_special_offer_path, :class=>'backgrounds action-button'
+    #search.right
+      = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
+    .backgrounds.search-form
+  .content-background
+  %table#table.datatable
+
+
+= dataTables_tag :url => admin_special_offers_path(:format => :json), :columns => ["{'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'Status'}","{'sTitle':'Used'}","{'sClass':'actions-td','bSearchable':false}"]
+

@@ -356,6 +356,8 @@ en:
     than: than
     if: if
     then: then
+    create:
+      action: 'create a special offer'
   voucher:
     one: voucher
     other: vouchers

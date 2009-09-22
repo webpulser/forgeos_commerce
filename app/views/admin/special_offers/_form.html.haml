@@ -12,9 +12,10 @@
   .backgrounds.big-header
     = text_field 'rule_builder', 'name', :id => 'special_offer_title'
     .interact-links
-      .borders.interact-button-left
+      /.borders.interact-button-left
+      = fg_submit_tag ('save_changes')
       /= submit_tag 'Save special offer', :class => 'backgrounds interact-button'
-      .borders.interact-button-right
+      /.borders.interact-button-right
       or
       %a.back-link{ :href => "#" }
         Cancel
@@ -97,11 +98,6 @@
 
         .specialOffers_bottom_arrow
 
-      %br
-      .borders.interact-button-left
-      = submit_tag 'Save special offer', :class => 'backgrounds interact-button'
-      %br
-      %br
 
       .specialOffers_products
         .specialOffers_products_header
