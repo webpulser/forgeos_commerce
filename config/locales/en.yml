@@ -28,6 +28,13 @@ en:
   woman:
     one: woman
     other: women
+  currency:
+    euro:
+      one: euro
+      other: euros
+    usd:
+      one: usd
+      other: usd
   catalog: catalog
   log_in: 'log in'
   sign_up: 'sign up'

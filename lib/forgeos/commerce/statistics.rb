@@ -2,8 +2,14 @@ module Forgeos
   module Commerce
     class Statistics
       def self.total_of_sales(date = nil)
-        conditions = { :status => %w(paid accepted sended closed) }
-        conditions[:created_at] = date if date
+        conditions = { :status => %w(paid accepted shipped closed) }
+        if date
+          if date.kind_of?(Date)
+            conditions[:created_at] = date.beginning_of_day..date.end_of_day
+          else
+            conditions[:created_at] = date
+          end
+        end
         Order.all(:conditions => conditions).collect(&:total).sum
       end
 

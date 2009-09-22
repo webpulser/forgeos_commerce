@@ -17,10 +17,10 @@
           %li= link_to I18n.t('sale', :count => 2), '#sales'
         #visitors
           .chart
-          = @visitors_graph if @visitors_graph
+            = @visitors_graph if @visitors_graph
         #sales
           .chart
-          = @sales_graph if @sales_graph
+            = @sales_graph if @sales_graph
       .clear
 
       %h2.small-icons.products
