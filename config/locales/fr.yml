@@ -118,7 +118,7 @@ fr:
   password: 'mot de passe'
   password_confirmation: 'vérification du mot de passe'
   save: sauvegarder
-  save_changes: 'sauvegarder modifications'
+  save_changes: 'sauvegarder'
   list: lister
   civility: 'civilité'
   address: 
@@ -172,8 +172,8 @@ fr:
   published: 'publié'
   unpublished: 'non publié'
   status:
-    one: status
-    other: status
+    one: statut
+    other: statuts
   shipping_method_price:
     one: "frai d'expédition"
     other: "frais d'expédition"
