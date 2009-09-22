@@ -1,3 +1,5 @@
+= javascript_include_tag 'swfobject'
+
 #dashboard.statistics.grtid_12.alpha.omega
   .left-dashboard.grid_12.omega.alpha
     .padding-wrap
@@ -9,9 +11,18 @@
         %select
           %option
             This month
-      .chart
-        there goes the chart
+      .to-tab
+        %ul
+          %li= link_to I18n.t('visitor', :count => 2), '#visitors'
+          %li= link_to I18n.t('sale', :count => 2), '#sales'
+        #visitors
+          .chart
+          = @visitors_graph if @visitors_graph
+        #sales
+          .chart
+          = @sales_graph if @sales_graph
       .clear
+
       %h2.small-icons.products
         Products
       .to-tab
@@ -186,3 +197,4 @@
           120$
         %span.clear
   .clear
+

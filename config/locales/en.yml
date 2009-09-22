@@ -580,6 +580,9 @@ en:
     live:
       one: 'live statistic'
       other: 'live statistics'
+  visitor:
+    one: visitor
+    other: visitors
   sale:
     one: sale
     other: sales

@@ -569,6 +569,9 @@ fr:
     live:
       one: 'statistique temps réel'
       other: 'statistiques temps réel'
+  visitor:
+    one: visiteurr
+    other: visiteurs
   sale:
     one: vente
     other: ventes
