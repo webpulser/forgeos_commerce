@@ -1,2 +1,44 @@
-%div{ :style => "float: left" }
-  = display_catalog @products
+/%div{ :style => "float: left" }
+/  = display_catalog @products
+-@selected_product= @products.first
+
+.before_breadcrumbs
+.breadcrumbs
+  .inner-breadcrumbs
+    %a{ :href => "#" }
+      Accueil
+    >
+    = @product_category.name
+.inner-content
+  .product-list
+    .filters
+      %span
+        Tri
+      %div
+        %select
+          %option
+            Toutes les vestes
+      %div
+        %select
+          %option
+            Prix
+      %span
+        Taille des images
+      .image-size
+        %a{ :href => "#" }
+          %span.big-image.active
+        %a{ :href => "#" }
+          %span.medium-image
+        %a{ :href => "#" }
+          %span.small-image
+    .slider_product
+      %ul#slider_products
+        -@products.each do |product|
+          %li
+            %a{ :href => "#"}
+            =image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel')
+            /%img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+            %span.price
+              =product.price
+              €  
+  =render :partial => 'products/show', :locals => { :product => @selected_product }

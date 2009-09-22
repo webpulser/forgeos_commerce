@@ -1,0 +1,124 @@
+.product
+  %h1
+    = product.name
+    %span
+      = "ref. #{product.sku}"
+  .product_block
+    .image_container
+      .first_image_container
+        /%img.first_image{ :title => "image produit", :src => "/images/front_demo/product_image_small.jpg", :alt => "image produit" }
+        =image_tag(product.pictures.first.public_filename(''), :class => 'first_image') if !product.pictures.blank?
+      .other_views
+        %span
+          Autres vues
+        -product.pictures.each do |picture|
+          =image_tag(picture.public_filename(:thumb))
+        %a.zoom{ :href => "#" }
+    .info_container.to_tab
+      %ul
+        %li
+          %a{ :href => "#descriptif" }
+            Descriptif
+        %li
+          %a{ :href => "#tudu" }
+            Conseils entretiens
+        %li
+          %a{ :href => "#tidi" }
+            Infos matière
+      #descriptif
+        %p.desc
+          = product.description
+
+        .price-box
+          %span.promo
+            50%
+          %span.old-price
+            59,95&euro;
+          %span.new-price
+            29,95&euro;
+        .clear
+        .color-picker
+          Je choisis ma couleur
+          %ul.colors
+            %li
+              %a.red{ :href => "#" }
+            %li
+              %a.blue{ :href => "#" }
+            %li
+              %a.black{ :href => "#" }
+            %li
+              %a.gray{ :href => "#" }
+            %li
+              %a.green{ :href => "#" }
+            %li
+              %a.lightgreen{ :href => "#" }
+            %li
+              %a.white{ :href => "#" }
+        .size-picker
+          Je choisis ma taille
+          %ul.sizes
+            %li
+              %a.out-stock{ :href => "#" }
+                36
+            %li
+              %a{ :href => "#" }
+                38
+            %li
+              %a{ :href => "#" }
+                40
+            %li
+              %a{ :href => "#" }
+                42
+            %li
+              %a{ :href => "#" }
+                44
+            %li
+              %a{ :href => "#" }
+                46
+            %li
+              %a{ :href => "#" }
+                48
+        .submit_box
+          .qty-picker
+            %span
+              Je choisis ma quantité
+            %input{ :type => "text" }
+          %input.add_to_cart{ :type => "submit", :value => "J'ajoute au panier" }
+        .clear
+        .links
+          %a.security{ :href => "#" }
+            J'achète en toute confiance
+          %a.print{ :href => "#" }
+            J'imprime
+          %a.signal_to_a_friend.last{ :href => "#" }
+            Je signale ce produit à une amie
+      #tudu
+      #tidi
+      .clear
+    .clear
+    .cross-selling
+      %h2
+        Nous vous proposons de compléter votre tenue avec :
+      %ul.cross-sells
+        %li
+          %a{ :href => "#" }
+            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+            %span
+              La jupe courte
+            %span.price
+              29,90&euro;
+        %li
+          %a{ :href => "#" }
+            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+        %li
+          %a{ :href => "#" }
+            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+        %li
+          %a{ :href => "#" }
+            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+        %li
+          %a{ :href => "#" }
+            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+        %li
+          %a{ :href => "#" }
+            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
