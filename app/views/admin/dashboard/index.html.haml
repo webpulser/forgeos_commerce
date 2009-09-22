@@ -143,13 +143,13 @@
                   2 hours before
   .right-dahsboard.grid_4
     - currency = $currency.code.upcase
-    - total_for_today = Forgeos::Commerce::Statistics.total_of_sales_for_day(Date.current).to_f
-    - total_for_yesterday = Forgeos::Commerce::Statistics.total_of_sales_for_day(Date.current.yesterday).to_f
-    - total_for_week = Forgeos::Commerce::Statistics.total_of_sales_for_week(Date.current).to_f
-    - total_for_last_week = Forgeos::Commerce::Statistics.total_of_sales_for_week(Date.current.ago(1.week)).to_f
+    - total_for_today = Forgeos::Commerce::Statistics.total_of_sales(Date.current).to_f
+    - total_for_yesterday = Forgeos::Commerce::Statistics.total_of_sales(Date.current.yesterday).to_f
+    - total_for_week = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(1.week)..Date.current).to_f
+    - total_for_last_week = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(2.week)..Date.current.ago(1.week)).to_f
     - week_diff = total_for_week.diff(total_for_last_week)
-    - total_for_month = Forgeos::Commerce::Statistics.total_of_sales_for_month(Date.current).to_f
-    - total_for_last_month = Forgeos::Commerce::Statistics.total_of_sales_for_month(Date.current.ago(1.month)).to_f
+    - total_for_month = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(1.month)..Date.current).to_f
+    - total_for_last_month = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(2.month)..Date.current.ago(1.month)).to_f
     - month_diff = total_for_month.diff(total_for_last_month)
     - lifetime_sales = Forgeos::Commerce::Statistics.total_of_sales.to_f
     %h2.small-icons.sales

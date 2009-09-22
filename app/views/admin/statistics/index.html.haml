@@ -19,14 +19,15 @@
           %li= link_to I18n.t('product.best_seller', :count => @products_most_sold.count), '#best-sellers'
           %li= link_to I18n.t('product.most_viewed', :count => @products_most_viewed.count), '#most-viewed'
         #best-sellers
-          - @products_most_sold.each do |product|
+          - @products_most_sold.each do |product_id, counter|
+            - product = Product.find(product_id)
             .stat-product-container
               - if picture = product.pictures.first
                 = image_tag(picture.public_filename(:thumb))
               - else
                 = image_tag('admin/no-image.png')
               %span.stat-product-sells
-                = I18n.t('product.sold', :count => product.product_sold_counters.find_by_date(@date).counter)
+                = I18n.t('product.sold', :count => counter)
               = link_to product.name, [:admin, product], :class => 'product-name'
               %span.stat-prodcut-title
                 = "#{product.price} #{$currency.html}"
@@ -34,14 +35,15 @@
           %a.see-all-orders{ :href => "#" }
             See all products
         #most-viewed
-          - @products_most_viewed.each do |product|
+          - @products_most_viewed.each do |product_id,counter|
+            - product = Product.find(product_id)
             .stat-product-container
               - if picture = product.pictures.first
                 = image_tag(picture.public_filename(:thumb))
               - else
                 = image_tag('admin/no-image.png')
               %span.stat-product-sells
-                = I18n.t('product.viewed', :count => product.product_viewed_counters.find_by_date(@date).counter)
+                = I18n.t('product.viewed', :count => counter)
               = link_to product.name, [:admin, product], :class => 'product-name'
               %span.stat-product-title
                 = "#{product.price} #{$currency.html}"
@@ -61,10 +63,11 @@
         #most-viewed-pages
           %table
             %tbody
-              - @pages_most_viewed.each do |page|
+              - @pages_most_viewed.each do |page_id, counter|
+                - page = Page.find(page_id)
                 %tr{ :class => cycle('odd','even') }
                   %td.table-product= "#{I18n.t(:page, :count => 1).capitalize} \"#{page.title}\""
-                  %td= I18n.t('page.viewed', :count => page.page_viewed_counters.find_by_date(@date).counter)
+                  %td= I18n.t('page.viewed', :count => counter)
           .clear
           %a.see-all-orders{ :href => "#" }
             See all pages

@@ -4,11 +4,11 @@ class Admin::StatisticsController < Admin::BaseController
 
 private
   def products_most_viewed
-    @products_most_viewed = Forgeos::Commerce::Statistics.products_most_viewed_for_month(@date,10)
+    @products_most_viewed = Forgeos::Commerce::Statistics.products_most_viewed(@date,10)
   end
 
   def products_most_sold
-    @products_most_sold = Forgeos::Commerce::Statistics.products_most_sold_for_month(@date,10)
+    @products_most_sold = Forgeos::Commerce::Statistics.products_most_sold(@date,10)
   end
 
 end
