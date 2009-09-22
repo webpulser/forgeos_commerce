@@ -1,7 +1,5 @@
 /%div{ :style => "float: left" }
 /  = display_catalog @products
--@selected_product= @products.first
-
 .before_breadcrumbs
 .breadcrumbs
   .inner-breadcrumbs
@@ -36,7 +34,7 @@
         -@products.each do |product|
           %li
             %a{ :href => "#"}
-            =image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel')
+            =link_to image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel'), {:controller => 'catalog', :action => 'index', :selected_product_id => product.id, :product_category_id => @product_category.id} if !product.pictures.blank?
             /%img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
             %span.price
               =product.price

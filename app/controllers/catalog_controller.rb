@@ -3,11 +3,17 @@ class CatalogController < ApplicationController
   include Ruleby
   
   # Show all <i>ProductDetail</i>
-  def index
+  def index  
     product_category_id = params[:product_category_id] || ProductCategory.first
     @product_category = ProductCategory.find_by_id(product_category_id)
-    @products = @product_category.products 
+    @products = @product_category.products.find(:all, :conditions => {:active => true, :deleted => false}) 
     #@products = Product.paginate(:all, :per_page => 8, :page => params[:page], :conditions => { :active => true, :deleted => false })
+    
+    if params[:selected_product_id]
+      @selected_product = @product_category.products.find_by_id(params[:selected_product_id])
+    else
+      @selected_product = @product_category.products.first
+    end
     
     # rules
     engine :special_offer_engine do |e|
