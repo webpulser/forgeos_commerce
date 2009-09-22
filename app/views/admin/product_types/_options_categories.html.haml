@@ -5,9 +5,9 @@
   - categories.each do |category|
     %li{ :rel => 'attribute-category', :id => "attribute_category_#{category.id}" }
       = link_to((category.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy')), '#')
-      - unless category.tattributes.empty?
+      - unless category.elements.empty?
         %ul
-          - category.options.each do |option|
+          - category.elements.each do |option|
             - unless option.product_types.include? @product_type
               %li{ :rel => 'attribute', :id => "option_#{option.id}" }
                 = link_to((option.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-tattribute')), '#')

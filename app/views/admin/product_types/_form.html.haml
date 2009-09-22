@@ -24,8 +24,8 @@
   #yellow-sidebar.grid_4.alpha.omega.yellow
     #product-types-all-tree.init-tree.a-tree
       %ul
-        = render :partial => 'options_categories', :locals => { :categories => TattributeCategory.find_all_by_parent_id(nil) }
-        - Tattribute.all(:include => :tattribute_categories, :conditions => { :categories => { :id => nil }}).each do |orphan_option|
+        = render :partial => 'options_categories', :locals => { :categories => OptionCategory.find_all_by_parent_id(nil) }
+        - Tattribute.all(:include => :option_categories, :conditions => { :categories => { :id => nil }}).each do |orphan_option|
           - unless orphan_option.product_types.include? @product_type
             %li{ :rel => 'attribute', :id => "option_#{orphan_option.id}" }
               = link_to((orphan_option.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-tattribute')), '#') 

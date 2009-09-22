@@ -1,6 +1,7 @@
 # This Controller Manage Options and his association with
 # Attributes
 class Admin::OptionsController < Admin::BaseController
+
   before_filter :get_options, :only => [:index]
   before_filter :get_option, :only => [:edit, :update, :destroy, :show, :duplicate]
   before_filter :new_option, :only => [:new, :create]
