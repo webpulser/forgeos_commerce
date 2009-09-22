@@ -19,12 +19,11 @@
         %li
           %a{ :href => "#descriptif" }
             Descriptif
-        %li
-          %a{ :href => "#tudu" }
-            Conseils entretiens
-        %li
-          %a{ :href => "#tidi" }
-            Infos matière
+        -product.product_type.options.find(:all, :conditions => { :type => 'LongtextOption' }).each do |option|
+          %li
+            %a{ :href => "##{option.access_method}" }
+              =option.name
+                
       #descriptif
         %p.desc
           = product.description
@@ -39,63 +38,39 @@
             =product.price
             €
         .clear
-        .color-picker
-          Je choisis ma couleur
-          %ul.colors
-            %li
-              %a.red{ :href => "#" }
-            %li
-              %a.blue{ :href => "#" }
-            %li
-              %a.black{ :href => "#" }
-            %li
-              %a.gray{ :href => "#" }
-            %li
-              %a.green{ :href => "#" }
-            %li
-              %a.lightgreen{ :href => "#" }
-            %li
-              %a.white{ :href => "#" }
-        .size-picker
-          Je choisis ma taille
-          %ul.sizes
-            %li
-              %a.out-stock{ :href => "#" }
-                36
-            %li
-              %a{ :href => "#" }
-                38
-            %li
-              %a{ :href => "#" }
-                40
-            %li
-              %a{ :href => "#" }
-                42
-            %li
-              %a{ :href => "#" }
-                44
-            %li
-              %a{ :href => "#" }
-                46
-            %li
-              %a{ :href => "#" }
-                48
-        .submit_box
-          .qty-picker
-            %span
-              Je choisis ma quantité
-            %input{ :type => "text" }
-          %input.add_to_cart{ :type => "submit", :value => "J'ajoute au panier" }
+        -if product.color and !product.color.blank?
+          .color-picker
+            Je choisis ma couleur
+            %ul.colors
+              -product.color.each do |color|
+                %li
+                  %a{:href => "#", :class => color.downcase }
+        -if product.size and !product.size.blank?        
+          .size-picker
+            Je choisis ma taille
+            %ul.sizes
+              -product.size.each do |size|
+                %li
+                  %a{ :href => "#" }
+                    =size
+        - form_tag :controller => 'cart', :action => 'add_product' do
+          .submit_box
+            .qty-picker
+              %span
+                Je choisis ma quantité
+              =text_field_tag 'quantity'
+            =submit_tag "J'ajoute au panier", :class => 'add_to_cart'
         .clear
         .links
           %a.security{ :href => "#" }
             J'achète en toute confiance
-          %a.print{ :href => "#" }
+          %a.print{ :href => "javascript:window.print();" }
             J'imprime
           %a.signal_to_a_friend.last{ :href => "#" }
             Je signale ce produit à une amie
-      #tudu
-      #tidi
+      -product.product_type.options.find(:all, :conditions => { :type => 'LongtextOption' }).each do |option|
+        %div{:id => option.access_method}
+          =product.dynamic_option_values.find_by_tattribute_id(option.id).value
       .clear
     .clear
     .cross-selling
