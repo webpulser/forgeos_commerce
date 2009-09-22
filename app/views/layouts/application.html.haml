@@ -5,65 +5,394 @@
     %title
       = I18n.t :project_name
     %link{ :href => "/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon" }
-    = stylesheet_link_tag %w(design_aqtp rails_commerce jquery-ui/themes/redmond), :cache => 'base'
-    = javascript_include_tag 'jquery'
+    = stylesheet_link_tag %w(front_demo/style front_demo/jqzoom front_demo/jquery.jcarousel front_demo/jquery-ui/themes/front), :cache => 'base'
+    = javascript_include_tag %w(jquery front_demo/customselects front_demo/init front_demo/jquery.jcarousel.pack front_demo/jquery.jqzoom front_demo/jquery-ui), :cache => 'base'
+
   %body
-    #application
-      #header
-        %h1
-          = link_to(I18n.t(:project_name), :root)
-        #display_standard_flashes
-        .change_language
-          - I18n.available_locales.each do |key, locale|
-            = link_to_unless(I18n.locale.to_sym==key.to_sym, image_tag("flags/#{key}.gif"), :controller => 'home', :locale => key)
-        %div
-          \&nbsp;
-        .change_currency
-          - Currency.find(:all).each do |currency|
-            = link_to_unless($currency==currency, currency.html, :controller => 'home', :action => 'change_currency', :id => currency)
-        %div
-          \&nbsp;
-        .logged_in
-          - if logged_in?
-            = I18n.t(:hello).capitalize + '&nbsp;' + current_user.fullname
-            = link_to I18n.t(:your_account).capitalize, user_path(current_user)
-            = link_to I18n.t(:disconnect).capitalize, session_path, :method => :delete
-          - else
-            = link_to I18n.t(:log_in).capitalize, new_session_path
-            = link_to I18n.t(:sign_up).capitalize, new_user_path
-        %ul#nav.nav
-          - build_menu
-          = yield :menu
+    .header
+      .header-content
+        %a.logo{ :href => "#", :title => "retour \303\240 l'accueil" }
+          %img{ :src => "/images/front_demo/logo.png" }
+        .baseline
+          Tenue de fête,
+          %br
+          soirée décontractée...
+          %br
+          La
+          %em
+            mode
+          est de
+          %span
+            sortie !
+          %br
+          %a.click-here{ :href => "#" }
+            cliquez-ici !
+        .cart
+          .newsletter
+            %a{ :href => "#" }
+              Je m'abonne à la newsletter
+          .search_box
+            %label
+              Je recherche un produit
+            .search_form
+              .search-icon
+              %input.input_text{ :type => "text" }
+              %input.btn_ok{ :type => "submit", :value => "ok" }
+          .cart-box
+            %a{ :href => "#" }
+              J'accède à Mon Espace Client
+            .cart-icon
+              %span
+                Mon panier
+              %br
+              3 articles
+            %ul.cart-products
+              %li
+                %span.li-product-name
+                  Veste tailleur
+                %span.li-product-qty
+                  x1
+                %span.li-product-price
+                  29,90&euro;
+                %span.clear
+              %li
+                %span.li-product-name
+                  Veste tailleur
+                %span.li-product-qty
+                  x1
+                %span.li-product-price
+                  29,90&euro;
+                %span.clear
+              %li
+                %span.li-product-name
+                  Veste tailleur
+                %span.li-product-qty
+                  x1
+                %span.li-product-price
+                  29,90&euro;
+                %span.clear
+              %li.last
+                %span.li-product-name
+                  Total
+                %span.li-product-qty
+                  122,85&euro;
+                %span.clear
+          .create-customer-space
+            %a{ :href => "#" }
+              Je crée Mon Espace Client
+        %ul.menu
           %li
-            - form_tag(:controller => 'catalog', :action => 'search') do
-              = text_field_tag 'keywords'
-              = submit_tag I18n.t('search').capitalize
-        .clear
-      #page
-        #content
-          .display_categories
-            = display_categories(ProductCategory.find_all_by_parent_id(nil))
-          .yield= yield
-        - unless %w(cart order wishlist).include?(@controller.controller_name)
-          #cart
-            = display_cart(@cart, false, true)
-          #wishlist
-            = display_wishlist(@wishlist, false, true)
-      #ancillary
-        .blocks
-          .block.first
+            %a{ :href => "#" }
+              T-shirts
+          %li
+            %a{ :href => "#" }
+              Chemises tuniques
+          %li
+            %a{ :href => "#" }
+              Pulls
+          %li
+            %a{ :href => "#" }
+              Vestes Manteaux
+          %li
+            %a{ :href => "#" }
+              Jupes Robes
+          %li
+            %a{ :href => "#" }
+              Pantalons Jeans
+          %li
+            %a{ :href => "#" }
+              Chaussures Accessoires
+          %li.new-products
+            %a{ :href => "#" }
+              Nouveautés
+          %li.promo
+            %a{ :href => "#" }
+              Promotions
+    .content
+      .before_breadcrumbs
+      .breadcrumbs
+        .inner-breadcrumbs
+          %a{ :href => "#" }
+            Accueil
+          > Nouveautés
+      .inner-content
+        .product-list
+          .filters
+            %span
+              Tri
+            %div
+              %select
+                %option
+                  Toutes les vestes
+            %div
+              %select
+                %option
+                  Prix
+            %span
+              Taille des images
+            .image-size
+              %a{ :href => "#" }
+                %span.big-image.active
+              %a{ :href => "#" }
+                %span.medium-image
+              %a{ :href => "#" }
+                %span.small-image
+          .slider_product
+            %ul#slider_products
+              %li
+                %a{ :href => "#" }
+                  %img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+                  %span.price
+                    69,95&euro;
+              %li
+                %a{ :href => "#" }
+                  %img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+                  %span.price
+                    69,95&euro;
+              %li
+                %a{ :href => "#" }
+                  %img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+                  %span.price
+                    69,95&euro;
+              %li
+                %a{ :href => "#" }
+                  %img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+                  %span.price
+                    69,95&euro;
+              %li
+                %a{ :href => "#" }
+                  %img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+                  %span.price
+                    69,95&euro;
+              %li
+                %a{ :href => "#" }
+                  %span.new-product
+                    Nouveauté
+                  %img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+                  %span.price
+                    69,95&euro;
+              %li
+                %a{ :href => "#" }
+                  %img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+                  %span.price
+                    69,95&euro;
+              %li
+                %a{ :href => "#" }
+                  %img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+                  %span.price
+                    69,95&euro;
+              %li
+                %a{ :href => "#" }
+                  %img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+                  %span.old-price
+                    69,95&euro;
+                  %span.new-price
+                    34,95&euro;
+                  %span.promo
+                    50%
+              %li
+                %a{ :href => "#" }
+                  %img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+                  69,95&euro;
+              %li
+                %a{ :href => "#" }
+                  %img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+                  69,95&euro;
+              %li
+                %a{ :href => "#" }
+                  %img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+                  69,95&euro;
+        .product
+          %h1
+            Veste tailleur
+            %span
+              ref. 71232456
+          .product_block
+            .image_container
+              .first_image_container
+                %img.first_image{ :title => "image produit", :src => "/images/front_demo/product_image_small.jpg", :alt => "image produit" }
+              .other_views
+                %span
+                  Autres vues
+                %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+                %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+                %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+                %a.zoom{ :href => "#" }
+            .info_container.to_tab
+              %ul
+                %li
+                  %a{ :href => "#descriptif" }
+                    Descriptif
+                %li
+                  %a{ :href => "#tudu" }
+                    Conseils entretiens
+                %li
+                  %a{ :href => "#tidi" }
+                    Infos matière
+              #descriptif
+                %p.desc
+                  Une coupe idéale, à l'allure fatale ! Col tailleur. Fermeture
+                  1 bouton. Manches longues. Épaulettes. 3 poches passepoilées devant.
+                  Pinces de cintrage devant et dos. Fente milieu dos. Superbes finitions.
+                  Longueur 60 cm environ.Une étoffe haut de gamme alliant la souplesse,
+                  la résistance et la facilité d'entretien du polyester, la chaleur d'une
+                  laine à l'incroyable douceur, la viscose, matière noble issue de produits naturels,
+                  à l'aspect lustré, et l'élasticité de l'élasthanne. En 58% polyester, 20% viscose,
+                  20% laine, 2% élasthanne. Cet article est garanti 1 an.
+                .price-box
+                  %span.promo
+                    50%
+                  %span.old-price
+                    59,95&euro;
+                  %span.new-price
+                    29,95&euro;
+                .clear
+                .color-picker
+                  Je choisis ma couleur
+                  %ul.colors
+                    %li
+                      %a.red{ :href => "#" }
+                    %li
+                      %a.blue{ :href => "#" }
+                    %li
+                      %a.black{ :href => "#" }
+                    %li
+                      %a.gray{ :href => "#" }
+                    %li
+                      %a.green{ :href => "#" }
+                    %li
+                      %a.lightgreen{ :href => "#" }
+                    %li
+                      %a.white{ :href => "#" }
+                .size-picker
+                  Je choisis ma taille
+                  %ul.sizes
+                    %li
+                      %a.out-stock{ :href => "#" }
+                        36
+                    %li
+                      %a{ :href => "#" }
+                        38
+                    %li
+                      %a{ :href => "#" }
+                        40
+                    %li
+                      %a{ :href => "#" }
+                        42
+                    %li
+                      %a{ :href => "#" }
+                        44
+                    %li
+                      %a{ :href => "#" }
+                        46
+                    %li
+                      %a{ :href => "#" }
+                        48
+                .submit_box
+                  .qty-picker
+                    %span
+                      Je choisis ma quantité
+                    %input{ :type => "text" }
+                  %input.add_to_cart{ :type => "submit", :value => "J'ajoute au panier" }
+                .clear
+                .links
+                  %a.security{ :href => "#" }
+                    J'achète en toute confiance
+                  %a.print{ :href => "#" }
+                    J'imprime
+                  %a.signal_to_a_friend.last{ :href => "#" }
+                    Je signale ce produit à une amie
+              #tudu
+              #tidi
+              .clear
             .clear
-          #footer
-            %p
-              \&copy; 2009
-              = link_to 'Webpulser', 'http://www.webpulser.com', :popup => true
-              | Designs :
-              = link_to 'Default', :controller => 'home', :action => 'change_design', :design => 'design_aqtp'
-              = link_to 'Minimalist', :controller => 'home', :action => 'change_design', :design => 'all'
-              | Demos :
-              = link_to 'Book', "http://book.rails-commerce.com"
-              = link_to 'Flower', "http://flower.rails-commerce.com"
-      = javascript_include_tag %w(jquery-ui jrails), :cache => 'base'
-      = drop_receiving_element('cart', :accept=> '.product,.product_show', :url => {:controller => 'cart', :action => 'add_product'}, :with => "'id='+($(ui.draggable).attr('id').split('_')[1])", :update => 'cart', :hoverClass => 'hover' )
-      = drop_receiving_element('wishlist', :accept=> '.product,.product_show', :url => {:controller => 'wishlist', :action => 'add_product'}, :with => "'id='+($(ui.draggable).attr('id').split('_')[1])", :update => 'wishlist', :hoverClass => 'hover' )
-      = display_standard_flashes
+            .cross-selling
+              %h2
+                Nous vous proposons de compléter votre tenue avec :
+              %ul.cross-sells
+                %li
+                  %a{ :href => "#" }
+                    %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+                    %span
+                      La jupe courte
+                    %span.price
+                      29,90&euro;
+                %li
+                  %a{ :href => "#" }
+                    %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+                %li
+                  %a{ :href => "#" }
+                    %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+                %li
+                  %a{ :href => "#" }
+                    %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+                %li
+                  %a{ :href => "#" }
+                    %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+                %li
+                  %a{ :href => "#" }
+                    %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+      .clear
+    .footer
+      .footer_categories_links
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+        %a{ :href => "#" }
+          T-shirts
+      .footer_links
+        %span
+          Paiement sécurisé
+        %img{ :src => "/images/front_demo/master_card.png" }
+        %img{ :src => "/images/front_demo/credit_card.png" }
+        %img{ :src => "/images/front_demo/visa.png" }
+        %img{ :src => "/images/front_demo/https.png" }
+        %a{ :href => "#" }
+          L'entreprise
+        |
+        %a{ :href => "#" }
+          Services
+        |
+        %a{ :href => "#" }
+          Livraison
+        |
+        %a{ :href => "#" }
+          CGV
+        |
+        %a{ :href => "#" }
+          Contact
+        |
+        %a{ :href => "#" }
+          FAQ
+        |
+        %a{ :href => "#" }
+          Recrutement
+        |
+        %a{ :href => "#" }
+          Mentions légales
+        |
+        %a{ :href => "#" }
+          Plan du site
