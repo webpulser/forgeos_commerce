@@ -37,8 +37,10 @@
           %br
         .cart
           .newsletter
-            %a{ :href => "#" }
-              Je m'abonne à la newsletter
+            -if logged_in?
+              = link_to I18n.t(:disconnect).capitalize, session_path, :method => :delete
+            -else
+              = link_to I18n.t(:log_in).capitalize, new_session_path
           .search_box
             %label
               Je recherche un produit

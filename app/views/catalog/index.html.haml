@@ -8,34 +8,38 @@
     >
     = @product_category.name
 .inner-content
-  .product-list
-    .filters
-      %span
-        Tri
-      %div
-        %select
-          %option
-            Toutes les vestes
-      %div
-        %select
-          %option
-            Prix
-      %span
-        Taille des images
-      .image-size
-        %a{ :href => "#" }
-          %span.big-image.active
-        %a{ :href => "#" }
-          %span.medium-image
-        %a{ :href => "#" }
-          %span.small-image
-    .slider_product
-      %ul#slider_products
-        -@products.each do |product|
-          %li
-            =link_to image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel'), {:controller => 'catalog', :action => 'index', :selected_product_id => product.id, :product_category_id => @product_category.id} if !product.pictures.blank?
-            /%img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
-            %span.price
-              =product.price
-              €  
-  =render :partial => 'products/show', :locals => { :product => @selected_product }
+  -if !@selected_product.nil?
+    .product-list
+      .filters
+        %span
+          Tri
+        %div
+          %select
+            %option
+              Toutes les vestes
+        %div
+          %select
+            %option
+              Prix
+        %span
+          Taille des images
+        .image-size
+          %a{ :href => "#" }
+            %span.big-image.active
+          %a{ :href => "#" }
+            %span.medium-image
+          %a{ :href => "#" }
+            %span.small-image
+      .slider_product
+        %ul#slider_products
+          -@products.each do |product|
+            %li
+              =link_to image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel'), {:controller => 'catalog', :action => 'index', :selected_product_id => product.id, :product_category_id => @product_category.id} if !product.pictures.blank?
+              /%img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+              %span.price
+                =product.price
+                €  
+    =render :partial => 'products/show', :locals => { :product => @selected_product }
+  -else
+    .no_product
+      Il n'y a pas de produits dans cette catégorie !!!!!!!

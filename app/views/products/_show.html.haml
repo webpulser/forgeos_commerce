@@ -38,14 +38,14 @@
             =product.price
             €
         .clear
-        -if product.color and !product.color.blank?
+        -if !product.product_type.options.find_by_access_method('color').nil? and !product.color.blank?
           .color-picker
             Je choisis ma couleur
             %ul.colors
               -product.color.each do |color|
                 %li
                   %a{:href => "#", :class => color.downcase }
-        -if product.size and !product.size.blank?        
+        -if !product.product_type.options.find_by_access_method('size').nil? and !product.size.blank?        
           .size-picker
             Je choisis ma taille
             %ul.sizes

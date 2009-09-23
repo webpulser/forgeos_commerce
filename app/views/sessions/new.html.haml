@@ -1,1 +1,10 @@
-= render :partial => 'new_form'
+.before_breadcrumbs
+.breadcrumbs
+  .inner-breadcrumbs
+    %a{ :href => "#" }
+      Accueil
+    >
+    Connexion
+
+.inner-content
+  = render :partial => 'new_form'
