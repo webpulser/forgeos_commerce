@@ -187,7 +187,7 @@ module OrderHelper
   # Display the order's total price
   def display_total
     content = '<div class="order_total">'
-      content += I18n.t('total').upcase + " : <span id='order_total_price'></span> #{$currency.html}"
+      content += I18n.t('total').upcase + " : <span class='order-total-price'><span id='order_total_price'></span>#{$currency.html}</span>"
       content += javascript_tag remote_function(:url => { :controller => 'order', :action => 'update_total' })
     content += '</div>'
   end

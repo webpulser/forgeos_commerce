@@ -7,23 +7,68 @@
     Mon panier
 
 .inner-content
+  .product-list
+    = step_order(1)
+  .cart-step-content
+    - unless @cart.is_empty?
+      /= display_cart(@cart)
+      - if @cart.is_empty?
+        Il n'y a aucun produit dans votre panier !
+      - else
+        %table.products_in_cart
+          %thead
+            %tr
+              %th
+                Nom du product
+              %th
+                Quantité
+              %th
+                Prix
+          %tbody
+            -@cart.carts_products.group_by(&:product_id).each do |cart_product|
+            -product = cart_product[1].first.product
+            -nb = cart_product[1].count
+              %tr
+                %td
+                  =product.name
+                %td
+                  ="x#{nb}"
+                %td
+                  =nb*product.price
+                  €
 
-  = step_order(1)
-  - unless @cart.is_empty?
-    /= display_cart(@cart)
-    - if @cart.is_empty?
-      Il n'y a aucun produit dans votre panier !
-    - else
-      -@cart.carts_products.group_by(&:product_id).each do |cart_product|
-        -product = cart_product[1].first.product
-        -nb = cart_product[1].count
-        =product.name
-        = "x#{nb}"
-        = nb*product.price
-        €
-        %br
+      .clear
+      .link_order
+        = link_to I18n.t('make_order').capitalize, :controller => 'order', :action => 'new'
+      .clear
+      .link_empty
+        = "or" + link_to_cart_empty
+      .clear
+  .clear
+    .cross-selling
+      %h2
+        Nous vous proposons de compléter votre tenue avec :
+      %ul.cross-sells
+        %li
+          %a{ :href => "#" }
+            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+            %span
+              La jupe courte
+            %span.price
+              29,90&euro;
+        %li
+          %a{ :href => "#" }
+            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+        %li
+          %a{ :href => "#" }
+            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+        %li
+          %a{ :href => "#" }
+            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+        %li
+          %a{ :href => "#" }
+            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+        %li
+          %a{ :href => "#" }
+            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
 
-    .link_empty
-      = link_to_cart_empty
-    .link_order
-      = link_to I18n.t('make_order').capitalize, :controller => 'order', :action => 'new'
