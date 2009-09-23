@@ -136,7 +136,7 @@ module OrderHelper
       content += '</div>'
       content += "<div class='filters'>"
       if multiple_addresses
-        content +="<div>"
+        content +="<div class='enhanced'>"
         content += select_tag address.class.to_s.gsub('', '').underscore + '_id', 
                         options_for_select(address.class.find_all_by_user_id(address.user_id).collect { |address_| [address_, address_.id] }, address.id), 
                         :onchange => remote_function(

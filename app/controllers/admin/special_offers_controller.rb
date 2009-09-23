@@ -86,7 +86,11 @@ class Admin::SpecialOffersController < Admin::BaseController
   def build_a_rule(rule_target, index)
     rule_target.downcase!
     if @main_attributes.include?(rule_target)
-      target = "m.#{rule_target}"
+      if rule_target == 'title' || rule_target == 'Title'
+        target = "m.name"
+      else
+        target = "m.#{rule_target}"
+      end
     else
       case "#{rule_target}"
       when "Total items quantity"

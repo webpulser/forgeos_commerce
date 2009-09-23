@@ -44,8 +44,7 @@
               %input.input_text{ :type => "text" }
               %input.btn_ok{ :type => "submit", :value => "ok" }
           .cart-box
-            %a{ :href => "#" }
-              J'accède à Mon Espace Client
+            = link_to "J'accède à Mon Espace Client", new_session_path if !logged_in?
             .cart-icon
               %span.opener
               %span
@@ -70,7 +69,7 @@
             - else
               = link_to 'Je crée mon Espace Client', new_user_path
         %ul.menu
-          -ProductCategory.all.each do |category|
+          -ProductCategory.all(:limit => 7).each do |category|
             %li
               = link_to category.name, {:controller => 'catalog', :action => 'index', :product_category_id => category.id}
     .content
