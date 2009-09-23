@@ -40,4 +40,4 @@
   .content-background
   %table#table.datatable
 
-= dataTables_tag :url => admin_options_path(:format => :json), :columns => ["{'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'#{I18n.t 'option.access_method'}'}","{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]
+= dataTables_tag :url => admin_options_path(:format => :json), :columns => ["{'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':\"#{I18n.t 'option.access_method'}\"}","{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]

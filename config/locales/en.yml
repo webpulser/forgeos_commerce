@@ -212,7 +212,7 @@ en:
     all: "all attributes"
     other: "attributes"
     back: back to attributes
-    name: "attribute name"
+    access_method: access method
     not_exist: 'the requested attribute does not exist'
     create:
       success: 'the attribute was successfully created'

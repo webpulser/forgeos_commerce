@@ -46,5 +46,6 @@
           = link_to I18n.t('tattribute.duplicate.action'), duplicate_admin_option_path(@option), :class => 'small-icons duplicate'
           = link_to I18n.t('tattribute.destroy.action').capitalize, [:admin, @option], :confirm => I18n.t('option.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
       .step
-        = I18n.t('tattribute.name')
+        = I18n.t('tattribute.access_method')
+        \:
         = @option.access_method

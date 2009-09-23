@@ -126,7 +126,7 @@ private
     columns = %w(sku products.name price stock product_type_id active)
     conditions = {}
     if params[:category_id]
-      conditions[:product_category_id] = params[:category_id]
+      conditions[:product_categories_products] = { :product_category_id => params[:category_id] }
     end
     
     conditions[:deleted] = params[:deleted] ? true : [false,nil]
@@ -138,14 +138,14 @@ private
     if params[:sSearch] && !params[:sSearch].blank?
       @products = Product.search(params[:sSearch],
         :conditions => conditions,
-        :include => ['product_categories'],
+        :include => :product_categories,
         :order => order,
         :page => page,
         :per_page => per_page)
     else
       @products = Product.paginate(:all,
         :conditions => conditions,
-        :include => ['product_categories'],
+        :include => :product_categories,
         :order => order,
         :page => page,
         :per_page => per_page)

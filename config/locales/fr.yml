@@ -213,6 +213,7 @@ fr:
     other: attributs
     back: retour aux attributs
     not_exist: "l'attribut demandé n'existe pas"
+    access_method: "méthode d'accès"
     create:
       success: "l'attribut a bien été créé"
       failed: "un problème est survenu lors de la création de l'attribut"
@@ -225,6 +226,9 @@ fr:
       success: "l'attribut a bien été supprimé"
       failed: "un problème est survenu lors de la suppression de l'attribut"
       confirm: "êtes-vous sûr de vouloir supprimer cet attribut ?" 
+      action: "supprimer l'option"
+    duplicate:
+      action: "dupliquer l'option"
   tattribute_value:
     one: valeur
     other: valeurs
@@ -564,45 +568,45 @@ fr:
       new: ajouter un choix
     access_method: "méthode d'accès"
   text_option:
-    one: text option
-    other: text options
-    field: text field
-    preview: preview
+    one: texte
+    other: textes
+    field: champ texte
+    preview: prévisualisation
   longtext_option:
-    one: longtext option
-    other: longtext options
-    field: longtext field
-    preview: preview
+    one: texte long
+    other: textes longs
+    field: champ texte long
+    preview: prévisualisation
   picklist_option:
-    one: picklist option
-    other: picklist options
-    field: picklist field
-    preview: preview
+    one: séléction
+    other: séléctions
+    field: champ séléction
+    preview: prévisualisation
   checkbox_option:
-    one: checkbox option
-    other: checkbox options
-    field: checkbox field
-    preview: preview
+    one: case à cocher
+    other: cases à cocher
+    field: champ case à cocher
+    preview: prévisualisation
   date_option:
-    one: date option
-    other: date options
-    field: date field
-    preview: preview
+    one: date
+    other: date
+    field: champ date
+    preview: prévisualisation
   number_option:
-    one: number option
-    other: number options
-    field: number field
-    preview: preview
+    one: nombre
+    other: nombres
+    field: champ nombre
+    preview: prévisualisation
   url_option:
-    one: url option
-    other: url options
-    field: url field
-    preview: preview
+    one: lien
+    other: liens
+    field: champ lien
+    preview: prévisualisation
   radiobutton_option:
-    one: radiobutton option
-    other: radiobutton options
-    field: radiobutton field
-    preview: preview
+    one: bouton radio
+    other: boutons radio
+    field: champ bouton radio
+    preview: prévisualisation
 
 # Active record
   activerecord:

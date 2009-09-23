@@ -124,12 +124,10 @@ private
   def sort
     columns = %w(tattributes.type tattributes.name access_method)
 
-    conditions = [[]]
+    conditions = {}
     if params[:category_id]
-      conditions[0] << 'option_categories_options.option_category_id = ?'
-      conditions << params[:category_id]
+      conditions[:option_categories_options] = { :option_category_id => params[:category_id] }
     end
-    conditions[0] = conditions[0].join(' AND ')
 
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
@@ -138,14 +136,14 @@ private
     if params[:sSearch] && !params[:sSearch].blank?
       @options = Tattribute.search(params[:sSearch],
         :conditions => conditions,
-        :include => ['option_categories'],
+        :include => :option_categories,
         :order => order,
         :page => page,
         :per_page => per_page)
     else
       @options = Tattribute.paginate(:all,
         :conditions => conditions,
-        :include => ['option_categories'],
+        :include => :option_categories,
         :order => order,
         :page => page,
         :per_page => per_page)
