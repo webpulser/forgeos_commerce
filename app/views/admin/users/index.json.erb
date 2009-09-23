@@ -9,8 +9,8 @@
   '<%= mail_to user.email, user.email, :class => 'email' %>',
   '<%= user.orders.empty? ? I18n.t('none').capitalize : user.orders.count %>',
   '<%= user.total_orders.blank? ? I18n.t('none').capitalize : content_tag(:div, "#{user.total_orders} #{$currency.html}") %>  ',
-  '<%= content_tag( :div, (user.orders.empty? ? "N/A" : user.orders.last.created_at.to_s(:slashed_fr)), :class => 'last-date') %> ',
-  '<%= user.created_at.to_s(:slashed_fr) %>',
+  '<%= content_tag( :div, (user.orders.empty? ? "N/A" : user.orders.last.created_at.to_s(:short)), :class => 'last-date') %> ',
+  '<%= user.created_at.to_s(:short) %>',
   '<%= escape_javascript(
     link_to('', [:edit, :admin, user], :class => 'small-icons edit-link') +
     link_to_remote('', :url => [:admin, user],

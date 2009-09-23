@@ -41,7 +41,7 @@ class Admin::StatisticsController < Admin::BaseController
 
     # Line Dot for sales
     line_dot = LineDot.new
-    line_dot.text = "Sales"
+    line_dot.text = I18n.t("sale", :count => 2)
     line_dot.tooltip = "#x_label#<br>#val# #{I18n.t('currency.' + $currency.name, :count => 2)}"
     line_dot.width = 4
     line_dot.colour = '#94CC69'

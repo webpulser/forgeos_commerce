@@ -20,7 +20,7 @@
            product_names 
        )
   -%>',
-  '<%= order.created_at.to_s(:slashed_fr) %>',
+  '<%= order.created_at.to_s(:short) %>',
   '<%= escape_javascript content_tag(:div, link_to(order.user.fullname, [:admin, order.user], :target => '_blank'), :class => 'username') %>',
   '<%= escape_javascript(
     select_tag(:status, options_for_select(order_states_for_select, order.status))

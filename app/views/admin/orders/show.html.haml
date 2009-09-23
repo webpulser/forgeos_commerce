@@ -6,7 +6,7 @@
     n°
     = @order.id
   %span.header-separator
-  %span= @order.created_at.to_s(:slashed_fr)
+  %span= @order.created_at.to_s(:short)
   .interact-links
     .borders.interact-button-left
     = link_to I18n.t('order.update.action').capitalize, [:edit, :admin, @order], :class => 'backgrounds interact-button'

@@ -8,7 +8,7 @@
       n°
       = order.id
     %span.header-separator
-    %span= order.created_at.to_s(:slashed_fr) unless order.created_at.nil?
+    %span= order.created_at.to_s(:short) unless order.created_at.nil?
     %span.header-separator
     .interact-links
       .borders.interact-button-left

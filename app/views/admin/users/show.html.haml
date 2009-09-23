@@ -45,7 +45,7 @@
                 = link_to(order.orders_details.length != 1 ? "#{order.orders_details.length} #{I18n.t('product', :count => order.orders_details.length)}" : order.orders_details.first.name.capitalize,[:admin,order])
               =product_names
 
-            %td= order.created_at.to_s(:slashed_fr)
+            %td= order.created_at.to_s(:short)
             %td= select_tag(:status, options_for_select(order_states_for_select, order.status))
             %td= link_to('', [:edit, :admin, order], :class => 'small-icons edit-link')
             
