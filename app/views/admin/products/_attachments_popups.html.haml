@@ -39,7 +39,7 @@
 #fileSelectDialog.media-hoverlay
   #inner-lightbox.backgrounds
     - %w(pdf video doc media).each do |file_type|
-      = link_to_function I18n.t(:other, :scope => [:media,file_type]), "update_current_dataTable_source('#{escape_javascript(admin_attachments_path(:format => :json, :file_type => file_type))}')", :class => "small-icons #{file_type}"
+      = link_to_function I18n.t(:other, :scope => [:media,file_type]), "update_current_dataTable_source('#{escape_javascript(admin_attachments_path(:mode => 'selection',:format => :json, :file_type => file_type))}')", :class => "small-icons #{file_type}"
   .media-hoverlay-header
     = link_to_function content_tag(:span, I18n.t('media.upload.action').capitalize, :class=>'big-icons add-media'), "$(\'#fileUploadDialog\').dialog(\'open\'); $(\'#fileSelectDialog\').dialog(\'close\')", :class=>'backgrounds button'
     #search.right
@@ -48,9 +48,9 @@
   .media-hoverlay-content
     %table#table-files.datatable.media.selectable_rows
       
-= dataTables_tag :url => admin_attachments_path(:format => :json, :file_type => 'picture'), :columns => ['{ "bSortable": false }',"{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
-= dataTables_tag :url => admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture'), :columns => [ '{ "bSortable": false, "bSearchable": false}','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}'], :id => 'thumbnail-table'
-= dataTables_tag :id => 'table-files', :url => admin_attachments_path(:format => :json, :file_type => 'pdf'), :columns => ['{ "bSortable": false }',"{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
+= dataTables_tag :url => admin_attachments_path(:format => :json, :file_type => 'picture', :mode => 'selection'), :columns => ['{ "bSortable": false }',"{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
+= dataTables_tag :url => admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture', :mode => 'selection'), :columns => [ '{ "bSortable": false, "bSearchable": false}','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}'], :id => 'thumbnail-table'
+= dataTables_tag :id => 'table-files', :url => admin_attachments_path(:format => :json, :file_type => 'pdf', :mode => 'selection'), :columns => ['{ "bSortable": false }',"{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
 
 -# TODO move to base.js
 - session_key = ActionController::Base.session_options[:key]
