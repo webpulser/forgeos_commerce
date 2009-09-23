@@ -89,7 +89,12 @@ private
 
     x_labels = XAxisLabels.new
     x_labels.set_steps(days_step)
-    x_labels.labels = @days.collect{|day| day.to_s(:long_ordinal)}
+    case params[:period]
+    when 'week'
+      x_labels.labels = @days.collect{|day| day.to_s(:only_day)}
+    else
+      x_labels.labels = @days.collect{|day| day.to_s(:long_ordinal)}
+    end
     x_labels.colour = '#7D5223'
     
     x_axis = XAxis.new
