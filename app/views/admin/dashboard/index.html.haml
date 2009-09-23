@@ -156,30 +156,37 @@
       = I18n.t(:sale, :count => 2).capitalize
     .sales-info-block
       .today-sales.first-block
-        = I18n.t('sale.day.current').capitalize
-        %span
+        %span.left
+          = I18n.t('sale.day.current').capitalize
+        %span.right
           = total_for_today.floor
           %sup
             = total_for_today.decimal
             = currency
+        .clear
       .yesterday-sales.second-block
-        = I18n.t('sale.day.previous').capitalize
-        %span
+        %span.left
+          = I18n.t('sale.day.previous').capitalize
+        %span.right
           = total_for_yesterday.floor
           %sup
             = total_for_yesterday.decimal
             = currency
+        .clear
     .sales-info-block
       .week-sales.first-block
-        = I18n.t('sale.week.current').capitalize
-        %span
+        %span.left
+          = I18n.t('sale.week.current').capitalize
+        %span.right
           = total_for_week.floor
           %sup
             = total_for_week.decimal
             = currency
+        .clear
       .last-week-sales.second-block
-        = I18n.t('sale.week.previous').capitalize
-        %span
+        %span.left
+          = I18n.t('sale.week.previous').capitalize
+        %span.right
           = total_for_last_week.floor
           %sup
             = total_for_last_week.decimal
@@ -190,17 +197,21 @@
       - else
         %div{ :class => 'diff-negative' }
           = "#{week_diff}%"
+        .clear
     .sales-info-block
       .month-sales.first-block
-        = I18n.t('sale.month.current').capitalize
-        %span
+        %span.left
+          = I18n.t('sale.month.current').capitalize
+        %span.right
           = total_for_month.floor
           %sup
             = total_for_month.decimal
             = currency
+        .clear
       .last-month-sales.second-block
-        = I18n.t('sale.month.previous').capitalize
-        %span
+        %span.left
+          = I18n.t('sale.month.previous').capitalize
+        %span.right
           = total_for_last_month.floor
           %sup
             = total_for_last_month.decimal
@@ -211,14 +222,17 @@
       - else
         %div{ :class => 'diff-negative' }
           = "#{month_diff}%"
+        .clear
     .sales-info-block
       .life-time-sales
-        = I18n.t('sale.lifetime').capitalize
-        %span
+        %span.left
+          = I18n.t('sale.lifetime').capitalize
+        %span.right
           = lifetime_sales.floor
           %sup
             = lifetime_sales.decimal
             = currency
+        .clear
     %h2.small-icons.live-stats
       = I18n.t('statistic.live', :count => 2).capitalize
     .live-stats-content

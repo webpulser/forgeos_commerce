@@ -1,9 +1,7 @@
 .backgrounds.big-header
   %h1= @product.name
   .interact-links
-    .borders.interact-button-left
     = link_to I18n.t('product.update.action').capitalize, [:edit, :admin, @product], :class => 'backgrounds interact-button'
-    .borders.interact-button-right
     = I18n.t('or')
     = link_to I18n.t('back_to_catalog').capitalize, admin_products_path, :class => 'back-link'
 

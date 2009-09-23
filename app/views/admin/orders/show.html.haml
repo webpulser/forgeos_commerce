@@ -8,9 +8,7 @@
   %span.header-separator
   %span= @order.created_at.to_s(:short)
   .interact-links
-    .borders.interact-button-left
     = link_to I18n.t('order.update.action').capitalize, [:edit, :admin, @order], :class => 'backgrounds interact-button'
-    .borders.interact-button-right
     = I18n.t('or')
     = link_to I18n.t('back').capitalize, admin_orders_path, :class => 'back-link'
 #content.grid_16.alpha.omega

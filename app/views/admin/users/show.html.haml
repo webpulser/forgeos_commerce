@@ -3,9 +3,7 @@
   %h1
     =@user.fullname
   .interact-links
-    .borders.interact-button-left
     = link_to I18n.t('user.update.action'), [:edit, :admin, @user], :class => 'backgrounds interact-button'
-    .borders.interact-button-right
     or
     %a.back-link{ :href => "#" }
       =link_to I18n.t('user.back'), admin_users_path, :class => 'back-link'
