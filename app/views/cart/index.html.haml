@@ -1,7 +1,29 @@
-= step_order(1)
-- unless @cart.is_empty?
-  = display_cart(@cart)
-  .link_empty
-    = link_to_cart_empty
-  .link_order
-    = link_to I18n.t('make_order').capitalize, :controller => 'order', :action => 'new'
+.before_breadcrumbs
+.breadcrumbs
+  .inner-breadcrumbs
+    %a{ :href => "#" }
+      Accueil
+    >
+    Mon panier
+
+.inner-content
+
+  = step_order(1)
+  - unless @cart.is_empty?
+    /= display_cart(@cart)
+    - if @cart.is_empty?
+      Il n'y a aucun produit dans votre panier !
+    - else
+      -@cart.carts_products.group_by(&:product_id).each do |cart_product|
+        -product = cart_product[1].first.product
+        -nb = cart_product[1].count
+        =product.name
+        = "x#{nb}"
+        = nb*product.price
+        €
+        %br
+
+    .link_empty
+      = link_to_cart_empty
+    .link_order
+      = link_to I18n.t('make_order').capitalize, :controller => 'order', :action => 'new'

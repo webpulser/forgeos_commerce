@@ -1,3 +1,12 @@
-= step_order(3)
-#order.order
-  = render :partial => 'new'
+.before_breadcrumbs
+.breadcrumbs
+  .inner-breadcrumbs
+    %a{ :href => "#" }
+      Accueil
+    >
+    Mon panier
+
+.inner-content
+  = step_order(3)
+  #order.order
+    = render :partial => 'new'

@@ -6,7 +6,7 @@
       Seb rocks ! 
     %link{ :href => "/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon" }
     = stylesheet_link_tag %w(front_demo/style front_demo/jqzoom front_demo/jquery.jcarousel front_demo/jquery-ui/themes/front), :cache => 'base'
-    = javascript_include_tag %w(jquery front_demo/customselects front_demo/init front_demo/jquery.jcarousel.pack front_demo/jquery.jqzoom front_demo/jquery-ui), :cache => 'base'
+    = javascript_include_tag %w(jquery front_demo/jquery-ui front_demo/customselects front_demo/init front_demo/jquery.jcarousel.pack front_demo/jquery.jqzoom ), :cache => 'base'
 
   %body
     .header
@@ -25,8 +25,6 @@
           %span
             sortie !
           %br
-          %a.click-here{ :href => "#" }
-            cliquez-ici !
         .cart
           .newsletter
             %a{ :href => "#" }
@@ -43,43 +41,26 @@
               J'accède à Mon Espace Client
             .cart-icon
               %span
-                Mon panier
+                =link_to_cart('Mon panier')
               %br
-              3 articles
+                ="#{@cart.total_items} articles" if !@cart.nil?
             %ul.cart-products
-              %li
-                %span.li-product-name
-                  Veste tailleur
-                %span.li-product-qty
-                  x1
-                %span.li-product-price
-                  29,90&euro;
-                %span.clear
-              %li
-                %span.li-product-name
-                  Veste tailleur
-                %span.li-product-qty
-                  x1
-                %span.li-product-price
-                  29,90&euro;
-                %span.clear
-              %li
-                %span.li-product-name
-                  Veste tailleur
-                %span.li-product-qty
-                  x1
-                %span.li-product-price
-                  29,90&euro;
-                %span.clear
-              %li.last
-                %span.li-product-name
-                  Total
-                %span.li-product-qty
-                  122,85&euro;
-                %span.clear
+              -@cart.products.group_by(&:id).each do |cart_product|
+                -product = cart_product[1].first
+                -nb = cart_product[1].count
+                %li
+                  %span.li-product-name
+                    = product.name
+                  %span.li-product-qty
+                    = "x#{nb}"
+                  %span.li-product-price
+                    = "#{product.price*nb} &euro;"
+                  %span.clear
           .create-customer-space
-            %a{ :href => "#" }
-              Je crée Mon Espace Client
+            -if logged_in?
+              = link_to "Bienvenue #{current_user.fullname}", "#"
+            - else
+              = link_to 'Je crée mon Espace Client', new_user_path
         %ul.menu
           -ProductCategory.all.each do |category|
             %li

@@ -59,6 +59,7 @@
               %span
                 Je choisis ma quantité
               =text_field_tag 'quantity'
+              =hidden_field_tag :id, product.id
             =submit_tag "J'ajoute au panier", :class => 'add_to_cart'
         .clear
         .links
