@@ -16,6 +16,6 @@
       = fg_search
     .backgrounds.search-form
   .content-background
-  %table#table.datatable
+  %table#table.datatable.draggable_rows
     
 = dataTables_tag :url => admin_users_path(:format => :json), :columns => ["{'bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'#{I18n.t :email}'}","{'sTitle':'#{I18n.t :order, :count => 2}'}","{'sTitle':'#{I18n.t :total}'}","{'sTitle':'#{I18n.t :last_order}'}","{'sTitle':'#{I18n.t :joined_on}'}","{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]
