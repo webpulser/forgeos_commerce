@@ -7,6 +7,9 @@ fr:
   cart:
     one: panier
     other: paniers
+    created:
+      one: '{{count}} panier créé'
+      other: '{{count}} paniers créés'
   empty_cart: 'vider le panier'
   add_to_wishlist: 'ajouter à la séléction'
   wishlist:
@@ -93,15 +96,7 @@ fr:
   tattributes: attributs
   tattribute_values: valeurs
   vouchers: 'codes promo'
-  users: utilisateurs
-  customer:
-    one: client
-    other: clients
   delivery: livraison
-  rights: droits
-  roles: roles
-  controller_name: 'nom du contrôleur'
-  action_name: "nom de l'action"
   export: exporter
   export_newsletter: 'exporter pour la newsletter'
   age: 'âge'
@@ -313,7 +308,7 @@ fr:
       action: 'créer une commande'
     update:
       success: 'la commande a bien été mise à jour'
-      failed: 'un problème est survenu lors de la mise ç jour de la commande'
+      failed: 'un problème est survenu lors de la mise à jour de la commande'
       action: 'éditer la commande'
     destroy:
       success: 'la commande a bien été supprimée'
@@ -401,35 +396,6 @@ fr:
       success: "le détail de méthode d'expédition a bien été supprimé"
       failed: "un problème est survenu lors de la suppression du détail de méthode d'expédition"
       confirm: "êtes-vous sûr de vouloir supprimer ce détail de méthode d'expédition ?"
-  user:
-    one: utilisateur
-    other: utilisateurs
-    back: 'retours aux utilisateurs'
-    spent_on: 'depensé en'
-    create:
-      success: "l'utilisateur a bien été créé"
-      failed: "un problème est survenu lors de la création de l'utilisateur"
-      action: "créer un utilisateur"
-    update:
-      success: "l'utilisateur a bien été mis à jour"
-      failed: "un problème est survenu lors de la mise à jour de l'utilisateur"
-      action: "éditer l'utilisateur"
-    destroy:
-      success: "l'utilisateur a bien été supprimé"
-      failed: "un problème est survenu lors de la suppression de l'utilisateur"
-      confirm: "êtes-vous sûr de vouloir supprimer cet utilisateur ?"
-    activation:
-      success: "l'utilisateur a bien été activé"
-      failed: "un problème est survenu lors de l'activation de l'utilisateur"
-      action: "activer"
-    disactivation:
-      success: "l'utilisateur a bien été désactivé"
-      failed: "un problème est survenu lors de l'désactivation de l'utilisateur"
-      action: "désactiver"
-    export:
-      failed: "échec de l'export, aucun utilisateur trouvé"
-    search:
-      failed: 'aucun utilisateur trouvé'
   product:
     one : produit
     other: produits
@@ -442,10 +408,9 @@ fr:
     viewed:
       one: "vu {{count}} fois"
       other: "vu {{count}} fois"
-
     best_seller:
       one: meilleur vente
-      other: meilleurs ventes
+      other: meilleures ventes
     most_viewed:
       one: plus vue
       other: plus vues
@@ -589,8 +554,8 @@ fr:
       current: 'cette semaine'
       previous: 'semaine dernière'
     month:
-      current: 'ce moi ci'
-      previous: 'le moi dernier'
+      current: 'ce mois ci'
+      previous: 'le mois dernier'
     lifetime: 'total des ventes'
   option:
     value:
@@ -638,34 +603,6 @@ fr:
     other: radiobutton options
     field: radiobutton field
     preview: preview
-
-# Date formats
-  date:
-    formats:
-      default: "%d-%m-%Y"
-      short: "%e %b"
-      long: "%B %e, %Y"
-      only_day: "%e"
-
-    day_names: [Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi]
-    abbr_day_names: [Dim, Lun, Mar, Mer, Jeu, Ven, Sam]
-    month_names: [~, Janvier, Février, Mars, Avril, Mai, Juin, Juillet, Aout, Septembre, Octobre, Novembre, Décembre]
-    abbr_month_names: [~, Jan, Fev, Mar, Avr, Mai, Jui, Juil, Aou, Sep, Oct, Nov, Déc]
-    order: [ :day, :month, :year ]
-  
-  time:
-    formats:
-      default: "%a %b %d %H:%M:%S %Z %Y"
-      time: "%H:%M"
-      short: "%d %b %H:%M"
-      long: "%B %d, %Y %H:%M"
-      only_second: "%S"
-      
-      datetime:
-        formats:
-          default: "%Y-%m-%dT%H:%M:%S%Z"
-    am: am
-    pm: pm
 
 # Active record
   activerecord:
