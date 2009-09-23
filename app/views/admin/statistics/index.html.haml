@@ -8,9 +8,8 @@
       .trend_filter
         %label
           Show trends for :
-        %select
-          %option
-            This month
+        = select_tag :trends, options_for_select([[I18n.t('statistic.this.month'), 'month'], [I18n.t('statistic.this.week'), 'week']]), :onchange => "statistic_graph(value)"
+
       .to-tab
         %ul
           %li= link_to I18n.t('visitor', :count => 2), '#visitors'

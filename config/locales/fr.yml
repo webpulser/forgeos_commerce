@@ -545,6 +545,9 @@ fr:
     live:
       one: 'statistique temps réel'
       other: 'statistiques temps réel'
+    this:
+      month: ce mois-ci
+      week: cette semaine
   visitor:
     one: visiteurr
     other: visiteurs

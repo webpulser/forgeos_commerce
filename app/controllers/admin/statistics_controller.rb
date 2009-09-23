@@ -8,10 +8,9 @@ class Admin::StatisticsController < Admin::BaseController
   # generates the ofc2 visitors graph
   def visitors_graph
     # visitors
-    today = Date.today
     visitors = []
     (1..@days_count).each do |day|
-      date = Date.new(today.year, today.month, day)
+      date = Date.new(@today.year, @today.month, day)
       visitors << Forgeos::Statistics.total_of_visitors(date)
     end
 
@@ -26,16 +25,15 @@ class Admin::StatisticsController < Admin::BaseController
     max = visitors.flatten.compact.max.to_i
     max_count = max > 0 ? max : 5
 
-    return generate_graph(bar, max_count, '#F7BD2E')
+    return render :text => generate_graph(bar, max_count, '#F7BD2E')
   end
 
   # generates the ofc2 sales graph
-  def sales_graph   
+  def sales_graph
     # sales
-    today = Date.today
     sales = []
     (1..@days_count).each do |day|
-      date = Date.new(today.year, today.month, day)
+      date = Date.new(@today.year, @today.month, day)
       sales << Forgeos::Commerce::Statistics.total_of_sales(date)
     end
 
@@ -54,7 +52,7 @@ class Admin::StatisticsController < Admin::BaseController
     max = sales.flatten.compact.max.to_i
     max_count = max > 0 ? max : 5
 
-    return generate_graph(line_dot, max_count, '#92CC60')
+    return render :text => generate_graph(line_dot, max_count, '#92CC60')
   end
 
 private
@@ -72,8 +70,16 @@ private
   end
 
   def get_days_count_and_days
-    @days_count = Time.days_in_month(Time.now.month)
-    @days = (1..@days_count).collect{|day| Date.new(Time.now.year, Time.now.month, day)}
+    @today = Date.current
+    case params[:period]
+    when 'week'
+      @days_count = 7
+      day_start = Date.new(@today.year, @today.month, @today.day - @today.cwday + 1)
+    else # month
+      @days_count = Time.days_in_month(@today.month)
+      day_start = Date.new(@today.year, @today.month, 1)
+    end
+    @days = day_start..(day_start + @days_count - 1)
   end
 
   def generate_graph(element, y_max, colour)
@@ -118,6 +124,6 @@ private
     chart.set_tooltip(tooltip)
     chart.add_element(element)
 
-    render :text => chart.to_s
+    return chart.to_s
   end
 end
