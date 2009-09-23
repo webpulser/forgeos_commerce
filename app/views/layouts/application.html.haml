@@ -14,15 +14,10 @@
         %a.logo{ :href => "#", :title => "retour \303\240 l'accueil" }
           %img{ :src => "/images/front_demo/logo.png" }
         %ul.list_static_pages
-          %li
-            %a{ :href => "#", :title => "Magasin" }
-              Magasin
-          %li
-            %a{ :href => "#", :title => "Notre philosophie" }
-              Notre philosophie
-          %li
-            %a{ :href => "#", :title => "Evénements" }
-              Evénements
+          -Page.find_all_by_active(true, :limit => 4).each do |page|
+            %li
+              =link_to page.title, page.url
+   
         .baseline
           Tenue de fête,
           %br
@@ -93,29 +88,6 @@
         %img{ :src => "/images/front_demo/credit_card.png" }
         %img{ :src => "/images/front_demo/visa.png" }
         %img{ :src => "/images/front_demo/https.png" }
-        %a{ :href => "#" }
-          L'entreprise
-        |
-        %a{ :href => "#" }
-          Services
-        |
-        %a{ :href => "#" }
-          Livraison
-        |
-        %a{ :href => "#" }
-          CGV
-        |
-        %a{ :href => "#" }
-          Contact
-        |
-        %a{ :href => "#" }
-          FAQ
-        |
-        %a{ :href => "#" }
-          Recrutement
-        |
-        %a{ :href => "#" }
-          Mentions légales
-        |
-        %a{ :href => "#" }
-          Plan du site
+        -Page.find_all_by_active(true).each do |page|
+          =link_to page.title, page.url
+          |

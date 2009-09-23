@@ -30,13 +30,18 @@
 
         .price-box
           %span.promo
-            &nbsp;
-          %span.old-price
-            &nbsp;
-          /  59,95&euro;
-          %span.new-price
-            =product.price
-            €
+            =product.barcode if !product.barcode.nil?
+          -price = Product.find_by_id(product.id).price
+          -if price != product.price
+            %span.old-price
+              ="#{price} €" if price != product.price
+            %span.new-price
+              =product.price
+              €
+          -else
+            %span.price
+              =product.price
+              €
         .clear
         -if !product.product_type.options.find_by_access_method('color').nil? and !product.color.blank?
           .color-picker
@@ -45,6 +50,7 @@
               -product.color.each do |color|
                 %li
                   %a{:href => "#", :class => color.downcase }
+                    %span
         -if !product.product_type.options.find_by_access_method('size').nil? and !product.size.blank?        
           .size-picker
             Je choisis ma taille
@@ -100,3 +106,7 @@
         %li
           %a{ :href => "#" }
             %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+
+-p 'hu'*40
+-p product.barcode
+-p product.inspect

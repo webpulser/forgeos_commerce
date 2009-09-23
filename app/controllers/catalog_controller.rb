@@ -17,11 +17,13 @@ class CatalogController < ApplicationController
     
     # rules
     engine :special_offer_engine do |e|
+      @shop = true
       rule_builder = SpecialOffer.new(e)
       rule_builder.rules
       @products.each do |product|
         e.assert product
       end
+      e.assert @selected_product
       e.match
     end
   

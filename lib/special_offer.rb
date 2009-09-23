@@ -5,16 +5,22 @@ class SpecialOffer < Ruleby::Rulebook
     SpecialOfferRule.find_all_by_activated(true).each do |special_offer|
       puts special_offer.conditions
       rule eval(special_offer.conditions) do |context|
-        
-        puts "test"*20
         product = context[:product]
                 
         ## Product in Shop
         if @cart.nil?
+          p 'ahhhah ah '*10
           # Discount product price
-          if special_offer.variables[:discount] and special_offer.variables[:for] == 'product_in_shop'
+                                                #and special_offer.variables[:for] == 'product_in_shop'
+          if special_offer.variables[:discount]
              rate = special_offer.variables[:discount]
              product.price-= special_offer.variables[:fixed_discount] ? rate : ((product.price * rate) / 100)
+             
+             if special_offer.variables[:fixed_discount]
+               product.barcode = "-#{rate}€"
+             else
+               product.barcode = "-#{rate}%"
+             end
           end
         
         ## Product in cart OR cart
