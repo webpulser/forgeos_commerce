@@ -1,8 +1,7 @@
 .before_breadcrumbs
 .breadcrumbs
   .inner-breadcrumbs
-    %a{ :href => "#" }
-      Accueil
+    =link_to 'Accueil', '/'
     >
     Mon panier
 
@@ -21,9 +20,11 @@
               %th
                 Nom du product
               %th
+                Prix unitaire
+              %th
                 Quantité
               %th
-                Prix
+                Prix total
           %tbody
             -@cart.carts_products.group_by(&:product_id).each do |cart_product|
             -product = cart_product[1].first.product
@@ -31,6 +32,9 @@
               %tr
                 %td
                   =product.name
+                %td
+                  =product.price
+                  €
                 %td
                   ="x#{nb}"
                 %td

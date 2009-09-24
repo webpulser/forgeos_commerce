@@ -3,16 +3,24 @@ class CatalogController < ApplicationController
   include Ruleby
   
   # Show all <i>ProductDetail</i>
-  def index  
+  def index
     product_category_id = params[:product_category_id] || ProductCategory.first
     @product_category = ProductCategory.find_by_id(product_category_id)
-    @products = @product_category.products.find(:all, :conditions => {:active => true, :deleted => false}) 
-    #@products = Product.paginate(:all, :per_page => 8, :page => params[:page], :conditions => { :active => true, :deleted => false })
+    @product_categories = @product_category.children.collect{|c| c.id}
+    @product_categories << @product_category.id
+    @category_choice = params[:category_choice]
+    
+    if @category_choice.blank?
+      @products = Product.all(:include => :product_categories,:conditions => {:deleted=>[false, nil], :product_categories_products=>{:product_category_id=>@product_categories}})
+    else
+      @category_choice = ProductCategory.find_by_id(@category_choice)
+      @products = @category_choice.products.all
+    end
     
     if params[:selected_product_id]
       @selected_product = @product_category.products.find_by_id(params[:selected_product_id])
     else
-      @selected_product = @product_category.products.first
+      @selected_product = @products.first
     end
     
     # rules
@@ -23,7 +31,7 @@ class CatalogController < ApplicationController
       @products.each do |product|
         e.assert product
       end
-      e.assert @selected_product
+      e.assert @selected_product if !@selected_product.nil?
       e.match
     end
   

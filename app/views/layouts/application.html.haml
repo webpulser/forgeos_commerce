@@ -69,7 +69,7 @@
             - else
               = link_to 'Je crée mon Espace Client', new_user_path
         %ul.menu
-          -ProductCategory.all(:limit => 7).each do |category|
+          -ProductCategory.find_all_by_parent_id(nil, :limit => 7).each do |category|
             %li
               = link_to category.name, {:controller => 'catalog', :action => 'index', :product_category_id => category.id}
     .content

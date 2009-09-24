@@ -3,8 +3,7 @@
 .before_breadcrumbs
 .breadcrumbs
   .inner-breadcrumbs
-    %a{ :href => "#" }
-      Accueil
+    =link_to 'Accueil', '/'
     >
     = @product_category.name
 .inner-content
@@ -14,13 +13,11 @@
         %span
           Tri
         %div
-          %select
-            %option
-              Toutes les vestes
-        %div
-          %select
-            %option
-              Prix
+          -form_tag :action => 'index' do
+            =hidden_field_tag :product_category_id, @product_category.id
+            =select_tag 'category_choice', options_for_select(@product_category.children.collect{|c| [c.name, c.id]})
+            =submit_tag 'ok'        
+
         %span
           Taille des images
         .image-size
@@ -42,4 +39,5 @@
     =render :partial => 'products/show', :locals => { :product => @selected_product }
   -else
     .no_product
-      Il n'y a pas de produits dans cette catégorie !!!!!!!
+      %h1
+        Il n'y a pas de produits dans cette catégorie !!!!!!!
