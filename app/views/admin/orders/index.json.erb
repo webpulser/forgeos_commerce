@@ -23,7 +23,10 @@
   '<%= order.created_at.to_s(:short) %>',
   '<%= escape_javascript content_tag(:div, link_to(order.user.fullname, [:admin, order.user], :target => '_blank'), :class => 'username') %>',
   '<%= escape_javascript(
-    select_tag(:status, options_for_select(order_states_for_select, order.status))
+    select('order_status',order.id,
+      options_for_select(order_states_for_select, order.status),
+      {}, { :class => 'order-change-status' }
+    )
   ) -%>',
   '<%= escape_javascript(
     link_to('', [:edit, :admin, order], :class => 'small-icons edit-link') +
