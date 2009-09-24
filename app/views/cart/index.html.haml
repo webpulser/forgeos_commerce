@@ -40,7 +40,12 @@
                 %td
                   =nb*product.price
                   €
-
+      -@cart.carts_products.group_by(&:product_id).each do |cart_product|
+        -product = cart_product[1].first.product
+        -if cart_product[1].first.new_price != nil
+          = "Promo #{product.name} : -#{product.price-cart_product[1].first.new_price} €"
+          %br 
+      ="Prix total #{@cart.total} €"
       .clear
       .link_order
         = link_to I18n.t('make_order').capitalize, :controller => 'order', :action => 'new'
