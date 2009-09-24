@@ -35,7 +35,10 @@
             -if logged_in?
               = link_to I18n.t(:disconnect).capitalize, session_path, :method => :delete
             -else
-              = link_to I18n.t(:log_in).capitalize, new_session_path
+              -session[:redirect] = '/'
+              = link_to I18n.t(:log_in).capitalize, '#', :id=>'login_link'
+              #login_container
+                = render :partial => 'sessions/new_form'
           .search_box
             %label
               Je recherche un produit
