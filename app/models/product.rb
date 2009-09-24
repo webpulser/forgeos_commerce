@@ -27,6 +27,7 @@ class Product < ActiveRecord::Base
   after_save :synchronize_stock
 
   validates_presence_of :product_type_id
+  validates_presence_of :sku
   validates_presence_of :url
   validates_uniqueness_of :url
   has_one :meta_info, :as => :target

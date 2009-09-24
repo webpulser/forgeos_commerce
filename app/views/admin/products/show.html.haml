@@ -95,17 +95,17 @@
           %span
             = I18n.t('title').capitalize
             \:
-          = @product.meta_info.title
+          = @product.meta_info.title if @product.meta_info
         %p
           %span
             = I18n.t('description').capitalize
             \:
-          = @product.meta_info.description
+          = @product.meta_info.description if @product.meta_info
         %p
           %span
             = I18n.t('keyword', :count => 2).capitalize
             \:
-          = @product.meta_info.keywords
+          = @product.meta_info.keywords if @product.meta_info
   
     .step.disabled
       %a.small-icons.step-title{ :href => "#" }
