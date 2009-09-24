@@ -5,13 +5,14 @@
       %span.small-icons.arrow
   .backgrounds.sidebar-background
   .sidebar-content
-    %h2.small-icons.all-products
-      All customers
+    %h2.small-icons.all-users
+      = I18n.t('user.all').capitalize
     #customer-tree.init-tree
       %ul
         /= render :partial => 'admin/customer/list', :locals => { :categories => Category.all }
 #content.grid_12.alpha.omega
   .backgrounds.header
+    = link_to content_tag(:span,I18n.t('user.create.action').capitalize, :class=>'big-icons create-user'), new_admin_user_path, :class=>'backgrounds action-button'
     #search.right
       = fg_search
     .backgrounds.search-form

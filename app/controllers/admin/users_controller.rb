@@ -3,7 +3,6 @@ class Admin::UsersController < Admin::BaseController
 
   before_filter :get_user, :only => [:show, :activate, :edit, :update, :destroy]
   before_filter :new_user, :only => [:new, :create]
-  before_filter :get_addresses, :only => [:create, :update]
 
   # List all users
   def index
@@ -32,6 +31,13 @@ class Admin::UsersController < Admin::BaseController
   # * <i>address_invoice</i> = Hash of Railscommerce::AddressInvoice attributes
   # * <i>address_delivery</i> = Hash of Railscommerce::AddressDelivery attributes
   def edit
+    respond_to do |format|
+      format.html
+      format.json do
+        sort_orders
+        render :layout => false
+      end
+    end
   end
 
   # Create an User
@@ -48,19 +54,22 @@ class Admin::UsersController < Admin::BaseController
       return redirect_to([:admin, @user])
     else
       flash[:error] = I18n.t('user.create.failed').capitalize
+      render :new
     end
   end
 
   def update
     upload_avatar 
-    if @user.update_attributes(params[:user]) &&
-      @user.address_invoice.update_attributes(params[:address_invoice]) &&
-      @user.address_delivery.update_attributes(params[:address_delivery]) &&
+    if @user.update_attributes(params[:user])
       flash[:notice] = I18n.t('user.update.success').capitalize
     else
       flash[:error] = I18n.t('user.update.failed').capitalize
     end
     render :action => 'edit'
+    puts "*"*50
+    require 'pp'
+    @user.errors
+    puts "*"*50
   end
 
   # Remotly Destroy an User
@@ -72,8 +81,7 @@ class Admin::UsersController < Admin::BaseController
       flash[:error] = I18n.t('user.destroy.failed').capitalize
     end
 
-    index
-    render :partial => 'list', :locals => { :users => @users }
+    return redirect_to(admin_users_path)
   end
 	
   def activate
@@ -175,11 +183,8 @@ private
 
   def new_user
     @user = User.new(params[:user])
-  end
-
-  def get_addresses
-    @user.build_address_invoice(params[:address_invoice]) unless @user.address_invoice
-    @user.build_address_delivery(params[:address_delivery]) unless @user.address_delivery
+    @user.address_deliveries.build if @user.address_deliveries.empty?
+    @user.address_invoices.build if @user.address_invoices.empty?
   end
 
   def stream_csv
@@ -229,6 +234,56 @@ private
     else
       @users = User.paginate(:all,
         :conditions => conditions,
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    end
+  end
+
+  def sort_orders
+    columns = %w(id id sum(orders_details.price) count(orders_details.id) created_at  status)
+    conditions = [[]]
+    case params[:filter]
+      when 'status'
+        conditions[0] << 'status = ?'
+        conditions << params[:status]
+    end
+    
+    conditions[0] << 'user_id = ?'
+    conditions << @user.id
+    
+    conditions[0] = conditions[0].join(' AND ')
+    per_page = params[:iDisplayLength].to_i
+    offset =  params[:iDisplayStart].to_i
+    page = (offset / per_page) + 1
+
+    order_column = columns[params[:iSortCol_0].to_i]
+    include_models = []
+    group_by = ['orders.id']
+
+    case order_column
+    when 'count(orders_details.id)', 'sum(orders_details.price)'
+      group_by << 'orders_details.id'
+      include_models << 'orders_details'
+    when 'people.lastname'
+      group_by << 'people.id'
+      include_models << 'user'
+    end
+    group_by = group_by.join(',')
+
+    order = "#{order_column} #{params[:iSortDir_0].upcase}"
+    if params[:sSearch] && !params[:sSearch].blank?
+      @orders = Order.search(params[:sSearch],
+        :include => include_models,
+        :group => group_by,
+        :order => order,
+        :page => page,
+        :per_page => per_page)
+    else
+      @orders = Order.paginate(:all,
+        :conditions => conditions,
+        :include => include_models,
+        :group => group_by,
         :order => order,
         :page => page,
         :per_page => per_page)

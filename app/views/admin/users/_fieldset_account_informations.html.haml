@@ -1,0 +1,25 @@
+.fieldset
+  %a.small-icons.panel{ :href => '#' }
+    Account Informations
+  .option-panel-content
+    .street-input
+      %label
+        = I18n.t(:password).capitalize
+      = f.password_field :password
+    .street-input
+      %label
+        = I18n.t(:password_confirmation).capitalize
+      = f.password_field :password_confirmation
+    .street-input
+      %label
+        = I18n.t(:birthday).capitalize
+      = f.text_field :birthday, :class => 'date-picker'
+    .street-input
+      %label
+        = I18n.t(:civility).capitalize
+      = f.collection_select 'civility_id', Civility.find(:all, :order => "name"), :id, :name, :selected => user.civility_id, :prompt => true
+    .country-select
+      %label
+        Country
+      = f.collection_select 'country_id', Country.find(:all, :order => "name"), :id, :printable_name, :selected => user.country_id, :prompt => true
+  .clear

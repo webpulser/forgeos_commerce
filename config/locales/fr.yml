@@ -136,6 +136,9 @@ fr:
   city: ville
   country: pays
   zip_code: 'code postale'
+  designation: 'désignation'
+  telephone: 'téléphone'
+  other_telephone: 'autre téléphone'
   track_number: 'numéro de suivi'
   back: retour
   thumbnail:

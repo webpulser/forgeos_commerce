@@ -9,8 +9,12 @@ class User < Person
   has_one :address_delivery, :order => 'id desc'
   has_one :address_invoice, :order => 'id desc'
   has_many :addresses
-  has_many :address_deliveries, :order => 'id desc'
+  has_many :address_deliveries, :order =>  'id desc'
   has_many :address_invoices, :order => 'id desc'
+
+
+  accepts_nested_attributes_for :address_deliveries, :address_delivery, :address_invoices, :address_invoices
+  attr_accessible :address_deliveries_attributes, :address_delivery_attributes, :address_invoices_attributes, :address_invoice_attributes
 
   has_many :orders, :order => 'id desc'
   has_and_belongs_to_many :attachments, :list => true, :order => 'position'
