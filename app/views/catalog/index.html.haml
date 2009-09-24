@@ -15,8 +15,9 @@
         %div
           -form_tag :action => 'index' do
             =hidden_field_tag :product_category_id, @product_category.id
-            =select_tag 'category_choice', options_for_select(@product_category.children.collect{|c| [c.name, c.id]})
-            =submit_tag 'ok'        
+            %div
+              =select_tag 'category_choice', options_for_select(@product_category.children.collect{|c| [c.name, c.id]})
+            =submit_tag 'ok', :class=>'ok-button'
 
         %span
           Taille des images
