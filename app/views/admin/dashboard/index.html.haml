@@ -63,7 +63,7 @@
               - lastest_orders.each do |order|
                 %tr{ :class => cycle('','even')}
                   %td.table-price
-                    = order.total
+                    = number_with_precision(order.total, :precision => 2)
                     = $currency.html
                   %td.table-product
                     = order.orders_details.count

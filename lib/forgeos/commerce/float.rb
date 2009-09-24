@@ -4,7 +4,7 @@ class Float
   end
   
   def diff(number)
-    return 100 if number.zero?
+    return 0 if number.zero?
     (((self - number) / number)* 100).round
   end
 end
