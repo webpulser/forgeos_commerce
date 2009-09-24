@@ -553,9 +553,9 @@ en:
     live:
       one: 'live statistic'
       other: 'live statistics'
-    this:
-      month: this month
-      week: this week
+    last:
+      month: last 30 days
+      week: last 7 days
   visitor:
     one: visitor
     other: visitors

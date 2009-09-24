@@ -3,16 +3,12 @@ class Admin::StatisticsController < Admin::BaseController
   before_filter :products_most_sold, :only => :index
 
   before_filter :get_visitors_and_sales_graphs, :only => :index
-  before_filter :get_days_count_and_days, :only => [:visitors_graph, :sales_graph]
+  before_filter :get_date, :only => [:visitors_graph, :sales_graph]
 
   # generates the ofc2 visitors graph
   def visitors_graph
     # visitors
-    visitors = []
-    (1..@days_count).each do |day|
-      date = Date.new(@today.year, @today.month, day)
-      visitors << Forgeos::Statistics.total_of_visitors(date)
-    end
+    visitors = @date.collect{|day| Forgeos::Statistics.total_of_visitors(day)}
 
     # Bar for visitors
     bar = Bar.new
@@ -31,11 +27,7 @@ class Admin::StatisticsController < Admin::BaseController
   # generates the ofc2 sales graph
   def sales_graph
     # sales
-    sales = []
-    (1..@days_count).each do |day|
-      date = Date.new(@today.year, @today.month, day)
-      sales << Forgeos::Commerce::Statistics.total_of_sales(date)
-    end
+    sales = @date.collect{|day| Forgeos::Commerce::Statistics.total_of_sales(day)}
 
     # Line Dot for sales
     line_dot = LineDot.new
@@ -69,31 +61,18 @@ private
     @sales_graph = open_flash_chart_object(666, 187, admin_statistics_sales_graph_url)
   end
 
-  def get_days_count_and_days
-    @today = Date.current
-    case params[:period]
-    when 'week'
-      @days_count = 7
-      day_start = Date.new(@today.year, @today.month, @today.day - @today.cwday + 1)
-    else # month
-      @days_count = Time.days_in_month(@today.month)
-      day_start = Date.new(@today.year, @today.month, 1)
-    end
-    @days = day_start..(day_start + @days_count - 1)
-  end
-
   def generate_graph(element, y_max, colour)
     # Conf for X axis
     steps = 4
-    days_step = @days_count / steps
+    days_step = (@date.count / steps) > 0 ? @date.count / steps : 1
 
     x_labels = XAxisLabels.new
     x_labels.set_steps(days_step)
     case params[:period]
     when 'week'
-      x_labels.labels = @days.collect{|day| day.to_s(:only_day)}
+      x_labels.labels = @date.collect{|day| day.to_s(:only_day)}
     else
-      x_labels.labels = @days.collect{|day| day.to_s(:long_ordinal)}
+      x_labels.labels = @date.collect{|day| day.to_s(:long_ordinal)}
     end
     x_labels.colour = '#7D5223'
     
