@@ -154,7 +154,7 @@
 
     #right-sidebar.grid_4.omega
       .step.status.open
-        - order_states_for_select = Order.aasm_states.collect{ |state| [state.name, I18n.t(state.name, :scope => [:order,:status])] }
+        - order_states_for_select = Order.aasm_states.collect{ |state| [I18n.t(state.name, :scope => [:order,:status]),state.name] }
         = f.select :status, options_for_select(order_states_for_select, order.status)
         .clear
       - unless order.new_record?
