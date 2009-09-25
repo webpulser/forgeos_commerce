@@ -23,15 +23,6 @@
               =select_tag 'category_choice', options_for_select(@product_category.children.collect{|c| [c.name, c.id]}), :selected => selected
             =submit_tag 'ok', :class=>'ok-button'
 
-        %span
-          Taille des images
-        .image-size
-          %a{ :href => "#" }
-            %span.big-image.active
-          %a{ :href => "#" }
-            %span.medium-image
-          %a{ :href => "#" }
-            %span.small-image
       .slider_product
         %ul#slider_products
           -@products.each do |product|

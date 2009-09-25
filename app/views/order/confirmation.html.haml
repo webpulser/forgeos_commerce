@@ -10,5 +10,7 @@
   .product-list
     = step_order(5)
   .cart-step-content.informations
-    = I18n.t('thank_you_to_place_order').capitalize
+    %p.confirm_message
+      ="Votre commande a bien été prise en compte, vous recevrez un mail de confirmation"
+    = link_to "Retour à la page d'accueil", {:controller=>'home',:action => 'index' } ,:class=> 'to_home'
   .clear

@@ -131,22 +131,6 @@ module OrderHelper
   def display_address(address, multiple_addresses=true)
     return unless address
     content = '<div class="display_address" id="order_address_' + address.class.to_s + '">'
-      content += '<div class="order_address_update">'
-        content += link_to_remote(I18n.t('update').capitalize, :url => { :controller => 'order', :action => 'update_address', :id => address })
-      content += '</div>'
-      content += "<div class='filters'>"
-      if multiple_addresses
-        content +="<div class='enhanced'>"
-        content += select_tag address.class.to_s.gsub('', '').underscore + '_id', 
-                        options_for_select(address.class.find_all_by_user_id(address.user_id).collect { |address_| [address_.designation, address_.id] }, address.id), 
-                        :onchange => remote_function(
-                          :url => { :controller => 'order', :action => 'change_address' }, 
-                          :with => "'id=' + this.value"
-                        )
-        content +="</div>"
-      end
-      content += "</div>"
-
       content += '<div class="address_name">'
         content += "#{address.name} #{address.firstname}"
       content += '</div>'
@@ -158,6 +142,22 @@ module OrderHelper
       content += '</div>'
       content += '<div class="address_city">'
         content += "#{address.zip_code} #{address.city}"
+      content += '</div>'
+      content += "<div class='filters'>"
+        if multiple_addresses
+          content +="<div class='enhanced'>"
+          content +="<label>Selectionnez une autre de vos adresses</label>"
+          content += select_tag address.class.to_s.gsub('', '').underscore + '_id',
+                          options_for_select(address.class.find_all_by_user_id(address.user_id).collect { |address_| [address_.designation, address_.id] }, address.id),
+                          :onchange => remote_function(
+                            :url => { :controller => 'order', :action => 'change_address' },
+                            :with => "'id=' + this.value"
+                          )
+          content +="</div>"
+        end
+      content += "</div>"
+      content += '<div class="order_address_update">'
+        content += link_to_remote(I18n.t('update').capitalize, :url => { :controller => 'order', :action => 'update_address', :id => address })
       content += '</div>'
     content += '</div>'
   end
