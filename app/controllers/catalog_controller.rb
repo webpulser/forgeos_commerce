@@ -16,8 +16,8 @@ class CatalogController < ApplicationController
       @products = @category_choice.products.all
     end
     
-    if params[:id]
-      @selected_product = Product.find_by_id(params[:id])
+    if params[:url]
+      @selected_product = Product.find_by_url(params[:url])
     else
       @selected_product = @products.first
     end

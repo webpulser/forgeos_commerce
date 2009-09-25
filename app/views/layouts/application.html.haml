@@ -79,7 +79,7 @@
         %ul.menu
           -ProductCategory.find_all_by_parent_id(nil, :limit => 7).each do |category|
             %li
-              = link_to category.name, {:controller => 'catalog', :action => 'index', :product_category_id => category.id}
+              = link_to category.name, {:controller => 'catalog', :action => 'index', :category_name=> category.name}
     .content
       .yield= yield
 
@@ -87,7 +87,7 @@
     .footer
       .footer_categories_links
         -ProductCategory.all.each do |category|
-          = link_to category.name, {:controller => 'catalog', :action => 'index', :product_category_id => category.id}
+          = link_to category.name, {:controller => 'catalog', :action => 'index', :category_name => category.name}
       .footer_links
         %span
           Paiement sécurisé
