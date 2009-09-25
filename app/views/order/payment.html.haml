@@ -10,5 +10,5 @@
   .product-list
     = step_order(4)
   .cart-step-content.informations
-    = link_to I18n.t('free_payment').capitalize, :action => 'confirmation'
+    = link_to I18n.t('free_payment').capitalize, {:action => 'confirmation' } ,:class=> 'payment-link'
   .clear
