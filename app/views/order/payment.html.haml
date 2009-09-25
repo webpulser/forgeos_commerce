@@ -1,3 +1,14 @@
-= step_order(4)
-%center
-  = link_to I18n.t('free_payment').capitalize, :action => 'confirmation'
+.before_breadcrumbs
+.breadcrumbs
+  .inner-breadcrumbs
+    %a{ :href => "#" }
+      Accueil
+    >
+    Mon panier
+
+.inner-content
+  .product-list
+    = step_order(4)
+  .cart-step-content.informations
+    = link_to I18n.t('free_payment').capitalize, :action => 'confirmation'
+  .clear

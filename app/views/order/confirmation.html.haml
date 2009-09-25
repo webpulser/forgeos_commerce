@@ -1,2 +1,14 @@
-= step_order(5)
-= I18n.t('thank_you_to_place_order').capitalize
+.before_breadcrumbs
+.breadcrumbs
+  .inner-breadcrumbs
+    %a{ :href => "#" }
+      Accueil
+    >
+    Confirmation
+
+.inner-content
+  .product-list
+    = step_order(5)
+  .cart-step-content.informations
+    = I18n.t('thank_you_to_place_order').capitalize
+  .clear
