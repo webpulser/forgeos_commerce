@@ -70,8 +70,6 @@
             =submit_tag "J'ajoute au panier", :class => 'add_to_cart'
         .clear
         .links
-          %a.security{ :href => "#" }
-            J'achète en toute confiance
           %a.print{ :href => "javascript:window.print();" }
             J'imprime
           %a.signal_to_a_friend.last{ :href => "#" }
@@ -93,5 +91,5 @@
                 = image_tag(picture.public_filename(:normal))
               - else
                 %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
-              %span= product.name
+              %span= truncate(product.name,15,' ...')
               %span.price= "#{product.price} #{$currency.html}"
