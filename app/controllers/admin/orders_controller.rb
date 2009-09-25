@@ -50,7 +50,11 @@ class Admin::OrdersController < Admin::BaseController
   def destroy
     if @order.destroy
       flash[:notice] = I18n.t('order.destroy.success').capitalize
+      return redirect_to(admin_orders_path) if !request.xhr?
+    else
+      flash[:error] = I18n.t('order.destroy.failed').capitalize
     end
+    render :nothing => true
   end
 
   def pay

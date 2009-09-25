@@ -90,7 +90,7 @@
                   %td{ :class => "table-state #{order.status}"}
                     = I18n.t(order.status, :scope => [:order,:status]).capitalize
                   %td.table-customer
-                    = order.user.fullname
+                    = order.user.fullname if order.user
                   %td.table-time
                     = I18n.t(order.created_at)
           = link_to I18n.t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
