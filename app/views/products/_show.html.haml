@@ -7,13 +7,14 @@
     .image_container
       .first_image_container
         /%img.first_image{ :title => "image produit", :src => "/images/front_demo/product_image_small.jpg", :alt => "image produit" }
-        =image_tag(product.pictures.first.public_filename(''), :alt=>product.pictures.first.public_filename(:big)) if !product.pictures.blank?
+        %a{:href => product.pictures.first.public_filename(:big), :class=>"jqzoom"}
+          =image_tag(product.pictures.first.public_filename(:normal) ,:alt=>product.pictures.first.public_filename(:big)) if !product.pictures.blank?
       .other_views
-        %span
-          Autres vues
-        -product.pictures.each do |picture|
-          =image_tag(picture.public_filename(''), :alt=>picture.public_filename(:big)) if picture != product.pictures.first
-        %a.zoom{ :href => "#" }
+        -if product.pictures.length > 1
+          %span
+            Autres vues
+          -product.pictures.each do |picture|
+            =image_tag(picture.public_filename(:normal), :alt=>picture.public_filename(:big)) if picture != product.pictures.first
     .info_container.to_tab
       %ul
         %li
