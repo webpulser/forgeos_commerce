@@ -146,7 +146,7 @@ fr:
       confirm: 'êtes-vous sûr de vouloir supprimer cette adresse ?'
   city: ville
   country: pays
-  zip_code: 'code postale'
+  zip_code: 'code postal'
   designation: 'désignation'
   telephone: 'téléphone'
   other_telephone: 'autre téléphone'
