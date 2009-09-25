@@ -1,4 +1,4 @@
-<% order_states_for_select = Order.aasm_states.collect{ |state| [I18n.t(state.name, :scope => [:order,:status]),state.name] }%>
+<% order_states_for_select = Order.aasm_states.collect{ |state| [I18n.t(state.name, :scope => [:order,:status]),state.name.to_s] }%>
 {
 'iTotalDisplayRecords': <%= @orders.total_entries || 0 %>,
 'aaData': [
