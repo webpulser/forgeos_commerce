@@ -1,14 +1,14 @@
-- form_tag session_path do
+- form_tag session_path, { :autocomplete => 'off' } do
   %p
     %label{ :for => "email" }
       = I18n.t('email').capitalize
-      = text_field_tag 'email', '', :autocomplete => 'off'
+      = text_field_tag 'email'
     %br
   %p
     %label{ :for => "password" }
       = I18n.t('password').capitalize
     %br
-    = password_field_tag 'password','', :autocomplete => 'off'
+    = password_field_tag 'password'
   %p
     = check_box_tag 'remember_me'
     %label{ :for => "remember_me" }
