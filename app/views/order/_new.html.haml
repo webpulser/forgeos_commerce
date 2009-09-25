@@ -11,7 +11,7 @@
       = display_address current_user.address_delivery
       
     .clear
-    %center
+    .add_address
       = link_to_remote('ajouter une adresse', :url => { :controller => 'order', :action => 'add_address' })
   .clear
     \&nbsp;
