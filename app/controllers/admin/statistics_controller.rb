@@ -1,13 +1,13 @@
 class Admin::StatisticsController < Admin::BaseController
   before_filter :products_most_viewed, :only => :index
   before_filter :products_most_sold, :only => :index
-  before_filter :custommers_new, :only => :index
+  before_filter :customers_new, :only => :index
 
   before_filter :get_visitors_and_sales_graphs, :only => :index
-  before_filter :get_date, :only => [:visitors_graph, :sales_graph]
 
   # generates the ofc2 visitors graph
   def visitors_graph
+    get_date
     # visitors
     visitors = @date.collect{|day| Forgeos::Statistics.total_of_visitors(day)}
 
@@ -27,6 +27,7 @@ class Admin::StatisticsController < Admin::BaseController
 
   # generates the ofc2 sales graph
   def sales_graph
+    get_date
     # sales
     sales = @date.collect{|day| Forgeos::Commerce::Statistics.total_of_sales(day)}
 
@@ -57,8 +58,7 @@ private
     @products_most_sold = Forgeos::Commerce::Statistics.products_most_sold(@date,10)
   end
 
-  def custommers_new
-    
+  def customers_new
   end
 
   def get_visitors_and_sales_graphs
