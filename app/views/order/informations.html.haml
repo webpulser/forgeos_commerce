@@ -5,7 +5,6 @@
       Accueil
     >
     Mon panier
-
 .inner-content
   .product-list
     = step_order(2)
@@ -13,6 +12,7 @@
     - if logged_in?
       = render :partial => 'users/edit_form'
     - else
+      - session[:redirect] = "/order/new"
       #login
         = render :partial => 'sessions/new_form'
       .order-separation
