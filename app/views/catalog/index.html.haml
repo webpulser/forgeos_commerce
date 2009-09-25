@@ -17,10 +17,10 @@
             =hidden_field_tag :product_category_id, @product_category.id
             %div
               - if !@category_choice.nil?
-                -selected = @category_choice.name 
-              - else        
-                -selected = 'none'
-              =select_tag 'category_choice', options_for_select(@product_category.children.collect{|c| [c.name, c.id]}), :selected => selected
+                -selected = @category_choice.id
+              - else
+                -selected = @product_category.children.first.id
+              =select_tag 'category_choice', options_for_select(@product_category.children.collect{|c| [c.name, c.id]},selected)
             =submit_tag 'ok', :class=>'ok-button'
 
       .slider_product
