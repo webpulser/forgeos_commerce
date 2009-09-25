@@ -31,13 +31,20 @@ module Forgeos
         )
       end
 
-#      def self.best_customers(date, limit = nil)
-#        orders = Order.all( :conditions => { :created_at => date } )
-#      end
-
+      def self.best_customers(date, limit = nil)
+        OrdersDetail.sum(:price,
+          :conditions => { 'orders.status' => %w(paid shipped closed), 'orders.updated_at' => date },
+          :include => :order,
+          :limit => limit,
+          :group => 'orders.user_id',
+          :order => 'sum_price DESC'
+        )
+      end
+      
       def self.new_customers(date, limit = nil)
         User.all( 
           :conditions => { :created_at => date },
+          :order => 'created_at DESC',
           :limit => limit
         )
       end
