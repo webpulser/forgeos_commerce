@@ -21,7 +21,7 @@
        )
   -%>',
   '<%= order.created_at.to_s(:short) %>',
-  '<%= escape_javascript content_tag(:div, link_to(order.user.fullname, [:admin, order.user], :target => '_blank'), :class => 'username') %>',
+  '<%= escape_javascript content_tag(:div, order.user ? link_to(order.user.fullname, [:admin, order.user], :target => '_blank') : '', :class => 'username') %>',
   '<%= escape_javascript(
     select('order_status',order.id,
       options_for_select(order_states_for_select, order.status),
