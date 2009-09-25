@@ -10,6 +10,8 @@
     .header
       .header-content
         %ul.list_static_pages
+          %li
+            =link_to Page.find_by_single_key('home').title, "/#{Page.find_by_single_key('home').url}"
           -Page.find_all_by_active(true,:conditions => {:single_key => nil, :active => true}, :limit => 4).each do |page|
             %li
               =link_to page.title, "/#{page.url}"

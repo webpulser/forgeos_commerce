@@ -1,20 +1,21 @@
 .before_breadcrumbs
 
-.inner-content
-  .blocks_container
-    .block
-      .left_shadow
-      .block_container
-        ='<img src="/images/front_demo/block_1.png" />'
-      .right_shadow
-    .block
-      .left_shadow
-      .block_container
-        ='<img src="/images/front_demo/block_2.png" />'
-      .right_shadow
-    .block
-      .left_shadow
-      .block_container
-        ='<img src="/images/front_demo/block_3.png" />'
-      .right_shadow
 
+/  .blocks_container
+/    .block
+/      .left_shadow
+/      .block_container
+/        ='<img src="/images/front_demo/block_1.png" />'
+/      .right_shadow
+/    .block
+/      .left_shadow
+/      .block_container
+/        ='<img src="/images/front_demo/block_2.png" />'
+/      .right_shadow
+/    .block
+/      .left_shadow
+/      .block_container
+/        ='<img src="/images/front_demo/block_3.png" />'
+/      .right_shadow
+.inner-content
+  =Page.find_by_single_key('home').content
