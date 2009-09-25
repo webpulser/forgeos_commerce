@@ -1,0 +1,15 @@
+#productSelectDialog.media-hoverlay
+  .media-hoverlay-header
+    = I18n.t('order.product.select').capitalize
+    #search.right.files
+      = fg_search
+    .backgrounds.search-form-files
+  .media-hoverlay-sidebar.grid_3.omega.alpha
+    .sidebar-content
+      %h2{ :class => 'small-icons products'}
+        = link_to_function I18n.t('product.all').capitalize, "select_all_elements('#{escape_javascript(admin_products_url :format => :json)}')"
+      .init-tree.a-tree{:id => 'product-tree'}
+  .media-hoverlay-content
+    %table#table-products.datatable.media.selectable_rows
+
+= dataTables_tag :id => 'table-products', :url => admin_products_path(:format => :json, :mode => 'selection'), :columns => ["{'sClass':'th-checkbox-container','bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t(:name)}'}","{'sTitle':'#{I18n.t(:sku)}'}","{'sTitle':'#{I18n.t(:price, :count => 1)}'}","{'sTitle':'#{I18n.t(:stock, :count => 1)}'}","{'sTitle':'#{I18n.t(:product_type, :count => 1)}'}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}"]
