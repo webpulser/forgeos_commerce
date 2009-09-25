@@ -215,8 +215,9 @@ class OrderController < ApplicationController
           current_user.addresses << type.create(params[:address])
         end
       else
-        type = (params[:address][:kind] == 'AddressDelivery') ? AddressDelivery : AddressInvoice
-        current_user.addresses << type.create(params[:address])
+        #type = (params[:address][:kind] == 'AddressDelivery') ? AddressDelivery : AddressInvoice
+        current_user.addresses << AddressDelivery.create(params[:address])
+        current_user.addresses << AddressInvoice.create(params[:address])
       end
     end
     back_addresses
