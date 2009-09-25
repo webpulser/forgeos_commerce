@@ -46,26 +46,27 @@
               .search-icon
               %input.input_text{ :type => "text" }
               %input.btn_ok{ :type => "submit", :value => "ok" }
-          .cart-box
-            = link_to "J'accède à Mon Espace Client", new_session_path if !logged_in?
-            .cart-icon
-              %span.opener
-              %span
-                =link_to_cart('Mon panier')
-              %br
-                ="#{@cart.total_items} articles" if !@cart.nil?
-            %ul.cart-products
-              -@cart.products.group_by(&:id).each do |cart_product|
-                -product = cart_product[1].first
-                -nb = cart_product[1].count
-                %li
-                  %span.li-product-name
-                    = product.name
-                  %span.li-product-qty
-                    = "x#{nb}"
-                  %span.li-product-price
-                    = "#{product.price*nb} &euro;"
-                  %span.clear
+          -if !@cart.nil?
+            .cart-box
+              = link_to "J'accède à Mon Espace Client", new_session_path if !logged_in?
+              .cart-icon
+                %span.opener
+                %span
+                  =link_to_cart('Mon panier')
+                %br
+                  ="#{@cart.total_items} articles" if !@cart.nil?
+              %ul.cart-products
+                -@cart.products.group_by(&:id).each do |cart_product|
+                  -product = cart_product[1].first
+                  -nb = cart_product[1].count
+                  %li
+                    %span.li-product-name
+                      = product.name
+                    %span.li-product-qty
+                      = "x#{nb}"
+                    %span.li-product-price
+                      = "#{product.price*nb} &euro;"
+                    %span.clear
           .create-customer-space
             -if logged_in?
               = link_to "Bienvenue #{current_user.fullname}", "#"

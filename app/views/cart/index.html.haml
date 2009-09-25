@@ -42,7 +42,8 @@
                   €
       -@cart.carts_products.group_by(&:product_id).each do |cart_product|
         -product = cart_product[1].first.product
-        -if cart_product[1].first.new_price != nil
+        
+        -if !	cart_product[1].first.new_price.nil? and cart_product[1].first.new_price != product.price
           = "Promo #{product.name} : -#{product.price-cart_product[1].first.new_price} €"
           %br 
       ="Prix total #{@cart.total} €"

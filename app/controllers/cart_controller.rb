@@ -2,7 +2,7 @@ require 'ruleby'
 class CartController < ApplicationController
   include Ruleby
   before_filter :get_cart
-  after_filter :special_offer 
+  #after_filter :special_offer, :only => [:index]
   # Show <i>Cart</i>
   def index
     flash[:notice] = I18n.t(:your_cart_is_empty).capitalize if @cart.is_empty?
@@ -72,7 +72,7 @@ class CartController < ApplicationController
   rescue
     redirect_to(:action => 'index')   
   end
-
+  
 protected
   # Update <i>session[:order_shipping_method_detail_id]</i> and <i>session[:order_voucher_ids]</i> at <i>nil</i>
   #
@@ -90,6 +90,9 @@ protected
   end
 
   def special_offer
+    p 'test'*10
+    p @cart.inspect
+    #dd
   # SpecialOffers
     # delete free product already in cart and cart discount
     @cart.update_attributes!(:discount => nil, :percent => nil)

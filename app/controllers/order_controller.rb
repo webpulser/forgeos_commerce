@@ -34,7 +34,7 @@ class OrderController < ApplicationController
       redirect_to(:action => 'new')
       return false
     end
-
+    
     redirect_to(:action => 'payment') if action
     return true
   end
@@ -67,23 +67,37 @@ class OrderController < ApplicationController
   def create
     valid = valid_shipment(false)
     return false unless valid
-
-    address_invoice = @address_invoice.clone
-    address_delivery = @address_delivery.clone
+    
+    address_invoice = @address_invoice
+    address_delivery = @address_delivery
     shipping_method_detail = @shipping_method_detail
-
-    voucher = Voucher.find_by_id(session[:order_voucher_ids])
-
-    address_invoice.update_attribute(:user_id, nil)
-    address_delivery.update_attribute(:user_id, nil)
-
     @order = Order.create(
       :user_id                => current_user.id,
-      :address_invoice_id     => address_invoice.id, 
-      :address_delivery_id    => address_delivery.id,
+      :address_delivery_attributes => {
+        :name => address_delivery.name,
+        :firstname => address_delivery.firstname,
+        :address => address_delivery.address,
+        :address_2 => address_delivery.address_2,
+        :zip_code => address_delivery.zip_code,
+        :city => address_delivery.city, 
+        :civility_id => address_delivery.civility_id,
+        :country_id => address_delivery.country_id, 
+        :designation => 'toto'
+        },
+      :address_invoice_attributes => {
+        :name => address_invoice.name,
+        :firstname => address_invoice.firstname,
+        :address => address_invoice.address,
+        :address_2 => address_invoice.address_2,
+        :zip_code => address_invoice.zip_code,
+        :city => address_invoice.city,
+        :civility_id => address_invoice.civility_id,
+        :country_id => address_invoice.country_id, 
+        :designation => 'toto'
+        },      
       :order_shipping_attributes => { :name => shipping_method_detail.name, :price => shipping_method_detail.price(false) },
-      :voucher                => (voucher) ? voucher.value : nil,
-      :transaction_number     => params[:trans],
+      #:voucher                => (voucher) ? voucher.value : nil,
+      #:transaction_number     => params[:trans],
       :reference              => @cart.id,
       :orders_details_attributes => @cart.products.collect do |product|
         {
@@ -96,12 +110,14 @@ class OrderController < ApplicationController
         }
       end
       )
-
+      
+    p 'toto'*10
+    p @order.inspect
     @cart.destroy
-    @order.pay! if params[:trans] && !params[:trans].blank?
+   # @order.pay! if params[:trans] && !params[:trans].blank?
     flash[:notice] = I18n.t('thank_you').capitalize
     session[:order_confirmation] = @order.id
-    redirect_to(:action => 'confirmation')
+    redirect_to(:action => 'payment')
   end
 
   def add_address
