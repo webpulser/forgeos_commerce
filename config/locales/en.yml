@@ -221,6 +221,8 @@ en:
   accept: 'validate order'
   send: 'validate shipping'
   drag_attributes: 'drag attributes from the right column to this product type:'
+  top_5_items: Top 5 search items
+  most_search: Most search items
   tattribute:
     one: "attribute"
     all: "all attributes"

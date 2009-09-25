@@ -221,6 +221,8 @@ fr:
   accept: 'valider la commande'
   send: "valider l'expédition"
   drag_attributes: 'Glisser les attributs depuis la colonne de droite pour les ajouter au type de produit'
+  top_5_items: Top 5 des produits recherchés
+  most_search: Produit les plus recherchés
   tattribute:
     one: attribut
     all: tous les attributs
