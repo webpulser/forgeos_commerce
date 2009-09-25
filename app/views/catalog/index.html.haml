@@ -4,7 +4,7 @@
 .breadcrumbs
   .inner-breadcrumbs
     =link_to 'Accueil', '/'
-    >
+    &gt;
     = @product_category.name
 .inner-content
   -if !@selected_product.nil?
@@ -27,7 +27,7 @@
         %ul#slider_products
           -@products.each do |product|
             %li
-              =link_to image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel'), {:controller => 'catalog', :action => 'index', :selected_product_id => product.id, :product_category_id => @product_category.id, :category_choice => @category_choice} if !product.pictures.blank?
+              =link_to image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel'), "/product/#{product.url}" if !product.pictures.blank?
               /%img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
               %span.price
                 =product.price

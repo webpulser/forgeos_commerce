@@ -85,29 +85,13 @@
       %h2
         Nous vous proposons de compléter votre tenue avec :
       %ul.cross-sells
-        %li
-          %a{ :href => "#" }
-            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
-            %span
-              La jupe courte
-            %span.price
-              29,90&euro;
-        %li
-          %a{ :href => "#" }
-            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
-        %li
-          %a{ :href => "#" }
-            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
-        %li
-          %a{ :href => "#" }
-            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
-        %li
-          %a{ :href => "#" }
-            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
-        %li
-          %a{ :href => "#" }
-            %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
-
--p 'hu'*40
--p product.barcode
--p product.inspect
+        - Product.all(:conditions => { :active => true, :deleted => [false,nil] }, :limit => 10).each do |product|
+          %li
+            %a{ :href => "/product/#{product.url}" }
+              - picture = product.pictures.first
+              - if picture
+                = image_tag(picture.public_filename(:normal))
+              - else
+                %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+              %span= product.name
+              %span.price= "#{product.price} #{$currency.html}"

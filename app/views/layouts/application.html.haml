@@ -2,8 +2,7 @@
 %html{ "xml:lang" => "fr", :lang => "fr", :xmlns => "http://www.w3.org/1999/xhtml" }
   %head
     %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-Type" }
-    %title
-      Seb rocks ! 
+    %title= I18n.t('project_name')
     %link{ :href => "/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon" }
     = stylesheet_link_tag %w(front_demo/style front_demo/jqzoom front_demo/jquery.jcarousel front_demo/jquery-ui/themes/front), :cache => 'base'
     = javascript_include_tag 'jquery'
@@ -13,7 +12,7 @@
         %ul.list_static_pages
           -Page.find_all_by_active(true, :limit => 4).each do |page|
             %li
-              =link_to page.title, page.url
+              =link_to page.title, "/#{page.url}"
    
         .baseline
           Tenue de fête,
