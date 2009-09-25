@@ -1,4 +1,4 @@
-- order_states_for_select = Order.aasm_states.collect{ |state| [state.name, I18n.t(state.name, :scope => [:order,:status])] }
+- order_states_for_select = Order.aasm_states.collect{ |state| [I18n.t(state.name, :scope => [:order,:status]),state.name.to_s] }
 .backgrounds.big-header
   %h1
     =@user.fullname
@@ -48,10 +48,9 @@
                 =product_names
 
               %td= order.created_at.to_s(:short)
-              %td= select_tag(:status, options_for_select(order_states_for_select, order.status))
+              %td= select_tag(:status, options_for_select(order_states_for_select, order.status), :class => 'order-change-status')
               %td= link_to('', [:edit, :admin, order], :class => 'small-icons edit-link')
             
-
     .padding-wrap
       .fieldset
         %h3
@@ -93,7 +92,7 @@
       
   #right-sidebar.grid_4.omega.alpha
     .step
-      =mail_to @user.email, 'Contact customer', :class => 'small-icons contact'
+      =mail_to @user.email, I18n.t('user.contact').capitalize, :class => 'small-icons contact'
       = link_to I18n.t('order.create.action').capitalize, new_admin_order_path, :class=>'small-icons duplicate'
       = link_to I18n.t('user.destroy.action').capitalize, [:admin, @user], :confirm => I18n.t('user.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
     .step.open
