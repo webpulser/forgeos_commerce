@@ -74,7 +74,6 @@
                 %td= 1
                 %td.total= "#{detail.total} #{$currency.html}"
                 %td= link_to_function '', "remove_order_detail($(this));", :class => 'small-icons destroy-link', :id => "order_detail_#{detail.id}"
-
         .order_details
           - f.fields_for :orders_details do |detail_form|
             = detail_form.hidden_field :_delete, :class => 'delete', :id => "_delete_order_detail_#{detail_form.object.id}"
@@ -116,12 +115,12 @@
         .fieldset
           - order.build_address_delivery if order.address_delivery.nil?
           - f.fields_for :address_delivery do |delivery_address_form|
-            = link_to I18n.t('address.delivery').capitalize, '#', :class => "small-icons panel"
+            = link_to I18n.t('address.delivery', :count => 1).capitalize, '#', :class => "small-icons panel"
             = render :partial => 'address_form', :locals => {:form => delivery_address_form, :civilities => civilities, :countries => countries}
         .fieldset
           - order.build_address_invoice if order.address_invoice.nil?
           - f.fields_for :address_invoice do |invoice_address_form|
-            = link_to I18n.t('address.invoice').capitalize, "#", :class => "small-icons panel"
+            = link_to I18n.t('address.invoice', :count => 1).capitalize, "#", :class => "small-icons panel"
             = render :partial => 'address_form', :locals => {:form => invoice_address_form, :civilities => civilities, :countries => countries}
 
         .fieldset
@@ -162,6 +161,7 @@
         .step
           = link_to I18n.t('order.invoice.show'), [:bill, :admin, order], :class => 'small-icons preview'
           = link_to I18n.t('order.destroy.action'), [:admin, order], :method => :delete, :confirm => I18n.t('order.destroy.confirm'), :class => 'small-icons delete'
+
         .step.disabled
           %a.small-icons.step-title{ :href => "#" }
             = I18n.t('order.history').capitalize

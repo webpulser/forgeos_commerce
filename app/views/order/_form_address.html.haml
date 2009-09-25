@@ -5,7 +5,7 @@
       = I18n.t('type').capitalize
     \:
     %br
-    = f.select :kind, [[I18n.t('address.delivery').capitalize, 'AddressDelivery'], [I18n.t('address.invoice').capitalize, 'AddressInvoice']]
+    = f.select :kind, [[I18n.t('address.delivery', :count => 1).capitalize, 'AddressDelivery'], [I18n.t('address.invoice', :count => 1).capitalize, 'AddressInvoice']]
   %p
     %label
       = I18n.t('civility').capitalize

@@ -85,7 +85,7 @@
         %h3= I18n.t('order.delivery')
         .order-delivery
           .order-delivery-adress
-            %h4.small-icons= I18n.t('address.delivery').capitalize
+            %h4.small-icons= I18n.t('address.delivery', :count => 1).capitalize
             %p= @order.address_delivery.address
             %p
               = @order.address_delivery.zip_code
@@ -93,7 +93,7 @@
             %p= @order.address_delivery.country.name
           .main-info-separation
           .order-billing-adress
-            %h4.small-icons= I18n.t('address.invoice').capitalize
+            %h4.small-icons= I18n.t('address.invoice', :count => 1).capitalize
             %p= @order.address_invoice.address
             %p
               = @order.address_invoice.zip_code
