@@ -72,8 +72,7 @@
         .links
           %a.print{ :href => "javascript:window.print();" }
             J'imprime
-          %a.signal_to_a_friend.last{ :href => "#" }
-            Je signale ce produit à une amie
+          = mail_to "", "Je signale ce produit à un ami", :subject => 'Demo Forgeos signaler un produit', :class => 'signal_to_a_friend last'
       -product.product_type.options.find(:all, :conditions => { :type => 'LongtextOption' }).each do |option|
         %div{:id => option.access_method}
           =product.dynamic_option_values.find_by_tattribute_id(option.id).value
