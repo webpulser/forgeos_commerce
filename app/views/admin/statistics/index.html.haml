@@ -97,21 +97,12 @@
           %li.ui-state-default.ui-corner-top= link_to I18n.t('user.new_customer', :count => 2).capitalize, '#new-customers'
         #best-customers.ui-tabs-panel.ui-widget-content.ui-corner-bottom
           %table
-            -#%tbody
-              %tr
-                %td.customer-bought-amount
-                  2465$
-                %td.table-product
-                  Page "About us" created
-                %td
-                  quentin@webpulser.com
-              %tr.even
-                %td.customer-bought-amount
-                  2465$
-                %td.table-product
-                  Page "About us" created
-                %td
-                  quentin@webpulser.com
+            %tbody
+            - @best_buyers.each do |user_id, total|
+              - if user = User.find_by_id(user_id)
+                %tr{:class => cycle('odd','even')}
+                  %td.customer-bought-amount= "#{total} #{$currency.html}"
+                  %td= user ? user.fullname : ''
           .clear
           = link_to I18n.t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
 
