@@ -78,8 +78,6 @@ fr:
   cancel: annuler
   unaccessible_function: 'fonction inaccessible'
   my_informations: 'mes informations'
-  unpaid: 'impayé'
-  sended: 'expédié'
 
 # Admin
   id: id
@@ -343,7 +341,7 @@ fr:
     send:
       success: 'la commande a bien été envoyée'
     status:
-      unpaid: 'en attente de paiement'
+      unpaid: 'non payée'
       paid: 'payée'
       canceled: 'annulée'
       shipped: 'expédiée'
