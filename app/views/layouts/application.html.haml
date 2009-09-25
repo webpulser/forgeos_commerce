@@ -96,7 +96,7 @@
         %img{ :src => "/images/front_demo/visa.png" }
         %img{ :src => "/images/front_demo/https.png" }
         -Page.find_all_by_active(true, :conditions => {:single_key => nil, :active => true}).each do |page|
-          =link_to page.title, page.url
+          =link_to page.title, {:controller => 'url_catcher', :action => 'page', :url => page.url}
           |
 
 = javascript_include_tag 'front_demo/jquery.jcarousel.pack', :cache => false
