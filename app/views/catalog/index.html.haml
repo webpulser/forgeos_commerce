@@ -20,7 +20,7 @@
                 -selected = @category_choice.id
               - else
                 -selected = @product_category.children.first.id
-              =select_tag 'category_choice', options_for_select(@product_category.children.collect{|c| [c.name, c.id]},selected)
+              =select_tag 'category_choice', options_for_select(@product_category.children.collect{|c| [c.name, c.id]},selected), :prompt => 'choose'
             =submit_tag 'ok', :class=>'ok-button'
 
       .slider_product
@@ -35,5 +35,8 @@
     =render :partial => 'products/show', :locals => { :product => @selected_product }
   -else
     .no_product
-      %h1
-        Il n'y a pas de produits dans cette catégorie !!!!!!!
+      .cart-step-content
+        %h1
+          Il n'y a pas de produit dans cette catégorie.
+          = link_to "Retour à l'accueil", '/home'
+'
