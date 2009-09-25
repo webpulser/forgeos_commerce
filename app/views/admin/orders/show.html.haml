@@ -70,7 +70,7 @@
           %span.order_shipping= "#{@order.order_shipping.price} #{$currency.html}"
       .order-totals
         %div= I18n.t('special_offer', :count => 2).capitalize
-        - if @order.voucher
+        - unless @order.voucher.blank?
           %span= "- #{@order.voucher} #{$currency.html}"
         -# @order.special_offers.each do |offer|
           %div= offer.name

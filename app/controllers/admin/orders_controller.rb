@@ -42,10 +42,6 @@ class Admin::OrdersController < Admin::BaseController
       redirect_to(admin_orders_path)
     else
       flash[:error] = I18n.t('order.update.failed').capitalize
-
-      logger.debug "*"*400
-      logger.debug @order.errors.collect{ |e, m| "- #{e.humanize unless e == 'base'} #{m}\n" }.to_s
-
       return render :text => false if request.xhr?
       render :action => 'edit'
     end

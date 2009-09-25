@@ -4,7 +4,7 @@
     = form.text_field :designation
   .civility-select
     = form.label :civility_id, I18n.t('civility').capitalize
-    = form.collection_select :civility_id, civilities, :id, :name, {:prompt => true}
+    = form.collection_select :civility_id, civilities, :id, :name, {:prompt => I18n.t('please_select')}
   .firstname-input
     = form.label :firstname , I18n.t('firstname').capitalize
     = form.text_field :firstname
@@ -25,5 +25,5 @@
     = form.text_field :city
   .country-select
     = form.label :country_id , I18n.t('country').capitalize
-    = form.collection_select :country_id, countries, :id, :name, {:prompt => true}
+    = form.collection_select :country_id, countries, :id, :name, {:prompt => I18n.t('please_select')}
   .clear

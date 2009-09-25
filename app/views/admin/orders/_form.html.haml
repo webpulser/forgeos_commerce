@@ -8,8 +8,9 @@
       n°
       = order.id
     %span.header-separator
-    %span= order.created_at.to_s(:short) unless order.created_at.nil?
-    %span.header-separator
+    - unless order.created_at.nil?
+      %span= order.created_at.to_s(:short) 
+      %span.header-separator
     .interact-links
       = submit_tag I18n.t('save_changes').capitalize, :class => 'backgrounds interact-button'
       = I18n.t('or')
@@ -18,13 +19,23 @@
   #content.grid_16.alpha.omega
     #order-see.grid_12.alpha
       .order-see-wrap
-        - unless order.new_record?
+        - if order.new_record?
           .fieldset
             %h3= I18n.t('order.main_infos')
             .main-infos
               - user = order.user
               .main-infos-cutomer
                 %h4.small-icons= I18n.t('user', :count => 1).capitalize
+                = f.select :user_id, User.all(:order => 'firstname ASC, lastname ASC').collect {|u| [u.fullname, u.id]}, {:prompt => I18n.t('please_select')}
+            .clear
+          .clear
+        - else
+          .fieldset
+            %h3= I18n.t('order.main_infos')
+            .main-infos
+              .main-infos-cutomer
+                %h4.small-icons= I18n.t('user', :count => 1).capitalize
+                - user = order.user
                 = link_to user.fullname, [:admin, user]
                 %p= "#{user.orders.count} #{I18n.t('order', :count => user.orders.count)} #{I18n.t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
                 %p= user.tel1
@@ -45,6 +56,7 @@
                 =# order.user_note
             .clear
           .clear
+
         %table#table-order-details.datatable
           %thead
             %tr
@@ -158,12 +170,12 @@
         - order_states_for_select = Order.aasm_states.collect{ |state| [I18n.t(state.name, :scope => [:order,:status]),state.name.to_s] }
         = f.select :status, options_for_select(order_states_for_select, order.status)
         .clear
-      - unless order.new_record?
-        .step
+      .step
+        = link_to I18n.t('order.product.add'), '#', :class => 'small-icons small-icons-verti-small-blue-plus add-order-detail'
+        - unless order.new_record?
           = link_to I18n.t('order.invoice.show'), [:bill, :admin, order], :class => 'small-icons preview'
-          = link_to I18n.t('order.product.add'), '#', :class => 'small-icons small-icons-verti-small-blue-plus add-order-detail'
           = link_to I18n.t('order.destroy.action'), [:admin, order], :method => :delete, :confirm => I18n.t('order.destroy.confirm'), :class => 'small-icons delete'
-
+      - unless order.new_record?
         .step.disabled
           %a.small-icons.step-title{ :href => "#" }
             = I18n.t('order.history').capitalize

@@ -18,7 +18,7 @@
       = select 'filter', 'gender', genders, :selected => @gender
       = label_tag 'filter[country]', I18n.t('country').capitalize
       \:
-      = collection_select 'filter', 'country', Country.find(:all, :order => "name"), :id, :printable_name, :selected => @country.to_i, :prompt => true
+      = collection_select 'filter', 'country', Country.find(:all, :order => "name"), :id, :printable_name, :selected => @country.to_i, :prompt => I18n.t('please_select')
       %br
       = label_tag 'filter[age]', I18n.t('age').capitalize
       \:
