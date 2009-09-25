@@ -158,7 +158,7 @@ fr:
   description: description
   rate_tax: taxe
   selling_date: 'date de mise en vente'
-  weight: poid
+  weight: poids
   stock:
     one: stock
     other : stocks
@@ -186,8 +186,8 @@ fr:
     one: 'quantité'
     other: 'quantités'
   please_select: 'Veuillez choisir'
-  weight_max: 'poid max'
-  weight_min: 'poid min'
+  weight_max: 'poids max'
+  weight_min: 'poids min'
   price_max: 'prix max'
   price_min: 'prix min'
   code:
@@ -323,14 +323,14 @@ fr:
       confirm: 'êtes-vous sûr de vouloir supprimer cette commande ?'
       action: 'supprimer la commande'
     pay:
-      success: 'la commande a bien été payé'
+      success: 'la commande a bien été payée'
     accept:
       success: 'la commande a bien été acceptée'
     send:
       success: 'la commande a bien été envoyée'
     status:
       unpaid: 'en attente de paiement'
-      paid: 'payé'
+      paid: 'payée'
       canceled: 'annulée'
       shipped: 'expédiée'
       closed: 'fermé'
@@ -479,25 +479,25 @@ fr:
       success: 'votre compte à bien été supprimé'
       failed: 'un problème est survenu lors de la suppression de votre compte'
       confirm: "êtes-vous sûr de vouloir supprimer votre compte ?"
-  price_cuts : 'prix barrés'
+  price_cuts : 'prix réduits'
   price_cut:
       product: produit
       oldprice: 'ancien prix'
       newprice: 'nouveau prix'
-      show: 'voir le prix barré'
+      show: 'voir le prix réduit'
       date_error: 'La date de fin doit être superieur à la date de début'
       create:
-        success: "le prix barré a bien été créé"
-        failed: "un problème est survenu lors de la création du prix barré"
-        action: 'créer un prix barré'
+        success: "le prix réduit a bien été créé"
+        failed: "un problème est survenu lors de la création du prix réduit"
+        action: 'créer un prix réduit'
       update:
-        success: "le prix barré a bien été mis à jour"
-        failed: "un problème est survenu lors de la mise à jour du prix barré"
-        action: "éditer le prix barré"
+        success: "le prix réduit a bien été mis à jour"
+        failed: "un problème est survenu lors de la mise à jour du prix réduit"
+        action: "éditer le prix réduit"
       destroy:
-        success: "le prix barré a bien été supprimé"
-        failed: "un problème est survenu lors de la suppression du prix barré"
-        confirm: "êtes-vous sûr de vouloir supprimer ce prix barré ?"
+        success: "le prix réduit a bien été supprimé"
+        failed: "un problème est survenu lors de la suppression du prix réduit"
+        confirm: "êtes-vous sûr de vouloir supprimer ce prix réduit ?"
   jquery:
     dataTables:
       oLanguage:
@@ -552,7 +552,7 @@ fr:
       month: à 30 jours
       week: à 7 jours
   visitor:
-    one: visiteurr
+    one: visiteur
     other: visiteurs
   sale:
     one: vente

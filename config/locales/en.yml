@@ -61,12 +61,12 @@ en:
   cart_is_empty: 'the cart is empty'
   your_wishlist_is_empty: 'your wishlist is empty'
   wishlist_is_empty: 'the wishlist is empty'
-  product_has_been_removed: 'product successfully remove from cart'
+  product_has_been_removed: 'product successfully removed from cart'
   account_update_ok: 'your account have been successfully created'
   account_creation_ok: 'your account have been successfully created'
-  signup_completed: 'your subscrition have been completed'
+  signup_completed: 'your subscription have been completed'
   log_in_ok: 'you are successfully connected'
-  log_in_failed: 'connexion failed, check your email and password' 
+  log_in_failed: 'connection failed, check your email and password' 
   log_out_ok: 'you have been successfully disconnected'
   hello: hello
   confirm_empty_cart: 'are you sure to wipe your cart ?'
@@ -76,7 +76,7 @@ en:
   your_account: 'your account'
   cancel: cancel
   unaccessible_function: 'unaccessible function'
-  my_informations: 'my informations'
+  my_informations: 'my information'
   unpaid: unpaid
   sended: sended
 
@@ -85,7 +85,7 @@ en:
   since: since
   information:
     one: information
-    other: informations
+    other: information
   show_deleted: 'show deleted'
   deleted: deleted
   create: create
@@ -228,7 +228,7 @@ en:
     destroy:
       action: 'delete attribute'
       success: 'the attribute was successfully destroyed'
-      failed: 'a problem occured during the attribute destroy'
+      failed: 'a problem occured during the attribute destruction'
       confirm: 'are you sure to delete this attribute ?'
     duplicate:
       action: 'duplicate attribute'
@@ -246,7 +246,7 @@ en:
       action: 'edit attribute value'
     destroy:
       success: 'the attribute value was successfully destroyed'
-      failed: 'a problem occured during the attribute value destroy'
+      failed: 'a problem occured during the attribute value destruction'
       confirm: 'are you sure to delete this attribute value ?'
   categories: categories
   category:
@@ -263,7 +263,7 @@ en:
       action: 'edit category'
     destroy:
       success: 'the category was successfully destroyed'
-      failed: 'a problem occured during the category destroy'
+      failed: 'a problem occured during the category destruction'
       confirm: 'are you sure to delete this category ?' 
     sub:
       create:
@@ -283,7 +283,7 @@ en:
       action: 'edit geographic zone'
     destroy:
       success: 'the geographic zone was successfully destroyed'
-      failed: 'a problem occured during the geographic zone destroy'
+      failed: 'a problem occured during the geographic zone destruction'
       confirm: 'are you sure to delete this geographic zone ?' 
     sub:
       create:
@@ -301,7 +301,7 @@ en:
       action: 'edit order detail'
     destroy:
       success: 'the order detail was successfully destroyed'
-      failed: 'a problem occured during the order detail destroy'
+      failed: 'a problem occured during the order detail destruction'
       confirm: 'are you sure to delete this order detail ?'
   order:
     zero: 'no orders'
@@ -319,7 +319,7 @@ en:
       action: 'edit order'
     destroy:
       success: 'the order was successfully destroyed'
-      failed: 'a problem occured during the order destroy'
+      failed: 'a problem occured during the order destruction'
       confirm: 'are you sure to delete this order ?'
       action: 'delete order'
     pay:
@@ -377,7 +377,7 @@ en:
       action: 'edit voucher'
     destroy:
       success: 'the voucher was successfully destroyed'
-      failed: 'a problem occured during the voucher destroy'
+      failed: 'a problem occured during the voucher destruction'
       confirm: 'are you sure to delete this voucher ?'
   shipping_method:
     one: "delivery method"
@@ -393,7 +393,7 @@ en:
       action: 'edit shipping method'
     destroy:
       success: 'the shipping method was successfully destroyed'
-      failed: 'a problem occured during the shipping method destroy'
+      failed: 'a problem occured during the shipping method destruction'
       confirm: 'are you sure to delete this shipping method ?'
   shipping_method_detail:
     one: "shipping method detail"
@@ -408,7 +408,7 @@ en:
       action: 'edit shipping method detail'
     destroy:
       success: 'the shipping method detail was successfully destroyed'
-      failed: 'a problem occured during the shipping method detail destroy'
+      failed: 'a problem occured during the shipping method detail destruction'
       confirm: 'are you sure to delete this shipping method detail ?'
   product:
     one : product
@@ -441,7 +441,7 @@ en:
       action: 'modify product'
     destroy:
       success: 'the product was successfully destroyed'
-      failed: 'a problem occured during the product destroy'
+      failed: 'a problem occured during the product destruction'
       confirm: 'are you sure to delete this product ?'
       action: 'delete product'
     duplicate: 'duplicate product'
@@ -461,7 +461,7 @@ en:
       action: 'edit product type'
     destroy:
       success: 'the product type was successfully destroyed'
-      failed: 'a problem occured during the product type destroy'
+      failed: 'a problem occured during the product type destruction'
       confirm: 'are you sure to delete this product type ?'
   comment:
     one: comment
@@ -476,7 +476,7 @@ en:
       action: 'edit comment'
     destroy:
       success: 'the comment was successfully destroyed'
-      failed: 'a problem occured during the comment destroy'
+      failed: 'a problem occured during the comment destruction'
       confirm: 'are you sure to delete this comment ?'
   my_account:
     update:
@@ -485,7 +485,7 @@ en:
       action: 'edit my account'
     destroy:
       success: 'your account was successfully destroyed'
-      failed: 'a problem occured during your account destroy'
+      failed: 'a problem occured during your account destruction'
       confirm: 'are you sure that you want to delete your account?'
   price_cuts : 'price cuts'
   price_cut:
@@ -504,7 +504,7 @@ en:
       action: 'edit price cut'
     destroy:
       success: 'the price cut was successfully destroyed'
-      failed: 'a problem occured during the price cut destroy'
+      failed: 'a problem occured during the price cut destruction'
       confirm: 'are you sure to delete this price cut ?'
   jquery:
     dataTables:
@@ -529,7 +529,7 @@ en:
       action: 'edit tag'
     destroy:
       success: 'the tag was successfully destroyed'
-      failed: 'a problem occured during the tag destroy'
+      failed: 'a problem occured during the tag destruction'
       confirm: 'are you sure to delete this tag ?'
 
   special_offer_rule:
@@ -545,7 +545,7 @@ en:
       action: 'edit special offer'
     destroy:
       success: 'the special offer was successfully destroyed'
-      failed: 'a problem occured during the special offer destroy'
+      failed: 'a problem occured during the special offer destruction'
       confirm: 'are you sure to delete this special offer ?'
 
   statistic:
