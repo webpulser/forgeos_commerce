@@ -134,8 +134,8 @@
       %h2.small-icons.search= I18n.t('search').capitalize
       .to-tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
         %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
-          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to 'Top 5 search items', '#top-search'
-          %li.ui-state-default.ui-corner-top= link_to "Most search items", '#most-search'
+          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to I18n.t('top_5_items').capitalize, '#top-search'
+          %li.ui-state-default.ui-corner-top= link_to I18n.t('most_search').capitalize, '#most-search'
         #top-search.ui-tabs-panel.ui-widget-content.ui-corner-bottom
           %table
             %tbody
