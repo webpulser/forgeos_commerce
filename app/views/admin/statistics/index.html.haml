@@ -99,13 +99,10 @@
         %ul
           %li
             %a{ :href => "#best-customers" }
-              = I18n.t('user.best_customer', :count => 2)
+              = I18n.t('user.best_customer', :count => 2).capitalize
           %li
-            %a{ :href => "#top-search" }
-              Top 5 search items
-          %li
-            %a{ :href => "#most-search" }
-              Most search items
+            %a{ :href => "#new-customers" }
+              = I18n.t('user.new_customer', :count => 2).capitalize
           %li
             %a{ :href => "#top-location" }
               Top 5 locations
@@ -127,26 +124,50 @@
                 %td
                   quentin@webpulser.com
           .clear
-          %a.see-all-orders{ :href => "#" }
-            = I18n.t('user.show.all').capitalize
-        #top-search
+          = link_to I18n.t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
+
+        #new-customers
           %table
             %tbody
+              - @customers_new.each do |customer|
+                %tr{ :class => cycle('odd','even') }
+                  %td
+                    = customer.fullname
+                  %td
+                    = I18n.t('user.join_the').capitalize
+                    = customer.created_at.to_s(:short)
+                  %td
+                    = customer.email
+            
           .clear
-          %a.see-all-orders{ :href => "#" }
-            = I18n.t('user.show.all').capitalize
-        #most-search
-          %table
-            %tbody
-          .clear
-          %a.see-all-orders{ :href => "#" }
-            = I18n.t('user.show.all').capitalize
+          = link_to I18n.t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
+          
         #top-location
           %table
             %tbody
           .clear
           %a.see-all-orders{ :href => "#" }
             = I18n.t('user.show.all').capitalize
+
+      %h2.small-icons.search= I18n.t('search').capitalize
+      .to-tab
+        %ul
+          %li
+            %a{ :href => "#top-search" }
+              Top 5 search items
+          %li
+            %a{ :href => "#most-search" }
+              Most search items
+        #top-search
+          %table
+            %tbody
+          .clear
+        #most-search
+          %table
+            %tbody
+          .clear
+
+
   .right-dahsboard.grid_4.alpha
     %h2.small-icons.see-stats= I18n.t('statistic.keyfacts').capitalize
     .live-stats-content

@@ -30,6 +30,18 @@ module Forgeos
           :group => 'element_id'
         )
       end
+
+#      def self.best_customers(date, limit = nil)
+#        orders = Order.all( :conditions => { :created_at => date } )
+#      end
+
+      def self.new_customers(date, limit = nil)
+        User.all( 
+          :conditions => { :created_at => date },
+          :limit => limit
+        )
+      end
+
     end
   end
 end

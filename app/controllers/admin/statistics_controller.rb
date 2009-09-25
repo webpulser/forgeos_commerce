@@ -59,6 +59,7 @@ private
   end
 
   def customers_new
+      @customers_new = Forgeos::Commerce::Statistics.new_customers(@date, 5)
   end
 
   def get_visitors_and_sales_graphs

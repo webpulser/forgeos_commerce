@@ -2,12 +2,12 @@
   #order_addresses.addresses
     %div
       %b
-        = I18n.t('address.invoice').capitalize
+        = I18n.t('address.invoice', :count => 1).capitalize
       = display_address current_user.address_invoice
 
     %div
       %b
-        = I18n.t('address.delivery').capitalize
+        = I18n.t('address.delivery', :count => 1).capitalize
       = display_address current_user.address_delivery
       
     .clear
