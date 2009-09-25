@@ -84,7 +84,6 @@
                     = order.total
                     = $currency.html
                   %td.table-product
-                  %td.table-product
                     = order.orders_details.count
                     = I18n.t(:product, :count => order.orders_details.count).capitalize
                   %td{ :class => "table-state #{order.status}"}
@@ -92,7 +91,7 @@
                   %td.table-customer
                     = order.user.fullname if order.user
                   %td.table-time
-                    = I18n.t(order.created_at)
+                    = order.created_at
           = link_to I18n.t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
 
       /
