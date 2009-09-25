@@ -2,7 +2,10 @@
 'iTotalDisplayRecords': <%= @users.total_entries || 0 %>,
 'aaData': [
 <% @users.each do |user| %>
-  <% link_id = "user_#{user.id}" %>
+  <%
+    link_id = "user_#{user.id}"
+    klass = user.active? ? 'see-on' : 'see-off'
+  %>
   [
   '<%= content_tag(:div, '&nbsp;', :id => link_id, :class => 'small-icons user-ico')%>',
   '<%= escape_javascript content_tag(:div, link_to(user.fullname, [:admin, user]), :class => 'user-name') %>',
@@ -11,6 +14,14 @@
   '<%= user.total_orders.blank? ? I18n.t('none').capitalize : content_tag(:div, "#{user.total_orders} #{$currency.html}") %>  ',
   '<%= content_tag( :div, (user.orders.empty? ?  I18n.t('none').capitalize : user.orders.last.created_at.to_s(:short)), :class => 'last-date') %> ',
   '<%= user.created_at.to_s(:short) %>',
+  '<%= escape_javascript(
+    link_to_remote('', :url => activate_admin_user_path(user),
+     :complete => "toggleActivate('#show_#{link_id}')",
+     :html => {
+       :class => "small-icons #{klass}",
+       :id => "show_#{link_id}"
+    }))
+  %> ',
   '<%= escape_javascript(
     link_to('', [:edit, :admin, user], :class => 'small-icons edit-link') +
     link_to_remote('', :url => [:admin, user],
