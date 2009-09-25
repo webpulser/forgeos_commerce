@@ -2,7 +2,7 @@
 class Admin::UsersController < Admin::BaseController
 
   before_filter :get_user, :only => [:show, :activate, :edit, :update, :destroy]
-  before_filter :new_user, :only => [:new, :create, :edit, :update]
+  before_filter :new_user, :only => [:new, :create]
 
   # List all users
   def index
