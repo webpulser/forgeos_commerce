@@ -10,7 +10,7 @@
     .header
       .header-content
         %ul.list_static_pages
-          -Page.find_all_by_active(true, :limit => 4).each do |page|
+          -Page.find_all_by_active(true,:conditions => {:single_key => nil, :active => true}, :limit => 4).each do |page|
             %li
               =link_to page.title, "/#{page.url}"
    
@@ -95,7 +95,7 @@
         %img{ :src => "/images/front_demo/credit_card.png" }
         %img{ :src => "/images/front_demo/visa.png" }
         %img{ :src => "/images/front_demo/https.png" }
-        -Page.find_all_by_active(true).each do |page|
+        -Page.find_all_by_active(true, :conditions => {:single_key => nil, :active => true}).each do |page|
           =link_to page.title, page.url
           |
 
