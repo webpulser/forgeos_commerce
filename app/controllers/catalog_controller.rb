@@ -18,7 +18,7 @@ class CatalogController < ApplicationController
     end
     
     if params[:selected_product_id]
-      @selected_product = @product_category.products.find_by_id(params[:selected_product_id])
+      @selected_product = Product.find_by_id(params[:selected_product_id])
     else
       @selected_product = @products.first
     end
@@ -34,7 +34,6 @@ class CatalogController < ApplicationController
       e.assert @selected_product if !@selected_product.nil?
       e.match
     end
-  
   end
 
   # Show all <i>ProductDetail</i> by <i>Category</i>

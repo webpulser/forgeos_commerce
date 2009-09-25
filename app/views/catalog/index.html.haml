@@ -16,7 +16,11 @@
           -form_tag :action => 'index' do
             =hidden_field_tag :product_category_id, @product_category.id
             %div
-              =select_tag 'category_choice', options_for_select(@product_category.children.collect{|c| [c.name, c.id]})
+              - if !@category_choice.nil?
+                -selected = @category_choice.name 
+              - else        
+                -selected = 'none'
+              =select_tag 'category_choice', options_for_select(@product_category.children.collect{|c| [c.name, c.id]}), :selected => selected
             =submit_tag 'ok', :class=>'ok-button'
 
         %span
@@ -32,7 +36,7 @@
         %ul#slider_products
           -@products.each do |product|
             %li
-              =link_to image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel'), {:controller => 'catalog', :action => 'index', :selected_product_id => product.id, :product_category_id => @product_category.id} if !product.pictures.blank?
+              =link_to image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel'), {:controller => 'catalog', :action => 'index', :selected_product_id => product.id, :product_category_id => @product_category.id, :category_choice => @category_choice} if !product.pictures.blank?
               /%img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
               %span.price
                 =product.price
