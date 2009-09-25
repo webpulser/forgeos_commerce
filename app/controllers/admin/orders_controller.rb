@@ -4,7 +4,7 @@ class Admin::OrdersController < Admin::BaseController
   before_filter :get_order, :only => [:show, :edit, :update, :destroy, :pay, :accept, :sent, :total]
   before_filter :get_civilities_and_countries, :only => [:new, :edit, :create, :update]
 
-  after_filter :render_list, :only => [:destroy, :pay, :accept, :sent]
+  after_filter :render_list, :only => [:pay, :accept, :sent]
   
   def index
     respond_to do |format|

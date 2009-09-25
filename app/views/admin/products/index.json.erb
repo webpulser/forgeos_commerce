@@ -41,7 +41,8 @@
      :html => { 
        :class => "small-icons #{klass}",
        :id => "show_#{link_id}"
-    }) +
+    })) -%>',
+  '<%= escape_javascript(
     link_to('', [:duplicate, :admin, product], :class => 'small-icons duplicate-link') +
     link_to('', [:edit, :admin, product], :class => 'small-icons edit-link') +
     link_to_remote('', :url => [:admin, product],
