@@ -2,17 +2,17 @@
   #order_addresses.addresses
     %div
       %b
-        = I18n.t('address.invoice', :count => 1).capitalize
+        =# I18n.t('address.invoice').capitalize
       = display_address current_user.address_invoice
 
     %div
       %b
-        = I18n.t('address.delivery', :count => 1).capitalize
+        =# I18n.t('address.delivery').capitalize
       = display_address current_user.address_delivery
       
     .clear
     %center
-      = link_to_remote(I18n.t('address.create.action').capitalize, :url => { :controller => 'order', :action => 'add_address' })
+      = link_to_remote('ajouter une adresse', :url => { :controller => 'order', :action => 'add_address' })
   .clear
     \&nbsp;
   %br
@@ -20,5 +20,5 @@
   =# display_voucher
   = display_total
   .clear
-  = submit_tag I18n.t('make_order').capitalize, :class=>'submit-button'
+  = submit_tag I18n.t('make_order'), :class=>'submit-button'
 .clear
