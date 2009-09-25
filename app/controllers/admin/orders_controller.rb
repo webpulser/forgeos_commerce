@@ -80,7 +80,7 @@ class Admin::OrdersController < Admin::BaseController
 
     # get order_details ids
     if order_details = params[:order][:orders_details_attributes]
-      detail_ids = order_details.values.collect{ |detail| detail['id'].to_i if detail['_delete'].to_i != 1 }
+      detail_ids = order_details.values.collect{ |detail| detail['id'].to_i if detail['id'] && detail['_delete'].to_i != 1 }
       detail_ids.compact!
       editing_order.orders_detail_ids = detail_ids
     end
