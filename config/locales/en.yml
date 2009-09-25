@@ -2,6 +2,7 @@ en:
 # FrontOffice
   or: or
   all: all
+  by: by
   add_to_cart: 'add to cart'
   update: update
   cart:
@@ -99,6 +100,9 @@ en:
   delivery: delivery
   export: export
   export_newsletter: 'export for newsletter'
+  newsletter:
+    one: newsletter
+    other: newsletters
   age: age
   template_by: 'Template by'
   avatar: avatar
@@ -126,9 +130,16 @@ en:
   address: 
     one: address
     other:  addresses
-    invoice: 'billing address'
-    delivery: 'delivery address'
-    designation: 'designation'
+    invoice:
+      one: 'billing address'
+      other: 'billing addresses'
+      others: 'others billing addresses'
+    delivery:
+      one: 'delivery address'
+      other: 'delivery addresses'
+      others: 'others delivery addresses'
+    designation: designation
+    billing_same_as_delivery: 'my billing address is the same as my delivery address: '
     create:
       action: 'add an address'
     destroy:

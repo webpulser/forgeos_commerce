@@ -1,7 +1,7 @@
 - f.fields_for :address_invoices do |address_invoice|
-  .fieldset
+  .fieldset.invoice-address
     %a.small-icons.panel{ :href => '#' }
-      = I18n.t('address.invoice')
+      = I18n.t('address.invoice', :count => 1)
     .option-panel-content
       .street-input
         %label
@@ -40,4 +40,12 @@
         %label
           = I18n.t(:country).capitalize
         = address_invoice.collection_select 'country_id', Country.find(:all, :order => "name"), :id, :printable_name, :selected => user.country_id, :prompt => true
+      .clear
+      %br
+      = I18n.t('address.billing_same_as_delivery').capitalize
+      = radio_button_tag :same_as_delivery, :true, false
+      Yes
+      = radio_button_tag :same_as_delivery, :false, true
+      No
+
     .clear

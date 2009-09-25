@@ -1,7 +1,7 @@
 - f.fields_for :address_deliveries do |address_delivery|
-  .fieldset
+  .fieldset.delivery-address
     %a.small-icons.panel{ :href => '#' }
-      = I18n.t('address.delivery')
+      = I18n.t('address.delivery', :count => 1)
     .option-panel-content
       .street-input
         %label

@@ -2,6 +2,7 @@ fr:
 # FrontOffice
   or: ou
   all: Tous
+  by: par
   add_to_cart: 'ajouter au panier'
   update: 'mettre à jour'
   cart:
@@ -99,6 +100,9 @@ fr:
   delivery: livraison
   export: exporter
   export_newsletter: 'exporter pour la newsletter'
+  newsletter:
+    one: newsletter
+    other: newsletters
   age: 'âge'
   template_by: 'Thème par'
   avatar: avatar
@@ -126,9 +130,16 @@ fr:
   address: 
     one: adresse
     other:  adresses
-    invoice: 'adresse de facturation'
-    delivery: 'adresse de livraison'
+    invoice:
+      one: 'adresse de facturation'
+      other: 'adresses de facturation'
+      others: 'autres adresses de facturation'
+    delivery:
+      one: 'adresse de livraison'
+      other: 'adresses de livraison'
+      others: 'autres adresses de livraison'
     designation: 'désignation'
+    billing_same_as_delivery: 'mon adresse de facturation est la même que celle de livraison: '
     create:
       action: 'ajouter une addresse'
     destroy:

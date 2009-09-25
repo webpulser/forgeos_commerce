@@ -4,58 +4,62 @@
     =@user.fullname
   .interact-links
     = link_to I18n.t('user.update.action'), [:edit, :admin, @user], :class => 'backgrounds interact-button'
-    or
+    = I18n.t(:or)
     %a.back-link{ :href => "#" }
       =link_to I18n.t('user.back'), admin_users_path, :class => 'back-link'
 #content.grid_16.alpha.omega
   #customer-see.grid_12.alpha.omega
     .customer-header.backgrounds
-      %span.small-icons.order
-        =@user.orders.all.sum(&:total)
-        €
-      = "#{I18n.t('user.spent_on')} #{@user.orders.length}"
-      = @user.orders.length > 1 ? I18n.t('order.other') : I18n.t('order.one')
-    %table#table.datatable
-      %thead
-        %tr
-          %th &nbsp;
-          %th= I18n.t('id').capitalize
-          %th= I18n.t('order.total').capitalize
-          %th= I18n.t('product.one').capitalize
-          %th= 'Date'
-          %th= I18n.t('status', :count => 1).capitalize
-          %th.actions &nbsp;
-      %tbody
-        -@user.orders.each do |order|
-          %tr{:id => "row_order_#{order.id}"}
-            %td
-              - if order.orders_details.length > 1 
-                .some-variants.plus{:id => "order_#{order.id}"}
-                  .image
-                    &nbsp;
-              - else
-                %div{:id => "order_#{order.id}"}  
-            %td= order.id
-            %td= "#{order.total} #{$currency.html}"
-            %td
-              - product_names = order.orders_details.length > 1 ? '<br/><p class="product-name" style="display:none">'+order.orders_details.collect(&:name).join('<br />')+'</p>' : ''
-              .product-name
-                = link_to(order.orders_details.length != 1 ? "#{order.orders_details.length} #{I18n.t('product', :count => order.orders_details.length)}" : order.orders_details.first.name.capitalize,[:admin,order])
-              =product_names
+      - if @user.orders.empty?
+        = I18n.t(:order, :count => 0).capitalize
+      - else
+        %span.small-icons.order
+          =@user.orders.all.sum(&:total)
+          = $currency.html
+        = "#{I18n.t('user.spent_on')} #{@user.orders.length}"
+        = @user.orders.length > 1 ? I18n.t('order.other') : I18n.t('order.one')
+    - unless @user.orders.empty?
+      %table#table.datatable
+        %thead
+          %tr
+            %th &nbsp;
+            %th= I18n.t('id').capitalize
+            %th= I18n.t('order.total').capitalize
+            %th= I18n.t('product.one').capitalize
+            %th= 'Date'
+            %th= I18n.t('status', :count => 1).capitalize
+            %th.actions &nbsp;
+        %tbody
+          -@user.orders.each do |order|
+            %tr{:id => "row_order_#{order.id}"}
+              %td
+                - if order.orders_details.length > 1
+                  .some-variants.plus{:id => "order_#{order.id}"}
+                    .image
+                      &nbsp;
+                - else
+                  %div{:id => "order_#{order.id}"}
+              %td= order.id
+              %td= "#{order.total} #{$currency.html}"
+              %td
+                - product_names = order.orders_details.length > 1 ? '<br/><p class="product-name" style="display:none">'+order.orders_details.collect(&:name).join('<br />')+'</p>' : ''
+                .product-name
+                  = link_to(order.orders_details.length != 1 ? "#{order.orders_details.length} #{I18n.t('product', :count => order.orders_details.length)}" : order.orders_details.first.name.capitalize,[:admin,order])
+                =product_names
 
-            %td= order.created_at.to_s(:short)
-            %td= select_tag(:status, options_for_select(order_states_for_select, order.status))
-            %td= link_to('', [:edit, :admin, order], :class => 'small-icons edit-link')
+              %td= order.created_at.to_s(:short)
+              %td= select_tag(:status, options_for_select(order_states_for_select, order.status))
+              %td= link_to('', [:edit, :admin, order], :class => 'small-icons edit-link')
             
 
     .padding-wrap
       .fieldset
         %h3
-          Customer infos
+          = I18n.t('user.customer_infos').capitalize
         .main-infos
           .main-infos-cutomer
             %h4.small-icons
-              Contact information
+              = I18n.t('user.contact_infos').capitalize
             %p
               =@user.tel1
             %p.customer-email
@@ -63,7 +67,7 @@
           .main-info-separation.big-separation
           .order-delivery-adress
             %h4.small-icons
-              Delivery adress
+              = I18n.t('address.delivery', :count => 1).capitalize
             -@user.address_deliveries.each do |address_delivery|
               %p= address_delivery.address
               %p= address_delivery.address_2 if address_delivery.address_2
@@ -74,11 +78,11 @@
               %br
               -if address_delivery == @user.address_deliveries.first and @user.address_deliveries.length > 1
                 %h4
-                  Others delivery address
+                  = I18n.t('address.delivery', :count => 2).capitalize
           .main-info-separation.big-separation
           .order-billing-adress
             %h4.small-icons
-              Billing adress
+              = I18n.t('address.invoice', :count => 1).capitalize
             %p= @user.address_invoice.address
             %p= @user.address_invoice.address_2 if @user.address_invoice.address_2
             %p
@@ -90,25 +94,23 @@
   #right-sidebar.grid_4.omega.alpha
     .step
       =mail_to @user.email, 'Contact customer', :class => 'small-icons contact'
-      %a.small-icons.duplicate{ :href => "#" }
-        Create order
-      %a.small-icons.delete{ :href => "#" }
-        Delete customer
+      = link_to I18n.t('order.create.action').capitalize, new_admin_order_path, :class=>'small-icons duplicate'
+      = link_to I18n.t('user.destroy.action').capitalize, [:admin, @user], :confirm => I18n.t('user.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+    .step.open
+      %a.small-icons.step-title.disable{ :href => '#' }
+        = I18n.t('special_offer', :count => 2).capitalize
+    .step.open.disable
+      %a.small-icons.step-title{ :href => '#' }
+        = I18n.t('newsletter', :count => 2).capitalize
     .step.open
       %a.small-icons.step-title{ :href => '#' }
-        Special offers
-    .step.open
-      %a.small-icons.step-title{ :href => '#' }
-        Newsletter
-    .step.open
-      %a.small-icons.step-title{ :href => '#' }
-        Account history
+        = I18n.t('user.history').capitalize
       .inner-step
         %p
-          Created on
+          = I18n.t('created_on').capitalize
           =@user.created_at.to_date
           %br
-          by
+          = I18n.t('by')
           =@user.fullname
   .clear
 

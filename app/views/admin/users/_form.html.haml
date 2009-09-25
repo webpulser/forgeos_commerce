@@ -1,4 +1,4 @@
-- form_for [:admin, user], :html => { :id => 'wrap' } do |f|
+- form_for [:admin, user], :html => { :id => 'wrap', :autocomplete => 'off' } do |f|
   .backgrounds.big-header
     = f.text_field :lastname
     = f.text_field :firstname
@@ -11,14 +11,18 @@
     #customer-see.grid_12.alpha.omega
       - unless user.new_record?
         .customer-header.backgrounds
-          %span.small-icons.order
-            = user.orders.all.sum(&:total)
-            = $currency.html
-          = "#{I18n.t('user.spent_on')} #{user.orders.length}"
-          = user.orders.length > 1 ? I18n.t('order.other') : I18n.t('order.one')
+          - if user.orders.empty?
+            = I18n.t(:order, :count => 0).capitalize
+          - else
+            %span.small-icons.order
+              = user.orders.all.sum(&:total)
+              = $currency.html
+            = "#{I18n.t('user.spent_on')} #{user.orders.length}"
+            = user.orders.length > 1 ? I18n.t('order.other') : I18n.t('order.one')
 
-      %table#table.datatable
-        - unless user.new_record?
+
+      - unless user.new_record? || user.orders.empty?
+        %table#table.datatable
           = dataTables_tag :url => edit_admin_user_path(:user => user, :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false}","{'sTitle':'#{I18n.t(:id).upcase!}'}","{'sTitle':'#{I18n.t(:total)}'}","{'sTitle':'#{I18n.t(:order, :count => 1)}'}","{'sTitle':'#{I18n.t(:created_on)}'}","{'sTitle':'#{I18n.t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
 
       .padding-wrap
@@ -26,58 +30,58 @@
         = render :partial => 'fieldset_account_informations', :locals => { :user => user, :f => f }
         = render :partial => 'fieldset_contact_informations', :locals => { :user => user, :f => f }
 
-        = render :partial => 'fields_for_addresses_deliveries', :locals => { :user => user, :f => f }
         = render :partial => 'fields_for_addresses_invoices', :locals => { :user => user, :f => f }
+        = render :partial => 'fields_for_addresses_deliveries', :locals => { :user => user, :f => f }
 
-        .fieldset.messages-fieldset
-          %h3
-            Messages
-          .received-message
-            %a.small-icons{ :href => '#' }
-              New message!
-            %span
-              Received on 28/08/88
-          .sent-message
-            %a.small-icons
-              New message!
-            %span
-              Sent on 28/08/88
-          .send-message
-            %label
-              Title
-            %input.all-width{ :type => 'text' }
-            %label
-              Body
-            %textarea
-            .clear
-            %a.backgrounds.button{ :href => '#' }
-              Send message
-            = I18n.t('or').capitalize
-            %a.back-link{ :href => '#' }
-              Cancel
+        /
+          .fieldset.messages-fieldset
+            %h3
+              Messages
+            .received-message
+              %a.small-icons{ :href => '#' }
+                New message!
+              %span
+                Received on 28/08/88
+            .sent-message
+              %a.small-icons
+                New message!
+              %span
+                Sent on 28/08/88
+            .send-message
+              %label
+                Title
+              %input.all-width{ :type => 'text' }
+              %label
+                Body
+              %textarea
+              .clear
+              %a.backgrounds.button{ :href => '#' }
+                Send message
+              = I18n.t('or').capitalize
+              %a.back-link{ :href => '#' }
+                Cancel
 
 
     -unless user.new_record?
       #right-sidebar.grid_4.omega.alpha
         .step
-          =mail_to @user.email, 'Contact customer', :class => 'small-icons contact'
-          %a.small-icons.duplicate.disabled{ :href => "#" }
-            Create order
+          = mail_to @user.email, 'Contact customer', :class => 'small-icons contact'
+          = link_to I18n.t('order.create.action').capitalize, new_admin_order_path, :class=>'small-icons duplicate'
           = link_to I18n.t('user.destroy.action').capitalize, [:admin, user], :confirm => I18n.t('user.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
         .step.open.disabled
           %a.small-icons.step-title{ :href => '#' }
-            Special offers
+            = I18n.t('special_offer', :count => 2).capitalize
         .step.open.disabled
           %a.small-icons.step-title{ :href => '#' }
-            Newsletter
+            = I18n.t('newsletter', :count => 2).capitalize
         .step.open.disabled
           %a.small-icons.step-title{ :href => '#' }
-            Account history
+            = I18n.t('user.history').capitalize
           .inner-step
             %p
-              Created on
+              = I18n.t('created_on').capitalize
               =@user.created_at.to_date
               %br
-              by
+              = I18n.t('by')
               =@user.fullname
       .clear

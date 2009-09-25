@@ -66,10 +66,6 @@ class Admin::UsersController < Admin::BaseController
       flash[:error] = I18n.t('user.update.failed').capitalize
     end
     render :action => 'edit'
-    puts "*"*50
-    require 'pp'
-    @user.errors
-    puts "*"*50
   end
 
   # Remotly Destroy an User
