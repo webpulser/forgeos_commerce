@@ -315,11 +315,12 @@ en:
       failed: 'a problem occured during the order detail destruction'
       confirm: 'are you sure to delete this order detail ?'
   order:
-    zero: 'no orders'
+    zero: no orders
     one: order
     other: orders
-    all: 'all orders'
-    history: 'order history'
+    all: all orders
+    history: order history
+    add_product: add product
     create:
       success: 'the order was successfully created'
       failed: 'a problem occured during the order creation'
@@ -427,6 +428,8 @@ en:
     all: 'all products'
     in_stock: 'in stock'
     showed_on_homepage: 'showed on homepage'
+    show:
+      all: see all products
     sold:
       one: "{{count}} sale"
       other: "{{count}} sales"
@@ -562,8 +565,16 @@ en:
   statistic:
     one: statistic
     other: statistics
+    trends: trends
+    keyfacts: keyfacts
+    average_order: average order
+    average_customer: average customers
+    products_sold: products sold
+    revenue: revenue
+    conversion_rate: conversion rate
     show:
       all: 'see statistics'
+      for: show for
     live:
       one: 'live statistic'
       other: 'live statistics'

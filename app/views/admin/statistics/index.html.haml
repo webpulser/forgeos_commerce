@@ -3,13 +3,12 @@
 #dashboard.statistics.grtid_12.alpha.omega
   .left-dashboard.grid_12.omega.alpha
     .padding-wrap
-      %h2.small-icons.see-stats
-        Trends
+      %h2.small-icons.see-stats= I18n.t('statistic.trends').capitalize
       .trend_filter
-        %label
-          Show trends for :
-        = select_tag :trends, options_for_select([[I18n.t('please_select'), nil], [I18n.t('statistic.last.month'), 'month'], [I18n.t('statistic.last.week'), 'week']]), :onchange => "statistic_graph(value)"
-
+        - form_tag admin_statistics_url, :id => 'form_stats' do |f|
+          %label
+            = "#{I18n.t('statistic.show.for').capitalize} :"
+          = select_tag :timestamp, options_for_select([[I18n.t('please_select'), nil], [I18n.t('statistic.last.month'), 'month'], [I18n.t('statistic.last.week'), 'week']], params[:timestamp]), :onchange => "$('#form_stats').submit()"
       .to-tab
         %ul
           %li= link_to I18n.t('visitor', :count => 2), '#visitors'
@@ -22,8 +21,7 @@
             = @sales_graph if @sales_graph
       .clear
 
-      %h2.small-icons.products
-        Products
+      %h2.small-icons.products= I18n.t('product', :count => 2).capitalize
       .to-tab
         %ul
           %li= link_to I18n.t('product.best_seller', :count => @products_most_sold.count), '#best-sellers'
@@ -43,7 +41,7 @@
                 = "#{product.price} #{$currency.html}"
           .clear
           %a.see-all-orders{ :href => "#" }
-            See all products
+            = I18n.t('product.show.all').capitalize
         #most-viewed
           - @products_most_viewed.each do |product_id,counter|
             - product = Product.find(product_id)
@@ -59,17 +57,16 @@
                 = "#{product.price} #{$currency.html}"
             .clear
           %a.see-all-orders{ :href => "#" }
-            See all products
-      %h2.small-icons.page
-        Pages
+            = I18n.t('product.show.all').capitalize
+      %h2.small-icons.page= I18n.t('page', :count => 2).capitalize
       .to-tab
         %ul
           %li
             %a{ :href => "#most-viewed-pages" }
-              Most viewed
+              = I18n.t('page.most_viewed', :count => 2)
           %li
             %a{ :href => "#most-commented" }
-              Most commented
+              = I18n.t('page.most_commented', :count => 2)
         #most-viewed-pages
           %table
             %tbody
@@ -80,10 +77,10 @@
                   %td= I18n.t('page.viewed', :count => counter)
           .clear
           %a.see-all-orders{ :href => "#" }
-            See all pages
+            = I18n.t('page.show.all').capitalize
         #most-commented
           %table
-            %tbody
+            -#%tbody
               %tr
                 %td.table-product
                   Page "About us" created
@@ -96,14 +93,13 @@
                   by Quentin Tousart
           .clear
           %a.see-all-orders{ :href => "#" }
-            See all pages
-      %h2.small-icons.customer
-        Customers
+            = I18n.t('page.show.all').capitalize
+      %h2.small-icons.customer= I18n.t('customer', :count => 2).capitalize
       .to-tab
         %ul
           %li
             %a{ :href => "#best-customers" }
-              best-customers
+              = I18n.t('user.best_customer', :count => 2)
           %li
             %a{ :href => "#top-search" }
               Top 5 search items
@@ -115,7 +111,7 @@
               Top 5 locations
         #best-customers
           %table
-            %tbody
+            -#%tbody
               %tr
                 %td.customer-bought-amount
                   2465$
@@ -132,66 +128,55 @@
                   quentin@webpulser.com
           .clear
           %a.see-all-orders{ :href => "#" }
-            See all pages
+            = I18n.t('user.show.all').capitalize
         #top-search
           %table
             %tbody
           .clear
           %a.see-all-orders{ :href => "#" }
-            See all pages
+            = I18n.t('user.show.all').capitalize
         #most-search
           %table
             %tbody
           .clear
           %a.see-all-orders{ :href => "#" }
-            See all pages
+            = I18n.t('user.show.all').capitalize
         #top-location
           %table
             %tbody
           .clear
           %a.see-all-orders{ :href => "#" }
-            See all pages
+            = I18n.t('user.show.all').capitalize
   .right-dahsboard.grid_4.alpha
-    %h2.small-icons.see-stats
-      Keyfacts
-    .trend_filter
-      %select
-        %option
-          This month
+    %h2.small-icons.see-stats= I18n.t('statistic.keyfacts').capitalize
     .live-stats-content
       %span
-        %span.keyfacts-name
-          Visitors
+        %span.keyfacts-name= I18n.t('visitor', :count => 2).capitalize
         %span.keyfacts-value
           4500
         %span.clear
       %span
-        %span.keyfacts-name
-          Averag order
+        %span.keyfacts-name= I18n.t('statistic.average_order').capitalize
         %span.keyfacts-value
           45.5$
         %span.clear
       %span
-        %span.keyfacts-name
-          Product Sold
+        %span.keyfacts-name= I18n.t('statistic.products_sold').capitalize
         %span.keyfacts-value
           450
         %span.clear
       %span
-        %span.keyfacts-name
-          Revenue
+        %span.keyfacts-name= I18n.t('statistic.revenue').capitalize
         %span.keyfacts-value
           45000$
         %span.clear
       %span
-        %span.keyfacts-name
-          Conversion rate
+        %span.keyfacts-name= I18n.t('statistic.conversion_rate').capitalize
         %span.keyfacts-value
           8%
         %span.clear
       %span
-        %span.keyfacts-name
-          Average customer
+        %span.keyfacts-name= I18n.t('statistic.average_customer').capitalize
         %span.keyfacts-value
           120$
         %span.clear

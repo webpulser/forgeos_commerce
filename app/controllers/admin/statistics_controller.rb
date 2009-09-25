@@ -57,8 +57,8 @@ private
   end
 
   def get_visitors_and_sales_graphs
-    @visitors_graph = open_flash_chart_object(666, 187, admin_statistics_visitors_graph_url)
-    @sales_graph = open_flash_chart_object(666, 187, admin_statistics_sales_graph_url)
+    @visitors_graph = open_flash_chart_object(666, 187, admin_statistics_visitors_graph_url(:timestamp => params[:timestamp]))
+    @sales_graph = open_flash_chart_object(666, 187, admin_statistics_sales_graph_url(:timestamp => params[:timestamp]))
   end
 
   def generate_graph(element, y_max, colour)

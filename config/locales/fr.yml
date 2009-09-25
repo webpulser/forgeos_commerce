@@ -320,6 +320,7 @@ fr:
     other: commandes
     all: 'toutes les commandes'
     history: 'historique de la commande'
+    add_product: ajouter un produit
     create:
       success: 'la commande a bien été créée'
       failed: 'un problème est survenu lors de la création de la commande'
@@ -420,6 +421,8 @@ fr:
     all: 'tous les produits'
     in_stock: 'en stock'
     showed_on_homepage: "Affiché sur la page d'acceuil"
+    show:
+      all: voir tous les produits
     sold:
       one: "{{count}} vente"
       other: "{{count}} ventes"
@@ -430,8 +433,8 @@ fr:
       one: meilleur vente
       other: meilleures ventes
     most_viewed:
-      one: plus vue
-      other: plus vues
+      one: plus vu
+      other: plus vus
     associated_collection:
       one: 'collection associée'
       other: 'collections associées'
@@ -554,14 +557,22 @@ fr:
   statistic:
     one: statistique
     other: statistiques
+    trends: tendances
+    keyfacts: mots-clefs
+    average_order: commande moyenne
+    average_customer: utilisateur moyen
+    products_sold: produits vendus
+    revenue: recette
+    conversion_rate: taux de conversion
     show:
       all: 'voir les statistiques'
+      for: voir pour
     live:
       one: 'statistique temps réel'
       other: 'statistiques temps réel'
     last:
-      month: à 30 jours
-      week: à 7 jours
+      month: les 30 derniers jours
+      week: les 7 derniers jours
   visitor:
     one: visiteur
     other: visiteurs
