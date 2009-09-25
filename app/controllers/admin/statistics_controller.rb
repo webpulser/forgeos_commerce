@@ -2,6 +2,7 @@ class Admin::StatisticsController < Admin::BaseController
   before_filter :products_most_viewed, :only => :index
   before_filter :products_most_sold, :only => :index
   before_filter :customers_new, :only => :index
+  before_filter :best_customers, :only => :index
 
   before_filter :get_visitors_and_sales_graphs, :only => :index
 
@@ -60,6 +61,10 @@ private
 
   def customers_new
       @customers_new = Forgeos::Commerce::Statistics.new_customers(@date, 5)
+  end
+
+  def best_customers
+      @best_buyers = Forgeos::Commerce::Statistics.best_customers(@date, 5)
   end
 
   def get_visitors_and_sales_graphs
