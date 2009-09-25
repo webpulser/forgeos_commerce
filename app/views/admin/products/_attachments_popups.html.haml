@@ -12,8 +12,8 @@
     = link_to_function content_tag(:span, I18n.t('media.picture.upload.action').capitalize, :class=>'big-icons add-picture'), "$(\'#imageUploadDialog\').dialog(\'open\'); $(\'#imageSelectDialog\').dialog(\'close\')", :class=>'backgrounds button'
     .display-mode
       .heading-separator
-      .display-thumbnails.off
-      .display-list
+      .display-thumbnails
+      .display-list.off
     #search.right.image
       %a.small-icons.left.search-link{ :href => "#" }
         %span.small-icons.search-span
@@ -25,10 +25,11 @@
       %h2{ :class => 'small-icons picture'}
         = link_to_function I18n.t('media.picture.all').capitalize, "select_all_elements('#{escape_javascript(admin_attachments_url :format => :json, :file_type => 'picture')}')"
       .init-tree.a-tree{:id => 'picture-attachment-tree'}
-  .media-hoverlay-content
-    %table#image-table.datatable.media.selectable_rows
   .media-hoverlay-content.thumbnails
     %div.table#thumbnail-table.datatable.media.selectable_rows
+  .media-hoverlay-content.table.hidden
+    %table#image-table.datatable.media.selectable_rows
+
 
 #fileUploadDialog.upload-lightbox-container.white
   #fileUpload
@@ -49,8 +50,8 @@
   .media-hoverlay-content
     %table#table-files.datatable.media.selectable_rows
       
-= dataTables_tag :id => 'image-table', :url => admin_attachments_path(:format => :json, :file_type => 'picture',:mode => 'selection'),:columns => ["{'sClass':'th-checkbox-container', 'bSortable': false }",    "{ 'sTitle': '#{I18n.t('media.filename')}'}",    "{ 'sTitle': '#{I18n.t('media.content_type')}'}",    "{ 'sTitle': '#{I18n.t('media.updated_at')}'}",   "{ 'sTitle': '#{I18n.t('media.size')}'}",   '{"bVisible": false}', '{ "bVisible": false }',    '{ "bVisible": false}','{ "bVisible": false}',    '{ "bVisible": false}']
-= dataSlides_tag :url => admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture', :mode => 'selection'), :columns => [ '{ "bSortable": false, "bSearchable": false}'], :id => 'thumbnail-table'
+= dataSlides_tag :url => admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture', :mode => 'selection'), :columns => [ '{ "bSortable": true, "bSearchable": true, "sType": "string", "bUseRendered": true, "fnRender": null, "iDataSort": 0, "nTf": null, "nTh": function(){$(".thead").find(".th");}, "sWidth": "0px"}','{"bVisible": false}', '{ "bVisible": false }', '{ "bVisible": false}' ], :id => 'thumbnail-table'
+= dataTables_tag :id => 'image-table', :url => admin_attachments_path(:format => :json, :file_type => 'picture',:mode => 'selection'),:columns => ["{'sClass':'th-checkbox-container', 'bSortable': false }",    "{ 'sTitle': '#{I18n.t('media.filename')}'}",    "{ 'sTitle': '#{I18n.t('media.content_type')}'}",    "{ 'sTitle': '#{I18n.t('media.updated_at')}'}",   "{ 'sTitle': '#{I18n.t('media.size')}'}",   '{"bVisible": false}', '{ "bVisible": false }', '{ "bVisible": false}','{ "bVisible": false}',    '{ "bVisible": false}']
 = dataTables_tag :id => 'table-files', :url => admin_attachments_path(:format => :json, :file_type => 'pdf', :mode => 'selection'), :columns => ["{'sClass':'th-checkbox-container', 'bSortable': false }","{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
 
 -# TODO move to base.js
