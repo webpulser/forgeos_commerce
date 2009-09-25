@@ -322,7 +322,9 @@ en:
     other: orders
     all: all orders
     history: order history
-    add_product: add product
+    product:
+      add: add product
+      select: select product
     create:
       success: 'the order was successfully created'
       failed: 'a problem occured during the order creation'

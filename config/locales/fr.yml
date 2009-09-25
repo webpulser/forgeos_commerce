@@ -279,8 +279,8 @@ fr:
     sub:
       create:
         action: 'créer une catégorie sous-jacente'
-  categories: 'zone géographiques'
-  category:
+  geo_zones: 'zone géographiques'
+  geo_zone:
     one: 'zone géographique'
     other: 'zone géographiques'
     not_exist: "la zone géographique demandée n'existe pas"
@@ -320,7 +320,9 @@ fr:
     other: commandes
     all: 'toutes les commandes'
     history: 'historique de la commande'
-    add_product: ajouter un produit
+    product:
+      add: ajouter un produit
+      select: sélectionner un produit
     create:
       success: 'la commande a bien été créée'
       failed: 'un problème est survenu lors de la création de la commande'

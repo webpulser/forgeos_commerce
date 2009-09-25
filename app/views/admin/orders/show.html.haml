@@ -1,5 +1,5 @@
 .backgrounds.big-header
-  %span.order-price= "#{@order.total(true)} #{$currency.html}"
+  %span.order-price= "#{@order.total} #{$currency.html}"
   %span.header-separator
   %span
     = I18n.t('order',:count =>1).capitalize
@@ -75,12 +75,12 @@
         -# @order.special_offers.each do |offer|
           %div= offer.name
           %span= "- #{offer.total} #{$currency.html}"
-      .order-totals
+      -#.order-totals
         %div= I18n.t('tax', :count => 2).capitalize
         %span= "#{@order.taxes} #{$currency.html}"
       .order-totals.total-block
         .order-total= I18n.t('order.total').capitalize
-        %span.order-total= "#{@order.total(true)} #{$currency.html}"
+        %span.order-total= "#{@order.total} #{$currency.html}"
       .fieldset
         %h3= I18n.t('order.delivery')
         .order-delivery

@@ -42,6 +42,10 @@ class Admin::OrdersController < Admin::BaseController
       redirect_to(admin_orders_path)
     else
       flash[:error] = I18n.t('order.update.failed').capitalize
+
+      logger.debug "*"*400
+      logger.debug @order.errors.collect{ |e, m| "- #{e.humanize unless e == 'base'} #{m}\n" }.to_s
+
       return render :text => false if request.xhr?
       render :action => 'edit'
     end
@@ -90,11 +94,11 @@ class Admin::OrdersController < Admin::BaseController
     editing_order.order_shipping.attributes = params[:order][:order_shipping_attributes]
 
     # calculate total, subtotal and taxes
-    total = editing_order.total(true)
+    total = editing_order.total
     subtotal = editing_order.total(false,true,false,false)
-    taxes = editing_order.taxes
+    #taxes = editing_order.taxes
 
-    return render :json => { :result => 'success', :id => @order.id, :total => total, :subtotal => subtotal, :taxes => taxes}
+    return render :json => { :result => 'success', :id => @order.id, :total => total, :subtotal => subtotal} #, :taxes => taxes}
   end
 
 private

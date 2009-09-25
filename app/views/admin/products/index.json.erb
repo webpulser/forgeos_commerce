@@ -11,7 +11,7 @@
 <% if product.kind_of? Pack -%>
   '<%= content_tag(:div, '<div class="image">&nbsp'+ image_tag(picture || 'admin/no-image.png') +'</div>', :id => link_id, :class => 'some-variants plus') %>',
   '<%= escape_javascript(
-    content_tag(:div, link_to(product.name, [:admin, product]) + content_tag(:span, product.products.count), :class => 'product-name') +
+    content_tag(:div, params[:mode] == 'selection' ? product.name : link_to(product.name, [:admin, product]) + content_tag(:span, product.products.count), :class => 'product-name') +
     '<br /><br /><p class="product-name">' +
     product.products.collect(&:name).join('<br />')
   ) -%></p>',
@@ -27,7 +27,10 @@
    ) -%>',
 <% else -%>
   '<%= content_tag(:div, image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product') %>',
-  '<%= escape_javascript(content_tag(:div, link_to(product.name, [:admin, product]), :class => 'product-name')) %>',
+  '<%= escape_javascript(content_tag(:div, params[:mode] == 'selection' ? product.name : link_to(product.name, [:admin, product]), :class => 'product-name')) %>',
+  <% if params[:mode] == 'selection' %>
+    '<%= escape_javascript(content_tag(:div, product.sku)) %>',
+  <% end %>
   '<%= escape_javascript(content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price')) %>',
   '<%= escape_javascript(content_tag(:div, product.stock, :class => 'stocks' )) %>',
 <% end -%>
@@ -48,7 +51,11 @@
       :html => {
       :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
     })
-  ) -%>'
+  ) -%>',
+  '<%= product.id %>',
+  '<%= product.name %>',
+  '<%= product.sku %>',
+  '<%= product.price %>'
     ] <%= ',' unless @products.last == product %>
 <% end %>
 ]
