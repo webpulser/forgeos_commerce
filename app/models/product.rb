@@ -85,6 +85,10 @@ class Product < ActiveRecord::Base
       self.update_attribute('active', false)
     end
   end
+
+  def cross_sellings
+    Product.all(:conditions => { :active => true, :deleted => [false,nil], :id_ne => id}, :limit => 10, :order => 'RAND()')
+  end
   
   def activate
     self.update_attribute('active', !self.active )

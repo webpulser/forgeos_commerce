@@ -82,7 +82,7 @@
       %h2
         Nous vous proposons de compléter votre tenue avec :
       %ul.cross-sells
-        - Product.all(:conditions => { :active => true, :deleted => [false,nil] }, :limit => 10).each do |product|
+        - product.cross_sellings.each do |product|
           %li
             %a{ :href => "/product/#{product.url}" }
               - picture = product.pictures.first
