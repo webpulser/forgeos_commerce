@@ -56,5 +56,3 @@ namespace :admin do |admin|
   admin.statistics_visitors_graph '/statistics/visitors_graph', :controller => 'statistics', :action => 'visitors_graph'
   admin.statistics_sales_graph '/statistics/sales_graph', :controller => 'statistics', :action => 'sales_graph'
 end
-
-root :controller => 'home'
