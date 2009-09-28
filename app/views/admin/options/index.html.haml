@@ -26,16 +26,35 @@
     #option-tree.init-tree
 #content.grid_12.alpha.omega
   .backgrounds.header
-    = link_to content_tag(:span,I18n.t(:text_option, :count => 1), :class=>'small-icons text_option'),new_admin_text_option_path, :class=>'backgrounds action-button tattributes first'
-    = link_to content_tag(:span,I18n.t(:longtext_option, :count => 1), :class=>'small-icons longtext_option'),new_admin_longtext_option_path, :class=>'backgrounds action-button tattributes'
-    = link_to content_tag(:span,I18n.t(:number_option, :count => 1), :class=>'small-icons number_option'),new_admin_number_option_path, :class=>'backgrounds action-button tattributes'
-    = link_to content_tag(:span,I18n.t(:picklist_option, :count => 1), :class=>'small-icons picklist_option'),new_admin_picklist_option_path, :class=>'backgrounds action-button tattributes'
-    = link_to content_tag(:span,I18n.t(:checkbox_option, :count => 1), :class=>'small-icons checkbox_option'), new_admin_checkbox_option_path, :class=>'backgrounds action-button tattributes'
-    = link_to content_tag(:span,I18n.t(:radiobutton_option, :count => 1), :class=>'small-icons radiobutton_option'),new_admin_radiobutton_option_path, :class=>'backgrounds action-button tattributes'
-    = link_to content_tag(:span,I18n.t(:date_option, :count => 1), :class=>'small-icons date_option'),new_admin_date_option_path, :class=>'backgrounds action-button tattributes'
-    = link_to content_tag(:span,I18n.t(:url_option, :count => 1), :class=>'small-icons url_option'),new_admin_url_option_path, :class=>'backgrounds action-button tattributes'
+    %span.backgrounds.action-button.option-text-action.select_choice
+      %span.big-icons.create-text-option
+        = I18n.t('option.create.text').capitalize
+      %span.small-icons.arrow
+      %span.choices_list
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:text_option, :count => 1), :class=>'small-icons text_option'),new_admin_text_option_path
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:longtext_option, :count => 1), :class=>'small-icons longtext_option'),new_admin_longtext_option_path
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:url_option, :count => 1), :class=>'small-icons url_option'),new_admin_url_option_path
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:number_option, :count => 1), :class=>'small-icons number_option'),new_admin_number_option_path
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:date_option, :count => 1), :class=>'small-icons date_option'),new_admin_date_option_path
+
+    %span.backgrounds.action-button.option-choice-action.select_choice
+      %span.big-icons.create-choice-option
+        = I18n.t('option.create.choice').capitalize
+      %span.small-icons.arrow
+      %span.choices_list
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:picklist_option, :count => 1), :class=>'small-icons picklist_option'),new_admin_picklist_option_path
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:checkbox_option, :count => 1), :class=>'small-icons checkbox_option'), new_admin_checkbox_option_path
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:radiobutton_option, :count => 1), :class=>'small-icons radiobutton_option'),new_admin_radiobutton_option_path
     #search.right
-      = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
+      = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#'
     .backgrounds.search-form
   .content-background
   %table#table.datatable.draggable_rows

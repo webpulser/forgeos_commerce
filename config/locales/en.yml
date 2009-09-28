@@ -602,6 +602,9 @@ en:
       previous: 'last month'
     lifetime: 'lifetime sales'
   option:
+    create:
+      text: create a field
+      choice: create a choice
     value:
       one: choice
       other: choices
