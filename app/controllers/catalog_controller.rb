@@ -9,7 +9,7 @@ class CatalogController < ApplicationController
     @product_categories << @product_category.id
     @category_choice = params[:category_choice]
     
-    if @category_choice.blank?
+    if @category_choice.blank? || @category_choice == "0"
       @products = Product.all(:include => :product_categories,:conditions => {:deleted=>[false, nil], :product_categories_products=>{:product_category_id=>@product_categories}})
     else
       @category_choice = ProductCategory.find_by_id(@category_choice)
