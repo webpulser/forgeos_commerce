@@ -29,6 +29,7 @@
             = radio_button_tag 'product[option_value_ids][]', value.id, product ? product.option_value_ids.include?(value.id) : false
             = value.name
       - when 'PicklistOption'
-        = collection_select '','product[option_value_ids][]', option.option_values, :id, :name, :prompt => I18n.t('please_select')
+        - value = product.option_values.find_by_tattribute_id(option.id)
+        = select_tag 'product[option_value_ids][]', options_for_select(option.option_values.collect{ |v| [v.name, v.id] }, value ? value.id : nil), { :prompt => I18n.t('please_select') }
     .clear
 .clear
