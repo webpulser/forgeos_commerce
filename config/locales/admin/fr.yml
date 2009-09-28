@@ -1,0 +1,89 @@
+product:
+    one : produit
+    other: produits
+    all: 'tous les produits'
+    in_stock: 'en stock'
+    showed_on_homepage: "Affiché sur la page d'acceuil"
+    show:
+      all: voir tous les produits
+    sold:
+      one: "{{count}} vente"
+      other: "{{count}} ventes"
+    viewed:
+      one: "vu {{count}} fois"
+      other: "vu {{count}} fois"
+    best_seller:
+      one: meilleur vente
+      other: meilleures ventes
+    most_viewed:
+      one: plus vu
+      other: plus vus
+    associated_collection:
+      one: 'collection associée'
+      other: 'collections associées'
+    create:
+      success: 'le produit a bien été créé'
+      failed: 'un problème est survenu lors de la création du produit'
+      action: 'créer le produit'
+    update:
+      success: 'le produit a bien été mis à jour'
+      failed: 'un problème est survenu lors de la mise à jour du produit'
+      action: 'éditer produit'
+    destroy:
+      success: 'le produit a bien été supprimé'
+      failed: 'un problème est survenu lors de la suppression du produit'
+      confirm: 'êtes-vous sûr de vouloir de supprimé ce produit ?'
+      action: 'supprimer produit'
+    duplicate: 'dupliquer produit'
+order:
+    zero: 'pas de commande'
+    one: commande
+    other: commandes
+    all: 'toutes les commandes'
+    history: 'historique de la commande'
+    product:
+      add: ajouter un produit
+      select: sélectionner un produit
+    create:
+      success: 'la commande a bien été créée'
+      failed: 'un problème est survenu lors de la création de la commande'
+      action: 'créer une commande'
+    update:
+      success: 'la commande a bien été mise à jour'
+      failed: 'un problème est survenu lors de la mise à jour de la commande'
+      action: 'éditer la commande'
+    destroy:
+      success: 'la commande a bien été supprimée'
+      failed: 'un problème est survenu lors de la suppression de la commande'
+      confirm: 'êtes-vous sûr de vouloir supprimer cette commande ?'
+      action: 'supprimer la commande'
+    pay:
+      success: 'la commande a bien été payée'
+    accept:
+      success: 'la commande a bien été acceptée'
+    send:
+      success: 'la commande a bien été envoyée'
+    status:
+      unpaid: 'non payée'
+      paid: 'payée'
+      canceled: 'annulée'
+      shipped: 'expédiée'
+      closed: 'fermé'
+    lastest:
+      one: 'la dernière commande'
+      other: 'les dernières commandes'
+    pendings: 
+      one: 'commande en attente'
+      other: 'commandes en attentes'
+    show:
+      all: 'voir toutes les commandes'
+    main_infos: 'informations principales'
+    subtotal: 'sous-total'
+    total: total
+    user_note: "note de l'utilisateur"
+    invoice:
+      one: facture
+      other: factures
+      show: voir la facture
+    delivery: expédition
+  
