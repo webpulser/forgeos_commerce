@@ -53,6 +53,4 @@ namespace :admin do |admin|
   admin.resources :special_offers
   admin.resources :shipping_rules
 
-  admin.statistics_visitors_graph '/statistics/visitors_graph', :controller => 'statistics', :action => 'visitors_graph'
-  admin.statistics_sales_graph '/statistics/sales_graph', :controller => 'statistics', :action => 'sales_graph'
 end

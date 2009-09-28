@@ -9,16 +9,8 @@
           %label
             = "#{I18n.t('statistic.show.for').capitalize} :"
           = select_tag :timestamp, options_for_select([[I18n.t('please_select'), nil], [I18n.t('statistic.last.month'), 'month'], [I18n.t('statistic.last.week'), 'week']], params[:timestamp]), :onchange => "$('#form_stats').submit()"
-      .to-tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
-        %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
-          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to I18n.t('visitor', :count => 2), '#visitors'
-          %li.ui-state-default.ui-corner-top= link_to I18n.t('sale', :count => 2), '#sales'
-        #visitors.ui-tabs-panel.ui-widget-content.ui-corner-bottom
-          .chart
-            = @visitors_graph if @visitors_graph
-        #sales.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide
-          .chart
-            = @sales_graph if @sales_graph
+      .chart
+        = @graph
       .clear
 
       %h2.small-icons.products= I18n.t('product', :count => 2).capitalize
@@ -142,7 +134,7 @@
     .live-stats-content
       %span
         %span.keyfacts-name= I18n.t('visitor', :count => 2).capitalize
-        %span.keyfacts-value= VisitorCounter.sum(:counter, :conditions => { :date => @date})
+        %span.keyfacts-value= Forgeos::Statistics.total_of_visitors(@date)
         %span.clear
       %span
         %span.keyfacts-name= I18n.t('statistic.average_order').capitalize
