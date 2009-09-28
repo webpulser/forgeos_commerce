@@ -31,7 +31,7 @@
             -if logged_in?
               = link_to I18n.t(:disconnect).capitalize, session_path, :method => :delete
             -else
-              -session[:redirect] = '/'
+              -#session[:redirect] = '/'
               = link_to I18n.t(:log_in).capitalize, '#', :id=>'login_link'
               #login_container
                 = render :partial => 'sessions/new_form'
