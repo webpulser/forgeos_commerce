@@ -78,16 +78,15 @@
               = link_to 'Je crée mon Espace Client', new_user_path
         %ul.menu
           -ProductCategory.find_all_by_parent_id(nil, :limit => 7).each do |category|
-            %li
-              = link_to category.name, {:controller => 'catalog', :action => 'index', :category_name=> category.name}
+            %li= link_to category.name, catalog_path(:category_name=> category.name, :url => nil)
     .content
       .yield= yield
 
       .clear
     .footer
       .footer_categories_links
-        -ProductCategory.all.each do |category|
-          = link_to category.name, {:controller => 'catalog', :action => 'index', :category_name => category.name}
+        - ProductCategory.all.each do |category|
+          = link_to category.name, catalog_path(:category_name=> category.name, :url => nil)
       .footer_links
         %span
           Paiement sécurisé
