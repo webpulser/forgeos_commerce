@@ -57,18 +57,18 @@
         = "or" + link_to_cart_empty
       .clear
   .clear
-
-  .cross-selling
-    %h2
-      Nous vous proposons de compléter votre panier avec :
-    %ul.cross-sells
-      -@cross_selling_products.each do |product|
-        %li
-          %a{ :href => "/product/#{product.url}" }
-            - picture = product.pictures.first
-            - if picture
-              = image_tag(picture.public_filename(:normal))
-            - else
-              %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
-            %span= truncate(product.name,15,' ...')
-            %span.price= "#{product.price} #{$currency.html}"
+  - unless @cross_selling_products.empty?
+    .cross-selling
+      %h2
+        Nous vous proposons de compléter votre panier avec :
+      %ul.cross-sells
+        -@cross_selling_products.each do |product|
+          %li
+            %a{ :href => "/product/#{product.url}" }
+              - picture = product.pictures.first
+              - if picture
+                = image_tag(picture.public_filename(:normal))
+              - else
+                %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
+              %span= truncate(product.name,15,' ...')
+              %span.price= "#{product.price} #{$currency.html}"
