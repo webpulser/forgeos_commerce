@@ -9,7 +9,7 @@
   [
   '<%= content_tag(:div, '&nbsp;', :id => link_id, :class => 'small-icons user-ico')%>',
   '<%= escape_javascript content_tag(:div, link_to(user.fullname, [:admin, user]), :class => 'user-name') %>',
-  '<%= mail_to user.email, truncate(user.email,25,'...'), :class => 'email' %>',
+  '<%= escape_javascript content_tag(:div, mail_to(user.email, user.email, :class => 'truncate', :title => user.email), :class => 'email') %>',
   '<%= user.orders.empty? ? I18n.t('none').capitalize : user.orders.count %>',
   '<%= user.total_orders.blank? ? I18n.t('none').capitalize : content_tag(:div, "#{user.total_orders} #{$currency.html}") %>  ',
   '<%= content_tag( :div, (user.orders.empty? ?  I18n.t('none').capitalize : user.orders.last.created_at.to_s(:short)), :class => 'last-date') %> ',
