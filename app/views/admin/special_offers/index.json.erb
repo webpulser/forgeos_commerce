@@ -1,28 +1,20 @@
-{
-'iTotalDisplayRecords': <%= @special_offers.total_entries || 0 %>,
-'aaData': [
-<% @special_offers.each do |special_offer| %>
+<%- output = {
+:iTotalDisplayRecords => @special_offers.total_entries || 0,
+:aaData => @special_offers.collect do |special_offer|
+  link_id = special_offer.id
   [
-  <% link_id= special_offer.id %>
-  '<%= content_tag(:div, '', :id => link_id) %>',
-  '<%= special_offer.name %>',
-  '<%= escape_javascript(
-    select_tag(:status, options_for_select(['Active', 'Inactive'], special_offer.activated ? 'Active' : 'Inactive'),:class => 'published')
-  ) -%>',
-  '<%= special_offer.use %>',
-  '<%= escape_javascript(
-    #link_to('', [:edit, :admin, order], :class => 'small-icons edit-link') +
-    link_to_remote('', :url => {:controller => 'special_offers', :action => 'index'},
+    content_tag(:div, '', :id => link_id),
+    special_offer.name,
+    select_tag(:status, options_for_select([['Active',1], ['Inactive',0]], special_offer.activated)),
+    special_offer.use,
+    link_to_remote('', :url => { :controller => 'special_offers', :action => 'destroy', :id => special_offer.id },
        :method => :delete,
        :confirm => I18n.t('special_offer.destroy.confirm').capitalize,
        :success => "removedataTablesRow('#destroy_#{link_id}')",
        :html => {
          :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-  })
-  ) -%>',
-  ] <%= ',' unless @special_offers.last == special_offer %>
-
-
-<% end %>
-]
-}
+    })
+  ]
+end
+} -%>
+<%= output.to_json %>

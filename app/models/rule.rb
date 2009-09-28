@@ -5,6 +5,6 @@ class Rule < ActiveRecord::Base
 
   def usage
     #activated = false if max_use && max_use > 0 && use >= max_use
-    activated = true
+    self.activated = true
   end
 end

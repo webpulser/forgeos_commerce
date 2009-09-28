@@ -112,28 +112,15 @@ class Admin::SpecialOffersController < Admin::BaseController
     @rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
   end
   
-  #def index
-  #  @special_offers = SpecialOfferRule.find_all_by_parent_id(nil)
-  #end
-
-  def show
-    
-  end
-  
-  def new
-  
+  def new  
   end
   
   def destroy
     @special_offer = SpecialOfferRule.find_by_id(params[:id])
-    if @special_offer && request.delete?  
-      if @special_offer.destroy
-        flash[:notice] = "Special offer destroy"
-      else
-        flash[:error] = "Special offer not destroy"
-      end
+    if @special_offer.destroy
+      flash[:notice] = "Special offer destroy"
     else
-      flash[:error] = "Special offer does not exist"
+      flash[:error] = "Special offer not destroy"
     end
     redirect_to :action => 'index'
   end
@@ -142,27 +129,20 @@ private
 
   def sort
     columns = %w(name activated use)
-    #if params[:category_id]
-    #  conditions[:product_category_id] = params[:category_id]
-    #end
-    #conditions = 'parent_id = NULL'
-    #conditions[:deleted] = params[:deleted] ? true : [false,nil]
-
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    conditions = { :parent_id => nil }
     if params[:sSearch] && !params[:sSearch].blank?
       @special_offers = SpecialOfferRule.search(params[:sSearch],
-        :conditions => ["rules.parent_id is NULL"],
-        #:include => ['product_categories'],
+        :conditions => conditions,
         :order => order,
         :page => page,
         :per_page => per_page)
     else
       @special_offers = SpecialOfferRule.paginate(:all,
-        :conditions => ["rules.parent_id is NULL"],
-        #:include => ['product_categories'],
+        :conditions => conditions,
         :order => order,
         :page => page,
         :per_page => per_page)
