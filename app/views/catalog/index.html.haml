@@ -24,9 +24,9 @@
             =submit_tag 'ok', :class=>'ok-button'
 
       .slider_product
-        %ul#slider_products
+        %ul#slider_products.jcarousel-list
           -@products.each do |product|
-            %li
+            %li.jcarousel-item
               =link_to image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel'), "/product/#{product.url}" if !product.pictures.blank?
               /%img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
               %span.price

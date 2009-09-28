@@ -15,17 +15,17 @@
             Autres vues
           -product.pictures.each do |picture|
             =image_tag(picture.public_filename(:normal), :alt=>picture.public_filename(:big)) if picture != product.pictures.first
-    .info_container.to_tab
-      %ul
-        %li
+    .info_container.to_tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
+      %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
+        %li.ui-state-default.ui-corner-top.ui-state-active
           %a{ :href => "#descriptif" }
             Descriptif
         -product.product_type.options.find(:all, :conditions => { :type => 'LongtextOption' }).each do |option|
-          %li
+          %li.ui-state-default.ui-corner-top.ui-state-active
             %a{ :href => "##{option.access_method}" }
               =option.name
                 
-      #descriptif
+      #descriptif.ui-tabs-panel
         .desc
           = product.description
 
@@ -47,17 +47,17 @@
         -if !product.product_type.options.find_by_access_method('color').nil? and !product.color.blank?
           .color-picker
             Je choisis ma couleur
-            %ul.colors
+            %ul.colors.jcarousel-list
               -product.color.each do |color|
-                %li
+                %li.jcarousel-item
                   %a{:href => "#", :class => color.downcase }
                     %span
         -if !product.product_type.options.find_by_access_method('size').nil? and !product.size.blank?        
           .size-picker
             Je choisis ma taille
-            %ul.sizes
+            %ul.sizes.jcarousel-list
               -product.size.each do |size|
-                %li
+                %li.jcarousel-item
                   %a{ :href => "#" }
                     =size
         - form_tag :controller => 'cart', :action => 'add_product' do
@@ -74,16 +74,16 @@
             J'imprime
           = mail_to "", "Je signale ce produit à un ami", :subject => 'Demo Forgeos signaler un produit', :class => 'signal_to_a_friend last'
       -product.product_type.options.find(:all, :conditions => { :type => 'LongtextOption' }).each do |option|
-        %div{:id => option.access_method}
+        %div{:id => option.access_method, :class=>'ui-tabs-panel'}
           =product.dynamic_option_values.find_by_tattribute_id(option.id).value
       .clear
     .clear
     .cross-selling
       %h2
         Nous vous proposons de compléter votre tenue avec :
-      %ul.cross-sells
+      %ul.cross-sells.jcarousel-list
         - product.cross_sellings.each do |product|
-          %li
+          %li.jcarousel-item
             %a{ :href => "/product/#{product.url}" }
               - picture = product.pictures.first
               - if picture
