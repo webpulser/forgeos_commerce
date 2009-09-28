@@ -463,6 +463,7 @@ fr:
     duplicate: 'dupliquer produit'
   product_types: 'types de produit'
   product_type:
+    all: tous les types de produit
     one : 'type de produit'
     other: 'types de produit'
     back: retour aux types

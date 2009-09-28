@@ -465,7 +465,7 @@ en:
     duplicate: 'duplicate product'
   product_types: 'product types'
   product_type:
-    all: 'all products type'
+    all: all product types
     one : 'product type'
     other: 'product types'
     back: back to types
