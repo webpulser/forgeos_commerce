@@ -2,7 +2,9 @@ require 'ruleby'
 class CartController < ApplicationController
   include Ruleby
   before_filter :get_cart
-  #after_filter :special_offer, :only => [:index]
+  before_filter  :get_cross_selling, :only => [ :index ]
+
+  after_filter :special_offer, :only => [:index]
   # Show <i>Cart</i>
   def index
     flash[:notice] = I18n.t(:your_cart_is_empty).capitalize if @cart.is_empty?
@@ -90,9 +92,6 @@ protected
   end
 
   def special_offer
-    p 'test'*10
-    p @cart.inspect
-    #dd
   # SpecialOffers
     # delete free product already in cart and cart discount
     @cart.update_attributes!(:discount => nil, :percent => nil)
@@ -114,5 +113,27 @@ protected
       e.match
     end
   end
-  
+
+  def get_cross_selling
+    
+    @cross_selling_products = []
+    @cart.carts_products.group_by(&:product_id).each do |cart_product|
+      product = cart_product[1].first.product
+      product.cross_sellings.each do |cross_selling_product|
+        @cross_selling_products << cross_selling_product
+      end
+    end
+
+    # rules
+    engine :special_offer_engine do |e|
+      @shop = true
+      rule_builder = SpecialOffer.new(e)
+      rule_builder.rules
+      @cross_selling_products.each do |product|
+        e.assert product
+      end
+      e.match
+    end
+  end
+
 end
