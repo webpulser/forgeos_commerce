@@ -65,7 +65,7 @@ private
   end
 
   def get_graph
-    @graph = open_flash_chart_object(666, 187, admin_statistics_graph_path(:timestamp => params[:timestamp]), true,'/flashes/')
+    @graph = open_flash_chart_object(666, 250, admin_statistics_graph_path(:timestamp => params[:timestamp]), true,'/flashes/')
   end
 
   def generate_graph(element, y_max, colour)

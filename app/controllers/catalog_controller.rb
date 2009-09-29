@@ -46,20 +46,5 @@ class CatalogController < ApplicationController
 
     render :action => 'index'
   end
-
-  # Search <i>ProductDetail</i>
-  #
-  # keywords is save in 
-  #
-  # ==== Parameters
-  # * <tt>:keywords</tt> - an id of a <i>Category</i>    
-  def search
-    keywords = params[:keywords] || session[:keywords]
-    session[:keywords] = keywords
-
-    @products = Product.search_paginate(keywords, params[:page])
-
-    render :action => 'index'
-  end
-  
+ 
 end
