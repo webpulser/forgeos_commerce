@@ -5,7 +5,7 @@ currencies_001:
   default: "0"
   code: USD
 currencies_002: 
-  html: "&euro;"
+  html: €
   name: euro
   default: "1"
   code: EUR

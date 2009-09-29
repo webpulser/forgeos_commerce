@@ -61,7 +61,7 @@
               - @pages_most_viewed.each do |page_id, counter|
                 - if page = Page.find_by_id(page_id)
                   %tr{ :class => cycle('odd','even') }
-                    %td.table-product= "#{I18n.t(:page, :count => 1).capitalize} \"#{page.title}\""
+                    %td.table-product= link_to page.title, [:admin, page]
                     %td= I18n.t('page.viewed', :count => counter)
           .clear
           %a.see-all-orders{ :href => "#" }
@@ -94,7 +94,7 @@
               - if user = User.find_by_id(user_id)
                 %tr{:class => cycle('odd','even')}
                   %td.customer-bought-amount= "#{total} #{$currency.html}"
-                  %td= user ? user.fullname : ''
+                  %td= user ? link_to(user.fullname, [:admin, user]) : ''
           .clear
           = link_to I18n.t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
 
@@ -104,12 +104,12 @@
               - @customers_new.each do |customer|
                 %tr{ :class => cycle('odd','even') }
                   %td
-                    = customer.fullname
+                    = link_to customer.fullname, [:admin, customer]
                   %td
                     = I18n.t('user.joined_the').capitalize
                     = customer.created_at.to_s(:short)
-                  %td
-                    = customer.email
+                  %td.email
+                    = mail_to customer.email, customer.email
             
           .clear
           = link_to I18n.t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
