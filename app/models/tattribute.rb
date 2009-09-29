@@ -20,7 +20,7 @@ class Tattribute < ActiveRecord::Base
   def clone
     option = super
     option.option_values = self.option_values.collect(&:clone)
-    %w(tattribute_category_ids attachment_ids).each do |method|
+    %w(option_category_ids attachment_ids).each do |method|
       option.send("#{method}=",self.send(method))
     end
     option
