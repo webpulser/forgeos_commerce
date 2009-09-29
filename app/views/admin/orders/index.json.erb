@@ -1,44 +1,47 @@
-<% order_states_for_select = Order.aasm_states.collect{ |state| [I18n.t(state.name, :scope => [:order,:status]),state.name.to_s] }%>
-{
-'iTotalDisplayRecords': <%= @orders.total_entries || 0 %>,
-'aaData': [
-<% @orders.each do |order| -%>
-  <% details_count = order.orders_details.count -%>
-  <% link_id = "order_#{order.id}" -%>
-  [
-  '<%= escape_javascript(details_count > 1 ? content_tag(:div, '<div class="image">&nbsp;</div>', :id => link_id, :class => 'some-variants plus') : content_tag(:div, '', :id => link_id)) -%>',
-  '<%= order.id -%>',
-  '<%= "#{order.total} #{$currency.html}" -%>',
-  <% product_names = details_count > 1 ? '<br/><p class="product-name" >'+order.orders_details.collect(&:name).join('<br />')+'</p>' : '' -%>
-  '<%= escape_javascript(
+<% 
+  order_states_for_select = Order.aasm_states.collect{ |state| [I18n.t(state.name, :scope => [:order,:status]),state.name.to_s] }
+  select_class = (params[:skin] == 'read_only' ? 'order-change-status disabled' : 'order-change-status')
+  output = { 
+    :iTotalDisplayRecords => @orders.total_entries || 0,
+    :aaData => @orders.collect do |order|
+      details_count = order.orders_details.count
+      product_names = details_count > 1 ? '<br/><p class="product-name" >'+order.orders_details.collect(&:name).join('<br />')+'</p>' : ''
+      link_id = "order_#{order.id}"
+      [
+        (
+          details_count > 1 ? 
+          content_tag(:div,
+            content_tag(:div, '&nbsp;', :class=> 'image'),
+            :id => link_id, :class => 'some-variants plus') : content_tag(:div, '', :id => link_id)
+        ),
+        order.id,
+        "#{order.total} #{$currency.html}",
          content_tag(:div, 
-           link_to(
-             details_count != 1 ? "#{details_count} #{I18n.t('product', :count => details_count)}" : order.orders_details.first.name.capitalize,
-             [:admin,order]
-           ),
-           :class => 'product-name')+
-           product_names 
-       )
-  -%>',
-  '<%= order.created_at.to_s(:short) %>',
-  '<%= escape_javascript content_tag(:div, order.user ? link_to(order.user.fullname, [:admin, order.user], :target => '_blank') : '', :class => 'username') %>',
-  '<%= escape_javascript(
-    select('order_status',order.id,
-      options_for_select(order_states_for_select, order.status),
-      {}, { :class => 'order-change-status' }
-    )
-  ) -%>',
-  '<%= escape_javascript(
-    link_to('', [:edit, :admin, order], :class => 'small-icons edit-link') +
-    link_to_remote('', :url => [:admin, order],
-       :method => :delete,
-       :confirm => I18n.t('order.destroy.confirm').capitalize,
-       :success => "removedataTablesRow('#destroy_#{link_id}')",
-       :html => {
-         :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-  })
-  ) -%>'
-  ] <%= ',' unless @orders.last == order %>
-<% end -%>
-]
-}
+         link_to(
+           details_count != 1 ? "#{details_count} #{I18n.t('product', :count => details_count)}" : order.orders_details.first.name.capitalize,
+           [:admin,order]
+         ),
+         :class => 'product-name')+product_names,
+        order.created_at.to_s(:short),
+        content_tag(:div, order.user ? link_to(order.user.fullname, [:admin, order.user]) : '', :class => 'username'),
+        (
+          params[:skin] != 'read_only' ?
+            select('order_status',order.id,
+              options_for_select(order_states_for_select, order.status),
+              {}, { :class => select_class }
+            ) : 
+            content_tag(:dl, content_tag(:dt, link_to(content_tag(:span, order.status),'#', :class => 'dropdown_toggle'), :class => "dropdown #{order.status} disabled"))
+        ),
+        link_to('', [:edit, :admin, order], :class => 'small-icons edit-link') +
+        link_to_remote('', :url => [:admin, order],
+           :method => :delete,
+           :confirm => I18n.t('order.destroy.confirm').capitalize,
+           :success => "removedataTablesRow('#destroy_#{link_id}')",
+           :html => {
+             :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
+        })
+      ]
+    end
+  }
+-%>
+<%= output.to_json %>

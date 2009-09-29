@@ -127,13 +127,14 @@ private
 
   def sort
     columns = %w(id id sum(orders_details.price) count(orders_details.id) created_at people.lastname status)
-    conditions = [[]]
+    conditions = {}
     case params[:filter]
     when 'status'
-      conditions[0] << 'status = ?'
-      conditions << params[:status]
+      conditions[:status] = params[:status]
+    when 'user'
+      conditions[:user_id] = params[:user_id]
     end
-    conditions[0] = conditions[0].join(' AND ')
+
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1

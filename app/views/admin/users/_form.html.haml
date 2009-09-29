@@ -23,7 +23,7 @@
 
       - unless user.new_record? || user.orders.empty?
         %table#table.datatable
-          = dataTables_tag :url => edit_admin_user_path(:user => user, :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false}","{'sTitle':'#{I18n.t(:id).upcase!}'}","{'sTitle':'#{I18n.t(:total)}'}","{'sTitle':'#{I18n.t(:order, :count => 1)}'}","{'sTitle':'#{I18n.t(:created_on)}'}","{'sTitle':'#{I18n.t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
+        = dataTables_tag :url => admin_orders_path(:filter => 'user', :user_id => user.id, :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false}","{'sTitle':'#{I18n.t(:id)}'}","{'sTitle':'#{I18n.t(:total)}'}","{'sTitle':'#{I18n.t(:product, :count => 1)}'}","{'sTitle':'#{I18n.t(:created_on)}'}","{'sTitle':'#{I18n.t(:customer, :count => 1)}','bVisible': false}","{'sTitle':'#{I18n.t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
 
       .padding-wrap
 

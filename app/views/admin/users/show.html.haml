@@ -18,39 +18,8 @@
           = $currency.html
         = "#{I18n.t('user.spent_on')} #{@user.orders.length}"
         = @user.orders.length > 1 ? I18n.t('order.other') : I18n.t('order.one')
-    - unless @user.orders.empty?
-      %table#table.datatable
-        %thead
-          %tr
-            %th &nbsp;
-            %th= I18n.t('id').capitalize
-            %th= I18n.t('order.total').capitalize
-            %th= I18n.t('product.one').capitalize
-            %th= 'Date'
-            %th= I18n.t('status', :count => 1).capitalize
-            %th.actions &nbsp;
-        %tbody
-          -@user.orders.each do |order|
-            %tr{:id => "row_order_#{order.id}"}
-              %td
-                - if order.orders_details.length > 1
-                  .some-variants.plus{:id => "order_#{order.id}"}
-                    .image
-                      &nbsp;
-                - else
-                  %div{:id => "order_#{order.id}"}
-              %td= order.id
-              %td= "#{order.total} #{$currency.html}"
-              %td
-                - product_names = order.orders_details.length > 1 ? '<br/><p class="product-name" style="display:none">'+order.orders_details.collect(&:name).join('<br />')+'</p>' : ''
-                .product-name
-                  = link_to(order.orders_details.length != 1 ? "#{order.orders_details.length} #{I18n.t('product', :count => order.orders_details.length)}" : order.orders_details.first.name.capitalize,[:admin,order])
-                =product_names
-
-              %td= order.created_at.to_s(:short)
-              %td= select_tag(:status, options_for_select(order_states_for_select, order.status), :class => 'order-change-status')
-              %td= link_to('', [:edit, :admin, order], :class => 'small-icons edit-link')
-            
+    %table#table.datatable    
+    = dataTables_tag :url => admin_orders_path(:filter => 'user', :user_id => @user.id, :skin => 'read_only', :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false}","{'sTitle':'#{I18n.t(:id)}'}","{'sTitle':'#{I18n.t(:total)}'}","{'sTitle':'#{I18n.t(:product, :count => 1)}'}","{'sTitle':'#{I18n.t(:created_on)}'}","{'sTitle':'#{I18n.t(:customer, :count => 1)}','bVisible': false}","{'sTitle':'#{I18n.t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
     .padding-wrap
       .fieldset
         %h3
@@ -112,5 +81,3 @@
           = I18n.t('by')
           =@user.fullname
   .clear
-
-= dataTables_tag :callback => "rezindex", :columns => ['{ "bSortable": false }', '{ "sType": "numeric"}', '{ "sType": "currency"}', '', '', '{ "bSortable": false}', '{ "bSortable": "date" }']
