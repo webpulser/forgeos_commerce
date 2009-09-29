@@ -28,7 +28,7 @@
                   = image_tag('admin/no-image.png')
                 %span.stat-product-sells
                   = I18n.t('product.sold', :count => counter)
-                = link_to product.name, [:admin, product], :class => 'product-name'
+                = link_to product.name, [:admin, product], :class => 'product-name truncate', :title => product.name
                 %span.stat-prodcut-title
                   = "#{product.price} #{$currency.html}"
           .clear
@@ -44,7 +44,7 @@
                   = image_tag('admin/no-image.png')
                 %span.stat-product-sells
                   = I18n.t('product.viewed', :count => counter)
-                = link_to product.name, [:admin, product], :class => 'product-name'
+                = link_to product.name, [:admin, product], :class => 'product-name truncate', :title => product.name
                 %span.stat-product-title
                   = "#{product.price} #{$currency.html}"
               .clear
