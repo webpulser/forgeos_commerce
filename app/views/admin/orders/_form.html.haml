@@ -68,7 +68,7 @@
               %th= I18n.t('order.total').capitalize
               %th.actions &nbsp;
           %tbody
-            - order.orders_details.each do |detail|
+            - order.order_details.each do |detail|
               %tr
                 - product = detail.product
                 %td
@@ -88,7 +88,7 @@
                 %td= link_to_function '', "remove_order_detail($(this));", :class => 'small-icons destroy-link', :id => "order_detail_#{detail.id}"
         = link_to I18n.t('order.product.add').capitalize, '#', :class => 'small-icons add-link add-order-detail'
         #order_details
-          - f.fields_for :orders_details do |detail_form|
+          - f.fields_for :order_details do |detail_form|
             = detail_form.hidden_field :_delete, :class => 'delete', :id => "_delete_order_detail_#{detail_form.object.id}"
 
         .order-totals
@@ -185,8 +185,8 @@
 
 #empty_order_detail{:style => 'display: none;'}
   - id = "EMPTY_ID"
-  = hidden_field_tag "order[orders_details_attributes][#{id}][_delete]", '', :class => 'delete'
-  = hidden_field_tag "order[orders_details_attributes][#{id}][product_id]"
-  = hidden_field_tag "order[orders_details_attributes][#{id}][name]"
-  = hidden_field_tag "order[orders_details_attributes][#{id}][price]"
-  = hidden_field_tag "order[orders_details_attributes][#{id}][sku]"
+  = hidden_field_tag "order[order_details_attributes][#{id}][_delete]", '', :class => 'delete'
+  = hidden_field_tag "order[order_details_attributes][#{id}][product_id]"
+  = hidden_field_tag "order[order_details_attributes][#{id}][name]"
+  = hidden_field_tag "order[order_details_attributes][#{id}][price]"
+  = hidden_field_tag "order[order_details_attributes][#{id}][sku]"

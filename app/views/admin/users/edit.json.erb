@@ -1,40 +1,35 @@
-<% order_states_for_select = Order.aasm_states.collect{ |state| [state.name, I18n.t(state.name, :scope => [:order,:status])] }%>
-{
-'iTotalDisplayRecords': <%= @orders.total_entries || 0 %>,
-'aaData': [
-<% @orders.each do |order| -%>
-  <% details_count = order.orders_details.count -%>
-  <% link_id = "order_#{order.id}" -%>
-  [
-  '<%= escape_javascript(details_count > 1 ? content_tag(:div, '<div class="image">&nbsp;</div>', :id => link_id, :class => 'some-variants plus') : content_tag(:div, '', :id => link_id)) -%>',
-  '<%= order.id -%>',
-  '<%= "#{order.total} #{$currency.html}" -%>',
-  <% product_names = details_count > 1 ? '<br/><p class="product-name" >'+order.orders_details.collect(&:name).join('<br />')+'</p>' : '' -%>
-  '<%= escape_javascript(
-         content_tag(:div,
+<% 
+  order_states_for_select = Order.aasm_states.collect{ |state| [state.name, I18n.t(state.name, :scope => [:order,:status])] }
+  output = {
+    :iTotalDisplayRecords => @orders.total_entries || 0,
+    :aaData =>  @orders.collect do |order|
+      details_count = order.order_details.count
+      link_id = "order_#{order.id}"
+      product_names = details_count > 1 ? '<br/><p class="product-name" >'+order.order_details.collect(&:name).join('<br />')+'</p>' : ''
+      [
+        (details_count > 1 ? content_tag(:div, '<div class="image">&nbsp;</div>', :id => link_id, :class => 'some-variants plus') : content_tag(:div, '', :id => link_id)),
+        order.id,
+        "#{order.total} #{$currency.html}",
+        content_tag(:div,
            link_to(
-             details_count != 1 ? "#{details_count} #{I18n.t('product', :count => details_count)}" : order.orders_details.first.name.capitalize,
+             details_count != 1 ? "#{details_count} #{I18n.t('product', :count => details_count)}" : order.order_details.first.name.capitalize,
              [:admin,order]
            ),
            :class => 'product-name')+
-           product_names
-       )
-  -%>',
-  '<%= order.created_at.to_s(:short) %>',
-  '<%= escape_javascript(
-    select_tag(:status, options_for_select(order_states_for_select, order.status))
-  ) -%>',
-  '<%= escape_javascript(
-    link_to('', [:edit, :admin, order], :class => 'small-icons edit-link') +
-    link_to_remote('', :url => [:admin, order],
-       :method => :delete,
-       :confirm => I18n.t('order.destroy.confirm').capitalize,
-       :success => "removedataTablesRow('#destroy_#{link_id}')",
-       :html => {
-         :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-  })
-  ) -%>'
-  ] <%= ',' unless @orders.last == order %>
-<% end -%>
-]
-}
+           product_names,
+        order.created_at.to_s(:short),
+        select_tag(:status, options_for_select(order_states_for_select, order.status)),
+        link_to('', [:edit, :admin, order], :class => 'small-icons edit-link') +
+        link_to_remote('', :url => [:admin, order],
+          :method => :delete,
+          :confirm => I18n.t('order.destroy.confirm').capitalize,
+          :success => "removedataTablesRow('#destroy_#{link_id}')",
+          :html => {
+            :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
+          }
+        )
+      ]
+    end
+  }
+-%>
+<%= output.to_json %>

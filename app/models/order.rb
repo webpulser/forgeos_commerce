@@ -6,7 +6,7 @@
 # * <tt>user</tt> - <i>User</i>
 #
 # ==== has_many
-# * <tt>orders_details</tt> - <i>OrdersDetail</i>
+# * <tt>order_details</tt> - <i>OrdersDetail</i>
 #
 # ==== Attributes
 # * <tt>shipping_method</tt> - <i>ShippingMethod</i> name
@@ -37,9 +37,9 @@ class Order < ActiveRecord::Base
     transitions :to => :closed, :from => [:shipped, :canceled]
   end
 
-  has_many :orders_details, :dependent => :destroy
+  has_many :order_details, :dependent => :destroy
   has_one :order_shipping, :dependent => :destroy
-  accepts_nested_attributes_for :orders_details, :allow_destroy => true
+  accepts_nested_attributes_for :order_details, :allow_destroy => true
   accepts_nested_attributes_for :order_shipping
 
   has_one :address_delivery
@@ -53,8 +53,8 @@ class Order < ActiveRecord::Base
   # Returns order's amount
   def total(with_tax=false, with_currency=true,with_shipping=true, with_vouchers=true )
     amount = 0
-    orders_details.each do |orders_detail|
-      amount += orders_detail.total(with_tax, with_currency)
+    order_details.each do |order_detail|
+      amount += order_detail.total(with_tax, with_currency)
     end
     amount += order_shipping.price if with_shipping && order_shipping
     amount -= voucher.to_f if with_vouchers
@@ -62,7 +62,7 @@ class Order < ActiveRecord::Base
   end
 
   #def total(with_tax=false, with_currency=true)
-  #  orders_details.inject(0) { |total, orders_detail| total += orders_detail.total(with_tax, with_currency) } + shipping_method_price - voucher.to_f
+  #  order_details.inject(0) { |total, order_detail| total += order_detail.total(with_tax, with_currency) } + shipping_method_price - voucher.to_f
   #end
 
   def taxes
@@ -70,9 +70,9 @@ class Order < ActiveRecord::Base
   end
 
   def product_names
-    count = self.orders_details.count
+    count = self.order_details.count
     if count == 1
-      return self.orders_details.first.name
+      return self.order_details.first.name
     else
       return "#{count} #{I18n.t('product', :count => 2)}"
     end

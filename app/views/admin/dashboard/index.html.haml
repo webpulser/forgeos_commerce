@@ -66,8 +66,8 @@
                     = number_with_precision(order.total, :precision => 2)
                     = $currency.html
                   %td.table-product
-                    = order.orders_details.count
-                    = I18n.t(:product, :count => order.orders_details.count).capitalize
+                    = order.order_details.count
+                    = I18n.t(:product, :count => order.order_details.count).capitalize
                   %td{ :class => "table-state #{order.status}"}
                     = I18n.t(order.status, :scope => [:order,:status]).capitalize
                   %td.table-customer
@@ -84,8 +84,8 @@
                     = order.total
                     = $currency.html
                   %td.table-product
-                    = order.orders_details.count
-                    = I18n.t(:product, :count => order.orders_details.count).capitalize
+                    = order.order_details.count
+                    = I18n.t(:product, :count => order.order_details.count).capitalize
                   %td{ :class => "table-state #{order.status}"}
                     = I18n.t(order.status, :scope => [:order,:status]).capitalize
                   %td.table-customer

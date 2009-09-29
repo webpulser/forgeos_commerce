@@ -99,7 +99,7 @@ class OrderController < ApplicationController
       #:voucher                => (voucher) ? voucher.value : nil,
       #:transaction_number     => params[:trans],
       :reference              => @cart.id,
-      :orders_details_attributes => @cart.products.collect do |product|
+      :order_details_attributes => @cart.products.collect do |product|
         {
           :name => product.name,
           :description => product.description,

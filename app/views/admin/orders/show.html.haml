@@ -49,7 +49,7 @@
             %th= I18n.t('quantity', :count => 1).capitalize
             %th= I18n.t('order.total').capitalize
         %tbody
-          - @order.orders_details.all(:group => 'name').each do |detail|
+          - @order.order_details.all(:group => 'name').each do |detail|
             %tr
               - product = detail.product
               - if product && picture = product.pictures.first
@@ -59,7 +59,7 @@
               %td.product-name= detail.name
               %td= detail.sku
               %td= detail.price
-              %td= @order.orders_details.count('sku',:conditions => { :sku => detail.sku })
+              %td= @order.order_details.count('sku',:conditions => { :sku => detail.sku })
               %td.total= detail.total
                 
       .order-totals

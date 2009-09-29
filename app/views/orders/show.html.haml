@@ -7,7 +7,7 @@
     = I18n.t('address.delivery', :count => 1).capitalize
   = render :partial => 'addresses/show', :locals => { :address => @order.address_delivery }
 %h3
-  = I18n.t('product', :count=>@order.orders_details.count).capitalize
+  = I18n.t('product', :count=>@order.order_details.count).capitalize
 %table
   %thead
     %th
@@ -21,7 +21,7 @@
     %th
       = I18n.t('action', :count=>2).capitalize
   %tbody
-    - @order.orders_details.each do |product|
+    - @order.order_details.each do |product|
       %tr
         %td
           = product.name

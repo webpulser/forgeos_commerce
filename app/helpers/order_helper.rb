@@ -19,13 +19,13 @@ module OrderHelper
   # * <tt>cart</tt> a <i>Cart</i> object
   # * <tt>carts_product</tt> a <i>CartsProduct</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
-  def display_order_by_carts_product(order, orders_detail)
+  def display_order_by_carts_product(order, order_detail)
     content_tag :div, :class => 'order_product_line' do
-      content_tag :div, orders_detail.name, :class =>'order_name'
+      content_tag :div, order_detail.name, :class =>'order_name'
       content_tag :div, order_detail.quantity, :class => 'order_quantity'
-      content_tag :div, orders_detail.price, :class => 'order_price'
-      content_tag :div, orders_detail.total_tax, :class => 'order_tax'
-      content_tag :div, "#{orders_detail.total(true)} #{$currency.html}", :class => 'order_price'
+      content_tag :div, order_detail.price, :class => 'order_price'
+      content_tag :div, order_detail.total_tax, :class => 'order_tax'
+      content_tag :div, "#{order_detail.total(true)} #{$currency.html}", :class => 'order_price'
     end
   end
 
@@ -45,8 +45,8 @@ module OrderHelper
       end
     end
     content = ""
-    order.orders_details.each do |orders_detail|
-      content += display_order_by_carts_product(order, orders_detail)
+    order.order_details.each do |order_detail|
+      content += display_order_by_carts_product(order, order_detail)
     end
     content += content_tag :div, order.order_shipping.name, :class=>'order_shipping_method'
     content += content_tag :div, "#{price} #{$currency.html}", :class=>'order_shipping_method_price'
@@ -78,7 +78,7 @@ module OrderHelper
       content_tag :div, I18n.t('unit_price').capitalize, :class=>'order_name'
       content_tag :div, I18n.t('tax', :count => 1), :class=>'order_name'
       content_tag :div, I18n.t('total').capitalize, :class=>'order_name'
-      content_tag :div, display_order_all_products_lines(order), :class => 'orders_details'
+      content_tag :div, display_order_all_products_lines(order), :class => 'order_details'
       content_tag :div, I18n.t(order.status), :class => 'order_status'
     end
     #content_tag :div, 'nbsp;' , :class => 'clear'

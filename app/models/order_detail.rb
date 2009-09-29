@@ -7,7 +7,7 @@
 # * <tt>price</tt> - <i>Product</i> price
 # * <tt>rate_tax</tt> - <i>Product</i> rate_tax
 # * <tt>quantity</tt> - <i>Product</i> quantity
-class OrdersDetail < ActiveRecord::Base
+class OrderDetail < ActiveRecord::Base
   
   belongs_to :order
   belongs_to :product

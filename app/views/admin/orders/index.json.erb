@@ -4,8 +4,8 @@
   output = { 
     :iTotalDisplayRecords => @orders.total_entries || 0,
     :aaData => @orders.collect do |order|
-      details_count = order.orders_details.count
-      product_names = details_count > 1 ? '<br/><p class="product-name" >'+order.orders_details.collect(&:name).join('<br />')+'</p>' : ''
+      details_count = order.order_details.count
+      product_names = details_count > 1 ? '<br/><p class="product-name" >'+order.order_details.collect(&:name).join('<br />')+'</p>' : ''
       link_id = "order_#{order.id}"
       [
         (
@@ -18,7 +18,7 @@
         "#{order.total} #{$currency.html}",
          content_tag(:div, 
          link_to(
-           details_count != 1 ? "#{details_count} #{I18n.t('product', :count => details_count)}" : order.orders_details.first.name.capitalize,
+           details_count != 1 ? "#{details_count} #{I18n.t('product', :count => details_count)}" : order.order_details.first.name.capitalize,
            [:admin,order]
          ),
          :class => 'product-name')+product_names,

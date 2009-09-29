@@ -237,7 +237,7 @@ private
   end
 
   def sort_orders
-    columns = %w(id id sum(orders_details.price) count(orders_details.id) created_at  status)
+    columns = %w(id id sum(order_details.price) count(order_details.id) created_at  status)
     conditions = [[]]
     case params[:filter]
       when 'status'
@@ -258,9 +258,9 @@ private
     group_by = ['orders.id']
 
     case order_column
-    when 'count(orders_details.id)', 'sum(orders_details.price)'
-      group_by << 'orders_details.id'
-      include_models << 'orders_details'
+    when 'count(order_details.id)', 'sum(order_details.price)'
+      group_by << 'order_details.id'
+      include_models << 'order_details'
     when 'people.lastname'
       group_by << 'people.id'
       include_models << 'user'

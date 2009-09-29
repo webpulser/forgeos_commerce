@@ -72,7 +72,7 @@ class Admin::OrdersController < Admin::BaseController
   def get_product
     product = Product.find_by_id(params[:product_id])
     @products = Product.all
-    render :partial => 'form_details', :locals => { :orders_detail => OrdersDetail.new(
+    render :partial => 'form_details', :locals => { :order_detail => OrdersDetail.new(
       { :name => product.name, :description => product.description, :price => product.price, :rate_tax => product.rate_tax }),
     :products => @products }
   end
@@ -83,10 +83,10 @@ class Admin::OrdersController < Admin::BaseController
     editing_order.order_shipping = @order.order_shipping.clone
 
     # get order_details ids
-    if order_details = params[:order][:orders_details_attributes]
+    if order_details = params[:order][:order_details_attributes]
       detail_ids = order_details.values.collect{ |detail| detail['id'].to_i if detail['id'] && detail['_delete'].to_i != 1 }
       detail_ids.compact!
-      editing_order.orders_detail_ids = detail_ids
+      editing_order.order_detail_ids = detail_ids
     end
 
     # update attributes for order and order_shipping
@@ -126,7 +126,7 @@ private
   end
 
   def sort
-    columns = %w(id id sum(orders_details.price) count(orders_details.id) created_at people.lastname status)
+    columns = %w(id id sum(order_details.price) count(order_details.id) created_at people.lastname status)
     conditions = {}
     case params[:filter]
     when 'status'
@@ -144,9 +144,9 @@ private
     group_by = ['orders.id']
 
     case order_column
-    when 'count(orders_details.id)', 'sum(orders_details.price)'
-      group_by << 'orders_details.id'
-      include_models << 'orders_details'
+    when 'count(order_details.id)', 'sum(order_details.price)'
+      group_by << 'order_details.id'
+      include_models << 'order_details'
     when 'people.lastname'
       group_by << 'people.id'
       include_models << 'user'
