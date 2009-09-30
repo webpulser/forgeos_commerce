@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
         session[:redirect] = nil
         redirect_to(redirect)
       else
-        redirect_to_home
+        redirect_to(:root)
       end
       flash[:notice] = I18n.t("log_in_ok").capitalize
     else
@@ -34,6 +34,6 @@ class SessionsController < ApplicationController
     cookies.delete :auth_token
     reset_session
     flash[:notice] = I18n.t('log_out_ok').capitalize
-    redirect_to_home
+    redirect_to(:root)
   end
 end

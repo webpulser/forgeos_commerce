@@ -3,7 +3,7 @@
 .before_breadcrumbs
 .breadcrumbs
   .inner-breadcrumbs
-    =link_to 'Accueil', '/'
+    =link_to 'Accueil', :root
     &gt;
     = @product_category.name
 .inner-content
@@ -38,5 +38,4 @@
       .cart-step-content
         %h1
           Il n'y a pas de produit dans cette catégorie.
-          = link_to "Retour à l'accueil", '/home'
-'
+          = link_to "Retour à l'accueil", :root

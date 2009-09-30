@@ -92,3 +92,7 @@
                 %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
               %span= truncate(product.name,15,' ...')
               %span.price= "#{product.price} #{$currency.html}"
+- if product.meta_info
+  - content_for :title, product.meta_info.title
+  - content_for :description, product.meta_info.description
+  - content_for :keywords, product.meta_info.keywords

@@ -10,10 +10,10 @@ class CatalogController < ApplicationController
     @category_choice = params[:category_choice]
     
     if @category_choice.blank? || @category_choice == "0"
-      @products = Product.all(:include => :product_categories,:conditions => {:deleted=>[false, nil], :categories_elements=>{:category_id=>@product_categories}})
+      @products = Product.all(:include => :product_categories,:conditions => {:active => true, :deleted=>[false, nil], :categories_elements=>{:category_id=>@product_categories}})
     else
       @category_choice = ProductCategory.find_by_id(@category_choice)
-      @products = @category_choice.products.all
+      @products = @category_choice.products.find_all_by_active(true)
     end
     
     if params[:url]
