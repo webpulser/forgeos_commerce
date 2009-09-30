@@ -1,3 +1,3 @@
 class OptionCategory < Category
-  has_and_belongs_to_many :elements, :class_name => 'Tattribute', :join_table => 'option_categories_options', :association_foreign_key => 'option_id'
+  has_and_belongs_to_many :elements, :join_table => 'categories_elements', :foreign_key => 'category_id', :association_foreign_key => 'element_id', :class_name => 'Tattribute'
 end

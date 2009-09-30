@@ -76,9 +76,7 @@ private
   def sort
     columns = %w(product_types.name product_types.id)
     conditions = {}
-    if params[:category_id]
-      conditions[:product_type_categories_product_types] = { :product_type_category_id => params[:category_id] }
-    end
+    conditions[:categories_elements] = { :category_id => params[:category_id] } if params[:category_id]
 
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i

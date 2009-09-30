@@ -127,9 +127,7 @@ private
   def sort
     columns = %w(sku products.name price stock product_type_id active)
     conditions = {}
-    if params[:category_id]
-      conditions[:product_categories_products] = { :product_category_id => params[:category_id] }
-    end
+    conditions[:categories_elements] = { :category_id => params[:category_id] } if params[:category_id]
     
     conditions[:deleted] = params[:deleted] ? true : [false,nil]
 

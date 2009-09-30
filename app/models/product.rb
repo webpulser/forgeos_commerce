@@ -3,7 +3,8 @@ class Product < ActiveRecord::Base
   acts_as_taggable_on :tags
 
   has_and_belongs_to_many :carts
-  has_and_belongs_to_many :product_categories, :readonly => true
+  
+  has_and_belongs_to_many :product_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
   
   has_and_belongs_to_many :attachments, :list => true, :order => 'position'
   has_and_belongs_to_many :pictures, :association_foreign_key => 'attachment_id', :join_table => 'attachments_products', :class_name => 'Picture', :order => 'position'

@@ -125,9 +125,7 @@ private
     columns = %w(tattributes.type tattributes.name access_method)
 
     conditions = {}
-    if params[:category_id]
-      conditions[:option_categories_options] = { :option_category_id => params[:category_id] }
-    end
+    conditions[:categories_elements] = { :category_id => params[:category_id] } if params[:category_id]
 
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i

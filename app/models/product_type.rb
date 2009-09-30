@@ -11,7 +11,7 @@ class ProductType < ActiveRecord::Base
     :conditions => {:dynamic => true}
 
   has_and_belongs_to_many :attachments, :list => true, :order => 'position'
-  has_and_belongs_to_many   :product_type_categories, :readonly => true
+  has_and_belongs_to_many :product_type_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
 
   # Destroy all Product associated with this ProductType
   def after_destroy

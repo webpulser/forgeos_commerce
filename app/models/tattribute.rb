@@ -2,7 +2,7 @@
 class Tattribute < ActiveRecord::Base
   
   has_and_belongs_to_many :attachments, :list => true, :order => 'position'
-  has_and_belongs_to_many :option_categories, :readonly => true, :join_table => 'option_categories_options', :foreign_key => 'option_id'
+  has_and_belongs_to_many :option_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
   has_and_belongs_to_many :product_types, :readonly => true
   
   has_many :tattribute_values, :dependent => :destroy
