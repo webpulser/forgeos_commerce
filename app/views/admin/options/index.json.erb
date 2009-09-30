@@ -1,26 +1,23 @@
-{
-'iTotalDisplayRecords': <%= @options.total_entries || 0 %>,
-'aaData': [
-<% @options.each do |option| %>
-  <% 
-    link_id = "tattribute_#{option.id}"
-  %>
-  [
-  '<%= escape_javascript content_tag(:div, '&nbsp;', :id => link_id, :class => "small-icons #{option.class.to_s.underscore}") %>',
-  '<%= escape_javascript content_tag(:div, link_to(option.name, admin_option_path(option)), :class => 'product-name') -%>',
-  '<%= option.access_method %> ',
-  '<%= escape_javascript(
-    link_to('', duplicate_admin_option_path(option), :class => 'small-icons duplicate-link') +
-    link_to('', [:edit, :admin, option], :class => 'small-icons edit-link') +
-    link_to_remote('', :url => [:admin, option],
-         :method => :delete,
-         :confirm => I18n.t('tattribute.destroy.confirm').capitalize,
-         :success => "removedataTablesRow('#destroy_#{link_id}')",
-         :html => {
-         :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-       })
-  ) -%>'
-    ] <%= ',' unless @options.last == option %>
-<% end %>
-]
-}
+<%
+  output = {
+    :iTotalDisplayRecords => @options.total_entries || 0,
+    :aaData => @options.collect do |option|
+      link_id = "tattribute_#{option.id}"
+      [
+        content_tag(:div, '&nbsp;', :id => link_id, :class => "small-icons #{option.class.to_s.underscore}"),
+        content_tag(:div, link_to(option.name, admin_option_path(option)), :class => 'product-name'),
+        option.access_method,
+        link_to('', duplicate_admin_option_path(option), :class => 'small-icons duplicate-link') +
+        link_to('', [:edit, :admin, option], :class => 'small-icons edit-link') +
+        link_to_remote('', :url => [:admin, option],
+             :method => :delete,
+             :confirm => I18n.t('tattribute.destroy.confirm').capitalize,
+             :success => "removedataTablesRow('#destroy_#{link_id}')",
+             :html => {
+             :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
+           })
+      ]
+    end
+  }
+-%>
+<%= output.to_json -%>

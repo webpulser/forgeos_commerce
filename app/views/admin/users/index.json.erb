@@ -1,38 +1,33 @@
-{
-'iTotalDisplayRecords': <%= @users.total_entries || 0 %>,
-'aaData': [
-<% @users.each do |user| %>
-  <%
-    link_id = "user_#{user.id}"
-    klass = user.active? ? 'see-on' : 'see-off'
-  %>
-  [
-  '<%= content_tag(:div, '&nbsp;', :id => link_id, :class => 'small-icons user-ico')%>',
-  '<%= escape_javascript content_tag(:div, link_to(user.fullname, [:admin, user]), :class => 'user-name') %>',
-  '<%= escape_javascript content_tag(:div, mail_to(user.email, user.email, :class => 'truncate', :title => user.email), :class => 'email') %>',
-  '<%= user.orders.empty? ? I18n.t('none').capitalize : user.orders.count %>',
-  '<%= user.total_orders.blank? ? I18n.t('none').capitalize : content_tag(:div, "#{user.total_orders} #{$currency.html}") %>  ',
-  '<%= content_tag( :div, (user.orders.empty? ?  I18n.t('none').capitalize : user.orders.last.created_at.to_s(:short)), :class => 'last-date') %> ',
-  '<%= user.created_at.to_s(:short) %>',
-  '<%= escape_javascript(
-    link_to_remote('', :url => activate_admin_user_path(user),
-     :complete => "toggleActivate('#show_#{link_id}')",
-     :html => {
-       :class => "small-icons #{klass}",
-       :id => "show_#{link_id}"
-    }))
-  %> ',
-  '<%= escape_javascript(
-    link_to('', [:edit, :admin, user], :class => 'small-icons edit-link') +
-    link_to_remote('', :url => [:admin, user],
-     :method => :delete,
-     :confirm => I18n.t('user.destroy.confirm').capitalize,
-     :success => "removedataTablesRow('#destroy_#{link_id}')",
-     :html => {
-       :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-    })
-  ) -%>'
-    ] <%= ',' unless @users.last == user %>
-<% end %>
-]
+<%
+  output = {
+    :iTotalDisplayRecords => @users.total_entries || 0,
+    :aaData => @users.collect do |user|
+      link_id = "user_#{user.id}"
+      klass = user.active? ? 'see-on' : 'see-off'
+      [
+      content_tag(:div, '&nbsp;', :id => link_id, :class => 'small-icons user-ico'),
+      content_tag(:div, link_to(user.fullname, [:admin, user]), :class => 'user-name'),
+      content_tag(:div, mail_to(user.email, user.email, :class => 'truncate', :title => user.email), :class => 'email'),
+      user.orders.empty? ? I18n.t('none').capitalize : user.orders.count,
+      user.total_orders.blank? ? I18n.t('none').capitalize : content_tag(:div, "#{user.total_orders} #{$currency.html}"),
+      content_tag( :div, (user.orders.empty? ?  I18n.t('none').capitalize : user.orders.last.created_at.to_s(:short)), :class => 'last-date'),
+      user.created_at.to_s(:short),
+        link_to_remote('', :url => activate_admin_user_path(user),
+         :complete => "toggleActivate('#show_#{link_id}')",
+         :html => {
+           :class => "small-icons #{klass}",
+           :id => "show_#{link_id}"
+        }),
+        link_to('', [:edit, :admin, user], :class => 'small-icons edit-link') +
+        link_to_remote('', :url => [:admin, user],
+         :method => :delete,
+         :confirm => I18n.t('user.destroy.confirm').capitalize,
+         :success => "removedataTablesRow('#destroy_#{link_id}')",
+         :html => {
+           :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
+        })
+      ]
+    end
 }
+-%>
+<%= output.to_json -%>
