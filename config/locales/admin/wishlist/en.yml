@@ -1,0 +1,89 @@
+product:
+    one : product
+    other: products
+    all: 'all products'
+    in_stock: 'in stock'
+    showed_on_homepage: 'showed on homepage'
+    show:
+      all: see all products
+    sold:
+      one: "{{count}} sale"
+      other: "{{count}} sales"
+    viewed:
+      one: "viewed {{count}} time"
+      other: "viewed {{count}} times"
+    best_seller:
+      one: best seller
+      other: best sellers
+    most_viewed:
+      one: most viewed
+      other: most viewed
+    associated_collection:
+      one: 'associated collection'
+      other: 'associated collections'
+    create:
+      success: 'the product was successfully created'
+      failed: 'a problem occured during the product creation'
+      action: 'create product'
+    update:
+      success: 'the product was successfully updated'
+      failed: 'a problem occured during the product update'
+      action: 'modify product'
+    destroy:
+      success: 'the product was successfully deleted'
+      failed: 'a problem occured during the product deletion'
+      confirm: 'are you sure to delete this product ?'
+      action: 'delete product'
+    duplicate: 'duplicate product'
+order:
+    zero: no orders
+    one: order
+    other: orders
+    all: all orders
+    history: order history
+    product:
+      add: add product
+      select: select product
+    create:
+      success: 'the order was successfully created'
+      failed: 'a problem occured during the order creation'
+      action: 'create an order'
+    update:
+      success: 'the order was successfully updated'
+      failed: 'a problem occured during the order update'
+      action: 'edit order'
+    destroy:
+      success: 'the order was successfully deleted'
+      failed: 'a problem occured during the order deletion'
+      confirm: 'are you sure to delete this order ?'
+      action: 'delete order'
+    pay:
+      success: 'the order was successfully paid'
+    accept:
+      success: 'the order was successfully accepted'
+    send:
+      success: 'the order was successfully sent'
+    status:
+      unpaid: unpaid
+      paid: paid
+      canceled: canceled
+      shipped: shipped
+      closed: closed
+    lastest:
+      one: 'last order'
+      other: 'last orders'
+    pendings: 
+      one: 'pending order'
+      other: 'pending orders'
+    show:
+      all: 'see all orders'
+    main_infos: 'main infos'
+    subtotal: subtotal
+    total: total
+    user_note: note from the customer
+    invoice:
+      one: 'bill'
+      other: 'bills'
+      show: 'see bill'
+    delivery: 'delivery'
+  
