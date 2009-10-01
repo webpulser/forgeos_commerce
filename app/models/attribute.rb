@@ -2,7 +2,7 @@
 class Attribute < ActiveRecord::Base
   
   has_and_belongs_to_many :attachments, :list => true, :order => 'position'
-  has_and_belongs_to_many :attribute_categories, :readonly => true, :join_table => 'attribute_categories_attributes', :foreign_key => 'attribute_id'
+  has_and_belongs_to_many :attribute_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
   
   has_many :attribute_values, :dependent => :destroy
   has_many :dynamic_attribute_values, :dependent => :destroy
