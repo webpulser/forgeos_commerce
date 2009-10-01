@@ -83,7 +83,7 @@ class Cart < ActiveRecord::Base
   # * <tt>:product</tt> - a <i>Product</i> object
   def total(with_tax=false, product=nil, with_discount=false)
     if product.nil?
-      total = CartsProduct.find_all_by_cart_id_and_free(id,true).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
+      total = CartsProduct.find_all_by_cart_id_and_free(id,false).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
       if with_discount and !self.discount.nil? 
         self.percent.nil? ? total-=self.discount : total-= (total*self.discount)/100
       end
