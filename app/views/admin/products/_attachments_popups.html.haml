@@ -95,6 +95,7 @@
   name = current_table.fnGetData(indexes[i]).slice(-1);
   add_picture_to_product(path,id,name);
   }
+  check_product_first_image();
   $(current_table.fnGetSelectedNodes()).toggleClass('row_selected');
   }
   function add_picture_to_product(path,id,name){
