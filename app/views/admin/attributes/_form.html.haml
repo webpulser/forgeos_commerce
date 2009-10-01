@@ -26,7 +26,8 @@
           - when 'NumberAttribute'
             = render :partial => 'number', :locals => { :attribute => attribute, :form => f }
         - unless attribute.kind_of?(DynamicAttribute)
-          %span.small-icons.add-choice= I18n.t('attribute.value.new')
+           %a{:href =>"#", :class => "small-icons add-choice"}
+            = I18n.t('option.value.new')
     #right-sidebar.grid_4.omega
       - unless attribute.new_record?
         .step

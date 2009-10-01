@@ -54,7 +54,7 @@
         %span.widget-item
           = link_to content_tag(:span,I18n.t(:radiobutton_attribute, :count => 1), :class=>'small-icons radiobutton_attribute'),new_admin_radiobutton_attribute_path
     #search.right
-      = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#'
+      = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class =>'small-icons left search-link'
     .backgrounds.search-form
   .content-background
   %table#table.datatable.draggable_rows
