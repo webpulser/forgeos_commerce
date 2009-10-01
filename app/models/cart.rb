@@ -112,7 +112,7 @@ class Cart < ActiveRecord::Base
   def get_shipping_method_details
     shipping_method_details = []
     ShippingMethod.all.each do |shipping_method|
-      shipping_method_details += shipping_method.shipping_method_details.find(:all, :conditions => { :weight_min_lte => weight, :weight_max_gte => weight}))
+      shipping_method_details += shipping_method.shipping_method_details.find(:all, :conditions => { :weight_min_lte => weight, :weight_max_gte => weight})
       shipping_method_details += shipping_method.shipping_method_details.find(:all, :conditions => { :price_min_lte => total(true), :price_max_gte => total(true)})
     end
     shipping_method_details.uniq
