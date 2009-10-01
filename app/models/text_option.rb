@@ -1,2 +1,0 @@
-class TextOption < DynamicOption
-end

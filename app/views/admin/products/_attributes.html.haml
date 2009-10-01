@@ -1,0 +1,35 @@
+- unless product_type.nil?
+  - product_type.product_attributes.each do |attribute|
+    .fake-hr
+      %span.option-second-title
+        = attribute.name
+    - if attribute.dynamic?
+      - dynamic_attribute_value = product.dynamic_attribute_values.find_by_attribute_id(attribute.id) if product
+      - case attribute.class.to_s
+      - when 'TextAttribute'
+        = text_field "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?)
+      - when 'NumberAttribute'
+        = text_field "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?)
+      - when 'DateAttribute'
+        = text_field "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?), :class => 'date-picker'
+      - when 'UrlAttribute'
+        = text_field "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?)
+      - when 'LongtextAttribute'
+        = text_area "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?), :class => 'mceEditor'
+    - else
+      - case attribute.class.to_s
+      - when 'CheckboxAttribute'
+        - attribute.attribute_values.each do |value|
+          .grid_3.omega
+            = check_box_tag 'product[attribute_value_ids][]', value.id, product ? product.attribute_value_ids.include?(value.id) : false
+            = value.name
+      - when 'RadiobuttonAttribute'
+        -  attribute.attribute_values.each do |value|
+          .grid_3.omega
+            = radio_button_tag 'product[attribute_value_ids][]', value.id, product ? product.attribute_value_ids.include?(value.id) : false
+            = value.name
+      - when 'PicklistAttribute'
+        - value = product.attribute_values.find_by_attribute_id(attribute.id)
+        = select_tag 'product[attribute_value_ids][]', options_for_select(attribute.attribute_values.collect{ |v| [v.name, v.id] }, value ? value.id : nil), { :prompt => I18n.t('please_select') }
+    .clear
+.clear

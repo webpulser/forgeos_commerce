@@ -1,0 +1,38 @@
+- form_for [:admin , attribute], :html => { :id => 'wrap' } do |f|
+  .backgrounds.big-header
+    = f.text_field :name
+    .interact-links
+      = fg_submit_tag 'save_changes'
+      = I18n.t('or')
+      = link_to I18n.t('cancel').capitalize, admin_attributes_path, :class => 'back-link'
+  #content.grid_16.alpha.omega
+    .grid_12.alpha
+      .inner-content
+        - case attribute.class.to_s
+          - when 'CheckboxAttribute'
+            = render :partial => 'checkbox', :locals => { :attribute => attribute, :form => f }
+          - when 'PicklistAttribute'
+            = render :partial => 'picklist', :locals => { :attribute => attribute, :form => f }
+          - when 'RadiobuttonAttribute'
+            = render :partial => 'radiobutton', :locals => { :attribute => attribute, :form => f }
+          - when 'TextAttribute'
+            = render :partial => 'text', :locals => { :attribute => attribute, :form => f }
+          - when 'LongtextAttribute'
+            = render :partial => 'longtext', :locals => { :attribute => attribute, :form => f }
+          - when 'DateAttribute'
+            = render :partial => 'date', :locals => { :attribute => attribute, :form => f }
+          - when 'UrlAttribute'
+            = render :partial => 'url', :locals => { :attribute => attribute, :form => f }
+          - when 'NumberAttribute'
+            = render :partial => 'number', :locals => { :attribute => attribute, :form => f }
+        - unless attribute.kind_of?(DynamicAttribute)
+          %span.small-icons.add-choice= I18n.t('attribute.value.new')
+    #right-sidebar.grid_4.omega
+      - unless attribute.new_record?
+        .step
+          = link_to I18n.t('attribute.duplicate.action'), duplicate_admin_attribute_path(attribute), :class => 'small-icons duplicate'
+          = link_to I18n.t('attribute.destroy.action').capitalize, [:admin, attribute], :confirm => I18n.t('attribute.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+      .step
+        = I18n.t('attribute.access_method')
+        = f.text_field :access_method, :class => 'field'
+  = javascript_tag "object_name = '#{f.object_name}'"

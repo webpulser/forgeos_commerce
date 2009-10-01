@@ -1,0 +1,3 @@
+class CheckboxAttribute < Attribute
+
+end

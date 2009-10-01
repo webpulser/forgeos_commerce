@@ -1,0 +1,2 @@
+class TextAttribute < DynamicAttribute
+end

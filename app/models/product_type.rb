@@ -1,13 +1,8 @@
 class ProductType < ActiveRecord::Base
   has_many :products
   has_many :vouchers
-  has_and_belongs_to_many :tattributes, :readonly => true
-  has_and_belongs_to_many :dynamic_tattributes, :class_name => 'Tattribute', :readonly => true, :join_table => 'product_types_tattributes', :association_foreign_key => 'tattribute_id',
-    :conditions => {:dynamic => true}
-  
-  # TODO rename all tattribute to option
-  has_and_belongs_to_many :options, :class_name => 'Tattribute', :readonly => true
-  has_and_belongs_to_many :dynamic_options, :class_name => 'Tattribute', :readonly => true, :join_table => 'product_types_tattributes', :association_foreign_key => 'tattribute_id',
+  has_and_belongs_to_many :product_attributes, :class_name => 'Attribute', :readonly => true
+  has_and_belongs_to_many :dynamic_attributes, :class_name => 'Attribute', :readonly => true, :join_table => 'attributes_product_types', :association_foreign_key => 'attribute_id',
     :conditions => {:dynamic => true}
 
   has_and_belongs_to_many :attachments, :list => true, :order => 'position'
@@ -18,10 +13,10 @@ class ProductType < ActiveRecord::Base
     Product.destroy_all(['product_type_id = ?', self.id])
   end
 
-  # Set all Products dynamic_tattributes on save
+  # Set all Products dynamic_attributes on save
   def before_save
     self.products.each do |product|
-      product.dynamic_tattributes = dynamic_tattributes
+      product.dynamic_attributes = dynamic_attributes
     end
   end
 end

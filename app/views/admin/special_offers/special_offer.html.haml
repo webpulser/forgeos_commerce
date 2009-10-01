@@ -1,7 +1,7 @@
-- @default_options = ['Price','Title','Description', 'Weight', 'SKU', 'Stock']
-- @options = Tattribute.all.collect(&:name)
-- @cart_options = ['Total items quantity', 'Total weight', 'Total amount', 'Shipping method']
-- @disable_options = ['MAIN SETTINGS','ATTRIBUTES']
+- @default_attributes = ['Price','Title','Description', 'Weight', 'SKU', 'Stock']
+- @attributes = Attribute.all.collect(&:name)
+- @cart_attributes = ['Total items quantity', 'Total weight', 'Total amount', 'Shipping method']
+- @disable_attributes = ['MAIN SETTINGS','ATTRIBUTES']
 
 - @for = Hash["Product in Shop", "Product", "Product in Cart", "Product", "Cart", "Cart"]
 
@@ -27,7 +27,7 @@
     of these conditions are true
     #rule-conditions
       %p.rule-condition
-        = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options}),{ :onchange => "change_rule(this,'rule-condition')" } 
+        = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes}),{ :onchange => "change_rule(this,'rule-condition')" }
         = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
         = text_field_tag 'rule[values][]'
         = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins disabled'
@@ -118,43 +118,43 @@
 %div.rule-conditions{ :style => 'display: none'}
 
   %p.rule-condition.pattern
-    = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options}),{ :onchange => "change_rule(this,'rule-condition')" } 
+    = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes}),{ :onchange => "change_rule(this,'rule-condition')" }
     = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
     = text_field_tag 'rule[values][]'
     = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
     = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
 
-  - ['Price','Description', 'Weight', 'SKU', 'Stock'].each do |option|
-    %p{:class => "rule-#{option} pattern"}
-      = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options, :selected => option}),{ :onchange => "change_rule(this,'rule-condition')" } 
+  - ['Price','Description', 'Weight', 'SKU', 'Stock'].each do |attribute|
+    %p{:class => "rule-#{attribute} pattern"}
+      = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes, :selected => attribute}),{ :onchange => "change_rule(this,'rule-condition')" }
       = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
       = text_field_tag 'rule[values][]'
       = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
       = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
 
   %p.rule-Title.pattern
-    = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options, :selected => 'Title'}),{ :onchange => "change_rule(this,'rule-condition')" } 
+    = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes, :selected => 'Title'}),{ :onchange => "change_rule(this,'rule-condition')" }
     = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
     = select_tag 'rule[values][]', options_for_select(Product.all.collect {|p| [p.name, p.name]})
     = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
     = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
 
-  -@options.each do |option|
-    %p{:class => "rule-#{option.delete " "} pattern"}
-      = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_options+['ATTRIBUTES']+@options,{:disabled => @disable_options, :selected => option}),{ :onchange => "change_rule(this,'rule-condition')" } 
+  -@attributes.each do |attribute|
+    %p{:class => "rule-#{attribute.delete " "} pattern"}
+      = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes, :selected => attribute}),{ :onchange => "change_rule(this,'rule-condition')" }
       = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
-      -if Tattribute.find_by_name(option).dynamic
+      -if Attribute.find_by_name(attribute).dynamic
         = text_field_tag 'rule[values][]'
       -else
-        = select_tag 'rule[values][]', options_for_select(Tattribute.find_by_name(option).tattribute_values.collect(&:name))
+        = select_tag 'rule[values][]', options_for_select(Attribute.find_by_name(attribute).attribute_values.collect(&:name))
       = link_to_function ' ', "remove_rule(this,'rule-condition')", :class => 'icon1 moins'
       = link_to_function ' ', "add_rule('rule-condition')", :class => 'icon1 plus'
 
-  -@cart_options.each do |option|
-    %p{:class => "rule-#{option.delete " "} pattern"}
-      = select_tag 'rule[targets][]', options_for_select(@cart_options, option),{ :onchange => "change_rule(this,'rule-condition')" } 
+  -@cart_attributes.each do |attribute|
+    %p{:class => "rule-#{attribute.delete " "} pattern"}
+      = select_tag 'rule[targets][]', options_for_select(@cart_attributes, attribute),{ :onchange => "change_rule(this,'rule-condition')" }
       = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
-      - if option == 'Shipping method'
+      - if attribute == 'Shipping method'
         = select_tag 'rule[values][]', options_for_select(ShippingMethodDetail.all.collect(&:name))
       - else
         = text_field_tag 'rule[values][]'

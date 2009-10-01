@@ -95,7 +95,6 @@ class Admin::UsersController < Admin::BaseController
       end
     end
     if request.xhr?
-      index
       render(:partial => 'list', :locals => { :users => @users })
     else
       return redirect_to(:back)
@@ -244,6 +243,11 @@ private
         conditions[0] << 'status = ?'
         conditions << params[:status]
     end
+
+    if params[:category_id]
+      conditions[0] << 'user_categories_users'
+      conditions << { :user_category_id => params[:category_id] }
+    end
     
     conditions[0] << 'user_id = ?'
     conditions << @user.id
@@ -265,7 +269,10 @@ private
       group_by << 'people.id'
       include_models << 'user'
     end
+    include_models << 'user_categories'
     group_by = group_by.join(',')
+
+    p include_models
 
     order = "#{order_column} #{params[:iSortDir_0].upcase}"
     if params[:sSearch] && !params[:sSearch].blank?

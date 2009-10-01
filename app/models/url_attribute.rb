@@ -1,0 +1,2 @@
+class UrlAttribute < DynamicAttribute
+end

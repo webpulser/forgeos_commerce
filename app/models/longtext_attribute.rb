@@ -1,0 +1,2 @@
+class LongtextAttribute < DynamicAttribute
+end

@@ -1,0 +1,17 @@
+.attribute-type
+  %span.small-icons.checkbox_attribute= I18n.t 'checkbox_attribute.field'
+.choices
+  %h2= I18n.t 'attribute.value', :count => 2
+  %ul.sortable.sortable-choices.grid_10.omega.alpha
+    - form.fields_for :attribute_values  do |attribute_value|
+      %li.block-container
+        %span.block-type
+          %span.handler
+            %span.inner
+        %span.block-name
+          = attribute_value.text_field :name
+          = attribute_value.hidden_field :id
+          = attribute_value.hidden_field :_delete, :class => 'delete'
+        %span.small-icons.red-delete-icon
+        %span.small-icons.green-add-icon
+  .clear

@@ -1,0 +1,3 @@
+class TextFieldAttribute < Attribute
+
+end

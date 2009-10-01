@@ -12,6 +12,7 @@ class User < Person
   has_many :address_deliveries, :order =>  'id desc'
   has_many :address_invoices, :order => 'id desc'
 
+  has_and_belongs_to_many   :user_categories, :readonly => true
 
   accepts_nested_attributes_for :address_deliveries, :address_delivery, :address_invoices, :address_invoices
   attr_accessible :address_deliveries_attributes, :address_delivery_attributes, :address_invoices_attributes, :address_invoice_attributes

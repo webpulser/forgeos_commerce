@@ -21,23 +21,19 @@ namespace :admin do |admin|
   admin.resources :shipping_methods
   admin.resources :vouchers
   admin.resources :categories, :member => { :add_element => :post }
-  %w(product product_type option).each do |category|
+  %w(product product_type attribute user).each do |category|
     admin.resources "#{category}_categories", :controller => 'categories', :requirements => { :type => "#{category}_category" }
   end
   admin.resources :geo_zones
   admin.resources :countries, :controller => 'geo_zones'
   admin.resources :users, :collection => { :filter => [:post, :get] }, :member => { :activate => :post }
 
-  admin.resources :options, :collection => { :access_method => :post }, :member => { :duplicate => :get} do |option|
-    option.resources :option_values, :controller => 'tattribute_values'
-  end
-  admin.resources :tattributes, :controller => 'options', :collection => { :access_method => :post } do |tattribute|
-    tattribute.resources :values, :controller => 'tattribute_values'
+  admin.resources :attributes, :collection => { :access_method => :post }, :member => { :duplicate => :get} do |attribute|
+    attribute.resources :attribute_values, :controller => 'attribute_values'
   end
 
-
-  %w(checkbox radiobutton picklist text longtext number date url).each do |option_type|
-    admin.resources "#{option_type}_options", :controller => 'options', :requirements => { :type => option_type }
+  %w(checkbox radiobutton picklist text longtext number date url).each do |attribute_type|
+    admin.resources "#{attribute_type}_attributes", :controller => 'attributes', :requirements => { :type => attribute_type }
   end
   
   admin.resources :orders, :member => { :bill => :get, :total => :put } do |order|
@@ -46,8 +42,8 @@ namespace :admin do |admin|
 
   admin.resources :pictures
   admin.resources :product_types
-  admin.resources :products, :collection => { :url => :post }, :member => { :activate => :post, :update_tattributes_list => :post, :duplicate => :get }
-  admin.resources :packs, :collection => { :url => :post }, :member => { :activate => :post, :update_tattributes_list => :post, :duplicate => :get }, :controller => :products
+  admin.resources :products, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }
+  admin.resources :packs, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }, :controller => :products
   admin.resources :tags
   #admin.resources :special_offers, :collection => { :special_offer => [:get, :post] }
   admin.resources :special_offers

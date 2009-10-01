@@ -20,10 +20,10 @@
         %li.ui-state-default.ui-corner-top.ui-state-active
           %a{ :href => "#descriptif" }
             Descriptif
-        -product.product_type.options.find(:all, :conditions => { :type => 'LongtextOption' }).each do |option|
+        -product.product_type.product_attributes.find(:all, :conditions => { :type => 'LongtextAttribute' }).each do |attribute|
           %li.ui-state-default.ui-corner-top.ui-state-active
-            %a{ :href => "##{option.access_method}" }
-              =option.name
+            %a{ :href => "##{attribute.access_method}" }
+              =attribute.name
                 
       #descriptif.ui-tabs-panel
         .desc
@@ -44,7 +44,7 @@
               =product.price
               €
         .clear
-        -if !product.product_type.options.find_by_access_method('color').nil? and !product.color.blank?
+        -if !product.product_type.product_attributes.find_by_access_method('color').nil? and !product.color.blank?
           .color-picker
             Je choisis ma couleur
             %ul.colors.jcarousel-list
@@ -52,7 +52,7 @@
                 %li.jcarousel-item
                   %a{:href => "#", :class => color.downcase }
                     %span
-        -if !product.product_type.options.find_by_access_method('size').nil? and !product.size.blank?        
+        -if !product.product_type.product_attributes.find_by_access_method('size').nil? and !product.size.blank?
           .size-picker
             Je choisis ma taille
             %ul.sizes.jcarousel-list
@@ -73,9 +73,9 @@
           %a.print{ :href => "javascript:window.print();" }
             J'imprime
           = mail_to "", "Je signale ce produit à un ami", :subject => 'Demo Forgeos signaler un produit', :class => 'signal_to_a_friend last'
-      -product.product_type.options.find(:all, :conditions => { :type => 'LongtextOption' }).each do |option|
-        %div{:id => option.access_method, :class=>'ui-tabs-panel'}
-          =product.dynamic_option_values.find_by_tattribute_id(option.id).value
+      -product.product_type.product_attributes.find(:all, :conditions => { :type => 'LongtextAttribute' }).each do |attribute|
+        %div{:id => attribute.access_method, :class=>'ui-tabs-panel'}
+          =product.dynamic_attribute_values.find_by_attribute_id(attribute.id).value
       .clear
     .clear
     .cross-selling

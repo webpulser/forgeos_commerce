@@ -1,0 +1,2 @@
+class RadiobuttonAttribute < Attribute
+end

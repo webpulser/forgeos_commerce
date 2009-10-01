@@ -12,11 +12,11 @@
       #product-types-options-tree.a-tree.init-tree
         = I18n.t('tattribute', :count => 2).capitalize
         %ul
-          - @product_type.options.each do |option|
-            - id = "option_#{option.id}"
+          - @product_type.product_attributes.each do |attribute|
+            - id = "attribute_#{attribute.id}"
             %li{ :id => id, :rel => 'attribute' }
               %a{ :href => '#' }
-                = option.name
+                = attribute.name
         .clear
   .clear
 

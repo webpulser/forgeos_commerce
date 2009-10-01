@@ -1,0 +1,51 @@
+= render :partial => 'tabs'
+#wrap
+  .backgrounds.big-header
+    %h1= @attribute.name
+    .interact-links
+      = link_to I18n.t('attribute.update.action').capitalize, [:edit, :admin, @attribute ], :class => 'backgrounds interact-button'
+      = I18n.t('or')
+      = link_to I18n.t('attribute.back').capitalize, admin_attributes_path, :class => 'back-link'
+  #content.grid_16.alpha.omega
+    .grid_12.alpha
+      .inner-content
+        - attribute_type = @attribute.class.to_s
+        .attribute-type
+          %span.small-icons{:class =>  attribute_type.underscore}= I18n.t "#{attribute_type.underscore}.field"
+        - unless @attribute.dynamic?
+          .choices
+            %h2= I18n.t 'attribute.value', :count => 2
+            %ul.sortable.sortable-choices.grid_10.omega.alpha
+              - @attribute.attribute_values.each do |attribute_value|
+                %li.block-container
+                  %span.block-name
+                    = attribute_value.name
+            .clear
+        - else
+          .attribute-preview
+            %h2= I18n.t "#{attribute_type.underscore}.preview"
+            - case attribute_type
+              - when 'TextAttribute'
+                = text_field_tag ''
+
+              - when 'LongtextAttribute'
+                = text_area_tag '', '', :rows => 20, :cols => 70, :class => 'mceEditor'
+
+              - when 'DateAttribute'
+                = text_field_tag :date_attribute_preview
+
+              - when 'UrlAttribute'
+                = text_field_tag :url_attribute_preview
+
+              - when 'NumberAttribute'
+                = text_field_tag :number_attribute_preview
+
+    #right-sidebar.grid_4.omega
+      - unless @attribute.new_record?
+        .step
+          = link_to I18n.t('attribute.duplicate.action'), duplicate_admin_attribute_path(@attribute), :class => 'small-icons duplicate'
+          = link_to I18n.t('attribute.destroy.action').capitalize, [:admin, @attribute], :confirm => I18n.t('attribute.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+      .step
+        = I18n.t('attribute.access_method')
+        \:
+        = @attribute.access_method

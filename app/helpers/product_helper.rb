@@ -95,14 +95,14 @@ module ProductHelper
   def display_product_page_attributes(product)
     content = ""
     return content unless product && product.product_type
-    product.product_type.tattributes.each do |tattribute|
+    product.product_type.attributes.each do |attribute|
       content += "<div class='product_attribute_group_name'>"
-        content += tattribute.name + "&nbsp;:&nbsp;"
+        content += attribute.name + "&nbsp;:&nbsp;"
       content += "</div>"
       content += '<div class="product_attributes">'
-        tattribute.tattribute_values.each do |tattribute_value|
+        attribute.attribute_values.each do |attribute_value|
           content += '<div class="product_attribute">'
-            content += tattribute_value.name
+            content += attribute_value.name
           content += "</div>"
         end
       content += '</div>'

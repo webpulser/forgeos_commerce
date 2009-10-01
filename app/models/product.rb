@@ -10,14 +10,9 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :pictures, :association_foreign_key => 'attachment_id', :join_table => 'attachments_products', :class_name => 'Picture', :order => 'position'
   has_and_belongs_to_many :pdfs, :association_foreign_key => 'attachment_id', :join_table => 'attachments_products', :class_name => 'Pdf', :order => 'position'
 
-  has_and_belongs_to_many :tattribute_values, :readonly => true
-  has_many :dynamic_tattribute_values, :dependent => :destroy
-  has_many :dynamic_tattributes, :through => :dynamic_tattribute_values, :class_name => 'Tattribute', :source => 'tattribute'
-
-  # TODO rename all tattribute to option
-  has_and_belongs_to_many :option_values, :class_name => 'TattributeValue', :readonly => true
-  has_many :dynamic_option_values, :class_name => 'DynamicTattributeValue', :dependent => :destroy
-  has_many :dynamic_options, :through => :dynamic_option_values, :class_name => 'Tattribute', :source => 'tattribute'
+  has_and_belongs_to_many :attribute_values, :readonly => true
+  has_many :dynamic_attribute_values, :dependent => :destroy
+  has_many :dynamic_attributes, :through => :dynamic_attribute_values, :class_name => 'Attribute', :source => 'Attribute'
 
   has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products'
   belongs_to :product_type
@@ -58,8 +53,8 @@ class Product < ActiveRecord::Base
     find_all_by_active_and_deleted_and_on_first_page(true,false,true)
   end
 
-  def attribute_of(tattribute)
-    tattribute_values.find_by_tattribute_id(tattribute.id)
+  def attribute_of(attribute)
+    attribute_values.find_by_attribute_id(attribute.id)
   end
 
 
@@ -74,8 +69,8 @@ class Product < ActiveRecord::Base
   def clone
     product_cloned = super
     product_cloned.meta_info = meta_info.clone
-    product_cloned.dynamic_option_values = dynamic_option_values.collect(&:clone)
-    %w(attachment_ids picture_ids tag_list product_category_ids option_value_ids).each do |assoc|
+    product_cloned.dynamic_attribute_values = dynamic_attribute_values.collect(&:clone)
+    %w(attachment_ids picture_ids tag_list product_category_ids attribute_value_ids).each do |assoc|
       product_cloned.send(assoc+'=', self.send(assoc))
     end
     return product_cloned
@@ -160,17 +155,17 @@ class Product < ActiveRecord::Base
 #  end
 
   def method_missing_with_attribute(method, *args, &block)
-    unless self.product_type && tattribute = self.product_type.tattributes.find_by_access_method(method.to_s)
+    unless self.product_type && attribute = self.product_type.product_attributes.find_by_access_method(method.to_s)
       method_missing_without_attribute(method, *args, &block)
     else
-      if tattribute.dynamic
-        if attr_value = self.dynamic_tattribute_values.find_by_tattribute_id(tattribute.id)
+      if attribute.dynamic?
+        if attr_value = self.dynamic_attribute_values.find_by_attribute_id(attribute.id)
           return attr_value.value
         else
           method_missing_without_attribute(method, *args, &block)
         end
       else
-        self.tattribute_values.find_all_by_tattribute_id(tattribute.id).collect(&:name)
+        self.attribute_values.find_all_by_attribute_id(attribute.id).collect(&:name)
       end
     end
   end

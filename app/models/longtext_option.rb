@@ -1,2 +1,0 @@
-class LongtextOption < DynamicOption
-end

@@ -1,15 +1,28 @@
 #sidebar.grid_4.omega.alpha
   .backgrounds.header
-    %span.backgrounds.action-button
+    %span.backgrounds.action-button.create-action
       %span.big-icons.new-category
       %span.small-icons.arrow
+      %span.create-list
+        %span.big-icons.create-folder
+          = I18n.t('folder.create')
+        -#%span.small-icons.create-smart-folder
+          -#= I18n.t('folder.smart')
+    %span.backgrounds.action-button.update-action
+      %span.small-icons.more-actions
+      %span.small-icons.arrow
+      %span.update-list
+        %span.small-icons.modify-folder
+          = I18n.t('folder.edit')
+        %span.small-icons.duplicate-folder
+          = I18n.t('folder.duplicate')
+        %span.small-icons.delete-folder
+          = I18n.t('folder.destroy')
   .backgrounds.sidebar-background
   .sidebar-content
     %h2.small-icons.all-users
-      = I18n.t('user.all').capitalize
-    #customer-tree.init-tree
-      %ul
-        /= render :partial => 'admin/customer/list', :locals => { :categories => Category.all }
+      = link_to_function I18n.t('user.all').capitalize, "select_all_elements('/admin/users.json')"
+    #user-tree.init-tree.a-tree
 #content.grid_12.alpha.omega
   .backgrounds.header
     = link_to content_tag(:span,I18n.t('user.create.action').capitalize, :class=>'big-icons create-user'), new_admin_user_path, :class=>'backgrounds action-button'

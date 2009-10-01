@@ -1,0 +1,62 @@
+= render :partial => 'tabs'
+#sidebar.grid_4.omega.alpha
+  .backgrounds.header
+    %span.backgrounds.action-button.create-action
+      %span.big-icons.new-category
+      %span.small-icons.arrow
+      %span.create-list
+        %span.big-icons.create-folder
+          = I18n.t('folder.create')
+        -#%span.small-icons.create-smart-folder
+          -#= I18n.t('folder.smart')
+    %span.backgrounds.action-button.update-action
+      %span.small-icons.more-actions
+      %span.small-icons.arrow
+      %span.update-list
+        %span.small-icons.modify-folder
+          = I18n.t('folder.edit')
+        %span.small-icons.duplicate-folder
+          = I18n.t('folder.duplicate')
+        %span.small-icons.delete-folder
+          = I18n.t('folder.destroy')
+  .backgrounds.sidebar-background
+  .sidebar-content
+    %h2.small-icons.attributes
+      = link_to_function I18n.t('attribute.all').capitalize, "select_all_elements('/admin/attributes.json')"
+    #attribute-tree.init-tree
+#content.grid_12.alpha.omega
+  .backgrounds.header
+    %span.backgrounds.action-button.attribute-text-action.select_choice
+      %span.big-icons.create-text-attribute
+        = I18n.t('attribute.create.text').capitalize
+      %span.small-icons.arrow
+      %span.choices_list
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:text_attribute, :count => 1), :class=>'small-icons text_attribute'),new_admin_text_attribute_path
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:longtext_attribute, :count => 1), :class=>'small-icons longtext_attribute'),new_admin_longtext_attribute_path
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:url_attribute, :count => 1), :class=>'small-icons url_attribute'),new_admin_url_attribute_path
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:number_attribute, :count => 1), :class=>'small-icons number_attribute'),new_admin_number_attribute_path
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:date_attribute, :count => 1), :class=>'small-icons date_attribute'),new_admin_date_attribute_path
+
+    %span.backgrounds.action-button.attribute-choice-action.select_choice
+      %span.big-icons.create-choice-attribute
+        = I18n.t('attribute.create.choice').capitalize
+      %span.small-icons.arrow
+      %span.choices_list
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:picklist_attribute, :count => 1), :class=>'small-icons picklist_attribute'),new_admin_picklist_attribute_path
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:checkbox_attribute, :count => 1), :class=>'small-icons checkbox_attribute'), new_admin_checkbox_attribute_path
+        %span.widget-item
+          = link_to content_tag(:span,I18n.t(:radiobutton_attribute, :count => 1), :class=>'small-icons radiobutton_attribute'),new_admin_radiobutton_attribute_path
+    #search.right
+      = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#'
+    .backgrounds.search-form
+  .content-background
+  %table#table.datatable.draggable_rows
+
+= dataTables_tag :url => admin_attributes_path(:format => :json), :columns => ["{'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':\"#{I18n.t 'attribute.access_method'}\"}","{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]

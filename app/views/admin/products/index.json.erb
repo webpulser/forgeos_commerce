@@ -2,44 +2,51 @@
   output = {
     :iTotalDisplayRecords => @products.total_entries || 0,
     :aaData => @products.collect do |product|
+      
       picture = product.pictures.first.public_filename(:thumb) if product.pictures.first
       klass = product.active? ? 'see-on' : 'see-off'
       link_id = "product_#{product.id}"
+
       product_array = []
+
       if product.kind_of? Pack
+
         product_array <<
-        content_tag(:div, '<div class="image">&nbsp'+ image_tag(picture || 'admin/no-image.png') +'</div>', :id => link_id, :class => 'some-variants plus') <<
-        content_tag(:div, params[:mode] == 'selection' ? product.name : link_to(product.name, [:admin, product]) + content_tag(:span, product.products.count), :class => 'product-name') +
-        content_tag(:p, product.products.collect(&:name).join('<br />'), :class=>'product-name') <<
-        content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price') +
-        content_tag(:p, product.products.collect{ |p| "#{p.price} #{$currency.html}"}.join('<br />')) <<
-        content_tag(:div, product.stock, :class => 'stocks' ) + '<br /><p class="stocks">' + product.products.collect(&:stock).join('<br />') + '</p>'
+          content_tag(:div, '<div class="image">&nbsp'+ image_tag(picture || 'admin/no-image.png') +'</div>', :id => link_id, :class => 'some-variants plus') <<
+            content_tag(:div, params[:mode] == 'selection' ? product.name : link_to(product.name, [:admin, product]) + content_tag(:span, product.products.count), :class => 'product-name') +
+              content_tag(:p, product.products.collect(&:name).join('<br />'), :class=>'product-name') <<
+                content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price') +
+                  content_tag(:p, product.products.collect{ |p| "#{p.price} #{$currency.html}"}.join('<br />')) <<
+                    content_tag(:div, product.stock, :class => 'stocks' ) + '<br /><p class="stocks">' + product.products.collect(&:stock).join('<br />') + '</p>'
       else
+
         product_array <<
-        content_tag(:div, image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product') <<
-        content_tag(:div, params[:mode] == 'selection' ? product.name : link_to(product.name, [:admin, product]), :class => 'product-name')
+          content_tag(:div, image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product') <<
+            content_tag(:div, params[:mode] == 'selection' ? product.name : link_to(product.name, [:admin, product]), :class => 'product-name')
         product_array << content_tag(:div, product.sku) if params[:mode] == 'selection'
         product_array <<
-        content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price') <<
-        content_tag(:div, product.stock, :class => 'stocks' )
+          content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price') <<
+            content_tag(:div, product.stock, :class => 'stocks' )
+
       end
+
       product_array <<
-      product.product_type.name <<
-      link_to_remote('', :url => activate_admin_product_path(product),
-       :complete => "toggleActivate('#show_#{link_id}')",
-       :html => { 
-         :class => "small-icons #{klass}",
-         :id => "show_#{link_id}"
-      }) <<
-      link_to('', [:duplicate, :admin, product], :class => 'small-icons duplicate-link') +
-      link_to('', [:edit, :admin, product], :class => 'small-icons edit-link') +
-      link_to_remote('', :url => [:admin, product],
-        :method => :delete,
-        :confirm => I18n.t('product.destroy.confirm').capitalize,
-        :success => "removedataTablesRow('#destroy_#{link_id}')", 
-        :html => {
-        :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-      }) << product.id << product.name << product.sku << product.price
+        product.product_type.name <<
+          link_to_remote('', :url => activate_admin_product_path(product),
+           :complete => "toggleActivate('#show_#{link_id}')",
+           :html => {
+             :class => "small-icons #{klass}",
+             :id => "show_#{link_id}"
+          }) <<
+            link_to('', [:duplicate, :admin, product], :class => 'small-icons duplicate-link') +
+            link_to('', [:edit, :admin, product], :class => 'small-icons edit-link') +
+            link_to_remote('', :url => [:admin, product],
+              :method => :delete,
+              :confirm => I18n.t('product.destroy.confirm').capitalize,
+              :success => "removedataTablesRow('#destroy_#{link_id}')",
+              :html => {
+              :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
+            }) << product.id << product.name << product.sku << product.price
     end
   }
 -%>

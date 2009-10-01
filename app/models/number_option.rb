@@ -1,2 +1,0 @@
-class NumberOption < DynamicOption
-end

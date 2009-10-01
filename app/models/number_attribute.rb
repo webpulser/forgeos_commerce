@@ -1,0 +1,2 @@
+class NumberAttribute < DynamicAttribute
+end

@@ -1,0 +1,2 @@
+class DateAttribute < DynamicAttribute
+end

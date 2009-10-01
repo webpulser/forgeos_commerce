@@ -7,13 +7,13 @@
       = link_to((category.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy')), '#')
       - unless category.elements.empty?
         %ul
-          - category.elements.each do |option|
-            - unless option.product_types.include? @product_type
-              %li{ :rel => 'attribute', :id => "option_#{option.id}" }
-                = link_to((option.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-tattribute')), '#')
+          - category.elements.each do |attribute|
+            - unless attribute.product_types.include? @product_type
+              %li{ :rel => 'attribute', :id => "attribute_#{attribute.id}" }
+                = link_to((attribute.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-attribute')), '#')
         - unless category.children.empty?
           %ul
             - category.children.each do |child|
-              - unless child.options.empty?
+              - unless child.attribute.empty?
                 = render :partial => 'categories', :locals => { :categories => [child], :level => (level + 1) }
 

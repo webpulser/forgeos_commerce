@@ -1,0 +1,3 @@
+class RadioAttribute < Attribute
+
+end

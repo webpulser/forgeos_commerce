@@ -75,10 +75,10 @@ class Admin::ProductsController < Admin::BaseController
     render :text => @product.activate
   end
 
-  def update_tattributes_list
+  def update_attributes_list
     product_type = ProductType.find_by_id(params[:product_type_id])
     product = Product.find_by_id(params[:id])
-    render :partial => 'options', :locals => { :product_type => product_type, :product => product }
+    render :partial => 'attributes', :locals => { :product_type => product_type, :product => product }
   end
 
 private
@@ -90,14 +90,14 @@ private
   # Update DynamicAttributes values
   # return false if one of update fail
   def manage_dynamic_attributes
-    return true unless params[:dynamic_option_values]
+    return true unless params[:dynamic_attribute_values]
     result = true
-    @product.product_type.dynamic_option_ids.each do |d|
-      if option_value = @product.dynamic_option_values.find_by_tattribute_id(d)
-        result = result & option_value.update_attributes(params[:dynamic_option_values][d.to_s])
+    @product.product_type.dynamic_attribute_ids.each do |d|
+      if attribute_value = @product.dynamic_attribute_values.find_by_attribute_id(d)
+        result = result & attribute_value.update_attributes(params[:dynamic_attribute_values][d.to_s])
       else
-        if params[:dynamic_option_values][d.to_s]
-          result = result & @product.dynamic_option_values.create(params[:dynamic_option_values][d.to_s].merge(:tattribute_id => d))
+        if params[:dynamic_attribute_values][d.to_s]
+          result = result & @product.dynamic_attribute_values.create(params[:dynamic_attribute_values][d.to_s].merge(:attribute_id => d))
         end
       end
     end
