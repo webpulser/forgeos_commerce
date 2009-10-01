@@ -3,7 +3,7 @@
   .backgrounds.sidebar-background
   .sidebar-content
     %h2.small-icons.orders= link_to_function I18n.t('order.all').capitalize, "select_all_elements('/admin/orders.json')"
-    #orders-tree.a-tree
+    #orders-tree.a-tree.init-tree
       %ul
         - Order.aasm_states.each do |state|
           - state_name = state.name.to_s

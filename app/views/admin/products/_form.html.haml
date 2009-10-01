@@ -132,7 +132,7 @@
       .step.open
         %a.small-icons.step-title{ :href => "#" }
           Associated to collection
-        #association-product-tree.inner-step
+        #association-product-tree.inner-step.init-tree
           %ul
             = hidden_field_tag "#{f.object_name}[product_category_ids][]" 
             = render :partial => 'admin/categories/associated_elements', :locals => { :association_id => 'product_category_ids', :element => product, :category_ids => product.product_category_ids, :categories => ProductCategory.find_all_by_parent_id(nil) }
