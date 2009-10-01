@@ -25,7 +25,7 @@ class Cart < ActiveRecord::Base
   end
 
   def has_free_product?(product_id)
-    return !carts_products.find_by_product_id(product_id, :conditions => ['free = 1']).blank?
+    return !carts_products.find_by_product_id_and_free(product_id,true).nil?
   end
 
   def add_new_price(carts_product_id, new_price)
@@ -55,8 +55,7 @@ class Cart < ActiveRecord::Base
   def remove_product(carts_product_id)
     return false if carts_products.nil?
     # destroy the product
-    #cart_product = carts_products.find_by_product_id(carts_product_id)
-    cart_product = carts_products.all(:conditions => ["product_id = #{carts_product_id}"])
+    cart_product = carts_products.find_by_product_id(carts_product_id)
     cart_product.each do |product|
       product.destroy if cart_product
     end
@@ -84,7 +83,7 @@ class Cart < ActiveRecord::Base
   # * <tt>:product</tt> - a <i>Product</i> object
   def total(with_tax=false, product=nil, with_discount=false)
     if product.nil?
-      total = CartsProduct.find_all_by_cart_id(id, :conditions => ['free != 1']).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
+      total = CartsProduct.find_all_by_cart_id_and_free(id,true).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
       if with_discount and !self.discount.nil? 
         self.percent.nil? ? total-=self.discount : total-= (total*self.discount)/100
       end
@@ -112,10 +111,11 @@ class Cart < ActiveRecord::Base
   # Returns all <i>ShippingMethodDetail</i> available for this cart
   def get_shipping_method_details
     shipping_method_details = []
-    ShippingMethod.find(:all).each do |shipping_method|
-      shipping_method_details += shipping_method.shipping_method_details.find(:all, :conditions => ["(weight_min <= ? AND weight_max >= ?) OR (price_min <= ? AND price_max >= ?)", weight, weight, total(true), total(true)])
+    ShippingMethod.all.each do |shipping_method|
+      shipping_method_details += shipping_method.shipping_method_details.find(:all, :conditions => { :weight_min_lte => weight, :weight_max_gte => weight}))
+      shipping_method_details += shipping_method.shipping_method_details.find(:all, :conditions => { :price_min_lte => total(true), :price_max_gte => total(true)})
     end
-    shipping_method_details
+    shipping_method_details.uniq
   end
   
   def total_items

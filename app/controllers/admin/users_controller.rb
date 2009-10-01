@@ -125,14 +125,10 @@ class Admin::UsersController < Admin::BaseController
     @c_age = params[:filter][:age][:conds]
 
     gender = @gender.chomp.split(',').collect(&:to_i)
-    conditions_ini = [[]]
-    if @country.blank?
-      conditions_ini[0] <<  'civility_id IN (?)'
-      conditions_ini << gender
-    else
-      conditions_ini[0] << 'civility_id IN (?) AND country_id = ?'
-      conditions_ini << gender
-      conditions_ini <<@country.to_i
+    conditions_ini = {}
+    conditions_ini[:civility_id] = gender
+    unless @country.blank?
+      conditions_ini[:country_id] = @country.to_i
     end
 
     unless @v_age.nil? && @c_age.nil?
@@ -141,24 +137,20 @@ class Admin::UsersController < Admin::BaseController
       
       case @c_age
         when '=='
-          conditions_ini[0] << 'birthday BETWEEN ? AND ?'
-          conditions_ini << (old_date << 12)
+          conditions_ini[:birthday] = old_date.ago(12.month)..old_date
         when '!='
-          conditions_ini[0] << 'birthday NOT BETWEEN ? AND ?'
-          conditions_ini << (old_date << 12)
+          conditions_ini[:birthday_not] = old_date.ago(12.month)..old_date
         when '>='
-          conditions_ini[0] << 'birthday <= ?'
+          conditions_ini[:birthday_lte] = old_date
         when '<='
-          conditions_ini[0] << 'birthday >= ?'
+          conditions_ini[:birthday_gte] = old_date
         when '<'
-          conditions_ini[0] << 'birthday > ?'
+          conditions_ini[:birthday_gt] = old_date
         when '>'
-          conditions_ini[0] << 'birthday < ?'
+          conditions_ini[:birthday_lt] = old_date
       end
-      conditions_ini << old_date
     end
 
-    conditions_ini[0] = conditions_ini[0].join(' AND ')
     @users = User.all( :conditions => conditions_ini )
     
     flash[:error] = I18n.t('user.search.failed').capitalize if @users.empty?
@@ -237,11 +229,10 @@ private
 
   def sort_orders
     columns = %w(id id sum(order_details.price) count(order_details.id) created_at  status)
-    conditions = [[]]
+    conditions = { :user_id => @user.id}
     case params[:filter]
       when 'status'
-        conditions[0] << 'status = ?'
-        conditions << params[:status]
+        conditions[:status] = params[:status]
     end
 
     if params[:category_id]
@@ -249,10 +240,6 @@ private
       conditions << { :user_category_id => params[:category_id] }
     end
     
-    conditions[0] << 'user_id = ?'
-    conditions << @user.id
-    
-    conditions[0] = conditions[0].join(' AND ')
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
@@ -264,10 +251,10 @@ private
     case order_column
     when 'count(order_details.id)', 'sum(order_details.price)'
       group_by << 'order_details.id'
-      include_models << 'order_details'
+      include_models << :order_details
     when 'people.lastname'
       group_by << 'people.id'
-      include_models << 'user'
+      include_models << :user
     end
     include_models << 'user_categories'
     group_by = group_by.join(',')

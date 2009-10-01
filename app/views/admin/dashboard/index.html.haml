@@ -235,8 +235,8 @@
     %h2.small-icons.live-stats
       = I18n.t('statistic.live', :count => 2).capitalize
     .live-stats-content
-      - online_users = User.count(:conditions => ['updated_at > ?',Time.now - 10.minutes])
-      - online_visitors = User.count(:conditions => ['updated_at > ?',Time.now - 10.minutes])
+      - online_users = User.count(:conditions => { :updated_at_gt => Time.now - 10.minutes })
+      - online_visitors = User.count(:conditions => { :updated_at_gt => Time.now - 10.minutes})
       %span
         = I18n.t('visitor.online', :count => online_visitors)
       %span
