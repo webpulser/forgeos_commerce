@@ -1,7 +1,7 @@
 # Include this module in your controller
 #
 # ==== session's variables
-# * <tt>session[:order_shipping_method_detail_id]</tt> - an id of a <i>ShippingMethodDetail</i> choice by user
+# * <tt>session[:order_shipping_method_id]</tt> - an id of a <i>ShippingMethodDetail</i> choice by user
 # * <tt>session[:order_voucher_ids]</tt> - an id of a <i>Voucher</i> using by user
 
 require 'ruleby'
@@ -12,7 +12,7 @@ class OrderController < ApplicationController
   before_filter :can_create_order?, :only => :create
   before_filter :get_cart, :only => [:new,:informations,:paye]
   # Save in session <i>address_invoice_id</i> and <i>address_delivery_id</i>.
-  # Returns false if miss an address or if <i>shipping_method_detail</i> is not validate by user, returns true else
+  # Returns false if miss an address or if <i>shipping_method</i> is not validate by user, returns true else
   def valid_shipment(action=true)
     session[:address_invoice_id] = params[:address_invoice_id] if params[:address_invoice_id]
     session[:address_delivery_id] = params[:address_delivery_id] if params[:address_delivery_id]
@@ -27,9 +27,9 @@ class OrderController < ApplicationController
     end
 
     # TODO - include ActiveShipping
-    # ShippingMethodDetail is obligatory for valid an order
-    @shipping_method_detail = ShippingMethodDetail.find_by_id(session[:order_shipping_method_detail_id])
-    unless @shipping_method_detail
+    # ShippingMethod is obligatory for valid an order
+    @shipping_method = ShippingMethod.find_by_id(session[:order_shipping_method_id])
+    unless @shipping_method
       flash[:warning] = I18n.t('shipping_method',:count=>1).capitalize
       redirect_to(:action => 'new')
       return false
@@ -70,7 +70,7 @@ class OrderController < ApplicationController
     
     address_invoice = @address_invoice
     address_delivery = @address_delivery
-    shipping_method_detail = @shipping_method_detail
+    shipping_method = @shipping_method
     @order = Order.create(
       :user_id                => current_user.id,
       :address_delivery_attributes => {
@@ -95,7 +95,7 @@ class OrderController < ApplicationController
         :country_id => address_invoice.country_id, 
         :designation => 'toto'
         },      
-      :order_shipping_attributes => { :name => shipping_method_detail.name, :price => shipping_method_detail.price(false) },
+      :order_shipping_attributes => { :name => shipping_method.name, :price => shipping_method.price(false) },
       #:voucher                => (voucher) ? voucher.value : nil,
       #:transaction_number     => params[:trans],
       :reference              => @cart.id,
@@ -129,14 +129,14 @@ class OrderController < ApplicationController
   def update_total
     vouchers = session[:order_voucher_ids].collect{|voucher_id| Voucher.find(voucher_id)} if session[:order_voucher_ids]
     total = current_user.cart.total(true)
-    if session[:order_shipping_method_detail_id]
+    if session[:order_shipping_method_id]
       offer_delivery = false
       if vouchers
         vouchers.each do |voucher|
           offer_delivery ||= voucher.offer_delivery
         end
       end
-      total += ShippingMethodDetail.find_by_id(session[:order_shipping_method_detail_id]).price unless offer_delivery
+      total += ShippingMethod.find_by_id(session[:order_shipping_method_id]).price unless offer_delivery
     end
     if vouchers
       vouchers.each do |voucher|
@@ -147,7 +147,7 @@ class OrderController < ApplicationController
 
     render(:update) do |page|
       page.replace_html('order_voucher', display_voucher)
-      page.replace_html('order_shipping_methods', display_shipping_methods)
+      page.replace_html('order_transporters', display_transporters)
       page.replace_html("order_total_price", total)
       page.visual_effect :highlight, 'order_total_price'
     end
@@ -173,9 +173,9 @@ class OrderController < ApplicationController
     update_total
   end
 
-  def update_shipping_method
-    shipping_method_detail = ShippingMethodDetail.find_by_id(params[:id])
-    session[:order_shipping_method_detail_id] = shipping_method_detail.id if shipping_method_detail
+  def update_transporter
+    shipping_method = ShippingMethod.find_by_id(params[:id])
+    session[:order_shipping_method_id] = shipping_method.id if shipping_method
     update_total
   end
 

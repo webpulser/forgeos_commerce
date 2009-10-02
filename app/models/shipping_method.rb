@@ -1,5 +1,14 @@
 class ShippingMethod < ActiveRecord::Base
-  has_and_belongs_to_many :attachments, :list => true, :order => 'position'
-  has_many :shipping_method_details
-  validates_presence_of :name
+    
+  belongs_to :transporter
+  validates_presence_of :price, :name, :weight_min, :weight_max
+
+  def fullname
+    self.transporter ? "#{self.transporter.name}, #{self.name}" : self.name
+  end
+
+  def price(with_currency=true)
+    return super if Currency::is_default? || !with_currency
+    ("%01.2f" % (super * $currency.to_exchanges_rate(Currency::default).rate)).to_f
+  end
 end

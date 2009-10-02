@@ -1,6 +1,6 @@
 - @products_types = ProductType.find(:all, :order => 'name').collect{ |p| [p.name, p.id] }
 - @countries = Country.find(:all, :order => 'name').collect{ |c| [c.printable_name, c.id] }
-- @shipping_methods = ShippingMethod.all.collect{ |s| s.name }
+- @shipping_methods = Transporter.all.collect{ |s| s.name }
 
 - @for = Hash[ 'Weight', '0' , 'Type', '1', 'Country', '2']
 

@@ -9,8 +9,8 @@
 # * <tt>order_details</tt> - <i>OrdersDetail</i>
 #
 # ==== Attributes
-# * <tt>shipping_method</tt> - <i>ShippingMethod</i> name
-# * <tt>shipping_method_price</tt> - <i>ShippingMethod</i> price
+# * <tt>transporter</tt> - <i>Transporter</i> name
+# * <tt>transporter_price</tt> - <i>ShippingMethod</i> price
 class Order < ActiveRecord::Base
   include AASM
   aasm_column :status
@@ -62,7 +62,7 @@ class Order < ActiveRecord::Base
   end
 
   #def total(with_tax=false, with_currency=true)
-  #  order_details.inject(0) { |total, order_detail| total += order_detail.total(with_tax, with_currency) } + shipping_method_price - voucher.to_f
+  #  order_details.inject(0) { |total, order_detail| total += order_detail.total(with_tax, with_currency) } + transporter_price - voucher.to_f
   #end
 
   def taxes

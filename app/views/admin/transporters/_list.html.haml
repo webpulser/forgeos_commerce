@@ -9,7 +9,7 @@
       %th
         = I18n.t('action', :count=>2).capitalize
   %tbody
-    - shipping_methods.each do |shipping_method|
+    - transporters.each do |shipping_method|
       %tr
         %td
           = shipping_method.name

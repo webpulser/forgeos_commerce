@@ -258,9 +258,7 @@ private
     end
     include_models << 'user_categories'
     group_by = group_by.join(',')
-
-    p include_models
-
+    
     order = "#{order_column} #{params[:iSortDir_0].upcase}"
     if params[:sSearch] && !params[:sSearch].blank?
       @orders = Order.search(params[:sSearch],

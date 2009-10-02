@@ -1,0 +1,90 @@
+- @condition_is = Hash["is", "=="]
+- @conditions_is = Hash[ "is", "==", "is not", "not=="]
+- @conditions =  Hash["Is not", "not==","is equals or greater than",">=","is equals or less than","<=", "is greater than", ">", "is less than","<"]
+
+
+= render :partial => 'tabs'
+- form_for [:admin, transporter], :html => { :id => 'wrap' } do |f|
+
+  .backgrounds.big-header
+    = f.text_field :name
+    .interact-links
+      = fg_submit_tag (transporter.new_record? ? 'transporter.create.action' : 'save_changes')
+      = I18n.t('or')
+      = link_to I18n.t('cancel').capitalize, admin_transporters_path, :class => 'back-link'
+
+  #content.grid_16.alpha.omega
+    .grid_16.alpha
+      .grid_12.alpha
+        .padding-wrap.grid_10.omega.alpha
+          .type-of-delivery.grid_10
+            %span.type-delivery-title= I18n.t('transporter.delivery.type').capitalize
+            %div= select_tag 'delivery_type', options_for_select(['Weight base rate'])
+                  
+        .clear
+        #delivery-rules
+          .delivery-rule
+            .inner-delivery-rule
+              %span.span-left When weight
+              %div= select_tag 'delivery_rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+              = text_field_tag 'delivery_rule[values][]'
+              %span.span-left.unit KG
+              %span.span-left= I18n.t(:and)
+              %div= select_tag 'delivery_rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+              = text_field_tag 'delivery_rule[values][]'
+              %span.span-left.unit KG
+              %span.span-left Shipping is
+              = text_field_tag 'delivery_rule[prices][]'
+              %span.span-left.unit= $currency.html
+              .clear
+            = link_to_function '', "remove_delivery_rule(this)", :class => 'small-icons red-minus', :style => 'display: none'
+            = link_to_function '', "add_delivery_rule('weight-even')", :class => 'small-icons add-green-plus'
+            .clear
+
+      #right-sidebar.grid_4.omega
+        - unless transporter.new_record?
+          .step
+            = link_to I18n.t('transporter.duplicate').capitalize, [:duplicate, :admin, transporter], :class => 'small-icons duplicate'
+            = link_to I18n.t('transporter.destroy.action').capitalize, [:admin, transporter], :confirm => I18n.t('transporter.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+        .step.status.open
+          %div
+            = f.select :activated, [[I18n.t('inactive'), 0], [I18n.t('active'), 1]], :selected => transporter.activated ? 1 : 0
+          .clear
+
+  .clear
+
+%div.delivery-rule.weight-even.pattern{ :style => 'display: none' }
+  .inner-delivery-rule.even
+    %span.span-left When weight
+    %div= select_tag 'delivery_rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+    = text_field_tag 'delivery_rule[values][]'
+    %span.span-left.unit  KG
+    %span.span-left= I18n.t(:and)
+    %div= select_tag 'delivery_rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+    = text_field_tag 'delivery_rule[values][]'
+    %span.span-left.unit KG
+    %span.span-left Shipping is
+    = text_field_tag 'delivery_rule[prices][]'
+    %span.span-left.unit= $currency.html
+    .clear
+  = link_to_function '', "remove_delivery_rule(this)", :class => 'small-icons red-minus'
+  = link_to_function '', "add_delivery_rule('weight-even')", :class => 'small-icons add-green-plus'
+  .clear
+
+%div.delivery-rule.weight.pattern{ :style => 'display: none' }
+  .inner-delivery-rule
+    %span.span-left When weight
+    %div= select_tag 'delivery_rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+    = text_field_tag 'delivery_rule[values][]'
+    %span.span-left.unit  KG
+    %span.span-left= I18n.t(:and)
+    %div= select_tag 'delivery_rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+    = text_field_tag 'delivery_rule[values][]'
+    %span.span-left.unit KG
+    %span.span-left Shipping is
+    = text_field_tag 'delivery_rule[prices][]'
+    %span.span-left.unit USD
+    .clear
+  = link_to_function '', "remove_delivery_rule(this)", :class => 'small-icons red-minus'
+  = link_to_function '', "add_delivery_rule('weight')", :class => 'small-icons add-green-plus'
+  .clear

@@ -1,3 +1,3 @@
 class ShippingRule < Rule
-  belongs_to  :shipping_method
+  belongs_to  :transporter
 end

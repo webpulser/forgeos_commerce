@@ -18,7 +18,7 @@
         %td
           = order.user.fullname
         %td
-          = order.shipping_method
+          = order.transporter
         %td
           = link_to_remote(I18n.t('pay').capitalize, :url => { :controller => 'admin/orders', :action => 'pay', :id => order.id }, :update => 'orders' ) + ' -' if order.aasm_current_state == :unpaid
           = link_to_remote(I18n.t('accept').capitalize, :url => { :controller => 'admin/orders', :action => 'accept', :id => order.id }, :update => 'orders' ) + ' -' if order.aasm_current_state == :paid

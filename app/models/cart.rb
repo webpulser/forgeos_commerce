@@ -8,7 +8,7 @@ class Cart < ActiveRecord::Base
 
   has_many :carts_products, :dependent => :destroy
   has_many :products, :through => :carts_products
-  has_and_belongs_to_many :free_shipping_method_details, :class_name => 'ShippingMethodDetail'
+  has_and_belongs_to_many :free_shipping_methods, :class_name => 'ShippingMethod'
 
   belongs_to :user
   before_save :destroy_duplicates
@@ -109,13 +109,13 @@ class Cart < ActiveRecord::Base
   end
 
   # Returns all <i>ShippingMethodDetail</i> available for this cart
-  def get_shipping_method_details
-    shipping_method_details = []
-    ShippingMethod.all.each do |shipping_method|
-      shipping_method_details += shipping_method.shipping_method_details.find(:all, :conditions => { :weight_min_lte => weight, :weight_max_gte => weight})
-      shipping_method_details += shipping_method.shipping_method_details.find(:all, :conditions => { :price_min_lte => total(true), :price_max_gte => total(true)})
+  def get_shipping_methods
+    shipping_methods = []
+    Transporter.find(:all).each do |transporter|
+      shipping_methodls += transporter.shipping_methods.find(:all, :conditions => { :weight_min_lte => weight, :weight_max_gte => weight})
+      shipping_methods += transporter.shipping_methods.find(:all, :conditions => { :price_min_lte => total(true), :price_max_gte => total(true)})
     end
-    shipping_method_details.uniq
+    shipping_methods.uniq
   end
   
   def total_items

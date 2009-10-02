@@ -7,4 +7,9 @@ class Rule < ActiveRecord::Base
     #activated = false if max_use && max_use > 0 && use >= max_use
     self.activated = true
   end
+
+  def activate
+    self.update_attribute('activated', !self.activated)
+  end
+
 end

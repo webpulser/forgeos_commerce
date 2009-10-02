@@ -40,7 +40,7 @@ class SpecialOffer < Ruleby::Rulebook
           #return true unless @cart
         
           # Free shippment --cart and product_in_cart
-          @cart.free_shipping_method_detail_ids += special_offer.variables[:shipping_ids] if special_offer.variables[:shipping_ids]
+          @cart.free_shipping_method_ids += special_offer.variables[:shipping_ids] if special_offer.variables[:shipping_ids]
         
           # Free products  --cart and product_in_cart
           special_offer.variables[:product_ids].each do |product_id|

@@ -76,11 +76,11 @@ class CartController < ApplicationController
   end
   
 protected
-  # Update <i>session[:order_shipping_method_detail_id]</i> and <i>session[:order_voucher_ids]</i> at <i>nil</i>
+  # Update <i>session[:order_shipping_method_id]</i> and <i>session[:order_voucher_ids]</i> at <i>nil</i>
   #
   # User must again valid the shipping method and his voucher if his <i>Cart</i> is updated
   def reset_order_session
-    session[:order_shipping_method_detail_id] = session[:order_voucher_ids] = nil
+    session[:order_shipping_method_id] = session[:order_voucher_ids] = nil
   end
 
   def redirect_or_update

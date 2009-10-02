@@ -18,7 +18,7 @@ catalog '/catalog/:category_name/:url', :controller => 'catalog', :action => 'in
 connect '/product/:url', :controller => 'url_catcher', :action => 'product'
 
 namespace :admin do |admin|
-  admin.resources :shipping_methods
+  admin.resources :transporters, :member => { :activate => :post }
   admin.resources :vouchers
   %w(product product_type attribute user).each do |category|
     admin.resources "#{category}_categories", :controller => 'categories', :requirements => { :type => "#{category}_category" }

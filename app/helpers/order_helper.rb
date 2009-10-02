@@ -35,7 +35,7 @@ module OrderHelper
   # * <tt>cart</tt> a <i>Cart</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_order_all_products_lines(order)
-    price = order.shipping_method_price.to_s
+    price = order.shipping_method.to_s
     if session[:order_voucher_ids]
       session[:order_voucher_ids].each do |voucher_id|
         voucher = Voucher.find(voucher_id)
@@ -48,8 +48,8 @@ module OrderHelper
     order.order_details.each do |order_detail|
       content += display_order_by_carts_product(order, order_detail)
     end
-    content += content_tag :div, order.order_shipping.name, :class=>'order_shipping_method'
-    content += content_tag :div, "#{price} #{$currency.html}", :class=>'order_shipping_method_price'
+    content += content_tag :div, order.order_shipping.name, :class=>'order_transporter'
+    content += content_tag :div, "#{price} #{$currency.html}", :class=>'order_transporter_price'
     if order.voucher
       content += content_tag :div,
         "#{I18n.t('voucher', :count => 1)} : -#{order.voucher} #{order.voucher.percent} #{$currency.html}",
@@ -85,25 +85,25 @@ module OrderHelper
   end
 
   # Display all shipping methods available for cart
-  def display_shipping_methods(cart=current_user.cart)
-    content = '<div class="order_shipping_methods" id="order_shipping_methods">'
-    if cart.get_shipping_method_details.empty?
+  def display_transporters(cart=current_user.cart)
+    content = '<div class="order_transporters" id="order_transporters">'
+    if cart.get_shipping_method.empty?
       content += I18n.t('can_not_place_order')
     else
-      cart.get_shipping_method_details.each do |shipping_method_detail|
+      cart.get_shipping_method.each do |shipping_method|
         content += '<div class="order_shipping_method">'
           content += '<span class="order_shipping_method_name">'
             content += radio_button_tag(
-                        'shipping_method_detail_id', 
-                        shipping_method_detail.id, 
-                        (shipping_method_detail.id == session[:order_shipping_method_detail_id]),
+                        'shipping_method_id', 
+                        shipping_method.id, 
+                        (shipping_method.id == session[:order_shipping_method_id]),
                         :onclick => remote_function(
-                          :url => { :action => 'update_shipping_method', :id => shipping_method_detail.id }
+                          :url => { :action => 'update_transporter', :id => shipping_method.id }
                         )
                       )
-            content += shipping_method_detail.fullname
+            content += shipping_method.fullname
           content += '</span>'
-          content += '<span class="order_shipping_method_price">'
+          content += '<span class="order_transporter_price">'
           offer_delivery = false
           if session[:order_voucher_ids]
             session[:order_voucher_ids].each do |voucher_id|
@@ -112,14 +112,14 @@ module OrderHelper
             end
           end
           unless offer_delivery
-            content += "#{shipping_method_detail.price} #{$currency.html}"
+            content += "#{shipping_method.price} #{$currency.html}"
           else  
-            content += "<s>#{shipping_method_detail.price}</s> <b>0</b> #{$currency.html}"
+            content += "<s>#{shipping_method.price}</s> <b>0</b> #{$currency.html}"
           end
           content += '</span>'
 
           content += '<div class="order_shipping_method_description">'
-            content += shipping_method_detail.shipping_method.description
+            content += shipping_method.transporter.description
           content += '</div>'
         content += '</div>'
       end
