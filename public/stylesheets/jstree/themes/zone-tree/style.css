@@ -1,0 +1,54 @@
+/* LOCKED */
+.tree-zone-tree{position: relative;padding-left:10px;}
+.tree-zone-tree ul {display: block;}
+
+.tree-zone-tree li {
+  display: block;
+  margin: 2px 0;
+}
+
+.tree-zone-tree li.leaf{
+  margin: 0;
+}
+
+.tree-zone-tree li.open { background: url("dark-blue-minus.png") 0 4px no-repeat;}
+.tree-zone-tree li.closed{ background: url("dark-blue-plus.png") 0 5px no-repeat; }
+
+.tree-zone-tree li a {
+  font-size: 1.1em;
+  text-align: left;
+  color: #4D4D4D;
+  padding: 4px 4px 4px 4px;
+  font-weight: lighter;
+  background-color:#F9F9F9;
+  border:1px solid #E0E0E0;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  display:block;
+  height:auto;
+  line-height:auto;
+}
+
+.tree-zone-tree li.leaf a {
+  font-size: .8em;
+  background-image: url("check-unchecked.png");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  padding: 2px 0 2px 20px;
+  background-color:#FFF;
+  border:0;
+  font-weight:bold;
+}
+
+.tree-zone-tree li.leaf a.clicked{background-image: url("check-checked.png");color:#009640;background-position: 0 1px;}
+
+/* CONTEXT MENU */
+.tree-zone-tree-context { width:160px; background:#F0F0F0 url("context.gif") 22px 0 repeat-y; border:1px solid silver; position:absolute; }
+.tree-zone-tree-context a, .tree-zone-tree-context a.disabled:hover { display:block; text-decoration:none; color:black; line-height:20px; background-repeat: no-repeat; background-position:2px center; padding:1px 0 1px 25px; background-color:transparent; border:1px solid #f0f0f0; border-width:0 1px; margin:0; }
+.tree-zone-tree-context a:hover { background-color:#e7f4f9; border:1px solid #d8f0fa; padding:0 0 0 25px; margin:0; }
+.tree-zone-tree-context a.disabled, .tree-zone-tree-context a.disabled:hover { color:silver; opacity:0.5; -ms-filter:'alpha(opacity=50)'; filter:alpha(opacity=50); zoom:1; }
+.tree-zone-tree-context .separator { background:#FFFFFF;border-top:1px solid #E0E0E0;font-size:1px;height:1px;line-height:1px;margin:0 2px 0 24px;min-height:1px;display:block; }
+
+.tree-zone-tree li li{
+  padding-left:15px;
+}
