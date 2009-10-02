@@ -20,7 +20,6 @@ connect '/product/:url', :controller => 'url_catcher', :action => 'product'
 namespace :admin do |admin|
   admin.resources :shipping_methods
   admin.resources :vouchers
-  admin.resources :categories, :member => { :add_element => :post }
   %w(product product_type attribute user).each do |category|
     admin.resources "#{category}_categories", :controller => 'categories', :requirements => { :type => "#{category}_category" }
   end
@@ -40,13 +39,10 @@ namespace :admin do |admin|
     order.resources :details, :controller => 'order_details'
   end
 
-  admin.resources :pictures
   admin.resources :product_types
   admin.resources :products, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }
   admin.resources :packs, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }, :controller => :products
-  admin.resources :tags
   #admin.resources :special_offers, :collection => { :special_offer => [:get, :post] }
   admin.resources :special_offers
   admin.resources :shipping_rules
-
 end
