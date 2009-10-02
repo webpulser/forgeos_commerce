@@ -1,0 +1,123 @@
+.tree-product_category
+  ul
+    display: block
+    padding: 0
+    margin: 0
+
+  li
+    display: block !important
+    width: auto !important
+    float: none !important
+
+    &.open
+      background: url("brown-minus.png") 0px 1px no-repeat
+
+    &.closed
+      background: url("brown-plus.png") 0 1px no-repeat
+
+
+#jstree-dragged.tree-product_category li li.open
+  background: url("brown-plus.png") 0 1px no-repeat
+
+
+.tree.tree-product_category .ltr li a
+  padding: 0px 24px 0px 24px
+  color: #75491B
+  font-weight: bold
+  font-size: 0.8em
+  background-position: 0 -272px
+  display: block
+  position: relative
+
+
+.tree-product_category li a span
+  height: 13px
+  width: 19px
+  font-size: 0.7em
+  background-image: url("bubble-quantity-products.png")
+  background-repeat: no-repeat
+  background-position: -1px -5px
+  text-align: center
+  color: #75491B
+  position: absolute
+  right: 10px
+  top: 2px
+  line-height: 1.4em
+  padding: 0px 5px 2px 1px
+
+
+.tree.tree-product_category .ltr li
+  a
+    &:hover, &.hover
+      background-color: #FDD794
+      color: #F16028
+
+    &.clicked
+      background-color: #FDD794
+      color: #F16028
+
+      &:hover
+        background-color: #FDD794
+        color: #F16028
+
+  span.clicked
+    background-color: #FDD794
+    color: #F16028
+
+
+.tree-product_category li span.clicked
+  padding: 0px 3px 0px 20px
+
+
+.tree.tree-product_category .ltr li a.loading
+  background-image: url("throbber.gif")
+
+
+.tree-product_category-context
+  width: 160px
+  background: #FFF
+  border: 1px solid #AEB0B2
+  position: absolute
+  border-bottom: 0
+
+  a
+    display: block
+    text-decoration: none
+    border-bottom: 1px solid #AEB0B2
+    color: black
+    line-height: 20px
+    padding: 1px 0 1px 25px
+    margin: 0
+
+    &.disabled:hover
+      display: block
+      text-decoration: none
+      border-bottom: 1px solid #AEB0B2
+      color: black
+      line-height: 20px
+      padding: 1px 0 1px 25px
+      margin: 0
+
+    &:hover
+      background-color: #D6EDF4
+      padding: 0 0 0 25px
+      margin: 0
+      color: #2973BD
+      border-bottom: 1px solid #AEB0B2
+
+    &.disabled
+      color: silver
+      opacity: 0.5
+      -ms-filter: 'alpha(opacity=50)'
+      filter: alpha(opacity=50)
+      zoom: 1
+
+      &:hover
+        color: silver
+        opacity: 0.5
+        -ms-filter: 'alpha(opacity=50)'
+        filter: alpha(opacity=50)
+        zoom: 1
+
+  .separator
+    display: none !important

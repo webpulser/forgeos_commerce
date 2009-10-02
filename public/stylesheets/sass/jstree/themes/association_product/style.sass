@@ -1,0 +1,167 @@
+.tree-association_product
+  position: relative
+
+  .locked li a
+    color: gray
+
+  ul
+    display: block
+    margin: 0
+
+  li
+    display: block !important
+    float: none !important
+    margin: 2px 0 !important
+
+  .rtl
+    background-position: right 1px
+
+    ul
+      background-position: right 1px
+
+    li
+      background-position: right 8px
+
+      &.last
+        background-image: url("lastli_rtl.gif")
+        background-position: right top
+
+  li
+    &.open
+      background: url("dark-blue-minus.png") 0 0 no-repeat
+
+    &.closed
+      background: url("dark-blue-plus.png") 0 1px no-repeat
+
+
+#jstree-dragged.tree-association_product li li.open
+  background: url("dark-blue-plus.png") 0 1px no-repeat
+
+
+.tree-association_product li
+  a
+    padding: 0px 5px 0px 24px
+    display: block
+    color: #557383 !important
+    font-weight: bold
+    font-size: 1em
+    background-image: url("folder.png")
+    background-repeat: no-repeat
+    background-position: left bottom
+    background-color: #b0e0f1
+    -moz-border-radius: 3px
+    -webkit-border-radius: 3px
+    height: 20px
+    position: relative
+
+    span
+      height: 13px
+      width: 19px
+      font-size: 0.7em
+      background-image: url("check-unchecked.png")
+      background-repeat: no-repeat
+      background-position: 0 0
+      text-align: center
+      color: #75491B
+      right: 2px
+      position: absolute
+      top: 2px
+
+    &.clicked
+      color: #FFF !important
+
+      span
+        background-image: url("check-checked.png")
+
+      &:hover
+        color: #FFF !important
+
+  span.clicked
+    color: #FFF !important
+    padding: 0px 3px 0px 20px
+
+  a.loading
+    background-image: url("throbber.gif")
+
+
+.tree-association_product-context
+  width: 160px
+  background: #F0F0F0 url("context.gif") 22px 0 repeat-y
+  border: 1px solid silver
+  position: absolute
+
+  a
+    display: block
+    text-decoration: none
+    color: black
+    line-height: 20px
+    background-repeat: no-repeat
+    background-position: 2px center
+    padding: 1px 0 1px 25px
+    background-color: transparent
+    border: 1px solid #f0f0f0
+    border-width: 0 1px
+    margin: 0
+
+    &.disabled:hover
+      display: block
+      text-decoration: none
+      color: black
+      line-height: 20px
+      background-repeat: no-repeat
+      background-position: 2px center
+      padding: 1px 0 1px 25px
+      background-color: transparent
+      border: 1px solid #f0f0f0
+      border-width: 0 1px
+      margin: 0
+
+    &:hover
+      background-color: #e7f4f9
+      border: 1px solid #d8f0fa
+      padding: 0 0 0 25px
+      margin: 0
+
+    &.disabled
+      color: silver
+      opacity: 0.5
+      -ms-filter: 'alpha(opacity=50)'
+      filter: alpha(opacity=50)
+      zoom: 1
+
+      &:hover
+        color: silver
+        opacity: 0.5
+        -ms-filter: 'alpha(opacity=50)'
+        filter: alpha(opacity=50)
+        zoom: 1
+
+  .separator
+    background: #FFFFFF
+    border-top: 1px solid #E0E0E0
+    font-size: 1px
+    height: 1px
+    line-height: 1px
+    margin: 0 2px 0 24px
+    min-height: 1px
+    display: block
+
+
+.tree-association_product li li
+  padding-left: 15px
+
+
+.leaf
+  padding-left: 5px !important
+
+
+.tree-association_product li a
+  &.clicked
+    background-color: #8fc864
+
+  &:hover
+    background-color: #8fc864
+    color: #FFF !important
+
+  &.hover, &.clicked
+    color: #FFF !important

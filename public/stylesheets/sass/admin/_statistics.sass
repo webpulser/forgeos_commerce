@@ -1,0 +1,66 @@
+.statistics
+  :background-color = !white
+  .padding-wrap
+    :padding-top 0
+  .trend_filter
+    :position absolute
+    :top 20px
+    :right 20px
+    :font-size .8em
+    label
+      :float left
+  .stat-product-container
+    :float left
+    :width 30%
+    :margin 0 1% 10px
+    :font-size .9em
+    img
+      :width 54px
+      :height 54px
+      :float left
+      :border = !grayBorder
+    span,a
+      :margin-left 65px
+      :display block
+      :padding 0
+    span.stat-product-sells
+      :color = !orange
+    span.stat-product-price
+      :color = !lightGray
+    a.product-name
+      :color = !blueLink
+  h2.see-stats
+    :background-position 0 -3212px
+  h2.products
+    :background-position 0 -522px
+  h2.page
+    :background-position 0 -1194px
+  h2.customer
+    :background-position 0 -3356px
+  .customer-bought-amount
+    :color = !orange
+    :text-align center
+  .table-product
+    :font-weight normal
+  .right-dahsboard
+    .trend_filter
+      :top 17px
+      :right 0px
+  .live-stats-content
+    span
+      :padding 0
+      .keyfacts-name,.keyfacts-value
+        :border-bottom 0
+        :font-size 1em
+        :padding  0
+        :width 50%
+        :line-height 1.5em
+        +left()
+      .keyfacts-value
+        :font-weight bold
+  .chart
+    text-align: center
+.product-name.truncate
+  width: 100px
+.search
+  :background-position 0 -1101px

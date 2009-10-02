@@ -1,0 +1,178 @@
+.tree-product-types-selected
+  margin-top: 20px
+  margin-left: 20px
+  height: 50px
+
+  .locked li a
+    color: gray
+
+  ul
+    width: 87%
+    margin-top: 10px
+
+  li
+    width: 100%
+    position: relative !important
+
+    &.last
+  .rtl
+    background-position: right 1px
+
+    ul
+      background-position: right 1px
+
+    li
+      background-position: right 8px
+
+      &.last
+        background-image: url("lastli_rtl.gif")
+        background-position: right top
+
+  .no_dots
+    background: transparent
+
+    ul
+      background: transparent
+
+    li.leaf
+      background-image: none
+      background-color: transparent
+
+  li
+    &.open
+      background: url("dark-blue-minus.png") 0 0 no-repeat
+
+    &.closed
+      background: url("dark-blue-plus.png") 0 1px no-repeat
+
+
+#jstree-dragged.tree-product-types-selected li li.open
+  background: url("dark-blue-plus.png") 0 1px no-repeat
+
+
+.tree-product-types-selected .rtl li
+  margin-right: 1px
+
+  &.last
+    margin-right: 0
+    padding-right: 16px
+
+  &.open
+    background: url("fminus_rtl.gif") right 6px no-repeat
+    margin-right: 0
+    padding-right: 16px
+
+  &.closed
+    background: url("fplus_rtl.gif") right 4px no-repeat
+    margin-right: 0
+    padding-right: 16px
+
+
+#jstree-dragged.tree-product-types-selected .rtl li li.open
+  background: url("fplus_rtl.gif") right 4px no-repeat
+  margin-right: 0
+  padding-right: 16px
+
+
+.tree-product-types-selected li
+  a
+    padding: 0px 5px 0px 24px
+    width: 100%
+    color: #4D4D4D !important
+    font-weight: bold
+    font-size: 1em
+    background: url("folder.png") no-repeat left bottom
+    height: 20px
+    position: relative
+
+  &:hover a span
+    -moz-opacity: 1
+    opacity: 1
+
+  a
+    span
+      right: 45px
+      top: 3px
+
+    &.loading
+      background-image: url("throbber.gif")
+
+
+.tree-product-types-selected-context
+  width: 160px
+  background: #F0F0F0 url("context.gif") 22px 0 repeat-y
+  border: 1px solid silver
+  position: absolute
+
+  a
+    display: block
+    text-decoration: none
+    color: black
+    line-height: 20px
+    background-repeat: no-repeat
+    background-position: 2px center
+    padding: 1px 0 1px 25px
+    background-color: transparent
+    border: 1px solid #f0f0f0
+    border-width: 0 1px
+    margin: 0
+
+    &.disabled:hover
+      display: block
+      text-decoration: none
+      color: black
+      line-height: 20px
+      background-repeat: no-repeat
+      background-position: 2px center
+      padding: 1px 0 1px 25px
+      background-color: transparent
+      border: 1px solid #f0f0f0
+      border-width: 0 1px
+      margin: 0
+
+    &:hover
+      background-color: #e7f4f9
+      border: 1px solid #d8f0fa
+      padding: 0 0 0 25px
+      margin: 0
+
+    &.disabled
+      color: silver
+      opacity: 0.5
+      -ms-filter: 'alpha(opacity=50)'
+      filter: alpha(opacity=50)
+      zoom: 1
+
+      &:hover
+        color: silver
+        opacity: 0.5
+        -ms-filter: 'alpha(opacity=50)'
+        filter: alpha(opacity=50)
+        zoom: 1
+
+  .separator
+    background: #FFFFFF
+    border-top: 1px solid #E0E0E0
+    font-size: 1px
+    height: 1px
+    line-height: 1px
+    margin: 0 2px 0 24px
+    min-height: 1px
+    display: block
+
+
+.tree-product-types-selected
+  li li
+    padding-left: 15px
+
+  .leaf
+    background-color: #FFF
+    -moz-border-radius: 3px
+    margin: 2px 0
+    padding-left: 0
+    border: 1px solid #E7E7E7
+
+  li.leaf a
+    background: url("drag-drop.png") no-repeat left center
+    padding-top: 3px
+    padding-left: 40px

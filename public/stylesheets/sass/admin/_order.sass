@@ -1,0 +1,174 @@
+#order-see .fieldset,
+#customer-see .fieldset
+  font-size: .8em
+  h4
+    padding-top: 2px
+    margin: 2px 0 2px -20px
+  .main-infos, .order-delivery
+    clear: both
+    a
+      :color = !black
+.main-infos-note
+  :background-color = !lightYellow
+#order-see .fieldset
+  p
+    padding: 0
+    margin: 0
+  a
+    :color = !gray
+.main-infos div, .order-delivery div
+  +left()
+  width: 26%
+  padding: 10px 0 10px 3%
+.main-infos div.main-info-separation, .order-delivery div.main-info-separation
+  height: 90px
+  margin: 15px 3%
+  width: 1px
+  :background-color = !whiteGray
+  padding: 0
+#order-see .datatable
+  :border = 1px solid !whiteGray
+  margin-bottom: 10px
+  td
+    vertical-align: middle
+    img
+      width: 45px
+      height: 45px
+      :border-bottom = 1px solid !whiteGray
+      margin: 5px
+  .total
+    font-weight: bold
+    :color = !lightDark
+.order-totals
+  float: right
+  clear: both
+  width: 300px
+  :border-bottom = 1px solid !whiteGray
+  padding: 5px
+  font-size: .9em
+  line-height: 1.4em
+  :color = !lightDark
+  div
+    +left()
+    clear: both
+    width: 200px
+    text-align: right
+    margin-right: 10px
+  span
+    &.voucher, &.order_shipping
+      +left()
+  .enhanced .dropdown .options
+    text-align: left !important
+    a span
+      :color = !blueLink
+      text-transform: none
+.order-subtotal, .order-subtotal-currency
+  font-weight: bold
+.total-block
+  margin-bottom: 10px
+  border: 0
+.order-total, .order-currency
+  font-weight: bold
+  :color = !orange
+  font-size: 1.1em
+.payment-checked
+  :color = !lightGreen
+.customer-email
+  text-decoration: underline
+.media-image-container
+  +left()
+  :color = !lightGray
+  font-size: .7em
+  margin-top: 25px
+.media-image
+  :border = 1px solid !whiteGray
+  margin-bottom: 15px
+.media-size
+  :background-color = !whiteGray
+  text-transform: uppercase
+  padding: 3px 8px
+.media-size-pixels
+  padding: 3px 8px
+  display: block
+  margin-top: 5px
+.large-info-container
+  float: right
+  font-size: .8em
+  margin-top: 25px
+.large-info-block
+  padding: 5px 0
+  :border-bottom = 1px solid !whiteGray
+  span
+    width: 50%
+    display: block
+    +left()
+.large-info-name
+  :color = !lightGray
+#order-see .datatable td input
+  :border = 1px solid !darkGray
+  +borderCorner(3px,3px,3px,3px)
+  :background
+    :position 0 -600px
+    :image url(/images/admin/backgrounds-verti.png)
+    :repeat repeat-x
+  padding: 2px 0
+.sku-input
+  width: 110px
+.price-input
+  width: 45px
+.qty-input
+  width: 30px
+  +left()
+.more-quantity
+  :color = !white
+  :background-color = !darkGray
+  +borderCorner(2px,2px,2px,2px)
+  width: 10px
+  height: 10px
+  text-align: center
+  line-height: 10px
+  display: block
+  margin-left: 35px
+  outline: none
+.less-quantity
+  :color = !white
+  :background-color = !darkGray
+  +borderCorner(2px,2px,2px,2px)
+  width: 10px
+  height: 10px
+  text-align: center
+  line-height: 10px
+  display: block
+  margin-left: 35px
+  outline: none
+  margin-top: 1px
+#order-see .fieldset .panel
+  :background-color = !white
+  padding: 0 20px
+.fieldset
+  label
+    display: block
+    :color = !lightGray
+    font-size: .9em
+    margin: 8px 2px 2px
+  input
+    :border = 1px solid !darkGray
+    +borderCorner(3px,3px,3px,3px)
+    :background
+      :position 0 -600px
+      :image url(/images/admin/backgrounds-verti.png)
+      :repeat repeat-x
+    padding: 2px 0
+  .firstname-input
+    clear: both
+    +left()
+  .street-input input
+    width: 395px
+  .phone-input input
+    width: 240px
+  .zip-code-input
+    +left()
+  .country-select, .civility-select
+    clear: both
+#order-see .fieldset .street-input
+  clear: both
