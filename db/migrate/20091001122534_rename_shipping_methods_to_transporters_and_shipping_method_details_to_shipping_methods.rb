@@ -8,5 +8,6 @@ class RenameShippingMethodsToTransportersAndShippingMethodDetailsToShippingMetho
   def self.down
     rename_table :transporters, :shipping_methods
     rename_table :shipping_methods, :shipping_method_details
+    rename_column :shipping_methods, :transporter_id, :shipping_method_id
   end
 end
