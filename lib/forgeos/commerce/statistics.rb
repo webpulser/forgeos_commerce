@@ -32,7 +32,7 @@ module Forgeos
       end
 
       def self.best_customers(date, limit = nil)
-        OrdersDetail.sum(:price,
+        OrderDetail.sum(:price,
           :conditions => { :orders => { :status => %w(paid shipped closed), :updated_at => date } },
           :include => :order,
           :limit => limit,
