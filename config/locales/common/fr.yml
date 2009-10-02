@@ -82,6 +82,9 @@ fr:
 # Admin
   id: id
   since: depuis
+  taxes_and_shippings: taxes & livraisons
+  checkout_and_payment: réglement & paiement
+  zones_and_taxes: zones & taxes
   information:
     one: information
     other: informations

@@ -1,0 +1,32 @@
+en:
+  transporter:
+    one: "transporter"
+    other: "transporters"
+    change: 'change transporter'
+    create:
+      success: 'the transporter was successfully created'
+      failed: 'a problem occured during the transporter creation'
+      action: 'create transporter'
+    update:
+      success: 'the transporter was successfully updated'
+      failed: 'a problem occured during the transporter update'
+      action: 'edit transporter'
+    destroy:
+      success: 'the transporter was successfully deleted'
+      failed: 'a problem occured during the transporter deletion'
+      confirm: 'are you sure to delete this transporter?'
+  shipping_method:
+    one: "shipping method"
+    other: "shipping methods"
+    create:
+      success: 'the shipping method was successfully created'
+      failed: 'a problem occured during the shipping method creation'
+      action: 'create a shipping method'
+    update:
+      success: 'the shipping method was successfully updated'
+      failed: 'a problem occured during the shipping method update'
+      action: 'edit shipping method'
+    destroy:
+      success: 'the shipping method was successfully deleted'
+      failed: 'a problem occured during the shipping method deletion'
+      confirm: 'are you sure to delete this shipping method?'

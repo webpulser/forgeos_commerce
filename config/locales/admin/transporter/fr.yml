@@ -1,0 +1,32 @@
+fr:
+  transporter:
+    one: "transporteur"
+    other: "transporteur"
+    change: "changer de transporteur"
+    create:
+      success: "le transporteur a bien été créé"
+      failed: "un problème est survenu lors de la création du transporteur"
+      action: "créer transporteur"
+    update:
+      success: "le transporteur a bien été créé"
+      failed: "un problème est survenu lors du transporteur"
+      action: "éditer le transporteur"
+    destroy:
+      success: "le transporteur a bien été supprimée"
+      failed: "un problème est survenu lors de la suppression du transporteur"
+      confirm: "êtes-vous sûr de vouloir supprimer ce transporteur ?"
+  shipping_method:
+    one: "méthode d'expédition"
+    other: "méthodes d'expédition"
+    create:
+      success: "la méthode d'expédition a bien été créé"
+      failed: "un problème est survenu lors de la création de la méthode d'expédition"
+      action: "créer un détail de méthode d'expédition"
+    update:
+      success: "la méthode d'expédition a bien été mis à jour"
+      failed: "un problème est survenu lors de la mise à jour de la méthode d'expédition"
+      action: "éditer la méthode d'expédition"
+    destroy:
+      success: "la méthode d'expédition a bien été supprimé"
+      failed: "un problème est survenu lors de la suppression de la méthode d'expédition"
+      confirm: "êtes-vous sûr de vouloir supprimer cette méthode d'expédition ?"
