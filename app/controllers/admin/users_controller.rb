@@ -1,4 +1,3 @@
-# This controller Manage Users
 class Admin::UsersController < Admin::BaseController
 
   before_filter :get_user, :only => [:show, :activate, :edit, :update, :destroy]
@@ -277,5 +276,4 @@ private
         :per_page => per_page)
     end
   end
-
 end

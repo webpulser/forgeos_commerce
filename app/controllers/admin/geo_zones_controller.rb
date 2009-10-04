@@ -55,9 +55,6 @@ class Admin::GeoZonesController < Admin::BaseController
     else
       flash[:error] = I18n.t('geo_zone.destroy.failed').capitalize
     end
-    render(:update) do |page|
-      display_standard_flashes
-    end
   end
 private
   def get_geo_zone

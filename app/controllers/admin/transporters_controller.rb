@@ -3,9 +3,6 @@ class Admin::TransportersController < Admin::BaseController
   before_filter :new_transporter, :only => [:new, :create]
   before_filter :get_transporter, :only => [ :show, :edit, :update, :destroy, :create_shipping_method, :edit_shipping_method, :destroy_shipping_method ]
 
-  before_filter :new_shipping_method, :only => [:new, :create]
-  before_filter :get_shipping_method, :only => [ :edit_shipping_method, :destroy_shipping_method]
-
   def index
     respond_to do |format|
       format.html
@@ -23,15 +20,8 @@ class Admin::TransportersController < Admin::BaseController
   end
 
   def create
-
-    # Parameters: {"commit"=>"Create transporter", "action"=>"create", "authenticity_token"=>"ulSiBSIy2bYzmtuZJKEF1rwxssrl37ZBKAOgkawNIn0=",
-    # "transporter"=>{"name"=>"La Poste", "activated"=>"0"}, "controller"=>"admin/transporters", "delivery_rule"=>{"delivery_type"=>["Weight base rate"], "values"=>["20", "200"], "conds"=>[">", "<"], "prices"=>["12"]}}
-
-
-    # [Cart, :product, m.weight.>(10), m.weight.=Underwear]
     @rule_condition = []
     @rule_condition << params[:delivery_type] << ':product'
-
 
     values = params[:delivery_rule][:values]
     conds = params[:delivery_rule][:conds]
@@ -41,17 +31,6 @@ class Admin::TransportersController < Admin::BaseController
     end
 
     @transporter.conditions = "[#{@rule_condition.join(', ')}]"
-
-    p @transporter
-
-
-#    if @transporter.save
-#      flash[:notice] = I18n.t('transporter.create.success').capitalize
-#      redirect_to([:admin, @transporter])
-#    else
-#      flash[:error] = I18n.t('transporter.create.failed').capitalize
-#      render :new
-#    end
   end
   
   def edit
@@ -80,42 +59,6 @@ class Admin::TransportersController < Admin::BaseController
     render :text => @transporter.activate
   end
   
-  def new_shipping_method
-  end
-
-  def create_shipping_method
-    if request.post?
-      if @shipping_method.save
-        flash[:notice] = I18n.t('shipping_method.create.success').capitalize
-        redirect_to(:action => 'edit', :id => @transporter.id)
-      else
-        flash[:error] = I18n.t('shipping_method.create.failed').capitalize
-        render :new_shipping_method
-      end
-    end
-  end
-
-  def edit_shipping_method
-  end
-
-  def update_shipping_method
-    if request.post?
-      if @shipping_method.update_attributes(params[:shipping_method])
-        flash[:notice] = I18n.t('shipping_method.update.success').capitalize
-      else
-        flash[:error] = I18n.t('shipping_method.update.failed').capitalize
-      end
-    end
-    render :edit_shipping_method
-  end
-
-  def destroy_shipping_method
-    if @shipping_method.destroy
-      flash[:notice] = I18n.t('shipping_method.destroy.success').capitalize
-      render :partial => 'list_details', :locals => { :transporter => @transporter }
-    end
-  end
-
   private
     def get_transporter
       @transporter = Transporter.find_by_id(params[:id])
@@ -153,7 +96,4 @@ class Admin::TransportersController < Admin::BaseController
           :per_page => per_page)
       end
     end
-
-
-
 end
