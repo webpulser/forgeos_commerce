@@ -7,12 +7,13 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :product_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
   
   has_and_belongs_to_many :attachments, :list => true, :order => 'position'
+  has_and_belongs_to_many :attachments2, :list => true, :order => 'position', :join_table => 'attachments_elements', :foreign_key => 'element_id', :association_foreign_key => 'attachment_id', :class_name => 'Attachment'
   has_and_belongs_to_many :pictures, :association_foreign_key => 'attachment_id', :join_table => 'attachments_products', :class_name => 'Picture', :order => 'position'
   has_and_belongs_to_many :pdfs, :association_foreign_key => 'attachment_id', :join_table => 'attachments_products', :class_name => 'Pdf', :order => 'position'
 
   has_and_belongs_to_many :attribute_values, :readonly => true
   has_many :dynamic_attribute_values, :dependent => :destroy
-  has_many :dynamic_attributes, :through => :dynamic_attribute_values, :class_name => 'Attribute', :source => 'Attribute'
+  has_many :dynamic_attributes, :through => :dynamic_attribute_values, :class_name => 'DynamicAttribute', :source => 'product'
 
   has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products'
   belongs_to :product_type
