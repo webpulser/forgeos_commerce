@@ -22,8 +22,8 @@
   .media-hoverlay-sidebar.grid_3.omega.alpha
     .sidebar-content
       %h2{ :class => 'small-icons picture'}
-        = link_to_function I18n.t('media.picture.all').capitalize, "select_all_elements('#{escape_javascript(admin_attachments_url :format => :json, :file_type => 'picture')}')"
-      .init-tree.a-tree{:id => 'picture-attachment-tree'}
+        = link_to_function I18n.t('media.picture.all').capitalize, "select_all_elements_without_category('picture-attachment-tree')"
+      #picture-attachment-tree.init-tree.a-tree
   .media-hoverlay-content.thumbnails
     %div.table#thumbnail-table.datatable.media.selectable_rows
   .media-hoverlay-content.table.hidden

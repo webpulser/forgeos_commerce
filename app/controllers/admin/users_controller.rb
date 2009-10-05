@@ -207,19 +207,27 @@ private
 
   def sort
     columns = %w(lastname email order total last_order joined_on)
-    conditions = []
+    conditions = {}
+
+    if params[:category_id]
+      conditions[:categories_elements] = { :category_id => params[:category_id] }
+    end
+
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
     if params[:sSearch] && !params[:sSearch].blank?
       @users = User.search(params[:sSearch],
+        :conditions => conditions,
+        :include => :user_categories,
         :order => order,
         :page => page,
         :per_page => per_page)
     else
       @users = User.paginate(:all,
         :conditions => conditions,
+        :include => :user_categories,
         :order => order,
         :page => page,
         :per_page => per_page)

@@ -7,8 +7,8 @@
   .media-hoverlay-sidebar.grid_3.omega.alpha
     .sidebar-content
       %h2{ :class => 'small-icons products'}
-        = link_to_function I18n.t('product.all').capitalize, "select_all_elements('#{escape_javascript(admin_products_url :format => :json)}')"
-      .init-tree.a-tree{:id => 'product-tree'}
+        = link_to_function I18n.t('product.all').capitalize, "select_all_elements_without_category()"
+      #product-tree.init-tree.a-tree
   .media-hoverlay-content
     %table#table-products.datatable.media.selectable_rows
 

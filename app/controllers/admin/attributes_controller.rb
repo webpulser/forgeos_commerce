@@ -123,10 +123,9 @@ private
 
   def sort
     columns = %w(attributes.type attributes.name access_method)
-
     conditions = {}
     if params[:category_id]
-      conditions[:attribute_categories_attributes] = { :attribute_category_id => params[:category_id] }
+      conditions[:categories_elements] = { :category_id => params[:category_id] }
     end
 
     per_page = params[:iDisplayLength].to_i

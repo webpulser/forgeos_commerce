@@ -1,7 +1,8 @@
 jQuery(document).ready(function(){
-  init_tree('#product-tree','ProductCategory', '/admin/products.json','/admin/product_categories.json');
-  init_tree("#product-type-tree",'ProductTypeCategory', '/admin/product_types.json','/admin/product_type_categories.json');
-  init_tree("#option-tree",'OptionCategory', '/admin/options.json','/admin/option_categories.json');
+  init_category_tree("#user-tree",'UserCategory','/admin/user_categories.json');
+  init_category_tree('#product-tree','ProductCategory','/admin/product_categories.json');
+  init_category_tree("#product-type-tree",'ProductTypeCategory','/admin/product_type_categories.json');
+  init_category_tree("#attribute-tree",'AttributeCategory','/admin/attribute_categories.json');
 
   //init the zone modify tree
    $("#zone-tree").tree({
