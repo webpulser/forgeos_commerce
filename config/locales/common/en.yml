@@ -108,7 +108,6 @@ en:
     other: newsletters
   age: age
   template_by: 'Template by'
-  avatar: avatar
   created_on: 'created on'
   joined_on: 'joined on'
   last_order: 'last order'
@@ -122,10 +121,6 @@ en:
   _yes: yes
   _no: no
   back_to_catalog: 'back to catalog'
-  firstname: firstname
-  lastname: lastname
-  password: password
-  password_confirmation: 'password confirmation'
   save: save
   save_changes: 'save changes'
   list: list

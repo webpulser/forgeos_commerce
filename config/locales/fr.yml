@@ -103,7 +103,6 @@ fr:
     other: newsletters
   age: 'âge'
   template_by: 'Thème par'
-  avatar: avatar
   created_on: 'créé le'
   joined_on: 'inscrit le'
   last_order: 'dernière commande'
@@ -115,9 +114,6 @@ fr:
   _yes: oui
   _no: non
   back_to_catalog: 'retour au catalogue'
-  firstname: 'prénom'
-  lastname: nom
-  password_confirmation: 'vérification du mot de passe'
   save: sauvegarder
   save_changes: 'sauvegarder'
   list: lister
