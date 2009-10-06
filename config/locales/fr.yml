@@ -112,7 +112,6 @@ fr:
   edit: 'éditer'
   destroy: supprimer
   activate: activer
-  name: nom
   _yes: oui
   _no: non
   back_to_catalog: 'retour au catalogue'

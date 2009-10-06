@@ -114,7 +114,6 @@ en:
   edit: edit
   destroy: destroy
   activate: activate
-  name: name
   _yes: yes
   _no: no
   back_to_catalog: 'back to catalog'
