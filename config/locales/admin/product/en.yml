@@ -1,0 +1,38 @@
+en:
+product:
+    one : product
+    other: products
+    all: 'all products'
+    in_stock: 'in stock'
+    showed_on_homepage: 'showed on homepage'
+    show:
+      all: see all products
+    sold:
+      one: "{{count}} sale"
+      other: "{{count}} sales"
+    viewed:
+      one: "viewed {{count}} time"
+      other: "viewed {{count}} times"
+    best_seller:
+      one: best seller
+      other: best sellers
+    most_viewed:
+      one: most viewed
+      other: most viewed
+    associated_collection:
+      one: 'associated collection'
+      other: 'associated collections'
+    create:
+      success: 'the product was successfully created'
+      failed: 'a problem occured during the product creation'
+      action: 'create product'
+    update:
+      success: 'the product was successfully updated'
+      failed: 'a problem occured during the product update'
+      action: 'modify product'
+    destroy:
+      success: 'the product was successfully deleted'
+      failed: 'a problem occured during the product deletion'
+      confirm: 'are you sure to delete this product ?'
+      action: 'delete product'
+    duplicate: 'duplicate product'
