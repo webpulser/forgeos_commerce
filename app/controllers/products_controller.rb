@@ -3,6 +3,19 @@ class ProductsController < ApplicationController
   include Ruleby
   before_filter :get_product, :only => [ :show ]
 
+  # TEST only use for mobile application
+  def index
+    @products = Product.all(:conditions => {:deleted => [false, nil],:active => true})
+    @products.each do |product|
+      product.url = product.pictures.first.public_filename(:thumb) if !product.pictures.blank?
+    end
+    respond_to do |format|
+            format.html
+            format.xml { render :xml => @products.to_xml }
+            format.json { render :json => @products.to_json }
+    end
+  end
+
 private
   def get_product
     @product = Product.find_by_id(params[:id])

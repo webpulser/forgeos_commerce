@@ -14,7 +14,7 @@ resources :packs, :controller => :products
 resources :addresses
 resources :orders
 catalog '/catalog/:category_name/:url', :controller => 'catalog', :action => 'index', :url => nil
-
+resources :catalog
 connect '/product/:url', :controller => 'url_catcher', :action => 'product'
 
 namespace :admin do |admin|

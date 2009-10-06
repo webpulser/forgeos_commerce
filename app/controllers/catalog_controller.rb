@@ -33,6 +33,10 @@ class CatalogController < ApplicationController
       e.assert @selected_product if !@selected_product.nil?
       e.match
     end
+    respond_to do |format|
+            format.html
+            format.xml { render :xml => ProductCategory.find_all_by_parent_id(nil).to_xml }
+    end
   end
 
   # Show all <i>ProductDetail</i> by <i>Category</i>
