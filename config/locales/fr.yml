@@ -113,13 +113,11 @@ fr:
   destroy: supprimer
   activate: activer
   name: nom
-  email: email
   _yes: oui
   _no: non
   back_to_catalog: 'retour au catalogue'
   firstname: 'prénom'
   lastname: nom
-  password: 'mot de passe'
   password_confirmation: 'vérification du mot de passe'
   save: sauvegarder
   save_changes: 'sauvegarder'

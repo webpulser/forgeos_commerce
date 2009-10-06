@@ -115,13 +115,11 @@ en:
   destroy: destroy
   activate: activate
   name: name
-  email: email
   _yes: yes
   _no: no
   back_to_catalog: 'back to catalog'
   firstname: firstname
   lastname: lastname
-  password: password
   password_confirmation: 'password confirmation'
   save: save
   save_changes: 'save changes'
