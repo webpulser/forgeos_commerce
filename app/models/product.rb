@@ -157,16 +157,16 @@ class Product < ActiveRecord::Base
 
   def method_missing_with_attribute(method, *args, &block)
     unless self.product_type && attribute = self.product_type.product_attributes.find_by_access_method(method.to_s)
-      method_missing_without_attribute(method, *args, &block)
+      return method_missing_without_attribute(method, *args, &block)
     else
       if attribute.dynamic?
         if attr_value = self.dynamic_attribute_values.find_by_attribute_id(attribute.id)
           return attr_value.value
         else
-          method_missing_without_attribute(method, *args, &block)
+          return method_missing_without_attribute(method, *args, &block)
         end
       else
-        self.attribute_values.find_all_by_attribute_id(attribute.id).collect(&:name)
+        return self.attribute_values.find_all_by_attribute_id(attribute.id).collect(&:name)
       end
     end
   end
