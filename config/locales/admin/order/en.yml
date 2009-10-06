@@ -1,5 +1,5 @@
 en:
-order:
+  order:
     zero: no orders
     one: order
     other: orders
@@ -50,4 +50,3 @@ order:
       other: 'bills'
       show: 'see bill'
     delivery: 'delivery'
-  

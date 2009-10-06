@@ -1,5 +1,5 @@
 fr:
-order:
+  order:
     zero: 'pas de commande'
     one: commande
     other: commandes
