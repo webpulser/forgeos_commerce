@@ -1,5 +1,5 @@
 namespace :rails_commerce do
-  task :sync do
+  task :sync => ['rails_content:sync'] do
     system 'rsync -rvC vendor/plugins/rails_commerce/public .'
   end
 
