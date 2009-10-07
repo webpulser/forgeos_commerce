@@ -8,6 +8,7 @@ fr:
       text: créer un attribut
       choice: choisir un attribut
       access_method: attribut
+    value: valeur
     all: tous les attributs
     update:
       action: "mettre à jour l'attribut"
@@ -18,19 +19,19 @@ fr:
       action: "supprimer l'attribut"
     access_method: "méthode d'accès"
 
-  text_attribute:
+  text_attribute: champ texte
 
-  longtext_attribute:
+  longtext_attribute: champ grand texte
 
-  url_attribute:
+  url_attribute: champ url
 
-  number_attribute:
+  number_attribute: champ nombre
 
-  date_attribute:
+  date_attribute: champ date
 
-  picklist_attribute:
+  picklist_attribute: liste de choix
 
   checkbox_attribute:
-     field:
+     field: champ
 
-  radiobutton_attribute:  
+  radiobutton_attribute: radio bouton

@@ -7,30 +7,30 @@ en:
       text: create an attribute
       choice: choose an attribute
       access_method: attribute
-    value:
+    value: value
     all: all attributes
     update:
       action: update attribute
-    back:
+    back: back
     duplicate:
       action: duplicate attribute
     destroy:
       action: delete attribute
     access_method: access method
 
-  text_attribute:
+  text_attribute: text attribute
 
-  longtext_attribute:
+  longtext_attribute: long text attribute
 
-  url_attribute:
+  url_attribute: url attribute
 
-  number_attribute:
+  number_attribute: number attribute
 
-  date_attribute:
+  date_attribute: date attribute
 
-  picklist_attribute:
+  picklist_attribute: picklist attribute
 
   checkbox_attribute:
-     field:
+     field: field
 
-  radiobutton_attribute:
+  radiobutton_attribute: radiobutton attribute
