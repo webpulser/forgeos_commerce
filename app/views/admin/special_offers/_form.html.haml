@@ -15,8 +15,7 @@
       = fg_submit_tag ('save_changes')
       /= submit_tag 'Save special offer', :class => 'backgrounds interact-button'
       or
-      %a.back-link{ :href => "#" }
-        Cancel
+      =link_to 'Cancel',{:action => 'index'}, :class => 'back-link'
 
 
   #special_offers.grid_12.omega
