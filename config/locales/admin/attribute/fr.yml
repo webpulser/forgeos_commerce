@@ -7,12 +7,12 @@ fr:
     all: tous les attributs
     update:
       action: mettre à jour
-    back:
+    back: retour
     duplicate:
       action: dupliquer
-    destroy
+    destroy:
       action: supprimer
-    access_method:
+    access_method: "méthode d'accès"
 
   text_attribute:
 

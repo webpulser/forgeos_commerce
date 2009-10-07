@@ -1,5 +1,4 @@
 en:
-#attribut doesn't have an "e" after the "t" in english !!!
   attribute: attributs
     create: 
       text: create an attribut
@@ -12,9 +11,9 @@ en:
     back:
     duplicate:
       action: duplicate
-    destroy
+    destroy:
       action: delete
-    access_method:
+    access_method: access method
 
   text_attribute:
 
