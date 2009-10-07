@@ -104,7 +104,7 @@ describe Attribute do
       Attribute.last.should == @attribute
     end
   end
-  
+    
   describe 'edit/delete attribute' do
     before :each do
       @attribute = Attribute.create!({:name => "Color", :access_method => 'color'})
@@ -120,14 +120,58 @@ describe Attribute do
       @attribute.access_method.should == 'new_color'
     end
 
+    it 'should not update attributes if name is missing' do
+      @attribute.update_attributes(:name => '').should_not == true
+      @new_attribute = Attribute.find_by_id(@attribute.id)
+      @new_attribute.should_not == nil
+      @new_attribute.name.should == 'Color'
+    end
+
+    it 'should not update attributes if access_method is missing' do
+      @attribute.update_attributes(:access_method => '').should_not == true
+      @new_attribute = Attribute.find_by_id(@attribute.id)
+      @new_attribute.should_not == nil
+      @new_attribute.access_method.should == 'color'
+    end
+  
     # delete
     it 'should destroy the attribute' do
       @attribute.destroy
       Attribute.last.should_not == @attribute
     end
 
+    it 'should destroy the attribute_values' do
+      3.times do |i|
+        attribute_value = @attribute.attribute_values.create!({:name => "test#{i}"})
+      end
+      AttributeValue.all.length.should == 3
+      @attribute.destroy
+      AttributeValue.all.length.should == 0
+    end
+
+    it 'should destroy the dynamic_attribute_values' do
+      3.times do |i|
+        dynamic_attribute_value = @attribute.dynamic_attribute_values.create!({:value => "test#{i}", :product_id => 1})
+      end
+      DynamicAttributeValue.all.length.should == 3
+      @attribute.destroy
+      DynamicAttributeValue.all.length.should == 0
+    end
+
   end
   
+  describe 'clone attribute' do
+    before :each do
+      @attribute = Attribute.create!({:name => "Color", :access_method => 'color'})
+      @attribute_clone = @attribute.clone
+    end
+    
+    it "should have the same name and access_method" do
+      @attribute_clone.should_not == nil
+      @attribute_clone.name.should == @attribute.name
+      @attribute_clone.access_method.should == @attribute.access_method
+    end
+  end
   
   
 end
