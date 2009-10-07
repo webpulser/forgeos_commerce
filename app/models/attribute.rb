@@ -7,6 +7,7 @@ class Attribute < ActiveRecord::Base
   has_many :attribute_values, :dependent => :destroy
   has_many :dynamic_attribute_values, :dependent => :destroy
 
+  validates_presence_of :name, :access_method
   validates_uniqueness_of :access_method
   
   before_save :clear_attributes

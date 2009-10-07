@@ -20,6 +20,12 @@ describe Product do
       @product.sku.should == '001'
     end
     
+    it "should have a unique url" do
+      @second_product = Product.new({:url => "product", :name => "product", :sku => "001", :product_type_id => @product_type.id})
+      @second_product.should_not be_valid
+      @second_product.should have(1).errors_on(:url)
+    end
+    
     it "should find a product with find_by_id" do
       Product.find_by_id(@product.id).should == @product
     end
@@ -107,7 +113,7 @@ describe Product do
       @product.destroy
       Product.last.should_not == @product
     end
-    
+
   end
   
   
