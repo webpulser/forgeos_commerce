@@ -203,6 +203,7 @@ en:
     other:  values
   total_min: 'total min'
   cumulable: cumulable
+  sections: 'sections'
   offer_delivery: 'delivery offered'
   max_use: 'maximum of use'
   using_after: 'using after (price)'

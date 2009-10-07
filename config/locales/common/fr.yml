@@ -201,6 +201,7 @@ fr:
     other:  valeurs
   total_min: 'somme minimale'
   cumulable: cumulable
+  sections: 'sections'
   offer_delivery: 'frais de livraison offerts'
   max_use: "maximum d'utilisation"
   using_after: 'utilisatable après (prix)'
