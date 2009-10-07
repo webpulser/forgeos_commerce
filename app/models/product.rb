@@ -6,10 +6,9 @@ class Product < ActiveRecord::Base
   
   has_and_belongs_to_many :product_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
   
-  has_and_belongs_to_many :attachments, :list => true, :order => 'position'
-  has_and_belongs_to_many :attachments2, :list => true, :order => 'position', :join_table => 'attachments_elements', :foreign_key => 'element_id', :association_foreign_key => 'attachment_id', :class_name => 'Attachment'
-  has_and_belongs_to_many :pictures, :association_foreign_key => 'attachment_id', :join_table => 'attachments_products', :class_name => 'Picture', :order => 'position'
-  has_and_belongs_to_many :pdfs, :association_foreign_key => 'attachment_id', :join_table => 'attachments_products', :class_name => 'Pdf', :order => 'position'
+  has_and_belongs_to_many :attachments, :list => true, :order => 'position', :join_table => 'attachments_elements', :foreign_key => 'element_id'
+  has_and_belongs_to_many :pictures, :association_foreign_key => 'attachment_id', :join_table => 'attachments_elements', :class_name => 'Picture', :order => 'position', :foreign_key => 'element_id'
+  has_and_belongs_to_many :pdfs, :association_foreign_key => 'attachment_id', :join_table => 'attachments_elements', :class_name => 'Pdf', :order => 'position', :foreign_key => 'element_id'
 
   has_and_belongs_to_many :attribute_values, :readonly => true
   has_many :dynamic_attribute_values, :dependent => :destroy
