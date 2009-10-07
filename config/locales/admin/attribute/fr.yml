@@ -1,17 +1,21 @@
 fr:
-  attribute: attributs
+  attributes: attributs
+  attribute:
+    zero: attribut
+    one: attribut
+    other: attributs
     create: 
       text: créer un attribut
       choice: choisir un attribut
       access_method: attribut
     all: tous les attributs
     update:
-      action: mettre à jour
+      action: "mettre à jour l'attribut"
     back: retour
     duplicate:
-      action: dupliquer
+      action: "dupliquer l'attribut"
     destroy:
-      action: supprimer
+      action: "supprimer l'attribut"
     access_method: "méthode d'accès"
 
   text_attribute:

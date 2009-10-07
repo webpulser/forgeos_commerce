@@ -1,18 +1,21 @@
 en:
-  attribute: attributs
+  attributes: attributes 
+  attribute: 
+    one: attribute
+    other: attributes
     create: 
-      text: create an attribut
-      choice: choose an attribut
-      access_method: attribut
+      text: create an attribute
+      choice: choose an attribute
+      access_method: attribute
     value:
-    all: all attributs
+    all: all attributes
     update:
-      action: update
+      action: update attribute
     back:
     duplicate:
-      action: duplicate
+      action: duplicate attribute
     destroy:
-      action: delete
+      action: delete attribute
     access_method: access method
 
   text_attribute:
