@@ -1,0 +1,34 @@
+en:
+#attribut doesn't have an "e" after the "t" in english !!!
+  attribute: attributs
+    create: 
+      text: create an attribut
+      choice: choose an attribut
+      access_method: attribut
+    value:
+    all: all attributs
+    update:
+      action: update
+    back:
+    duplicate:
+      action: duplicate
+    destroy
+      action: delete
+    access_method:
+
+  text_attribute:
+
+  longtext_attribute:
+
+  url_attribute:
+
+  number_attribute:
+
+  date_attribute:
+
+  picklist_attribute:
+
+  checkbox_attribute:
+     field:
+
+  radiobutton_attribute:

@@ -1,0 +1,32 @@
+fr:
+  attribute: attributs
+    create: 
+      text: créer un attribut
+      choice: choisir un attribut
+      access_method: attribut
+    all: tous les attributs
+    update:
+      action: mettre à jour
+    back:
+    duplicate:
+      action: dupliquer
+    destroy
+      action: supprimer
+    access_method:
+
+  text_attribute:
+
+  longtext_attribute:
+
+  url_attribute:
+
+  number_attribute:
+
+  date_attribute:
+
+  picklist_attribute:
+
+  checkbox_attribute:
+     field:
+
+  radiobutton_attribute:  
