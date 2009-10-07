@@ -6,7 +6,11 @@ jQuery(document).ready(function(){
 
   //init the zone modify tree
    $("#zone-tree").tree({
-    ui: { theme_path: '/stylesheets/jstree/themes/', theme_name : 'zone-tree' },
+    ui: {
+      theme_path: '/stylesheets/jstree/themes/',
+      theme_name : 'zone-tree',
+      selected_parent_close: false
+    },
     rules: { multiple:'on' },
     callback: {
       onload: function(TREE_OBJ){
@@ -18,7 +22,14 @@ jQuery(document).ready(function(){
 
   //init the tree for products/blocks associations
   $("#association-product-tree").tree({
-    ui: { theme_path: '/stylesheets/jstree/themes/', theme_name : 'association_product'},
+    ui: {
+      theme_path: '/stylesheets/jstree/themes/',
+      theme_name : 'association_product',
+      selected_parent_close: false
+    },
+    plugins:{
+      'contextmenu': {}
+    },
     rules: { multiple:'on' },
     callback: {
       onload: function(TREE_OBJ){
@@ -45,7 +56,11 @@ jQuery(document).ready(function(){
 
   //init the tree for product-types
   $("#product-types-all-tree").tree({
-    ui: { theme_path: '/stylesheets/jstree/themes/', theme_name : 'product-types-all'},
+    ui: {
+      theme_path: '/stylesheets/jstree/themes/',
+      theme_name : 'product-types-all',
+      selected_parent_close: false
+    },
     rules: {
         multitree : true,
         type_attr : 'rel',
@@ -67,7 +82,11 @@ jQuery(document).ready(function(){
   });
   //init the tree for product-types-selected
   $("#product-types-selected-tree").tree({
-    ui: { theme_path: '/stylesheets/jstree/themes/', theme_name : 'product-types-selected'},
+    ui: {
+      theme_path: '/stylesheets/jstree/themes/',
+      theme_name : 'product-types-selected',
+      selected_parent_close: false
+    },
     rules: {
         multitree : true,
         type_attr : 'rel',
