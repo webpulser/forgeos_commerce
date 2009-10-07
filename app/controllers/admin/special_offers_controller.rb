@@ -132,20 +132,19 @@ private
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
+
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
     conditions = { :parent_id => nil }
+    options = { 
+      :conditions => conditions,
+      :order => order,
+      :page => page,
+      :per_page => per_page
+    }
     if params[:sSearch] && !params[:sSearch].blank?
-      @special_offers = SpecialOfferRule.search(params[:sSearch],
-        :conditions => conditions,
-        :order => order,
-        :page => page,
-        :per_page => per_page)
+      @special_offers = SpecialOfferRule.search(params[:sSearch],options)
     else
-      @special_offers = SpecialOfferRule.paginate(:all,
-        :conditions => conditions,
-        :order => order,
-        :page => page,
-        :per_page => per_page)
+      @special_offers = SpecialOfferRule.paginate(:all,options)
     end
   end
   

@@ -123,29 +123,27 @@ private
 
   def sort
     columns = %w(attributes.type attributes.name access_method)
-    conditions = {}
-    if params[:category_id]
-      conditions[:categories_elements] = { :category_id => params[:category_id] }
-    end
 
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+
+    conditions = {}
+    options = { :page => page, :per_page => per_page }
+
+    if params[:category_id]
+      conditions[:categories_elements] = { :category_id => params[:category_id] }
+      options[:include] = :attribute_categories
+    end
+
+    options[:conditions] = conditions unless conditions.empty?
+    options[:order] = order unless order.squeeze.blank?
+
     if params[:sSearch] && !params[:sSearch].blank?
-      @attributes = Attribute.search(params[:sSearch],
-        :conditions => conditions,
-        :include => :attribute_categories,
-        :order => order,
-        :page => page,
-        :per_page => per_page)
+      @attributes = Attribute.search(params[:sSearch],options)
     else
-      @attributes = Attribute.paginate(:all,
-        :conditions => conditions,
-        :include => :attribute_categories,
-        :order => order,
-        :page => page,
-        :per_page => per_page)
+      @attributes = Attribute.paginate(:all,options)
     end
   end
 end

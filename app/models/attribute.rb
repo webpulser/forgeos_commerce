@@ -12,6 +12,12 @@ class Attribute < ActiveRecord::Base
   
   before_save :clear_attributes
 
+  define_index do
+    indexes name, :sortable => true
+    indexes access_method, :sortable => true
+    indexes type
+  end
+
   def clone
     attribute = super
     attribute.attribute_values = self.attribute_values.collect(&:clone)

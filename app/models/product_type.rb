@@ -8,6 +8,10 @@ class ProductType < ActiveRecord::Base
   has_and_belongs_to_many :attachments, :list => true, :order => 'position', :join_table => 'attachments_elements', :foreign_key => 'element_id'
   has_and_belongs_to_many :product_type_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
 
+  define_index do
+    indexes name, :sortable => true
+  end
+
   # Destroy all Product associated with this ProductType
   def after_destroy
     Product.destroy_all(['product_type_id = ?', self.id])

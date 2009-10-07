@@ -50,6 +50,14 @@ class Order < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :user_id, :address_delivery, :address_invoice, :order_shipping
 
+  define_index do
+    indexes status, :sortable => true
+    indexes order_details.name, :facet => true,  :sortable => true
+    indexes order_details.description, :facet => true,  :sortable => true
+    indexes order_details.sku, :facet => true,  :sortable => true
+    indexes order_details.price, :facet => true,  :sortable => true
+  end
+
   # Returns order's amount
   def total(with_tax=false, with_currency=true,with_shipping=true, with_vouchers=true )
     amount = 0

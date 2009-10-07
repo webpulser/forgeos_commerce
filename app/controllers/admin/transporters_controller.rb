@@ -84,16 +84,15 @@ class Admin::TransportersController < Admin::BaseController
       page = (offset / per_page) + 1
       order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
       
+      options = {
+        :order => order,
+        :page => page,
+        :per_page => per_page
+      }
       if params[:sSearch] && !params[:sSearch].blank?
-        @transporters = Transporter.search(params[:sSearch],
-          :order => order,
-          :page => page,
-          :per_page => per_page)
+        @transporters = Transporter.search(params[:sSearch],options)
       else
-        @transporters = Transporter.paginate(:all,
-          :order => order,
-          :page => page,
-          :per_page => per_page)
+        @transporters = Transporter.paginate(:all,options)
       end
     end
 end

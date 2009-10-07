@@ -74,28 +74,32 @@ private
   end
   
   def sort
-    columns = %w(product_types.name product_types.id)
-    conditions = {}
-    conditions[:categories_elements] = { :category_id => params[:category_id] } if params[:category_id]
+    columns = %w(product_types.name product_types.name count(products.id) product_types.name)
 
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+ 
+    conditions = {}
+    options = { :page => page, :per_page => per_page }
+
+    includes = []
+    includes << :products if params[:iSortCol_0].to_i == 2
+
+    if params[:category_id]
+      conditions[:categories_elements] = { :category_id => params[:category_id] }
+      includes << :product_type_categories
+    end
+   
+    options[:conditions] = conditions unless conditions.empty?
+    options[:include] = includes unless includes.empty?
+    options[:order] = order unless order.squeeze.blank?
+
     if params[:sSearch] && !params[:sSearch].blank?
-      @product_types = ProductType.search(params[:sSearch],
-        :conditions => conditions,
-        :include => :product_type_categories,
-        :order => order,
-        :page => page,
-        :per_page => per_page)
+      @product_types = ProductType.search(params[:sSearch],options)
     else
-      @product_types = ProductType.paginate(:all,
-        :conditions => conditions,
-        :include => :product_type_categories,
-        :order => order,
-        :page => page,
-        :per_page => per_page)
+      @product_types = ProductType.paginate(:all,options)
     end
   end
 end

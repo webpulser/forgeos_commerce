@@ -126,29 +126,29 @@ private
 
   def sort
     columns = %w(sku products.name price stock product_type_id active)
-    conditions = {}
-    conditions[:categories_elements] = { :category_id => params[:category_id] } if params[:category_id]
-    
-    conditions[:deleted] = params[:deleted] ? true : [false,nil]
-
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+
+    conditions = {}
+    includes = []
+    options = { :page => page, :per_page => per_page }
+    
+    if params[:category_id]
+      conditions[:categories_elements] = { :category_id => params[:category_id] }
+      includes << :product_categories
+    end
+    conditions[:deleted] = params[:deleted] ? true : [false,nil]
+
+    options[:conditions] = conditions unless conditions.empty?
+    options[:include] = includes unless includes.empty?
+    options[:order] = order unless order.squeeze.blank?
+
     if params[:sSearch] && !params[:sSearch].blank?
-      @products = Product.search(params[:sSearch],
-        :conditions => conditions,
-        :include => :product_categories,
-        :order => order,
-        :page => page,
-        :per_page => per_page)
+      @products = Product.search(params[:sSearch],options)
     else
-      @products = Product.paginate(:all,
-        :conditions => conditions,
-        :include => :product_categories,
-        :order => order,
-        :page => page,
-        :per_page => per_page)
+      @products = Product.paginate(:all,options)
     end
   end
 end

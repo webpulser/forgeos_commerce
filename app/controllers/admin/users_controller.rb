@@ -208,81 +208,71 @@ private
 
   def sort
     columns = %w(lastname email order total last_order joined_on)
-    conditions = {}
-
-    if params[:category_id]
-      conditions[:categories_elements] = { :category_id => params[:category_id] }
-    end
-
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+
+    conditions = {}
+    includes = []
+    options = { :page => page, :per_page => per_page }
+
+    if params[:category_id]
+      conditions[:categories_elements] = { :category_id => params[:category_id] }
+      includes << :user_categories
+    end
+
+    options[:conditions] = conditions unless conditions.empty?
+    options[:include] = includes unless includes.empty?
+
     if params[:sSearch] && !params[:sSearch].blank?
-      @users = User.search(params[:sSearch],
-        :conditions => conditions,
-        :include => :user_categories,
-        :order => order,
-        :page => page,
-        :per_page => per_page)
+      @users = User.search(params[:sSearch],options)
     else
-      @users = User.paginate(:all,
-        :conditions => conditions,
-        :include => :user_categories,
-        :order => order,
-        :page => page,
-        :per_page => per_page)
+      @users = User.paginate(:all,options)
     end
   end
 
   def sort_orders
-    columns = %w(id id sum(order_details.price) count(order_details.id) created_at  status)
-    conditions = { :user_id => @user.id}
-    case params[:filter]
-      when 'status'
-        conditions[:status] = params[:status]
-    end
+    columns = %w(id id sum(order_details.price) count(order_details.id) created_at people.lastname status)
 
-    if params[:category_id]
-      conditions[0] << 'user_categories_users'
-      conditions << { :user_category_id => params[:category_id] }
-    end
-    
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
 
-    order_column = columns[params[:iSortCol_0].to_i]
-    include_models = []
-    group_by = ['orders.id']
+    conditions = {}
+    options = { :page => page, :per_page => per_page }
+
+    case params[:filter]
+    when 'status'
+      conditions[:status] = params[:status]
+    when 'user'
+      conditions[:user_id] = params[:user_id]
+    end
+
+    order_column = params[:iSortCol_0].to_i
+    includes = []
+    group_by = []
 
     case order_column
-    when 'count(order_details.id)', 'sum(order_details.price)'
-      group_by << 'order_details.id'
-      include_models << :order_details
-    when 'people.lastname'
-      group_by << 'people.id'
-      include_models << :user
+    when 2, 3
+      group_by << 'orders.id'
+      includes << :order_details
+    when 5
+      includes << :user
     end
-    include_models << 'user_categories'
-    group_by = group_by.join(',')
-    
-    order = "#{order_column} #{params[:iSortDir_0].upcase}"
+
+    order = "#{columns[order_column]} #{params[:iSortDir_0].upcase}"
+
+    options[:group] = group_by.join(', ') unless group_by.empty?
+    options[:conditions] = conditions unless conditions.empty?
+    options[:include] = includes unless includes.empty?
+    options[:order] = order unless order.squeeze.blank?
+
+    logger.debug(options.inspect)
     if params[:sSearch] && !params[:sSearch].blank?
-      @orders = Order.search(params[:sSearch],
-        :include => include_models,
-        :group => group_by,
-        :order => order,
-        :page => page,
-        :per_page => per_page)
+      @orders = Order.search(params[:sSearch],options)
     else
-      @orders = Order.paginate(:all,
-        :conditions => conditions,
-        :include => include_models,
-        :group => group_by,
-        :order => order,
-        :page => page,
-        :per_page => per_page)
+      @orders = Order.paginate(:all,options)
     end
   end
 end
