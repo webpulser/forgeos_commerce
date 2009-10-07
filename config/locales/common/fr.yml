@@ -182,9 +182,6 @@ fr:
   quick_edit: 'édition rapide'
   published: 'publié'
   unpublished: 'non publié'
-  status:
-    one: statut
-    other: statuts
   shipping_method_price:
     one: "frai d'expédition"
     other: "frais d'expédition"

@@ -184,9 +184,6 @@ en:
   quick_edit: 'quick edit'
   published: published
   unpublished: unpublished
-  status:
-    one: status
-    other: statuses
   shipping_method_price:
     one: "shipping method price"
     other: "shipping method prices"
