@@ -19,7 +19,7 @@
         .padding-wrap.grid_10.omega.alpha
           .type-of-delivery.grid_10
             %span.type-delivery-title= I18n.t('transporter.delivery.type').capitalize
-            %div= select_tag 'delivery_type', options_for_select(['Weight base rate'])
+            %div= select_tag 'delivery_type', options_for_select(Hash['Weight base rate','weight'])
                   
         .clear
         #delivery-rules
