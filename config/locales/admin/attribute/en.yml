@@ -18,20 +18,11 @@ en:
     destroy:
       action: delete attribute
     access_method: access method
-
-  text_attribute: text attribute
-
-  longtext_attribute: long text attribute
-
-  url_attribute: url attribute
-
-  number_attribute: number attribute
-
-  date_attribute: date attribute
-
-  picklist_attribute: picklist attribute
-
-  checkbox_attribute:
-     field: field
-
-  radiobutton_attribute: radiobutton attribute
+  text_attribute: text
+  longtext_attribute: long text
+  url_attribute: url
+  number_attribute: number
+  date_attribute: date
+  picklist_attribute: picklist
+  checkbox_attribute: checkbox
+  radiobutton_attribute: radio button

@@ -18,20 +18,11 @@ fr:
     destroy:
       action: "supprimer l'attribut"
     access_method: "méthode d'accès"
-
   text_attribute: champ texte
-
   longtext_attribute: champ grand texte
-
   url_attribute: champ url
-
   number_attribute: champ nombre
-
   date_attribute: champ date
-
   picklist_attribute: liste de choix
-
-  checkbox_attribute:
-     field: champ
-
+  checkbox_attribute: cases à cocher
   radiobutton_attribute: radio bouton

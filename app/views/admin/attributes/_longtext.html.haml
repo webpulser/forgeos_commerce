@@ -2,4 +2,4 @@
   %span.small-icons.longtext_attribute= I18n.t('longtext_attribute.field')
 .attribute-preview
   %h2= I18n.t('longtext_attribute.preview')
-  = text_area_tag '', '', :rows => 20, :cols => 70, :class => 'mceEditor'
+  = text_area 'preview', 'content', :rows => 20, :cols => 70, :class => 'mceEditor'

@@ -37,6 +37,16 @@ Forgeos::AdminMenu << { :title => 'users',
   :url => { :controller => 'admin/users' }, :i18n => true,
   :html => { :class => 'left'}
 }
+Forgeos::AdminMenu << { :title => 'site_builder',
+  :url => { :controller => 'admin/product_types'},
+  :i18n => true,
+  :html => { :class => 'right' }
+}
+Forgeos::AdminMenu << { :title => 'marketing', 
+  :i18n => true,
+  :url => { :controller => 'admin/special_offers'},
+  :html => { :class => 'right' }
+}
 
 # Set site's menu
 Forgeos::Menu << { :title => 'home', :url => :root, :i18n => true }
