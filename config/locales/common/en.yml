@@ -190,7 +190,6 @@ en:
   quantity:
     one: quantity
     other: quantities
-  please_select: 'please select'
   weight_max: 'max weight'
   weight_min: 'min weight'
   price_max: 'max price'
@@ -216,7 +215,6 @@ en:
   accept: 'validate order'
   send: 'validate shipping'
   drag_attributes: 'drag attributes from the right column to this product type:'
-  top_5_items: Top 5 search items
   most_search: Most search items
   tattribute:
     one: "attribute"
@@ -472,26 +470,6 @@ en:
       success: 'the special offer was successfully deleted'
       failed: 'a problem occured during the special offer deletion'
       confirm: 'are you sure to delete this special offer ?'
-
-  statistic:
-    one: statistic
-    other: statistics
-    trends: trends
-    keyfacts: keyfacts
-    average_order: average order
-    average_customer: average customers
-    products_sold: products sold
-    revenue: revenue
-    conversion_rate: conversion rate
-    show:
-      all: 'see statistics'
-      for: show for
-    live:
-      one: 'live statistic'
-      other: 'live statistics'
-    last:
-      month: last 30 days
-      week: last 7 days
   sale:
     one: sale
     other: sales

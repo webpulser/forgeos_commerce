@@ -188,7 +188,6 @@ fr:
   quantity:
     one: 'quantité'
     other: 'quantités'
-  please_select: 'Veuillez choisir'
   weight_max: 'poids max'
   weight_min: 'poids min'
   price_max: 'prix max'
@@ -214,7 +213,6 @@ fr:
   accept: 'valider la commande'
   send: "valider l'expédition"
   drag_attributes: 'Glisser les attributs depuis la colonne de droite pour les ajouter au type de produit'
-  top_5_items: Top 5 des produits recherchés
   most_search: Produit les plus recherchés
   tattribute:
     one: attribut
@@ -470,26 +468,6 @@ fr:
       success: "l'offre speciale a bien été supprimé"
       failed: "un problème est survenu lors de la suppression de l'offre speciale"
       confirm: "êtes-vous sûr de vouloir supprimer cette offre speciale ?"
-
-  statistic:
-    one: statistique
-    other: statistiques
-    trends: tendances
-    keyfacts: mots-clefs
-    average_order: commande moyenne
-    average_customer: utilisateur moyen
-    products_sold: produits vendus
-    revenue: recette
-    conversion_rate: taux de conversion
-    show:
-      all: 'voir les statistiques'
-      for: voir pour
-    live:
-      one: 'statistique temps réel'
-      other: 'statistiques temps réel'
-    last:
-      month: les 30 derniers jours
-      week: les 7 derniers jours
   sale:
     one: vente
     other: ventes
