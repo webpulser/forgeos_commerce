@@ -490,9 +490,6 @@ fr:
     last:
       month: les 30 derniers jours
       week: les 7 derniers jours
-  visitor:
-    one: visiteur
-    other: visiteurs
   sale:
     one: vente
     other: ventes

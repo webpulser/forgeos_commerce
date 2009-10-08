@@ -492,9 +492,6 @@ en:
     last:
       month: last 30 days
       week: last 7 days
-  visitor:
-    one: visitor
-    other: visitors
   sale:
     one: sale
     other: sales
