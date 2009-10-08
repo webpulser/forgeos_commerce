@@ -2,7 +2,7 @@
   %span.small-icons.radiobutton_attribute= I18n.t 'radiobutton_attribute.field'
 .choices
   %h2= I18n.t 'attribute.value', :count => 2
-  %ul.sortable.sortable-choices.grid_10.omega.alpha
+  %ul.nested_sortable.sortable-choices.grid_10.omega.alpha
     - form.fields_for :attribute_values  do |attribute_value|
       %li.block-container
         %span.block-type
@@ -12,6 +12,7 @@
           = attribute_value.text_field :name
           = attribute_value.hidden_field :id
           = attribute_value.hidden_field :_delete, :class => 'delete'
+          = attribute_value.hidden_field :position
         %span.small-icons.red-delete-icon
         %span.small-icons.green-add-icon
   .clear
