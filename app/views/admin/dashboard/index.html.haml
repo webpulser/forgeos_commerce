@@ -237,9 +237,9 @@
     .live-stats-content
       - online_users = User.count(:conditions => { :updated_at_gt => Time.now - 10.minutes })
       - online_visitors = User.count(:conditions => { :updated_at_gt => Time.now - 10.minutes})
-      %span
+      %span.disabled
         = I18n.t('visitor.online', :count => online_visitors)
-      %span
+      %span.disabled
         = I18n.t('user.online', :count => online_users)
       %span
         = I18n.t('cart.created', :count => Cart.count)
