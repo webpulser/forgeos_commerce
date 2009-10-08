@@ -1,6 +1,7 @@
 en:
   attributes: attributes 
   attribute: 
+    zero: attribute
     one: attribute
     other: attributes
     create: 
