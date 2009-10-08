@@ -68,7 +68,7 @@ class Product < ActiveRecord::Base
 
   def clone
     product_cloned = super
-    product_cloned.meta_info = meta_info.clone
+    product_cloned.meta_info = meta_info.clone if meta_info
     product_cloned.dynamic_attribute_values = dynamic_attribute_values.collect(&:clone)
     %w(attachment_ids picture_ids tag_list product_category_ids attribute_value_ids).each do |assoc|
       product_cloned.send(assoc+'=', self.send(assoc))
