@@ -5,11 +5,11 @@ class Rule < ActiveRecord::Base
 
   def usage
     #activated = false if max_use && max_use > 0 && use >= max_use
-    self.activated = true
+    self.active = true
   end
 
   def activate
-    self.update_attribute('activated', !self.activated)
+    self.update_attribute(:active, !self.active)
   end
 
 end
