@@ -1,6 +1,6 @@
 require 'forgeos/commerce/statistics'
 require 'forgeos/commerce/float'
-module RailsCommerce
+module ForgeosCommerce
   OPTIONS = {
     :text => {
       :are_you_sure_to_empty_your_cart      => 'are you sure to empty your cart ?',
@@ -55,13 +55,13 @@ Forgeos::AdminMenu << { :title => 'marketing',
 Forgeos::Menu << { :title => 'home', :url => :root, :i18n => true }
 Forgeos::Menu << { :title => 'catalog', :url => { :controller => 'catalog' }, :i18n => true }
 Forgeos::Menu << { :title => ['cart', { :count => 1}], 
-  :html => { :id => 'rails_commerce_cart_link' },
+  :html => { :id => 'forgeos_commerce_cart_link' },
   :url => { :controller => 'cart' },
   :helper => { :method => 'link_to_cart' },
   :i18n => true
 } 
 Forgeos::Menu << { :title => ['wishlist',{ :count => 1}],
-  :html => { :id => 'rails_commerce_wishlist_link' },
+  :html => { :id => 'forgeos_commerce_wishlist_link' },
   :url => { :controller => 'wishlist' },
   :helper => { :method => 'link_to_wishlist' },
   :i18n => true 

@@ -7,7 +7,7 @@ module CartHelper
   # * <tt>carts_product</tt> a <i>CartsProduct</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_cart_by_carts_product(cart, carts_product, static=false, mini=false)
-    content = "<div class='cart_product_line' id='rails_commerce_cart_product_line_#{carts_product.product_id}'>"
+    content = "<div class='cart_product_line' id='forgeos_commerce_cart_product_line_#{carts_product.product_id}'>"
       content += "<div class='cart_name'>"
         content += carts_product.free == 1 ? "Free : #{carts_product.product.name}" : link_to_product(carts_product.product)
       content += "</div>"
@@ -54,14 +54,14 @@ module CartHelper
   # * <tt>cart</tt> a <i>Cart</i> object
   # * <tt>static</tt> add action's buttons for edit this cart if true, false by default
   def display_cart(cart, static=false, mini=false)
-    content = '<div class="cart'+(mini ? ' mini' : '')+'" id="rails_commerce_cart">'
+    content = '<div class="cart'+(mini ? ' mini' : '')+'" id="forgeos_commerce_cart">'
       content += "<div class='cart_name'>#{I18n.t('name').capitalize}</div>"
     unless mini
       content += "<div class='cart_name'>#{I18n.t('unit_price').capitalize}</div>"
       content += "<div class='cart_name'>#{I18n.t('tax', :count=>1).capitalize}</div>"
       content += "<div class='cart_name'>#{I18n.t('total').capitalize}</div>"
     end
-      content += "<div id='rails_commerce_cart_products'>"
+      content += "<div id='forgeos_commerce_cart_products'>"
         content += display_cart_all_products_lines(cart, static, mini)
       content += "</div>"
     content += "</div>"
@@ -80,10 +80,10 @@ module CartHelper
   #
   # ==== Parameters
   # * <tt>:product</tt> - a <i>Product</i> object
-  # * <tt>:name</tt> - name, <i>image_tag('rails_commerce/remove_product.gif')</i> by default
+  # * <tt>:name</tt> - name, <i>image_tag('forgeos_commerce/remove_product.gif')</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'cart', :action => 'empty'}</i> by default
-  # * <tt>options</tt> the html options, <i>{:confirm => RailsCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart]}</i> by default
-  def link_to_cart_remove_product(carts_product, mini=false, name=image_tag('rails_commerce/remove_product.gif'), options={:confirm => I18n.t(:confirm_remove_product)})
+  # * <tt>options</tt> the html options, <i>{:confirm => ForgeosCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart]}</i> by default
+  def link_to_cart_remove_product(carts_product, mini=false, name=image_tag('forgeos_commerce/remove_product.gif'), options={:confirm => I18n.t(:confirm_remove_product)})
     if mini
       link_to_remote(name,{ :url=>{:controller => 'cart', :action => 'remove_product', :id => carts_product}, :update => 'cart' }.merge(options))
     else
@@ -94,9 +94,9 @@ module CartHelper
   # Extension of <i>link_to(name, options = {}, html_options = nil)</i>
   #
   # ==== Parameters
-  # * <tt>:name</tt> - name, <i>RailsCommerce::OPTIONS[:text][:empty_cart]</i> by default
+  # * <tt>:name</tt> - name, <i>ForgeosCommerce::OPTIONS[:text][:empty_cart]</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'cart', :action => 'empty'}</i> by default
-  # * <tt>options</tt> the html options, <i>{:confirm => RailsCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart]}</i> by default
+  # * <tt>options</tt> the html options, <i>{:confirm => ForgeosCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart]}</i> by default
   def link_to_cart_empty(mini=false,name=I18n.t('empty_cart').capitalize, url={:controller => 'cart', :action => 'empty'}, options={:confirm => I18n.t(:confirm_empty_cart)})
     if mini
       link_to_remote name, { :update => 'cart', :url => url }.merge(options)

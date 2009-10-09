@@ -7,7 +7,7 @@ module WishlistHelper
   # * <tt>wishlists_product</tt> a <i>WishlistsProduct</i> object
   # * <tt>static</tt> add action's buttons for edit this wishlist if true, false by default
   def display_wishlist_by_wishlists_product(wishlist, wishlists_product, static=false, mini=false)
-    content = "<div class='wishlist_product_line' id='rails_commerce_wishlist_product_line_#{wishlists_product.product_id}'>"
+    content = "<div class='wishlist_product_line' id='forgeos_commerce_wishlist_product_line_#{wishlists_product.product_id}'>"
       content += "<div class='wishlist_name'>"
         content += link_to_product(wishlists_product.product)
       content += "</div>"
@@ -61,7 +61,7 @@ module WishlistHelper
   # * <tt>wishlist</tt> a <i>Wishlist</i> object
   # * <tt>static</tt> add action's buttons for edit this wishlist if true, false by default
   def display_wishlist(wishlist, static=false, mini=false)
-    content = '<div class="wishlist'+(mini ? ' mini' : '')+'" id="rails_commerce_wishlist">'
+    content = '<div class="wishlist'+(mini ? ' mini' : '')+'" id="forgeos_commerce_wishlist">'
       content += "<div class='wishlist_name'>#{I18n.t('name').capitalize}</div>"
       content += "<div class='wishlist_name'>#{I18n.t('quantity', :count=>1).capitalize}</div>"
     unless mini
@@ -69,7 +69,7 @@ module WishlistHelper
       content += "<div class='wishlist_name'>#{I18n.t('tax', :count=>1).capitalize}</div>"
       content += "<div class='wishlist_name'>#{I18n.t('total').capitalize}</div>"
     end
-      content += "<div id='rails_commerce_wishlist_products'>"
+      content += "<div id='forgeos_commerce_wishlist_products'>"
         content += display_wishlist_all_products_lines(wishlist, static, mini)
       content += "</div>"
     content += "</div>"
@@ -88,10 +88,10 @@ module WishlistHelper
   #
   # ==== Parameters
   # * <tt>:product</tt> - a <i>Product</i> object
-  # * <tt>:name</tt> - name, <i>image_tag('rails_commerce/remove_product.gif')</i> by default
+  # * <tt>:name</tt> - name, <i>image_tag('forgeos_commerce/remove_product.gif')</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'wishlist', :action => 'empty'}</i> by default
-  # * <tt>options</tt> the html options, <i>{:confirm => RailsCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_wishlist]}</i> by default
-  def link_to_wishlist_remove_product(product, mini=false, name=image_tag('rails_commerce/remove_product.gif'), options={:confirm => I18n.t(:confirm_remove_product)})
+  # * <tt>options</tt> the html options, <i>{:confirm => ForgeosCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_wishlist]}</i> by default
+  def link_to_wishlist_remove_product(product, mini=false, name=image_tag('forgeos_commerce/remove_product.gif'), options={:confirm => I18n.t(:confirm_remove_product)})
     if mini
       link_to_remote(name,{ :url=>{:controller => 'wishlist', :action => 'remove_product', :id => product}, :update => 'wishlist' }.merge(options))
     else
@@ -102,9 +102,9 @@ module WishlistHelper
   # Extension of <i>link_to(name, options = {}, html_options = nil)</i>
   #
   # ==== Parameters
-  # * <tt>:name</tt> - name, <i>RailsCommerce::OPTIONS[:text][:empty_wishlist]</i> by default
+  # * <tt>:name</tt> - name, <i>ForgeosCommerce::OPTIONS[:text][:empty_wishlist]</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'wishlist', :action => 'empty'}</i> by default
-  # * <tt>options</tt> the html options, <i>{:confirm => RailsCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_wishlist]}</i> by default
+  # * <tt>options</tt> the html options, <i>{:confirm => ForgeosCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_wishlist]}</i> by default
   def link_to_wishlist_empty(mini=false,name=I18n.t('empty_wishlist').capitalize, url={:controller => 'wishlist', :action => 'empty'}, options={:confirm => I18n.t(:confirm_empty_wishlist)})
     if mini
       link_to_remote name, { :update => 'wishlist', :url => url }.merge(options)

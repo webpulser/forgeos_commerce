@@ -6,7 +6,7 @@ register '/register', :controller => 'users', :action => 'create'
 signup '/signup', :controller => 'users', :action => 'new'
 activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
  
-# resources :rails_commerces
+# resources :forgeos_commerce
 resource :session
 resources :users
 resources :products

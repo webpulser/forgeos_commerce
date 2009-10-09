@@ -14,7 +14,7 @@
 #cart.hover {
         background-color: #d8d8d8;
 }
-#cart { margin: 3px; border: 1px solid #d8d8d8;float: right; width: 200px; height: 200px; background: #F0FEDA url('/images/rails_commerce/sac.png') no-repeat scroll center; overflow: auto; }
+#cart { margin: 3px; border: 1px solid #d8d8d8;float: right; width: 200px; height: 200px; background: #F0FEDA url('/images/forgeos_commerce/sac.png') no-repeat scroll center; overflow: auto; }
 
 .cart .cart_product_line {
 	clear: both;
@@ -61,7 +61,7 @@
 #wishlist.hover {
         background-color: #d8d8d8;
 }
-#wishlist { margin: 3px; border: 1px solid #d8d8d8;float: right; width: 200px; height: 200px; background: #F0FEDA url('/images/rails_commerce/wishlist.png') no-repeat scroll center; overflow: auto; }
+#wishlist { margin: 3px; border: 1px solid #d8d8d8;float: right; width: 200px; height: 200px; background: #F0FEDA url('/images/forgeos_commerce/wishlist.png') no-repeat scroll center; overflow: auto; }
 
 .wishlist .wishlist_product_line {
 	clear: both;

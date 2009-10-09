@@ -1,8 +1,8 @@
-h1. RailsCommerce
+h1. ForgeosCommerce
 
-RailsCommerce is an extension of Ruby on Rails for e-commerce development 
+ForgeosCommerce is an extension of Ruby on Rails for e-commerce development 
 
-RAILS_COMMERCE_VERSION : 0.6.0
+FOREOS_COMMERCE_VERSION : 0.9.0
 
 h1. Prerequisites
 
@@ -53,12 +53,12 @@ h2. Plugins
 h2. Initialize
 
  <pre><code>
-  ./script/generate migration install_rails_commerce_plugin
-  -> add "migrate_plugin 'rails_commerce', LAST_MIGRATION" in self.up and "migrate_plugin 'rails_commerce', 0" in self.down
+  ./script/generate migration install_forgeos_commerce_plugin
+  -> add "migrate_plugin 'forgeos_commerce', LAST_MIGRATION" in self.up and "migrate_plugin 'forgeos_commerce', 0" in self.down
 
   gem install desert
   rake db:migrate
-  rake rails_commerce:install
+  rake forgeos_commerce:install
   ./script/ferret_server start (in production)
  </code></pre>
 

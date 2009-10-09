@@ -48,10 +48,10 @@ class WishlistController < ApplicationController
 
     if request.xhr?
       render(:update) do |page|
-        page.replace_html("rails_commerce_wishlist_products", display_wishlist_all_products_lines(@wishlist, false, params[:mini]))
-        page.replace_html("rails_commerce_wishlist_link", link_to_wishlist)
-        page.visual_effect :pulsate, 'rails_commerce_wishlist_link'
-        page.visual_effect :highlight, 'rails_commerce_wishlist'
+        page.replace_html("forgeos_commerce_wishlist_products", display_wishlist_all_products_lines(@wishlist, false, params[:mini]))
+        page.replace_html("forgeos_commerce_wishlist_link", link_to_wishlist)
+        page.visual_effect :pulsate, 'forgeos_commerce_wishlist_link'
+        page.visual_effect :highlight, 'forgeos_commerce_wishlist'
         page.replace_html("notice", '')
       end
     else

@@ -10,4 +10,4 @@ administrator:
   type: Admin
   remember_token: 
   firstname: admin
-  email: admin@rails-commerce.com
+  email: admin@commerce.forgeos.com

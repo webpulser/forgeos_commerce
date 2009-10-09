@@ -1,14 +1,14 @@
-namespace :rails_commerce do
+namespace :forgeos_commerce do
   namespace :fixtures do
     desc "Load seed fixtures (from db/fixtures) into the current environment's database." 
     task :load => :environment do
       require 'active_record/fixtures'
       
-      PLUGIN_PATH = Desert::Manager.plugin_path('rails_commerce')
+      PLUGIN_PATH = Desert::Manager.plugin_path('forgeos_commerce')
       if ENV['FIXTURES']
         tables = ENV['FIXTURES'].split(',')
       else
-        puts "usage: rake rails_commerce:fixtures:load FIXTURES=table_name1,table_name2;"
+        puts "usage: rake forgeos_commerce:fixtures:load FIXTURES=table_name1,table_name2;"
         exit
       end
       
@@ -27,7 +27,7 @@ namespace :rails_commerce do
     desc 'Create YAML test fixtures from data in an existing database.  
     Defaults to development database. Set RAILS_ENV to override.'
     task :extract => :environment do
-      PLUGIN_PATH = Desert::Manager.plugin_path('rails_commerce')
+      PLUGIN_PATH = Desert::Manager.plugin_path('forgeos_commerce')
 
       skip_tables = ["schema_info", "sessions"]
       ActiveRecord::Base.establish_connection
@@ -35,7 +35,7 @@ namespace :rails_commerce do
       if ENV['FIXTURES']
         tables = (ENV['FIXTURES'] == '*') ? ActiveRecord::Base.connection.tables - skip_tables : ENV['FIXTURES'].split(',')
       else
-        puts "usage: rake rails_commerce:fixtures:extract FIXTURES=table_name1,table_name2;"
+        puts "usage: rake forgeos_commerce:fixtures:extract FIXTURES=table_name1,table_name2;"
         exit
       end
 

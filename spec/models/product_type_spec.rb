@@ -62,8 +62,8 @@ describe ProductType do
       @products = []
       @products << @product_type.products.create!({:url => "the_sphere", :name => "The sphere"})
       @products << @product_type.products.create!({:url => "rails_social", :name => "Rails social"})
-      @products << @product_type.products.create!({:url => "rails_content", :name => "Rails content"})
-      @products << @product_type.products.create!({:url => "rails_commerce", :name => "Rails commerce"})
+      @products << @product_type.products.create!({:url => "forgeos_cms", :name => "Rails content"})
+      @products << @product_type.products.create!({:url => "forgeos_commerce", :name => "ForgeosCommerce"})
       @products << @product_type.products.create!({:url => "webpulser", :name => "Webpulser"})
       @products << @product_type.products.create!({:url => "forgeos", :name => "Forgeos"})
       
@@ -109,8 +109,8 @@ describe ProductType do
       @products = []
       @products << product_type2.products.create!({:url => "the_sphere", :name => "The sphere"})
       @products << @product_type.products.create!({:url => "rails_social", :name => "Rails social"})
-      @products << @product_type.products.create!({:url => "rails_content", :name => "Rails content"})
-      @products << @product_type.products.create!({:url => "rails_commerce", :name => "Rails commerce"})
+      @products << @product_type.products.create!({:url => "forgeos_cms", :name => "ForgeosCMS"})
+      @products << @product_type.products.create!({:url => "forgeos_commerce", :name => "ForgeosCommerce"})
       @products << product_type2.products.create!({:url => "webpulser", :name => "Webpulser"})
       @products << @product_type.products.create!({:url => "forgeos", :name => "Forgeos"})
     end

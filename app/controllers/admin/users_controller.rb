@@ -23,12 +23,6 @@ class Admin::UsersController < Admin::BaseController
   def new
   end
 
-  # Edit an User
-  # ==== Params
-  # * <i>id</i> = User's id
-  # * <i>user</i> = Hash of User attributes
-  # * <i>address_invoice</i> = Hash of Railscommerce::AddressInvoice attributes
-  # * <i>address_delivery</i> = Hash of Railscommerce::AddressDelivery attributes
   def edit
     respond_to do |format|
       format.html
@@ -39,11 +33,6 @@ class Admin::UsersController < Admin::BaseController
     end
   end
 
-  # Create an User
-  # ==== Params
-  # * <i>user</i> = Hash of User attributes
-  # * <i>address_invoice</i> = Hash of Railscommerce::AddressInvoice attributes
-  # * <i>address_delivery</i> = Hash of Railscommerce::AddressDelivery attributes
   def create
     if @user.avatar.nil? && params[:avatar] && params[:avatar][:uploaded_data] && params[:avatar][:uploaded_data].blank?
       @user.build_avatar(params[:avatar])

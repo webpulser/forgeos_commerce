@@ -1,4 +1,4 @@
-body { margin: 0; padding: 0; font: normal 11px/1.5em Verdana, "Lucida Grande", Lucida, Tahoma, "Trebuchet MS", Arial, Geneva, Helvetica, sans-serif; background: url(/images/rails_commerce/header-bg.png) repeat-x; color: #777; }
+body { margin: 0; padding: 0; font: normal 11px/1.5em Verdana, "Lucida Grande", Lucida, Tahoma, "Trebuchet MS", Arial, Geneva, Helvetica, sans-serif; background: url(/images/forgeos_commerce/header-bg.png) repeat-x; color: #777; }
 
 img { border: none; margin: 0; padding: 0; }
 img a { margin: 0; padding: 0; }
@@ -21,16 +21,16 @@ a.block { display: block; text-align: center; }
 h1 { float: left; margin: 0; padding: 0; }
 h1 a { display: block; height: 64px; padding-top: 10px; }
 
-.cart_link { float: right; margin-top: 10px; padding-left: 15px; background: url(/images/rails_commerce/cart.gif) center left no-repeat; font-size: 10px; }
+.cart_link { float: right; margin-top: 10px; padding-left: 15px; background: url(/images/forgeos_commerce/cart.gif) center left no-repeat; font-size: 10px; }
 .cart_link a { color: #fff; }
 
 .change_currency, .change_language, .logged_in { float: right; }
 
 #nav { float: left; margin: -26px 200px 0 0; padding: 0; clear: left; list-style: none; }
-#nav li { float: left; margin: 0 2px; background: url(/images/rails_commerce/tab-bg.png) repeat-x; }
+#nav li { float: left; margin: 0 2px; background: url(/images/forgeos_commerce/tab-bg.png) repeat-x; }
 #nav li a { display: block; padding: 4px 10px 5px 10px; color: #fff; text-decoration: none; }
 #nav li a:hover { background-color: #0D5192; }
-#nav li#signup-link a { background: url(/images/rails_commerce/arrow.gif) 4px center no-repeat; padding-left: 16px; font-weight: bold; }
+#nav li#signup-link a { background: url(/images/forgeos_commerce/arrow.gif) 4px center no-repeat; padding-left: 16px; font-weight: bold; }
 #nav li#signup-link a:hover { background-color: #0D5192; }
 
 
@@ -68,7 +68,7 @@ a { color: #000; }
 .product_special .product .product_add_cart:hover { background-position:0 -35px; border:1px solid #ffb591; }
 .product_special .product .product_add_cart { 
 	float: right; 
-	background: transparent url(/images/rails_commerce/bg-add-cart.gif) no-repeat scroll 0% 0%; 
+	background: transparent url(/images/forgeos_commerce/bg-add-cart.gif) no-repeat scroll 0% 0%; 
 	width:152px;
 	height:35px;
 	color: #fff;

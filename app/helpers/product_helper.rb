@@ -4,7 +4,7 @@ module ProductHelper
     total = (products.is_a?(WillPaginate::Collection)) ? products.total_entries : products.size
     content = pluralize total, "result"
 
-    products.in_groups_of(RailsCommerce::OPTIONS[:product_in_groups_of]).each do |products_|
+    products.in_groups_of(ForgeosCommerce::OPTIONS[:product_in_groups_of]).each do |products_|
       products_.each do |product|
         content += display_product(product) if product
       end
