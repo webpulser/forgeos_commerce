@@ -4,6 +4,7 @@ en:
     other: products
     all: 'all products'
     in_stock: 'in stock'
+    stop_sales: 'stop sales if out of stock'
     showed_on_homepage: 'showed on homepage'
     show:
       all: see all products

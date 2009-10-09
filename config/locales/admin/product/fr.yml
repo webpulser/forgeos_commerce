@@ -4,6 +4,7 @@ fr:
     other: produits
     all: 'tous les produits'
     in_stock: 'en stock'
+    stop_sales: "arréter les ventes si le produit n'est plus en stock"
     showed_on_homepage: "Affiché sur la page d'acceuil"
     show:
       all: voir tous les produits
