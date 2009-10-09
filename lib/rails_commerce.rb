@@ -38,7 +38,10 @@ Forgeos::AdminMenu << { :title => 'users',
   :html => { :class => 'left'}
 }
 Forgeos::AdminMenu << { :title => 'site_builder',
-  :url => { :controller => 'admin/product_types'},
+  :url => [
+    { :controller => 'admin/product_types'},
+    { :controller => 'admin/attributes' }
+  ],
   :i18n => true,
   :html => { :class => 'right' }
 }
