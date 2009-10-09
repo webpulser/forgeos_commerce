@@ -4,4 +4,6 @@ class AttributeValue < ActiveRecord::Base
   
   has_and_belongs_to_many :products
   has_and_belongs_to_many :attachments, :list => true, :order => 'position', :join_table => 'attachments_elements', :foreign_key => 'element_id'
+
+  validates_presence_of :attribute_id
 end

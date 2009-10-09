@@ -49,13 +49,25 @@ describe Product do
     end
     
     it "should have attribute_values" do
+      @attribute = Attribute.create!({:name => "attribute", :access_method => 'attribute'})
       @attribute_values = []
       (1..20).each do |i|
-        attribute_value = @product.attribute_values.create!({:name => "test#{i}"})
+        attribute_value = @product.attribute_values.create!({:name => "test#{i}", :attribute_id => @attribute.id})
         @attribute_values << attribute_value
       end
       @product.attribute_values.all.should == @attribute_values
     end
+    
+    it "should have dynamic_attribute_values" do
+      @attribute = Attribute.create!({:name => "attribute", :access_method => 'attribute'})
+      @dynamic_attribute_values = []
+      (1..20).each do |i|
+        dynamic_attribute_value = @product.dynamic_attribute_values.create!({:value=> "test#{i}", :attribute_id => @attribute.id})
+        @dynamic_attribute_values << dynamic_attribute_value
+      end
+      @product.dynamic_attribute_values.all.should == @dynamic_attribute_values
+    end
+    
   end
   
   describe 'all products' do
