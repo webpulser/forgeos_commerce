@@ -114,18 +114,18 @@
           .clear
           = link_to I18n.t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
 
-      /%h2.small-icons.search= I18n.t('search').capitalize
-      /.to-tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
-      /  %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
-      /    %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to I18n.t('top_5_items').capitalize, '#top-search'
-      /  #top-search.ui-tabs-panel.ui-widget-content.ui-corner-bottom
-      /    %table
-      /      %tbody
-      /        - @keywords.each do |keyword_id, count|
-      /          - if search_keyword = SearchKeyword.find_by_id(keyword_id)
-      /            %tr{ :class => cycle('odd','even')}
-      /              %td= search_keyword.keyword
-      /              %td= I18n.t('seen', :count => count, :scope => :search_keyword)
+      %h2.small-icons.search= I18n.t('search').capitalize
+      .to-tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
+        %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
+          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to I18n.t('top_5_items').capitalize, '#top-search'
+        #top-search.ui-tabs-panel.ui-widget-content.ui-corner-bottom
+          %table
+            %tbody
+              - @keywords.each do |keyword_id, count|
+                - if search_keyword = SearchKeyword.find_by_id(keyword_id)
+                  %tr{ :class => cycle('odd','even')}
+                    %td= search_keyword.keyword
+                    %td= I18n.t('seen', :count => count, :scope => :search_keyword)
 
   .right-dahsboard.grid_4.alpha
     %h2.small-icons.see-stats= I18n.t('statistic.keyfacts').capitalize
