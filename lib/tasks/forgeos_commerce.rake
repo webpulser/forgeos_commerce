@@ -4,7 +4,8 @@ namespace :forgeos_commerce do
   end
 
   task :initialize => [ 'db:migrate' ] do
-    system 'rake forgeos_commerce:fixtures:load FIXTURES=geo_zones,currencies_exchanges_rates,currencies,namables,people'
+    system 'rake forgeos_commerce:fixtures:load FIXTURES=currencies_exchanges_rates,currencies'
+    system 'rake forgeos_core:generate:acl vendor/plugins/forgeos_commerce'
   end
 
   task :install => [ 'gems:install', :initialize, :sync]
