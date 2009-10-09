@@ -38,7 +38,7 @@ class Admin::SpecialOffersController < Admin::BaseController
         variables[:shipping_ids] = params[:act][:values][index]
       when "Discount cart"
         variables[:cart_discount] = params[:act][:values][index]
-        variable[:percent] = (params[:act][:conds][index] == "By percent" ? false : true)
+        variables[:percent] = (params[:act][:conds][index] == "By percent" ? false : true)
       end
     end
     

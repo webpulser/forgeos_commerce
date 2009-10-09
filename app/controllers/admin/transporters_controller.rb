@@ -20,17 +20,27 @@ class Admin::TransportersController < Admin::BaseController
   end
 
   def create
-    @rule_condition = []
-    @rule_condition << params[:delivery_type] << ':product'
+    
+    require 'pp'
 
-    values = params[:delivery_rule][:values]
-    conds = params[:delivery_rule][:conds]
+    @shipping_methods = params[:shipping_method]
 
-    values.each_with_index do |value,  index|
-      @rule_condition << "m.weight.#{conds[index]}#{value}"
+    @shipping_methods.each do |shipping_method|
+
+      new_shipping_method = ShippingMethod.new
+      rule_condition = []
+      rule_condition << params[:delivery_type] << ':product'
+
+      shipping_method[1][:values].each_with_index do |value, index|
+        rule_condition << "m.weight.#{shipping_method[1][:conds][index]}#{value}"
+      end
+
+      new_shipping_method.conditions = "[#{rule_condition.join(', ')}]"
+      new_shipping_method.variables = shipping_method[1][:price][0]
+
+      pp new_shipping_method
     end
-
-    @transporter.conditions = "[#{@rule_condition.join(', ')}]"
+    
   end
   
   def edit

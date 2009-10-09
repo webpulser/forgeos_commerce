@@ -2,10 +2,15 @@ function add_delivery_rule(name) {
   var delivery_rule = $('.' + name + '.pattern');
   delivery_rules = $('#delivery-rules');
 
-  delivery_rules.append('<div class="delivery-rule"' + delivery_rule.html() + '</div>');
+  new_rule = '<div class="delivery-rule item_'+ false_id +'">';
+    new_rule += delivery_rule.html().replace(/undefined_id/g, false_id);
+  new_rule += '</div>';
+
+  delivery_rules.append(new_rule);
   check_remove_icon_status('delivery-rule');
 
   rezindex();
+  false_id--;
 }
 
 function remove_delivery_rule(element){

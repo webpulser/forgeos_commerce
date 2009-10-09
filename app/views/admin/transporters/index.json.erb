@@ -3,7 +3,7 @@
     :iTotalDisplayRecords => @transporters.total_entries || 0,
     :aaData => @transporters.collect do |transporter|
       link_id = "transporter_#{transporter.id}"
-      klass = transporter.activated? ? 'see-on' : 'see-off'
+      klass = transporter.active? ? 'see-on' : 'see-off'
       [
         content_tag(:div, "&nbsp;", :id => link_id, :class => 'small-icons transporters'),
         content_tag(:div, link_to(transporter.name, [:admin, transporter]), :class => 'tranporter-name'),
