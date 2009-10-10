@@ -19,9 +19,9 @@
     = f.text_field :firstname
   %p
     %b
-      = f.label :civility_id, I18n.t('civility').capitalize
+      = f.label :civility, I18n.t(:civility, :count => 1).capitalize
       \:
-    = f.collection_select :civility_id, civilities, :id, :name, { :prompt => I18n.t('please_select').capitalize }
+    = f.select :civility, civilities, { :prompt => I18n.t('please_select').capitalize }
   %p
     %b
       = f.label :address, I18n.t('address', :count=>1).capitalize

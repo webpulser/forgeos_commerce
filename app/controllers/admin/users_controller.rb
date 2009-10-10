@@ -115,7 +115,7 @@ class Admin::UsersController < Admin::BaseController
 
     gender = @gender.chomp.split(',').collect(&:to_i)
     conditions_ini = {}
-    conditions_ini[:civility_id] = gender
+    conditions_ini[:civility] = gender
     unless @country.blank?
       conditions_ini[:country_id] = @country.to_i
     end

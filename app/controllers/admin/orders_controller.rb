@@ -116,7 +116,7 @@ private
   end
 
   def get_civilities_and_countries
-    @civilities = Civility.all :order => 'name ASC'
+    @civilities = I18n.t('civility.label')
     @countries = Country.all :order => 'name ASC'
   end
     

@@ -3,8 +3,8 @@
     = form.label :designation, I18n.t('address.designation').capitalize
     = form.text_field :designation
   .civility-select
-    = form.label :civility_id, I18n.t('civility').capitalize
-    = form.collection_select :civility_id, civilities, :id, :name, {:prompt => I18n.t('please_select')}
+    = form.label :civility, I18n.t(:civility, :count => 1).capitalize
+    = form.select :civility, I18n.t('civility.label'), {:prompt => I18n.t('please_select')}
   .firstname-input
     = form.label :firstname , I18n.t('firstname').capitalize
     = form.text_field :firstname

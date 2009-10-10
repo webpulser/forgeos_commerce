@@ -121,7 +121,13 @@ fr:
   save: sauvegarder
   save_changes: 'sauvegarder'
   list: lister
-  civility: 'civilité'
+  civility:
+    one: civilité
+    other: civilités
+    label:
+      - [Mr, 0]
+      - [Mme, 1]
+      - [Mlle, 2]
   address: 
     one: adresse
     other:  adresses

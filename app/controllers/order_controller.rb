@@ -80,7 +80,7 @@ class OrderController < ApplicationController
         :address_2 => address_delivery.address_2,
         :zip_code => address_delivery.zip_code,
         :city => address_delivery.city, 
-        :civility_id => address_delivery.civility_id,
+        :civility => address_delivery.civility,
         :country_id => address_delivery.country_id, 
         :designation => 'toto'
         },
@@ -91,7 +91,7 @@ class OrderController < ApplicationController
         :address_2 => address_invoice.address_2,
         :zip_code => address_invoice.zip_code,
         :city => address_invoice.city,
-        :civility_id => address_invoice.civility_id,
+        :civility => address_invoice.civility,
         :country_id => address_invoice.country_id, 
         :designation => 'toto'
         },      

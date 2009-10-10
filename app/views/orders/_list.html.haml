@@ -21,7 +21,7 @@
             = I18n.t(order.aasm_current_state).capitalize
           %td
             %pre
-              = order.address_delivery.civility.name
+              = I18n.t(order.address_delivery.civility, :scope => [:civility, :label])
               \&nbsp;
               = order.address_delivery.name
               \&nbsp;

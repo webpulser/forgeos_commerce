@@ -1,5 +1,5 @@
 %pre
-  = address.civility.name
+  = I18n.t(address.civility, :scope => [:civility, :label])
   \&nbsp;
   = address.name
   \&nbsp;

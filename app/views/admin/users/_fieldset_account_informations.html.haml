@@ -16,8 +16,8 @@
       = f.text_field :birthday, :class => 'date-picker'
     .street-input
       %label
-        = I18n.t(:civility).capitalize
-      = f.collection_select 'civility_id', Civility.find(:all, :order => "name"), :id, :name, :selected => user.civility_id, :prompt => I18n.t('please_select')
+        = I18n.t(:civility, :count => 1).capitalize
+      = f.select :civility, I18n.t('civility.label'), :prompt => I18n.t('please_select')
     .country-select
       %label
         = I18n.t(:country).capitalize

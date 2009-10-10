@@ -123,7 +123,13 @@ en:
   save: save
   save_changes: 'save changes'
   list: list
-  civility: civility
+  civility:
+    one: civility
+    other: civilities
+    label:
+      - [Mr, 0]
+      - [Ms, 1]
+      - [Mss, 2]
   address: 
     one: address
     other:  addresses
