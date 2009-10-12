@@ -11,6 +11,8 @@ class OrderController < ApplicationController
 
   before_filter :can_create_order?, :only => :create
   before_filter :get_cart, :only => [:new,:informations,:paye]
+  before_filter :shipping_methods, :only => :new
+  
   # Save in session <i>address_invoice_id</i> and <i>address_delivery_id</i>.
   # Returns false if miss an address or if <i>shipping_method</i> is not validate by user, returns true else
   def valid_shipment(action=true)
@@ -256,5 +258,21 @@ private
       end
     end
 
+  def shipping_methods
 
+    engine :shipping_method_engine do |e|
+
+      rule_builder = ShippingMethod.new(e)
+      rule_builder.cart = @cart
+      rule_builder.rules
+      @cart.carts_products.each do |cart_product|
+          p cart_product.product.product_type
+        e.assert cart_product.product
+      end
+      e.assert @cart
+      e.match
+    end
+    
+  end
+  
 end

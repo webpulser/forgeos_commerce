@@ -1,10 +1,5 @@
 - form_for :user, flash[:user], :url => users_path, :html => { :autocomplete => 'off' } do |f|
   %p
-    = f.label :civility, I18n.t(:civility, :count => 1).capitalize
-    %br
-    %span.enhanced
-      = f.select :civility, I18n.t('civility.label')
-  %p
     = f.label :fistname, I18n.t('firstname').capitalize
     %br
     = f.text_field :firstname

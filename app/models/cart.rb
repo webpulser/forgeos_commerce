@@ -8,7 +8,7 @@ class Cart < ActiveRecord::Base
 
   has_many :carts_products, :dependent => :destroy
   has_many :products, :through => :carts_products
-  #has_and_belongs_to_many :free_shipping_methods, :class_name => 'ShippingMethod'
+ # has_many :shipping_methods
 
   belongs_to :user
   before_save :destroy_duplicates

@@ -1,4 +1,4 @@
-class ShippingMethod < Rule
+class ShippingMethodRule < Rule
 
   belongs_to :transporter
 

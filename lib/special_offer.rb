@@ -2,7 +2,7 @@ require 'ruleby'
 class SpecialOffer < Ruleby::Rulebook
   attr_writer :cart
   def rules
-    SpecialOfferRule.find_all_by_active(true).each do |special_offer|
+    SpecialOfferRule.find_all_by_activated(true).each do |special_offer|
       puts special_offer.conditions
       rule eval(special_offer.conditions) do |context|
         product = context[:product]
