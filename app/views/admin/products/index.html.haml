@@ -22,7 +22,7 @@
   .sidebar-content
     %h2.small-icons.products
       = link_to_function I18n.t('product.all').capitalize, "select_all_elements_without_category()"
-    #product-tree.init-tree.a-tree
+    #product-tree.init-tree.a-tree.category-tree
 #content.grid_12.alpha.omega
   .backgrounds.header
     = link_to content_tag(:span,I18n.t('product.create.action').capitalize, :class=>'big-icons create-product'), new_admin_product_path, :class=>'backgrounds action-button'
