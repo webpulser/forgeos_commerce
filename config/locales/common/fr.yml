@@ -79,6 +79,19 @@ fr:
   my_informations: 'mes informations'
 
 # Admin
+  back-office:
+    title:
+      orders: commandes
+      catalog: catalogue
+      users: utilisateurs
+      site_builder: site builder
+      product_types: types de produit
+      attributes: attributs
+      special_offers: offres spéciales
+      geo_zones: zones géographiques
+      shipping_rules: "méthodes d'expédition"
+      transporters: transporteurs
+      vouchers: codes promo
   id: id
   since: depuis
   taxes_and_shippings: taxes & livraisons

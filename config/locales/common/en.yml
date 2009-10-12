@@ -81,6 +81,19 @@ en:
   sended: sended
 
 # Admin
+  back-office:
+    title:
+      orders: orders
+      catalog: catalog
+      users: users
+      site_builder: site builder
+      product_types: product types
+      attributes: attributes
+      special_offers: special offers
+      geo_zones: zones geo zones
+      shipping_rules: shipping rules
+      transporters: transporters
+      vouchers: vouchers
   id: id
   since: since
   taxes_and_shippings: taxes & shippings
