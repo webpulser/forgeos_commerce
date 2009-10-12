@@ -26,7 +26,7 @@ fr:
     create:
       success: 'le produit a bien été créé'
       failed: 'un problème est survenu lors de la création du produit'
-      action: 'créer le produit'
+      action: 'créer un produit'
     update:
       success: 'le produit a bien été mis à jour'
       failed: 'un problème est survenu lors de la mise à jour du produit'
