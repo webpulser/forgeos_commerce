@@ -60,3 +60,50 @@ function check_icons(type){
     $('#'+type).children('.condition').children('.small-icons.red-delete-icon').show()
   }
 }
+
+function change_select_for(element){
+  if ($(element).val() != 'Category'){
+    $('#rule_builder_target').parent().hide()
+    if ($(element).val() == 'Cart'){
+      $('#rule-conditions').html('')
+      $('#rule-conditions').append("<div class='condition'>"+$('.rule-Totalitemsquantity.pattern').html()+'</div>')
+
+      // then actions only => Offer a product and Offer free delivery
+
+      $('#action-conditions').html('')
+      $('#action-conditions').append("<div class='condition'>"+$('.action-Offeraproduct-cart.pattern').html()+'</div>')
+
+    }
+    else{
+      if ($('#rule_builder_for :selected').text() == 'Product in Cart'){
+
+        $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
+        $('#rule-conditions').append($('.rule-condition.pattern').clone().removeClass('pattern'))
+
+        $('#action-conditions').html('')
+        $('#action-conditions').append($('.action-Discountpricethisproduct-productincart.pattern').clone().removeClass('pattern').removeClass('action-Discountpricethisproduct-productincart').addClass('action-condition'))
+      } else {
+        $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
+        $('#rule-conditions').append($('.rule-condition.pattern').clone().removeClass('pattern'))
+
+        $('#action-conditions').html('')
+        $('#action-conditions').append($('.action-Discountpricethisproduct-productinshop.pattern').clone().removeClass('pattern').removeClass('action-Discountpricethisproduct-productinshop').addClass('action-condition'))
+
+      }
+    }
+  }
+  else{
+    $('#rule_builder_target').parent().show()
+    $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
+    $('#rule-conditions').append($('.rule-condition.pattern').clone().removeClass('pattern'))
+
+    $('#action-conditions').html('')
+    $('#action-conditions').append($('.action-Discountpricethisproduct-category.pattern').clone().removeClass('pattern').removeClass('action-Discountpricethisproduct-category').addClass('action-condition'))
+  }
+  rezindex();
+  //check_remove_icon_status('rule-condition')
+  //check_remove_icon_status('action-condition')
+  check_icons('action-conditions')
+  check_icons('rule-conditions')
+  check_icons('end-conditions');
+}

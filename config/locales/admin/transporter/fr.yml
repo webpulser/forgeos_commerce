@@ -3,6 +3,7 @@ fr:
     one: "transporteur"
     other: "transporteur"
     change: "changer de transporteur"
+    delivery_type: type de livraison
     create:
       success: "le transporteur a bien été créé"
       failed: "un problème est survenu lors de la création du transporteur"
@@ -30,3 +31,15 @@ fr:
       success: "la méthode d'expédition a bien été supprimé"
       failed: "un problème est survenu lors de la suppression de la méthode d'expédition"
       confirm: "êtes-vous sûr de vouloir supprimer cette méthode d'expédition ?"
+    rule:
+      type:
+        weight: weight base rate
+        geographic_zone: zone géographique
+        product_category: catégorie de produits
+        product: produit
+      when:
+        weight: quand le poids
+        geographic_zone: quand la zone géographique
+        product_category:  quand la catégorie de produits
+        product: quand le produit
+      shipping_is: le paiement est de

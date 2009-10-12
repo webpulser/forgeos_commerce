@@ -1,7 +1,7 @@
 class Admin::TransportersController < Admin::BaseController
 
   before_filter :new_transporter, :only => [:new, :create]
-  before_filter :get_transporter, :only => [ :show, :edit, :update, :destroy, :create_shipping_method, :edit_shipping_method, :destroy_shipping_method ]
+  before_filter :get_transporter, :only => [ :show, :edit, :update ]
 
   def index
     respond_to do |format|
@@ -23,16 +23,21 @@ class Admin::TransportersController < Admin::BaseController
     
     require 'pp'
 
+    # ProductCategory
+    # Product
+    # Weight
+    # Zone geo
+
     @shipping_methods = params[:shipping_method]
 
     @shipping_methods.each do |shipping_method|
 
       new_shipping_method = ShippingMethod.new
       rule_condition = []
-      rule_condition << params[:delivery_type] << ':product'
+      rule_condition << params[:delivery_type] << ':cart'
 
       shipping_method[1][:values].each_with_index do |value, index|
-        rule_condition << "m.weight.#{shipping_method[1][:conds][index]}#{value}"
+        rule_condition << "m.#{params[:delivery_type]}.#{shipping_method[1][:conds][index]}#{value}"
       end
 
       new_shipping_method.conditions = "[#{rule_condition.join(', ')}]"

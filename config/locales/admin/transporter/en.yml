@@ -3,6 +3,7 @@ en:
     one: "transporter"
     other: "transporters"
     change: 'change transporter'
+    delivery_type: type of delivery
     create:
       success: 'the transporter was successfully created'
       failed: 'a problem occured during the transporter creation'
@@ -30,3 +31,15 @@ en:
       success: 'the shipping method was successfully deleted'
       failed: 'a problem occured during the shipping method deletion'
       confirm: 'are you sure to delete this shipping method?'
+    rule:
+      type:
+        weight: weight base rate
+        geographic_zone: geographic zone
+        product_category: product category
+        product: product
+      when:
+        weight: when weight
+        geographic_zone: when geographic zone
+        product_category:  when product category
+        product: when product
+      shipping_is: shipping is
