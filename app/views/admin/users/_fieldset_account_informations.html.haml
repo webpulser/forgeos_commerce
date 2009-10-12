@@ -14,12 +14,13 @@
       %label
         = I18n.t(:birthday).capitalize
       = f.text_field :birthday, :class => 'date-picker'
-    .street-input
+    .civility-select
       %label
         = I18n.t(:civility, :count => 1).capitalize
       = f.select :civility, I18n.t('civility.label'), :prompt => I18n.t('please_select')
     .country-select
       %label
         = I18n.t(:country).capitalize
-      = f.collection_select 'country_id', Country.find(:all, :order => "name"), :id, :printable_name, :selected => user.country_id, :prompt => I18n.t('please_select')
+      %div
+        = f.collection_select 'country_id', Country.find(:all, :order => "name"), :id, :printable_name, :selected => user.country_id, :prompt => I18n.t('please_select')
   .clear
