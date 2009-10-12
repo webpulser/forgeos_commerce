@@ -1,6 +1,6 @@
 class Admin::TransportersController < Admin::BaseController
 
-  before_filter :new_transporter, :only => [:new, :create]
+#  before_filter :new_transporter, :only => [:new, :create]
   before_filter :get_transporter, :only => [ :show, :edit, :update ]
 
   def index
@@ -21,18 +21,18 @@ class Admin::TransportersController < Admin::BaseController
 
   def create
 
-    if @transporter.save
 
       @shipping_methods = params[:shipping_method]
 
       @shipping_methods.each do |shipping_method|
 
-        new_shipping_method = ShippingMethod.new
+        new_shipping_method = shipping_method == @shipping_methods.first ? ShippingMethodRule.new(params[:transporter]) : ShippingMethodRule.new
+        
         rule_condition = []
-        rule_condition << params[:delivery_type] << ':cart'
+        rule_condition << 'Product' << ':cart'
 
         shipping_method[1][:values].each_with_index do |value, index|
-          rule_condition << "m.#{params[:delivery_type]}.#{shipping_method[1][:conds][index]}#{value}"
+          rule_condition << "m.#{params[:delivery_type]}.#{shipping_method[1][:conds][index]}(#{value})"
         end
 
         new_shipping_method.conditions = "[#{rule_condition.join(', ')}]"
@@ -40,14 +40,14 @@ class Admin::TransportersController < Admin::BaseController
 
         new_shipping_method.parent_id = @transporter.id
         new_shipping_method.save
+        @parent_id = new_shipping_method.id if shipping_method == @shipping_methods.first
       end
 
       return redirect_to(admin_transporters_path)
       
-    else
-      flash[:error] = I18n.t('transporter.create.failed').capitalize
-      render :action => :new
-    end
+    
+#      flash[:error] = I18n.t('transporter.create.failed').capitalize
+#      render :action => :new
   end
   
   def edit
@@ -77,19 +77,19 @@ class Admin::TransportersController < Admin::BaseController
   end
   
   private
-    def get_transporter
-      unless @transporter = Transporter.find_by_id(params[:id])
-        flash[:notice] = I18n.t('transporter.not_exist').capitalize
-        return redirect_to(admin_transporters_path)
-      end
-    end
-    
-    def new_transporter
-      @transporter = Transporter.new(params[:transporter])
-    end
+#    def get_transporter
+#      unless @transporter = Transporter.find_by_id(params[:id])
+#        flash[:notice] = I18n.t('transporter.not_exist').capitalize
+#        return redirect_to(admin_transporters_path)
+#      end
+#    end
+#
+#    def new_transporter
+#      @transporter = Transporter.new(params[:transporter])
+#    end
 
     def sort
-      columns = %w(id name activated)
+      columns = %w(id name active)
 
       per_page = params[:iDisplayLength].to_i
       offset =  params[:iDisplayStart].to_i

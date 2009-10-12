@@ -6,7 +6,7 @@
       [
         content_tag(:div, '', :id => link_id),
         special_offer.name,
-        select_tag(:status, options_for_select([['Active',1], ['Inactive',0]], special_offer.activated)),
+        select_tag(:status, options_for_select([['Active',1], ['Inactive',0]], special_offer.active)),
         special_offer.use,
         link_to_remote('', :url => { :controller => 'special_offers', :action => 'destroy', :id => special_offer.id },
            :method => :delete,

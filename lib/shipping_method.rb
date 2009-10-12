@@ -4,7 +4,7 @@ class ShippingMethod < Ruleby::Rulebook
   attr_writer :cart
   
   def rules
-    ShippingMethodRule.find_all_by_activated(true).each do |shipping_method|
+    ShippingMethodRule.find_all_by_active(true).each do |shipping_method|
       p "*"*200
       p shipping_method.conditions
       rule eval(shipping_method.conditions) do |context|

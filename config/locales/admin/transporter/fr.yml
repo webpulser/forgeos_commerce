@@ -35,11 +35,11 @@ fr:
       type:
         weight: weight base rate
         geographic_zone: zone géographique
-        product_category: catégorie de produits
+        product_type: type de produit
         product: produit
       when:
         weight: quand le poids
         geographic_zone: quand la zone géographique
-        product_category:  quand la catégorie de produits
+        product_type:  quand le type de produit
         product: quand le produit
       shipping_is: le paiement est de
