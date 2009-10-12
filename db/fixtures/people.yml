@@ -1,0 +1,14 @@
+--- 
+administrator: 
+  salt: e30b9e6542e51581f01b0c3fa5225a096e291c85
+  activated_at: '2009-01-01 00:00:00'
+  remember_token_expires_at: 
+  crypted_password: 508e5472d3dc0e7fd47be784df949cc5c713ae82
+  activation_code:
+  avatar_id: 
+  lastname: admin
+  type: Admin
+  remember_token: 
+  firstname: admin
+  email: admin@commerce.forgeos.com
+  role_id: 1
