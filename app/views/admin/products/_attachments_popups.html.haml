@@ -58,34 +58,43 @@
 - javascript_tag do
   function initImageUpload(){
   $('#imageUploadDialog').html('<div id="imageUpload"></div><div class="library-add"><span>or</span><a href="#" onclick="$(\'#imageUploadDialog\').dialog(\'close\'); $(\'#imageSelectDialog\').dialog(\'open\'); return false;">add from library</a></div>');
+
   $('#imageUpload').uploadify({
-  'uploader': '/images/uploadify/uploadify.swf',
-  = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
-  = "'script': '#{admin_medias_path(:file_type => 'picture')}',"
-  = "'buttonImg' :'#{image_path("uploadify/choose-picture_#{I18n.locale}.png")}',"
-  'width' :'154',
-  'height' :'24',
-  'scriptData': {
-  'format': 'json',
-  = "'authenticity_token': encodeURIComponent('#{u form_authenticity_token}')," if protect_against_forgery?
-  = "'#{session_key}': encodeURIComponent('#{cookies[session_key]}')"
+  uploader: '/images/uploadify/uploadify.swf',
+  = "cancelImg: '#{image_path('admin/big-icons/delete-icon.png')}',"
+  = "script: '#{admin_medias_path(:file_type => 'picture')}',"
+  = "buttonImg:'#{image_path("uploadify/choose-picture_#{I18n.locale}.png")}',"
+  width: 154,
+  height:24,
+  scriptData: {
+  format: 'json',
+  = "authenticity_token: encodeURIComponent('#{u form_authenticity_token}')," if protect_against_forgery?
+  = "#{session_key}: encodeURIComponent('#{cookies[session_key]}')"
   },
-  'ScriptAccess': 'always',
-  'multi': 'true',
-  'displayData': 'speed',
-  'onComplete': function(e,queueID,fileObj,response,data){
+  ScriptAccess: 'always',
+  multi: 'true',
+  displayData: 'speed',
+  onComplete: function(e,queueID,fileObj,response,data){
+  if(typeof JSON=="object" && typeof JSON.parse=="function")
+  {
   result = JSON.parse(response);
+  }
+  else{
+  result = eval('(' + response + ')');
+  }
   if (result.result == 'success'){
   add_picture_to_product(result.path,result.id, fileObj.name);
   } else {
   display_notification_message('error',result.error)
   }
   },
-  'onAllComplete': function(){
+  onAllComplete: function(){
   check_product_first_image();
   $('#imageUploadDialog').dialog('close');
   }
-  });}
+  });
+  }
+
   function add_picture_to_element(){
   var current_table = oTables[current_table_index];
   indexes = current_table.fnGetSelectedIndexes();
@@ -98,6 +107,7 @@
   check_product_first_image();
   $(current_table.fnGetSelectedNodes()).toggleClass('row_selected');
   }
+
   function add_picture_to_product(path,id,name){
   = "object_name='#{form.object_name}';"
   $('#product-images ul.sortable li.clear').before('<li><a href="#" onclick="$(this).parents(\'li\').remove(); check_product_first_image(); return false;" class="big-icons trash"></a><a class="big-icons edit" href="#"></a><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+id+'"/><img src="'+path+'" alt="'+name+'"/><div class="handler"><div class="inner"></div></div></li>');
@@ -109,29 +119,35 @@
   function initFileUpload(){
   $('#fileUploadDialog').html('<div id="fileUpload"></div><div class="library-add"><span>or</span><a href="#" onclick="$(\'#fileUploadDialog\').dialog(\'close\'); $(\'#fileSelectDialog\').dialog(\'open\'); return false;">add from library</a></div>');
   $('#fileUpload').uploadify({
-  'uploader': '/images/uploadify/uploadify.swf',
-  = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
-  = "'script': '#{admin_medias_path(:file_type => 'picture')}',"
-  = "'buttonImg' :'#{image_path("uploadify/choose-file_#{I18n.locale}.png")}',"
-  'width' :'154',
-  'height' :'24',
-  'scriptData': {
-  'format': 'json',
-  = "'authenticity_token': encodeURIComponent('#{u form_authenticity_token}')," if protect_against_forgery?
-  = "'#{session_key}': encodeURIComponent('#{cookies[session_key]}')"
+  uploader: '/images/uploadify/uploadify.swf',
+  = "cancelImg: '#{image_path('admin/big-icons/delete-icon.png')}',"
+  = "script: '#{admin_medias_path(:file_type => 'picture')}',"
+  = "buttonImg :'#{image_path("uploadify/choose-file_#{I18n.locale}.png")}',"
+  width: 154,
+  height: 24,
+  scriptData: {
+  format: 'json',
+  = "authenticity_token: encodeURIComponent('#{u form_authenticity_token}')," if protect_against_forgery?
+  = "#{session_key}: encodeURIComponent('#{cookies[session_key]}')"
   },
-  'ScriptAccess': 'always',
-  'multi': 'true',
-  'displayData': 'speed',
-  'onComplete': function(e,queueID,fileObj,response,data){
+  ScriptAccess: 'always',
+  multi: 'true',
+  displayData: 'speed',
+  onComplete: function(e,queueID,fileObj,response,data){
+  if(typeof JSON=="object" && typeof JSON.parse=="function")
+  {
   result = JSON.parse(response);
+  }
+  else{
+  result = eval('(' + response + ')');
+  }
   if (result.result == 'success'){
   add_attachment_to_product(result.id,fileObj.name,result.size,result.type);
   } else {
   display_notification_message('error',result.error);
   }
   },
-  'onAllComplete': function(){
+  onAllComplete: function(){
   $('#fileUploadDialog').dialog('close');
   }
   });
