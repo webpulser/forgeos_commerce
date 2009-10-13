@@ -312,7 +312,8 @@ en:
   sku: 'sku'
   special_offer:
     one: special offer
-    other: specials offers
+    other: special offers
+    all: all special offers
     for: for
     this_condition: these conditions are
     than: than

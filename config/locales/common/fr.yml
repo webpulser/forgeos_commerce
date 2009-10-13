@@ -310,6 +310,7 @@ fr:
   special_offer:
     one: offre spéciale
     other: offres spéciales
+    all: toutes les offres spéciales
     for: pour
     this_condition: ses conditions sont
     than: que
