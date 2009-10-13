@@ -1,28 +1,4 @@
-#sidebar.grid_4.omega.alpha
-  .backgrounds.header
-    %span.backgrounds.action-button.create-action
-      %span.big-icons.new-category
-      %span.small-icons.arrow
-      %span.create-list
-        %span.big-icons.create-folder
-          = I18n.t('folder.create').capitalize
-        -#%span.small-icons.create-smart-folder
-          -#= I18n.t('folder.smart').capitalize
-    %span.backgrounds.action-button.update-action
-      %span.small-icons.more-actions
-      %span.small-icons.arrow
-      %span.update-list
-        %span.small-icons.modify-folder
-          = I18n.t('folder.edit').capitalize
-        %span.small-icons.duplicate-folder
-          = I18n.t('folder.duplicate').capitalize
-        %span.small-icons.delete-folder
-          = I18n.t('folder.destroy').capitalize
-  .backgrounds.sidebar-background
-  .sidebar-content
-    %h2.small-icons.products
-      = link_to_function I18n.t('product.all').capitalize, "select_all_elements_without_category()"
-    #product-tree.init-tree.a-tree.category-tree
+= render :partial => 'admin/sidebars/left_sidebar', :locals => {:icon_class => 'products', :sidebar_title => 'product.all', :tree_id =>'product-tree' }
 #content.grid_12.alpha.omega
   .backgrounds.header
     = link_to content_tag(:span,I18n.t('product.create.action').capitalize, :class=>'big-icons create-product'), new_admin_product_path, :class=>'backgrounds action-button'

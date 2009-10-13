@@ -1,29 +1,5 @@
 = render :partial => 'tabs'
-#sidebar.grid_4.omega.alpha
-  .backgrounds.header
-    %span.backgrounds.action-button.create-action
-      %span.big-icons.new-category
-      %span.small-icons.arrow
-      %span.create-list
-        %span.big-icons.create-folder
-          = I18n.t('folder.create')
-        -#%span.small-icons.create-smart-folder
-          -#= I18n.t('folder.smart')
-    %span.backgrounds.action-button.update-action
-      %span.small-icons.more-actions
-      %span.small-icons.arrow
-      %span.update-list
-        %span.small-icons.modify-folder
-          = I18n.t('folder.edit')
-        %span.small-icons.duplicate-folder
-          = I18n.t('folder.duplicate')
-        %span.small-icons.delete-folder
-          = I18n.t('folder.destroy')
-  .backgrounds.sidebar-background
-  .sidebar-content
-    %h2.small-icons.product-types
-      = link_to_function I18n.t('product_type.all').capitalize, "select_all_elements_without_category()"
-    #product-type-tree.init-tree.category-tree
+= render :partial => 'admin/sidebars/left_sidebar', :locals => { :icon_class => 'product-types', :sidebar_title => 'product_type.all', :tree_id =>'product-type-tree' }
 
 #content.grid_12.alpha.omega
   .backgrounds.header

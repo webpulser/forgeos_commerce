@@ -1,28 +1,5 @@
 = render :partial => 'tabs'
-
-#sidebar.grid_4.omega.alpha
-  .backgrounds.header
-    %span.backgrounds.action-button.create-action
-      %span.big-icons.new-category
-      %span.small-icons.arrow
-      %span.create-list
-        %span.big-icons.create-folder
-          = I18n.t('folder.create')
-        -#%span.small-icons.create-smart-folder
-          -#= I18n.t('folder.smart')
-    %span.backgrounds.action-button.update-action
-      %span.small-icons.more-actions
-      %span.small-icons.arrow
-      %span.update-list
-        %span.small-icons.modify-folder
-          = I18n.t('folder.edit')
-        %span.small-icons.duplicate-folder
-          = I18n.t('folder.duplicate')
-        %span.small-icons.delete-folder
-          = I18n.t('folder.destroy')
-  .backgrounds.sidebar-background
-  .sidebar-content
-
+= render :partial => 'admin/sidebars/left_sidebar', :locals => { :icon_class => 'special-offers', :sidebar_title => 'special_offers.all', :tree_id =>'special_offers-tree' }
 
 #content.grid_12.alpha.omega
   .backgrounds.header
