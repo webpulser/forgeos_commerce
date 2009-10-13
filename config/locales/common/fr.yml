@@ -271,26 +271,6 @@ fr:
       success: "la valeur a bien été supprimé"
       failed: "un problème est survenu lors de la suppression de la valeur"
       confirm: "êtes-vous sûr de vouloir supprimer cette valeur ?"
-  categories: 'catégories'
-  category:
-    one: 'catégorie'
-    other: 'catégories'
-    not_exist: "la catégorie demandée n'existe pas"
-    create:
-      success: 'la catégorie a bien été créée'
-      failed: 'un problème est survenu lors de la création de la catégorie'
-      action: 'créer une catégorie'
-    update:
-      success: 'la catégorie a bien été mise à jour'
-      failed: 'un problème est survenu lors de la mise à jour de la catégorie'
-      action: 'éditer la catégorie'
-    destroy:
-      success: 'la catégorie a bien été supprimée'
-      failed: 'un problème est survenu lors de la suppression de la catégorie'
-      confirm: 'êtes-vous sûr de vouloir supprimer cette catégorie ?' 
-    sub:
-      create:
-        action: 'créer une catégorie sous-jacente'
   geo_zones: 'zone géographiques'
   geo_zone:
     one: 'zone géographique'
