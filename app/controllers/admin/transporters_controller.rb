@@ -32,7 +32,18 @@ class Admin::TransportersController < Admin::BaseController
         rule_condition << 'Product' << ':cart'
 
         shipping_method[1][:values].each_with_index do |value, index|
-          rule_condition << "m.#{params[:delivery_type]}.#{shipping_method[1][:conds][index]}(#{value})"
+          case params[:delivery_type]
+            when 'weight'
+              condition = "m.#{params[:delivery_type]}"
+            when 'geo_zone'
+              condition = "m.geo_zone_id"
+            when 'product_type'
+              condition = "m.product_type.id"
+            when 'product'
+              condition = "m.id"
+          end
+          condition += ".#{shipping_method[1][:conds][index]}(#{value})"
+          rule_condition << condition
         end
 
         new_shipping_method.conditions = "[#{rule_condition.join(', ')}]"

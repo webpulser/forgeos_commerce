@@ -11,7 +11,7 @@ class OrderController < ApplicationController
 
   before_filter :can_create_order?, :only => :create
   before_filter :get_cart, :only => [:new,:informations,:paye, :update_transporter]
-  before_filter :shipping_methods, :only => [ :new, :update_transporter ]
+  before_filter :shipping_methods, :only => :new
   
   # Save in session <i>address_invoice_id</i> and <i>address_delivery_id</i>.
   # Returns false if miss an address or if <i>shipping_method</i> is not validate by user, returns true else
@@ -113,7 +113,7 @@ class OrderController < ApplicationController
       end
       )
       
-    p 'toto'*10
+    p '#'*50
     p @order.inspect
     @cart.destroy
    # @order.pay! if params[:trans] && !params[:trans].blank?
@@ -151,7 +151,7 @@ class OrderController < ApplicationController
 #      page.replace_html('order_voucher', display_voucher)
       page.replace_html('order_transporters', display_transporters)
       page.replace_html("order_total_price", total)
-      page.replace_html('transporter_price', "#{@cart.discount} #{$currency.html}")
+      page.replace_html('transporter_price', "#{current_user.cart.total(true) + @shipping_method_rule.variables.to_f} #{$currency.html}")
       page.visual_effect :highlight, 'transporter_price'
       page.visual_effect :highlight, 'order_total_price'
     end
@@ -178,8 +178,9 @@ class OrderController < ApplicationController
   end
 
   def update_transporter
-    shipping_method = ShippingMethodRule.find_by_id(params[:id])
-    session[:order_shipping_method_id] = shipping_method.id if shipping_method
+    @shipping_method_rule = ShippingMethodRule.find_by_id(params[:id])
+    session[:order_shipping_method_id] = @shipping_method_rule.id if @shipping_method_rule
+    shipping_methods
     update_total
   end
 
@@ -250,31 +251,22 @@ private
   end
 
   protected
-    def shipping_rule
-      engine :shipping_rule_engine do |e|
-        rule_builder = ShippingRule.new(e)
-        rule_builder.cart = @cart
+
+    def shipping_methods
+      @shipping_ids = []
+
+      engine :shipping_method_engine do |e|
+
+        rule_builder = ShippingMethod.new(e)
+        rule_builder.shipping_ids = @shipping_ids
         rule_builder.rules
-
-          
+        @cart.carts_products.each do |cart_product|
+          e.assert cart_product.product
+        end
+        e.assert @cart
+        e.match
       end
+
     end
-
-  def shipping_methods
-
-    engine :shipping_method_engine do |e|
-
-      rule_builder = ShippingMethod.new(e)
-      rule_builder.cart = @cart
-      rule_builder.rules
-      @cart.carts_products.each do |cart_product|
-          p cart_product.product.product_type
-        e.assert cart_product.product
-      end
-      e.assert @cart
-      e.match
-    end
-    
-  end
   
 end

@@ -85,75 +85,77 @@ module OrderHelper
   end
 
   # Display all shipping methods available for cart
-  def display_shipping_methods(cart=current_user.cart)
-    content = '<div class="order_transporters" id="order_transporters">'
-    if cart.get_shipping_method.empty?
-      content += I18n.t('can_not_place_order')
-    else
-      cart.get_shipping_method.each do |shipping_method|
-        content += '<div class="order_shipping_method">'
-          content += '<span class="order_shipping_method_name">'
-            content += radio_button_tag(
-                        'shipping_method_id', 
-                        shipping_method.id, 
-                        (shipping_method.id == session[:order_shipping_method_id]),
-                        :onclick => remote_function(
-                          :url => { :action => 'update_transporter', :id => shipping_method.id }
-                        )
-                      )
-            content += shipping_method.fullname
-          content += '</span>'
-          content += '<span class="order_transporter_price">'
-          offer_delivery = false
-          if session[:order_voucher_ids]
-            session[:order_voucher_ids].each do |voucher_id|
-              voucher = Voucher.find(voucher_id)
-              offer_delivery ||= voucher.offer_delivery
-            end
-          end
-          unless offer_delivery
-            content += "#{shipping_method.price} #{$currency.html}"
-          else  
-            content += "<s>#{shipping_method.price}</s> <b>0</b> #{$currency.html}"
-          end
-          content += '</span>'
-
-          content += '<div class="order_shipping_method_description">'
-            content += shipping_method.transporter.description
-          content += '</div>'
-        content += '</div>'
-      end
-    end
-    content += '</div>'
-  end
+#  def display_shipping_methods(cart=current_user.cart)
+#    content = '<div class="order_transporters" id="order_transporters">'
+#    if cart.get_shipping_method.empty?
+#      content += I18n.t('can_not_place_order')
+#    else
+#      cart.get_shipping_method.each do |shipping_method|
+#        content += '<div class="order_shipping_method">'
+#          content += '<span class="order_shipping_method_name">'
+#            content += radio_button_tag(
+#                        'shipping_method_id',
+#                        shipping_method.id,
+#                        (shipping_method.id == session[:order_shipping_method_id]),
+#                        :onclick => remote_function(
+#                          :url => { :action => 'update_transporter', :id => shipping_method.id }
+#                        )
+#                      )
+#            content += shipping_method.fullname
+#          content += '</span>'
+#          content += '<span class="order_transporter_price">'
+#          offer_delivery = false
+#          if session[:order_voucher_ids]
+#            session[:order_voucher_ids].each do |voucher_id|
+#              voucher = Voucher.find(voucher_id)
+#              offer_delivery ||= voucher.offer_delivery
+#            end
+#          end
+#          unless offer_delivery
+#            content += "#{shipping_method.price} #{$currency.html}"
+#          else
+#            content += "<s>#{shipping_method.price}</s> <b>0</b> #{$currency.html}"
+#          end
+#          content += '</span>'
+#
+#          content += '<div class="order_shipping_method_description">'
+#            content += shipping_method.transporter.description
+#          content += '</div>'
+#        content += '</div>'
+#      end
+#    end
+#    content += '</div>'
+#  end
 
   # Display all shipping methods available for cart
-  def display_transporters(cart=current_user.cart)
+  def display_transporters()
     content = '<div class="order_transporters" id="order_transporters">'
-    if cart.get_transporters.empty?
-      content += I18n.t('can_not_place_order')
-    else
-      cart.get_transporters.each do |transporter|
-        content += '<div class="order_shipping_method">'
-          content += '<span class="order_shipping_method_name">'
-            content += radio_button_tag(
-                        'shipping_method_id',
-                        transporter.id,
-                        (transporter.id == session[:order_shipping_method_id]),
-                        :onclick => remote_function(
-                          :url => { :action => 'update_transporter', :id => transporter.id }
-                        )
-                      )
-            content += transporter.name
-            content += " (#{transporter.variables} #{$currency.html})"
-          content += '</span>'
 
-          content += '<div class="order_shipping_method_description">'
-            content += transporter.description
-          content += '</div>'
+    @shipping_ids.each do |shipping_id|
+
+      transporter = ShippingMethodRule.find_by_id(shipping_id)
+
+      content += '<div class="order_shipping_method">'
+        content += '<span class="order_shipping_method_name">'
+          content += radio_button_tag(
+              'shipping_method_id',
+              transporter.id,
+              (transporter.id == session[:order_shipping_method_id]),
+              :onclick => remote_function(
+              :url => { :action => 'update_transporter', :id => transporter.id }
+              )
+            )
+          content += transporter.name.nil? ? transporter.parent.name : transporter.name
+          content += " (#{transporter.variables} #{$currency.html})"
+        content += '</span>'
+
+        content += '<div class="order_shipping_method_description">'
+          content += transporter.description.nil? ? transporter.parent.description : transporter.description
         content += '</div>'
-      end
+      content += '</div>'
+
     end
+    
     content += '</div>'
   end
 
