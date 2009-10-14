@@ -21,44 +21,45 @@ class Admin::TransportersController < Admin::BaseController
 
   def create
 
+    @shipping_methods = params[:shipping_method]
 
-      @shipping_methods = params[:shipping_method]
+    @shipping_methods.each do |shipping_method|
 
-      @shipping_methods.each do |shipping_method|
+      new_shipping_method = shipping_method == @shipping_methods.first ? ShippingMethodRule.new(params[:transporter]) : ShippingMethodRule.new
 
-        new_shipping_method = shipping_method == @shipping_methods.first ? ShippingMethodRule.new(params[:transporter]) : ShippingMethodRule.new
-        
-        rule_condition = []
-        rule_condition << 'Product' << ':cart'
+      rule_condition = []
+      rule_condition << 'Product' << ':cart'
 
-        shipping_method[1][:values].each_with_index do |value, index|
-          case params[:delivery_type]
-            when 'weight'
-              condition = "m.#{params[:delivery_type]}"
-            when 'geo_zone'
-              condition = "m.geo_zone_id"
-            when 'product_type'
-              condition = "m.product_type.id"
-            when 'product'
-              condition = "m.id"
-          end
-          condition += ".#{shipping_method[1][:conds][index]}(#{value})"
-          rule_condition << condition
+      shipping_method[1][:values].each_with_index do |value, index|
+
+        case params[:delivery_type]
+          when 'weight'
+            condition = "m.#{params[:delivery_type]}"
+          when 'geo_zone'
+            condition = "m.geo_zone_id"
+          when 'product_type'
+            condition = "m.product_type.id"
+          when 'product'
+            condition = "m.id"
         end
 
-        new_shipping_method.conditions = "[#{rule_condition.join(', ')}]"
-        new_shipping_method.variables = shipping_method[1][:price][0]
-
-        new_shipping_method.parent_id = @transporter.id
-        new_shipping_method.save
-        if shipping_method == @shipping_methods.first
-          @parent_id = new_shipping_method.id
-        else
-          new_shipping_method.update_attribute(:parent_id, @parent_id)
-        end
+        condition += ".#{shipping_method[1][:conds][index]}(#{value})"
+        rule_condition << condition
       end
 
-      return redirect_to(admin_transporters_path)
+      new_shipping_method.conditions = "[#{rule_condition.join(', ')}]"
+      new_shipping_method.variables = shipping_method[1][:price][0]
+
+      new_shipping_method.parent_id = @transporter.id
+      new_shipping_method.save
+      if shipping_method == @shipping_methods.first
+        @parent_id = new_shipping_method.id
+      else
+        new_shipping_method.update_attribute(:parent_id, @parent_id)
+      end
+    end
+
+    return redirect_to(admin_transporters_path)
       
     
 #      flash[:error] = I18n.t('transporter.create.failed').capitalize
