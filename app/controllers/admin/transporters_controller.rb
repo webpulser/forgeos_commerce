@@ -1,6 +1,6 @@
 class Admin::TransportersController < Admin::BaseController
 
-#  before_filter :new_transporter, :only => [:new, :create]
+  before_filter :new_transporter, :only => [:new, :create]
   before_filter :get_transporter, :only => [ :show, :edit, :update ]
 
   def index
@@ -40,7 +40,11 @@ class Admin::TransportersController < Admin::BaseController
 
         new_shipping_method.parent_id = @transporter.id
         new_shipping_method.save
-        @parent_id = new_shipping_method.id if shipping_method == @shipping_methods.first
+        if shipping_method == @shipping_methods.first
+          @parent_id = new_shipping_method.id
+        else
+          new_shipping_method.update_attribute(:parent_id, @parent_id)
+        end
       end
 
       return redirect_to(admin_transporters_path)
@@ -77,16 +81,16 @@ class Admin::TransportersController < Admin::BaseController
   end
   
   private
-#    def get_transporter
-#      unless @transporter = Transporter.find_by_id(params[:id])
-#        flash[:notice] = I18n.t('transporter.not_exist').capitalize
-#        return redirect_to(admin_transporters_path)
-#      end
-#    end
-#
-#    def new_transporter
-#      @transporter = Transporter.new(params[:transporter])
-#    end
+    def get_transporter
+      unless @transporter = Transporter.find_by_id(params[:id])
+        flash[:notice] = I18n.t('transporter.not_exist').capitalize
+        return redirect_to(admin_transporters_path)
+      end
+    end
+
+    def new_transporter
+      @transporter = Transporter.new(params[:transporter])
+    end
 
     def sort
       columns = %w(id name active)
@@ -97,14 +101,17 @@ class Admin::TransportersController < Admin::BaseController
       order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
       
       options = {
+        :conditions => { :parent_id => nil },
         :order => order,
         :page => page,
         :per_page => per_page
       }
       if params[:sSearch] && !params[:sSearch].blank?
-        @transporters = Transporter.search(params[:sSearch],options)
+#        @transporters = Transporter.search(params[:sSearch],options)
+        @transporters = ShippingMethodRule.search(params[:sSearch],options)
       else
-        @transporters = Transporter.paginate(:all,options)
+#        @transporters = Transporter.paginate(:all,options)
+        @transporters = ShippingMethodRule.paginate(:all,options)
       end
     end
 end

@@ -15,7 +15,10 @@
 
   #content.grid_16.alpha.omega
     .grid_16.alpha
-      .grid_12.alpha
+      #transporter.grid_12.alpha
+        .inner-content
+          = f.label :description, I18n.t(:description).capitalize
+          = f.text_area :description, :rows => 2
         .padding-wrap.grid_10.omega.alpha
           .type-of-delivery.grid_10
             %span.type-delivery-title= "#{I18n.t('transporter.delivery_type').capitalize}:"
@@ -88,17 +91,17 @@
   .clear
 
 
-%div.delivery-rule.product_category.pattern{ :style => 'display: none' }
+%div.delivery-rule.product_type_id.pattern{ :style => 'display: none' }
   .inner-delivery-rule
-    %span.span-left= I18n.t('shipping_method.rule.when.product_category').capitalize
+    %span.span-left= I18n.t('shipping_method.rule.when.product_type').capitalize
     %div= select_tag "shipping_method[#{id}][conds][]", options_for_select(@conditions_is.collect{|c| [c[0], c[1]] })
-    %div= select_tag "shipping_method[#{id}][values][]", options_for_select(ProductCategory.all( :order => :name ).collect{|c| [c.name, c.id]})
+    %div= select_tag "shipping_method[#{id}][values][]", options_for_select(ProductType.all( :order => :name ).collect{|c| [c.name, c.id]})
     %span.span-left= I18n.t('shipping_method.rule.shipping_is').capitalize
     = text_field_tag "shipping_method[#{id}][price][]"
     %span.span-left.unit= $currency.html()
     .clear
   = link_to_function '', "remove_delivery_rule(this)", :class => 'small-icons red-minus'
-  = link_to_function '', "add_delivery_rule('product_category')", :class => 'small-icons add-green-plus'
+  = link_to_function '', "add_delivery_rule('product_type_id')", :class => 'small-icons add-green-plus'
   .clear
 
 
