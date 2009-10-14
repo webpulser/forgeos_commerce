@@ -39,7 +39,7 @@ describe Attribute do
     
     it "should have attribute_values" do
       @attribute_values = []
-      (1..20).each do |i|
+      (1..5).each do |i|
         attribute_value = @attribute.attribute_values.create!({:name => "test#{i}"})
         @attribute_values << attribute_value
       end
