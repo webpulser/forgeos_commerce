@@ -52,16 +52,18 @@ class Cart < ActiveRecord::Base
   end
 
   # Remove a product of this cart
-  def remove_product(carts_product_id)
+  def remove_product(product_id)
     return false if carts_products.nil?
     # destroy the product
-    cart_product = carts_products.find_by_product_id(carts_product_id)
+    cart_product = carts_products.find_all_by_product_id(product_id)
     cart_product.each do |product|
-      product.destroy if cart_product
+      product.destroy
     end
     # destroy free product
-    free_products = carts_products.find_by_free(1)
-    free_products.destroy if free_products
+    free_products = carts_products.find_all_by_free(1)
+    free_products.each do |free_product|
+      free_product.destroy
+    end
   end
 
   # Empty this cart

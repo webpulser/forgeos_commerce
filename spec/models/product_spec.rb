@@ -5,7 +5,7 @@ describe Product do
   describe 'one product' do
     before :each do
       @product_type = ProductType.create!({:name => 'product_type'})
-      @product = Product.create!({:url => "product", :name => "product", :sku => "001", :product_type_id => @product_type.id})
+      @product = Product.create!({:url => "product", :name => "product", :sku => "001", :product_type => @product_type})
     end
     
     it "should have name product" do
@@ -20,8 +20,12 @@ describe Product do
       @product.sku.should == '001'
     end
     
+    it "should have a product_type" do
+      @product.product_type.should == @product_type
+    end
+    
     it "should have a unique url" do
-      @second_product = Product.new({:url => "product", :name => "product", :sku => "001", :product_type_id => @product_type.id})
+      @second_product = Product.new({:url => "product", :name => "product", :sku => "001", :product_type => @product_type})
       @second_product.should_not be_valid
       @second_product.should have(1).errors_on(:url)
     end
@@ -52,7 +56,7 @@ describe Product do
       @attribute = Attribute.create!({:name => "attribute", :access_method => 'attribute'})
       @attribute_values = []
       (1..20).each do |i|
-        attribute_value = @product.attribute_values.create!({:name => "test#{i}", :attribute_id => @attribute.id})
+        attribute_value = @product.attribute_values.create!({:name => "test#{i}", :attribute => @attribute})
         @attribute_values << attribute_value
       end
       @product.attribute_values.all.should == @attribute_values
@@ -62,7 +66,7 @@ describe Product do
       @attribute = Attribute.create!({:name => "attribute", :access_method => 'attribute'})
       @dynamic_attribute_values = []
       (1..20).each do |i|
-        dynamic_attribute_value = @product.dynamic_attribute_values.create!({:value=> "test#{i}", :attribute_id => @attribute.id})
+        dynamic_attribute_value = @product.dynamic_attribute_values.create!({:value=> "test#{i}", :dynamic_attribute => @attribute})
         @dynamic_attribute_values << dynamic_attribute_value
       end
       @product.dynamic_attribute_values.all.should == @dynamic_attribute_values
@@ -86,7 +90,7 @@ describe Product do
   describe 'new product' do
     before(:each) do
       @product_type = ProductType.create!({:name => 'product_type'})
-      @product = Product.new({:url => "product", :name => "product", :sku => "001", :product_type_id => @product_type.id})
+      @product = Product.new({:url => "product", :name => "product", :sku => "001", :product_type => @product_type})
     end
     
     it "should be valid" do
@@ -106,7 +110,7 @@ describe Product do
   describe 'edit/delete product' do
     before :each do
       @product_type = ProductType.create!({:name => 'product_type'})
-      @product = Product.create!({:url => "product", :name => "product", :sku => "001", :product_type_id => @product_type.id})
+      @product = Product.create!({:url => "product", :name => "product", :sku => "001", :product_type => @product_type})
     end
     
     # update

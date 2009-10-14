@@ -89,7 +89,12 @@ describe Cart do
 
   describe 'edit/delete cart' do
     before :each do
-      @cart = Cart.create
+      @cart = Cart.create!
+      product_type = ProductType.create!({:name => "type"})
+      (1..5).each do |i|
+        product = product_type.products.create!({:url => "url_#{i}", :name => "test", :sku => i})
+        cart_product = @cart.carts_products.create!({:product => product})
+      end  
     end
     
     # delete
@@ -97,5 +102,12 @@ describe Cart do
       @cart.destroy
       Cart.last.should_not == @cart
     end
+    
+    it 'should destroy the carts_product' do
+      CartsProduct.all.length.should == 5
+      @cart.destroy
+      CartsProduct.all.length.should == 0
+    end
+    
   end
 end
