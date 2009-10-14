@@ -87,6 +87,7 @@ en:
       catalog: catalog
       users: users
       site_builder: site builder
+      products: products
       product_types: product types
       attributes: attributes
       special_offers: special offers

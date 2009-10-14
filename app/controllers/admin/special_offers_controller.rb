@@ -153,5 +153,4 @@ private
       @special_offers = SpecialOfferRule.paginate(:all,options)
     end
   end
-  
 end
