@@ -15,8 +15,16 @@
       = link_to_remote('ajouter une adresse', :url => { :controller => 'order', :action => 'add_address' })
   .clear
   %br
-  =  @cart.discount
+  = display_transporters
   =# display_voucher
   .clear
+
+  .total-div
+    .total-label.last
+      Prix Total
+    #transporter_price.total-price.last
+  .clear
+  %br
+
   = submit_tag I18n.t('make_order'), :class=>'submit-button'
 .clear

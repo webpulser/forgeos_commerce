@@ -85,7 +85,7 @@ module OrderHelper
   end
 
   # Display all shipping methods available for cart
-  def display_transporters(cart=current_user.cart)
+  def display_shipping_methods(cart=current_user.cart)
     content = '<div class="order_transporters" id="order_transporters">'
     if cart.get_shipping_method.empty?
       content += I18n.t('can_not_place_order')
@@ -120,6 +120,36 @@ module OrderHelper
 
           content += '<div class="order_shipping_method_description">'
             content += shipping_method.transporter.description
+          content += '</div>'
+        content += '</div>'
+      end
+    end
+    content += '</div>'
+  end
+
+  # Display all shipping methods available for cart
+  def display_transporters(cart=current_user.cart)
+    content = '<div class="order_transporters" id="order_transporters">'
+    if cart.get_transporters.empty?
+      content += I18n.t('can_not_place_order')
+    else
+      cart.get_transporters.each do |transporter|
+        content += '<div class="order_shipping_method">'
+          content += '<span class="order_shipping_method_name">'
+            content += radio_button_tag(
+                        'shipping_method_id',
+                        transporter.id,
+                        (transporter.id == session[:order_shipping_method_id]),
+                        :onclick => remote_function(
+                          :url => { :action => 'update_transporter', :id => transporter.id }
+                        )
+                      )
+            content += transporter.name
+            content += " (#{transporter.variables} #{$currency.html})"
+          content += '</span>'
+
+          content += '<div class="order_shipping_method_description">'
+            content += transporter.description
           content += '</div>'
         content += '</div>'
       end

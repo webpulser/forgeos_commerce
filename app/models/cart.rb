@@ -117,6 +117,15 @@ class Cart < ActiveRecord::Base
     end
     shipping_methods.uniq
   end
+
+  # Returns all <i>ShippingMethod</i> available for this cart
+  def get_transporters
+    shipping_methods = []
+    ShippingMethodRule.all( :conditions => { :parent_id => nil } ).each do |transporter|
+      shipping_methods << transporter
+    end
+    shipping_methods.uniq
+  end
   
   def total_items
     return carts_products.length

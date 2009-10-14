@@ -10,8 +10,8 @@ class OrderController < ApplicationController
   include Ruleby
 
   before_filter :can_create_order?, :only => :create
-  before_filter :get_cart, :only => [:new,:informations,:paye]
-  before_filter :shipping_methods, :only => :new
+  before_filter :get_cart, :only => [:new,:informations,:paye, :update_transporter]
+  before_filter :shipping_methods, :only => [ :new, :update_transporter ]
   
   # Save in session <i>address_invoice_id</i> and <i>address_delivery_id</i>.
   # Returns false if miss an address or if <i>shipping_method</i> is not validate by user, returns true else
@@ -30,7 +30,7 @@ class OrderController < ApplicationController
 
     # TODO - include ActiveShipping
     # ShippingMethod is obligatory for valid an order
-    @shipping_method = ShippingMethod.find_by_id(session[:order_shipping_method_id])
+    @shipping_method = ShippingMethodRule.find_by_id(session[:order_shipping_method_id])
     unless @shipping_method
       flash[:warning] = I18n.t('shipping_method',:count=>1).capitalize
       redirect_to(:action => 'new')
@@ -97,7 +97,7 @@ class OrderController < ApplicationController
         :country_id => address_invoice.country_id, 
         :designation => 'toto'
         },      
-      :order_shipping_attributes => { :name => shipping_method.name, :price => shipping_method.price(false) },
+      :order_shipping_attributes => { :name => shipping_method.name, :price =>  @cart.discount },
       #:voucher                => (voucher) ? voucher.value : nil,
       #:transaction_number     => params[:trans],
       :reference              => @cart.id,
@@ -138,7 +138,7 @@ class OrderController < ApplicationController
           offer_delivery ||= voucher.offer_delivery
         end
       end
-      total += ShippingMethod.find_by_id(session[:order_shipping_method_id]).price unless offer_delivery
+      total += ShippingMethodRule.find_by_id(session[:order_shipping_method_id]).variables.to_f unless offer_delivery
     end
     if vouchers
       vouchers.each do |voucher|
@@ -148,9 +148,11 @@ class OrderController < ApplicationController
     total = 0 if total < 0
 
     render(:update) do |page|
-      page.replace_html('order_voucher', display_voucher)
+#      page.replace_html('order_voucher', display_voucher)
       page.replace_html('order_transporters', display_transporters)
       page.replace_html("order_total_price", total)
+      page.replace_html('transporter_price', "#{@cart.discount} #{$currency.html}")
+      page.visual_effect :highlight, 'transporter_price'
       page.visual_effect :highlight, 'order_total_price'
     end
   end
@@ -176,7 +178,7 @@ class OrderController < ApplicationController
   end
 
   def update_transporter
-    shipping_method = ShippingMethod.find_by_id(params[:id])
+    shipping_method = ShippingMethodRule.find_by_id(params[:id])
     session[:order_shipping_method_id] = shipping_method.id if shipping_method
     update_total
   end
