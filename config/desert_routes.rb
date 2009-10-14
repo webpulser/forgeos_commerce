@@ -1,7 +1,5 @@
 # Add your custom routes here.  If in config/routes.rb you would 
 # add <tt>map.resources</tt>, here you would add just <tt>resources</tt>
-logout '/logout', :controller => 'sessions', :action => 'destroy'
-login '/login', :controller => 'sessions', :action => 'new'
 register '/register', :controller => 'users', :action => 'create'
 signup '/signup', :controller => 'users', :action => 'new'
 activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
@@ -20,12 +18,11 @@ connect '/product/:url', :controller => 'url_catcher', :action => 'product'
 namespace :admin do |admin|
   admin.resources :transporters, :member => { :activate => :post }
   admin.resources :vouchers
-  %w(product product_type attribute special_offer user).each do |category|
+  %w(product product_type attribute special_offer).each do |category|
     admin.resources "#{category}_categories", :controller => 'categories', :requirements => { :type => "#{category}_category" }
   end
   admin.resources :geo_zones
   admin.resources :countries, :controller => 'geo_zones'
-  admin.resources :users, :collection => { :filter => [:post, :get] }, :member => { :activate => :post }
 
   admin.resources :attributes, :collection => { :access_method => :post }, :member => { :duplicate => :get} do |attribute|
     attribute.resources :attribute_values, :controller => 'attribute_values'

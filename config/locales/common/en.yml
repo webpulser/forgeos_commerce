@@ -39,13 +39,11 @@ en:
       one: usd
       other: usd
   catalog: catalog
-  log_in: 'log in'
   sign_up: 'sign up'
   make_order: 'Make order'
   remove_voucher: 'remove voucher'
   disconnect: disconnect
   cant_not_place_order: 'We are sorry, but it is temporarily impossible to place order'
-  remember_me: 'remember me'
   thank_you_to_place_order: 'Thank you for your order'
   remove_this_voucher: 'remove this voucher'
   add: add
@@ -65,9 +63,6 @@ en:
   account_update_ok: 'your account have been successfully created'
   account_creation_ok: 'your account have been successfully created'
   signup_completed: 'your subscription have been completed'
-  log_in_ok: 'you are successfully connected'
-  log_in_failed: 'connection failed, check your email and password' 
-  log_out_ok: 'you have been successfully disconnected'
   hello: hello
   confirm_empty_cart: 'are you sure to wipe your cart ?'
   confirm_empty_wishlist: 'are you sure to wipe your wishlist ?'

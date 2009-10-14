@@ -39,13 +39,11 @@ fr:
       one: dollar
       other: dollars
   catalog: catalogue
-  log_in: 'se connecter'
   sign_up: "s'inscrire"
   make_order: 'passer commande'
   remove_voucher: 'enlever le code promo'
   disconnect: 'se déconnecter'
   cant_not_place_order: 'Nous sommes désolé, mais il est temporairement impossible de passer commande'
-  remember_me: 'rester connecté'
   thank_you_to_place_order: "Merci d'avoir passé commande"
   remove_this_voucher: 'enlever ce code promo'
   add: ajouter
@@ -65,9 +63,6 @@ fr:
   account_update_ok: 'votre compte à bien été mis à jour'
   account_creation_ok: 'votre compte à bien été créé'
   signup_completed: 'votre inscription à bien été prise en compte'
-  log_in_ok: 'connection réussie, bienvenue !'
-  log_in_failed: 'connection échouée, veuillez vérifier votre email et votre mot de passe' 
-  log_out_ok: 'déconnection réussie, à bientôt !'
   hello: bienvenue
   confirm_empty_cart: 'êtes-vous sûr de vouloir vider votre panier ?'
   confirm_empty_wishlist: 'êtes-vous sûr de vouloir vider votre sélection ?'
