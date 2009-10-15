@@ -50,13 +50,10 @@ class Admin::TransporterRulesController < Admin::BaseController
       new_shipping_method.conditions = "[#{rule_condition.join(', ')}]"
       new_shipping_method.variables = shipping_method[1][:price][0]
 
-      new_shipping_method.parent_id = @transporter.id
       new_shipping_method.save
-      if shipping_method == @shipping_methods.first
-        @parent_id = new_shipping_method.id
-      else
-        new_shipping_method.update_attribute(:parent_id, @parent_id)
-      end
+      
+      shipping_method == @shipping_methods.first ? @parent_id = new_shipping_method.id : new_shipping_method.update_attribute(:parent_id, @parent_id)
+      
     end
 
     return redirect_to(admin_transporters_path)

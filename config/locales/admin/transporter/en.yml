@@ -16,21 +16,11 @@ en:
       success: 'the transporter was successfully deleted'
       failed: 'a problem occured during the transporter deletion'
       confirm: 'are you sure to delete this transporter?'
+      action: 'delete transporter'
+    duplicate: 'duplicate transporter'
   shipping_method:
     one: "shipping method"
     other: "shipping methods"
-    create:
-      success: 'the shipping method was successfully created'
-      failed: 'a problem occured during the shipping method creation'
-      action: 'create a shipping method'
-    update:
-      success: 'the shipping method was successfully updated'
-      failed: 'a problem occured during the shipping method update'
-      action: 'edit shipping method'
-    destroy:
-      success: 'the shipping method was successfully deleted'
-      failed: 'a problem occured during the shipping method deletion'
-      confirm: 'are you sure to delete this shipping method?'
     rule:
       type:
         weight: weight base rate

@@ -1,0 +1,10 @@
+#right-sidebar.grid_4.omega
+  - unless transporter.new_record?
+    .step
+      = link_to I18n.t('transporter.duplicate').capitalize, [:duplicate, :admin, transporter], :class => 'small-icons duplicate'
+      = link_to I18n.t('transporter.destroy.action').capitalize, [:admin, transporter], :confirm => I18n.t('transporter.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+  .step.status.open
+    %div
+      = f.select :active, [[I18n.t('inactive'), 0], [I18n.t('active'), 1]], :selected => transporter.active ? 1 : 0
+    .clear
+
