@@ -1,13 +1,12 @@
 page_home:
   title: HomePage
   url: home
-  content: "<h1>Welcome to Forgeos Commerce</h1>
+  content: '<h1>Welcome to Forgeos Commerce</h1>
     <h2>Administration</h2>
-    <p>Go to the <a href=\"/admin\">back-office</a> to manage pages, 
+    <p>Go to the <a href="/admin">back-office</a> to manage pages, 
     sections, blocks and more...</p>
-    <p>&nbsp;</p>
-    <p>Login: admin@commerce.forgeos.com</p>
-    <p>Password: admin</p>"
+    <p><strong>Login</strong> : admin@commerce.forgeos.com</p>
+    <p><strong>Password</strong> : admin</p>'
 
 page_404:
   single_key: 404 # Don't edit this single key!
