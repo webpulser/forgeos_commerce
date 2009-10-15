@@ -38,7 +38,7 @@
                 - user = order.user
                 = link_to user.fullname, [:admin, user]
                 %p= "#{user.orders.count} #{I18n.t('order', :count => user.orders.count)} #{I18n.t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
-                %p= user.tel1
+                %p= user.phone
                 %p.customer-email= user.email
               .main-info-separation
               .main-infos-payment

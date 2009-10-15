@@ -5,7 +5,6 @@ signup '/signup', :controller => 'users', :action => 'new'
 activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
  
 # resources :forgeos_commerce
-resource :session
 resources :users
 resources :products
 resources :packs, :controller => :products

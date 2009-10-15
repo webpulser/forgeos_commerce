@@ -1,7 +1,6 @@
 fr:
 # FrontOffice
   all: Tous
-  by: par
   add_to_cart: 'ajouter au panier'
   update: 'mettre à jour'
   cart:
@@ -78,7 +77,6 @@ fr:
     title:
       orders: commandes
       catalog: catalogue
-      users: utilisateurs
       site_builder: site builder
       products: produits
       product_types: types de produit
@@ -108,14 +106,9 @@ fr:
   vouchers: 'codes promo'
   delivery: livraison
   export: exporter
-  export_newsletter: 'exporter pour la newsletter'
-  newsletter:
-    one: newsletter
-    other: newsletters
   age: 'âge'
   template_by: 'Thème par'
   created_on: 'créé le'
-  joined_on: 'inscrit le'
   last_order: 'dernière commande'
   active: 'activé'
   actions: actions
@@ -130,13 +123,6 @@ fr:
   save: sauvegarder
   save_changes: 'sauvegarder'
   list: lister
-  civility:
-    one: civilité
-    other: civilités
-    label:
-      - [Mr, 0]
-      - [Mme, 1]
-      - [Mlle, 2]
   address: 
     one: adresse
     other:  adresses
@@ -155,7 +141,6 @@ fr:
     destroy:
       confirm: 'êtes-vous sûr de vouloir supprimer cette adresse ?'
   city: ville
-  country: pays
   zip_code: 'code postal'
   designation: 'désignation'
   telephone: 'téléphone'
@@ -527,9 +512,3 @@ fr:
     field: champ bouton radio
     preview: prévisualisation
 
-# Active record
-  activerecord:
-    models:
-      product: produit
-      shipping_method: "méthode d'expédition"
-      user: utilisateur

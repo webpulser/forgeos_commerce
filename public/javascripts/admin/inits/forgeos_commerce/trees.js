@@ -1,5 +1,4 @@
 jQuery(document).ready(function(){
-  init_category_tree("#user-tree",'UserCategory','/admin/user_categories.json');
   init_category_tree('#product-tree','ProductCategory','/admin/product_categories.json');
   init_category_tree("#product-type-tree",'ProductTypeCategory','/admin/product_type_categories.json');
   init_category_tree("#attribute-tree",'AttributeCategory','/admin/attribute_categories.json');

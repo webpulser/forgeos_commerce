@@ -1,7 +1,6 @@
 en:
 # FrontOffice
   all: all
-  by: by
   add_to_cart: 'add to cart'
   update: update
   cart:
@@ -80,7 +79,6 @@ en:
     title:
       orders: orders
       catalog: catalog
-      users: users
       site_builder: site builder
       products: products
       product_types: product types
@@ -110,14 +108,9 @@ en:
   vouchers: vouchers
   delivery: delivery
   export: export
-  export_newsletter: 'export for newsletter'
-  newsletter:
-    one: newsletter
-    other: newsletters
   age: age
   template_by: 'Template by'
   created_on: 'created on'
-  joined_on: 'joined on'
   last_order: 'last order'
   active: active
   actions: actions
@@ -132,13 +125,6 @@ en:
   save: save
   save_changes: 'save changes'
   list: list
-  civility:
-    one: civility
-    other: civilities
-    label:
-      - [Mr, 0]
-      - [Ms, 1]
-      - [Mss, 2]
   address: 
     one: address
     other:  addresses
@@ -157,7 +143,6 @@ en:
     destroy:
       confirm: 'are you sure to remove this address ?'
   city: city
-  country: country
   zip_code: 'zip code'
   designation: 'designation'
   telephone: 'telephone'
@@ -528,10 +513,3 @@ en:
     other: choices
     field: radiobutton field
     preview: preview
-
-# Active record
-  activerecord:
-    models:
-      product: product
-      shipping_method: 'shipping method'
-      user: user

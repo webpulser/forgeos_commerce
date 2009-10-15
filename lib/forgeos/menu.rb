@@ -8,10 +8,6 @@ module Forgeos
     :url => { :controller => 'admin/products' }, :i18n => true,
     :html => { :class => 'left'}
   }
-  AdminMenu << { :title => 'users',
-    :url => { :controller => 'admin/users' }, :i18n => true,
-    :html => { :class => 'left'}
-  }
   AdminMenu << { :title => 'site_builder',
     :url => [
       { :controller => 'admin/product_types'},

@@ -106,7 +106,7 @@
                   %td
                     = link_to customer.fullname, [:admin, customer]
                   %td
-                    = I18n.t('user.joined_the').capitalize
+                    = I18n.t('user.joined_on').capitalize
                     = customer.created_at.to_s(:short)
                   %td.email
                     = mail_to customer.email, customer.email

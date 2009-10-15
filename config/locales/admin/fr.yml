@@ -80,7 +80,7 @@ order:
     main_infos: 'informations principales'
     subtotal: 'sous-total'
     total: total
-    user_note: "note de l'utilisateur"
+    user_note: note du client
     invoice:
       one: facture
       other: factures

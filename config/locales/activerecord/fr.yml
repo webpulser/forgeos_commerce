@@ -4,4 +4,3 @@ fr:
     models:
       product: produit
       shipping_method: "méthode d'expédition"
-      user: utilisateur

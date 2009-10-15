@@ -4,4 +4,3 @@ en:
     models:
       product: product
       shipping_method: 'shipping method'
-      user: user
