@@ -15,7 +15,8 @@ resources :catalog
 connect '/product/:url', :controller => 'url_catcher', :action => 'product'
 
 namespace :admin do |admin|
-  admin.resources :transporters, :member => { :activate => :post }
+  admin.resources :transporters, :controller => 'transporter_rules', :member => { :activate => :post }
+  admin.resources :transporter_rules
   admin.resources :vouchers
   %w(product product_type attribute special_offer).each do |category|
     admin.resources "#{category}_categories", :controller => 'categories', :requirements => { :type => "#{category}_category" }
@@ -40,5 +41,4 @@ namespace :admin do |admin|
   admin.resources :packs, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }, :controller => :products
   #admin.resources :special_offers, :collection => { :special_offer => [:get, :post] }
   admin.resources :special_offers
-  admin.resources :shipping_rules
 end

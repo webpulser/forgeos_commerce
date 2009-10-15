@@ -131,9 +131,9 @@ module OrderHelper
   def display_transporters()
     content = '<div class="order_transporters" id="order_transporters">'
 
-    @shipping_ids.each do |shipping_id|
+    @transporter_ids.each do |transporter_id|
 
-      transporter = ShippingMethodRule.find_by_id(shipping_id)
+      transporter = TransporterRule.find_by_id(transporter_id)
 
       content += '<div class="order_shipping_method">'
         content += '<span class="order_shipping_method_name">'

@@ -97,7 +97,7 @@ class OrderController < ApplicationController
         :country_id => address_invoice.country_id, 
         :designation => 'toto'
         },      
-      :order_shipping_attributes => { :name => shipping_method.name, :price =>  @cart.discount },
+      :order_shipping_attributes => { :name => shipping_method.name, :price =>  @transporter_rule.variables },
       #:voucher                => (voucher) ? voucher.value : nil,
       #:transaction_number     => params[:trans],
       :reference              => @cart.id,
@@ -138,7 +138,7 @@ class OrderController < ApplicationController
           offer_delivery ||= voucher.offer_delivery
         end
       end
-      total += ShippingMethodRule.find_by_id(session[:order_shipping_method_id]).variables.to_f unless offer_delivery
+      total += TransporterRule.find_by_id(session[:order_shipping_method_id]).variables.to_f unless offer_delivery
     end
     if vouchers
       vouchers.each do |voucher|
@@ -151,7 +151,7 @@ class OrderController < ApplicationController
 #      page.replace_html('order_voucher', display_voucher)
       page.replace_html('order_transporters', display_transporters)
       page.replace_html("order_total_price", total)
-      page.replace_html('transporter_price', "#{current_user.cart.total(true) + @shipping_method_rule.variables.to_f} #{$currency.html}")
+      page.replace_html('transporter_price', "#{current_user.cart.total(true) + @transporter_rule.variables.to_f} #{$currency.html}")
       page.visual_effect :highlight, 'transporter_price'
       page.visual_effect :highlight, 'order_total_price'
     end
@@ -178,8 +178,8 @@ class OrderController < ApplicationController
   end
 
   def update_transporter
-    @shipping_method_rule = ShippingMethodRule.find_by_id(params[:id])
-    session[:order_shipping_method_id] = @shipping_method_rule.id if @shipping_method_rule
+    @transporter_rule = TransporterRule.find_by_id(params[:id])
+    session[:order_shipping_method_id] = @transporter_rule.id if @transporter_rule
     shipping_methods
     update_total
   end
@@ -253,12 +253,12 @@ private
   protected
 
     def shipping_methods
-      @shipping_ids = []
+      @transporter_ids = []
 
-      engine :shipping_method_engine do |e|
+      engine :transporter_engine do |e|
 
-        rule_builder = ShippingMethod.new(e)
-        rule_builder.shipping_ids = @shipping_ids
+        rule_builder = Transporter.new(e)
+        rule_builder.transporter_ids = @transporter_ids
         rule_builder.rules
         @cart.carts_products.each do |cart_product|
           e.assert cart_product.product

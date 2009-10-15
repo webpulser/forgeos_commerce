@@ -6,15 +6,18 @@
       klass = transporter.active? ? 'see-on' : 'see-off'
       [
         content_tag(:div, "&nbsp;", :id => link_id, :class => 'small-icons transporters'),
-        content_tag(:div, link_to(transporter.name, [:admin, transporter]), :class => 'tranporter-name'),
+        #content_tag(:div, link_to(transporter.name, [:admin, transporter]), :class => 'tranporter-name'),
+        content_tag(:div, link_to(transporter.name, admin_transporter_path(transporter)), :class => 'tranporter-name'),
         link_to_remote('', :url => activate_admin_transporter_path(transporter),
          :complete => "toggleActivate('#show_#{link_id}')",
          :html => {
            :class => "small-icons #{klass}",
            :id => "show_#{link_id}"
         }),
-        link_to('', [:edit, :admin, transporter], :class => 'small-icons edit-link') +
-        link_to_remote('', :url => [:admin, transporter],
+        #link_to('', [:edit, :admin, transporter], :class => 'small-icons edit-link') +
+        link_to('', edit_admin_transporter_path(transporter), :class => 'small-icons edit-link') +
+        #link_to_remote('', :url => [:admin, transporter],
+        link_to_remote('', :url => admin_transporter_path(transporter),
          :method => :delete,
          :confirm => I18n.t('transporter.destroy.confirm').capitalize,
          :success => "removedataTablesRow('#destroy_#{link_id}')",
