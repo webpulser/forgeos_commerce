@@ -43,9 +43,9 @@
               Je recherche un produit
             .search_form
               .search-icon
-                - form_tag(:controller => 'search') do
-                  = text_field_tag 'keywords', '', :class => 'input_text'
-                  = submit_tag I18n.t('search').capitalize, :class => 'btn_ok'
+              - form_tag(:controller => 'search') do
+                = text_field_tag 'keywords', '', :class => 'input_text'
+                = submit_tag I18n.t('front.search').capitalize, :class => 'btn_ok'
           -if !@cart.nil?
             .cart-box
               = link_to "J'accède à Mon Espace Client", new_session_path if !logged_in?

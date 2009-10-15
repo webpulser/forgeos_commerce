@@ -3,6 +3,8 @@ fr:
   all: Tous
   add_to_cart: 'ajouter au panier'
   update: 'mettre à jour'
+  front:
+    search: ok
   cart:
     one: panier
     other: paniers
