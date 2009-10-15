@@ -3,13 +3,13 @@ class SpecialOffer < Ruleby::Rulebook
   attr_writer :cart
   def rules
     SpecialOfferRule.find_all_by_active(true).each do |special_offer|
-      puts special_offer.conditions
+      #puts special_offer.conditions
       rule eval(special_offer.conditions) do |context|
         product = context[:product]
                 
         ## Product in Shop
         if @cart.nil?
-          p 'ahhhah ah '*10
+          #p 'ahhhah ah '*10
           # Discount product price
                                                 #and special_offer.variables[:for] == 'product_in_shop'
           if special_offer.variables[:discount]
