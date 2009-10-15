@@ -144,7 +144,7 @@ describe Order do
     it "should destroy the order_shipping" do
       @order.destroy
       OrderShipping.find_by_id(@order_shipping.id).should == nil
-    end    
+    end
   end
   
 end
