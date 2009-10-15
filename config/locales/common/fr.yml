@@ -1,10 +1,12 @@
 fr:
 # FrontOffice
+  welcome : Bienvenue
   all: Tous
   add_to_cart: 'ajouter au panier'
   update: 'mettre à jour'
   front:
     search: ok
+    research: Je recherche un produit
   cart:
     one: panier
     other: paniers
@@ -40,7 +42,7 @@ fr:
       one: dollar
       other: dollars
   catalog: catalogue
-  sign_up: "s'inscrire"
+  sign_up: "Je crée mon Espace Client"
   make_order: 'passer commande'
   remove_voucher: 'enlever le code promo'
   disconnect: 'se déconnecter'
@@ -73,6 +75,8 @@ fr:
   cancel: annuler
   unaccessible_function: 'fonction inaccessible'
   my_informations: 'mes informations'
+  my_cart: 'mon panier'
+  my_account_login: "J'accède à Mon Espace Client"
 
 # Admin
   back-office:

@@ -1,10 +1,12 @@
 en:
 # FrontOffice
+  welcome: 'welcome'
   all: all
   add_to_cart: 'add to cart'
   update: update
   front:
     search: ok
+    research: search a product
   cart:
     one: cart
     other: carts
@@ -75,6 +77,8 @@ en:
   my_informations: 'my information'
   unpaid: unpaid
   sended: sended
+  my_cart: my cart
+  my_account_login : my account
 
 # Admin
   back-office:

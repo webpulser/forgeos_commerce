@@ -30,7 +30,8 @@
                 = render :partial => 'sessions/new_form'
           .search_box
             %label
-              Je recherche un produit
+              
+              =I18n.t('front.research').capitalize
             .search_form
               .search-icon
               - form_tag(:controller => 'search') do
@@ -38,10 +39,10 @@
                 = submit_tag I18n.t('front.search').capitalize, :class => 'btn_ok'
           -if !@cart.nil?
             .cart-box
-              = link_to "J'accède à Mon Espace Client", new_session_path if !logged_in?
+              = link_to I18n.t('my_account_login').capitalize, new_session_path if !logged_in?
               .cart-icon
                 %span
-                  =link_to_cart('Mon panier')
+                  =link_to_cart(I18n.t('my_cart').capitalize)
                 %br
                   ="#{@cart.total_items} article(s)" if !@cart.nil?
                 - if @cart.products.length > 0
@@ -67,9 +68,9 @@
                       €
           .create-customer-space
             -if logged_in?
-              = link_to "Bienvenue #{current_user.fullname}", "#"
+              = link_to "#{I18n.t(:welcome)} #{current_user.fullname}", "#"
             - else
-              = link_to 'Je crée mon Espace Client', new_user_path
+              = link_to I18n.t(:sign_up), new_user_path
         %ul.menu
           -ProductCategory.find_all_by_parent_id(nil, :limit => 7).each do |category|
             %li= link_to category.name, catalog_path(:category_name=> category.name, :url => nil)
