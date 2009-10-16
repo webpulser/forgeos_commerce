@@ -246,6 +246,7 @@ class Admin::TransporterRulesController < Admin::BaseController
       end
       
     end
+    
     def sort
       columns = %w(id name active)
 
