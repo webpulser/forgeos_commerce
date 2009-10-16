@@ -3,7 +3,6 @@ class CreateOrders < ActiveRecord::Migration
     create_table :orders do |t|
       t.belongs_to :user
       t.string :status,
-        :voucher,
         :transaction_number,
         :reference
       t.timestamps
