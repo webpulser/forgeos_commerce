@@ -2,6 +2,7 @@ class Admin::TransporterRulesController < Admin::BaseController
 
   before_filter :new_transporter, :only => [:new, :create]
   before_filter :get_transporter, :only => [ :show, :edit, :update ]
+  before_filter :get_rules, :only => [ :show, :edit ]
 
   def index
     respond_to do |format|
@@ -50,79 +51,75 @@ class Admin::TransporterRulesController < Admin::BaseController
   end
   
   def edit
-
-    @delivery_type = get_delivery_type
-
-    transporters = []
-    transporters << @transporter
-    @transporter.children.collect{ |transporter| transporters << transporter }
-
-    rules = {}
-    transporters.each do |transporter|
-
-      db_condition = transporter.conditions
-      array_db_condition = db_condition.split(',')
-      conditions = []
-      conditions << array_db_condition[2]
-      conditions << array_db_condition[3] unless array_db_condition[3].nil?
-
-      transporter_rules = {}
-      conditions.each_with_index do |condition, _index|
-        hash_rule = {}
-
-        array_condition = condition.split('.')
-        operator_value = array_condition[2]
-        
-        puts '##'*100
-        p array_condition
-        puts '##'*100
-        hash_rule[:value] = operator_value[/[0-9]+/]
-        hash_rule[:operator] = operator_value[0, operator_value.index('(')]
-        transporter_rules[_index] = hash_rule
-      end
-
-      rules[transporter.id] = transporter_rules
-      rules[transporter.id][:price] = transporter.variables
-      
-    end
-
-    @rules = rules.sort
   end
 
+  # TODO Fix bug when deleting the two first rules, the first isn't destroy, but the second yes | Check order of index in the hash params[:shipping_method]
   def update
 
     result = true
-    
+    parent_transporter_deleted = false
+    @parent_id = @transporter.id
+
+    # Get rules to delete
+    @transporters_to_delete = params[:shipping_methods_to_delete]
+    unless @transporters_to_delete.nil?
+      @transporters_to_delete.each do |item_id|
+          transporter = TransporterRule.find_by_id(item_id)
+          if transporter == @transporter
+            parent_transporter_deleted = true
+            @transporter_name = transporter.name
+            @transporter_description = transporter.description
+          else
+            parent_transporter_deleted = false
+            transporter.destroy
+          end
+      end
+    end
+
+    # Get new & existing rules, create or update
     @shipping_methods = params[:shipping_method]
 
     @shipping_methods.each do |shipping_method|
-      
-      rule_condition = build_conditions shipping_method
 
+      rule_condition = build_conditions shipping_method
       transporter_id = shipping_method[0]
+
+      # If rule exists
       if new_shipping_method = TransporterRule.find_by_id(transporter_id)
         result = new_shipping_method.update_attribute(:conditions, "[#{rule_condition.join(', ')}]")
         result = new_shipping_method.update_attribute(:variables, shipping_method[1][:price][0])
+        # Get the new parent_id & update name/description to this one
+        check_parent_transporter parent_transporter_deleted, shipping_method, new_shipping_method
+        
+        result = new_shipping_method.update_attribute(:parent_id, @parent_id) if new_shipping_method.id != @parent_id
+        
       else
+        
+        # If delivery type change
         if @delivery_type != params[:delivery_type] && shipping_method == @shipping_methods.first
-          new_shipping_method = TransporterRule.find_by_id(@transporter.id)
+          new_shipping_method = TransporterRule.find_by_id(@parent_id)
           result = new_shipping_method.update_attribute(:conditions, "[#{rule_condition.join(', ')}]")
           result = new_shipping_method.update_attribute(:variables, shipping_method[1][:price][0])
-          puts '##'*100
-          p new_shipping_method
-          puts '##'*100
+          result = new_shipping_method.update_attribute(:parent_id, @parent_id)
+          
         else
           new_shipping_method = TransporterRule.new
 
           new_shipping_method.conditions = "[#{rule_condition.join(', ')}]"
           new_shipping_method.variables = shipping_method[1][:price][0]
-          new_shipping_method.parent_id = @transporter.id
 
           result = new_shipping_method.save
+          
+          # Get the new parent_id & update name/description to this one
+          check_parent_transporter parent_transporter_deleted, shipping_method, new_shipping_method
+          result = new_shipping_method.update_attribute(:parent_id, @parent_id)
+          
         end
       end
-      
     end
+
+    # Destroy the parent transporter at the end
+    @transporter.destroy if parent_transporter_deleted
 
     if result
       flash[:notice] = I18n.t('transporter.update.success').capitalize
@@ -159,6 +156,10 @@ class Admin::TransporterRulesController < Admin::BaseController
       @transporter = TransporterRule.new(params[:transporter_rule])
     end
 
+    def get_rules
+      @rules = parse_transporters
+    end
+
     def build_conditions shipping_method
       rule_condition = []
       rule_condition << 'Product' << ':cart'
@@ -182,6 +183,42 @@ class Admin::TransporterRulesController < Admin::BaseController
       rule_condition
     end
 
+    def parse_transporters
+
+      @delivery_type = get_delivery_type
+
+      transporters = []
+      transporters << @transporter
+      @transporter.children.collect{ |transporter| transporters << transporter }
+
+      rules = {}
+      transporters.each do |transporter|
+
+        db_condition = transporter.conditions
+        array_db_condition = db_condition.split(',')
+        conditions = []
+        conditions << array_db_condition[2]
+        conditions << array_db_condition[3] unless array_db_condition[3].nil?
+
+        transporter_rules = {}
+        conditions.each_with_index do |condition, _index|
+          hash_rule = {}
+
+          array_condition = condition.split('.')
+          operator_value = array_condition[2]
+
+          hash_rule[:value] = operator_value[/[0-9]+/]
+          hash_rule[:operator] = operator_value[0, operator_value.index('(')]
+          transporter_rules[_index] = hash_rule
+        end
+
+        rules[transporter.id] = transporter_rules
+        rules[transporter.id][:price] = transporter.variables
+
+      end
+      rules.sort
+    end
+
     def get_delivery_type
       db_delivery_type = @transporter.conditions.split('.')[1]
 
@@ -199,6 +236,16 @@ class Admin::TransporterRulesController < Admin::BaseController
       @delivery_type
     end
 
+    def check_parent_transporter(parent_transporter_deleted, shipping_method, new_shipping_method)
+
+      if parent_transporter_deleted && shipping_method == @shipping_methods.first
+        @parent_id = new_shipping_method.id
+        new_shipping_method.update_attribute(:name, @transporter_name)
+        new_shipping_method.update_attribute(:description, @transporter_description)
+        new_shipping_method.update_attribute(:parent_id, nil)
+      end
+      
+    end
     def sort
       columns = %w(id name active)
 

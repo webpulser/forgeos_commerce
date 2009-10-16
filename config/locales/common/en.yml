@@ -92,7 +92,7 @@ en:
       special_offers: special offers
       geo_zones: zones geo zones
       shipping_rules: shipping rules
-      transporters: transporters
+      transporter_rules: transporters
       vouchers: vouchers
   id: id
   since: since

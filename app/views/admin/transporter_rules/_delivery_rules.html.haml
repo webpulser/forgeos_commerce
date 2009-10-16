@@ -1,6 +1,6 @@
 #delivery-rules
   - if transporter.new_record?
-    .delivery-rule.item_0
+    #item_0.delivery-rule
       .inner-delivery-rule
         %span.span-left= I18n.t('shipping_method.rule.when.weight').capitalize
         %div= select_tag 'shipping_method[0][conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] } + @conditions.collect{|c| [c[0], c[1]] })
@@ -14,14 +14,14 @@
         = text_field_tag 'shipping_method[0][price][]'
         %span.span-left.unit= $currency.html
         .clear
-      = link_to_function '', "remove_delivery_rule(this)", :class => 'small-icons red-minus', :style => 'display: none'
+      = link_to_function '', "remove_delivery_rule(this)", :class => 'small-icons red-minus'
       = link_to_function '', "add_delivery_rule('weight')", :class => 'small-icons add-green-plus'
       .clear
   - else
     - case @delivery_type
       - when 'weight'
         - @rules.each do |rule|
-          .delivery-rule{ :class => "item_#{rule[0]}"}
+          .delivery-rule{ :id => "item_#{rule[0]}"}
             .inner-delivery-rule
               %span.span-left= I18n.t('shipping_method.rule.when.weight').capitalize
               %div= select_tag "shipping_method[#{rule[0]}][conds][]", options_for_select(@condition_is.collect{|c| [c[0], c[1]] } + @conditions.collect{|c| [c[0], c[1]] }, rule[1][0][:operator])
@@ -40,7 +40,7 @@
             .clear
       - when 'product_type'
         - @rules.each do |rule|
-          .delivery-rule{ :class => "item_#{rule[0]}"}
+          .delivery-rule{ :id => "item_#{rule[0]}"}
             .inner-delivery-rule
               %span.span-left= I18n.t('shipping_method.rule.when.product_type').capitalize
               %div= select_tag "shipping_method[#{rule[0]}][conds][]", options_for_select(@conditions_is.collect{|c| [c[0], c[1]] }, rule[1][0][:operator])
@@ -54,7 +54,7 @@
             .clear
       - when 'product'
         - @rules.each do |rule|
-          .delivery-rule{ :class => "item_#{rule[0]}"}
+          .delivery-rule{ :id => "item_#{rule[0]}"}
             .inner-delivery-rule
               %span.span-left= I18n.t('shipping_method.rule.when.product').capitalize
               %div= select_tag "shipping_method[#{rule[0]}][conds][]", options_for_select(@conditions_is.collect{|c| [c[0], c[1]] }, rule[1][0][:operator])
@@ -68,7 +68,7 @@
             .clear
       - when 'geo_zone'
         - @rules.each do |rule|
-          .delivery-rule{ :class => "item_#{rule[0]}"}
+          .delivery-rule{ :id => "item_#{rule[0]}"}
             .inner-delivery-rule
               %span.span-left= I18n.t('shipping_method.rule.when.geographic_zone').capitalize
               %div= select_tag "shipping_method[#{rule[0]}][conds][]", options_for_select(@conditions_is.collect{|c| [c[0], c[1]] }, rule[1][0][:operator])

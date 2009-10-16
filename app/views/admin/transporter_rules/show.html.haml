@@ -1,17 +1,32 @@
-%h1
-  = I18n.t('shipping_method', :count => 1).capitalize
-%p
-  %b
-    = I18n.t('name').capitalize
-    \:
-  = @shipping_method.name
-%p
-  %b
-    = I18n.t('description').capitalize
-    \:
-  = @shipping_method.description
-%fieldset
-  %legend
-    = link_to_effect_toggle(I18n.t('shipping_method_detail', :count=>2).capitalize,'details')
-  #details
-    = render :partial => 'list_details', :locals => { :shipping_method => @shipping_method }
+- @condition_is = Hash[ I18n.t('conditions.is'), "==" ]
+- @conditions_is = Hash[ I18n.t('conditions.is'), "==", I18n.t('conditions.is_not'), "not==" ]
+- @conditions =  Hash[ I18n.t('conditions.is_not'), "not==", I18n.t('conditions.is_equals_or_greater_than'), ">=", I18n.t('conditions.is_equals_or_less_than'), "<=", I18n.t('conditions.is_greater_than'), ">", I18n.t('conditions.is_less_than'), "<" ]
+- @delivery_types = Hash[ I18n.t('shipping_method.rule.type.weight').capitalize, 'weight', I18n.t('shipping_method.rule.type.geographic_zone').capitalize, 'geo_zone', I18n.t('shipping_method.rule.type.product_type').capitalize, 'product_type', I18n.t('shipping_method.rule.type.product').capitalize, 'product' ]
+- @product_types = ProductType.all( :order => :name ).collect{|c| [c.name, c.id]}
+- @geo_zones = GeoZone.all( :order => :printable_name ).collect{|c| [c.name, c.id]}
+
+= render :partial => 'tabs'
+.backgrounds.big-header
+  %h1= @transporter.name
+  .interact-links
+    = link_to I18n.t('transporter.update.action').capitalize, [:edit, :admin, @transporter], :class => 'backgrounds interact-button'
+    = I18n.t('or')
+    = link_to I18n.t('back_to_catalog').capitalize, admin_transporters_path, :class => 'back-link'
+
+#content.grid_16.alpha.omega
+  .grid_16.alpha
+    #transporter.grid_12.alpha
+      .inner-content
+        = label_tag :description, I18n.t(:description).capitalize
+        = @transporter.description
+      .padding-wrap.grid_10.omega.alpha
+        .type-of-delivery.grid_10
+          %span.type-delivery-title= "#{I18n.t('transporter.delivery_type').capitalize}:"
+          %div= select_tag 'delivery_type', options_for_select(@delivery_types, ( @delivery_type.nil? ? 'weight' : @delivery_type)), { :onchange => "change_rule_for(this)" }
+      .clear
+
+      = render :partial => 'delivery_rules', :locals => { :transporter => @transporter }
+
+    /= render :partial => 'sidebar', :locals => { :f => f, :transporter => transporter }
+
+.clear

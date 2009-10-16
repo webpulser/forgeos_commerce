@@ -90,7 +90,7 @@ fr:
       special_offers: offres spéciales
       geo_zones: zones géographiques
       shipping_rules: "méthodes d'expédition"
-      transporters: transporteurs
+      transporter_rules: transporteurs
       vouchers: codes promo
   id: id
   since: depuis
