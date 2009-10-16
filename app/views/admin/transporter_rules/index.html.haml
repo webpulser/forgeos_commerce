@@ -1,12 +1,5 @@
 = render :partial => 'tabs'
-#sidebar.grid_4.omega.alpha
-  .backgrounds.header
-    %span.backgrounds.action-button.create-action.disable
-  .backgrounds.sidebar-background
-  .sidebar-content
-    %h2.small-icons.transporters
-      = link_to_function I18n.t(:shipping_method, :count => 2).capitalize, "select_all_elements_without_category()"
-    #transporter-tree.init-tree.category-tree
+= render :partial => 'admin/sidebars/left_sidebar', :locals => {:icon_class => 'transporters', :sidebar_title => 'transporter.all', :tree_id =>'transporter-tree' }
 
 #content.grid_12.alpha.omega
   .backgrounds.header

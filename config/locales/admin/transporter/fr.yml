@@ -2,6 +2,7 @@ fr:
   transporter:
     one: "transporteur"
     other: "transporteur"
+    all: "tous les transporteurs"
     change: "changer de transporteur"
     delivery_type: type de livraison
     create:

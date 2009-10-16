@@ -18,7 +18,7 @@ namespace :admin do |admin|
   admin.resources :transporters, :controller => 'transporter_rules', :member => { :activate => :post, :duplicate => :get }
   admin.resources :transporter_rules, :member => { :duplicate => :get }
   admin.resources :vouchers
-  %w(product product_type attribute special_offer).each do |category|
+  %w(product product_type attribute special_offer transporter).each do |category|
     admin.resources "#{category}_categories", :controller => 'categories', :requirements => { :type => "#{category}_category" }
   end
   admin.resources :geo_zones

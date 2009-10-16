@@ -2,6 +2,7 @@ en:
   transporter:
     one: "transporter"
     other: "transporters"
+    all: "all transporters"
     change: 'change transporter'
     delivery_type: type of delivery
     create:

@@ -53,7 +53,7 @@ class Admin::TransporterRulesController < Admin::BaseController
   def edit
   end
 
-  # TODO Fix bug when deleting the two first rules, the first isn't destroy, but the second yes | Check order of index in the hash params[:shipping_method]
+  # TODO Fix bug when deleting the two (or more) first rules, the first isn't destroy, but the second (& others) yes | Check order of index in the hash params[:shipping_method]
   def update
 
     result = true
