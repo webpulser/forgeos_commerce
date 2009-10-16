@@ -1,4 +1,4 @@
-- form_for [:admin, order], :html => { :id => 'wrap' } do |f|
+- form_for [:admin, order], :html => { :id => 'wrap', :class => 'edit_order' } do |f|
   .backgrounds.big-header
     %span.order-price= order.total
     %span.order-currency= $currency.html
@@ -142,11 +142,11 @@
             = link_to I18n.t('delivery').capitalize, '#', :class => "small-icons panel"
             .option-panel-content
               .delivery-method
-                - shipping_grouped_options = grouped_options_for_select(TransporterRule.all.collect{ |transporter|
-                -   [transporter.name, transporter.id.to_s]
-                - }, order.order_shipping.name, I18n.t('shipping_method.change').capitalize)
+                /- shipping_grouped_options = grouped_options_for_select(TransporterRule.all.collect{ |transporter|
+                /-   [transporter.name, transporter.id.to_s]
+                /- }, order.order_shipping.name, I18n.t('shipping_method.change').capitalize)
 
-                = select_tag :order_shipping, options_for_select(TransporterRule.all(:conditions => {:parent_id => nil}).collect{ |transporter| [ transporter.name, transporter.id ]}), :class => 'select-order-shipping'
+                = select_tag :order_shipping, options_for_select(TransporterRule.all(:conditions => {:parent_id => nil}).collect{ |transporter| [ transporter.name, transporter.variables ]}), :class => 'select-order-shipping'
               .clear
 
               .name-input

@@ -5,7 +5,7 @@ fr:
     one: attribut
     other: attributs
     create: 
-      text: créer un attribut
+      action: créer un attribut
       choice: choisir un attribut
       access_method: attribut
     value: valeur

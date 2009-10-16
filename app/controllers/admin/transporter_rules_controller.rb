@@ -21,48 +21,42 @@ class Admin::TransporterRulesController < Admin::BaseController
 
   def create
 
+    result = true
+
     @shipping_methods = params[:shipping_method]
 
     @shipping_methods.each do |shipping_method|
 
       new_shipping_method = shipping_method == @shipping_methods.first ? TransporterRule.new(params[:transporter_rule]) : TransporterRule.new
 
-      rule_condition = build_rule shipping_method
+      rule_condition = build_conditions shipping_method
 
       new_shipping_method.conditions = "[#{rule_condition.join(', ')}]"
       new_shipping_method.variables = shipping_method[1][:price][0]
 
-      new_shipping_method.save
+      result = new_shipping_method.save
       
       shipping_method == @shipping_methods.first ? @parent_id = new_shipping_method.id : new_shipping_method.update_attribute(:parent_id, @parent_id)
       
     end
 
-    return redirect_to(admin_transporters_path)
-      
-    
-#      flash[:error] = I18n.t('transporter.create.failed').capitalize
-#      render :action => :new
+    if result
+      flash[:notice] = I18n.t('transporter.create.success').capitalize
+      return redirect_to(admin_transporters_path)
+    else
+      flash[:error] = I18n.t('transporter.create.failed').capitalize
+      render :action => :new
+    end
   end
   
   def edit
 
-    array_transporter_conditions = @transporter.conditions.split('.')
-
-    case array_transporter_conditions[1]
-      when 'weight'
-        @delivery_type = array_transporter_conditions[1]
-      when 'geo_zone_id'
-        @delivery_type = 'geo_zone'
-      when 'product_type_id'
-        @delivery_type = 'product_type'
-      when 'id'
-        @delivery_type = 'product'
-    end
+    @delivery_type = get_delivery_type
 
     transporters = []
     transporters << @transporter
     @transporter.children.collect{ |transporter| transporters << transporter }
+
     rules = {}
     transporters.each do |transporter|
 
@@ -78,7 +72,10 @@ class Admin::TransporterRulesController < Admin::BaseController
 
         array_condition = condition.split('.')
         operator_value = array_condition[2]
-
+        
+        puts '##'*100
+        p array_condition
+        puts '##'*100
         hash_rule[:value] = operator_value[/[0-9]+/]
         hash_rule[:operator] = operator_value[0, operator_value.index('(')]
         transporter_rules[_index] = hash_rule
@@ -86,16 +83,16 @@ class Admin::TransporterRulesController < Admin::BaseController
 
       rules[transporter.id] = transporter_rules
       rules[transporter.id][:price] = transporter.variables
-      rules[transporter.id]
       
     end
-    puts "**"*100
-    p rules
-    puts "**"*100
+
     @rules = rules.sort
   end
 
   def update
+
+    result = true
+    
     @shipping_methods = params[:shipping_method]
 
     @shipping_methods.each do |shipping_method|
@@ -103,18 +100,37 @@ class Admin::TransporterRulesController < Admin::BaseController
       rule_condition = build_conditions shipping_method
 
       transporter_id = shipping_method[0]
-      new_shipping_method = TransporterRule.find_by_id(transporter_id)
+      if new_shipping_method = TransporterRule.find_by_id(transporter_id)
+        result = new_shipping_method.update_attribute(:conditions, "[#{rule_condition.join(', ')}]")
+        result = new_shipping_method.update_attribute(:variables, shipping_method[1][:price][0])
+      else
+        if @delivery_type != params[:delivery_type] && shipping_method == @shipping_methods.first
+          new_shipping_method = TransporterRule.find_by_id(@transporter.id)
+          result = new_shipping_method.update_attribute(:conditions, "[#{rule_condition.join(', ')}]")
+          result = new_shipping_method.update_attribute(:variables, shipping_method[1][:price][0])
+          puts '##'*100
+          p new_shipping_method
+          puts '##'*100
+        else
+          new_shipping_method = TransporterRule.new
+
+          new_shipping_method.conditions = "[#{rule_condition.join(', ')}]"
+          new_shipping_method.variables = shipping_method[1][:price][0]
+          new_shipping_method.parent_id = @transporter.id
+
+          result = new_shipping_method.save
+        end
+      end
       
-      new_shipping_method.update_attribute(:conditions, "[#{rule_condition.join(', ')}]")
-      new_shipping_method.update_attribute(:variables, shipping_method[1][:price][0])
-
-
     end
-#    if @transporter.update_attributes(params[:transporter_rule])
-#      flash[:notice] = I18n.t('transporter.update.success').capitalize
-#    else
-#      flash[:error] = I18n.t('transporter.update.failed').capitalize
-#    end
+
+    if result
+      flash[:notice] = I18n.t('transporter.update.success').capitalize
+      return redirect_to(admin_transporters_path)
+    else
+      flash[:error] = I18n.t('transporter.update.failed').capitalize
+      render :action => :edit
+    end
   end
 
   def destroy
@@ -155,7 +171,7 @@ class Admin::TransporterRulesController < Admin::BaseController
           when 'geo_zone'
             condition = "m.geo_zone_id"
           when 'product_type'
-            condition = "m.product_type.id"
+            condition = "m.product_type_id"
           when 'product'
             condition = "m.id"
         end
@@ -164,6 +180,23 @@ class Admin::TransporterRulesController < Admin::BaseController
         rule_condition << condition
       end
       rule_condition
+    end
+
+    def get_delivery_type
+      db_delivery_type = @transporter.conditions.split('.')[1]
+
+      case db_delivery_type
+        when 'weight'
+          @delivery_type = db_delivery_type
+        when 'geo_zone_id'
+          @delivery_type = 'geo_zone'
+        when 'product_type_id'
+          @delivery_type = 'product_type'
+        when 'id'
+          @delivery_type = 'product'
+      end
+
+      @delivery_type
     end
 
     def sort

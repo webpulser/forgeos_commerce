@@ -5,7 +5,7 @@ en:
     one: attribute
     other: attributes
     create: 
-      text: create an attribute
+      action: create an attribute
       choice: choose an attribute
       access_method: attribute
     value: value
