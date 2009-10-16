@@ -27,9 +27,10 @@ class Admin::ProductTypesController < Admin::BaseController
   def create
     if @product_type.save
       flash[:notice] = I18n.t('product_type.create.success').capitalize
-      return redirect_to(edit_admin_product_type_path(@product_type))
+      return redirect_to(admin_product_types_path)
     else
       flash[:error] = I18n.t('product_type.create.failed').capitalize
+      render :action => :new
     end
   end
   

@@ -10,7 +10,7 @@
   #content.grid_12.alpha.omega
     .grid_12.alpha
       #product-types-options-tree.a-tree.init-tree
-        = I18n.t('tattribute', :count => 2).capitalize
+        = I18n.t('attribute', :count => 2).capitalize
         %ul
           - @product_type.product_attributes.each do |attribute|
             - id = "attribute_#{attribute.id}"

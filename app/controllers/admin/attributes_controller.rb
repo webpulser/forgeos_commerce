@@ -34,7 +34,7 @@ class Admin::AttributesController < Admin::BaseController
   def create
     if @attribute.save
       flash[:notice] = I18n.t('attribute.create.success').capitalize
-      return redirect_to([:edit, :admin, @attribute])
+      return redirect_to(admin_attributes_path)
     else
       flash[:error] = I18n.t('attribute.create.failed').capitalize
       render :action => :new
