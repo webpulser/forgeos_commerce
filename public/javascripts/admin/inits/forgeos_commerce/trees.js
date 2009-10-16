@@ -104,7 +104,7 @@ jQuery(document).ready(function(){
 
         if (!$('#product_type_option_ids_'+option_id).is(':empty')) {
           NODE.id = 'option_'+option_id;
-          $('a', NODE).append('<input type="hidden" id="product_type_option_ids_'+option_id+'" name="product_type[option_ids][]" value="'+option_id+'" />');
+          $('a', NODE).append('<input type="hidden" id="product_type_product_attribute_ids_'+option_id+'" name="product_type[product_attribute_ids][]" value="'+option_id+'" />');
         } else {
           $('#option_'+option_id+'_copy').remove();
         }

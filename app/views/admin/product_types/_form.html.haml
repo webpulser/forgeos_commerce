@@ -18,16 +18,16 @@
               %a{ :href => '#' }
                 = hidden_field_tag 'product_type[attribute_ids][]', attribute.id, :id => "product_type_attribute_ids_#{attribute.id}"
                 = attribute.name
-                %span.big-icons.gray-destroy
+                %span.big-icons.gray-destroy-attribute.gray-destroy
                   &nbsp;
         .clear
   #yellow-sidebar.grid_4.alpha.omega.yellow
     #product-types-all-tree.init-tree.a-tree
       %ul
-        - ProductAttribute.all(:include => :attribute_categories, :conditions => { :categories => { :id => nil }}).each do |orphan_attribute|
+        - Attribute.all(:include => :attribute_categories, :conditions => { :categories => { :id => nil }}).each do |orphan_attribute|
           - unless orphan_attribute.product_types.include? @product_type
             %li{ :rel => 'attribute', :id => "attribute_#{orphan_attribute.id}" }
-              = link_to((orphan_attribute.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-attribute')), '#')
+              = link_to((orphan_attribute.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-attribute gray-destroy')), '#')
       .clear
     = link_to I18n.t('attribute.create.action').capitalize, admin_attributes_path, :class => 'small-icons small-icons-verti-small-blue-plus attribute-new'
   .clear
