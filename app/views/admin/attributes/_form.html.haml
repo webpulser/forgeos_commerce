@@ -27,11 +27,11 @@
             = render :partial => 'number', :locals => { :attribute => attribute, :form => f }
         - unless attribute.kind_of?(DynamicAttribute)
           %a{:href =>"#", :class => "small-icons add-choice"}
-            = I18n.t('option.value.new')
+            = I18n.t('attribute.value.new')
     #right-sidebar.grid_4.omega
       - unless attribute.new_record?
         .step
-          = link_to I18n.t('attribute.duplicate.action'), duplicate_admin_attribute_path(attribute), :class => 'small-icons duplicate'
+          = link_to I18n.t('attribute.duplicate.action').capitalize, duplicate_admin_attribute_path(attribute), :class => 'small-icons duplicate'
           = link_to I18n.t('attribute.destroy.action').capitalize, [:admin, attribute], :confirm => I18n.t('attribute.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
       .step
         = I18n.t('attribute.access_method')
