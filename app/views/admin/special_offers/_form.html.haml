@@ -228,7 +228,7 @@
       %span= select_tag 'rule[targets][]', options_for_select(@cart_attributes, attribute),{ :onchange => "change_rule(this,'rule-condition')" }
       %span= select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
       - if attribute == 'Shipping method'
-        %span= select_tag 'rule[values][]', options_for_select(ShippingMethodRule.all( :conditions => { :parent_id => nil } ).collect(&:name))
+        %span= select_tag 'rule[values][]', options_for_select(TransporterRule.all( :conditions => { :parent_id => nil } ).collect(&:name))
       - else
         = text_field_tag 'rule[values][]'
       = link_to_function '', "add_cart_rule()", :class => 'small-icons green-add-icon'

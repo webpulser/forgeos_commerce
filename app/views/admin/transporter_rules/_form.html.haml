@@ -24,7 +24,7 @@
         .padding-wrap.grid_10.omega.alpha
           .type-of-delivery.grid_10
             %span.type-delivery-title= "#{I18n.t('transporter.delivery_type').capitalize}:"
-            %div= select_tag 'delivery_type', options_for_select(@delivery_types, ( @delivery_type.nil? ? 'weight' : @delivery_type)), {:onchange => "change_select_for(this)"}
+            %div= select_tag 'delivery_type', options_for_select(@delivery_types, ( @delivery_type.nil? ? 'weight' : @delivery_type)), {:onchange => "change_rule_for(this)"}
         .clear
 
         = render :partial => 'delivery_rules', :locals => { :transporter => transporter }

@@ -22,7 +22,7 @@ function remove_delivery_rule(element){
 }
 
 
-function change_select_for(element){
+function change_rule_for(element){
 
   delivery_type = element.options[element.selectedIndex].value;
   delivery_rules = $('#delivery-rules');
