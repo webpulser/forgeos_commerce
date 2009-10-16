@@ -75,30 +75,23 @@ function change_select_for(element){
 
     }
     else{
-      if ($('#rule_builder_for :selected').text() == 'Product in Cart'){
-
-        $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
-        $('#rule-conditions').append($('.rule-condition.pattern').clone().removeClass('pattern'))
-
-        $('#action-conditions').html('')
-        $('#action-conditions').append($('.action-Discountpricethisproduct-productincart.pattern').clone().removeClass('pattern').removeClass('action-Discountpricethisproduct-productincart').addClass('action-condition'))
+	  $('#rule-conditions').html('')
+	  $('#action-conditions').html('')
+	  $('#rule-conditions').append("<div class='condition'>"+$('.rule-condition.pattern').html()+'</div>')
+      if ($('#rule_builder_for :selected').text() == 'Product in Cart'){     
+        $('#action-conditions').append("<div class='condition'>"+$('.action-Discountpricethisproduct-productincart.pattern').html()+'</div>')   
       } else {
-        $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
-        $('#rule-conditions').append($('.rule-condition.pattern').clone().removeClass('pattern'))
-
-        $('#action-conditions').html('')
-        $('#action-conditions').append($('.action-Discountpricethisproduct-productinshop.pattern').clone().removeClass('pattern').removeClass('action-Discountpricethisproduct-productinshop').addClass('action-condition'))
-
+        $('#action-conditions').append("<div class='condition'>"+$('.action-Discountpricethisproduct-productinshop.pattern').html()+'</div>')
       }
     }
   }
   else{
-    $('#rule_builder_target').parent().show()
-    $('#rule-conditions').replaceWith("<div id='rule-conditions'></div>")
-    $('#rule-conditions').append($('.rule-condition.pattern').clone().removeClass('pattern'))
-
+    $('#rule_builder_target').parent().show()    
+    $('#rule-conditions').html('')
+    $('#rule-conditions').append("<div class='condition'>"+$('.rule-condition.pattern').html()+'</div>')
     $('#action-conditions').html('')
-    $('#action-conditions').append($('.action-Discountpricethisproduct-category.pattern').clone().removeClass('pattern').removeClass('action-Discountpricethisproduct-category').addClass('action-condition'))
+    $('#action-conditions').append("<div class='condition'>"+$('.action-Discountpricethisproduct-category.pattern').html()+'</div>')
+
   }
   rezindex();
   //check_remove_icon_status('rule-condition')
