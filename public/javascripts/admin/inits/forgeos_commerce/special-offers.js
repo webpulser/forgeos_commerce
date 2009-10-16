@@ -23,7 +23,7 @@ jQuery(document).ready(function(){
           tmce_load_children('#product-types-panel');
         },
         type:'post',
-        url:'/admin/products/update_tattributes_list'
+        url:'/admin/products/update_attributes_list'
       });
   });
 
