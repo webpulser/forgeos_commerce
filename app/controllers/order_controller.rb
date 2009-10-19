@@ -66,6 +66,8 @@ class OrderController < ApplicationController
     engine :special_offer_engine do |e|
       rule_builder = SpecialOffer.new(e)
       rule_builder.cart = @cart
+      @free_product_ids = []
+      rule_builder.free_product_ids = @free_product_ids
       rule_builder.rules
       @cart.carts_products.each do |cart_product|
         e.assert cart_product.product
@@ -84,8 +86,9 @@ class OrderController < ApplicationController
     engine :special_offer_engine do |e|
       rule_builder = SpecialOffer.new(e)
       rule_builder.cart = @cart
+      @free_product_ids = []
+      rule_builder.free_product_ids = @free_product_ids
       rule_builder.rules
-    
       @cart.products.each do |product|
         e.assert product
       end
@@ -137,11 +140,13 @@ class OrderController < ApplicationController
         }
       end
       )
+    
+    @free_product_ids.each do |product_id|
+      product = Product.find_by_id(product_id)
+      @order.order_details.create!(:name => product.name, :description => product.description, :price => 0, :rate_tax => 0, :sku => product.sku, :product_id => product.id, :discount => "free product", :discount_price => 0)
+    end
       
-    p '#'*50
-    p @order.inspect
     @cart.destroy
-   # @order.pay! if params[:trans] && !params[:trans].blank?
     flash[:notice] = I18n.t('thank_you').capitalize
     session[:order_confirmation] = @order.id
     redirect_to(:action => 'payment')

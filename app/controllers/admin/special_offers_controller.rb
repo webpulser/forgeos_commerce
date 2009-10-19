@@ -11,7 +11,6 @@ class Admin::SpecialOffersController < Admin::BaseController
   end
   
   def create
-    dd
     return flash[:error] = 'Fields' unless params[:rule_builder]
     
     # GENERATE RULE !!!!!!!

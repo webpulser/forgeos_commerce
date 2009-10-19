@@ -1,5 +1,5 @@
 class Product < ActiveRecord::Base
-  attr_accessor :new_price, :promo, :carts_product_id
+  attr_accessor :new_price, :promo
   acts_as_taggable_on :tags
 
   has_and_belongs_to_many :carts

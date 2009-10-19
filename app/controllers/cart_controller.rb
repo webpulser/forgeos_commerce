@@ -11,6 +11,8 @@ class CartController < ApplicationController
     engine :special_offer_engine do |e|
       rule_builder = SpecialOffer.new(e)
       rule_builder.cart = @cart
+      @free_product_ids = []
+      rule_builder.free_product_ids = @free_product_ids
       rule_builder.rules
       @cart.carts_products.each do |cart_product|
         e.assert cart_product.product

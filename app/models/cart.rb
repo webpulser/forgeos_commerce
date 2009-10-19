@@ -5,7 +5,6 @@
 # * <tt>carts_product</tt> - <i>CartsProduct</i>
 # * <tt>products</tt> - <i>Product</i>
 class Cart < ActiveRecord::Base
-
   has_many :carts_products, :dependent => :destroy
   has_many :products, :through => :carts_products
 
