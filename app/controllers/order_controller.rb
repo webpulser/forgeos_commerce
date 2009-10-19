@@ -27,15 +27,15 @@ class OrderController < ApplicationController
       redirect_to(:action => 'new')
       return false
     end
+ 
+    session[:transporter_rule_id] = params[:transporter_rule_id] if params[:transporter_rule_id]
+    @transporter = TransporterRule.find_by_id(session[:transporter_rule_id])
 
-    # TODO - include ActiveShipping
-    # ShippingMethod is obligatory for valid an order
-    #@shipping_method = ShippingMethodRule.find_by_id(session[:order_shipping_method_id])
-    #unless @shipping_method
-    #  flash[:warning] = I18n.t('shipping_method',:count=>1).capitalize
-    #  redirect_to(:action => 'new')
-    #  return false
-    #end
+    unless @transporter
+      flash[:warning] = I18n.t('shipping_method',:count=>1).capitalize
+      redirect_to(:action => 'new')
+      return false
+    end
     
     redirect_to(:action => 'payment') if action
     return true
@@ -125,7 +125,7 @@ class OrderController < ApplicationController
         :designation => 'toto'
         },      
       #:order_shipping_attributes => { :name => shipping_method.name, :price =>  @transporter_rule.variables },
-      :order_shipping_attributes => { :name => "test", :price =>  10 },
+      :order_shipping_attributes => { :name => @transporter.name, :price =>  @transporter.variables},
       :reference              => @cart.id,
       :order_details_attributes => @cart.products.collect do |product|
         {
@@ -160,7 +160,7 @@ class OrderController < ApplicationController
 
   def update_total
     vouchers = session[:order_voucher_ids].collect{|voucher_id| Voucher.find(voucher_id)} if session[:order_voucher_ids]
-    total = current_user.cart.total(true)
+    total = current_user.cart.total
     if session[:order_shipping_method_id]
       offer_delivery = false
       if vouchers
@@ -181,7 +181,7 @@ class OrderController < ApplicationController
 #      page.replace_html('order_voucher', display_voucher)
       page.replace_html('order_transporters', display_transporters)
       page.replace_html("order_total_price", total)
-      page.replace_html('transporter_price', "#{current_user.cart.total(true) + @transporter_rule.variables.to_f} #{$currency.html}")
+      page.replace_html('transporter_price', "#{current_user.cart.total + @transporter_rule.variables.to_f} #{$currency.html}")
       page.visual_effect :highlight, 'transporter_price'
       page.visual_effect :highlight, 'order_total_price'
     end

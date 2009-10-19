@@ -138,7 +138,7 @@ module OrderHelper
       content += '<div class="order_shipping_method">'
         content += '<span class="order_shipping_method_name">'
           content += radio_button_tag(
-              'shipping_method_id',
+              'transporter_rule_id',
               transporter.id,
               (transporter.id == session[:order_shipping_method_id]),
               :onclick => remote_function(
