@@ -5,7 +5,7 @@
 # * <tt>cart</tt> - <i>Cart</i>
 
 class CartsProduct < ActiveRecord::Base
-  
+  #attr_accessor :new_price, :promo
   belongs_to :product
   belongs_to :cart
   validates_presence_of :cart_id, :product_id

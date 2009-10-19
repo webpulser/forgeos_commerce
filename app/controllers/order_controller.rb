@@ -62,6 +62,17 @@ class OrderController < ApplicationController
 
   def new
     return redirect_to(:action => 'informations') unless current_user
+    
+    engine :special_offer_engine do |e|
+      rule_builder = SpecialOffer.new(e)
+      rule_builder.cart = @cart
+      rule_builder.rules
+      @cart.carts_products.each do |cart_product|
+        e.assert cart_product.product
+      end
+      e.assert @cart
+      e.match
+    end    
   end
 
 

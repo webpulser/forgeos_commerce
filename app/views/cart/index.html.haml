@@ -41,13 +41,24 @@
                   =nb*product.price
                   €
       .total-div
-        -@cart.carts_products.group_by(&:product_id).each do |cart_product|
-          -product = cart_product[1].first.product
+        -@cart.carts_products.each do |carts_product|
+          -unless carts_product.product.promo.nil?
+            %span.total-label
+              ="Promo #{carts_product.product.name} #{carts_product.product.promo}"
+            %span.total-price
+              ="#{carts_product.product.new_price} €"
+        %span.total-label.last
+          Prix total
+        %span.total-price.last
+          ="#{@cart.total} €"
+        
+        /-@cart.carts_products.group_by(&:product_id).each do |cart_product|
+        /  -product = cart_product[1].first.product
 
-          -if !	cart_product[1].first.new_price.nil? and cart_product[1].first.new_price != product.price
-            = "<span class='total-label'>Promo #{product.name} :</span><span class='total-price'> -#{product.price-cart_product[1].first.new_price} €</span>"
-            %br
-        ="<span class='total-label last'>Prix total</span><span class='total-price last'> #{@cart.total} €</span>"
+        /  -if !	cart_product[1].first.new_price.nil? and cart_product[1].first.new_price != product.price
+        /    = "<span class='total-label'>Promo #{product.name} :</span><span class='total-price'> -#{product.price-cart_product[1].first.new_price} €</span>"
+        /    %br
+        /="<span class='total-label last'>Prix total</span><span class='total-price last'> #{@cart.total} €</span>"
       .clear
       .link_order
         = link_to I18n.t('make_order').capitalize, :controller => 'order', :action => 'new'

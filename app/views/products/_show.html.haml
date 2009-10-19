@@ -31,13 +31,12 @@
 
         .price-box
           %span.promo
-            =product.barcode if !product.barcode.nil?
-          -price = Product.find_by_id(product.id).price
-          -if price != product.price
+            =product.promo if !product.promo.nil?
+          -if !product.new_price.nil? and product.new_price != product.price
             %span.old-price
-              ="#{price} €" if price != product.price
+              ="#{product.price} €" 
             %span.new-price
-              =product.price
+              =product.new_price
               €
           -else
             %span.price

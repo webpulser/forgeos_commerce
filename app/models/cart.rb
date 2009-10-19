@@ -21,11 +21,12 @@ class Cart < ActiveRecord::Base
   # * <tt>:product</tt> - a <i>Product</i> object
   def add_product(product,free=false)
     return false if product.nil? || product.new_record?
-    carts_products << CartsProduct.create(:product_id => product.id, :free => free)
+    #carts_products << CartsProduct.create(:product_id => product.id, :free => free)
+    carts_products << CartsProduct.create(:product_id => product.id)
   end
 
   def has_free_product?(product_id)
-    return !carts_products.find_by_product_id_and_free(product_id,true).nil?
+    #return !carts_products.find_by_product_id_and_free(product_id,true).nil?
   end
 
   def add_new_price(carts_product_id, new_price)
@@ -60,10 +61,10 @@ class Cart < ActiveRecord::Base
       product.destroy
     end
     # destroy free product
-    free_products = carts_products.find_all_by_free(1)
-    free_products.each do |free_product|
-      free_product.destroy
-    end
+    #free_products = carts_products.find_all_by_free(1)
+    #free_products.each do |free_product|
+    #  free_product.destroy
+    #end
   end
 
   # Empty this cart
@@ -83,9 +84,9 @@ class Cart < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_tax</tt> - add tax of price if true, false by default
   # * <tt>:product</tt> - a <i>Product</i> object
-  def total(with_tax=false, product=nil, with_discount=false)
+  def total_old(with_tax=false, product=nil, with_discount=false)
     if product.nil?
-      total = CartsProduct.find_all_by_cart_id_and_free(id,false).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
+      total = CartsProduct.find_all_by_cart_id(id).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
       if with_discount and !self.discount.nil? 
         self.percent.nil? ? total-=self.discount : total-= (total*self.discount)/100
       end
@@ -93,6 +94,14 @@ class Cart < ActiveRecord::Base
     else
       CartsProduct.find_all_by_cart_id_and_product_id(id, product.id).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
     end
+  end
+
+  def total
+    total = 0
+    carts_products.each do |cart_product|
+      total += cart_product.product.new_price.nil? ? cart_product.product.price : cart_product.product.new_price
+    end
+    return total
   end
 
   def total_with_tax

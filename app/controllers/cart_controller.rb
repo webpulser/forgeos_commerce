@@ -2,12 +2,23 @@ require 'ruleby'
 class CartController < ApplicationController
   include Ruleby
   before_filter :get_cart
-  before_filter  :get_cross_selling, :only => [ :index ]
+  before_filter :get_cross_selling, :only => [ :index ]
   
   #after_filter :special_offer, :only => [:index]
   # Show <i>Cart</i>
   def index
     flash[:notice] = I18n.t(:your_cart_is_empty).capitalize if @cart.is_empty?
+    engine :special_offer_engine do |e|
+      rule_builder = SpecialOffer.new(e)
+      rule_builder.cart = @cart
+      rule_builder.rules
+      @cart.carts_products.each do |cart_product|
+        e.assert cart_product.product
+      end
+      e.assert @cart
+      e.match
+    end
+    
   end
 
   # Add a <i>Product</i> in <i>Cart</i>
@@ -94,20 +105,23 @@ protected
   def special_offer
   # SpecialOffers
     # delete free product already in cart and cart discount
-    @cart.update_attributes!(:discount => nil, :percent => nil)
-    free_products = @cart.carts_products.find_by_free(1)
-    free_products.destroy if free_products
+   # @cart.update_attributes!(:discount => nil, :percent => nil)
+    #free_products = @cart.carts_products.find_by_free(1)
+    #free_products.destroy if free_products
     engine :special_offer_engine do |e|
       rule_builder = SpecialOffer.new(e)
       rule_builder.cart = @cart
       rule_builder.rules
       @cart.carts_products.each do |cart_product|
+        cart_product.product.update_attribute('carts_product_id', cart_product.id)
+        e.assert cart_product.product
         ## set the new_price to product price
-        cart_product.update_attributes!(:new_price => cart_product.product.price)
+        #cart_product.update_attributes!(:new_price => cart_product.product.price)
+        
         
         ## barcode is not save!!, it's only to have the carts_products_id in the rule 
-        cart_product.product.barcode = cart_product.id
-        e.assert cart_product.product if cart_product.free != 1
+        #cart_product.product.barcode = cart_product.id
+        #e.assert cart_product.product if cart_product.free != 1
       end
       e.assert @cart
       e.match
@@ -125,15 +139,15 @@ protected
     end
 
     # rules
-    engine :special_offer_engine do |e|
-      @shop = true
-      rule_builder = SpecialOffer.new(e)
-      rule_builder.rules
-      @cross_selling_products.each do |product|
-        e.assert product
-      end
-      e.match
-    end
+    #engine :special_offer_engine do |e|
+    #  @shop = true
+    #  rule_builder = SpecialOffer.new(e)
+    #  rule_builder.rules
+    #  @cross_selling_products.each do |product|
+    #    e.assert product
+    #  end
+    #  e.match
+    #end
   end
 
   

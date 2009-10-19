@@ -3,8 +3,6 @@ class CreateCartsProducts < ActiveRecord::Migration
     create_table :carts_products do |t|
       t.belongs_to :cart,
         :product
-      t.integer :free
-      t.float   :new_price
     end
   end
 
