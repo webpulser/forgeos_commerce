@@ -25,7 +25,7 @@ namespace :admin do |admin|
   admin.resources :countries, :controller => 'geo_zones'
 
   admin.resources :attributes, :collection => { :access_method => :post }, :member => { :duplicate => :get}
-  %w(checkbox radio picklist text longtext number date url).each do |attribute_type|
+  %w(checkbox radiobutton picklist text longtext number date url).each do |attribute_type|
     admin.resources "#{attribute_type}_attributes", :controller => 'attributes', :requirements => { :type => attribute_type }
   end
   

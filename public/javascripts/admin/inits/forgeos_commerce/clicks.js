@@ -9,8 +9,13 @@ jQuery(document).ready(function(){
   });
 
   $('.red-delete-icon').live('click', function(){
-    $(this).parent().hide();
-    $($(this).parent()).find('.delete').val(1);
+    var block = $(this).parents(':first');
+    if (parseInt(get_rails_element_id(block.find('input:first'))) < 0) {
+      block.remove();
+    } else {
+      block.hide();
+      block.find('.delete').val(1);
+    }
     return false;
   });
 

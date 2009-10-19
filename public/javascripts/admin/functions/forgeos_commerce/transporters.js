@@ -52,7 +52,7 @@ function change_rule_for(element){
 
 function check_remove_icon_status(name){
   var c = $('#' + name + 's .' + name);
-  var icon = $('#'+ name + 's .'+name+' a.red-minus')[0];
+  var icon = c.find('a.red-minus:first');
   
   if (c.size() == 1) {
     $(icon).hide();

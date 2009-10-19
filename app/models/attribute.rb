@@ -11,6 +11,9 @@ class Attribute < ActiveRecord::Base
   validates_presence_of :name, :access_method
   validates_uniqueness_of :access_method
   
+  has_and_belongs_to_many :product_types, :readonly => true
+  has_many :products, :through => :dynamic_attribute_values, :readonly => true
+
   before_save :clear_attributes
 
   define_index do
