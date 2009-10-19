@@ -1,5 +1,5 @@
 function add_item_on_add_click() {
-  false_id = -1;
+  if (typeof(false_id) == 'undefined') false_id = -1;
   var new_choice = '<li class="block-container">';
   new_choice += '<span class="block-type"> <span class="handler"> <span class="inner" /> </span> </span> </span>';
   new_choice += '<span class="block-name"> <input type="text" id="attribute_values_attributes_'+false_id+'" size="30" name ="'+object_name+'[attribute_values_attributes]['+false_id+'][name]" /> ';
