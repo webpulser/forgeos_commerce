@@ -8,7 +8,6 @@ class Cart < ActiveRecord::Base
 
   has_many :carts_products, :dependent => :destroy
   has_many :products, :through => :carts_products
- # has_many :shipping_methods
 
   belongs_to :user
   before_save :destroy_duplicates
@@ -19,22 +18,9 @@ class Cart < ActiveRecord::Base
   #
   # ==== Parameters
   # * <tt>:product</tt> - a <i>Product</i> object
-  def add_product(product,free=false)
+  def add_product(product)
     return false if product.nil? || product.new_record?
-    #carts_products << CartsProduct.create(:product_id => product.id, :free => free)
     carts_products << CartsProduct.create(:product_id => product.id)
-  end
-
-  def has_free_product?(product_id)
-    #return !carts_products.find_by_product_id_and_free(product_id,true).nil?
-  end
-
-  def add_new_price(carts_product_id, new_price)
-    carts_products.find_by_id(carts_product_id).update_attributes!(:new_price => new_price)
-  end
- 
-  def get_new_price(carts_product_id)
-    return carts_products.find_by_id(carts_product_id).new_price
   end
 
   def destroy_duplicates
@@ -48,7 +34,7 @@ class Cart < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:product_id</tt> - an <i>id</i> of a <i>Product</i>
   # This method use <i>add_product</i>
-  def add_product_id(product_id, free=false)
+  def add_product_id(product_id)
     add_product(Product.find_by_id(product_id))
   end
 
@@ -60,11 +46,6 @@ class Cart < ActiveRecord::Base
     cart_product.each do |product|
       product.destroy
     end
-    # destroy free product
-    #free_products = carts_products.find_all_by_free(1)
-    #free_products.each do |free_product|
-    #  free_product.destroy
-    #end
   end
 
   # Empty this cart

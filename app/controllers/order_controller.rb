@@ -30,12 +30,12 @@ class OrderController < ApplicationController
 
     # TODO - include ActiveShipping
     # ShippingMethod is obligatory for valid an order
-    @shipping_method = ShippingMethodRule.find_by_id(session[:order_shipping_method_id])
-    unless @shipping_method
-      flash[:warning] = I18n.t('shipping_method',:count=>1).capitalize
-      redirect_to(:action => 'new')
-      return false
-    end
+    #@shipping_method = ShippingMethodRule.find_by_id(session[:order_shipping_method_id])
+    #unless @shipping_method
+    #  flash[:warning] = I18n.t('shipping_method',:count=>1).capitalize
+    #  redirect_to(:action => 'new')
+    #  return false
+    #end
     
     redirect_to(:action => 'payment') if action
     return true
@@ -81,9 +81,22 @@ class OrderController < ApplicationController
     valid = valid_shipment(false)
     return false unless valid
     
+    engine :special_offer_engine do |e|
+      rule_builder = SpecialOffer.new(e)
+      rule_builder.cart = @cart
+      rule_builder.rules
+    
+      @cart.products.each do |product|
+        e.assert product
+      end
+      e.assert @cart
+      e.match  
+    end
+    
+    
     address_invoice = @address_invoice
     address_delivery = @address_delivery
-    shipping_method = @shipping_method
+    #shipping_method = @shipping_method
     @order = Order.create(
       :user_id                => current_user.id,
       :address_delivery_attributes => {
@@ -108,9 +121,8 @@ class OrderController < ApplicationController
         :country_id => address_invoice.country_id, 
         :designation => 'toto'
         },      
-      :order_shipping_attributes => { :name => shipping_method.name, :price =>  @transporter_rule.variables },
-      #:voucher                => (voucher) ? voucher.value : nil,
-      #:transaction_number     => params[:trans],
+      #:order_shipping_attributes => { :name => shipping_method.name, :price =>  @transporter_rule.variables },
+      :order_shipping_attributes => { :name => "test", :price =>  10 },
       :reference              => @cart.id,
       :order_details_attributes => @cart.products.collect do |product|
         {
@@ -119,7 +131,9 @@ class OrderController < ApplicationController
           :price => product.price(false, false),
           :rate_tax => product.rate_tax,
           :sku => product.sku,
-          :product_id => product.id
+          :product_id => product.id,
+          :discount => product.promo,
+          :discount_price => product.new_price
         }
       end
       )

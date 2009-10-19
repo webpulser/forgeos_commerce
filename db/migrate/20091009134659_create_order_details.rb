@@ -3,9 +3,11 @@ class CreateOrderDetails < ActiveRecord::Migration
     create_table :order_details do |t|
       t.string :name,
         :description,
-        :sku
+        :sku,
+        :discount
       t.float :price,
-        :rate_tax
+        :rate_tax,
+        :discount_price
       t.belongs_to :order,
         :product
       t.timestamps
