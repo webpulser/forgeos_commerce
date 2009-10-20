@@ -1,51 +1,139 @@
 class Admin::VouchersController < Admin::BaseController
+  
   def index
-    @vouchers = Voucher.all
-  end
-
-  def new
-    @voucher = Voucher.new(params[:voucher])
-    render :action => 'create'
+    respond_to do |format|
+      format.html
+      format.json do
+        sort
+        render :layout => false
+      end
+    end
   end
 
   def create
-    params[:voucher]
-    @voucher = Voucher.new(params[:voucher])
-    if @voucher.save
-      flash[:notice] = I18n.t('voucher.create.success').capitalize
-      redirect_to(:action => 'index')
-    else
-      flash[:error] = I18n.t('voucher.create.failed').capitalize
+    return flash[:error] = 'Fields' unless params[:rule_builder]
+      
+    @main_attributes = %w(price title description weight sKU stock)
+    
+    @rule_condition = []
+    @rule_condition << params[:rule_builder]['for'] << ':product'
+    
+    # Build Action variables
+    variables = {}
+    params[:act][:targets].each_with_index do |action, index|
+      case "#{action}"
+      when "Discount price this product"
+        variables[:discount] = params[:act][:values][index].to_i
+        variables[:fixed_discount] = (params[:act][:conds][index] == "By percent" ? false : true)
+      when "Offer a product"
+        variables[:product_ids] = [params[:act][:values][index].to_i]
+      when "Offer free delivery"
+        variables[:shipping_ids] = params[:act][:values][index]
+      when "Discount cart"
+        variables[:cart_discount] = params[:act][:values][index]
+        variables[:percent] = (params[:act][:conds][index] == "By percent" ? false : true)
+      end
     end
-  end
-
-  def show
-    @voucher = Voucher.find_by_id(params[:id])
-  end
-
-  def edit
-    @voucher = Voucher.find_by_id(params[:id])
-  end
-
-  def update
-    @voucher = Voucher.find_by_id(params[:id])
-    if @voucher.update_attributes(params[:voucher])
-      flash[:notice] = I18n.t('voucher.update.success').capitalize
+    
+    if params[:rule_builder][:if] == 'All'
+      @rule = VoucherRule.new
+      @rule.name = params[:rule_builder][:name]
+      @rule.description = params[:rule_builder][:description]
+      
+      params[:rule][:targets].each_with_index do |rule_target, index|
+        build_a_rule(rule_target, index)
+      end
+      
+      if params[:rule_builder]['for'] == 'Category'
+        @rule_condition << "m.category.=(#{params[:rule_builder][:target]})"
+      end
+      
+      @rule.conditions = "[#{@rule_condition.join(', ')}]" 
+      @rule.variables = variables
+      @rule.save
     else
-      flash[:error] = I18n.t('voucher.update.failed').capitalize
+      rule_parent = nil
+      params[:rule][:targets].each_with_index do |rule_target, index|
+        @rule_condition = []
+        @rule_condition << params[:rule_builder]['for'] << ':product'
+        @rule = VoucherRule.new
+        @rule.parent = rule_parent
+        @rule.name = params[:rule_builder][:name]
+        @rule.description = params[:rule_builder][:description]
+        
+        build_a_rule(rule_target, index)
+        
+        if params[:rule_builder]['for'] == 'Category'
+          @rule_condition << "m.category.=(#{params[:rule_builder][:target]})"
+        end
+        
+        @rule.conditions = "[#{@rule_condition.join(', ')}]" 
+        @rule.variables = variables
+        @rule.save
+        rule_parent = @rule if index == 0
+      end
     end
-    render :action => 'edit'
+    redirect_to :action => 'index'
+  end
+  
+  def build_a_rule(rule_target, index)
+    rule_target.downcase!
+    if @main_attributes.include?(rule_target)
+      if rule_target == 'title' || rule_target == 'Title'
+        target = "m.name"
+      else
+        target = "m.#{rule_target}"
+      end
+    else
+      case "#{rule_target}"
+      when "Total items quantity"
+        target = "m.total_items"
+      when "Total weight"
+        target = "m.weight"
+      when "Total amount"
+        target = "m.total_with_tax)"
+      else
+        target = "m.#{rule_target})"
+      end
+    end
+
+    if params[:rule][:values][index].to_i == 0
+      value = "'#{params[:rule][:values][index]}'"
+    else
+      value = params[:rule][:values][index]
+    end
+    @rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
   end
 
-  def destroy
-    @voucher = Voucher.find_by_id(params[:id])
-    if @voucher.destroy
-      flash[:notice] = I18n.t('voucher.destroy.success').capitalize
-    else
-      flash[:error] = I18n.t('voucher.destroy.failed').capitalize
+
+private
+
+  def sort
+    columns = %w(rules.name rules.name active code rules.use)
+
+    per_page = params[:iDisplayLength].to_i
+    offset =  params[:iDisplayStart].to_i
+    page = (offset / per_page) + 1
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+
+    conditions = { :parent_id => nil }
+    options = { :page => page, :per_page => per_page }
+
+    includes = []
+    if params[:category_id]
+      conditions[:categories_elements] = { :category_id => params[:category_id] }
+      includes << :voucher_categories
     end
-    index
-    render :partial => 'list', :locals => { :vouchers => @vouchers }
+
+    options[:conditions] = conditions unless conditions.empty?
+    options[:include] = includes unless includes.empty?
+    options[:order] = order unless order.squeeze.blank?
+
+    if params[:sSearch] && !params[:sSearch].blank?
+      @vouchers = VoucherRule.search(params[:sSearch],options)
+    else
+      @vouchers = VoucherRule.paginate(:all,options)
+    end
   end
 
 end

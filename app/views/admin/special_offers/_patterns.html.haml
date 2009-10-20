@@ -1,0 +1,119 @@
+%div.end-conditions{ :style => 'display : none'}
+  %p.end-condition.pattern
+    %span= select_tag 'end[targets][]', options_for_select(['Date','Total number of offer use','Customer number of offer use'])
+    %span= select_tag 'end[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+    = text_field_tag 'end[values][]'
+    = link_to_function '', "add_rule('end-condition')", :class => 'small-icons green-add-icon'
+    = link_to_function '', "remove_rule(this,'end-condition')", :class => 'small-icons red-delete-icon'
+    .clear
+
+%div.action-conditions{ :style => 'display: none' }
+  - @actions = ['Discount price this product','Offer a product','Offer free delivery']
+
+  %p.action-Offeraproduct-cart.pattern
+    %span= select_tag 'act[targets][]', options_for_select(['Offer a product', 'Offer free delivery'], 'Offer a product'), {:onchange => "change_action(this,'action-condition','cart')"}
+    %span= select_tag 'act[values][]', options_from_collection_for_select(Product.all, :id, :name)
+    = link_to_function '', "add_action('action-Offeraproduct-cart')", :class => 'small-icons green-add-icon'
+    = link_to_function '', "remove_rule(this,'action-condition')", :class => 'small-icons red-delete-icon'
+    %br
+    .clear
+
+  %p.action-Offerfreedelivery-cart.pattern
+    %span= select_tag 'act[targets][]', options_for_select(['Offer a product', 'Offer free delivery'],'Offer free delivery'), {:onchange => "change_action(this,'action-condition','cart')"}
+    = link_to_function '', "add_action('action-Offeraproduct-cart')", :class => 'small-icons green-add-icon'  
+    = link_to_function '', "remove_rule(this,'action-condition')", :class => 'small-icons red-delete-icon'
+    %br
+    .clear
+
+
+  %p.action-Offeraproduct-productincart.pattern
+    %span= select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product', 'Offer free delivery'], 'Offer a product'), {:onchange => "change_action(this,'action-condition','productincart')"}
+    %span= select_tag 'act[values][]', options_from_collection_for_select(Product.all, :id, :name)
+    = link_to_function '', "add_action('action-Offeraproduct-productincart')", :class => 'small-icons green-add-icon'
+    = link_to_function '', "remove_rule(this,'action-condition')", :class => 'small-icons red-delete-icon'
+    %br
+    .clear
+
+  %p.action-Offerfreedelivery-productincart.pattern
+    %span= select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product', 'Offer free delivery'], 'Offer free delivery'), {:onchange => "change_action(this,'action-condition','productincart')"}
+    = link_to_function '', "add_action('action-Offerfreedelivery-productincart')", :class => 'small-icons green-add-icon'
+    = link_to_function '', "remove_rule(this,'action-condition')", :class => 'small-icons red-delete-icon'
+    %br
+    .clear
+
+  %p.action-Discountpricethisproduct-productincart.pattern
+    %span= select_tag 'act[targets][]', options_for_select(['Discount price this product','Offer a product', 'Offer free delivery'], 'Discount price this product'), {:onchange => "change_action(this,'action-condition','productincart')"}
+    %span= select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
+    = text_field_tag 'act[values][]'
+    = link_to_function '', "add_action('action-Offerfreedelivery-productincart')", :class => 'small-icons green-add-icon'
+    = link_to_function '', "remove_rule(this,'action-condition')", :class => 'small-icons red-delete-icon'
+    .clear
+
+  %p.action-Discountpricethisproduct-productinshop.pattern
+    %span= select_tag 'act[targets][]', options_for_select(['Discount price this product'], 'Discount price this product')
+    %span= select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
+    = text_field_tag 'act[values][]'
+    .clear
+
+  %p.action-Discountpricethisproduct-category.pattern
+    %span= select_tag 'act[targets][]', options_for_select(['Discount price this product'], 'Discount price this product')
+    %span= select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
+    = text_field_tag 'act[values][]'
+    .clear
+
+
+%div.rule-conditions{ :style => 'display: none'}
+
+  %p.rule-condition.pattern
+    %span= select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes}),{ :onchange => "change_rule(this,'rule-condition')" }
+    %span= select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+    = text_field_tag 'rule[values][]'
+    = link_to_function '', "add_rule('rule-condition')", :class => 'small-icons green-add-icon'
+    = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon'
+    .clear
+
+  - ['Price','Description', 'Weight', 'SKU', 'Stock'].each do |attribute|
+    %p{:class => "rule-#{attribute} pattern"}
+      %span= select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes, :selected => attribute}),{ :onchange => "change_rule(this,'rule-condition')" }
+      %span= select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+      = text_field_tag 'rule[values][]'
+      = link_to_function '', "add_rule('rule-condition')", :class => 'small-icons green-add-icon'
+      = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon'
+      .clear
+
+  %p.rule-Title.pattern
+    %span= select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes, :selected => 'Title'}),{ :onchange => "change_rule(this,'rule-condition')" }
+    %span= select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+    %span= select_tag 'rule[values][]', options_for_select(Product.all.collect {|p| [p.name, p.name]})
+    = link_to_function '', "add_rule('rule-condition')", :class => 'small-icons green-add-icon'
+    = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon'
+    %br
+    .clear
+
+  -@attributes.each do |attribute|
+    %p{:class => "rule-#{attribute.delete " "} pattern"}
+      %span= select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes, :selected => attribute}),{ :onchange => "change_rule(this,'rule-condition')" }
+      %span= select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+      -if Attribute.find_by_name(attribute).dynamic
+        = text_field_tag 'rule[values][]'
+      -else
+        %span= select_tag 'rule[values][]', options_for_select(Attribute.find_by_name(attribute).attribute_values.collect(&:name))
+      = link_to_function '', "add_rule('rule-condition')", :class => 'small-icons green-add-icon'
+      = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon'
+      -if !Attribute.find_by_name(attribute).dynamic
+        %br
+      .clear
+
+  -@cart_attributes.each do |attribute|
+    %p{:class => "rule-#{attribute.delete " "} pattern"}
+      %span= select_tag 'rule[targets][]', options_for_select(@cart_attributes, attribute),{ :onchange => "change_rule(this,'rule-condition')" }
+      %span= select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+      - if attribute == 'Shipping method'
+        %span= select_tag 'rule[values][]', options_for_select(TransporterRule.all( :conditions => { :parent_id => nil } ).collect(&:name))
+      - else
+        = text_field_tag 'rule[values][]'
+      = link_to_function '', "add_cart_rule()", :class => 'small-icons green-add-icon'
+      = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon'
+      - if attribute == 'Shipping method'
+        %br
+      .clear

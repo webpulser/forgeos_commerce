@@ -3,7 +3,7 @@
 - @cart_attributes = ['Total items quantity', 'Total weight', 'Total amount', 'Shipping method']
 - @disable_attributes = ['MAIN SETTINGS','ATTRIBUTES']
 
-- @for = Hash["Product in Shop", "Product", "Product in Cart", "Product", "Cart", "Cart"]
+- @for = Hash["Cart", "Cart"]
 
 - @condition_is = Hash["Is", "=="]
 - @conditions =  Hash["Is not", "not==","Equals or greater than",">=","Equals or less than","<=", "Greater than", ">", "Less than","<"]
@@ -13,7 +13,6 @@
     = text_field 'rule_builder', 'name', :id => 'special_offer_title'
     .interact-links
       = fg_submit_tag ('save_changes')
-      /= submit_tag 'Save special offer', :class => 'backgrounds interact-button'
       or
       =link_to 'Cancel',{:action => 'index'}, :class => 'back-link'
 
@@ -28,9 +27,7 @@
           %span.conditioner
             = I18n.t('special_offer.for').capitalize
           %div
-            = select_tag 'rule_builder[for]', options_for_select(Hash['Category', "Category"].collect{|c| [c[0], c[1]]}+@for.collect{|c| [c[0], c[1]] }), {:onchange => "change_select_for(this)"}
-          %div
-            = select 'rule_builder', 'target', ProductCategory.all.collect(&:name)
+            = select_tag 'rule_builder[for]', options_for_select(Hash['Product in Cart','Product'].collect{|c| [c[0], c[1]]}+@for.collect{|c| [c[0], c[1]] }), {:onchange => "change_select_for(this)"}
           .clear
         .specialOffers_bottom_arrow
 
@@ -107,13 +104,9 @@
             Inactive
       .clear
     .step
-      /%a.small-icons.duplicate{ :href => "#" }
-      /  duplicate special offer
-      /%a.small-icons.delete{ :href => "#" }
-      /  delete special offer
+      Voucher code :
+      = text_field_tag 'voucher_code'
     
   .clear
 
-
-
-= render :partial => 'patterns'
+= render :partial => 'admin/special_offers/patterns'

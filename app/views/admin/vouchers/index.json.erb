@@ -1,0 +1,23 @@
+<% 
+  output = {
+    :iTotalDisplayRecords => @vouchers.total_entries || 0,
+    :aaData => @vouchers.collect do |voucher|
+      link_id = voucher.id
+      [
+        content_tag(:div, '', :id => link_id),
+        voucher.name,
+        select_tag(:status, options_for_select([['Active',1], ['Inactive',0]], voucher.active)),
+        voucher.use,
+        voucher.code,
+        link_to_remote('', :url => { :controller => 'vouchers', :action => 'destroy', :id => voucher.id },
+           :method => :delete,
+           :confirm => I18n.t('voucher.destroy.confirm').capitalize,
+           :success => "removedataTablesRow('#destroy_#{link_id}')",
+           :html => {
+             :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
+        })
+      ]
+    end
+  }
+-%>
+<%= output.to_json -%>
