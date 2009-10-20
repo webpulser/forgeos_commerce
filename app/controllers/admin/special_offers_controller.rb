@@ -128,7 +128,8 @@ class Admin::SpecialOffersController < Admin::BaseController
 private
 
   def sort
-    columns = %w(rules.name active use)
+    columns = %w(rules.name rules.name active rules.use)
+
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1

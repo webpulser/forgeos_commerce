@@ -18,21 +18,26 @@ private
   end
 
   def sort
-    columns = %w(lastname email order total last_order joined_on)
+    columns = %w(lastname lastname email '' '' '' created_at activated_at)
+
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
-    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+
+    order_column = params[:iSortCol_0].to_i
+    order = "#{columns[order_column]} #{params[:iSortDir_0].upcase}"
 
     conditions = {}
     includes = []
-    options = { :page => page, :per_page => per_page }
+    group_by = []
+    options = { :order => order, :page => page, :per_page => per_page }
 
     if params[:category_id]
       conditions[:categories_elements] = { :category_id => params[:category_id] }
       includes << :user_categories
     end
 
+    options[:group] = group_by.join(', ') unless group_by.empty?
     options[:conditions] = conditions unless conditions.empty?
     options[:include] = includes unless includes.empty?
 
