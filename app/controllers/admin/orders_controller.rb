@@ -95,7 +95,7 @@ class Admin::OrdersController < Admin::BaseController
 
     # calculate total, subtotal and taxes
     total = editing_order.total
-    subtotal = editing_order.total(false,true,false,false)
+    subtotal = editing_order.total(false,true,false)
     #taxes = editing_order.taxes
 
     return render :json => { :result => 'success', :id => @order.id, :total => total, :subtotal => subtotal} #, :taxes => taxes}

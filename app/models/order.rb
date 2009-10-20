@@ -59,19 +59,14 @@ class Order < ActiveRecord::Base
   end
 
   # Returns order's amount
-  def total(with_tax=false, with_currency=true,with_shipping=true, with_vouchers=true )
+  def total(with_tax=false, with_currency=true,with_shipping=true)
     amount = 0
     order_details.each do |order_detail|
       amount += order_detail.total(with_tax, with_currency)
     end
     amount += order_shipping.price if with_shipping && order_shipping
-    amount -= voucher.to_f if with_vouchers
     return ("%01.2f" % amount).to_f
   end
-
-  #def total(with_tax=false, with_currency=true)
-  #  order_details.inject(0) { |total, order_detail| total += order_detail.total(with_tax, with_currency) } + transporter_price - voucher.to_f
-  #end
 
   def taxes
     ("%01.2f" % (total(true) - total)).to_f
