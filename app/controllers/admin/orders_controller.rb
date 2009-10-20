@@ -1,11 +1,14 @@
+require 'ruleby'
+
 class Admin::OrdersController < Admin::BaseController
+  include Ruleby
   before_filter :get_orders, :only => [:index]
   before_filter :new_order, :only => [:new, :create]
   before_filter :get_order, :only => [:show, :edit, :update, :destroy, :pay, :accept, :sent, :total]
   before_filter :get_civilities_and_countries, :only => [:new, :edit, :create, :update]
+  before_filter :get_available_transporters, :only => [:edit]
 
   after_filter :render_list, :only => [:pay, :accept, :sent]
-  
   def index
     respond_to do |format|
       format.html
@@ -118,6 +121,20 @@ private
   def get_civilities_and_countries
     @civilities = I18n.t('civility.label')
     @countries = Country.all :order => 'name ASC'
+  end
+    
+  def get_available_transporters
+    @transporter_ids = []
+    engine :transporter_engine do |e|
+      rule_builder = Transporter.new(e)
+      rule_builder.transporter_ids = @transporter_ids
+      rule_builder.rules
+      @order.order_details.each do |order_detail|  
+        e.assert order_detail.product
+      end
+      e.match
+    end
+    @available_transporters = TransporterRule.find_all_by_id(@transporter_ids.uniq!)
   end
     
   def render_list

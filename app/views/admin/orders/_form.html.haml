@@ -142,11 +142,7 @@
             = link_to I18n.t('delivery').capitalize, '#', :class => "small-icons panel"
             .option-panel-content
               .delivery-method
-                /- shipping_grouped_options = grouped_options_for_select(TransporterRule.all.collect{ |transporter|
-                /-   [transporter.name, transporter.id.to_s]
-                /- }, order.order_shipping.name, I18n.t('shipping_method.change').capitalize)
-
-                = select_tag :order_shipping, options_for_select(TransporterRule.all(:conditions => {:parent_id => nil}).collect{ |transporter| [ transporter.name, transporter.variables ]}), :class => 'select-order-shipping'
+                = select_tag :order_shipping, options_for_select(@available_transporters.collect{ |transporter| [ transporter.name, transporter.variables ]}), :class => 'select-order-shipping' unless @available_transporters.nil?
               .clear
 
               .name-input
