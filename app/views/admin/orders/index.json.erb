@@ -4,8 +4,10 @@
   output = { 
     :iTotalDisplayRecords => @orders.total_entries || 0,
     :aaData => @orders.collect do |order|
+      odd = "odd" 
       details_count = order.order_details.count
-      product_names = details_count > 1 ? '<br/><p class="product-name" >'+order.order_details.collect(&:name).join('<br />')+'</p>' : ''
+      product_names = details_count > 1 ? '<br/><p class="product-name" ><span class="'+odd+'">'+order.order_details.collect(&:name)+'</span></p>' : ''
+      odd = "even" 
       link_id = "order_#{order.id}"
       [
         (
