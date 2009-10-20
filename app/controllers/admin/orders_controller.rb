@@ -116,6 +116,7 @@ private
   
   def new_order
     @order = Order.new(params[:order])
+    @available_transporters = TransporterRule.find_all_by_active(true)
   end
 
   def get_civilities_and_countries
