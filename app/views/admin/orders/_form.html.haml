@@ -93,7 +93,7 @@
 
         .order-totals
           .order-subtotal= I18n.t('order.subtotal').capitalize
-          %span.order-subtotal= order.total(false,true,false,false)
+          %span.order-subtotal= order.total(false,true,false)
           %span.order-subtotal-currency= $currency.html
           - if order.order_shipping
             %div= I18n.t('shipping').capitalize
@@ -108,9 +108,9 @@
             = content_tag(:span, order.voucher, :class => 'voucher_value')
             = " #{$currency.html}"
 
-          %div.change-voucher
-            = select_tag :voucher, options_for_select(Voucher.all.collect{ |voucher| [voucher.name, voucher.value] }.unshift([I18n.t('voucher.change').capitalize, nil])), :class => 'select-voucher'
-          = f.hidden_field :voucher
+          /%div.change-voucher
+          /  = select_tag :voucher, options_for_select(Voucher.all.collect{ |voucher| [voucher.name, voucher.value] }.unshift([I18n.t('voucher.change').capitalize, nil])), :class => 'select-voucher'
+          /= f.hidden_field :voucher
           %span
 
           -# order.special_offers.each do |offer|
