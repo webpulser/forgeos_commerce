@@ -1,7 +1,6 @@
 - order_states_for_select = Order.aasm_states.collect{ |state| [I18n.t(state.name, :scope => [:order,:status]),state.name.to_s] }
 .backgrounds.big-header
-  %h1
-    =@user.fullname
+  %h1= @user.fullname
   .interact-links
     = link_to I18n.t('user.update.action'), [:edit, :admin, @user], :class => 'backgrounds interact-button'
     = I18n.t(:or)
@@ -14,7 +13,7 @@
         = I18n.t(:order, :count => 0).capitalize
       - else
         %span.small-icons.order
-          =@user.orders.all.sum(&:total)
+          = @user.orders.all.sum(&:total)
           = $currency.html
         = "#{I18n.t('user.spent_on')} #{@user.orders.length}"
         = @user.orders.length > 1 ? I18n.t('order.other') : I18n.t('order.one')
@@ -22,20 +21,15 @@
     = dataTables_tag :url => admin_orders_path(:filter => 'user', :user_id => @user.id, :skin => 'read_only', :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false}","{'sTitle':'#{I18n.t(:id)}'}","{'sTitle':'#{I18n.t(:total)}'}","{'sTitle':'#{I18n.t(:product, :count => 1)}'}","{'sTitle':'#{I18n.t(:created_on)}'}","{'sTitle':'#{I18n.t(:customer, :count => 1)}','bVisible': false}","{'sTitle':'#{I18n.t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
     .padding-wrap
       .fieldset
-        %h3
-          = I18n.t('user.customer_infos').capitalize
+        %h3= I18n.t('user.customer_infos').capitalize
         .main-infos
           .main-infos-cutomer
-            %h4.small-icons
-              = I18n.t('user.contact_infos').capitalize
-            %p
-              =@user.phone
-            %p.customer-email
-              =@user.email
+            %h4.small-icons= I18n.t('user.contact_infos').capitalize
+            %p= @user.phone
+            %p.customer-email= @user.email
           .main-info-separation.big-separation
           .order-delivery-adress
-            %h4.small-icons
-              = I18n.t('address.delivery', :count => 1).capitalize
+            %h4.small-icons= I18n.t('address.delivery', :count => 1).capitalize
             -@user.address_deliveries.each do |address_delivery|
               %p= address_delivery.address
               %p= address_delivery.address_2 if address_delivery.address_2
@@ -45,12 +39,10 @@
               %p= address_delivery.country.name
               %br
               -if address_delivery == @user.address_deliveries.first and @user.address_deliveries.length > 1
-                %h4
-                  = I18n.t('address.delivery', :count => 2).capitalize
+                %h4= I18n.t('address.delivery', :count => 2).capitalize
           .main-info-separation.big-separation
           .order-billing-adress
-            %h4.small-icons
-              = I18n.t('address.invoice', :count => 1).capitalize
+            %h4.small-icons= I18n.t('address.invoice', :count => 1).capitalize
             %p= @user.address_invoice.address
             %p= @user.address_invoice.address_2 if @user.address_invoice.address_2
             %p
@@ -76,8 +68,8 @@
       .inner-step
         %p
           = I18n.t('created_on').capitalize
-          =@user.created_at.to_date
+          = @user.created_at.to_date
           %br
           = I18n.t('by')
-          =@user.fullname
+          = @user.fullname
   .clear

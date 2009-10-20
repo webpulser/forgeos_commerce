@@ -4,40 +4,31 @@
       = I18n.t('address.delivery', :count => 1)
     .option-panel-content
       .street-input
-        %label
-          = I18n.t(:designation).capitalize
+        %label= I18n.t(:designation).capitalize
         = address_delivery.text_field :designation
       .street-input
-        %label
-          = I18n.t(:civility, :count => 1).capitalize
+        %label= I18n.t(:civility, :count => 1).capitalize
         = address_delivery.select :civility, I18n.t('civility.label'), :prompt => I18n.t('please_select')
       .clear
       .street-input
-        %label
-          = I18n.t(:lastname).capitalize
+        %label= I18n.t(:lastname).capitalize
         = address_delivery.text_field :name
       .street-input
-        %label
-          = I18n.t(:firstname).capitalize
+        %label= I18n.t(:firstname).capitalize
         = address_delivery.text_field :firstname
       .street-input
-        %label
-          = I18n.t(:address, :count => 1).capitalize
+        %label= I18n.t(:address, :count => 1).capitalize
         = address_delivery.text_field :address
       .street-input
-        %label
-          = I18n.t(:address, :count => 1).capitalize
+        %label= I18n.t(:address, :count => 1).capitalize
         = address_delivery.text_field :address_2
       .zip-code-input
-        %label
-          = I18n.t(:zip_code).capitalize
+        %label= I18n.t(:zip_code).capitalize
         = address_delivery.text_field :zip_code
       .town-input
-        %label
-          = I18n.t(:city).capitalize
+        %label= I18n.t(:city).capitalize
         = address_delivery.text_field :city
       .country-select
-        %label
-          = I18n.t(:country).capitalize
+        %label= I18n.t(:country).capitalize
         = address_delivery.collection_select 'country_id', Country.find(:all, :order => "name"), :id, :printable_name, :selected => user.country_id, :prompt => I18n.t('please_select')
       .clear

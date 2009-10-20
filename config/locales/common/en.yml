@@ -149,8 +149,6 @@ en:
   city: city
   zip_code: 'zip code'
   designation: 'designation'
-  telephone: 'telephone'
-  other_telephone: 'other telephone'
   track_number: 'tracking number'
   back: back
   thumbnail:

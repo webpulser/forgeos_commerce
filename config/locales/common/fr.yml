@@ -147,8 +147,6 @@ fr:
   city: ville
   zip_code: 'code postal'
   designation: 'désignation'
-  telephone: 'téléphone'
-  other_telephone: 'autre téléphone'
   track_number: 'numéro de suivi'
   back: retour
   thumbnail:
