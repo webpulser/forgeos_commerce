@@ -18,7 +18,7 @@ private
   end
 
   def sort
-    columns = %w(lastname lastname email '' '' '' created_at activated_at)
+    columns = %w(lastname lastname email count(orders.id) '' max(orders.created_at) created_at activated_at)
 
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
@@ -35,6 +35,12 @@ private
     if params[:category_id]
       conditions[:categories_elements] = { :category_id => params[:category_id] }
       includes << :user_categories
+    end
+
+    case order_column
+    when 3, 5
+      group_by << 'people.id'
+      includes << :orders
     end
 
     options[:group] = group_by.join(', ') unless group_by.empty?
