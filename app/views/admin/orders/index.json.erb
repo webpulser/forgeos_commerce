@@ -4,8 +4,8 @@
   output = { 
     :iTotalDisplayRecords => @orders.total_entries || 0,
     :aaData => @orders.collect do |order|
-      details_count = order.order_details.count
-      product_names = details_count > 1 ? '<br/><p class="product-name" >'+order.order_details.collect{|detail| "<span class=\"#{cycle('even', 'odd')}\">#{detail.name}</span>"}.join('')+'</p>' : ''
+      details_count = order.order_details.count 
+      product_names = details_count > 1 ? '<br/><p class="product-name" >'+order.order_details.all.collect{|detail| "<span class=\"#{cycle('even', 'odd')}\">#{detail.name}</span>"}.join('')+'</p>' : ''
       link_id = "order_#{order.id}"
       [
         (

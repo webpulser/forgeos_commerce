@@ -168,7 +168,8 @@
       .step
         = link_to I18n.t('order.product.add'), '#', :class => 'small-icons small-icons-verti-small-blue-plus add-order-detail'
         - unless order.new_record?
-          = link_to I18n.t('order.invoice.show'), [:bill, :admin, order], :class => 'small-icons preview'
+          -#= link_to I18n.t('order.invoice.show'), [:bill, :admin, order], :class => 'small-icons preview'
+          = content_tag :span, I18n.t('order.invoice.show').capitalize, :class => 'small-icons preview disabled'
           = link_to I18n.t('order.destroy.action'), [:admin, order], :method => :delete, :confirm => I18n.t('order.destroy.confirm'), :class => 'small-icons delete'
       - unless order.new_record?
         .step.disabled
