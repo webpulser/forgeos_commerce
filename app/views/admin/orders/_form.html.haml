@@ -150,7 +150,7 @@
                 %span.order_shipping_name= order.order_shipping.name
                 = order_shipping_form.hidden_field :name
               .price-input
-                = order_shipping_form.label :price, I18n.t('price.one').capitalize
+                = order_shipping_form.label :price, I18n.t('price', :count => 1).capitalize
                 %span
                   = content_tag(:span, order.order_shipping.price, :class => 'order_shipping_price')
                   = " #{$currency.html}"

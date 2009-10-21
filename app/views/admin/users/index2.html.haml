@@ -13,8 +13,8 @@
       \:
       - genders = []
       - genders << [I18n.t('all').capitalize, [0,1,2]]
-      - genders << [I18n.t('woman.other').capitalize, [1,2]]
-      - genders << [I18n.t('man.other').capitalize, [0]]
+      - genders << [I18n.t('woman', :count => 2).capitalize, [1,2]]
+      - genders << [I18n.t('man', :count => 2).capitalize, [0]]
       = select 'filter', 'gender', genders, :selected => @gender
       = label_tag 'filter[country]', I18n.t('country').capitalize
       \:

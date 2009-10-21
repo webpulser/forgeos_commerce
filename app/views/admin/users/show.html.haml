@@ -16,7 +16,7 @@
           = @user.orders.all.sum(&:total)
           = $currency.html
         = "#{I18n.t('user.spent_on')} #{@user.orders.length}"
-        = @user.orders.length > 1 ? I18n.t('order.other') : I18n.t('order.one')
+        = I18n.t('order', :count => @user.orders.length)
     %table#table.datatable    
     = dataTables_tag :url => admin_orders_path(:filter => 'user', :user_id => @user.id, :skin => 'read_only', :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false}","{'sTitle':'#{I18n.t(:id)}'}","{'sTitle':'#{I18n.t(:total)}'}","{'sTitle':'#{I18n.t(:product, :count => 1)}'}","{'sTitle':'#{I18n.t(:created_on)}'}","{'sTitle':'#{I18n.t(:customer, :count => 1)}','bVisible': false}","{'sTitle':'#{I18n.t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
     .padding-wrap

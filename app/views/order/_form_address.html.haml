@@ -31,13 +31,13 @@
     = f.text_field :firstname
   %p
     %label
-      = I18n.t('address.one').capitalize
+      = I18n.t('address', :count => 1).capitalize
     \:
     %br
     = f.text_field :address
   %p
     %label
-      = I18n.t('address.one').capitalize
+      = I18n.t('address', :count => 1).capitalize
     \:
     %br
     = f.text_field :address_2

@@ -18,8 +18,7 @@
               = user.orders.all.sum(&:total)
               = $currency.html
             = "#{I18n.t('user.spent_on')} #{user.orders.length}"
-            = user.orders.length > 1 ? I18n.t('order.other') : I18n.t('order.one')
-
+            = I18n.t('order', :count => user.orders.length)
 
       - unless user.new_record? || user.orders.empty?
         %table#table.datatable
