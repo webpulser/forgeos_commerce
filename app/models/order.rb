@@ -80,4 +80,13 @@ class Order < ActiveRecord::Base
       return "#{count} #{I18n.t('product', :count => 2)}"
     end
   end
+  
+  def weight
+    weight=0
+    self.order_details.each do |product| 
+      weight+=product.product.weight
+    end
+    return weight
+  end
+  
 end
