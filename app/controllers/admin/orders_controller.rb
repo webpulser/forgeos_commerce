@@ -120,7 +120,7 @@ private
   end
 
   def get_civilities_and_countries
-    @civilities = I18n.t('civility.label')
+    @civilities = I18n.t('civility.select')
     @countries = Country.all :order => 'name ASC'
   end
     

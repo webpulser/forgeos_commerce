@@ -26,7 +26,6 @@
 
       .padding-wrap
         = render :partial => 'fieldset_account_informations', :locals => { :user => user, :f => f }
-        = render :partial => 'fieldset_contact_informations', :locals => { :user => user, :f => f }
 
         = render :partial => 'fields_for_addresses_invoices', :locals => { :user => user, :f => f }
         = render :partial => 'fields_for_addresses_deliveries', :locals => { :user => user, :f => f }
