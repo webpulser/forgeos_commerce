@@ -194,16 +194,10 @@ module OrderHelper
     content += '</div>'
   end
 
-  # Display the voucher's form_tag or the activate voucher <i>session[:order_voucher_ids]</i>
-  def display_voucher
+  # Display the voucher's form_tag or the activate voucher
+  def display_voucher(voucher=false)
     content = '<div class="order_voucher" id="order_voucher">'
-    if session[:order_voucher_ids]
-      session[:order_voucher_ids].each do |voucher_id|
-        voucher = Voucher.find(voucher_id)
-        content += "#{I18n.t('voucher', :count=>1)} #{voucher.name} : -" + voucher.value.to_s + 
-        " #{(voucher.percent ? '%' : $currency.html)} " + link_to_remove_voucher(voucher.id) + '<br />'
-      end
-    end
+
     content += "#{I18n.t('voucher', :count=>1)} : " + 
     text_field_tag(:voucher_code, "", :id => 'voucher_code') + " " + 
     button_to_function(
@@ -213,6 +207,11 @@ module OrderHelper
         :with => "'voucher_code='+$('#voucher_code').val()"
       )
     )
+    
+    if voucher
+      content += "<br />Avec le code promo => #{voucher.code} : #{voucher.description}"
+    end
+    
     content += '</div>'
   end
 

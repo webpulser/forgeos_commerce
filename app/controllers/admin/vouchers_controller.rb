@@ -1,4 +1,5 @@
 class Admin::VouchersController < Admin::BaseController
+  before_filter :get_voucher, :only => [:destroy]
   
   def index
     respond_to do |format|
@@ -37,6 +38,7 @@ class Admin::VouchersController < Admin::BaseController
     
     if params[:rule_builder][:if] == 'All'
       @rule = VoucherRule.new
+      @rule.code = params[:voucher_code]
       @rule.name = params[:rule_builder][:name]
       @rule.description = params[:rule_builder][:description]
       
@@ -59,6 +61,7 @@ class Admin::VouchersController < Admin::BaseController
         @rule = VoucherRule.new
         @rule.parent = rule_parent
         @rule.name = params[:rule_builder][:name]
+        @rule.code = params[:voucher_code]
         @rule.description = params[:rule_builder][:description]
         
         build_a_rule(rule_target, index)
@@ -85,13 +88,14 @@ class Admin::VouchersController < Admin::BaseController
         target = "m.#{rule_target}"
       end
     else
+      p "TARGET => #{rule_target}"
       case "#{rule_target}"
-      when "Total items quantity"
+      when "total items quantity"
         target = "m.total_items"
       when "Total weight"
         target = "m.weight"
       when "Total amount"
-        target = "m.total_with_tax)"
+        target = "m.total)"
       else
         target = "m.#{rule_target})"
       end
@@ -106,7 +110,20 @@ class Admin::VouchersController < Admin::BaseController
   end
 
 
+  def destroy
+    if @voucher.destroy
+      flash[:notice] = "Voucher destroy"
+    else
+      flash[:error] = "Voucher not destroy"
+    end
+    redirect_to :action => 'index'    
+  end
+
 private
+
+  def get_voucher
+    @voucher = VoucherRule.find_by_id(params[:id])
+  end
 
   def sort
     columns = %w(rules.name rules.name active code rules.use)

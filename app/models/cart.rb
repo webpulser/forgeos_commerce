@@ -5,9 +5,11 @@
 # * <tt>carts_product</tt> - <i>CartsProduct</i>
 # * <tt>products</tt> - <i>Product</i>
 class Cart < ActiveRecord::Base
+  attr_accessor :voucher_discount, :voucher_discount_price, :voucher
+  
   has_many :carts_products, :dependent => :destroy
   has_many :products, :through => :carts_products
-
+  
   belongs_to :user
   before_save :destroy_duplicates
   

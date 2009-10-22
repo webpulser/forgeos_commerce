@@ -16,13 +16,19 @@
   .clear
   %br
   = display_transporters
-  =# display_voucher
+  #order_voucher
+    = display_voucher
   .clear
 
   .total-div
+    .total-label
+      Prix Total du panier
+    #transporter_price.total-price
+      ="#{@cart.total} €"
+  .total-div
     .total-label.last
-      Prix Total
-    #transporter_price.total-price.last
+      Prix Total avec livraison et voucher
+    #order_total_price.total-price.last
       ="#{@cart.total} €"
   .clear
   %br

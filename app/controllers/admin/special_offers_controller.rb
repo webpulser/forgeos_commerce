@@ -93,7 +93,7 @@ class Admin::SpecialOffersController < Admin::BaseController
       end
     else
       case "#{rule_target}"
-      when "Total items quantity"
+      when "total items quantity"
         target = "m.total_items"
       when "Total weight"
         target = "m.weight"
