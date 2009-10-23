@@ -15,20 +15,16 @@
       = link_to_remote('ajouter une adresse', :url => { :controller => 'order', :action => 'add_address' })
   .clear
   %br
-  = display_transporters
-  #order_voucher
-    = display_voucher
+  - if @cart.free_shipping
+    = "La livraison est offerte !"
+  - else
+    = display_transporters
   .clear
 
   .total-div
     .total-label
       Prix Total du panier
     #transporter_price.total-price
-      ="#{@cart.total} €"
-  .total-div
-    .total-label.last
-      Prix Total avec livraison et voucher
-    #order_total_price.total-price.last
       ="#{@cart.total} €"
   .clear
   %br

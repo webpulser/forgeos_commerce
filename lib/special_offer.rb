@@ -27,9 +27,10 @@ class SpecialOffer < Ruleby::Rulebook
         
         ## Product in cart OR cart
         else
+          
+          ## FIXME - need to works with vouchers
           # Discount product price --product_in_cart 
           if !special_offer.variables[:discount].nil?
-            p "aha"*20
             rate = special_offer.variables[:discount]
             
             new_price = special_offer.variables[:fixed_discount] ? product.price-rate : product.price-((product.price * rate) / 100)    
@@ -39,8 +40,6 @@ class SpecialOffer < Ruleby::Rulebook
             else
               product.update_attribute('promo',"-#{rate}%")
             end
-            p "new price : #{product.new_price}"
-            p "save my attributes mother fucker !!!!!"
           end
                         
           # Free products  --cart and product_in_cart              
@@ -49,8 +48,18 @@ class SpecialOffer < Ruleby::Rulebook
           end if special_offer.variables[:product_ids]
         
           # Discount cart total price  --cart
-          #@cart.discount_cart(special_offer.variables[:cart_discount], special_offer.variables[:percent]) if special_offer.variables[:cart_discount]
-        
+          if special_offer.variables[:cart_discount]
+            rate = special_offer.variables[:cart_discount]
+            discount_price = special_offer.variables[:fixed_discount] ? rate : (@cart.total * rate) / 100         
+            @cart.special_offer_discount_price = discount_price
+            special_offer.variables[:fixed_discount]? @cart.special_offer_discount = "-#{rate}€" : @cart.special_offer_discount = "-#{rate}%"
+          end
+          
+          # Free delivery
+          if special_offer.variables[:shipping]
+            @cart.free_shipping = true
+          end
+          
        end
        retract product
       end

@@ -11,10 +11,10 @@ class OrderController < ApplicationController
 
   before_filter :can_create_order?, :only => :create
   before_filter :get_cart, :only => [:new,:informations,:paye, :update_transporter, :add_voucher]
+  before_filter :special_offer, :only => [:new, :create, :update_transporter]
+  before_filter :voucher, :only =>[:new, :create, :update_transporter]
   before_filter :shipping_methods, :only => :new
-  before_filter :special_offer, :only => [:new, :add_voucher, :create]
-  before_filter :voucher, :only =>[:add_voucher, :create]
-  
+    
   # Save in session <i>address_invoice_id</i> and <i>address_delivery_id</i>.
   # Returns false if miss an address or if <i>shipping_method</i> is not validate by user, returns true else
   def valid_shipment(action=true)
@@ -29,11 +29,11 @@ class OrderController < ApplicationController
       redirect_to(:action => 'new')
       return false
     end
- 
+    
     session[:transporter_rule_id] = params[:transporter_rule_id] if params[:transporter_rule_id]
     @transporter = TransporterRule.find_by_id(session[:transporter_rule_id])
 
-    unless @transporter
+    unless @transporter or @cart.free_shipping
       flash[:warning] = I18n.t('shipping_method',:count=>1).capitalize
       redirect_to(:action => 'new')
       return false
@@ -46,7 +46,7 @@ class OrderController < ApplicationController
   # Payment integration
   def payment
     # TODO - include ActiveMerchant
-    valid_shipment(false)
+    #valid_shipment(false)
   end
  
   # Subscribe or edit user's informations
@@ -73,6 +73,14 @@ class OrderController < ApplicationController
     address_invoice = @address_invoice
     address_delivery = @address_delivery
     #shipping_method = @shipping_method
+    if @cart.free_shipping
+      transporter_name = "Free shipping"
+      transporter_price = 0
+    else
+      transporter_name = @transporter.name
+      transporter_price = @transporter.variables
+    end
+    
     @order = Order.create(
       :user_id                => current_user.id,
       :address_delivery_attributes => {
@@ -97,8 +105,9 @@ class OrderController < ApplicationController
         :country_id => address_invoice.country_id, 
         :designation => 'toto'
         },      
-      :order_shipping_attributes => { :name => @transporter.name, :price =>  @transporter.variables},
+      :order_shipping_attributes => { :name => transporter_name, :price =>  transporter_price},
       :reference              => @cart.id,
+      :voucher_discount => @cart.voucher_discount_price,
       :order_details_attributes => @cart.products.collect do |product|
         {
           :name => product.name,
@@ -117,7 +126,7 @@ class OrderController < ApplicationController
       product = Product.find_by_id(product_id)
       @order.order_details.create!(:name => product.name, :description => product.description, :price => 0, :rate_tax => 0, :sku => product.sku, :product_id => product.id, :discount => "free product", :discount_price => 0)
     end
-      
+    session.delete(:voucher_code) if session[:voucher_code]
     @cart.destroy
     flash[:notice] = I18n.t('thank_you').capitalize
     session[:order_confirmation] = @order.id
@@ -131,7 +140,7 @@ class OrderController < ApplicationController
   end
 
   def update_total
-    special_offer
+    #special_offer
     transporter_price = 0    
     if session[:order_shipping_method_id]
       offer_delivery = false
@@ -141,28 +150,13 @@ class OrderController < ApplicationController
         
     
     order_total = @cart.total + transporter_price
-    order_total -= @cart.voucher_discount_price if @cart.voucher_discount_price
-    voucher = VoucherRule.find_by_id(@cart.voucher)
-    voucher.nil? ? session[:voucher_code].delete : session[:voucher_code] = voucher.code
-    
-    order_total = 0 if order_total < 0
+
     render(:update) do |page|
-      page.replace_html('order_voucher', display_voucher(voucher))
-      #page.replace_html('order_transporters', display_transporters)
-      page.replace_html('order_total_price', "#{order_total} #{$currency.html}")
-      #page.replace_html('transporter_price', "#{@cart.total + transporter_price} #{$currency.html}")
+      #page.replace_html('order_total_price', "#{order_total} #{$currency.html}")
+      page.replace_html('transporter_price', "#{@cart.total + transporter_price} #{$currency.html}")
       page.visual_effect :highlight, 'transporter_price'
       page.visual_effect :highlight, 'order_total_price'
     end
-  end
-
-  def add_voucher
-    update_total
-  end
-
-  def remove_voucher
-    session[:order_voucher_ids].delete_if{|voucher_id| voucher_id.to_s == params[:voucher_id]}
-    update_total
   end
 
   def update_transporter
@@ -259,7 +253,8 @@ private
     engine :voucher_engine do |e|
       rule_builder = Voucher.new(e)
       rule_builder.cart = @cart
-      rule_builder.code = params[:voucher_code] || session[:voucher_code]
+      rule_builder.code = session[:voucher_code]
+      rule_builder.free_product_ids = @free_product_ids
       rule_builder.rules
       @cart.carts_products.each do |cart_product|
         e.assert cart_product.product

@@ -2,8 +2,10 @@ require 'ruleby'
 class CartController < ApplicationController
   include Ruleby
   before_filter :get_cart
-  before_filter :get_cross_selling, :only => [ :index ]
-  before_filter :special_offer, :only => [:index]
+  before_filter :get_cross_selling, :only => [:index]
+  before_filter :check_voucher_code, :only => [:add_voucher]
+  before_filter :special_offer, :only => [:index, :add_voucher]
+  before_filter :voucher, :only => [:index, :add_voucher]
   
   # Show <i>Cart</i>
   def index
@@ -43,8 +45,6 @@ class CartController < ApplicationController
   # * <tt>:id</tt> - a <i>Product</i> object
   def remove_product
     reset_order_session
-    #p "pouf"*10
-    #puts params[:id]
     flash[:notice] = I18n.t(:product_has_been_remove).capitalize if @cart.remove_product(params[:id])
     redirect_or_update
   end
@@ -74,6 +74,21 @@ class CartController < ApplicationController
   rescue
     redirect_to(:action => 'index')   
   end
+  
+  def add_voucher
+    voucher = VoucherRule.find_by_id(@cart.voucher)    
+    if voucher.nil?
+      session.delete(:voucher_code) 
+    else
+      session[:voucher_code] = voucher.code
+      render(:update) do |page|
+        page.replace_html('voucher_message', "With voucher code #{voucher.code} : #{voucher.name}")
+        page.replace_html('cart_total', "#{@cart.total} €")
+        page.visual_effect :highlight, 'cart_total'
+      end
+    end
+  end
+  
   
 protected
   # Update <i>session[:order_shipping_method_id]</i> and <i>session[:order_voucher_ids]</i> at <i>nil</i>
@@ -105,6 +120,32 @@ protected
       e.match
     end
   end
+
+  def check_voucher_code
+    @voucher_code = params[:voucher_code] || session[:voucher_code]
+    voucher = VoucherRule.find_all_by_active_and_code(true,@voucher_code)
+    render(:update) do |page|
+      page.replace_html('voucher_message', "Le code promo #{@voucher_code} est invalide")
+      page.replace_html('cart_total', "#{@cart.total} €")
+      session.delete(:voucher_code) if session[:voucher_code]
+    end if voucher.blank? or voucher.nil?
+  end
+
+  def voucher
+    engine :voucher_engine do |e|
+      rule_builder = Voucher.new(e)
+      rule_builder.cart = @cart
+      rule_builder.code = @voucher_code || session[:voucher_code]
+      rule_builder.free_product_ids = @free_product_ids
+      rule_builder.rules
+      @cart.carts_products.each do |cart_product|
+        e.assert cart_product.product
+      end
+      e.assert @cart
+      e.match
+    end  
+  end
+
 
   def get_cross_selling
     

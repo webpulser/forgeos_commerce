@@ -6,6 +6,8 @@ class CreateOrders < ActiveRecord::Migration
         :voucher,
         :transaction_number,
         :reference
+      t.float :voucher_discount,
+        :special_offer_discount
       t.timestamps
     end  
   end

@@ -55,9 +55,14 @@
             Free
         %span.total-label.last
           Prix total
-        %span.total-price.last
+        %span.total-price.last#cart_total
           ="#{@cart.total} €"
       .clear
+      #voucher_message
+        - if @cart.voucher
+          -voucher = VoucherRule.find_by_id(@cart.voucher)
+          = "With voucher code #{voucher.code} : #{voucher.name}" unless voucher.nil?
+      = display_voucher
       .link_order
         = link_to I18n.t('make_order').capitalize, :controller => 'order', :action => 'new'
         = link_to 'poursuivre ma commande'.capitalize, :back

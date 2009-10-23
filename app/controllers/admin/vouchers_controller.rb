@@ -29,7 +29,7 @@ class Admin::VouchersController < Admin::BaseController
       when "Offer a product"
         variables[:product_ids] = [params[:act][:values][index].to_i]
       when "Offer free delivery"
-        variables[:shipping_ids] = params[:act][:values][index]
+        variables[:shipping] = 'free'
       when "Discount cart"
         variables[:cart_discount] = params[:act][:values][index]
         variables[:percent] = (params[:act][:conds][index] == "By percent" ? false : true)

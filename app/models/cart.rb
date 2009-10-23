@@ -6,7 +6,8 @@
 # * <tt>products</tt> - <i>Product</i>
 class Cart < ActiveRecord::Base
   attr_accessor :voucher_discount, :voucher_discount_price, :voucher
-  
+  attr_accessor :special_offer_discount, :special_offer_discount_price
+  attr_accessor :free_shipping
   has_many :carts_products, :dependent => :destroy
   has_many :products, :through => :carts_products
   
@@ -83,6 +84,9 @@ class Cart < ActiveRecord::Base
     carts_products.each do |cart_product|
       total += cart_product.product.new_price.nil? ? cart_product.product.price : cart_product.product.new_price
     end
+    
+    # discount total price if there are a valid voucher
+    total -=  self.voucher_discount_price if self.voucher_discount_price  
     return total
   end
 
@@ -99,25 +103,6 @@ class Cart < ActiveRecord::Base
       return product.weight unless carts_product.nil?
     end
     return 0
-  end
-
-  # Returns all <i>ShippingMethodDetail</i> available for this cart
-  def get_shipping_methods
-    shipping_methods = []
-    Transporter.find(:all).each do |transporter|
-      shipping_methodls += transporter.shipping_methods.find(:all, :conditions => { :weight_min_lte => weight, :weight_max_gte => weight})
-      shipping_methods += transporter.shipping_methods.find(:all, :conditions => { :price_min_lte => total(true), :price_max_gte => total(true)})
-    end
-    shipping_methods.uniq
-  end
-
-  # Returns all <i>ShippingMethod</i> available for this cart
-  def get_transporters
-    shipping_methods = []
-    ShippingMethodRule.all( :conditions => { :parent_id => nil } ).each do |transporter|
-      shipping_methods << transporter
-    end
-    shipping_methods.uniq
   end
   
   def total_items

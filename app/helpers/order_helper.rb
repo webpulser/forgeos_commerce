@@ -85,49 +85,6 @@ module OrderHelper
   end
 
   # Display all shipping methods available for cart
-#  def display_shipping_methods(cart=current_user.cart)
-#    content = '<div class="order_transporters" id="order_transporters">'
-#    if cart.get_shipping_method.empty?
-#      content += I18n.t('can_not_place_order')
-#    else
-#      cart.get_shipping_method.each do |shipping_method|
-#        content += '<div class="order_shipping_method">'
-#          content += '<span class="order_shipping_method_name">'
-#            content += radio_button_tag(
-#                        'shipping_method_id',
-#                        shipping_method.id,
-#                        (shipping_method.id == session[:order_shipping_method_id]),
-#                        :onclick => remote_function(
-#                          :url => { :action => 'update_transporter', :id => shipping_method.id }
-#                        )
-#                      )
-#            content += shipping_method.fullname
-#          content += '</span>'
-#          content += '<span class="order_transporter_price">'
-#          offer_delivery = false
-#          if session[:order_voucher_ids]
-#            session[:order_voucher_ids].each do |voucher_id|
-#              voucher = Voucher.find(voucher_id)
-#              offer_delivery ||= voucher.offer_delivery
-#            end
-#          end
-#          unless offer_delivery
-#            content += "#{shipping_method.price} #{$currency.html}"
-#          else
-#            content += "<s>#{shipping_method.price}</s> <b>0</b> #{$currency.html}"
-#          end
-#          content += '</span>'
-#
-#          content += '<div class="order_shipping_method_description">'
-#            content += shipping_method.transporter.description
-#          content += '</div>'
-#        content += '</div>'
-#      end
-#    end
-#    content += '</div>'
-#  end
-
-  # Display all shipping methods available for cart
   def display_transporters()
     content = '<div class="order_transporters" id="order_transporters">'
 
@@ -195,23 +152,20 @@ module OrderHelper
   end
 
   # Display the voucher's form_tag or the activate voucher
-  def display_voucher(voucher=false)
+  def display_voucher
     content = '<div class="order_voucher" id="order_voucher">'
 
     content += "#{I18n.t('voucher', :count=>1)} : " + 
     text_field_tag(:voucher_code, "", :id => 'voucher_code') + " " + 
     button_to_function(
-      I18n.t('add').capitalize, 
+      I18n.t('add').capitalize,
+      #:url => { :controller => 'order', :action => 'add_voucher' }, 
       remote_function(
-        :url => { :controller => 'order', :action => 'add_voucher' },
+        :url => { :controller => 'cart', :action => 'add_voucher'},
         :with => "'voucher_code='+$('#voucher_code').val()"
       )
     )
-    
-    if voucher
-      content += "<br />Avec le code promo => #{voucher.code} : #{voucher.description}"
-    end
-    
+        
     content += '</div>'
   end
 
