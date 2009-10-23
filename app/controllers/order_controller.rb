@@ -8,7 +8,7 @@ require 'ruleby'
 class OrderController < ApplicationController
 
   include Ruleby
-
+  
   before_filter :can_create_order?, :only => :create
   before_filter :get_cart, :only => [:new,:informations,:paye, :update_transporter, :add_voucher]
   before_filter :special_offer, :only => [:new, :create, :update_transporter]
@@ -108,6 +108,7 @@ class OrderController < ApplicationController
       :order_shipping_attributes => { :name => transporter_name, :price =>  transporter_price},
       :reference              => @cart.id,
       :voucher_discount => @cart.voucher_discount_price,
+      :special_offer_discount => @cart.special_offer_discount_price,
       :order_details_attributes => @cart.products.collect do |product|
         {
           :name => product.name,

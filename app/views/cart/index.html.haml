@@ -53,6 +53,11 @@
             ="Free product : #{product.name}"
           %span.total-price
             Free
+        - if @cart.special_offer_discount
+          %span.total-label
+            Offre spécial
+          %span.total-price
+            = @cart.special_offer_discount
         %span.total-label.last
           Prix total
         %span.total-price.last#cart_total

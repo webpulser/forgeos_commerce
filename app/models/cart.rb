@@ -84,9 +84,11 @@ class Cart < ActiveRecord::Base
     carts_products.each do |cart_product|
       total += cart_product.product.new_price.nil? ? cart_product.product.price : cart_product.product.new_price
     end
-    
+    # discount total price if there are a special offer
+    total -= self.special_offer_discount_price if self.special_offer_discount_price
     # discount total price if there are a valid voucher
-    total -=  self.voucher_discount_price if self.voucher_discount_price  
+    total -=  self.voucher_discount_price if self.voucher_discount_price
+     
     return total
   end
 
