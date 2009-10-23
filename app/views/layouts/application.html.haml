@@ -86,6 +86,13 @@
         -Page.find_all_by_active(true, :conditions => {:single_key => nil, :active => true}).each do |page|
           =link_to page.title, {:controller => 'url_catcher', :action => 'page', :url => page.url}
           |
+      %script{:type => "text/javascript", :charset => "utf-8"}
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        try {
+        var pageTracker = _gat._getTracker("UA-11244835-1");
+        pageTracker._trackPageview();
+        } catch(err) {}
 
     = javascript_include_tag 'front_demo/jquery.jcarousel.pack', :cache => false
     = javascript_include_tag %w(front_demo/jquery-ui front_demo/customselects front_demo/jquery.jqzoom1.0.1 front_demo/init), :cache => 'base'
