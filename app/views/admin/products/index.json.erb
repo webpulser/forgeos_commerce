@@ -14,8 +14,8 @@
         product_array <<
           content_tag(:div, '<div class="image">&nbsp'+ image_tag(picture || 'admin/no-image.png') +'</div>', :id => link_id, :class => 'some-variants plus') <<
             content_tag(:div, params[:mode] == 'selection' ? product.name : link_to(product.name, [:admin, product]) + content_tag(:span, product.products.count), :class => 'product-name') +
-              content_tag(:p, product.products.collect(&:name).join('<br />'), :class=>'product-name') <<
-                content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price') +
+              content_tag(:p, product.products.collect { |variant| content_tag(:span,variant.name, :class => cycle('even','odd')) }, :class=>'product-name') <<
+                content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'currency'), :class => 'price') +
                   content_tag(:p, product.products.collect{ |p| "#{p.price} #{$currency.html}"}.join('<br />')) <<
                     content_tag(:div, product.stock, :class => 'stocks' ) + '<br /><p class="stocks">' + product.products.collect(&:stock).join('<br />') + '</p>'
       else
