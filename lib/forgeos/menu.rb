@@ -5,7 +5,11 @@ module Forgeos
     :html => { :class => 'left'}
   }
   AdminMenu << { :title => 'catalog',
-    :url => { :controller => 'admin/products' }, :i18n => true,
+    :url => [
+      { :controller => 'admin/products' },
+      { :controller => 'admin/packs' }
+    ],
+    :i18n => true,
     :html => { :class => 'left'}
   }
   AdminMenu << { :title => 'site_builder',

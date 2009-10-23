@@ -2,6 +2,7 @@
 #content.grid_12.alpha.omega
   .backgrounds.header
     = link_to content_tag(:span,I18n.t('product.create.action').capitalize, :class=>'big-icons create-product'), new_admin_product_path, :class=>'backgrounds action-button'
+    = link_to content_tag(:span,I18n.t('pack.create.action').capitalize, :class=>'big-icons create-pack'), new_admin_pack_path, :class=>'backgrounds action-button'
     #search.right
       = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
     .backgrounds.search-form

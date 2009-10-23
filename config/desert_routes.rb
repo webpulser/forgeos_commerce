@@ -35,7 +35,7 @@ namespace :admin do |admin|
 
   admin.resources :product_types
   admin.resources :products, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }
-  admin.resources :packs, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }, :controller => :products
+  admin.resources :packs, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }, :controller => :products, :requirements => { :type => 'pack' }
   #admin.resources :special_offers, :collection => { :special_offer => [:get, :post] }
   admin.resources :special_offers
 end

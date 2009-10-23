@@ -15,7 +15,7 @@
         = f.text_field :url
       .grid_9.omega
         .grid_4.alpha.omega
-          = f.label :price, "#{I18n.t('price', :count => 1).capitalize}<sup class=\"required\">*</sup>"
+          = label_tag :price, "#{I18n.t('price', :count => 1).capitalize}<sup class=\"required\">*</sup>"
           = f.text_field :price, :class => 'backgrounds grid_2 alpha omega', :id => 'price'
           %span.currency
             = $currency.html
@@ -64,7 +64,7 @@
             %li{ :class => (picture.id == product.picture_ids.first) ? 'first-image' : ''}
               = link_to_function '', "$(this).parents('li').remove(); check_product_first_image() ", :title => I18n.t('media.picture.destroy.confirm').capitalize, :class => 'big-icons trash'
               = link_to '', [:edit, :admin, picture], :class => 'big-icons edit'
-              = hidden_field_tag "#{f.object_name}[attachment_ids][]", picture.id
+              = hidden_field_tag "#{f.object_name}[attachment_ids][]", picture.id, :id => "attachment_#{picture.id}"
               = image_tag picture.public_filename('')
               .handler
                 .inner
@@ -77,14 +77,13 @@
           = f.text_area :description, :cols => 80, :class => 'mceEditor'
       .option-panel.open
         .backgrounds.content-header
-        %a.small-icons.panel{ :href => "#" }
-          = I18n.t('attributes')
+        = link_to I18n.t('attributes'), '#', :class => 'small-icons panel'
         #product-types-panel.option-panel-content
           = render :partial => 'attributes', :locals => { :product_type => product.product_type, :product => product }
+          .clear
       .option-panel
         .backgrounds.content-header
-        %a.small-icons.panel{ :href => "#" }
-          linked files
+        = link_to I18n.t('media.linked'), '#', :class => 'small-icons panel'
         .option-panel-content
           %a#add-file.backgrounds.button.right{ :href => "#" }
             %span.big-icons.add-media
@@ -98,8 +97,7 @@
           .clear
       .option-panel.disabled
         .backgrounds.content-header
-        %a.small-icons.panel{ :href => "#" }
-          variants
+        = link_to I18n.t('product.variant', :count => 2), '#', :class => 'small-icons panel'
         .option-panel-content
           %a.backgrounds.button.right{ :href => "#" }
             %span.small-icons.add-variant
@@ -110,6 +108,10 @@
               %a.small-icons.panel{ :href => "#" }
                 Domaine de Villemont 2008 37cl
             .variant
+          .clear
+
+      - if product.kind_of?(Pack)
+        = render :partial => 'products_popup', :locals => { :form => f }
 
     #right-sidebar.grid_4.omega
       .step.status.open
@@ -139,25 +141,22 @@
           = link_to I18n.t('product.duplicate').capitalize, [:duplicate, :admin, product], :class => 'small-icons duplicate'
           = link_to I18n.t('product.destroy.action').capitalize, [:admin, product], :confirm => I18n.t('product.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
       .step.open
-        %a.small-icons.step-title{ :href => "#" }
-          Associated to collection
+        = link_to(I18n.t('product.associated_collection', :count => 2), '#', :class => 'small-icons step-title')
         #association-product-tree.inner-step.init-tree
+          = hidden_field_tag "#{f.object_name}[product_category_ids][]" 
           %ul
-            = hidden_field_tag "#{f.object_name}[product_category_ids][]" 
             = render :partial => 'admin/categories/associated_elements', :locals => { :association_id => 'product_category_ids', :element => product, :category_ids => product.product_category_ids, :categories => ProductCategory.find_all_by_parent_id(nil) }
           .clear
       .step.open
-        %a.small-icons.step-title{ :href => "#" }
-          = I18n.t('delivery').capitalize
+        = link_to I18n.t(:delivery), '#', :class => 'small-icons step-title'
         .inner-step.weight
           %label{ :for => "weight" }
-            = I18n.t('weight').capitalize
+            = I18n.t(:weight).capitalize
             %br
-          = f.text_field 'weight', :class => 'product_weight', :id => 'weight'
+          = f.text_field :weight, :class => 'product_weight', :id => 'weight'
           KG
       .step.open
-        %a.small-icons.step-title{ :href => "#" }
-          Tags
+        = link_to I18n.t(:tag, :count => 2), '#', :class => 'small-icons step-title'
         .inner-step.tags
           .wrap_tags
             = hidden_field_tag 'tag_list[]', ''
@@ -169,8 +168,7 @@
                 = link_to '&nbsp;', '#', :class => 'big-icons gray-destroy'
           .clear
       .step.open
-        %a.small-icons.step-title{ :href => "#" }
-          = I18n.t('meta_description').capitalize
+        = link_to I18n.t(:meta_description, :count => 2), '#', :class => 'small-icons step-title'
         .inner-step.meta
           - product.build_meta_info unless product.meta_info
           - f.fields_for :meta_info do |meta_info|
@@ -190,8 +188,7 @@
                 \:
               = meta_info.text_area :keywords, :class => 'text'
       .step.disabled
-        %a.small-icons.step-title{ :href => "#" }
-          Graphic template
+        = link_to I18n.t(:graphic_template, :count => 1), '#', :class => 'small-icons step-title'
         .inner-step.glossy
           %select{ :name => "design" }
             %option{ :selected => "selected", :value => "default" }

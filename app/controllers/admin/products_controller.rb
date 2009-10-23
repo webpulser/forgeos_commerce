@@ -121,7 +121,8 @@ private
   end
 
   def new_product
-    @product = Product.new(params[:product])
+    params[:product] = params[:pack] if params[:pack]
+    @product = params[:type] == 'pack' ? Pack.new(params[:product]) : Product.new(params[:product])
   end
 
   def sort

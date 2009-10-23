@@ -2,10 +2,14 @@ en:
   product:
     one : product
     other: products
-    all: 'all products'
-    in_stock: 'in stock'
-    stop_sales: 'stop sales if out of stock'
-    showed_on_homepage: 'showed on homepage'
+    all: all products
+    in_stock: in stock
+    stop_sales: stop sales if out of stock
+    showed_on_homepage: showed on homepage
+    linked_files: linked files
+    variant:
+      one: variant
+      other: variants
     show:
       all: see all products
     sold:
@@ -21,19 +25,59 @@ en:
       one: most viewed
       other: most viewed
     associated_collection:
-      one: 'associated collection'
-      other: 'associated collections'
+      one: associated collection
+      other: associated collections
     create:
-      success: 'the product was successfully created'
-      failed: 'a problem occured during the product creation'
-      action: 'create product'
+      success: the product was successfully created
+      failed: a problem occured during the product creation
+      action: create product
     update:
-      success: 'the product was successfully updated'
-      failed: 'a problem occured during the product update'
-      action: 'modify product'
+      success: the product was successfully updated
+      failed: a problem occured during the product update
+      action: modify product
     destroy:
-      success: 'the product was successfully deleted'
-      failed: 'a problem occured during the product deletion'
-      confirm: 'are you sure to delete this product ?'
-      action: 'delete product'
-    duplicate: 'duplicate product'
+      success: the product was successfully deleted
+      failed: a problem occured during the product deletion
+      confirm: are you sure to delete this product ?
+      action: delete product
+    duplicate: duplicate product
+  pack:
+    one : pack
+    other: packs
+    all: all packs
+    in_stock: in stock
+    stop_sales: stop sales if out of stock
+    showed_on_homepage: showed on homepage
+    products:
+      add: add products
+    show:
+      all: see all packs
+    sold:
+      one: "{{count}} sale"
+      other: "{{count}} sales"
+    viewed:
+      one: "viewed {{count}} time"
+      other: "viewed {{count}} times"
+    best_seller:
+      one: best seller
+      other: best sellers
+    most_viewed:
+      one: most viewed
+      other: most viewed
+    associated_collection:
+      one: associated collection
+      other: associated collections
+    create:
+      success: the pack was successfully created
+      failed: a problem occured during the pack creation
+      action: create pack
+    update:
+      success: the pack was successfully updated
+      failed: a problem occured during the pack update
+      action: modify pack
+    destroy:
+      success: the pack was successfully deleted
+      failed: a problem occured during the pack deletion
+      confirm: are you sure to delete this pack ?
+      action: delete pack
+    duplicate: duplicate pack

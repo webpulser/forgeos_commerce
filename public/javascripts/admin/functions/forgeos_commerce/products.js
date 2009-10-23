@@ -35,3 +35,17 @@ function add_product_to_order_detail(id, name, sku, price, price_with_currency, 
 function check_product_first_image(){
   $('#product-images .sortable li:eq(0)').addClass('first-image');
 }
+
+function add_products_to_pack(){
+  var current_table = $('#table-products').dataTableInstance();
+  indexes = current_table.fnGetSelectedIndexes();
+  for(var i=0; i<indexes.length; i++){
+    name = current_table.fnGetData(indexes[i]).slice(-3,-2);
+    id = current_table.fnGetData(indexes[i]).slice(-4,-3);
+    price = current_table.fnGetData(indexes[i]).slice(-1);
+    sku = current_table.fnGetData(indexes[i]).slice(-2,-1);
+
+    $('#pack-products').append('<div class="block-container"><input type="hidden" name="pack[product_ids][]" value="'+id+'" /><span class="block-type"><span class="handler"><span class="inner">&nbsp;</span></span>'+sku+'</span><span class="block-name">'+name+'<span class="file-size"> - '+price+'</span></span><a href="#" class="big-icons gray-destroy"></a></div>');
+  }
+  $(current_table.fnGetSelectedNodes()).toggleClass('row_selected');
+}

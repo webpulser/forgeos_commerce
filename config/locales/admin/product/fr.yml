@@ -2,10 +2,14 @@ fr:
   product:
     one : produit
     other: produits
-    all: 'tous les produits'
-    in_stock: 'en stock'
+    all: tous les produits
+    in_stock: en stock
     stop_sales: "arréter les ventes si le produit n'est plus en stock"
     showed_on_homepage: "Affiché sur la page d'acceuil"
+    linked_files: fichiers liés
+    variant:
+      one: variant
+      other: variantes
     show:
       all: voir tous les produits
     sold:
@@ -21,19 +25,59 @@ fr:
       one: plus vu
       other: plus vus
     associated_collection:
-      one: 'collection associée'
-      other: 'collections associées'
+      one: collection associée
+      other: collections associées
     create:
-      success: 'le produit a bien été créé'
-      failed: 'un problème est survenu lors de la création du produit'
-      action: 'créer un produit'
+      success: le produit a bien été créé
+      failed: un problème est survenu lors de la création du produit
+      action: créer un produit
     update:
-      success: 'le produit a bien été mis à jour'
-      failed: 'un problème est survenu lors de la mise à jour du produit'
-      action: 'éditer produit'
+      success: le produit a bien été mis à jour
+      failed: un problème est survenu lors de la mise à jour du produit
+      action: éditer produit
     destroy:
-      success: 'le produit a bien été supprimé'
-      failed: 'un problème est survenu lors de la suppression du produit'
-      confirm: 'êtes-vous sûr de vouloir de supprimé ce produit ?'
-      action: 'supprimer produit'
-    duplicate: 'dupliquer produit'
+      success: le produit a bien été supprimé
+      failed: un problème est survenu lors de la suppression du produit
+      confirm: êtes-vous sûr de vouloir de supprimé ce produit ?
+      action: supprimer produit
+    duplicate: dupliquer produit
+  pack:
+    one : pack
+    other: packs
+    all: tous les packs
+    in_stock: en stock
+    stop_sales: "arréter les ventes si le pack n'est plus en stock"
+    showed_on_homepage: "Affiché sur la page d'acceuil"
+    products:
+      add: ajouter des produits
+    show:
+      all: voir tous les packs
+    sold:
+      one: "{{count}} vente"
+      other: "{{count}} ventes"
+    viewed:
+      one: "vu {{count}} fois"
+      other: "vu {{count}} fois"
+    best_seller:
+      one: meilleur vente
+      other: meilleures ventes
+    most_viewed:
+      one: plus vu
+      other: plus vus
+    associated_collection:
+      one: collection associée
+      other: collections associées
+    create:
+      success: le pack a bien été créé
+      failed: un problème est survenu lors de la création du pack
+      action: créer un pack
+    update:
+      success: le pack a bien été mis à jour
+      failed: un problème est survenu lors de la mise à jour du pack
+      action: éditer pack
+    destroy:
+      success: le pack a bien été supprimé
+      failed: un problème est survenu lors de la suppression du pack
+      confirm: êtes-vous sûr de vouloir de supprimé ce pack ?
+      action: supprimer pack
+    duplicate: dupliquer pack

@@ -44,7 +44,7 @@
         &nbsp;
       %span.panel= I18n.t('media.linked', :count => 2)
       .option-panel-content
-        .grid_9.sortable
+        .grid_9
           - @product.attachments.all(:conditions => { :type_not => 'Picture'}).each do |attachment|
             .block-container
               %span.block-type= attachment.type.to_s.upcase
@@ -55,12 +55,39 @@
                 %hr.block-separator 
         .clear
 
-    /
+    - if @product.is_a?(Pack)
       .option-panel.open
         .backgrounds.content-header
-          &nbsp;
-      %span.panel
-        = I18n.t('attributes')
+        &nbsp;
+        %span.panel= I18n.t(:product, :count => 2)
+        .option-panel-content
+          .grid_9
+            - @product.products.each do |product|
+              .block-container
+                %span.block-type= product.sku
+                %span.block-name
+                  = product.name
+                  %span.file-size= " - #{product.price} #{$currency.html}"
+                - unless product == @product.products.last
+                  %hr.block-separator 
+      .clear
+
+    .option-panel.open
+      .backgrounds.content-header
+        &nbsp;
+      %span.panel= I18n.t(:attributes)
+      .option-panel-content
+        - @product.product_type.product_attributes.each do |attribute|
+          .fake-hr
+            %span.option-second-title
+              = attribute.name
+          - if attribute.dynamic?
+            - dynamic_attribute_value = @product.dynamic_attribute_values.find_by_attribute_id(attribute.id)
+            = dynamic_attribute_value.value
+          - else
+            = @product.attribute_values.find_all_by_attribute_id(attribute.id).collect(&:name).join(', ')
+          .clear
+    .clear
 
   #right-sidebar.grid_4.omega
     .step.status.open
@@ -72,7 +99,6 @@
         = I18n.t('product.showed_on_homepage').capitalize
 
     .step
-      = link_to I18n.t('product.create.action').capitalize, new_admin_product_path, :class => 'small-icons plus'
       = link_to I18n.t('product.duplicate').capitalize, duplicate_admin_product_path(@product), :class => 'small-icons duplicate'
 
     .step.open
