@@ -70,8 +70,13 @@
             - product_categories.each do |category|
               %li= link_to category.name, catalog_path(:category_name=> category.name, :url => nil)
     .content
-      .yield= yield
-
+      .before_breadcrumbs
+      .breadcrumbs
+        .inner-breadcrumbs
+          = link_to I18n.t(:home), :root
+          &gt;
+          = yield :title
+      = yield
       .clear
     .footer
       .footer_categories_links

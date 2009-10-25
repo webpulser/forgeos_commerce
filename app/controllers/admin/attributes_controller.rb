@@ -50,10 +50,11 @@ class Admin::AttributesController < Admin::BaseController
   def update
     if @attribute.update_attributes(params[:attribute])
       flash[:notice] = I18n.t('attribute.update.success').capitalize
+      return redirect_to(admin_attributes_path)
     else
       flash[:error] = I18n.t('attribute.update.failed').capitalize
+      render :action => :edit
     end
-    return redirect_to(admin_attributes_path)
   end
 
   # Destroy an attribute

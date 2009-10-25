@@ -13,7 +13,7 @@ class CatalogController < ApplicationController
       @products = Product.all(:include => :product_categories,:conditions => {:active => true, :deleted=>[false, nil], :categories_elements=>{:category_id=>@product_categories}})
     else
       @category_choice = ProductCategory.find_by_id(@category_choice)
-      @products = @category_choice.products.find_all_by_active(true)
+      @products = @category_choice.elements.find_all_by_active(true)
     end
     
     if params[:url]

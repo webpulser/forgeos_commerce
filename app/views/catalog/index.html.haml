@@ -1,11 +1,3 @@
-/%div{ :style => "float: left" }
-/  = display_catalog @products
-.before_breadcrumbs
-.breadcrumbs
-  .inner-breadcrumbs
-    =link_to 'Accueil', :root
-    &gt;
-    = @product_category.name
 .inner-content
   -if !@selected_product.nil?
     .product-list
@@ -39,3 +31,4 @@
         %h1
           Il n'y a pas de produit dans cette catégorie.
           = link_to "Retour à l'accueil", :root
+- content_for :title, @product_category.name

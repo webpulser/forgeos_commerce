@@ -1,13 +1,8 @@
-.before_breadcrumbs
-.breadcrumbs
-  .inner-breadcrumbs
-    =link_to 'Accueil', '/'
-    >
-    Mon panier
-
 .inner-content
   .product-list
     = step_order(3)
   .cart-step-content.informations
     #order.order
       = render :partial => 'new'
+
+- content_for :title, I18n.t(:cart, :count => 1)
