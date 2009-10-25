@@ -29,5 +29,10 @@
     %br
     = f.password_field :password_confirmation
   %p
+      = f.label :lang, I18n.t(:lang).capitalize
+    %br
+    = f.select :lang, I18n.available_locales.collect{ |locale| [I18n.t(locale, :scope => [:lang, :full]),locale.to_s]}, :prompt => I18n.t(:please_select)
+
+  %p
     = submit_tag I18n.t('sign_up').capitalize, :class =>'submit-button'
   .clear

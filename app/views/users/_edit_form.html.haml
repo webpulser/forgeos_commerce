@@ -1,19 +1,25 @@
 - form_for current_user, :html => { :method => :put } do |f|
   %p
     %b
-      = f.label :lastname, I18n.t('lastname').capitalize
+      = f.label :lastname, I18n.t(:lastname).capitalize
       \:
     = f.text_field :lastname
   %p
     %b
-      = f.label :fistname, I18n.t('firstname').capitalize
+      = f.label :fistname, I18n.t(:firstname).capitalize
       \:
     = f.text_field :firstname
   %p
     %b
-      = f.label :email, I18n.t('email').capitalize
+      = f.label :email, I18n.t(:email).capitalize
       \:
     = f.text_field :email
+  %p
+    %b
+      = f.label :lang, I18n.t(:lang).capitalize
+      \:
+    = f.select :lang, I18n.available_locales.collect{ |locale| [I18n.t(locale, :scope => [:lang, :full]),locale.to_s]}, :prompt => I18n.t(:please_select)
+
   = submit_tag I18n.t('save').capitalize
   = link_to I18n.t('back').capitalize, user_path(current_user)
 .clear
