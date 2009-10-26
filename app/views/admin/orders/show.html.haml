@@ -6,7 +6,7 @@
     n°
     = @order.id
   %span.header-separator
-  %span= @order.created_at.to_s(:short)
+  %span= @order.created_at.to_s(:format => :default)
   .interact-links
     = link_to I18n.t('order.update.action').capitalize, [:edit, :admin, @order], :class => 'backgrounds interact-button'
     = I18n.t('or')
@@ -56,7 +56,11 @@
                 %td= image_tag(picture.public_filename(:thumb))
               - else
                 %td= image_tag('admin/no-image.png')
-              %td.product-name= detail.name
+              %td.product-name
+                - if product
+                  = link_to detail.name, [:admin, detail.product]
+                - else
+                  = detail.name
               %td= detail.sku
               %td= detail.price
               %td= @order.order_details.count('sku',:conditions => { :sku => detail.sku })

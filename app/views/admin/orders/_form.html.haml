@@ -9,8 +9,7 @@
       = order.id
     %span.header-separator
     - unless order.created_at.nil?
-      %span= order.created_at.to_s(:short) 
-      %span.header-separator
+      %span= @order.created_at.to_s(:format => :default)
     .interact-links
       = submit_tag I18n.t('save_changes').capitalize, :class => 'backgrounds interact-button'
       = I18n.t('or')
