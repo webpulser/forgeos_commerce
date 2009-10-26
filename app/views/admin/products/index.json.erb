@@ -12,7 +12,7 @@
       if product.kind_of? Pack
 
         product_array <<
-          content_tag(:div, '<div class="image">&nbsp'+ image_tag(picture || 'admin/no-image.png') +'</div>', :id => link_id, :class => 'some-variants plus') <<
+          content_tag(:div, '<div class="image"><div class="handler"></div>&nbsp'+ image_tag(picture || 'admin/no-image.png') +'</div>', :id => link_id, :class => 'some-variants plus handler_container') <<
             content_tag(:div, params[:mode] == 'selection' ? product.name : link_to(product.name, [:admin, product]) + content_tag(:span, product.products.count), :class => 'product-name') +
               content_tag(:p, product.products.collect { |variant| content_tag(:span,variant.name, :class => cycle('even','odd')) }, :class=>'product-name') <<
                 content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'currency'), :class => 'price') +
@@ -21,7 +21,7 @@
       else
 
         product_array <<
-          content_tag(:div, image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product') <<
+          content_tag(:div,'<div class="handler"></div>'+  image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product handler_container') <<
             content_tag(:div, params[:mode] == 'selection' ? product.name : link_to(product.name, [:admin, product]), :class => 'product-name')
         product_array << content_tag(:div, product.sku) if params[:mode] == 'selection'
         product_array <<

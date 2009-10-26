@@ -4,7 +4,7 @@
     :aaData => @special_offers.collect do |special_offer|
       link_id = special_offer.id
       [
-        content_tag(:div, '', :id => link_id),
+         content_tag(:div, '<div class="handler"></div><div class="small-icons offers"></div>', :id => link_id, :class => 'handler_container'),
         special_offer.name,
         select_tag(:status, options_for_select([['Active',1], ['Inactive',0]], special_offer.active)),
         special_offer.use,

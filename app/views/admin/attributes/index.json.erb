@@ -6,7 +6,7 @@
     link_id = "attribute_#{attribute.id}"
   %>
   [
-  '<%= escape_javascript content_tag(:div, '&nbsp;', :id => link_id, :class => "small-icons #{attribute.class.to_s.underscore}") %>',
+  '<%= escape_javascript content_tag(:div, "<div class='handler'></div><div class='small-icons #{attribute.class.to_s.underscore}'></div>", :id => link_id, :class => 'handler_container') -%>',
   '<%= escape_javascript content_tag(:div, link_to(attribute.name, admin_attribute_path(attribute)), :class => 'product-name') -%>',
   '<%= attribute.access_method %> ',
   '<%= escape_javascript(

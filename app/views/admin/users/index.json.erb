@@ -5,7 +5,7 @@
       link_id = "user_#{user.id}"
       klass = user.active? ? 'see-on' : 'see-off'
       [
-      content_tag(:div, '&nbsp;', :id => link_id, :class => 'small-icons user-ico'),
+      content_tag(:div, '<div class="handler"></div><div class="small-icons user-ico"></div>', :id => link_id, :class => 'handler_container'),
       content_tag(:div, link_to(user.fullname, [:admin, user]), :class => 'user-name'),
       content_tag(:div, mail_to(user.email, user.email, :class => 'truncate', :title => user.email), :class => 'email'),
       user.orders.count,
