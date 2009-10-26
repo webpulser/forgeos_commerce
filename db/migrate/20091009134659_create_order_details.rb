@@ -4,10 +4,12 @@ class CreateOrderDetails < ActiveRecord::Migration
       t.string :name,
         :description,
         :sku,
-        :discount
+        :voucher_discount,
+        :special_offer_discount
       t.float :price,
         :rate_tax,
-        :discount_price
+        :voucher_discount_price,
+        :special_offer_discount_price
       t.belongs_to :order,
         :product
       t.timestamps

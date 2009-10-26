@@ -109,16 +109,18 @@ class OrderController < ApplicationController
       :reference              => @cart.id,
       :voucher_discount => @cart.voucher_discount_price,
       :special_offer_discount => @cart.special_offer_discount_price,
-      :order_details_attributes => @cart.products.collect do |product|
+      :order_details_attributes => @cart.carts_products.collect do |cart_product|
         {
-          :name => product.name,
-          :description => product.description,
-          :price => product.price(false, false),
-          :rate_tax => product.rate_tax,
-          :sku => product.sku,
-          :product_id => product.id,
-          :discount => product.promo,
-          :discount_price => product.new_price
+          :name => cart_product.product.name,
+          :description => cart_product.product.description,
+          :price => cart_product.product.price(false, false),
+          :rate_tax => cart_product.product.rate_tax,
+          :sku => cart_product.product.sku,
+          :product_id => cart_product.product.id,
+          :voucher_discount => cart_product.product.voucher_discount,
+          :voucher_discount_price => cart_product.product.voucher_discount_price,
+          :special_offer_discount => cart_product.product.special_offer_discount,
+          :special_offer_discount_price => cart_product.product.special_offer_discount_price          
         }
       end
       )

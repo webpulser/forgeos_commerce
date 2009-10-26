@@ -13,34 +13,50 @@ class SpecialOffer < Ruleby::Rulebook
           #p 'ahhhah ah '*10
           # Discount product price
                                                 #and special_offer.variables[:for] == 'product_in_shop'
+          #if special_offer.variables[:discount]
+          #  rate = special_offer.variables[:discount]
+          #  new_price = special_offer.variables[:fixed_discount] ? product.price-rate : product.price-((product.price * rate) / 100)    
+          #  product.update_attribute('new_price',new_price)
+          #  
+          #  if special_offer.variables[:fixed_discount]
+          #    product.update_attribute('promo',"-#{rate}€")
+          #  else
+          #    product.update_attribute('promo',"-#{rate}%")
+          #  end
+          #end
           if special_offer.variables[:discount]
             rate = special_offer.variables[:discount]
-            new_price = special_offer.variables[:fixed_discount] ? product.price-rate : product.price-((product.price * rate) / 100)    
-            product.update_attribute('new_price',new_price)
-            
-            if special_offer.variables[:fixed_discount]
-              product.update_attribute('promo',"-#{rate}€")
-            else
-              product.update_attribute('promo',"-#{rate}%")
-            end
+            discount_price = special_offer.variables[:fixed_discount] ? rate : (product.price * rate) / 100
+            product.special_offer_discount_price = discount_price
+            special_offer.variables[:fixed_discount] ? product.special_offer_discount = "-#{rate}€" : product.special_offer_discount = "-#{rate}%"
           end
+        
+        
         
         ## Product in cart OR cart
         else
           
           ## FIXME - need to works with vouchers
           # Discount product price --product_in_cart 
-          if !special_offer.variables[:discount].nil?
+          #if !special_offer.variables[:discount].nil?
+          #  rate = special_offer.variables[:discount]
+          #  
+          #  new_price = special_offer.variables[:fixed_discount] ? product.price-rate : product.price-((product.price * rate) / 100)    
+          #  product.update_attributes!(:new_price => new_price)
+          #  if special_offer.variables[:fixed_discount]
+          #    product.update_attribute('promo',"-#{rate}€")
+          #  else
+          #    product.update_attribute('promo',"-#{rate}%")
+          #  end
+          #end
+           
+          if special_offer.variables[:discount]
             rate = special_offer.variables[:discount]
-            
-            new_price = special_offer.variables[:fixed_discount] ? product.price-rate : product.price-((product.price * rate) / 100)    
-            product.update_attributes!(:new_price => new_price)
-            if special_offer.variables[:fixed_discount]
-              product.update_attribute('promo',"-#{rate}€")
-            else
-              product.update_attribute('promo',"-#{rate}%")
-            end
+            discount_price = special_offer.variables[:fixed_discount] ? rate : (product.price * rate) / 100
+            product.special_offer_discount_price = discount_price
+            special_offer.variables[:fixed_discount] ? product.special_offer_discount = "-#{rate}€" : product.special_offer_discount = "-#{rate}%"
           end
+           
                         
           # Free products  --cart and product_in_cart              
           special_offer.variables[:product_ids].each do |product_id|

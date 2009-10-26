@@ -31,8 +31,8 @@
 
         .price-box
           %span.promo
-            =product.promo if !product.promo.nil?
-          -if !product.new_price.nil? and product.new_price != product.price
+            =product.special_offer_discount if !product.special_offer_discount.nil?
+          -unless product.special_offer_discount.nil?
             %span.old-price
               ="#{product.price} €" 
             %span.new-price

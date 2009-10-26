@@ -35,9 +35,9 @@
                   €
       .total-div
         -@cart.carts_products.each do |carts_product|
-          -unless carts_product.product.promo.nil?
+          -unless carts_product.product.special_offer_discount.nil?
             %span.total-label
-              ="Promo #{carts_product.product.name} #{carts_product.product.promo}"
+              ="Promo #{carts_product.product.name} #{carts_product.product.special_offer_discount}"
             %span.total-price
               ="#{carts_product.product.new_price} €"
         -@free_product_ids.each do |product_id|

@@ -1,5 +1,7 @@
 class Product < ActiveRecord::Base
-  attr_accessor :new_price, :promo
+  attr_accessor :voucher_discount, :voucher_discount_price
+  attr_accessor :special_offer_discount, :special_offer_discount_price
+  
   acts_as_taggable_on :tags
 
   has_and_belongs_to_many :carts
@@ -111,6 +113,13 @@ class Product < ActiveRecord::Base
     price += tax(false) if with_tax
     return price if Currency::is_default? || !with_currency
     ("%01.2f" % (price * $currency.to_exchanges_rate(Currency::default).rate)).to_f
+  end
+
+  def new_price(with_voucher=false)
+    price = self.price
+    price -= self.special_offer_discount_price if self.special_offer_discount_price
+    price -= self.voucher_discount_price if self.voucher_discount_price && with_voucher
+    return price
   end
 
   # Returns price's string with currency symbol
