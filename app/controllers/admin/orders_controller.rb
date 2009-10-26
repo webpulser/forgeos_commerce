@@ -116,6 +116,12 @@ private
   
   def new_order
     @order = Order.new(params[:order])
+    user = User.find_by_id(params[:user_id])
+    if user
+      @order.user = user
+      @order.address_delivery = user.address_delivery
+      @order.address_invoice = user.address_invoice
+    end
     @available_transporters = TransporterRule.find_all_by_active(true)
   end
 

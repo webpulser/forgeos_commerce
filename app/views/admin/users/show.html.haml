@@ -54,7 +54,7 @@
   #right-sidebar.grid_4.omega.alpha
     .step
       =mail_to @user.email, I18n.t('user.contact').capitalize, :class => 'small-icons contact'
-      = link_to I18n.t('order.create.action').capitalize, new_admin_order_path, :class=>'small-icons duplicate'
+      = link_to I18n.t('order.create.action').capitalize, new_admin_order_path(:user_id => @user.id), :class=>'small-icons duplicate'
       = link_to I18n.t('user.destroy.action').capitalize, [:admin, @user], :confirm => I18n.t('user.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
     .step.open
       %a.small-icons.step-title.disable{ :href => '#' }
