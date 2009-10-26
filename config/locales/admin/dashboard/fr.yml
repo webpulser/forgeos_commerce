@@ -1,0 +1,6 @@
+fr:
+  dashboard:
+    intro: "Bonjour,<br />
+Aujourd'hui, <em>{{visitors}} visiteurs</em> ont vus <em>{{pages}} pages</em> sur votre site internet.<br />
+<em>{{customers}} clients</em> visitent votre magasin et ont acheté <em>{{products}} produits</em> pour un total de <em>{{total}}</em>.<br />"
+    out_of_stock: "Prenez garde, vous avez <a href='#'>{{products}} produits en épuisement de stock</a>."

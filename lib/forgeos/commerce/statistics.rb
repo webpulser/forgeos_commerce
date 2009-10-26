@@ -31,6 +31,10 @@ module Forgeos
         )
       end
 
+      def self.total_of_sold_products(date)
+        ProductSoldCounter.sum(:counter, :conditions => { :date => date })
+      end
+
       def self.best_customers(date, limit = nil)
         OrderDetail.sum(:price,
           :conditions => { :orders => { :status => %w(paid shipped closed), :updated_at => date } },
