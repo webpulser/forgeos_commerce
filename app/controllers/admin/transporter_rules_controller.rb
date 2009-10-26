@@ -21,7 +21,6 @@ class Admin::TransporterRulesController < Admin::BaseController
   end
 
   def create
-
     result = true
 
     @shipping_methods = params[:shipping_method]
@@ -162,7 +161,12 @@ class Admin::TransporterRulesController < Admin::BaseController
 
     def build_conditions shipping_method
       rule_condition = []
-      rule_condition << 'Product' << ':cart'
+      if params[:delivery_type] == "weight"
+        rule_condition << 'Cart'
+      else
+        rule_condition << 'Product' 
+      end
+      rule_condition << ':cart'
 
       shipping_method[1][:values].each_with_index do |value, index|
 
