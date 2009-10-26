@@ -23,32 +23,6 @@
         = I18n.t('dashboard.intro', :visitors => online_visitors, :customers => today_users, :pages => pages_viewed_today, :products => products_sales_today, :total => "#{total_for_today.to_i} #{$currency.html}")
         - if out_of_stock_products > 0
           = I18n.t('dashboard.out_of_stock', :products => out_of_stock_products)
-      /
-        %p.summary
-          Welcome,
-          %br
-          Today,
-          %em
-            589 visitors
-          see
-          %em
-            3456
-          pages on your website.
-          %br
-          %em
-            340 customers
-          visit your shop and bought
-          %em
-            7 products
-          for a
-          total of
-          %em
-            95.34$
-          %br
-          Be careful, you have
-          %a{ :href => "#" }
-            1 product out of stock
-
       .quick-actions
         - link_to new_admin_page_path, :class => 'quick-action-button' do
           %span.big-icons.create-page
@@ -172,7 +146,8 @@
         %span.right
           = total_for_today.floor
           %sup
-            = total_for_today.decimal
+            - decimal = total_for_today.decimal
+            = "#{I18n.t(:separator, :scope => :number)}#{decimal}" if decimal > 0
             = currency
         .clear
       .yesterday-sales.second-block
@@ -181,7 +156,8 @@
         %span.right
           = total_for_yesterday.floor
           %sup
-            = total_for_yesterday.decimal
+            - decimal = total_for_yesterday.decimal
+            = "#{I18n.t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
             = currency
         .clear
     .sales-info-block
@@ -191,7 +167,8 @@
         %span.right
           = total_for_week.floor
           %sup
-            = total_for_week.decimal
+            - decimal = total_for_week.decimal
+            = "#{I18n.t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
             = currency
         .clear
       .last-week-sales.second-block
@@ -200,7 +177,8 @@
         %span.right
           = total_for_last_week.floor
           %sup
-            = total_for_last_week.decimal
+            - decimal = total_for_last_week.decimal
+            = "#{I18n.t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
             = currency
       - if week_diff >= 0
         %div{ :class => 'diff-positive' }
@@ -216,7 +194,8 @@
         %span.right
           = total_for_month.floor
           %sup
-            = total_for_month.decimal
+            - decimal = total_for_month.decimal
+            = "#{I18n.t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
             = currency
         .clear
       .last-month-sales.second-block
@@ -225,7 +204,8 @@
         %span.right
           = total_for_last_month.floor
           %sup
-            = total_for_last_month.decimal
+            - decimal = total_for_last_month.decimal
+            = "#{I18n.t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
             = currency
       - if month_diff >= 0
         %div{ :class => 'diff-positive' }
@@ -241,7 +221,8 @@
         %span.right
           = lifetime_sales.floor
           %sup
-            = lifetime_sales.decimal
+            - decimal = lifetime_sales.decimal
+            = "#{I18n.t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
             = currency
         .clear
     %h2.small-icons.live-stats
