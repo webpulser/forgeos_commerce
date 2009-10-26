@@ -1,5 +1,6 @@
 - form_for [:admin, user], :html => { :id => 'wrap', :autocomplete => 'off' } do |f|
   .backgrounds.big-header
+    = f.select :civility, I18n.t('civility.select'), :prompt => I18n.t('please_select').capitalize
     = f.text_field :lastname, :title => I18n.t('lastname'), :class => 'defaultValue'
     = f.text_field :firstname, :title => I18n.t('firstname'), :class => 'defaultValue'
     .interact-links
@@ -27,8 +28,15 @@
       .padding-wrap
         = render :partial => 'fieldset_account_informations', :locals => { :user => user, :f => f }
 
-        = render :partial => 'fields_for_addresses_invoices', :locals => { :user => user, :f => f }
         = render :partial => 'fields_for_addresses_deliveries', :locals => { :user => user, :f => f }
+        .fieldset.noborder
+          = I18n.t('address.billing_same_as_delivery').capitalize
+          = radio_button_tag :same_as_delivery, :true, false
+          = I18n.t(:_yes).capitalize
+          = radio_button_tag :same_as_delivery, :false, true
+          = I18n.t(:_no).capitalize
+        .clear
+        = render :partial => 'fields_for_addresses_invoices', :locals => { :user => user, :f => f }
 
         /
           .fieldset.messages-fieldset

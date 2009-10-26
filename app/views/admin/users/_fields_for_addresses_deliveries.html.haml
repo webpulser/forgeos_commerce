@@ -1,5 +1,5 @@
 - f.fields_for :address_deliveries do |address_delivery|
-  .fieldset.delivery-address
+  .fieldset.delivery-address.open
     %a.small-icons.panel{ :href => '#' }
       = I18n.t('address.delivery', :count => 1)
     .option-panel-content
@@ -7,15 +7,19 @@
         %label= I18n.t(:designation).capitalize
         = address_delivery.text_field :designation
       .street-input
-        %label= I18n.t(:civility, :count => 1).capitalize
-        = address_delivery.select :civility, I18n.t('civility.select'), :prompt => I18n.t('please_select')
-      .clear
-      .street-input
-        %label= I18n.t(:lastname).capitalize
-        = address_delivery.text_field :name
-      .street-input
-        %label= I18n.t(:firstname).capitalize
-        = address_delivery.text_field :firstname
+        = check_box_tag :same_people_infos
+        = I18n.t('address.same_people_infos')
+      .people_infos
+        .street-input
+          %label= I18n.t(:civility, :count => 1).capitalize
+          = address_delivery.select :civility, I18n.t('civility.select'), :prompt => I18n.t('please_select')
+        .clear
+        .street-input
+          %label= I18n.t(:lastname).capitalize
+          = address_delivery.text_field :name
+        .street-input
+          %label= I18n.t(:firstname).capitalize
+          = address_delivery.text_field :firstname
       .street-input
         %label= I18n.t(:address, :count => 1).capitalize
         = address_delivery.text_field :address
