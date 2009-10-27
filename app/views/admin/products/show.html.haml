@@ -8,6 +8,11 @@
 #content.grid_16.alpha.omega
   #product-see.grid_12.alpha
     .grid_8.omega
+      - permalink = "#{request.protocol}#{request.host_with_port}/product/#{@product.url}"
+      %h2.permalink
+        = I18n.t('permalink', :count => 1).capitalize
+        \:
+        = link_to permalink, permalink
       .prices
         .normal-price= "#{@product.price} #{$currency.html}"
         .promo
