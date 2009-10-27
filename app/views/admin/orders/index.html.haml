@@ -7,7 +7,9 @@
       %ul
         - Order.aasm_states.each do |state|
           - state_name = state.name.to_s
-          %li= link_to_function "#{I18n.t(state_name, :scope => [:order, :status])}#{content_tag(:span, Order.count(:conditions => { :status => state_name }))}","select_all_elements_by_url('/admin/orders.json?filter=status&status=#{state_name}')"
+          %li
+            = "<span class='colours #{state_name}'></span>"
+            = link_to_function "#{I18n.t(state_name, :scope => [:order, :status])}#{content_tag(:span, Order.count(:conditions => { :status => state_name }))}","select_all_elements_by_url('/admin/orders.json?filter=status&status=#{state_name}')"
 
 #content.grid_12.alpha.omega
   .backgrounds.header
