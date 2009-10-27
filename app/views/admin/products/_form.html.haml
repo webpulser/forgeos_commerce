@@ -160,7 +160,7 @@
         .inner-step.tags
           .wrap_tags
             = hidden_field_tag 'tag_list[]', ''
-            %input#tag.backgrounds{ :name => "tag", :type => "text" }
+            %input#tag.backgrounds{ :name => "tag", :type => "text", :title => I18n.t('tag_enter').capitalize, :class => 'defaultValue' }
             - product.tag_list.each do |tag|
               %span
                 = tag
