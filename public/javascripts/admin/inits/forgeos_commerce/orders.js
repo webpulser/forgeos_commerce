@@ -27,8 +27,10 @@ jQuery(document).ready(function(){
            current_table_index = 1;
            add_product_to_order_detail(id, name, sku, price, price_with_currency, img);
          }
-         $(current_table.fnGetSelectedNodes()).toggleClass('row_selected');
+
          $('#productSelectDialog').dialog('close');
+         current_table = $('#table-products').dataTableInstance();
+         current_table.fnUnSelectNodes();
        }
      },
      open: function(){
