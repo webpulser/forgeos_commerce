@@ -1,3 +1,6 @@
 - @items.each do |item|
-  = link_to (item.as_method?('name') ? item.name : item.title), item
-
+  - case item
+  - when Page
+    = link_to item.title, item.url
+  - when Product, Pack
+    = link_to item.name, "/product/#{item.url}"
