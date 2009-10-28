@@ -1,6 +1,12 @@
-- @items.each do |item|
-  - case item
-  - when Page
-    = link_to item.title, item.url
-  - when Product, Pack
-    = link_to item.name, "/product/#{item.url}"
+.inner-content
+  .cart-step-content
+    - if @items.empty?
+      = t(:page_not_found)
+    - else
+      %ul  
+        - @items.each do |item|
+          - case item
+          - when Page
+            %li= link_to item.title, item.url
+          - when Product, Pack
+            %li= link_to item.name, "/product/#{item.url}"
