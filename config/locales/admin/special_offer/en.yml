@@ -1,0 +1,9 @@
+en:
+  back_to_special_offer: back to special offer
+  offer_used:
+    one: "this offer has been used {{count}} time"
+    other: "this offer has been used {{count}} times"
+  apply:
+    zero: "This Offer apply to {{count}} product"
+    one: "This Offer apply to {{count}} product"
+    other: "This Offer apply to {{count}} products"

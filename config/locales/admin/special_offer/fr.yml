@@ -1,0 +1,9 @@
+fr:  
+  back_to_special_offer: retours au offres spécials
+  offer_used:
+    one: "cette offre spécial a été utilisé {{count}} fois"
+    other: "cette offre spécial a été utilisé {{count}} fois"
+  apply:
+    zero: "cette offre spécial s'applique à {{count}} produit"
+    one: "cette offre spécial s'applique à {{count}} produit"
+    other: "cette offre spécial s'applique à {{count}} produits"

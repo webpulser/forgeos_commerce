@@ -1,4 +1,7 @@
+require 'ruleby'
+
 class Admin::SpecialOffersController < Admin::BaseController
+  include Ruleby
   
   def index
     respond_to do |format|
@@ -112,7 +115,7 @@ class Admin::SpecialOffersController < Admin::BaseController
     @rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
   end
   
-  def new  
+  def new    
   end
   
   def destroy
@@ -123,6 +126,25 @@ class Admin::SpecialOffersController < Admin::BaseController
       flash[:error] = "Special offer not destroy"
     end
     redirect_to :action => 'index'
+  end
+  
+  def show
+    @special_offer = SpecialOfferRule.find_by_id(params[:id])
+    @selected_products = []
+    engine :special_offer_engine do |e|
+      rule_builder = SpecialOffer.new(e)
+      rule_builder.rule_id = params[:id]
+      rule_builder.selected_products = @selected_products
+      rule_builder.rules
+      products = Product.all(:conditions => {:active => true, :deleted=>[false, nil]})
+      products.each do |product|
+        e.assert product
+      end
+      e.match
+    end
+  end
+  
+  def preview
   end
   
 private

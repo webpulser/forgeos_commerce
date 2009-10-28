@@ -1,29 +1,28 @@
-%h1
-  = I18n.t('price_cut.show').capitalize
-- if @price_cut
-  %table
-    %tr
-      %th
-        = I18n.t('price_cut.product').capitalize
-      %td
-        = h @price_cut.product.name
-    %tr
-      %th
-        = I18n.t('price_cut.oldprice').capitalize
-      %td
-        = h @price_cut.old_price
-    %tr
-      %th
-        = I18n.t('price_cut.newprice').capitalize
-      %td
-        = h @price_cut.new_price
-    %tr
-      %th
-        = I18n.t('date_start').capitalize
-      %td
-        = h @price_cut.date_start
-    %tr
-      %th
-        = I18n.t('date_end').capitalize
-      %td
-        = h @price_cut.date_end
+.backgrounds.big-header
+  %h1= @special_offer.name
+  .interact-links
+    = link_to I18n.t('back_to_special_offer').capitalize, admin_special_offers_path, :class => 'backgrounds interact-button'
+    /= I18n.t('or')
+    /= link_to I18n.t('back_to_special_offer').capitalize,admin_special_offers_path, :class => 'back-link'
+
+#content.grid_16.alpha.omega
+  #special_offers.grid_12.alpha.omega
+    .grid_8.omega
+      .description= @special_offer.description
+      .description= "#{I18n.t('offer_used', :count => @special_offer.use).capitalize}"
+    .inner-content
+
+      .specialOffers_products
+        .specialOffers_products_header
+          = "#{I18n.t('apply', :count => @selected_products.size).capitalize}"
+        #specialOffers_products_table
+          .thead
+            .tr
+              .th
+          .tbody
+            -@selected_products.each do |product|
+              -product = Product.find_by_id(product)
+              .tr
+                .td
+                  =image_tag(product.pictures.first.public_filename(:thumb)) if product.pictures
+                  =link_to product.name, admin_product_path(product.id)
