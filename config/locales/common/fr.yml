@@ -121,8 +121,6 @@ fr:
   activate: activer
   name: nom
   email: email
-  _yes: oui
-  _no: non
   back_to_catalog: 'retour au catalogue'
   save: sauvegarder
   save_changes: 'sauvegarder'

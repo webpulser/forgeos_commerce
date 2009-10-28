@@ -123,8 +123,6 @@ en:
   activate: activate
   name: name
   email: email
-  _yes: yes
-  _no: no
   back_to_catalog: 'back to catalog'
   save: save
   save_changes: 'save changes'
