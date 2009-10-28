@@ -13,9 +13,8 @@
     = text_field 'rule_builder', 'name', :id => 'special_offer_title'
     .interact-links
       = fg_submit_tag ('save_changes')
-      or
-      =link_to 'Cancel',{:action => 'index'}, :class => 'back-link'
-
+      = I18n.t(:or)
+      =link_to I18n.t(:cancel).capitalize,{:action => 'index'}, :class => 'back-link'
 
   #special_offers.grid_12.omega
     .inner-content

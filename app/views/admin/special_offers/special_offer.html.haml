@@ -58,9 +58,9 @@
     = check_box 'rule_builder', 'stop'
     Stop futher rules processing
   %p
-    = submit_tag 'Save'
-    or
-    = link_to 'Cancel', :back
+    = submit_tag I18n.t(:save).capitalize
+    = I18n.t(:or)
+    = link_to I18n.t(:cancel).capitalize, :back
 
 
 %div.end-conditions{ :style => 'display : none'}
