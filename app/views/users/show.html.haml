@@ -5,10 +5,10 @@
         = I18n.t('my_informations').capitalize
     %li
       %a{ :href => "#tabs-2" }
-        = I18n.t('order',:count=>current_user.orders.count).capitalize
+        = I18n.t('order',:count => current_user.orders.count).capitalize
     %li
       %a{ :href => "#tabs-3" }
-        = I18n.t('address',:count=>2).capitalize
+        = I18n.t('address',:count => 2).capitalize
   #tabs-1
     #informations
       = link_to_remote I18n.t('edit').capitalize, :url => edit_user_path(current_user), :update => 'informations', :method => 'get'

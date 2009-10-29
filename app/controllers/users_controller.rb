@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  def show
+    @user = User.find_by_id params[:id]
+  end
+  
   # Return an HTML form for describing the new account
   def new
     session[:redirect] = nil
