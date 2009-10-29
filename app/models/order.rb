@@ -72,6 +72,10 @@ class Order < ActiveRecord::Base
     ("%01.2f" % (total(true) - total)).to_f
   end
 
+  def total_items
+    return order_details.length
+  end
+
   def product_names
     count = self.order_details.count
     if count == 1

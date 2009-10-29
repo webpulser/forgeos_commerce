@@ -84,8 +84,8 @@ class Admin::OrdersController < Admin::BaseController
     # clone order and order_shipping
     editing_order = @order.clone
     editing_order.order_shipping = @order.order_shipping.clone
-
     # get order_details ids
+    
     if order_details = params[:order][:order_details_attributes]
       detail_ids = order_details.values.collect{ |detail| detail['id'].to_i if detail['id'] && detail['_delete'].to_i != 1 }
       detail_ids.compact!
@@ -95,13 +95,32 @@ class Admin::OrdersController < Admin::BaseController
     # update attributes for order and order_shipping
     editing_order.attributes = params[:order]
     editing_order.order_shipping.attributes = params[:order][:order_shipping_attributes]
+    
+    @transporter_ids = []
+    if params[:transporter][:rebuild].to_i == 1
+      # get new available transporters
+      @order = editing_order
+      engine :transporter_engine do |e|
+        rule_builder = Transporter.new(e)
+        rule_builder.transporter_ids = @transporter_ids
+        rule_builder.order = @order
+        rule_builder.rules
+        @order.order_details.each do |order_detail|  
+          e.assert order_detail.product
+        end
+        e.assert @order
+        e.match
+      end
+    end
+    
+    @available_transporters = TransporterRule.find_all_by_id(@transporter_ids.uniq)
 
     # calculate total, subtotal and taxes
     total = editing_order.total
     subtotal = editing_order.total(false,true,false)
     #taxes = editing_order.taxes
 
-    return render :json => { :result => 'success', :id => @order.id, :total => total, :subtotal => subtotal} #, :taxes => taxes}
+    return render :json => { :result => 'success', :id => @order.id, :total => total, :subtotal => subtotal, :available_transporters =>  @available_transporters, :rebuild_transporter => params[:transporter][:rebuild].to_i} #, :taxes => taxes}
   end
 
 private

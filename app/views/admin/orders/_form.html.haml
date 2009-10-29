@@ -89,7 +89,7 @@
         #order_details
           - f.fields_for :order_details do |detail_form|
             = detail_form.hidden_field :_delete, :class => 'delete', :id => "_delete_order_detail_#{detail_form.object.id}"
-
+        = hidden_field_tag "transporter[rebuild]", 0
         .order-totals
           .order-subtotal= I18n.t('order.subtotal').capitalize
           %span.order-subtotal= order.total(false,true,false)

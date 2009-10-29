@@ -27,7 +27,8 @@ jQuery(document).ready(function(){
            current_table_index = 1;
            add_product_to_order_detail(id, name, sku, price, price_with_currency, img);
          }
-
+         $('#transporter_rebuild').val(1);
+         update_order_total();
          $('#productSelectDialog').dialog('close');
          current_table = $('#table-products').dataTableInstance();
          current_table.fnUnSelectNodes();

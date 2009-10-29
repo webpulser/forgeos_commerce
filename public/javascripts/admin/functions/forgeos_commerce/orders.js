@@ -7,7 +7,7 @@ function add_product_to_order_detail(id, name, sku, price, price_with_currency, 
 
   // add hidden field for new order detail and update total
   var new_order_detail = $('<div id="order_detail_' + false_id + '">').html($('#empty_order_detail').html().replace(/EMPTY_ID/g, false_id));
-  var base_field_id = '#order_orders_details_attributes_'+false_id+'_';
+  var base_field_id = '#order_order_details_attributes_'+false_id+'_';
 
   $(new_order_detail).find(base_field_id+'product_id').val(id);
   $(new_order_detail).find(base_field_id+'name').val(name);
@@ -15,7 +15,7 @@ function add_product_to_order_detail(id, name, sku, price, price_with_currency, 
   $(new_order_detail).find(base_field_id+'sku').val(sku);
   $('#order_details').append(new_order_detail);
 
-  update_order_total();
+  //update_order_total();
   false_id--;
 }
 
@@ -45,7 +45,25 @@ function update_order_total(){
       $('span.order-price').text(request.total);
       $('span.order-total').text(request.total);
       $('span.order-subtotal').text(request.subtotal);
+      $('#transporter_rebuild').val(0);
+      if (request.rebuild_transporter == 1){
+        // remove old transporters
+        $('#order_shipping').children().remove();
+      
+        // remove custom select
+        $('.delivery-method').removeClass('enhanced');
+        $('.delivery-method').children('.dropdown').remove();
+      
+        // add new available transporters
+        for (var i=0; i<request.available_transporters.length; i++){
+	      var transporter_rule = request.available_transporters[i].transporter_rule;
+	      $('#order_shipping').append('<option value="'+transporter_rule.variables+'">'+transporter_rule.name+'</options>');
+	    }
+	  }
       //$('span.order-taxes').text(request.taxes);
+      
+      // rebuild custom select
+      InitCustomSelects();
     },
     dataType:'json',
     type:'post'
