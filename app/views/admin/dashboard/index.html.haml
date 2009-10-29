@@ -11,7 +11,7 @@
 - online_users = User.count(:conditions => { :updated_at_gt => Time.now - 10.minutes })
 - today_users = User.count(:conditions => { :updated_at => Date.current.beginning_of_day..Date.current.end_of_day })
 - online_visitors = Forgeos::Statistics.total_of_visitors(Date.current)
-- out_of_stock_products = Product.count(:conditions => { :deleted => false, :active => true, :stock_gt => 5 })
+- out_of_stock_products = Product.count(:conditions => { :deleted => false, :active => true, :stock_lt => 5 })
 - pages_viewed_today = Forgeos::CMS::Statistics.total_of_pages(Date.current)
 - products_sales_today = Forgeos::Commerce::Statistics.total_of_sold_products(Date.current)
 
