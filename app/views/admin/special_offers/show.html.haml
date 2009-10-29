@@ -6,7 +6,7 @@
     /= link_to I18n.t('back_to_special_offer').capitalize,admin_special_offers_path, :class => 'back-link'
 
 #content.grid_16.alpha.omega
-  #special_offers.grid_12.alpha.omega
+  .special_offers.grid_12.alpha.omega
     .grid_8.omega
       .description= @special_offer.description
       .description= "#{I18n.t('offer_used', :count => @special_offer.use).capitalize}"
