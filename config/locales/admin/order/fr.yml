@@ -50,3 +50,4 @@ fr:
       other: factures
       show: voir la facture
     delivery: expédition
+    total_discount: remise sur la commande

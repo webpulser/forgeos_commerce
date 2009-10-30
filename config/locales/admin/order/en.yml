@@ -50,3 +50,4 @@ en:
       other: 'bills'
       show: 'see bill'
     delivery: 'delivery'
+    total_discount: total amount discount

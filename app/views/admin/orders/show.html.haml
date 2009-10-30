@@ -76,19 +76,23 @@
         %div= I18n.t('special_offer', :count => 2).capitalize
         %br
         - if @order.special_offer_discount
-          %div= "Remise sur la commande"
+          %div= I18n.t('order.total_discount').capitalize
           %span= "- #{@order.special_offer_discount} #{$currency.html}"
+          %br
         - @order.special_offer_discount_products.each do |product|
           %div= "#{product.name}"
           %span= "- #{product.special_offer_discount_price} #{$currency.html}"
+          %br
         %div= I18n.t('voucher', :count => 1).capitalize
         %br
         - if @order.voucher_discount
-          %div= "Remise sur la commande"
+          %div= I18n.t('order.total_discount').capitalize
           %span= "- #{@order.voucher_discount} #{$currency.html}"
+          %br
         - @order.voucher_discount_products.each do |product|
           %div= "#{product.name}"
           %span= "- #{product.voucher_discount_price} #{$currency.html}"
+          %br
       -#.order-totals
         %div= I18n.t('tax', :count => 2).capitalize
         %span= "#{@order.taxes} #{$currency.html}"

@@ -92,20 +92,33 @@
         = hidden_field_tag "transporter[rebuild]", 0
         .order-totals
           .order-subtotal= I18n.t('order.subtotal').capitalize
-          %span.order-subtotal= order.total(false,true,false)
+          %span.order-subtotal= order.total(false,true,false,false,false)
           %span.order-subtotal-currency= $currency.html
           - if order.order_shipping
             %div= I18n.t('shipping').capitalize
             %span.order_shipping
               = content_tag(:span, order.order_shipping.price, :class => 'order_shipping_price')
               = " #{$currency.html}"
-
         .order-totals
           %div= I18n.t('special_offer', :count => 2).capitalize
-          %span.voucher{:style => order.voucher.blank? ? 'display: none' : ''}
-            = "- "
-            = content_tag(:span, order.voucher, :class => 'voucher_value')
-            = " #{$currency.html}"
+          %br
+          - if order.special_offer_discount
+            %div= I18n.t('order.total_discount').capitalize
+            %span= "- #{order.special_offer_discount} #{$currency.html}"
+            %br
+          - order.special_offer_discount_products.each do |product|
+            %div{:class => "special_order_detail_#{product.id}"}= "#{product.name}"
+            %span{:class => "special_order_detail_#{product.id}"}= "- #{product.special_offer_discount_price} #{$currency.html}"
+          %div= I18n.t('voucher', :count => 1).capitalize
+          %br
+          - if order.voucher_discount
+            %div= I18n.t('order.total_discount').capitalize
+            %span= "- #{order.voucher_discount} #{$currency.html}"
+            %br
+          - order.voucher_discount_products.each do |product|
+            %div{:class => "voucher_order_detail_#{product.id}"}= "#{product.name}"
+            %span{:class => "voucher_order_detail_#{product.id}"}= "- #{product.voucher_discount_price} #{$currency.html}"
+            %br
 
           /%div.change-voucher
           /  = select_tag :voucher, options_for_select(Voucher.all.collect{ |voucher| [voucher.name, voucher.value] }.unshift([I18n.t('voucher.change').capitalize, nil])), :class => 'select-voucher'

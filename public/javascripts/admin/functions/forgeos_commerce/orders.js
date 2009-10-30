@@ -31,6 +31,11 @@ function remove_order_detail(destroy_link){
 
   // set order detail deleted
   $('#_delete_order_detail_' + detail_id).val(1);
+
+  // remove special offer and voucher discount detail
+  $('.special_order_detail_'+ detail_id).remove();
+  $('.voucher_order_detail_'+ detail_id).remove();
+
   update_order_total();
 }
 
