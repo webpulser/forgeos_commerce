@@ -118,8 +118,8 @@ class Admin::OrdersController < Admin::BaseController
     #total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=false)
 
     # calculate total, subtotal and taxes
-    total = editing_order.total(false,true,true,true)
-    subtotal = editing_order.total(false,true,false)
+    total = editing_order.total
+    subtotal = editing_order.total(false,true,false,false,false)
     #taxes = editing_order.taxes
 
     return render :json => { :result => 'success', :id => @order.id, :total => total, :subtotal => subtotal, :available_transporters =>  @available_transporters, :rebuild_transporter => params[:transporter][:rebuild].to_i} #, :taxes => taxes}

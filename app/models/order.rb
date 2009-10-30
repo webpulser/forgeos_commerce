@@ -59,7 +59,7 @@ class Order < ActiveRecord::Base
   end
 
   # Returns order's amount
-  def total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=false, with_voucher=false)
+  def total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=true, with_voucher=true)
     amount = 0
     order_details.each do |order_detail|
       price = order_detail.total(with_tax, with_currency,with_special_offer,with_voucher)
