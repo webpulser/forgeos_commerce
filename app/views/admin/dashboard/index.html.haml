@@ -69,7 +69,7 @@
                   %td.table-customer
                     = order.user.fullname if order.user
                   %td.table-time
-                    = order.created_at
+                    = t(:ago, :time => time_ago_in_words(order.created_at))
           = link_to I18n.t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
         #pending-orders.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide
           %table
@@ -87,7 +87,7 @@
                   %td.table-customer
                     = order.user.fullname if order.user
                   %td.table-time
-                    = order.created_at
+                    = t(:ago, :time => time_ago_in_words(order.created_at))
           = link_to I18n.t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
 
       /
