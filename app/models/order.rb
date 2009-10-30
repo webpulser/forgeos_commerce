@@ -62,9 +62,10 @@ class Order < ActiveRecord::Base
   def total(with_tax=false, with_currency=true,with_shipping=true)
     amount = 0
     order_details.each do |order_detail|
-      amount += order_detail.total(with_tax, with_currency)
+      price = order_detail.total(with_tax, with_currency)
+      amount += price if price
     end
-    amount += order_shipping.price if with_shipping && order_shipping
+    amount += order_shipping.price if with_shipping && order_shipping && order_shipping.price
     return ("%01.2f" % amount).to_f
   end
 
