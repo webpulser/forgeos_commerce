@@ -81,6 +81,10 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def total
+    if @order.nil?
+      @order = Order.new
+      @order.order_shipping = OrderShipping.new
+    end
     # clone order and order_shipping
     editing_order = @order.clone
     editing_order.order_shipping = @order.order_shipping.clone
