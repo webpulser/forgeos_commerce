@@ -1,10 +1,10 @@
 module Forgeos
   # Set administration's menu
-  AdminMenu << { :title => 'orders',
+  AdminMenu << { :title => 'back_office.menu.orders',
     :url => { :controller => 'admin/orders' }, :i18n => true,
     :html => { :class => 'left'}
   }
-  AdminMenu << { :title => 'catalog',
+  AdminMenu << { :title => 'back_office.menu.catalog',
     :url => [
       { :controller => 'admin/products' },
       { :controller => 'admin/packs' }
@@ -12,7 +12,7 @@ module Forgeos
     :i18n => true,
     :html => { :class => 'left'}
   }
-  AdminMenu << { :title => 'site_builder',
+  AdminMenu << { :title => 'back_office.menu.site_builder',
     :url => [
       { :controller => 'admin/product_types'},
       { :controller => 'admin/attributes' }
@@ -20,7 +20,7 @@ module Forgeos
     :i18n => true,
     :html => { :class => 'right' }
   }
-  AdminMenu << { :title => 'marketing', 
+  AdminMenu << { :title => 'back_office.menu.marketing', 
     :i18n => true,
     :url => { :controller => 'admin/special_offers'},
     :html => { :class => 'right' }

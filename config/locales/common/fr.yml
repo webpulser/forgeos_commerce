@@ -79,8 +79,8 @@ fr:
   my_account_login: "J'accède à Mon Espace Client"
 
 # Admin
-  back-office:
-    title:
+  back_office:
+    menu:
       orders: commandes
       catalog: catalogue
       site_builder: site builder
@@ -92,6 +92,7 @@ fr:
       shipping_rules: "méthodes d'expédition"
       transporter_rules: transporteurs
       vouchers: codes promo
+      marketing: marketing
   id: id
   since: depuis
   taxes_and_shippings: taxes & livraisons

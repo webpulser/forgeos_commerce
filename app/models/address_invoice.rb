@@ -1,4 +1,4 @@
 # ==== Inheritance
 # * <tt>Address</tt>
-class AddressInvoice < Address
+class AddressInvoice < UserAddress
 end

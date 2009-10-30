@@ -81,8 +81,8 @@ en:
   my_account_login : my account
 
 # Admin
-  back-office:
-    title:
+  back_office:
+    menu:
       orders: orders
       catalog: catalog
       site_builder: site builder
@@ -94,6 +94,7 @@ en:
       shipping_rules: shipping rules
       transporter_rules: transporters
       vouchers: vouchers
+      marketing: marketing
   id: id
   since: since
   taxes_and_shippings: taxes & shippings
