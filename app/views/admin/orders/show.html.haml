@@ -74,17 +74,27 @@
           %span.order_shipping= "#{@order.order_shipping.price} #{$currency.html}"
       .order-totals
         %div= I18n.t('special_offer', :count => 2).capitalize
-        - unless @order.voucher.blank?
-          %span= "- #{@order.voucher} #{$currency.html}"
-        -# @order.special_offers.each do |offer|
-          %div= offer.name
-          %span= "- #{offer.total} #{$currency.html}"
+        %br
+        - if @order.special_offer_discount
+          %div= "Remise sur la commande"
+          %span= "- #{@order.special_offer_discount} #{$currency.html}"
+        - @order.special_offer_discount_products.each do |product|
+          %div= "#{product.name}"
+          %span= "- #{product.special_offer_discount_price} #{$currency.html}"
+        %div= I18n.t('voucher', :count => 1).capitalize
+        %br
+        - if @order.voucher_discount
+          %div= "Remise sur la commande"
+          %span= "- #{@order.voucher_discount} #{$currency.html}"
+        - @order.voucher_discount_products.each do |product|
+          %div= "#{product.name}"
+          %span= "- #{product.voucher_discount_price} #{$currency.html}"
       -#.order-totals
         %div= I18n.t('tax', :count => 2).capitalize
         %span= "#{@order.taxes} #{$currency.html}"
       .order-totals.total-block
         .order-total= I18n.t('order.total').capitalize
-        %span.order-total= "#{@order.total} #{$currency.html}"
+        %span.order-total= "#{@order.total(false,true,true,true,true)} #{$currency.html}"
       .fieldset
         %h3= I18n.t('order.delivery')
         .order-delivery

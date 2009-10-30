@@ -114,9 +114,11 @@ class Admin::OrdersController < Admin::BaseController
     end
     
     @available_transporters = TransporterRule.find_all_by_id(@transporter_ids.uniq)
+    
+    #total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=false)
 
     # calculate total, subtotal and taxes
-    total = editing_order.total
+    total = editing_order.total(false,true,true,true)
     subtotal = editing_order.total(false,true,false)
     #taxes = editing_order.taxes
 

@@ -23,10 +23,12 @@ class OrderDetail < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def price(with_tax=false, with_currency=true)
+  def price(with_tax=false, with_currency=true,with_special_offer=false, with_voucher=false)
     return nil if super.nil? # assert
     price = super
-    price += tax(false) if with_tax
+    price -= self.special_offer_discount_price if with_special_offer and self.special_offer_discount_price
+    price -= self.voucher_discount_price if with_voucher and self.voucher_discount_price
+    #price += tax(false) if with_tax
     return ("%01.2f" % price).to_f if Currency::is_default? || !with_currency
     ("%01.2f" % (price * $currency.to_exchanges_rate(Currency::default).rate)).to_f
   end
@@ -54,8 +56,8 @@ class OrderDetail < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def total(with_tax=false, with_currency=true)
-    price(with_tax, with_currency)
+  def total(with_tax=false, with_currency=true,with_special_offer=false,with_voucher=false)
+    price(with_tax, with_currency,with_special_offer,with_voucher)
   end
 private
   

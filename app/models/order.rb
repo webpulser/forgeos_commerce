@@ -59,13 +59,15 @@ class Order < ActiveRecord::Base
   end
 
   # Returns order's amount
-  def total(with_tax=false, with_currency=true,with_shipping=true)
+  def total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=false, with_voucher=false)
     amount = 0
     order_details.each do |order_detail|
-      price = order_detail.total(with_tax, with_currency)
+      price = order_detail.total(with_tax, with_currency,with_special_offer,with_voucher)
       amount += price if price
     end
     amount += order_shipping.price if with_shipping && order_shipping && order_shipping.price
+    amount -= self.special_offer_discount if with_special_offer && self.special_offer_discount
+    amount -= self.voucher_discount if with_voucher && self.voucher_discount
     return ("%01.2f" % amount).to_f
   end
 
@@ -94,4 +96,11 @@ class Order < ActiveRecord::Base
     return weight
   end
   
+  def special_offer_discount_products
+    return order_details.all(:conditions => ['special_offer_discount_price IS NOT NULL'])
+  end
+  
+  def voucher_discount_products
+    return order_details.all(:conditions =>['voucher_discount_price IS NOT NULL'])
+  end
 end
