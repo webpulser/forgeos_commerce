@@ -11,5 +11,5 @@
   %table#table.datatable.draggable_rows
 
 
-= dataTables_tag :url => admin_special_offers_path(:format => :json), :columns => ["{'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'Status'}","{'sTitle':'Used'}","{'sClass':'actions-td','bSearchable':false}"]
+= dataTables_tag :url => admin_special_offers_path(:format => :json), :columns => ["{'sClass': 'image_product_td', 'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'Status'}","{'sTitle':'Used'}","{'sClass':'actions-td','bSearchable':false}"]
 
