@@ -3,8 +3,13 @@
   %li.ui-state-default.ui-corner-top= link_to t(:taxes_and_shippings).capitalize, admin_transporter_rules_path
   %li.ui-state-default.ui-corner-top= link_to t(:checkout_and_payment).capitalize,'#'
   %li.ui-state-default.ui-corner-top= link_to t(:notification, :count => 2).capitalize, '#'
-#blocks-header.backgrounds
-  = link_to t(:general, :scope => :setting).capitalize, '#content', :class => 'selected'
-  = link_to t(:mailer, :scope => :setting).capitalize, '#content'
-  = link_to t(:display, :scope => :setting).capitalize, '#content'
-  = link_to t(:backup, :scope => :setting).capitalize, '#content'
+#blocks-header.backgrounds.settings
+  %ul
+    %li
+      = link_to t(:general, :scope => :setting).capitalize, '#general', :class => 'selected'
+    %li
+      = link_to t(:mailer, :scope => :setting).capitalize, '#mailer'
+    %li
+      = link_to t(:display, :scope => :setting).capitalize, '#display'
+    %li
+      = link_to t(:backup, :scope => :setting).capitalize, '#backup'
