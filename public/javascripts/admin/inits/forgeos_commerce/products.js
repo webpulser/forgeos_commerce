@@ -39,4 +39,52 @@ jQuery(document).ready(function(){
         url:'/admin/products/update_attributes_list'
       });
   });
+
+  $('#imageSelectDialog').dialog({
+    autoOpen:false,
+    modal:true,
+    minHeight: 380,
+    width: 800,
+    resizable:'se',
+    buttons: {
+      Ok: function(){
+        dataTableSelectRows('#image-table:visible,#thumbnail-table:visible',function(current_table,indexes){
+          for(var i=0; i<indexes.length; i++){
+            var path = current_table.fnGetData(indexes[i]).slice(-3,-2);
+            var id = current_table.fnGetData(indexes[i]).slice(-2,-1);
+            var name = current_table.fnGetData(indexes[i]).slice(-1);
+            add_picture_to_element(path,id,name);
+          }
+          check_product_first_image();
+        });          
+        $('#imageSelectDialog').dialog('close');
+      }
+    },
+    open: function(){ $('#image-table:visible,#thumbnail-table:visible').dataTableInstance().fnDraw(); }
+  });
+
+  $('#fileSelectDialog').dialog({
+    autoOpen:false,
+    modal:true,
+    minHeight: 380,
+    width: 800,
+    resizable:'se',
+    buttons: {
+      Ok: function(){
+        dataTableSelectRows('#table-files', function(current_table, indexes) {
+          for(var i=0; i<indexes.length; i++){
+            var size = current_table.fnGetData(indexes[i]).slice(-6,-5);
+            var type = current_table.fnGetData(indexes[i]).slice(-8,-7);
+            var id = current_table.fnGetData(indexes[i]).slice(-2,-1);
+            var name = current_table.fnGetData(indexes[i]).slice(-1);
+
+            add_attachment_to_product(id,name,size,type);
+          }
+        });
+        $('#fileSelectDialog').dialog('close');
+      }
+    },
+    open: function(){ $('#table-files').dataTableInstance().fnDraw(); }
+  });
+
 });

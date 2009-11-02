@@ -7,11 +7,11 @@ jQuery(document).ready(function(){
     resizable:'se',
     buttons: {
      Ok: function(){
-       current_table_index = 0;
        add_products_to_pack();
        $('#pack-productSelectDialog').dialog('close');
      }
-    }
+    },
+    open: function(){ $('table-products').dataTableInstance().fnDraw(); }
   });
 
   $('#add-product').live('click',function(){

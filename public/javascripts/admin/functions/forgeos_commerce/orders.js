@@ -1,6 +1,6 @@
 function add_product_to_order_detail(id, name, sku, price, price_with_currency, img){
   // add order detail to datatable
-  var current_table = oTables[current_table_index];
+  var current_table = $('#table-order-details').dataTableInstance();
   var remove_link = '<a id="order_detail_'+false_id+'" class="small-icons destroy-link" onclick="remove_order_detail($(this));; return false;" href="#"/>';
 
   current_table.fnAddData([img,name,sku,price,'1',price_with_currency,remove_link]);
@@ -94,7 +94,7 @@ function disable_links() {
 function form_ajax_right(url, method){
   onsubmit_ajax = "$.ajax({\n\
       success: function(result){\n\
-        oTables[current_table_index].fnDraw(); \n\
+        $('#table').dataTableInstance().fnDraw(); \n\
         $('#table').unwrap(); \n\
         $('.create-right').parent().show();\n\
       }, \n\

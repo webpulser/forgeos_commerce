@@ -140,6 +140,9 @@ private
       conditions[:categories_elements] = { :category_id => params[:category_id] }
       includes << :product_categories
     end
+    if params[:ids]
+      conditions[:products] = { :id => params[:ids].split(',') }
+    end
     conditions[:deleted] = params[:deleted] ? true : [false,nil]
 
     options[:conditions] = conditions unless conditions.empty?

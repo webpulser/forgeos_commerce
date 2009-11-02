@@ -12,31 +12,24 @@ jQuery(document).ready(function(){
      resizable:'se',
      buttons: {
        Ok: function(){
-         var current_table = oTables[current_table_index];
-         indexes = current_table.fnGetSelectedIndexes();
+         dataTableSelectRows('#table-products', function(current_table, indexes) {
+           for(var i=0; i<indexes.length; i++){
+             var id = current_table.fnGetData(indexes[i]).slice(-4,-3);
+             var name = current_table.fnGetData(indexes[i]).slice(-3,-2)[0];
+             var sku = current_table.fnGetData(indexes[i]).slice(-2,-1);
+             var price = current_table.fnGetData(indexes[i]).slice(-1);
+             var price_with_currency = current_table.fnGetData(indexes[i]).slice(3,4);
+             var img = jquery_obj_to_str($(current_table.fnGetData(indexes[i]).slice(0, 1)[0]).find('img'));
 
-         for(var i=0; i<indexes.length; i++){
-           id = current_table.fnGetData(indexes[i]).slice(-4,-3);
-           name = current_table.fnGetData(indexes[i]).slice(-3,-2)[0];
-           sku = current_table.fnGetData(indexes[i]).slice(-2,-1);
-           price = current_table.fnGetData(indexes[i]).slice(-1);
-           price_with_currency = current_table.fnGetData(indexes[i]).slice(3,4);
-           img = current_table.fnGetData(indexes[i]).slice(0, 1)[0];
-           img = jquery_obj_to_str($(img).find('img'));
-
-           current_table_index = 1;
-           add_product_to_order_detail(id, name, sku, price, price_with_currency, img);
-         }
-         $('#transporter_rebuild').val(1);
-         update_order_total();
+             add_product_to_order_detail(id, name, sku, price, price_with_currency, img);
+           }
+           $('#transporter_rebuild').val(1);
+           update_order_total();
+         });
          $('#productSelectDialog').dialog('close');
-         current_table = $('#table-products').dataTableInstance();
-         current_table.fnUnSelectNodes();
        }
      },
-     open: function(){
-        current_table_index = 0;
-     }
+     open: function(){ $('#table-products').dataTableInstance().fnDraw(); }
   });
 
   // update voucher value and hide/show
