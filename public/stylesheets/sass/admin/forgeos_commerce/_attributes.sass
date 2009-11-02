@@ -1,0 +1,49 @@
+#checkbox_attribute_name,
+#picklist_attribute_name,
+#radiobutton_attribute_name,
+#text_attribute_name,
+#longtext_attribute_name,
+#number_attribute_name,
+#date_attribute_name,
+#url_attribute_name,
+#attribute_name
+  +element_form_name()
+.tattribute-type
+  :background-color = !lightYellow
+  padding: 3px 5px
+  :color = !darkBrown
+  text-transform: uppercase
+  font-size: .7em
+  font-weight: bold
+  span
+    padding-top: 2px
+.sortable-choices
+  .block-container
+    :background-color = !whiteGray
+    .block-type
+      width: 30px
+      :background-color = !whiteGray
+      :border = 1px solid !whiteGray
+    .block-name
+      margin-left: 40px
+      padding: 7px
+      :background-color = !whiteGray
+      :color = !black
+    .block-type .handler .inner
+      height: 25px
+.image-attribute
+  position: absolute
+  top: 2px
+  right: 5px
+  img
+    width: 28px
+    height: 28px
+    +left()
+    :border = 1px solid !whiteGray
+  a
+    :color = !darkGray
+    text-decoration: underline
+    font-size: .8em
+    +left()
+    margin-left: 5px
+    line-height: 2.5em

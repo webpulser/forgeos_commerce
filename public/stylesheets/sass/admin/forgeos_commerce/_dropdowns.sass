@@ -1,0 +1,142 @@
+//--------------------- ----------       
+// PRODUCT DROPDOWNS     
+//--------------------- ----------
+#product
+  .dropdown
+    margin-left: 0
+    width: 205px
+  a.dropdown_toggle
+    background: url(/images/admin/selects/product-select-right.png) right top no-repeat
+    padding-right: 26px
+    height: 23px
+    span
+      background: url(/images/admin/selects/product-select-left.png) no-repeat
+      height: 16px
+      :color = !black
+      text-transform: none
+  .tool-tip-content .content
+    .enhanced
+      +left()
+      clear: none
+    .dropdown
+      width: 100px
+    a.dropdown_toggle
+      background: url(/images/admin/small-icons/bottom-arrow.png) right center no-repeat
+      height: 22px
+      padding-right: 10px
+      span
+        background: none
+        height: auto
+        text-decoration: underline
+        padding: 5px 0 0 10px
+//--------------------- ----------       
+// VOUCHERS DROPDOWNS     
+//--------------------- ----------
+.change-voucher
+  .dropdown
+    margin-left: 0
+    width: 205px
+  a.dropdown_toggle
+    background: url(/images/admin/small-icons/bottom-arrow.png) right 5px no-repeat
+    padding-right: 26px
+    height: 23px
+    span
+      background: none
+      text-decoration: underline
+      :color = !blueLink
+      text-transform: none
+//--------------------- ----------       
+// DELIVERIES DROPDOWNS     
+//--------------------- ----------    
+.delivery-method
+  a.dropdown_toggle
+    background: url(/images/admin/small-icons/bottom-arrow.png) right 5px no-repeat
+    padding-right: 26px
+    height: 23px
+    span
+      background: none
+      text-decoration: underline
+      :color = !blueLink
+      text-transform: none
+      padding-left: 0px
+  &.enhanced .dropdown .options ul li a span
+    text-transform: none
+    font-size: .9em
+    :color = !blueLink
+    margin-left: 5px !important
+.type-of-delivery
+  .enhanced, select
+    +left()
+.delivery-rule
+  .enhanced, .span-left, input
+    +left()
+.type-of-delivery
+  .dropdown
+    margin-left: 0
+  a.dropdown_toggle
+    background: url(/images/admin/selects/product-select-right.png) right top no-repeat
+    padding-right: 26px
+    height: 23px
+    span
+      background: url(/images/admin/selects/product-select-left.png) no-repeat
+      height: 16px
+      :color = !black
+      text-transform: none
+.delivery-rule
+  margin: 5px 0
+  padding: 0 25px
+  .dropdown
+    margin-left: 0
+    width: auto
+  a.dropdown_toggle
+    background: url(/images/admin/small-icons/bottom-arrow.png) right 6px no-repeat
+    padding-right: 10px
+    height: auto
+    width: auto
+    span
+      background: none
+      height: auto
+      :color = !blueLink
+      text-transform: none
+      text-decoration: underline
+  .options
+    top: 18px
+    text-transform: none
+    font-size: .9em
+    :color = !blueLink
+    width: 150px !important
+    ul li a
+      :color = !blueLink
+//--------------------- ----------       
+// SPECIAL-OFFERS DROPDOWNS     
+//--------------------- ----------    
+.special_offers
+  .dropdown
+    :margin
+      :left 0
+      :right 5px
+    width: auto
+  a.dropdown_toggle
+    background: url(/images/admin/small-icons/bottom-arrow.png) right 3px no-repeat
+    padding-right: 15px
+    height: auto
+    width: auto
+    span
+      background: none
+      height: auto
+      :color = !blueLink
+      text-transform: none
+      text-decoration: underline
+      :line-height 1em
+      :padding
+        :top 4px
+        :right 2px
+      :font-weight bold
+  .options
+    top: 18px
+    text-transform: none
+    font-size: .9em
+    :color = !blueLink
+    width: 150px !important
+    ul li a
+      :color = !blueLink
