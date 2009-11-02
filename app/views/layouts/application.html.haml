@@ -2,7 +2,7 @@
 !!! 1.1
 %html{ 'xml:lang' => I18n.locale, :xmlns => 'http://www.w3.org/1999/xhtml' }
   %head
-    %title= yield(:title) || "#{I18n.t(:project_name)} #{I18n.t('page_not_found')}"
+    %title= yield(:title) || "#{Setting.first.name} #{I18n.t('page_not_found')}"
     %meta{ :content => 'text/html; charset=utf-8', 'http-equiv' => 'Content-Type' }
     %meta{ :name => 'Description', :content => yield(:description) || '' }
     %meta{ :name => 'keywords', :content => yield(:keywords) || '' }
