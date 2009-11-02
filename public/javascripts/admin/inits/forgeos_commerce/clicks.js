@@ -19,14 +19,5 @@ jQuery(document).ready(function(){
     return false;
   });
 
-  /*
-   *Add click function on .tags a.big-icons items
-   *Those items are links to remove elements (i.e. tags)
-   **/
-  $('.tags a.big-icons').live('click', function(){
-    $(this).remove();
-    return false;
-  });
-
   $('.add-choice,.block-container .green-add-icon').live('click', add_item_on_add_click);
 });
