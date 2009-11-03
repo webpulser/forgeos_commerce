@@ -13,18 +13,29 @@ describe Admin::CategoriesController, "GET index" do
 
     it "should load all categories" do
       Category.should_receive(:find_all_by_parent_id).with(nil)
-      get :index
+      get :index, :type => 'category'
     end
     
     it "should assign @categories" do
-      get :index
+      get :index, :type => 'category', :format => 'json'
       assigns[:categories].should == @categories
     end
     
     it "should render the index template" do
-      get :index
-      response.should render_template("index")
+      get :index, :type => 'category', :format => 'json'
+      response.should have_text('[]')
     end
+
+    it "should redirect_to admin/ if no type given" do
+      get :index, :format => 'json'
+      response.should redirect_to(root_path)
+    end
+
+    it "should redirect_to admin/ format is not json" do
+      get :index, :type => 'category'
+      response.should redirect_to(root_path)
+    end
+
   end
 end
 
@@ -128,7 +139,7 @@ describe Admin::CategoriesController, "POST create" do
       
       it "should redirect to the category edit path" do
         post :create
-        response.should redirect_to( edit_admin_category_path @category )
+        response.should redirect_to(edit_admin_category_path(@category))
       end
     end
     

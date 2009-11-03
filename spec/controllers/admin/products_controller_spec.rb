@@ -13,20 +13,16 @@ describe Admin::ProductsController do
   end
  
   describe 'index' do
-
-    it "should load all Products" do
-      Product.should_receive(:all)
-      get :index
-    end
-    
     it "should assign @products" do
-      get :index
-      assigns[:products].should == @products
+      get :index, :format => 'json'
+      assigns[:products].should_not == nil
     end
     
     it "should render the index template" do
       get :index
-      response.should render_template :index
+      response.should render_template(:index)
+      get :index, :format => 'json'
+      response.should render_template(:index)
     end
   end
 
@@ -44,7 +40,7 @@ describe Admin::ProductsController do
     
     it "should render the new template" do
       get :new
-      response.should render_template :new
+      response.should render_template(:new)
     end
   end
 
@@ -62,7 +58,7 @@ describe Admin::ProductsController do
     
     it "should render the edit template" do
       get :edit, :id => 1
-      response.should render_template :edit
+      response.should render_template(:edit)
     end
 
     context "when product does not exist" do
@@ -122,7 +118,7 @@ describe Admin::ProductsController do
       
       it "should render the new template" do
         post :create
-        response.should render_template :new
+        response.should render_template(:new)
       end
     end
   end
@@ -188,7 +184,7 @@ describe Admin::ProductsController do
       
       it "should render the edit template" do
         put :update
-        response.should render_template :edit
+        response.should render_template(:edit)
       end
     end
   end
@@ -220,7 +216,7 @@ describe Admin::ProductsController do
       
       it "should render products list" do
         delete :destroy, :id => 1
-        response.should render_template '_list'
+        response.should nil
       end
     end
 
@@ -237,7 +233,7 @@ describe Admin::ProductsController do
       
       it "should render products list" do
         delete :destroy, :id => 1
-        response.should render_template '_list'
+        response.should nil
       end
     end
 

@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Category do
   describe 'one category' do
     before :each do 
-      @category = Category.create!({:name => 'category'})
+      @category = ProductCategory.create!({:name => 'category'})
     end
 
     it "should have name category" do
@@ -18,11 +18,11 @@ describe Category do
       @products = []
       product_type = ProductType.create!({:name => "type"})
       (1..20).each do |i|
-        product = product_type.products.create!({:url => "url_#{i}", :name => "test"})
-        @category.products << product
+        product = product_type.products.create!({:url => "url_#{i}", :name => 'test', :sku => 'test'})
+        @category.elements << product
         @products << product
       end
-      @category.products.all.should == @products
+      @category.elements.all.should == @products
     end
     
   end
