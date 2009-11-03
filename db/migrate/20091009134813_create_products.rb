@@ -4,7 +4,6 @@ class CreateProducts < ActiveRecord::Migration
       t.string :name,
         :type,
         :sku,
-        :barcode,
         :url
       t.integer :stock
       t.float :price,
