@@ -212,7 +212,6 @@ private
     options[:include] = includes unless includes.empty?
     options[:order] = order unless order.squeeze.blank?
 
-    logger.debug(options.inspect)
     if params[:sSearch] && !params[:sSearch].blank?
       @orders = Order.search(params[:sSearch],options)
     else
