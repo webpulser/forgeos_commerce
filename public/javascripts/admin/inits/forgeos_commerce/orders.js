@@ -14,12 +14,13 @@ jQuery(document).ready(function(){
        Ok: function(){
          dataTableSelectRows('#table-products', function(current_table, indexes) {
            for(var i=0; i<indexes.length; i++){
-             var id = current_table.fnGetData(indexes[i]).slice(-4,-3);
-             var name = current_table.fnGetData(indexes[i]).slice(-3,-2)[0];
-             var sku = current_table.fnGetData(indexes[i]).slice(-2,-1);
-             var price = current_table.fnGetData(indexes[i]).slice(-1);
-             var price_with_currency = current_table.fnGetData(indexes[i]).slice(3,4);
-             var img = jquery_obj_to_str($(current_table.fnGetData(indexes[i]).slice(0, 1)[0]).find('img'));
+             var row = current_table.fnGetData(indexes[i]); 
+             var id = row.slice(-4,-3);
+             var name = row.slice(-3,-2)[0];
+             var sku = row.slice(-2,-1);
+             var price = row.slice(-1);
+             var price_with_currency = row.slice(3,4);
+             var img = jquery_obj_to_str($(row.slice(0, 1)[0]).find('img'));
 
              add_product_to_order_detail(id, name, sku, price, price_with_currency, img);
            }

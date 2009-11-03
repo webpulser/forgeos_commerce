@@ -50,9 +50,10 @@ jQuery(document).ready(function(){
       Ok: function(){
         dataTableSelectRows('#image-table:visible,#thumbnail-table:visible',function(current_table,indexes){
           for(var i=0; i<indexes.length; i++){
-            var path = current_table.fnGetData(indexes[i]).slice(-3,-2);
-            var id = current_table.fnGetData(indexes[i]).slice(-2,-1);
-            var name = current_table.fnGetData(indexes[i]).slice(-1);
+            var row = current_table.fnGetData(indexes[i]);
+            var path = row.slice(-3,-2);
+            var id = row.slice(-2,-1);
+            var name = row.slice(-1);
             add_picture_to_element(path,id,name);
           }
           check_product_first_image();
@@ -73,10 +74,11 @@ jQuery(document).ready(function(){
       Ok: function(){
         dataTableSelectRows('#table-files', function(current_table, indexes) {
           for(var i=0; i<indexes.length; i++){
-            var size = current_table.fnGetData(indexes[i]).slice(-6,-5);
-            var type = current_table.fnGetData(indexes[i]).slice(-8,-7);
-            var id = current_table.fnGetData(indexes[i]).slice(-2,-1);
-            var name = current_table.fnGetData(indexes[i]).slice(-1);
+            var row = current_table.fnGetData(indexes[i]);
+            var size = row.slice(-6,-5);
+            var type = row.slice(-8,-7);
+            var id = row.slice(-2,-1);
+            var name = row.slice(-1);
 
             add_attachment_to_product(id,name,size,type);
           }
