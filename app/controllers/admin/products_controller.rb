@@ -105,7 +105,7 @@ private
   end
 
   def manage_tags
-    params[:product][:tag_list] = params[:tag_list].join(',')
+    params[:product][:tag_list] = params[:tag_list].join(',') if params[:tag_list]
   end
 
   def get_tag(name)
@@ -127,10 +127,11 @@ private
 
   def sort
     columns = %w(sku products.name price stock product_type_id active)
-    per_page = params[:iDisplayLength].to_i
-    offset =  params[:iDisplayStart].to_i
+
+    per_page = params[:iDisplayLength] ? params[:iDisplayLength].to_i : 10
+    offset = params[:iDisplayStart] ? params[:iDisplayStart].to_i : 0
     page = (offset / per_page) + 1
-    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0] ? params[:iSortDir_0].upcase : 'ASC'}"
 
     conditions = {}
     includes = []

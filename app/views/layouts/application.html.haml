@@ -1,3 +1,4 @@
+-# encoding: utf8
 !!! xml utf-8
 !!! 1.1
 %html{ 'xml:lang' => I18n.locale, :xmlns => 'http://www.w3.org/1999/xhtml' }
@@ -47,18 +48,17 @@
                     -product = cart_product[1].first
                     -nb = cart_product[1].count
                     %li
-                      %span.li-product-name
-                        = truncate(product.name, 20, '...')
-                      %span.li-product-qty
-                        = "x#{nb}"
+                      %span.li-product-name= truncate(product.name, 20, '...')
+                      %span.li-product-qty= "x#{nb}"
                       %span.li-product-price
-                        = "#{product.price*nb} &euro;"
+                        = product.price*nb
+                        = $currency.html
                       %span.clear
                   %li.last
                     %span.li-product-name= I18n.t(:total)
                     %span.li-product-qty
                       = @cart.total
-                      €
+                      = $currency.html
           .create-customer-space
             -if logged_in?
               = link_to "#{I18n.t(:welcome)} #{current_user.fullname}", "#"

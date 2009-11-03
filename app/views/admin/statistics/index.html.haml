@@ -16,8 +16,8 @@
       %h2.small-icons.products= I18n.t('product', :count => 2).capitalize
       .to-tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
         %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
-          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to I18n.t('product.best_seller', :count => @products_most_sold.count), '#best-sellers'
-          %li.ui-state-default.ui-corner-top= link_to I18n.t('product.most_viewed', :count => @products_most_viewed.count), '#most-viewed'
+          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to I18n.t('product.best_seller', :count => @products_most_sold.size), '#best-sellers'
+          %li.ui-state-default.ui-corner-top= link_to I18n.t('product.most_viewed', :count => @products_most_viewed.size), '#most-viewed'
         #best-sellers.ui-tabs-panel.ui-widget-content.ui-corner-bottom
           - @products_most_sold.each do |product_id, counter|
             - if product = Product.find_by_id(product_id)

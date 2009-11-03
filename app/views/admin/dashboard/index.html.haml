@@ -51,8 +51,8 @@
               = I18n.t('order.lastest', :count => lastest_orders_count).capitalize
           %li.ui-state-default.ui-corner-top
             %a{ :href => "#pending-orders" }
-              = pending_orders.count
-              = I18n.t('order.pendings', :count => pending_orders.count).capitalize
+              = pending_orders.size
+              = I18n.t('order.pendings', :count => pending_orders.size).capitalize
         #last-orders.ui-tabs-panel.ui-widget-content.ui-corner-bottom
           %table
             %tbody

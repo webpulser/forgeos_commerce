@@ -20,12 +20,11 @@ private
   def sort
     columns = %w(lastname lastname email count(orders.id) '' max(orders.created_at) created_at activated_at)
 
-    per_page = params[:iDisplayLength].to_i
-    offset =  params[:iDisplayStart].to_i
+    per_page = params[:iDisplayLength] ? params[:iDisplayLength].to_i : 10
+    offset = params[:iDisplayStart] ? params[:iDisplayStart].to_i : 0
     page = (offset / per_page) + 1
-
     order_column = params[:iSortCol_0].to_i
-    order = "#{columns[order_column]} #{params[:iSortDir_0].upcase}"
+    order = "#{columns[order_column]} #{params[:iSortDir_0] ? params[:iSortDir_0].upcase : 'ASC'}"
 
     conditions = {}
     includes = []
@@ -57,8 +56,8 @@ private
   def sort_orders
     columns = %w(id id sum(order_details.price) count(order_details.id) created_at people.lastname status)
 
-    per_page = params[:iDisplayLength].to_i
-    offset =  params[:iDisplayStart].to_i
+    per_page = params[:iDisplayLength] ? params[:iDisplayLength].to_i : 10
+    offset = params[:iDisplayStart] ? params[:iDisplayStart].to_i : 0
     page = (offset / per_page) + 1
 
     conditions = {}
@@ -83,7 +82,7 @@ private
       includes << :user
     end
 
-    order = "#{columns[order_column]} #{params[:iSortDir_0].upcase}"
+    order = "#{columns[order_column]} #{params[:iSortDir_0] ? params[:iSortDir_0].upcase : 'ASC'}"
 
     options[:group] = group_by.join(', ') unless group_by.empty?
     options[:conditions] = conditions unless conditions.empty?
