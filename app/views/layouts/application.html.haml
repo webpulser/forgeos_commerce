@@ -25,7 +25,7 @@
               -#session[:redirect] = '/'
               = link_to I18n.t('log.in.action').capitalize, '#', :id=>'login_link'
               #login_container
-                = render :partial => 'sessions/new_form'
+                = render :partial => 'person_sessions/new_form'
           .search_box
             %label= I18n.t('front.research').capitalize
             .search_form
@@ -92,6 +92,6 @@
           =link_to page.title, {:controller => 'url_catcher', :action => 'page', :url => page.url}
           |
 
-    = render :partial => '/layouts/analytics'
+    = render :partial => '/layouts/analytics' if Rails.env == 'production'
     = javascript_include_tag 'front_demo/jquery.jcarousel.pack', :cache => false
     = javascript_include_tag %w(front_demo/jquery-ui front_demo/customselects front_demo/jquery.jqzoom1.0.1 front_demo/init), :cache => 'base'

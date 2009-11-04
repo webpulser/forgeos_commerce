@@ -16,7 +16,7 @@ private
   #
   # If <i>session[:cart_id]</i> existing, this method instance just <i>@cart</i>
   def get_cart
-    return redirect_to( :controller => 'admin/') if (logged_in? && current_user.is_a?(Admin))
+    return redirect_to(admin_root_path) if current_user.is_a?(Admin)
     session[:cart_id] = current_user.cart.id if session[:cart_id].nil? && logged_in? && current_user.cart
     session[:cart_id] = Cart.create.id if session[:cart_id].nil?
     @cart = Cart.find_by_id(session[:cart_id])
