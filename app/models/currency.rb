@@ -8,7 +8,7 @@ class Currency < ActiveRecord::Base
   end
   
   def self.is_default?
-    return $currency.nil? && $currency.id == Currency.find_by_default(true).id
+    !$currency.nil? && $currency.id == Currency.find_by_default(true).id
   end
   
   def to_exchanges_rate(currency)
