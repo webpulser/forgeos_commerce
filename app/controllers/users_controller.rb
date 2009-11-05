@@ -29,7 +29,7 @@ class UsersController < ApplicationController
         session[:redirect] = nil
         return redirect_to(redirect)
       else
-        return render :action => 'new'
+        return render(:action => :new)
       end
     end
     render :layout => false
