@@ -1,11 +1,10 @@
---- 
 currencies_001: 
   html: $
   name: usd
-  default: "0"
+  default: false
   code: USD
 currencies_002: 
   html: €
   name: euro
-  default: "1"
+  default: true
   code: EUR
