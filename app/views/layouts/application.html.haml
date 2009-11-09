@@ -20,7 +20,7 @@
         .cart
           .newsletter
             -if logged_in?
-              = link_to I18n.t(:disconnect).capitalize, session_path, :method => :delete
+              = link_to I18n.t(:disconnect).capitalize, person_session_path, :method => :delete
             -else
               -#session[:redirect] = '/'
               = link_to I18n.t('log.in.action').capitalize, '#', :id=>'login_link'
