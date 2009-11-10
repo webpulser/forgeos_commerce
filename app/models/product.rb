@@ -2,33 +2,28 @@ class Product < ActiveRecord::Base
   attr_accessor :voucher_discount, :voucher_discount_price
   attr_accessor :special_offer_discount, :special_offer_discount_price
   
-  acts_as_taggable_on :tags
+  acts_as_taggable
 
   has_and_belongs_to_many :carts
-  
-  has_and_belongs_to_many :product_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
-  
-  has_and_belongs_to_many :attachments, :list => true, :order => 'position', :join_table => 'attachments_elements', :foreign_key => 'element_id'
-  has_and_belongs_to_many :pictures, :association_foreign_key => 'attachment_id', :join_table => 'attachments_elements', :class_name => 'Picture', :order => 'position', :foreign_key => 'element_id'
-  has_and_belongs_to_many :pdfs, :association_foreign_key => 'attachment_id', :join_table => 'attachments_elements', :class_name => 'Pdf', :order => 'position', :foreign_key => 'element_id'
-
+  has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products' 
+  has_and_belongs_to_many :product_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'  
   has_and_belongs_to_many :attribute_values, :readonly => true
+
   has_many :dynamic_attribute_values, :dependent => :destroy
   has_many :dynamic_attributes, :through => :dynamic_attribute_values, :class_name => 'DynamicAttribute', :source => 'product'
-
-  has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products'
-  belongs_to :product_type
   has_many :product_viewed_counters, :as => :element
   has_many :product_sold_counters, :as => :element
 
-  before_save :clean_strings
-  after_save :synchronize_stock
+  belongs_to :product_type
 
-  validates_presence_of :product_type_id, :sku, :url
-  validates_uniqueness_of :url
   has_one :meta_info, :as => :target
   accepts_nested_attributes_for :meta_info
 
+  validates_presence_of :product_type_id, :sku, :url
+  validates_uniqueness_of :url
+
+  before_save :clean_strings
+  after_save :synchronize_stock
 
   define_index do
     indexes sku, :sortable => true

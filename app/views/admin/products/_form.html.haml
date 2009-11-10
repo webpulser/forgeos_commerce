@@ -89,7 +89,7 @@
             %span.big-icons.add-media
               = I18n.t('add_file').capitalize
           #product-files.grid_9.sortable
-            - product.attachments.all(:conditions => { :type_not => 'Picture'}).each do |attachment|
+            - product.attachments.all(:conditions => { :attachment_type_not => 'Picture'}).each do |attachment|
               = block_container f.object_name, 'attachment', attachment do
                 = attachment.filename
                 %span.file-size
