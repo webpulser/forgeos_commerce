@@ -88,12 +88,14 @@ jQuery(document).ready(function(){
       theme_name : 'product-types-selected',
       selected_parent_close: false
     },
+    types: {
+      "default": {
+        max_depth: 0
+      }
+    },
     rules: {
         multitree : true,
         type_attr : 'rel',
-        draggable : ['attribute'],
-        clickable: ['attribute'],
-        dragrules :['attribute after attribute','attribute before attribute' ]
     },
     callback: {
       onload: function(TREE_OBJ){
@@ -105,7 +107,7 @@ jQuery(document).ready(function(){
 
         if (!$('#product_type_option_ids_'+option_id).is(':empty')) {
           NODE.id = 'option_'+option_id;
-          $('a', NODE).append('<input type="hidden" id="product_type_product_attribute_ids_'+option_id+'" name="product_type[product_attribute_ids][]" value="'+option_id+'" />');
+          $('a', NODE).prepend('<input type="hidden" id="product_type_product_attribute_ids_'+option_id+'" name="product_type[product_attribute_ids][]" value="'+option_id+'" />');
         } else {
           $('#option_'+option_id+'_copy').remove();
         }
