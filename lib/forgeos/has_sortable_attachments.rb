@@ -8,6 +8,5 @@ module Forgeos
     :packs <<
     :product_categories <<
     :product_type_categories <<
-    :attribute_categories <<
-    :attribute_value_categories
+    :attribute_categories
 end
