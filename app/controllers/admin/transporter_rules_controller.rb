@@ -14,6 +14,15 @@ class Admin::TransporterRulesController < Admin::BaseController
     end
   end
 
+  def categories
+    respond_to do |format|
+      format.json do
+        # list categories like a tree
+        render :json => GeoZone.find_all_by_parent_id(nil).collect(&:to_jstree).to_json
+      end
+    end
+  end
+
   def show
   end
   
@@ -258,13 +267,16 @@ class Admin::TransporterRulesController < Admin::BaseController
       offset =  params[:iDisplayStart].to_i
       page = (offset / per_page) + 1
       order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
-      
+
       options = {
         :conditions => { :parent_id => nil },
         :order => order,
         :page => page,
         :per_page => per_page
       }
+      
+      options[:conditions] = ['conditions LIKE ?', '%m.geo_zone_id.==('+params[:category_id]+')%'] if params[:category_id]
+            
       if params[:sSearch] && !params[:sSearch].blank?
         @transporters = TransporterRule.search(params[:sSearch],options)
       else

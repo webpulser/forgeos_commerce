@@ -18,9 +18,10 @@ namespace :admin do |admin|
   admin.resources :transporters, :controller => 'transporter_rules', :member => { :activate => :post, :duplicate => :get }
   admin.resources :transporter_rules, :member => { :duplicate => :get }
   admin.resources :vouchers
-  %w(product product_type attribute special_offer transporter).each do |category|
+  %w(product product_type attribute special_offer).each do |category|
     admin.resources "#{category}_categories", :controller => 'categories', :requirements => { :type => "#{category}_category" }
   end
+  connect "admin/transporter_categories.json", :controller => 'admin/transporter_rules', :action => 'categories'
   admin.resources :geo_zones
   admin.resources :countries, :controller => 'geo_zones'
 
