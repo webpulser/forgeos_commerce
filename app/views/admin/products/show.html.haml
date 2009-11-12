@@ -50,7 +50,7 @@
       %span.panel= I18n.t('media.linked', :count => 2)
       .option-panel-content
         .grid_9
-          - @product.attachments.all(:conditions => { :attachment_type_not => 'Picture' }).each do |attachment|
+          - @product.attachments.all(:conditions => '`attachments`.`type` != "Picture"').each do |attachment|
             .block-container
               %span.block-type= attachment.type.to_s.upcase
               %span.block-name
