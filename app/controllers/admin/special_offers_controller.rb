@@ -98,9 +98,9 @@ class Admin::SpecialOffersController < Admin::BaseController
       case "#{rule_target}"
       when "total items quantity"
         target = "m.total_items"
-      when "Total weight"
+      when "total weight"
         target = "m.weight"
-      when "Total amount"
+      when "total amount"
         target = "m.total_with_tax)"
       else
         target = "m.#{rule_target})"

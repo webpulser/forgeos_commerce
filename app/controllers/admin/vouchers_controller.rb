@@ -92,12 +92,12 @@ class Admin::VouchersController < Admin::BaseController
       case "#{rule_target}"
       when "total items quantity"
         target = "m.total_items"
-      when "Total weight"
+      when "total weight"
         target = "m.weight"
-      when "Total amount"
-        target = "m.total)"
+      when "total amount"
+        target = "m.total"
       else
-        target = "m.#{rule_target})"
+        target = "m.#{rule_target}"
       end
     end
 
