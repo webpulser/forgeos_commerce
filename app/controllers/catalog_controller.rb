@@ -5,16 +5,18 @@ class CatalogController < ApplicationController
   # Show all <i>ProductDetail</i>
   def index
     @product_category = params[:category_name] ? ProductCategory.find_by_name(params[:category_name]) : ProductCategory.first
-    @product_categories = @product_category.children.collect{|c| c.id} if !@product_category.nil?
-    @product_categories << @product_category.id if !@product_category.nil?
-    @category_choice = params[:category_choice]
     
-    if @category_choice.blank? || @category_choice == "0"
-      @products = Product.all(:include => :product_categories,:conditions => {:active => true, :deleted=>[false, nil], :categories_elements=>{:category_id=>@product_categories}})
+    #category_choice_id = params[:category_choice]
+    @category_choice = ProductCategory.find_by_name(params[:category_choice]) || ProductCategory.find_by_id(params[:category_choice])
+    unless @category_choice.nil?
+      @product_categories = @category_choice.children.collect{|c| c.id} 
+      @product_categories << @category_choice.id
     else
-      @category_choice = ProductCategory.find_by_id(@category_choice)
-      @products = @category_choice.elements.find_all_by_active(true)
+      @product_categories = @product_category.children.collect{|c| c.id}
+      @product_categories << @product_category.id
     end
+        
+    @products = Product.all(:include => :product_categories,:conditions => {:active => true, :deleted=>[false, nil], :categories_elements=>{:category_id=>@product_categories}})
     
     if params[:url]
       @selected_product = Product.find_by_url(params[:url])
