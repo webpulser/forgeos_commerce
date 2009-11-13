@@ -13,7 +13,7 @@
         product_array <<
           content_tag(:div, '<div class="handler"></div>'+  image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product handler_container') 
         product_array <<
-          content_tag(:div, params[:mode] == 'selection' ? product.name : link_to(product.name, [:admin, product]), :class => 'product-name')
+          content_tag(:div, product.name, :class => 'product-name')
         product_array << product.id
 
       else
