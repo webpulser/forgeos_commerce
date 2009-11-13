@@ -3,7 +3,7 @@ jQuery(document).ready(function(){
   init_category_tree("#product-type-tree",'ProductTypeCategory','/admin/product_type_categories.json');
   init_category_tree("#attribute-tree",'AttributeCategory','/admin/attribute_categories.json');
   init_category_tree("#special-offer-tree",'SpecialOfferCategory','/admin/special_offer_categories.json');
-  init_category_tree("#transporter-tree",'TransporterCategory','/admin/transporters.json');
+  init_category_tree("#transporter-tree",'TransporterCategory','/admin/transporter_categories.json');
 
   //init the zone modify tree
    $("#zone-tree").tree({
