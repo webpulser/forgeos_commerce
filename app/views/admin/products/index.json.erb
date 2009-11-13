@@ -12,9 +12,9 @@
       if params[:mode] && params[:mode].eql?('menu_link')
         product_array <<
           content_tag(:div, '<div class="handler"></div>'+  image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product handler_container') 
-        product_array <<
-          content_tag(:div, product.name, :class => 'product-name')
+        product_array << content_tag(:div, product.name, :class => 'product-name')
         product_array << product.id
+        product_array << link_to(product.name, [:admin, product])
 
       else
         if product.kind_of? Pack
