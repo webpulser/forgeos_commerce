@@ -13,6 +13,7 @@ resources :orders
 catalog '/catalog/:category_name/:url', :controller => 'catalog', :action => 'index', :url => nil
 resources :catalog
 connect '/product/:category_name/:category_choice/:url', :controller => 'url_catcher', :action => 'product'
+product '/product/:url', :controller => 'url_catcher', :action => 'product'
 connect '/catalog/:category_name/:category_choice/:url', :controller => 'catalog', :action => 'index', :url => nil
 namespace :admin do |admin|
   admin.resources :transporters, :controller => 'transporter_rules', :member => { :activate => :post, :duplicate => :get }

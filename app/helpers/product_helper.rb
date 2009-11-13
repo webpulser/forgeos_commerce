@@ -1,5 +1,13 @@
 module ProductHelper
   
+  def product_path(object)
+    super(:id => nil, :url => object.url)
+  end
+
+  def product_category_path(object)
+    super(:id => nil, :category_name => object.name)
+  end
+
   def display_catalog(products)
     total = (products.is_a?(WillPaginate::Collection)) ? products.total_entries : products.size
     content = pluralize total, "result"
