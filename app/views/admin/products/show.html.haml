@@ -21,16 +21,22 @@
           = @product.stock
           &nbsp;
           = I18n.t('product.in_stock')
-      .description
-        %em
-          = I18n.t('description').capitalize
-          \:
-        = @product.description
+      .clear
       %p
         %em
           = I18n.t('product_type', :count => 1).capitalize
           \:
         = link_to @product.product_type.name, [:admin,@product.product_type], :class => 'product-type-link'
+      %p
+        %em
+          = t :sku
+          \:
+        = @product.sku
+      .description
+        %em
+          = I18n.t('description').capitalize
+          \:
+        = @product.description
     #product-images.grid_4.omega
       %ul
         - @product.pictures.each do |picture|
@@ -86,11 +92,8 @@
           .fake-hr
             %span.option-second-title
               = attribute.name
-          - if attribute.dynamic?
-            - dynamic_attribute_value = @product.dynamic_attribute_values.find_by_attribute_id(attribute.id)
-            = dynamic_attribute_value.value
-          - else
-            = @product.attribute_values.find_all_by_attribute_id(attribute.id).collect(&:name).join(', ')
+          - value = @product.send(attribute.access_method)
+          = value.is_a?(Array) ? value.join(', ') : value
           .clear
     .clear
 
