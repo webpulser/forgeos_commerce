@@ -29,4 +29,8 @@ module CategoryHelper
       end
     content += "</div>"
   end
+
+  def link_to_category(category)
+
+  end
 end

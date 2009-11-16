@@ -65,10 +65,11 @@
             - else
               = link_to I18n.t(:sign_up), new_user_path
         - product_categories = ProductCategory.find_all_by_parent_id(nil, :limit => 7)
+        = display_menu_front(Menu.first, {:ul_class => "menu", :li_class => "test_class_li", :li_current_class => "test_class_li_currrent"})
         - unless product_categories.empty?
-          %ul.menu
-            - product_categories.each do |category|
-              %li= link_to category.name, catalog_path(:category_name=> category.name, :url => nil)
+          /%ul.menu
+          /- product_categories.each do |category|
+          /%li= link_to category.name, catalog_path(:category_name=> category.name, :url => nil)
     .content
       .before_breadcrumbs
       .breadcrumbs
