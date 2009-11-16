@@ -6,7 +6,9 @@
   .product_block
     .image_container
       .first_image_container
-        - unless product.pictures.blank?
+        - if product.pictures.blank?
+          = image_tag("/images/admin/no-image.png", :alt => "no image") 
+        -else
           - picture = product.pictures.first
           =link_to image_tag(picture.public_filename(:normal), :alt => picture.public_filename) ,product.pictures.first.public_filename(:big), :class => "jqzoom"
       .other_views
@@ -81,17 +83,18 @@
       %h2
         Nous vous proposons de compléter votre tenue avec :
       %ul.cross-sells.jcarousel-list
-        - product.cross_sellings.each do |product|
+        - product.cross_sellings.each do |product_cross|
           %li.jcarousel-item
-            %a{ :href => "/product/#{product.url}" }
-              - picture = product.pictures.first
+            %a{ :href => "/product/#{product_cross.url}" }
+              - picture = product_cross.pictures.first
               - if picture
                 = image_tag(picture.public_filename(:normal))
               - else
                 %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
-              %span= truncate(product.name,15,' ...')
-              %span.price= "#{product.price} #{$currency.html}"
+              %span= truncate(product_cross.name,15,' ...')
+              %span.price= "#{product_cross.price} #{$currency.html}"
+              
 - if product.meta_info
-  - content_for :title, product.meta_info.title
+  - content_for :title, product.meta_info.title + " - " + category.name
   - content_for :description, product.meta_info.description
   - content_for :keywords, product.meta_info.keywords

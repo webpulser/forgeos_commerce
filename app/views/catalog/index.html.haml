@@ -20,17 +20,18 @@
         %ul#slider_products.jcarousel-list
           -@products.each do |product|
             %li.jcarousel-item
-              =link_to image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel'), "/product/#{product.url}" if !product.pictures.blank?
-              /%img{ :src => "/images/front_demo/product_image.jpg", :alt => "" }
+              -if !product.pictures.blank?
+                =link_to image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel'), "/product/#{product.url}"
+              - else
+                =link_to image_tag("/images/admin/no-image.png", :class => 'img_carousel'), "/product/#{product.url}fx"
               %span.price
                 =product.price
-                €  
-              %span= link_to product.name, "/product/#{@product_category.name}/#{selected.name}/#{product.url}"
-    =render :partial => 'products/show', :locals => { :product => @selected_product }
+                = $currency.html  
+    =render :partial => 'products/show', :locals => { :product => @selected_product, :category => @product_category }
   -else
     .no_product
       .cart-step-content
         %h1
           Il n'y a pas de produit dans cette catégorie.
           = link_to "Retour à l'accueil", :root
-- content_for :title, @product_category.name
+    - content_for :title, @product_category.name
