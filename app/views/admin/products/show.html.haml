@@ -109,19 +109,19 @@
     .step
       = link_to I18n.t('product.duplicate').capitalize, duplicate_admin_product_path(@product), :class => 'small-icons duplicate'
 
-    .step.open
+    #products_show_associated_collection.step.open
       %a.small-icons.step-title{:href => '#'}= I18n.t('product.associated_collection', :count => 2).capitalize
       #association-tree.inner-step.init-tree
         Coming Soon
 
-    .step.open
+    #products_show_tags.step.open
       %a.small-icons.step-title{:href => '#'}= I18n.t('tag', :count => 2).capitalize
       .inner-step.tags
         - @product.tags.each do |tag|
           %span
             = tag.name
         .clear
-    .step.open
+    #products_show_meta.step.open
       %a.small-icons.step-title{ :href => '#' }
         = I18n.t('meta_description').capitalize
       .inner-step.meta

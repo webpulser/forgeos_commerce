@@ -56,13 +56,13 @@
       =mail_to @user.email, I18n.t('user.contact').capitalize, :class => 'small-icons contact'
       = link_to I18n.t('order.create.action').capitalize, new_admin_order_path(:user_id => @user.id), :class=>'small-icons duplicate'
       = link_to I18n.t('user.destroy.action').capitalize, [:admin, @user], :confirm => I18n.t('user.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
-    .step.open
+    #users_show_special_offer.step.open
       %a.small-icons.step-title.disable{ :href => '#' }
         = I18n.t('special_offer', :count => 2).capitalize
-    .step.open.disable
+    #users_show_newsletter.step.open.disable
       %a.small-icons.step-title{ :href => '#' }
         = I18n.t('newsletter', :count => 2).capitalize
-    .step.open
+    #users_show_history.step.open
       %a.small-icons.step-title{ :href => '#' }
         = I18n.t('user.history').capitalize
       .inner-step

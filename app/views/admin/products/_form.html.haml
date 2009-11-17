@@ -139,14 +139,14 @@
         - unless product.new_record?
           = link_to I18n.t('product.duplicate').capitalize, [:duplicate, :admin, product], :class => 'small-icons duplicate'
           = link_to I18n.t('product.destroy.action').capitalize, [:admin, product], :confirm => I18n.t('product.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
-      .step.open
+      #products_associated_collection.step.open
         = link_to(I18n.t('product.associated_collection', :count => 2), '#', :class => 'small-icons step-title')
         #association-product-tree.inner-step.init-tree
           = hidden_field_tag "#{f.object_name}[product_category_ids][]" 
           %ul
             = render :partial => 'admin/categories/associated_elements', :locals => { :association_id => 'product_category_ids', :element => product, :category_ids => product.product_category_ids, :categories => ProductCategory.find_all_by_parent_id(nil) }
           .clear
-      .step.open
+      #products_delivery.step.open
         = link_to I18n.t(:delivery), '#', :class => 'small-icons step-title'
         .inner-step.weight
           %label{ :for => "weight" }
@@ -154,7 +154,7 @@
             %br
           = f.text_field :weight, :class => 'product_weight', :id => 'weight'
           KG
-      .step.open
+      #products_tags.step.open
         = link_to I18n.t(:tag, :count => 2), '#', :class => 'small-icons step-title'
         .inner-step.tags
           .wrap_tags
@@ -166,7 +166,7 @@
                 = hidden_field_tag 'tag_list[]', tag
                 = link_to '&nbsp;', '#', :class => 'big-icons gray-destroy'
           .clear
-      .step.open
+      #products_meta.step.open
         = link_to I18n.t(:meta_description, :count => 2), '#', :class => 'small-icons step-title'
         .inner-step.meta
           - product.build_meta_info unless product.meta_info
