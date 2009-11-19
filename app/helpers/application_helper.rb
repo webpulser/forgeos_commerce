@@ -4,5 +4,4 @@ module ApplicationHelper
   include ProductHelper
   include OrderHelper
   include CategoryHelper
-  include MenuHelper
 end
