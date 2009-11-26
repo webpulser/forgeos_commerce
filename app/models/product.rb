@@ -4,10 +4,11 @@ class Product < ActiveRecord::Base
   
   acts_as_taggable
 
+  has_and_belongs_to_many_attachments
   has_and_belongs_to_many :carts
   has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products' 
   has_and_belongs_to_many :product_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'  
-  has_and_belongs_to_many :attribute_values, :readonly => true
+  has_and_belongs_to_many :attribute_values, :readonly => true, :uniq => true
 
   has_many :dynamic_attribute_values, :dependent => :destroy
   has_many :dynamic_attributes, :through => :dynamic_attribute_values, :class_name => 'DynamicAttribute', :source => 'product'
@@ -35,7 +36,6 @@ class Product < ActiveRecord::Base
 
     has active, deleted
   end
-  #acts_as_ferret YAML.load_file(File.join(RAILS_ROOT, 'config', 'search.yml'))['product'].symbolize_keys
 
 
   # Returns month's offers
@@ -138,40 +138,21 @@ class Product < ActiveRecord::Base
     return ("%01.2f" % (price(false, with_currency) * self.rate_tax/100)).to_f
   end
 
-  # Returns an <i>Array</i> of <i>Product</i> who match gived keyword
-  # ==== Parameters
-  # * <tt>:keyword</tt> - a keyword
-#  def self.search(keyword, options = { :limit => :all })
-#    Product.find_with_ferret("%#{keyword}%",options)
-#  end
-
-  # Returns a <i>WillPaginate::Collection</i> of <i>Product</i> who match gived keyword
-  #
-  # ==== Parameters
-  # * <tt>:keyword</tt> - a keyword
-  # ==== paginate_options
-  # * <tt>:page</tt> - page number
-  # * <tt>:per_page</tt> - product's count by page
-#  def self.search_paginate(keyword, page=1, per_page=8)
-#    self.search(keyword).paginate(:page => page, :per_page => per_page)
-#  end
-
-  def method_missing_with_attribute(method, *args, &block)
-    unless self.product_type && attribute = self.product_type.product_attributes.find_by_access_method(method.to_s)
-      return method_missing_without_attribute(method, *args, &block)
-    else
-      if attribute.dynamic?
-        if attr_value = self.dynamic_attribute_values.find_by_attribute_id(attribute.id)
-          return attr_value.value
-        else
-          return method_missing_without_attribute(method, *args, &block)
+  def after_initialize()
+    if product_type
+      product_type.product_attributes.each do |attribute|
+        self.class_eval <<DEF
+        def #{attribute.access_method}
+          attribute = Attribute.find(#{attribute.id})
+          if attribute.dynamic?
+            attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
+            attribute_value ? attribute_value.value : nil
+          else
+            attribute_values.find_all_by_attribute_id(attribute.id).collect(&:name)
+          end
         end
-      else
-        return self.attribute_values.find_all_by_attribute_id(attribute.id).collect(&:name)
+DEF
       end
     end
   end
-
-  alias_method_chain :method_missing, :attribute
-  
 end

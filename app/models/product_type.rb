@@ -1,5 +1,6 @@
 class ProductType < ActiveRecord::Base
   has_many :products, :dependent => :destroy
+  has_and_belongs_to_many_attachments
   has_and_belongs_to_many :product_attributes, :class_name => 'Attribute', :readonly => true
   has_and_belongs_to_many :dynamic_attributes, :class_name => 'Attribute', :readonly => true, :join_table => 'attributes_product_types', :association_foreign_key => 'attribute_id',
     :conditions => {:dynamic => true}
