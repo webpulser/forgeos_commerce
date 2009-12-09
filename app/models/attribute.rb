@@ -1,5 +1,6 @@
 # Groups of <i>Attribute</i>
 class Attribute < ActiveRecord::Base
+  translates :name
   has_and_belongs_to_many :attribute_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
   
   has_many :attribute_values, :dependent => :destroy, :order => 'position'
