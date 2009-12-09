@@ -90,13 +90,6 @@ class Product < ActiveRecord::Base
     self.update_attribute('deleted', !self.deleted )
   end
 
-  # Overload the description attribute.
-  #
-  # Returns a empty string if <i>description</i> is <i>nil</i>
-  def description
-    (super.nil?) ? "" : super
-  end
-
   # Returns product's price without tax by default
   #
   # The currency of user is considered by default
