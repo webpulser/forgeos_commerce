@@ -150,10 +150,14 @@ private
     options[:include] = includes unless includes.empty?
     options[:order] = order unless order.squeeze.blank?
 
+    joins = []
+    joins << :globalize_translations
+    options[:joins] = joins
+
     if params[:sSearch] && !params[:sSearch].blank?
-      @products = Product.search(params[:sSearch],:joins => :globalize_translations,options)
+      @products = Product.search(params[:sSearch],options)
     else
-      @products = Product.paginate(:all,:joins => :globalize_translations,options)
+      @products = Product.paginate(:all,options)
     end
   end
 end
