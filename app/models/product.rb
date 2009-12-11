@@ -22,7 +22,7 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :meta_info
 
   validates_presence_of :product_type_id, :sku, :url
-  validates_uniqueness_of :url
+  #validates_uniqueness_of :url
 
   before_save :clean_strings
   after_save :synchronize_stock

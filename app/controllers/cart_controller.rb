@@ -138,7 +138,9 @@ protected
       rule_builder.code = @voucher_code || session[:voucher_code]
       rule_builder.free_product_ids = @free_product_ids
       rule_builder.rules
+      #p "voucher"*10
       @cart.carts_products.each do |cart_product|
+        #p cart_product.inspect
         e.assert cart_product.product
       end
       e.assert @cart
