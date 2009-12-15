@@ -10,7 +10,7 @@ module OrderHelper
   end
 
   def step_order_image_filename(step,index)
-    "step#{step}_#{((index == step) ? 'on' : 'go')}_#{I18n.locale}.gif"
+    "front_demo/steps/step#{step}_#{((index == step) ? 'on' : 'go')}_#{I18n.locale}.gif"
   end
 
   # Display a cart's product
