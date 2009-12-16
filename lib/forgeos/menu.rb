@@ -22,7 +22,7 @@ module Forgeos
   }
   AdminMenu << { :title => 'back_office.menu.marketing', 
     :i18n => true,
-    :url => { :controller => 'admin/special_offers'},
+    :url => { :controller => 'admin/vouchers'},
     :html => { :class => 'right' }
   }
 
