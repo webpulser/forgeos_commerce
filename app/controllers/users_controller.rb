@@ -1,6 +1,12 @@
 class UsersController < ApplicationController
   def show
     @user = User.find_by_id params[:id]
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @user.to_xml }
+      format.json { render :json => @user.to_json }
+    end
+    
   end
   
   # Return an HTML form for describing the new account
@@ -41,7 +47,10 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     @user.save
     if @user.errors.empty?
-      self.current_user = @user
+      #self.current_user = @user
+      @user.activate
+      
+      PersonSession.create(@user, true)
       flash[:notice] = I18n.t('account_creation_ok').capitalize
       get_cart
       if redirect = session[:redirect]
