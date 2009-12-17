@@ -21,9 +21,9 @@
           -@products.each do |product|
             %li.jcarousel-item
               -if !product.pictures.blank?
-                =link_to image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel'), "/product/#{product.url}"
+                = link_to image_tag(product.pictures.first.public_filename(:normal), :class => 'img_carousel'), "/product/#{@product_category.name}/#{selected.name}/#{product.url}"
               - else
-                =link_to image_tag("/images/admin/no-image.png", :class => 'img_carousel'), "/product/#{product.url}fx"
+                =link_to image_tag("/images/admin/no-image.png", :class => 'img_carousel'), "/product/#{@product_category.name}/#{selected.name}/#{product.url}"
               %span.price
                 =product.price
                 = $currency.html  
