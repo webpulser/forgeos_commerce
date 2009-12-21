@@ -51,6 +51,8 @@ en:
   remove_this_voucher: 'remove this voucher'
   add: add
   free_payment: "it's free!!!"
+  payment:
+    safe: safe payment
   no_product: 'no product'
   total: total
   unit_price: 'unit price' 

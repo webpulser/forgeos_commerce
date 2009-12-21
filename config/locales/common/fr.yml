@@ -51,6 +51,8 @@ fr:
   remove_this_voucher: 'enlever ce code promo'
   add: ajouter
   free_payment: "gratuit !!!"
+  payment:
+    safe: paiement sécurisé
   no_product: 'aucun produit'
   total: total
   unit_price: "prix à l'unité" 
