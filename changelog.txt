@@ -1,0 +1,8 @@
+rc1 :
+  - add transporter fonctionnality
+  - fix special offers and vouchers bug
+  - add special offers and vouchers to order show
+  - add helper for menu navigation
+  - fix ruby 1.8.6 compatibility
+  - add multiple selection on dataTables & dataSlides
+
