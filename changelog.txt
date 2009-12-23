@@ -1,8 +1,6 @@
-rc1 :
+0.9.0-rc1 :
   - add transporter fonctionnality
-  - fix special offers and vouchers bug
+  - fix special offers and vouchers apply in cart
   - add special offers and vouchers to order show
   - add helper for menu navigation
-  - fix ruby 1.8.6 compatibility
-  - add multiple selection on dataTables & dataSlides
-
+  - add import module for products from CSV file
