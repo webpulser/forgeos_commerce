@@ -1,7 +1,7 @@
 class Admin::TransporterRulesController < Admin::BaseController
 
   before_filter :new_transporter, :only => [:new, :create]
-  before_filter :get_transporter, :only => [ :show, :edit, :update ]
+  before_filter :get_transporter, :only => [ :show, :edit, :update, :destroy ]
   before_filter :get_rules, :only => [ :show, :edit ]
 
   def index
@@ -141,11 +141,10 @@ class Admin::TransporterRulesController < Admin::BaseController
   def destroy
     if @transporter.destroy
       flash[:notice] = I18n.t('transporter.destroy.success').capitalize
-      render :partial => 'list', :locals => { :transporters => @transporters }
     else
       flash[:error] = I18n.t('transporter.destroy.failed').capitalize
-      render :nothing => true
     end
+    redirect_to(admin_transporters_path)
   end
 
   def activate
