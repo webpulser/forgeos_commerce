@@ -9,4 +9,4 @@
           - when Page
             %li= link_to item.title, item.url
           - when Product, Pack
-            %li= link_to item.name, "/product/#{item.url}"
+            %li= link_to item.name, item

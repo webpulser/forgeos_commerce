@@ -2,10 +2,10 @@
 - form_remote_for :address, address, :url => { :controller => 'order', :action => 'create_address', :id => address } do |f|
   /%p
   /  %label
-  /    = I18n.t('type').capitalize
+  /    = t('type').capitalize
   /  \:
   /  %br
-  /  =# f.select :kind, [[I18n.t('address.delivery', :count => 1).capitalize, 'AddressDelivery'], [I18n.t('address.invoice', :count => 1).capitalize, 'AddressInvoice']]
+  /  =# f.select :kind, [[t('address.delivery', :count => 1).capitalize, 'AddressDelivery'], [t('address.invoice', :count => 1).capitalize, 'AddressInvoice']]
   %p
     %label
       Designation
@@ -13,51 +13,51 @@
     = f.text_field :designation
   %p
     %label
-      = I18n.t(:civility, :count => 1).capitalize
+      = t(:civility, :count => 1).capitalize
     \:
     %br
-    = f.select :civility, I18n.t('civility.select'), { :prompt => I18n.t('please_select').capitalize }
+    = f.select :civility, t('civility.select'), { :prompt => t('please_select').capitalize }
   %p
     %label
-      = I18n.t('lastname').capitalize
+      = t('lastname').capitalize
     \:
     %br
     = f.text_field :name
   %p
     %label
-      = I18n.t('firstname').capitalize
+      = t('firstname').capitalize
     \:
     %br
     = f.text_field :firstname
   %p
     %label
-      = I18n.t('address', :count => 1).capitalize
+      = t('address', :count => 1).capitalize
     \:
     %br
     = f.text_field :address
   %p
     %label
-      = I18n.t('address', :count => 1).capitalize
+      = t('address', :count => 1).capitalize
     \:
     %br
     = f.text_field :address_2
   %p
     %label
-      = I18n.t('zip_code').capitalize
+      = t('zip_code').capitalize
     \:
     %br
     = f.text_field :zip_code
   %p
     %label
-      = I18n.t('city').capitalize
+      = t('city').capitalize
     \:
     %br
     = f.text_field :city
   %p
     %label
-      = I18n.t('country').capitalize
+      = t('country').capitalize
     \:
     %br
-    = f.collection_select :country_id, Country.all, :id, :printable_name, { :prompt => I18n.t('please_select').capitalize }
-  = submit_tag I18n.t('save').capitalize, :class=>'submit-button'
+    = f.collection_select :country_id, Country.all, :id, :printable_name, { :prompt => t('please_select').capitalize }
+  = submit_tag t('save').capitalize, :class=>'submit-button'
 .clear
