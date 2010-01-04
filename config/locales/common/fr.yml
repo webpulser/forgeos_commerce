@@ -41,16 +41,25 @@ fr:
     usd:
       one: dollar
       other: dollars
+  product:
+    name: nom du produit
+    signal_to_a_friend: Je signale ce produit à un ami
   catalog: catalogue
-  sign_up: "Je crée mon Espace Client"
-  make_order: 'passer commande'
-  remove_voucher: 'enlever le code promo'
-  disconnect: 'se déconnecter'
+  choose_quantity: choisir votre quantité
+  sign_up: Je crée mon Espace Client
+  print: imprimer
+  make_order: passer commande
+  cross_products: Nous vous proposons de compléter votre panier avec
+  continue_in_shop: poursuivre mon shopping
+  remove_voucher: enlever le code promo
+  disconnect: se déconnecter
   cant_not_place_order: 'Nous sommes désolé, mais il est temporairement impossible de passer commande'
   thank_you_to_place_order: "Merci d'avoir passé commande"
   remove_this_voucher: 'enlever ce code promo'
   add: ajouter
   free_payment: "gratuit !!!"
+  payment:
+    safe: paiement sécurisé
   no_product: 'aucun produit'
   total: total
   unit_price: "prix à l'unité" 
@@ -183,6 +192,7 @@ fr:
   weight: poids
   select_all: 'sélectionner tout'
   unselect_all: 'désélectionner tout'
+  category_select: sélectionnez une sous catégorie
   price:
     one: prix
     other: prix

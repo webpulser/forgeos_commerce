@@ -7,10 +7,10 @@
     - else
       -session[:redirect] = "/order/new"
       #login
-        = render :partial => 'sessions/new_form'
+        = render :partial => 'person_sessions/new_form'
       .order-separation
-        = I18n.t('or').capitalize
+        = t('or').capitalize
       #signin
         = render :partial => 'users/new_form'
     .clear
-- content_for :title, I18n.t(:cart, :count => 1)
+- content_for :title, t(:cart, :count => 1)

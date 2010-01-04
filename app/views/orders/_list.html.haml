@@ -1,27 +1,23 @@
 - if orders.empty?
-  = I18n.t('order', :count => 0).capitalize
+  = t('order', :count => 0).capitalize
 - else
   %table
     %thead
       %tr
-        %th
-          = I18n.t('reference').capitalize
-        %th
-          = I18n.t('status', :count=>1).capitalize
-        %th
-          = I18n.t('address.delivery', :count => 1).capitalize
-        %th
-          = I18n.t('action', :count=>2).capitalize
+        %th= t('reference').capitalize
+        %th= t('status', :count=>1).capitalize
+        %th= t('address.delivery', :count => 1).capitalize
+        %th= t('action', :count=>2).capitalize
     %tbody
       - orders.each do |order|
         %tr
           %td
             - #= order.reference
           %td
-            = I18n.t(order.aasm_current_state).capitalize
+            = t(order.aasm_current_state).capitalize
           %td
             %pre
-              = I18n.t(order.address_delivery.civility, :scope => [:civility, :label])
+              = t(order.address_delivery.civility, :scope => [:civility, :label])
               \&nbsp;
               = order.address_delivery.name
               \&nbsp;
@@ -34,6 +30,6 @@
               = order.address_delivery.city
               = order.address_delivery.country.name
           %td
-            = link_to_remote I18n.t('show').capitalize, :url => order_path(order), :method => 'get', :update => 'orders'
+            = link_to_remote t('show').capitalize, :url => order_path(order), :method => 'get', :update => 'orders'
             \-
-            - #= link_to_remote I18n.t('destroy').capitalize, :url => order_path(order), :confirm => I18n.t('order.destroy.confirm').capitalize, :method => 'delete', :update => 'orders'
+            - #= link_to_remote t('destroy').capitalize, :url => order_path(order), :confirm => t('order.destroy.confirm').capitalize, :method => 'delete', :update => 'orders'

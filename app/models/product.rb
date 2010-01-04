@@ -38,6 +38,18 @@ class Product < ActiveRecord::Base
     has active, deleted
   end
 
+  def public_url
+    unless product_categories.empty?
+      category = product_categories.first
+      if category.ancestors.empty?
+        "/product/#{category.name}/#{self.url}"
+      else
+        "/product/#{category.ancestors.first.name}/#{category.name}/#{self.url}"
+      end
+    else
+      '#'
+    end
+  end
 
   # Returns month's offers
   def self.get_offer_month

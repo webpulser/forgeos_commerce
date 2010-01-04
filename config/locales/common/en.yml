@@ -41,16 +41,25 @@ en:
     usd:
       one: usd
       other: usd
+  product:
+    name: product name
+    signal_to_a_friend: signal to a friend
   catalog: catalog
-  sign_up: 'sign up'
-  make_order: 'Make order'
-  remove_voucher: 'remove voucher'
+  choose_quantity: choose quantity
+  sign_up: sign up
+  print: print
+  make_order: make order
+  cross_products: We propose to fill your cart with 
+  continue_in_shop: continue in shop
+  remove_voucher: remove voucher
   disconnect: disconnect
   cant_not_place_order: 'We are sorry, but it is temporarily impossible to place order'
   thank_you_to_place_order: 'Thank you for your order'
   remove_this_voucher: 'remove this voucher'
   add: add
   free_payment: "it's free!!!"
+  payment:
+    safe: safe payment
   no_product: 'no product'
   total: total
   unit_price: 'unit price' 
@@ -185,6 +194,7 @@ en:
   weight: weight
   select_all: 'select all'
   unselect_all: 'unselect all'
+  category_select: select a subcategory
   price:
     one: price
     other: prices

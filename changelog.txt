@@ -1,0 +1,6 @@
+0.9.0-rc1 :
+  - add transporter fonctionnality
+  - fix special offers and vouchers apply in cart
+  - add special offers and vouchers to order show
+  - add helper for menu navigation
+  - add import module for products from CSV file

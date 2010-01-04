@@ -36,14 +36,15 @@
             =product.special_offer_discount if !product.special_offer_discount.nil?
           -unless product.special_offer_discount.nil?
             %span.old-price
-              ="#{product.price} €" 
+              = number_with_precision(product.price,2)
+              = $currency.html
             %span.new-price
-              =product.new_price
-              €
+              = number_with_precision(product.new_price,2)
+              = $currency.html
           -else
             %span.price
-              =product.price
-              €
+              = number_with_precision(product.price,2)
+              = $currency.html
         .clear
         -if !product.product_type.product_attributes.find_by_access_method('color').nil? and !product.color.blank?
           .color-picker
@@ -64,16 +65,14 @@
         - form_tag :controller => 'cart', :action => 'add_product' do
           .submit_box
             .qty-picker
-              %span
-                Je choisis ma quantité
+              %span= t :choose_quantity
               =text_field_tag 'quantity', 1
               =hidden_field_tag :id, product.id
-            =submit_tag "J'ajoute au panier", :class => 'add_to_cart'
+            =submit_tag t(:add_to_cart), :class => 'add_to_cart'
         .clear
         .links
-          %a.print{ :href => "javascript:window.print();" }
-            J'imprime
-          = mail_to "", "Je signale ce produit à un ami", :subject => 'Demo Forgeos signaler un produit', :class => 'signal_to_a_friend last'
+          = link_to_function(t(:print), "javascript:window.print()", :class => 'print') 
+          = mail_to "", t('product.signal_to_a_friend'), :subject => 'Demo Forgeos signaler un produit', :class => 'signal_to_a_friend last'
       -product.product_type.product_attributes.find(:all, :conditions => { :type => 'LongtextAttribute' }).each do |attribute|
         %div{:id => attribute.access_method, :class=>'ui-tabs-panel'}
           =product.dynamic_attribute_values.find_by_attribute_id(attribute.id).value
@@ -81,20 +80,27 @@
     .clear
     .cross-selling
       %h2
-        Nous vous proposons de compléter votre tenue avec :
+        = t :cross_products
+        \:
       %ul.cross-sells.jcarousel-list
         - product.cross_sellings.each do |product_cross|
           %li.jcarousel-item
-            %a{ :href => "/product/#{product_cross.url}" }
+            - link_to product_cross.public_url do
               - picture = product_cross.pictures.first
               - if picture
                 = image_tag(picture.public_filename(:normal))
               - else
                 %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
               %span= truncate(product_cross.name,15,' ...')
-              %span.price= "#{product_cross.price} #{$currency.html}"
-              
+              %span.price
+                = number_with_precision(product_cross.price,2)
+                = $currency.html
+- content_for :breadcrumbs do
+  = link_to category.name, catalog_path(:url => nil, :category_name => category.name)
+  - if @category_choice
+    &gt;
+    = link_to @category_choice.name, catalog_selected_category_path(:url => nil, :category_name => category.name, :category_choice => @category_choice.name)
 - if product.meta_info
-  - content_for :title, product.meta_info.title + " - " + category.name
+  - content_for :title, product.meta_info.title
   - content_for :description, product.meta_info.description
   - content_for :keywords, product.meta_info.keywords

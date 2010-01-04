@@ -10,36 +10,32 @@
         %table.products_in_cart
           %thead
             %tr
-              %th
-                Nom du product
-              %th
-                Prix unitaire
-              %th
-                Quantité
-              %th
-                Prix total
+              %th= t('product.name')
+              %th= t(:unit_price)
+              %th= t(:quantity, :count => 1)
+              %th= t(:total)
           %tbody
             -@cart.carts_products.group_by(&:product_id).each do |cart_product|
             -product = cart_product[1].first.product
-            -nb = cart_product[1].count
+            -nb = cart_product[1].size
               %tr
+                %td=product.name
                 %td
-                  =product.name
+                  = number_with_precision(product.price,2)
+                  = $currency.html
+                %td=nb
                 %td
-                  =product.price
-                  €
-                %td
-                  =nb
-                %td
-                  =nb*product.price
-                  €
+                  = number_with_precision(nb*product.price,2)
+                  = $currency.html
       .total-div
         -@cart.carts_products.each do |carts_product|
           -unless carts_product.product.special_offer_discount.nil?
             %span.total-label
               ="Promo #{carts_product.product.name} #{carts_product.product.special_offer_discount}"
             %span.total-price
-              ="#{carts_product.product.new_price} €"
+              = number_with_precision(carts_product.product.new_price,2)
+              = $currency.html
+
         -@free_product_ids.each do |product_id|
           -product = Product.find_by_id(product_id)
           %span.total-label
@@ -54,7 +50,8 @@
         %span.total-label.last
           Prix total
         %span.total-price.last#cart_total
-          ="#{@cart.total} €"
+          = number_with_precision(@cart.total,2)
+          = $currency.html
       .clear
       #voucher_message
         - if @cart.voucher
@@ -62,8 +59,8 @@
           = "With voucher code #{voucher.code} : #{voucher.name}" unless voucher.nil?
       = display_voucher
       .link_order
-        = link_to I18n.t('make_order').capitalize, :controller => 'order', :action => 'new'
-        = link_to 'poursuivre ma commande'.capitalize, :back
+        = link_to t(:make_order).capitalize, :controller => 'order', :action => 'new'
+        = link_to t(:continue_in_shop), :back
       .clear
       .link_empty
         = "or" + link_to_cart_empty
@@ -72,11 +69,12 @@
   - unless @cross_selling_products.empty?
     .cross-selling
       %h2
-        Nous vous proposons de compléter votre panier avec :
+        = t(:cross_products)
+        \:
       %ul.cross-sells
         -@cross_selling_products.each do |product|
           %li
-            %a{ :href => "/product/#{product.url}" }
+            - link_to product.public_url do
               - picture = product.pictures.first
               - if picture
                 = image_tag(picture.public_filename(:normal))
@@ -84,4 +82,4 @@
                 %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
               %span= truncate(product.name,15,' ...')
               %span.price= "#{product.price} #{$currency.html}"
-- content_for :title, I18n.t(:cart, :count => 1)
+- content_for :title, t(:cart, :count => 1)

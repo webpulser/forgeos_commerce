@@ -4,7 +4,7 @@ class CatalogController < ApplicationController
   
   # Show all <i>ProductDetail</i>
   def index
-    @product_category = params[:category_name] ? ProductCategory.find_by_name(params[:category_name]) : ProductCategory.first
+    @product_category = ProductCategory.find_by_name(params[:category_name]) || ProductCategory.first
     
     #category_choice_id = params[:category_choice]
     @category_choice = ProductCategory.find_by_name(params[:category_choice]) || ProductCategory.find_by_id(params[:category_choice])

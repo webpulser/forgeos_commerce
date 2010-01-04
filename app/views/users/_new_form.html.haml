@@ -1,37 +1,37 @@
 - form_for :user, flash[:user], :url => users_path, :html => { :autocomplete => 'off' } do |f|
   %p
-    = f.label :fistname, I18n.t('firstname').capitalize
+    = f.label :fistname, t('firstname').capitalize
     %br
     = f.text_field :firstname
   %p
-    = f.label :lastname, I18n.t('lastname').capitalize
+    = f.label :lastname, t('lastname').capitalize
     %br
     = f.text_field :lastname
   %p
-    = f.label :birthday, I18n.t('birthday').capitalize
+    = f.label :birthday, t('birthday').capitalize
     %br
     %span.enhanced
-      = f.date_select :birthday, :start_year => 1900, :prompt => ''
+      = f.date_select :birthday, :end_year => 1900, :start_year => Date.current.year, :prompt => { :day => t('date.day'), :month => t('date.month'), :year => t('date.year') }
   %p.enhanced
-    = f.label :country_id, I18n.t('country').capitalize
+    = f.label :country_id, t('country').capitalize
     %br
-    = f.collection_select :country_id, Country.all(:order => 'printable_name'), :id, :printable_name,{ :prompt => I18n.t('please_select').capitalize }
+    = f.collection_select :country_id, Country.all(:order => 'printable_name'), :id, :printable_name,{ :prompt => t('please_select').capitalize }
   %p
-    = f.label :email, I18n.t('email').capitalize
+    = f.label :email, t('email').capitalize
     %br
     = f.text_field :email
   %p
-    = f.label :password, I18n.t('password').capitalize
+    = f.label :password, t('password').capitalize
     %br
     = f.password_field :password
   %p
-    = f.label :password_confirmation, I18n.t('password_confirmation').capitalize
+    = f.label :password_confirmation, t('password_confirmation').capitalize
     %br
     = f.password_field :password_confirmation
-  %p
-    = f.label :lang, I18n.t(:lang, :count => 1)
+  %p.enhanced
+    = f.label :lang, t(:lang, :count => 1)
     %br
-    = f.select :lang, I18n.available_locales.collect{ |locale| [I18n.t(locale, :scope => [:lang, :full]),locale.to_s]}, :prompt => I18n.t(:please_select)
+    = f.select :lang, I18n.available_locales.collect{ |locale| [t(locale, :scope => [:lang, :full]),locale.to_s]}, :prompt => t(:please_select)
   %p
-    = submit_tag I18n.t('sign_up').capitalize, :class => 'submit-button'
+    = submit_tag t('sign_up').capitalize, :class => 'submit-button'
   .clear

@@ -3,7 +3,7 @@
 !!! 1.1
 %html{ 'xml:lang' => I18n.locale, :xmlns => 'http://www.w3.org/1999/xhtml' }
   %head
-    %title= yield(:title) || "#{Setting.first.name} #{I18n.t('page_not_found')}"
+    %title= yield(:title) || "#{Setting.first.name} #{t('page_not_found')}"
     %meta{ :content => 'text/html; charset=utf-8', 'http-equiv' => 'Content-Type' }
     %meta{ :name => 'Description', :content => yield(:description) || '' }
     %meta{ :name => 'keywords', :content => yield(:keywords) || '' }
@@ -20,24 +20,24 @@
         .cart
           .newsletter
             -if logged_in?
-              = link_to I18n.t(:disconnect).capitalize, person_session_path, :method => :delete
+              = link_to t(:disconnect).capitalize, person_session_path, :method => :delete
             -else
               -#session[:redirect] = '/'
-              = link_to I18n.t('log.in.action').capitalize, '#', :id=>'login_link'
+              = link_to t('log.in.action').capitalize, '#', :id=>'login_link'
               #login_container
                 = render :partial => 'person_sessions/new_form'
           .search_box
-            %label= I18n.t('front.research').capitalize
+            %label= t('front.research').capitalize
             .search_form
               .search-icon
               - form_tag(:controller => 'search') do
                 = text_field_tag 'keywords', '', :class => 'input_text'
-                = submit_tag I18n.t('front.search').capitalize, :class => 'btn_ok'
+                = submit_tag t('front.search').capitalize, :class => 'btn_ok'
           -if !@cart.nil?
             .cart-box
-              = link_to I18n.t('my_account_login').capitalize, login_path if !logged_in?
+              = link_to t('my_account_login').capitalize, login_path if !logged_in?
               .cart-icon
-                %span= link_to_cart(I18n.t('my_cart').capitalize)
+                %span= link_to_cart(t('my_cart').capitalize)
                 %br
                 = "#{@cart.total_items} article(s)" if !@cart.nil?
                 - if @cart.products.length > 0
@@ -46,24 +46,24 @@
                 %ul.cart-products
                   -@cart.products.group_by(&:id).each do |cart_product|
                     -product = cart_product[1].first
-                    -nb = cart_product[1].count
+                    -nb = cart_product[1].size
                     %li
                       %span.li-product-name= truncate(product.name, 20, '...')
                       %span.li-product-qty= "x#{nb}"
                       %span.li-product-price
-                        = product.price*nb
+                        = number_with_precision(product.price*nb,2)
                         = $currency.html
                       %span.clear
                   %li.last
-                    %span.li-product-name= I18n.t(:total)
+                    %span.li-product-name= t(:total)
                     %span.li-product-qty
-                      = @cart.total
+                      = number_with_precision(@cart.total,2)
                       = $currency.html
           .create-customer-space
             -if logged_in?
-              = link_to "#{I18n.t(:welcome)} #{current_user.fullname}", "#"
+              = link_to "#{t(:welcome)} #{current_user.fullname}", "#"
             - else
-              = link_to I18n.t(:sign_up), new_user_path
+              = link_to t(:sign_up), new_user_path
         - product_categories = ProductCategory.find_all_by_parent_id(nil, :limit => 7)
         = display_menu_front(@menu, {:ul_class => "menu", :li_class => "test_class_li", :li_current_class => "test_class_li_currrent"})
         - unless product_categories.empty?
@@ -74,9 +74,9 @@
       .before_breadcrumbs
       .breadcrumbs
         .inner-breadcrumbs
-          = link_to I18n.t(:home), :root
+          = link_to t(:home), :root
           &gt;
-          = yield :title
+          = yield :breadcrumbs
       = yield
       .clear
     .footer
@@ -84,7 +84,7 @@
         - ProductCategory.all.each do |category|
           = link_to category.name, catalog_path(:category_name=> category.name, :url => nil)
       .footer_links
-        %span= I18n.t('payment.safe')
+        %span= t('payment.safe')
         = image_tag('front_demo/master_card.png') 
         = image_tag('front_demo/credit_card.png') 
         = image_tag('front_demo/visa.png') 
