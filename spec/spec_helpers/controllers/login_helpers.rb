@@ -1,6 +1,6 @@
 module LoginHelpers
   def login_as_admin
-    controller.stub(:current_user).and_return mock_model(Admin, :null_object => true)
+    controller.stub(:current_user).and_return mock_model(Administrator, :null_object => true)
   end
   
   def login_as_user(user=nil)

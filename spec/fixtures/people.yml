@@ -7,4 +7,4 @@ administrator:
   lang: en 
   time_zone: UTC
   email: admin@commerce.forgeos.com
-  type: Admin
+  type: Administrator

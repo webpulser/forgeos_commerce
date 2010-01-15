@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '../../../spec_helper')
 describe Admin::UsersController, "Get Index" do
   should_require_admin_login :get, :index
   
-  describe "Admin" do
+  describe "Administrator" do
     
     before(:each) do
       login_as_admin
@@ -26,7 +26,7 @@ end
 describe Admin::UsersController, "GET show" do
   should_require_admin_login :get, :show
   
-  describe "Admin" do
+  describe "Administrator" do
     
     before(:each) do
       login_as_admin
@@ -56,7 +56,7 @@ end
 describe Admin::UsersController, "Get new" do
   should_require_admin_login :get, :new
   
-  describe "Admin" do
+  describe "Administrator" do
     
     before(:each) do
       login_as_admin
@@ -86,7 +86,7 @@ end
 describe Admin::UsersController, "Post Create" do
   should_require_admin_login :post, :create
   
-  describe "Admin" do
+  describe "Administrator" do
     
     before(:each) do
       login_as_admin
