@@ -1,4 +1,3 @@
--# encoding: utf8
 !!! xml utf-8
 !!! 1.1
 %html{ 'xml:lang' => I18n.locale, :xmlns => 'http://www.w3.org/1999/xhtml' }
@@ -7,6 +6,7 @@
     %meta{ :content => 'text/html; charset=utf-8', 'http-equiv' => 'Content-Type' }
     %meta{ :name => 'Description', :content => yield(:description) || '' }
     %meta{ :name => 'keywords', :content => yield(:keywords) || '' }
+    %meta{ :name => 'generator', :content => 'Forgeos Commerce 0.9.0-rc2' }
     %link{ :href => '/images/front_demo/favicon.gif', :rel => 'shortcut icon', :type => 'image/gif' }
     = stylesheet_link_tag %w(front_demo/style front_demo/jqzoom front_demo/jquery.jcarousel front_demo/jquery-ui/themes/front), :cache => 'base'
     = javascript_include_tag 'jquery'
