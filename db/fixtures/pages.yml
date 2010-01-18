@@ -1,6 +1,6 @@
 page_home:
   title: HomePage
-  url: home
+  url: index
   content: '<h1>Welcome to Forgeos Commerce</h1>
     <h2>Administration</h2>
     <p>Go to the <a href="/admin">back-office</a> to manage pages, 
