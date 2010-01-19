@@ -79,6 +79,15 @@ class Cart < ActiveRecord::Base
     end
   end
 
+  def total_without_discount
+    total = 0
+    carts_products.each do |cart_product|
+      total += cart_product.product.price
+    end
+    return total
+  end
+
+
   def total
     total = 0
     carts_products.each do |cart_product|

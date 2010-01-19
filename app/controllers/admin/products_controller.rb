@@ -126,7 +126,7 @@ private
   end
 
   def sort
-    columns = %w(sku products.name price stock product_type_id active)
+    columns = %w(sku product_translations.name price stock product_type_id active)
 
     per_page = params[:iDisplayLength] ? params[:iDisplayLength].to_i : 10
     offset = params[:iDisplayStart] ? params[:iDisplayStart].to_i : 0
@@ -134,7 +134,7 @@ private
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0] ? params[:iSortDir_0].upcase : 'ASC'}"
 
     conditions = {}
-    includes = []
+    includes = [:globalize_translations]
     options = { :page => page, :per_page => per_page }
     
     if params[:category_id]
@@ -149,6 +149,10 @@ private
     options[:conditions] = conditions unless conditions.empty?
     options[:include] = includes unless includes.empty?
     options[:order] = order unless order.squeeze.blank?
+
+    joins = []
+    joins << :globalize_translations
+    options[:joins] = joins
 
     if params[:sSearch] && !params[:sSearch].blank?
       @products = Product.search(params[:sSearch],options)

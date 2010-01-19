@@ -1,4 +1,5 @@
 class Product < ActiveRecord::Base
+  translates :name, :description, :url
   attr_accessor :voucher_discount, :voucher_discount_price
   attr_accessor :special_offer_discount, :special_offer_discount_price
   
@@ -21,7 +22,7 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :meta_info
 
   validates_presence_of :product_type_id, :sku, :url
-  validates_uniqueness_of :url
+  #validates_uniqueness_of :url
 
   before_save :clean_strings
   after_save :synchronize_stock
@@ -99,13 +100,6 @@ class Product < ActiveRecord::Base
 
   def soft_delete
     self.update_attribute('deleted', !self.deleted )
-  end
-
-  # Overload the description attribute.
-  #
-  # Returns a empty string if <i>description</i> is <i>nil</i>
-  def description
-    (super.nil?) ? "" : super
   end
 
   # Returns product's price without tax by default

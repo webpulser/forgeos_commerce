@@ -1,6 +1,10 @@
 class Admin::VouchersController < Admin::BaseController
   before_filter :get_voucher, :only => [:destroy]
   
+  def new
+    
+  end
+  
   def index
     respond_to do |format|
       format.html

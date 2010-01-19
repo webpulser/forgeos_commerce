@@ -1,5 +1,6 @@
 # Attributes of <i>Product</i>
 class AttributeValue < ActiveRecord::Base
+  translates :name
   belongs_to :attribute, :readonly => true
   
   has_and_belongs_to_many_attachments

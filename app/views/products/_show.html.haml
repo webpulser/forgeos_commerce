@@ -22,6 +22,9 @@
         %li.ui-state-default.ui-corner-top.ui-state-active
           %a{ :href => "#descriptif" }
             Descriptif
+        %li.ui-state-default.ui-corner-top.ui-state-active
+          %a{ :href => "#attributes"}
+            Détails
         -product.product_type.product_attributes.find(:all, :conditions => { :type => 'LongtextAttribute' }).each do |attribute|
           %li.ui-state-default.ui-corner-top.ui-state-active
             %a{ :href => "##{attribute.access_method}" }
@@ -76,6 +79,12 @@
       -product.product_type.product_attributes.find(:all, :conditions => { :type => 'LongtextAttribute' }).each do |attribute|
         %div{:id => attribute.access_method, :class=>'ui-tabs-panel'}
           =product.dynamic_attribute_values.find_by_attribute_id(attribute.id).value
+      #attributes.ui-tabs-panel
+        -product.dynamic_attribute_values.each do |dynamic_attribute|
+          %b= dynamic_attribute.dynamic_attribute.name
+          =" : #{dynamic_attribute.value}"
+          %br
+      
       .clear
     .clear
     .cross-selling

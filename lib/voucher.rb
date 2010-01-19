@@ -6,6 +6,7 @@ class Voucher < Ruleby::Rulebook
   def rules
     VoucherRule.find_all_by_active_and_code(true,@code).each do |voucher|
       rule eval(voucher.conditions) do |context|
+        product = context[:product]
         @cart.voucher = voucher.id
                  
         # Voucher for a free product
