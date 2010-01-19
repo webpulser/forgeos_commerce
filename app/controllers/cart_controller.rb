@@ -9,7 +9,7 @@ class CartController < ApplicationController
   
   # Show <i>Cart</i>
   def index
-    flash[:notice] = I18n.t(:your_cart_is_empty).capitalize if @cart.is_empty?    
+    flash[:notice] = t(:your_cart_is_empty).capitalize if @cart.is_empty?    
   end
 
   # Add a <i>Product</i> in <i>Cart</i>
@@ -20,10 +20,10 @@ class CartController < ApplicationController
     reset_order_session
     if params[:quantity]
       params[:quantity].first.to_i.times do 
-        flash[:notice] = I18n.t(:product_added).capitalize if @cart.add_product_id(params[:id])
+        flash[:notice] = t(:product_added).capitalize if @cart.add_product_id(params[:id])
       end
     else
-      flash[:notice] = I18n.t(:product_added).capitalize if @cart.add_product_id(params[:id])
+      flash[:notice] = t(:product_added).capitalize if @cart.add_product_id(params[:id])
     end 
     redirect_to(:action => 'index')
     #dd
@@ -35,7 +35,7 @@ class CartController < ApplicationController
   def empty
     reset_order_session
     get_cart.to_empty
-    flash[:notice] = I18n.t(:cart_is_empty).capitalize
+    flash[:notice] = t(:cart_is_empty).capitalize
     redirect_or_update
   end
 
@@ -45,7 +45,7 @@ class CartController < ApplicationController
   # * <tt>:id</tt> - a <i>Product</i> object
   def remove_product
     reset_order_session
-    flash[:notice] = I18n.t(:product_has_been_remove).capitalize if @cart.remove_product(params[:id])
+    flash[:notice] = t(:product_has_been_remove).capitalize if @cart.remove_product(params[:id])
     redirect_or_update
   end
 
@@ -83,7 +83,7 @@ class CartController < ApplicationController
       session[:voucher_code] = voucher.code
       render(:update) do |page|
         page.replace_html('voucher_message', "With voucher code #{voucher.code} : #{voucher.name}")
-        page.replace_html('cart_total', "#{@cart.total} €")
+        page.replace_html('cart_total', "#{@cart.total} #{$curreny.html}")
         page.visual_effect :highlight, 'cart_total'
       end
     end
@@ -126,7 +126,7 @@ protected
     voucher = VoucherRule.find_all_by_active_and_code(true,@voucher_code)
     render(:update) do |page|
       page.replace_html('voucher_message', "Le code promo #{@voucher_code} est invalide")
-      page.replace_html('cart_total', "#{@cart.total} €")
+      page.replace_html('cart_total', "#{@cart.total} #{$curreny.html}")
       session.delete(:voucher_code) if session[:voucher_code]
     end if voucher.blank? or voucher.nil?
   end
@@ -170,7 +170,4 @@ protected
     #  e.match
     #end
   end
-
-  
-
 end

@@ -8,8 +8,8 @@ class Admin::ImportController < Admin::BaseController
       %w(sku name description price url stock weight).each_with_index do |attribute,i|
         attributes[attribute.to_sym] = row[i] if row[i]
       end
-      attributes[:product_type_id] = (ProductType.find_by_name(row[8]) || ProductType.first).id
-      attributes[:category_ids] = ProductCategory.find_all_by_name(row[7].split(','), :select=>'id').map(&:id) if row[7]
+      attributes[:product_type_id] = (ProductType.find_by_name(row[8], :select => :id) || ProductType.first(:select => :id)).id
+      attributes[:product_category_ids] = ProductCategory.find_all_by_name(row[7].split(','), :select=>'id').map(&:id) if row[7]
       attributes
     end
   end

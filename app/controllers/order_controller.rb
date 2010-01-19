@@ -190,7 +190,7 @@ class OrderController < ApplicationController
   def update_address
     @address = Address.find_by_id(params[:id])
     render(:update) do |page|
-      page.replace_html("order", :partial => 'form_address', :locals => { :address, @address })
+      page.replace_html("order", :partial => 'form_address', :locals => { :address => @address })
     end
   end
   

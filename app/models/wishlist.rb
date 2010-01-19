@@ -131,13 +131,4 @@ class Wishlist < ActiveRecord::Base
   def weight
     products.inject(0) { |total, product| total + product.weight }
   end
-
-  # Returns all <i>ShippingMethodDetail</i> available for this wishlist
-  def get_shipping_method_details
-    shipping_method_details = []
-    ShippingMethod.find(:all).each do |shipping_method|
-      shipping_method_details += shipping_method.shipping_method_details.find(:all, :conditions => { :weight_min_lte => weight, :weight_max_gte => weight })
-    end
-    shipping_method_details
-  end
 end

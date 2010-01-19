@@ -20,7 +20,7 @@ class SpecialOffer < Ruleby::Rulebook
               rate = special_offer.variables[:discount]
               discount_price = special_offer.variables[:fixed_discount] ? rate : (product.price * rate) / 100
               product.special_offer_discount_price = discount_price
-              special_offer.variables[:fixed_discount] ? product.special_offer_discount = "-#{rate}€" : product.special_offer_discount = "-#{rate}%"
+              special_offer.variables[:fixed_discount] ? product.special_offer_discount = "-#{rate}#{$curreny.html}" : product.special_offer_discount = "-#{rate}%"
             end
               
           ## Product in cart OR cart
@@ -30,7 +30,7 @@ class SpecialOffer < Ruleby::Rulebook
               rate = special_offer.variables[:discount]
               discount_price = special_offer.variables[:fixed_discount] ? rate : (product.price * rate) / 100
               product.special_offer_discount_price = discount_price
-              special_offer.variables[:fixed_discount] ? product.special_offer_discount = "-#{rate}€" : product.special_offer_discount = "-#{rate}%"
+              special_offer.variables[:fixed_discount] ? product.special_offer_discount = "-#{rate}#{$curreny.html}" : product.special_offer_discount = "-#{rate}%"
             end
            
                         
@@ -44,7 +44,7 @@ class SpecialOffer < Ruleby::Rulebook
               rate = special_offer.variables[:cart_discount]
               discount_price = special_offer.variables[:fixed_discount] ? rate : (@cart.total * rate) / 100         
               @cart.special_offer_discount_price = discount_price
-              special_offer.variables[:fixed_discount]? @cart.special_offer_discount = "-#{rate}€" : @cart.special_offer_discount = "-#{rate}%"
+              special_offer.variables[:fixed_discount]? @cart.special_offer_discount = "-#{rate}#{$curreny.html}" : @cart.special_offer_discount = "-#{rate}%"
             end
           
             # Free delivery
