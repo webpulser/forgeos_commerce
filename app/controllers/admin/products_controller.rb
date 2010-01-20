@@ -153,6 +153,7 @@ private
     joins = []
     joins << :globalize_translations
     options[:joins] = joins
+    options[:group] = :product_id
 
     if params[:sSearch] && !params[:sSearch].blank?
       @products = Product.search(params[:sSearch],options)
