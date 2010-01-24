@@ -4,39 +4,39 @@
     %span.order-currency= $currency.html
     %span.header-separator
     %span
-      = I18n.t('order',:count =>1).capitalize
+      = t('order',:count =>1).capitalize
       n°
       = order.id
     %span.header-separator
     - unless order.created_at.nil?
       %span= @order.created_at.to_s(:format => :default)
     .interact-links
-      = submit_tag I18n.t('save_changes').capitalize, :class => 'backgrounds interact-button'
-      = I18n.t('or')
-      = link_to I18n.t('cancel').capitalize, admin_orders_path, :class => 'back-link'
+      = submit_tag t('save_changes').capitalize, :class => 'backgrounds interact-button'
+      = t('or')
+      = link_to t('cancel').capitalize, admin_orders_path, :class => 'back-link'
 
   #content.grid_16.alpha.omega
     #order-see.grid_12.alpha
       .order-see-wrap
         - if order.new_record?
           .fieldset
-            %h3= I18n.t('order.main_infos')
+            %h3= t('order.main_infos')
             .main-infos
               - user = order.user
               .main-infos-cutomer
-                %h4.small-icons= I18n.t('user', :count => 1).capitalize
-                = f.select :user_id, User.all(:order => 'firstname ASC, lastname ASC').collect {|u| [u.fullname, u.id]}, {:prompt => I18n.t('please_select')}
+                %h4.small-icons= t('user', :count => 1).capitalize
+                = f.select :user_id, User.all(:order => 'firstname ASC, lastname ASC').collect {|u| [u.fullname, u.id]}, {:prompt => t('please_select')}
             .clear
           .clear
         - else
           .fieldset
-            %h3= I18n.t('order.main_infos')
+            %h3= t('order.main_infos')
             .main-infos
               .main-infos-cutomer
-                %h4.small-icons= I18n.t('user', :count => 1).capitalize
+                %h4.small-icons= t('user', :count => 1).capitalize
                 - user = order.user
                 = link_to user.fullname, [:admin, user]
-                %p= "#{user.orders.count} #{I18n.t('order', :count => user.orders.count)} #{I18n.t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
+                %p= "#{user.orders.count} #{t('order', :count => user.orders.count)} #{t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
                 %p= user.phone
                 %p.customer-email= user.email
               .main-info-separation
@@ -51,7 +51,7 @@
                   payment checked
               .main-info-separation
               .main-infos-note
-                %h4.small-icons= I18n.t('order.user_note').capitalize
+                %h4.small-icons= t('order.user_note').capitalize
                 =# order.user_note
             .clear
           .clear
@@ -60,11 +60,11 @@
           %thead
             %tr
               %th &nbsp;
-              %th.product-th= I18n.t('product', :count => 1).capitalize
-              %th= I18n.t('sku').capitalize
-              %th= I18n.t('price', :count => 1).capitalize
-              %th= I18n.t('quantity', :count => 1).capitalize
-              %th= I18n.t('order.total').capitalize
+              %th.product-th= t('product', :count => 1).capitalize
+              %th= t('sku').capitalize
+              %th= t('price', :count => 1).capitalize
+              %th= t('quantity', :count => 1).capitalize
+              %th= t('order.total').capitalize
               %th.actions &nbsp;
           %tbody
             - order.order_details.each do |detail|
@@ -83,45 +83,45 @@
                 %td= detail.sku
                 %td= detail.price
                 %td= 1
-                %td= "#{detail.total} #{$currency.html}"
+                %td= price_with_currency detail.total
                 %td= link_to_function '', "remove_order_detail($(this));", :class => 'small-icons destroy-link', :id => "order_detail_#{detail.id}"
-        = link_to I18n.t('order.product.add').capitalize, '#', :class => 'small-icons add-link add-order-detail'
+        = link_to t('order.product.add').capitalize, '#', :class => 'small-icons add-link add-order-detail'
         #order_details
           - f.fields_for :order_details do |detail_form|
             = detail_form.hidden_field :_delete, :class => 'delete', :id => "_delete_order_detail_#{detail_form.object.id}"
         = hidden_field_tag "transporter[rebuild]", 0
         .order-totals
-          .order-subtotal= I18n.t('order.subtotal').capitalize
-          %span.order-subtotal= order.total(false,true,false,false,false)
+          .order-subtotal= t('order.subtotal').capitalize
+          %span.order-subtotal= number_with_precision order.total(false,true,false,false,false), :precision => 2
           %span.order-subtotal-currency= $currency.html
           - if order.order_shipping
-            %div= I18n.t('shipping').capitalize
+            %div= t('shipping').capitalize
             %span.order_shipping
-              = content_tag(:span, order.order_shipping.price, :class => 'order_shipping_price')
+              = content_tag(:span, number_with_precision(order.order_shipping.price, :precision => 2), :class => 'order_shipping_price')
               = " #{$currency.html}"
         .order-totals
-          %div= I18n.t('special_offer', :count => 2).capitalize
+          %div= t('special_offer', :count => 2).capitalize
           %br
           - if order.special_offer_discount
-            %div= I18n.t('order.total_discount').capitalize
-            %span= "- #{order.special_offer_discount} #{$currency.html}"
+            %div= t('order.total_discount').capitalize
+            %span= "- #{price_with_currency order.special_offer_discount}"
             %br
           - order.special_offer_discount_products.each do |product|
             %div{:class => "special_order_detail_#{product.id}"}= "#{product.name}"
-            %span{:class => "special_order_detail_#{product.id}"}= "- #{product.special_offer_discount_price} #{$currency.html}"
-          %div= I18n.t('voucher', :count => 1).capitalize
+            %span{:class => "special_order_detail_#{product.id}"}= "- #{price_with_currency product.special_offer_discount_price}"
+          %div= t('voucher', :count => 1).capitalize
           %br
           - if order.voucher_discount
-            %div= I18n.t('order.total_discount').capitalize
-            %span= "- #{order.voucher_discount} #{$currency.html}"
+            %div= t('order.total_discount').capitalize
+            %span= "- #{price_with_currency order.voucher_discount}"
             %br
           - order.voucher_discount_products.each do |product|
             %div{:class => "voucher_order_detail_#{product.id}"}= "#{product.name}"
-            %span{:class => "voucher_order_detail_#{product.id}"}= "- #{product.voucher_discount_price} #{$currency.html}"
+            %span{:class => "voucher_order_detail_#{product.id}"}= "- #{price_with_currency product.voucher_discount_price}"
             %br
 
           /%div.change-voucher
-          /  = select_tag :voucher, options_for_select(Voucher.all.collect{ |voucher| [voucher.name, voucher.value] }.unshift([I18n.t('voucher.change').capitalize, nil])), :class => 'select-voucher'
+          /  = select_tag :voucher, options_for_select(Voucher.all.collect{ |voucher| [voucher.name, voucher.value] }.unshift([t('voucher.change').capitalize, nil])), :class => 'select-voucher'
           /= f.hidden_field :voucher
           %span
 
@@ -129,64 +129,64 @@
             %div= offer.name
             %span= "-#{offer.total} #{$currency.html}"
         -#.order-totals
-          %div= I18n.t('tax', :count => 2).capitalize
+          %div= t('tax', :count => 2).capitalize
           %span.order-taxes= order.taxes
           %span= $currency.html
         .order-totals.total-block
-          .order-total= I18n.t('order.total').capitalize
-          %span.order-total= order.total
+          .order-total= t('order.total').capitalize
+          %span.order-total= number_with_precision order.total
           %span.order-currency= $currency.html
 
         .fieldset.open
           - order.build_address_delivery if order.address_delivery.nil?
           - f.fields_for :address_delivery do |delivery_address_form|
-            = link_to I18n.t('address.delivery', :count => 1).capitalize, '#', :class => "small-icons panel"
+            = link_to t('address.delivery', :count => 1).capitalize, '#', :class => "small-icons panel"
             = render :partial => 'address_form', :locals => {:form => delivery_address_form, :civilities => civilities, :countries => countries}
         .fieldset.closed
           - order.build_address_invoice if order.address_invoice.nil?
           - f.fields_for :address_invoice do |invoice_address_form|
-            = link_to I18n.t('address.invoice', :count => 1).capitalize, "#", :class => "small-icons panel"
+            = link_to t('address.invoice', :count => 1).capitalize, "#", :class => "small-icons panel"
             = render :partial => 'address_form', :locals => {:form => invoice_address_form, :civilities => civilities, :countries => countries}
 
         .fieldset.open
           - order.build_order_shipping if order.order_shipping.nil?
           - f.fields_for :order_shipping do |order_shipping_form|
-            = link_to I18n.t('delivery').capitalize, '#', :class => "small-icons panel"
+            = link_to t('delivery').capitalize, '#', :class => "small-icons panel"
             .option-panel-content
               .delivery-method
                 = select_tag :order_shipping, options_for_select([[t(:please_select),0]]+@available_transporters.collect{ |transporter| [ transporter.name, transporter.variables ]}), :class => 'select-order-shipping' unless @available_transporters.nil?
                 .clear
 
               .name-input
-                = order_shipping_form.label :name, I18n.t('name').capitalize
+                = order_shipping_form.label :name, t('name').capitalize
                 %span.order_shipping_name= order.order_shipping.name
                 = order_shipping_form.hidden_field :name
               .price-input
-                = order_shipping_form.label :price, I18n.t('price', :count => 1).capitalize
+                = order_shipping_form.label :price, t('price', :count => 1).capitalize
                 %span
-                  = content_tag(:span, order.order_shipping.price, :class => 'order_shipping_price')
+                  = content_tag(:span, number_with_precision(order.order_shipping.price, :precision => 2), :class => 'order_shipping_price')
                   = " #{$currency.html}"
                 = order_shipping_form.hidden_field :price
               .street-input
-                = order_shipping_form.label :track_number,I18n.t('track_number').capitalize
+                = order_shipping_form.label :track_number,t('track_number').capitalize
                 = order_shipping_form.text_field :track_number
               .clear
 
     #right-sidebar.grid_4.omega
       .step.status.open
-        - order_states_for_select = Order.aasm_states.collect{ |state| [I18n.t(state.name, :scope => [:order,:status]),state.name.to_s] }
+        - order_states_for_select = Order.aasm_states.collect{ |state| [t(state.name, :scope => [:order,:status]),state.name.to_s] }
         = f.select :status, options_for_select(order_states_for_select, order.status)
         .clear
       .step
-        = link_to I18n.t('order.product.add'), '#', :class => 'small-icons small-icons-verti-small-blue-plus add-order-detail'
+        = link_to t('order.product.add'), '#', :class => 'small-icons small-icons-verti-small-blue-plus add-order-detail'
         - unless order.new_record?
-          -#= link_to I18n.t('order.invoice.show'), [:bill, :admin, order], :class => 'small-icons preview'
-          = content_tag :span, I18n.t('order.invoice.show').capitalize, :class => 'small-icons preview disabled'
-          = link_to I18n.t('order.destroy.action'), [:admin, order], :method => :delete, :confirm => I18n.t('order.destroy.confirm'), :class => 'small-icons delete'
+          -#= link_to t('order.invoice.show'), [:bill, :admin, order], :class => 'small-icons preview'
+          = content_tag :span, t('order.invoice.show').capitalize, :class => 'small-icons preview disabled'
+          = link_to t('order.destroy.action'), [:admin, order], :method => :delete, :confirm => t('order.destroy.confirm'), :class => 'small-icons delete'
       - unless order.new_record?
         .step.disabled
           %a.small-icons.step-title{ :href => "#" }
-            = I18n.t('order.history').capitalize
+            = t('order.history').capitalize
     .clear
   = render :partial => 'products_popup', :locals => {:form => f}
 = dataTables_tag :id => 'table-order-details', :columns => ["{ 'bSortable': false }", "{ 'sClass': 'product-name', 'sType': 'html'}", "", "{ 'sType': 'numeric'}", "", "{ 'sClass': 'total', 'sType': 'currency'}", "{ 'bSortable': false }"]

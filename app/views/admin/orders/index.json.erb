@@ -15,7 +15,7 @@
             :id => link_id, :class => 'some-variants plus') : content_tag(:div, '', :id => link_id)
         ),
         order.id,
-        "#{order.total} #{$currency.html}",
+        price_with_currency(order.total),
          content_tag(:div, 
          link_to(
            details_count != 1 ? "#{details_count} #{I18n.t('product', :count => details_count)}" : order.order_details.first.name.capitalize,

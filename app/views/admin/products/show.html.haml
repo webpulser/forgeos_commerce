@@ -16,7 +16,7 @@
         \:
         = link_to permalink, permalink
       .prices
-        .normal-price= "#{@product.price} #{$currency.html}"
+        .normal-price= price_with_currency @product.price
         .promo
           &nbsp;
         .stock
@@ -80,7 +80,9 @@
                 %span.block-type= product.sku
                 %span.block-name
                   = product.name
-                  %span.file-size= " - #{product.price} #{$currency.html}"
+                  %span.file-size
+                    \ - 
+                    = price_with_currency product.price
                 - unless product == @product.products.last
                   %hr.block-separator 
       .clear

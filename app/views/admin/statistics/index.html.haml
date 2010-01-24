@@ -3,21 +3,21 @@
 #dashboard.statistics.grtid_12.alpha.omega
   .left-dashboard.grid_12.omega.alpha
     .padding-wrap
-      %h2.small-icons.see-stats= I18n.t('statistic.trends').capitalize
+      %h2.small-icons.see-stats= t('statistic.trends').capitalize
       .trend_filter
         - form_tag admin_statistics_path, :id => 'form_stats' do |f|
           %label
-            = "#{I18n.t('statistic.show.for').capitalize} :"
-          = select_tag :timestamp, options_for_select([[I18n.t('please_select'), nil], [I18n.t('statistic.last.month'), 'month'], [I18n.t('statistic.last.week'), 'week']], params[:timestamp]), :onchange => "$('#form_stats').submit()"
+            = "#{t('statistic.show.for').capitalize} :"
+          = select_tag :timestamp, options_for_select([[t('please_select'), nil], [t('statistic.last.month'), 'month'], [t('statistic.last.week'), 'week']], params[:timestamp]), :onchange => "$('#form_stats').submit()"
       .chart
         = @graph
       .clear
 
-      %h2.small-icons.products= I18n.t('product', :count => 2).capitalize
+      %h2.small-icons.products= t('product', :count => 2).capitalize
       .to-tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
         %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
-          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to I18n.t('product.best_seller', :count => @products_most_sold.size), '#best-sellers'
-          %li.ui-state-default.ui-corner-top= link_to I18n.t('product.most_viewed', :count => @products_most_viewed.size), '#most-viewed'
+          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to t('product.best_seller', :count => @products_most_sold.size), '#best-sellers'
+          %li.ui-state-default.ui-corner-top= link_to t('product.most_viewed', :count => @products_most_viewed.size), '#most-viewed'
         #best-sellers.ui-tabs-panel.ui-widget-content.ui-corner-bottom
           - @products_most_sold.each do |product_id, counter|
             - if product = Product.find_by_id(product_id)
@@ -27,13 +27,13 @@
                 - else
                   = image_tag('admin/no-image.png')
                 %span.stat-product-sells
-                  = I18n.t('product.sold', :count => counter)
+                  = t('product.sold', :count => counter)
                 = link_to product.name, [:admin, product], :class => 'product-name truncate', :title => product.name
                 %span.stat-prodcut-title
-                  = "#{product.price} #{$currency.html}"
+                  = price_with_currency product.price
           .clear
           %a.see-all-orders{ :href => "#" }
-            = I18n.t('product.show.all').capitalize
+            = t('product.show.all').capitalize
         #most-viewed.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide
           - @products_most_viewed.each do |product_id,counter|
             - if product = Product.find_by_id(product_id)
@@ -43,18 +43,18 @@
                 - else
                   = image_tag('admin/no-image.png')
                 %span.stat-product-sells
-                  = I18n.t('product.viewed', :count => counter)
+                  = t('product.viewed', :count => counter)
                 = link_to product.name, [:admin, product], :class => 'product-name truncate', :title => product.name
                 %span.stat-product-title
-                  = "#{product.price} #{$currency.html}"
+                  = price_with_currency product.price
               .clear
           %a.see-all-orders{ :href => "#" }
-            = I18n.t('product.show.all').capitalize
-      %h2.small-icons.page= I18n.t('page', :count => 2).capitalize
+            = t('product.show.all').capitalize
+      %h2.small-icons.page= t('page', :count => 2).capitalize
       .to-tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
         %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
-          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to I18n.t('page.most_viewed', :count => 2), '#most-viewed-pages'
-          /%li.ui-state-default.ui-corner-top= link_to I18n.t('page.most_commented', :count => 2), '#most-commented'
+          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to t('page.most_viewed', :count => 2), '#most-viewed-pages'
+          /%li.ui-state-default.ui-corner-top= link_to t('page.most_commented', :count => 2), '#most-commented'
         #most-viewed-pages.ui-tabs-panel.ui-widget-content.ui-corner-bottom
           %table
             %tbody
@@ -62,10 +62,10 @@
                 - if page = Page.find_by_id(page_id)
                   %tr{ :class => cycle('odd','even') }
                     %td.table-product= link_to page.title, [:admin, page]
-                    %td= I18n.t('page.viewed', :count => counter)
+                    %td= t('page.viewed', :count => counter)
           .clear
           %a.see-all-orders{ :href => "#" }
-            = I18n.t('page.show.all').capitalize
+            = t('page.show.all').capitalize
         #most-commented.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide
           %table
             %tbody
@@ -81,22 +81,22 @@
                   by Quentin Tousart
           .clear
           %a.see-all-orders{ :href => "#" }
-            = I18n.t('page.show.all').capitalize
-      %h2.small-icons.customer= I18n.t('customer', :count => 2).capitalize
+            = t('page.show.all').capitalize
+      %h2.small-icons.customer= t('customer', :count => 2).capitalize
       .to-tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
         %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
-          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to I18n.t('user.best_customer', :count => 2).capitalize, '#best-customers'
-          %li.ui-state-default.ui-corner-top= link_to I18n.t('user.new_customer', :count => 2).capitalize, '#new-customers'
+          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to t('user.best_customer', :count => 2).capitalize, '#best-customers'
+          %li.ui-state-default.ui-corner-top= link_to t('user.new_customer', :count => 2).capitalize, '#new-customers'
         #best-customers.ui-tabs-panel.ui-widget-content.ui-corner-bottom
           %table
             %tbody
             - @best_buyers.each do |user_id, total|
               - if user = User.find_by_id(user_id)
                 %tr{:class => cycle('odd','even')}
-                  %td.customer-bought-amount= "#{sprintf("%.2f", total)} #{$currency.html}"
+                  %td.customer-bought-amount= price_with_currency total
                   %td= user ? link_to(user.fullname, [:admin, user]) : ''
           .clear
-          = link_to I18n.t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
+          = link_to t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
 
         #new-customers.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide
           %table
@@ -106,18 +106,18 @@
                   %td
                     = link_to customer.fullname, [:admin, customer]
                   %td
-                    = I18n.t('user.joined_on').capitalize
+                    = t('user.joined_on').capitalize
                     = customer.created_at.to_s(:short)
                   %td.email
                     = mail_to customer.email, customer.email
             
           .clear
-          = link_to I18n.t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
+          = link_to t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
 
-      %h2.small-icons.search= I18n.t('search').capitalize
+      %h2.small-icons.search= t('search').capitalize
       .to-tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
         %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
-          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to I18n.t('top_5_items').capitalize, '#top-search'
+          %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to t('top_5_items').capitalize, '#top-search'
         #top-search.ui-tabs-panel.ui-widget-content.ui-corner-bottom
           %table
             %tbody
@@ -125,33 +125,33 @@
                 - if search_keyword = SearchKeyword.find_by_id(keyword_id)
                   %tr{ :class => cycle('odd','even')}
                     %td= search_keyword.keyword
-                    %td= I18n.t('seen', :count => count, :scope => :search_keyword)
+                    %td= t('seen', :count => count, :scope => :search_keyword)
 
   .right-dahsboard.grid_4.alpha
-    %h2.small-icons.see-stats= I18n.t('statistic.keyfacts').capitalize
+    %h2.small-icons.see-stats= t('statistic.keyfacts').capitalize
     .live-stats-content
       %span
-        %span.keyfacts-name= I18n.t('visitor', :count => 2).capitalize
+        %span.keyfacts-name= t('visitor', :count => 2).capitalize
         %span.keyfacts-value= Forgeos::Statistics.total_of_visitors(@date)
         %span.clear
       %span.disabled
-        %span.keyfacts-name= I18n.t('statistic.average_order').capitalize
+        %span.keyfacts-name= t('statistic.average_order').capitalize
         %span.keyfacts-value
         %span.clear
       %span.disabled
-        %span.keyfacts-name= I18n.t('statistic.products_sold').capitalize
+        %span.keyfacts-name= t('statistic.products_sold').capitalize
         %span.keyfacts-value
         %span.clear
       %span.disabled
-        %span.keyfacts-name= I18n.t('statistic.revenue').capitalize
+        %span.keyfacts-name= t('statistic.revenue').capitalize
         %span.keyfacts-value
         %span.clear
       %span.disabled
-        %span.keyfacts-name= I18n.t('statistic.conversion_rate').capitalize
+        %span.keyfacts-name= t('statistic.conversion_rate').capitalize
         %span.keyfacts-value
         %span.clear
       %span.disabled
-        %span.keyfacts-name= I18n.t('statistic.average_customer').capitalize
+        %span.keyfacts-name= t('statistic.average_customer').capitalize
         %span.keyfacts-value
         %span.clear
   .clear

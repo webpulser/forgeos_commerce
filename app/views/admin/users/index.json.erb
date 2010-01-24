@@ -9,8 +9,8 @@
       content_tag(:div, link_to(user.fullname, [:admin, user]), :class => 'user-name'),
       content_tag(:div, mail_to(user.email, user.email, :class => 'truncate', :title => user.email), :class => 'email'),
       user.orders.count,
-      user.total_orders.blank? ? I18n.t('none').capitalize : content_tag(:div, "#{user.total_orders} #{$currency.html}"),
-      content_tag( :div, (user.orders.empty? ?  I18n.t('none').capitalize : user.orders.last(:order => 'created_at DESC' ).created_at.to_date), :class => 'last-date'),
+      user.total_orders.blank? ? t('none').capitalize : content_tag(:div, price_with_currency(user.total_orders)),
+      content_tag( :div, (user.orders.empty? ?  t('none').capitalize : user.orders.last(:order => 'created_at DESC' ).created_at.to_date), :class => 'last-date'),
         link_to_remote('', :url => activate_admin_user_path(user),
          :complete => "toggleActivate('#show_#{link_id}')",
          :html => {
@@ -20,7 +20,7 @@
         link_to('', [:edit, :admin, user], :class => 'small-icons edit-link') +
         link_to_remote('', :url => [:admin, user],
          :method => :delete,
-         :confirm => I18n.t('user.destroy.confirm').capitalize,
+         :confirm => t('user.destroy.confirm').capitalize,
          :success => "removedataTablesRow('#destroy_#{link_id}')",
          :html => {
            :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
