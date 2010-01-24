@@ -13,7 +13,7 @@ class OrderDetail < ActiveRecord::Base
   belongs_to :product
 
   #validates_presence_of :name, :price, :rate_tax, :order_id, :sku
-  validates_presence_of :name, :price, :sku
+  validates_presence_of :name, :price, :sku, :order_id
   after_create :increment_product_sold_counter
 
   # Returns price's string with currency symbol
@@ -62,9 +62,9 @@ class OrderDetail < ActiveRecord::Base
 private
   
   def increment_product_sold_counter
-    counter = product.product_sold_counters.new
-    unless counter.increment_counter
-      counter.save
+    if product
+      counter = product.product_sold_counters.new
+      counter.save unless counter.increment_counter
     end
   end
 end

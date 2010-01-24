@@ -35,18 +35,20 @@ class Admin::TransporterRulesController < Admin::BaseController
     @shipping_methods = params[:shipping_method]
 
     @shipping_methods.each do |shipping_method|
+      new_shipping_method = defined?(@parent_id) ? TransporterRule.new : TransporterRule.new(params[:transporter_rule])
 
-      new_shipping_method = shipping_method == @shipping_methods.first ? TransporterRule.new(params[:transporter_rule]) : TransporterRule.new
-
-      rule_condition = build_conditions shipping_method
+      rule_condition = build_conditions(shipping_method)
 
       new_shipping_method.conditions = "[#{rule_condition.join(', ')}]"
       new_shipping_method.variables = shipping_method[1][:price][0]
 
       result = new_shipping_method.save
       
-      shipping_method == @shipping_methods.first ? @parent_id = new_shipping_method.id : new_shipping_method.update_attribute(:parent_id, @parent_id)
-      
+      unless defined?(@parent_id)
+        @parent_id = new_shipping_method.id
+      else
+        new_shipping_method.update_attribute(:parent_id, @parent_id)
+      end
     end
 
     if result
@@ -219,7 +221,7 @@ class Admin::TransporterRulesController < Admin::BaseController
           array_condition = condition.split('.')
           operator_value = array_condition[2]
 
-          hash_rule[:value] = operator_value[/[0-9]+/]
+          hash_rule[:value] = operator_value[/\-?\d+/]
           hash_rule[:operator] = operator_value[0, operator_value.index('(')]
           transporter_rules[_index] = hash_rule
         end

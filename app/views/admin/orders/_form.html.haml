@@ -137,25 +137,25 @@
           %span.order-total= order.total
           %span.order-currency= $currency.html
 
-        .fieldset
+        .fieldset.open
           - order.build_address_delivery if order.address_delivery.nil?
           - f.fields_for :address_delivery do |delivery_address_form|
             = link_to I18n.t('address.delivery', :count => 1).capitalize, '#', :class => "small-icons panel"
             = render :partial => 'address_form', :locals => {:form => delivery_address_form, :civilities => civilities, :countries => countries}
-        .fieldset
+        .fieldset.closed
           - order.build_address_invoice if order.address_invoice.nil?
           - f.fields_for :address_invoice do |invoice_address_form|
             = link_to I18n.t('address.invoice', :count => 1).capitalize, "#", :class => "small-icons panel"
             = render :partial => 'address_form', :locals => {:form => invoice_address_form, :civilities => civilities, :countries => countries}
 
-        .fieldset
+        .fieldset.open
           - order.build_order_shipping if order.order_shipping.nil?
           - f.fields_for :order_shipping do |order_shipping_form|
             = link_to I18n.t('delivery').capitalize, '#', :class => "small-icons panel"
             .option-panel-content
               .delivery-method
-                = select_tag :order_shipping, options_for_select(@available_transporters.collect{ |transporter| [ transporter.name, transporter.variables ]}), :class => 'select-order-shipping' unless @available_transporters.nil?
-              .clear
+                = select_tag :order_shipping, options_for_select([[t(:please_select),0]]+@available_transporters.collect{ |transporter| [ transporter.name, transporter.variables ]}), :class => 'select-order-shipping' unless @available_transporters.nil?
+                .clear
 
               .name-input
                 = order_shipping_form.label :name, I18n.t('name').capitalize
