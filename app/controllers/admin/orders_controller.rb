@@ -14,7 +14,7 @@ class Admin::OrdersController < Admin::BaseController
       format.html
       format.json do
         sort
-        render :layout => false
+        render(:layout => false)
       end
     end
   end
@@ -23,15 +23,15 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def new
-    render :action => 'create'
+    render(:action => 'create')
   end
   
   def create
     if @order.save
-      flash[:notice] = I18n.t('order.create.success').capitalize
+      flash[:notice] = t('order.create.success').capitalize
       redirect_to(admin_orders_path)
     else
-      flash[:error] = I18n.t('order.create.failed').capitalize
+      flash[:error] = t('order.create.failed').capitalize
     end
   end
 
@@ -40,44 +40,44 @@ class Admin::OrdersController < Admin::BaseController
   
   def update
     if @order.update_attributes(params[:order])
-      flash[:notice] = I18n.t('order.update.success').capitalize
-      return render :text => true if request.xhr?
+      flash[:notice] = t('order.update.success').capitalize
+      return render(:text => true) if request.xhr?
       redirect_to(admin_orders_path)
     else
-      flash[:error] = I18n.t('order.update.failed').capitalize
-      return render :text => false if request.xhr?
-      render :action => 'edit'
+      flash[:error] = t('order.update.failed').capitalize
+      return render(:text => false) if request.xhr?
+      render(:action => 'edit')
     end
   end
 
   def destroy
     if @order.destroy
-      flash[:notice] = I18n.t('order.destroy.success').capitalize
+      flash[:notice] = t('order.destroy.success').capitalize
       return redirect_to(admin_orders_path) if !request.xhr?
     else
-      flash[:error] = I18n.t('order.destroy.failed').capitalize
+      flash[:error] = t('order.destroy.failed').capitalize
     end
-    render :nothing => true
+    render(:nothing => true)
   end
 
   def pay
-    flash[:notice] = I18n.t('order.pay.success').capitalize if @order.pay! == true
+    flash[:notice] = t('order.pay.success').capitalize if @order.pay! == true
   end
 
   def accept
-    flash[:notice] = I18n.t('order.accept.success').capitalize if @order.accept! == true
+    flash[:notice] = t('order.accept.success').capitalize if @order.accept! == true
   end
 
   def sent
-    flash[:notice] = I18n.t('order.send.success').capitalize if @order.start_shipping! == true
+    flash[:notice] = t('order.send.success').capitalize if @order.start_shipping! == true
   end
 
   def get_product
     product = Product.find_by_id(params[:product_id])
     @products = Product.all
-    render :partial => 'form_details', :locals => { :order_detail => OrdersDetail.new(
-      { :name => product.name, :description => product.description, :price => product.price, :rate_tax => product.rate_tax }),
-    :products => @products }
+    render(:partial => 'form_details', :locals => { :order_detail => OrdersDetail.new(
+      { :name => product.name, :description => product.description, :price => product.price, :rate_tax => product.rate_tax }
+    ), :products => @products })
   end
 
   def total
@@ -121,11 +121,11 @@ class Admin::OrdersController < Admin::BaseController
     #total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=false)
 
     # calculate total, subtotal and taxes
-    total = number_with_precision editing_order.total, :precision => 2
-    subtotal = number_with_precision editing_order.total(false,true,false,false,false), :precision => 2
+    total = editing_order.total
+    subtotal = editing_order.total(false,true,false,false,false)
     #taxes = editing_order.taxes
 
-    return render :json => { :result => 'success', :id => @order.id, :total => total, :subtotal => subtotal, :available_transporters =>  @available_transporters, :rebuild_transporter => params[:transporter][:rebuild].to_i} #, :taxes => taxes}
+    return render(:json => { :result => 'success', :id => @order.id, :total => total, :subtotal => subtotal, :available_transporters =>  @available_transporters, :rebuild_transporter => params[:transporter][:rebuild].to_i}) #, :taxes => taxes}
   end
 
 private
@@ -150,7 +150,7 @@ private
   end
 
   def get_civilities_and_countries
-    @civilities = I18n.t('civility.select')
+    @civilities = t('civility.select')
     @countries = Country.all :order => 'name ASC'
   end
     
@@ -172,7 +172,7 @@ private
     
   def render_list
     index
-    render :partial => 'list', :locals => { :orders => @orders } 
+    render(:partial => 'list', :locals => { :orders => @orders })
   end
 
   def sort

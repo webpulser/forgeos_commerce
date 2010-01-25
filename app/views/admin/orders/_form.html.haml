@@ -40,16 +40,17 @@
                 %p= user.phone
                 %p.customer-email= user.email
               .main-info-separation
-              .main-infos-payment
-                %h4.small-icons
-                  Payment method
-                %p
-                  Credit card Mastercard
-                %p
-                  6565-9878-XXXX
-                %p.payment-checked
-                  payment checked
-              .main-info-separation
+              /
+                .main-infos-payment
+                  %h4.small-icons
+                    Payment method
+                  %p
+                    Credit card Mastercard
+                  %p
+                    6565-9878-XXXX
+                  %p.payment-checked
+                    payment checked
+                .main-info-separation
               .main-infos-note
                 %h4.small-icons= t('order.user_note').capitalize
                 =# order.user_note
@@ -67,8 +68,10 @@
               %th= t('order.total').capitalize
               %th.actions &nbsp;
           %tbody
-            - order.order_details.each do |detail|
+            - child_index = 0
+            - f.fields_for :order_details do |detail_form|
               %tr
+                - detail = detail_form.object
                 - product = detail.product
                 %td
                   - if product && picture = product.pictures.first
@@ -84,11 +87,11 @@
                 %td= detail.price
                 %td= 1
                 %td= price_with_currency detail.total
-                %td= link_to_function '', "remove_order_detail($(this));", :class => 'small-icons destroy-link', :id => "order_detail_#{detail.id}"
+                %td= link_to_function '', "remove_order_detail($(this));", :class => 'small-icons destroy-link', :id => "order_detail_#{child_index}"
+                - content_for :deleted_details, detail_form.hidden_field(:_delete, :class => 'delete')
+                - child_index +=1
         = link_to t('order.product.add').capitalize, '#', :class => 'small-icons add-link add-order-detail'
-        #order_details
-          - f.fields_for :order_details do |detail_form|
-            = detail_form.hidden_field :_delete, :class => 'delete', :id => "_delete_order_detail_#{detail_form.object.id}"
+        #order_details= yield(:deleted_details)
         = hidden_field_tag "transporter[rebuild]", 0
         .order-totals
           .order-subtotal= t('order.subtotal').capitalize
