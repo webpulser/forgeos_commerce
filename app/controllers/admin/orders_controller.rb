@@ -91,8 +91,7 @@ class Admin::OrdersController < Admin::BaseController
     # get order_details ids
     
     if order_details = params[:order][:order_details_attributes]
-      detail_ids = order_details.values.collect{ |detail| detail['id'].to_i if detail['id'] && detail['_delete'].to_i != 1 }
-      detail_ids.compact!
+      detail_ids = order_details.values.collect{ |detail| detail['id'].to_i if detail['id'] && detail['_delete'].to_i != 1 }.uniq.compact
       editing_order.order_detail_ids = detail_ids
     end
 
@@ -122,8 +121,8 @@ class Admin::OrdersController < Admin::BaseController
     #total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=false)
 
     # calculate total, subtotal and taxes
-    total = editing_order.total
-    subtotal = editing_order.total(false,true,false,false,false)
+    total = number_with_precision editing_order.total, :precision => 2
+    subtotal = number_with_precision editing_order.total(false,true,false,false,false), :precision => 2
     #taxes = editing_order.taxes
 
     return render :json => { :result => 'success', :id => @order.id, :total => total, :subtotal => subtotal, :available_transporters =>  @available_transporters, :rebuild_transporter => params[:transporter][:rebuild].to_i} #, :taxes => taxes}

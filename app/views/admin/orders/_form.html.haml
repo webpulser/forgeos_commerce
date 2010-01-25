@@ -1,6 +1,6 @@
 - form_for [:admin, order], :html => { :id => 'wrap', :class => 'edit_order' } do |f|
   .backgrounds.big-header
-    %span.order-price= order.total
+    %span.order-price= number_with_precision order.total, :precision => 2
     %span.order-currency= $currency.html
     %span.header-separator
     %span
@@ -134,7 +134,7 @@
           %span= $currency.html
         .order-totals.total-block
           .order-total= t('order.total').capitalize
-          %span.order-total= number_with_precision order.total
+          %span.order-total= number_with_precision order.total, :precision => 2
           %span.order-currency= $currency.html
 
         .fieldset.open
@@ -189,7 +189,7 @@
             = t('order.history').capitalize
     .clear
   = render :partial => 'products_popup', :locals => {:form => f}
-= dataTables_tag :id => 'table-order-details', :columns => ["{ 'bSortable': false }", "{ 'sClass': 'product-name', 'sType': 'html'}", "", "{ 'sType': 'numeric'}", "", "{ 'sClass': 'total', 'sType': 'currency'}", "{ 'bSortable': false }"]
+= dataTables_tag :id => 'table-order-details', :columns => ["{ 'bSortable': false }", "{ 'sClass': 'product-name', 'sType': 'html'}", "", "{ 'sType': 'numeric'}", "", "{ 'sClass': 'total', 'sType': 'currency'}", "{ 'bSortable': false, 'sClass': 'actions' }"]
 
 #empty_order_detail{:style => 'display: none;'}
   - id = "EMPTY_ID"

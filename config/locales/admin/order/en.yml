@@ -35,7 +35,7 @@ en:
       closed: closed
     lastest:
       one: 'last order'
-      other: 'last orders'
+      other: "{{count}} last orders"
     pendings: 
       one: 'pending order'
       other: 'pending orders'
