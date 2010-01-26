@@ -3,6 +3,7 @@ class Admin::ProductsController < Admin::BaseController
   before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate, :duplicate]
   before_filter :new_product, :only => [:new, :create]
   before_filter :manage_tags, :only => [:create, :update]
+  before_filter :filter_radiobutton_attributes, :only => [:create, :update]
 
   def index
     respond_to do |format|
@@ -108,6 +109,13 @@ private
     params[:product][:tag_list] = params[:tag_list].join(',') if params[:tag_list]
   end
 
+  def filter_radiobutton_attributes
+    return true unless params[:product][:radiobutton]
+    params[:product][:attribute_value_ids] ||= []
+    params[:product][:attribute_value_ids] +=  params[:product][:radiobutton].values
+    params[:product].delete(:radiobutton)
+  end
+
   def get_tag(name)
     return @tag = Tag.find_by_name(name) ? true : false
   end
@@ -117,7 +125,10 @@ private
       flash[:error] = I18n.t('product.found.failed').capitalize
       return redirect_to(admin_products_path)
     end
-    params[:product] = params[:pack] if params[:pack]
+    if params[:pack]
+      params[:product] ||= {}
+      params[:product].merge params[:pack]
+    end
   end
 
   def new_product

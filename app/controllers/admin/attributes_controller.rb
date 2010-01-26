@@ -123,7 +123,7 @@ private
   end
 
   def sort
-    columns = %w(attributes.type attributes.name access_method)
+    columns = %w(attributes.type attribute_translations.name access_method)
 
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
@@ -140,6 +140,8 @@ private
 
     options[:conditions] = conditions unless conditions.empty?
     options[:order] = order unless order.squeeze.blank?
+    options[:joins] = :globalize_translations
+    options[:group] = :attribute_id
 
     if params[:sSearch] && !params[:sSearch].blank?
       @attributes = Attribute.search(params[:sSearch],options)

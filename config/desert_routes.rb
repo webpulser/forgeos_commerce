@@ -17,8 +17,8 @@ catalog_selected_category '/catalog/:category_name/:category_choice/:url', :cont
 
 #resources :catalog
 selected_product_category '/product/:category_name/:category_choice/:url', :controller => 'url_catcher', :action => 'product'
-product_category '/product/:category_name/:url', :controller => 'url_catcher', :action => 'product'
-product '/product/:url', :controller => 'url_catcher', :action => 'product'
+product_category '/product/:category_name/:url', :controller => 'url_catcher', :action => 'product'#
+product_by_url '/product/:url', :controller => 'url_catcher', :action => 'product'
 
 namespace :admin do |admin|
   admin.resources :transporters, :controller => 'transporter_rules', :member => { :activate => :post, :duplicate => :get }

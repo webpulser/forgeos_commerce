@@ -23,10 +23,10 @@
           .grid_3.omega
             = check_box_tag 'product[attribute_value_ids][]', value.id, product ? product.attribute_value_ids.include?(value.id) : false, :id => "attribute_value_#{value.id}"
             = value.name
-      - when RadioAttribute
+      - when RadiobuttonAttribute
         -  attribute.attribute_values.each do |value|
           .grid_3.omega
-            = radio_button_tag 'product[attribute_value_ids][]', value.id, product ? product.attribute_value_ids.include?(value.id) : false, :id => "attribute_value_#{value.id}"
+            = radio_button_tag "product[radiobutton][#{attribute.id}]", value.id, product ? product.attribute_value_ids.include?(value.id) : false, :id => "attribute_value_#{value.id}"
             = value.name
       - when PicklistAttribute
         - value = product.attribute_values.find_by_attribute_id(attribute.id)
