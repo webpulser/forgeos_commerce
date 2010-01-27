@@ -178,7 +178,7 @@
     #right-sidebar.grid_4.omega
       .step.status.open
         - order_states_for_select = Order.aasm_states.collect{ |state| [t(state.name, :scope => [:order,:status]),state.name.to_s] }
-        = f.select :status, options_for_select(order_states_for_select, order.status)
+        = f.select :aasm_current_state_with_event_firing, options_for_select(order_states_for_select, order.status)
         .clear
       .step
         = link_to t('order.product.add'), '#', :class => 'small-icons small-icons-verti-small-blue-plus add-order-detail'

@@ -13,7 +13,7 @@ class OrderDetail < ActiveRecord::Base
   belongs_to :product
 
   #validates_presence_of :name, :price, :rate_tax, :order_id, :sku
-  validates_presence_of :name, :price, :sku, :order_id
+  validates_presence_of :name, :price, :sku
   after_create :increment_product_sold_counter
 
   # Returns price's string with currency symbol

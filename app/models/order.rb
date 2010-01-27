@@ -16,7 +16,7 @@ class Order < ActiveRecord::Base
   aasm_column :status
   aasm_initial_state :unpaid
   aasm_state :unpaid
-  aasm_state :paid
+  aasm_state :paid, :after_enter => :mail_payment_confirmation
   aasm_state :shipped
   aasm_state :canceled
   aasm_state :closed
@@ -57,6 +57,16 @@ class Order < ActiveRecord::Base
     indexes order_details.sku, :facet => true,  :sortable => true
     indexes order_details.price, :facet => true,  :sortable => true
   end
+
+  def aasm_current_state_with_event_firing=(state)
+    aasm_events_for_current_state.each do |event_name|
+      event = self.class.aasm_events[event_name]
+      aasm_fire_event(event_name,false) if event && event.all_transitions.any?{ |t| t.to == state || t.to == state.to_sym }
+    end
+  end
+  
+  alias_method :aasm_current_state_with_event_firing, :aasm_current_state
+
 
   # Returns order's amount
   def total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=true, with_voucher=true)
@@ -103,4 +113,11 @@ class Order < ActiveRecord::Base
   def voucher_discount_products
     return order_details.all(:conditions =>['voucher_discount_price IS NOT NULL'])
   end
+
+  private
+
+  def mail_payment_confirmation
+    Notifier.deliver_order_confirmation(self.user,self) if self.user
+  end
+
 end
