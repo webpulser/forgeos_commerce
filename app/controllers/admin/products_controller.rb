@@ -1,9 +1,9 @@
 class Admin::ProductsController < Admin::BaseController
 
   before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate, :duplicate]
+  before_filter :filter_radiobutton_attributes, :only => [:create, :update]
   before_filter :new_product, :only => [:new, :create]
   before_filter :manage_tags, :only => [:create, :update]
-  before_filter :filter_radiobutton_attributes, :only => [:create, :update]
 
   def index
     respond_to do |format|
@@ -126,8 +126,8 @@ private
       return redirect_to(admin_products_path)
     end
     if params[:pack]
-      params[:product] ||= {}
-      params[:product].merge params[:pack]
+      params[:product] ||= []
+      params[:product].merge!(params[:pack])
     end
   end
 
