@@ -16,6 +16,9 @@ class OrderDetail < ActiveRecord::Base
   validates_presence_of :name, :price, :sku
   after_create :increment_product_sold_counter
 
+  def rate_tax
+    super ? super : 1
+  end
   # Returns price's string with currency symbol
   #
   # This method is an overload of <i>price</i> attribute.
@@ -28,7 +31,7 @@ class OrderDetail < ActiveRecord::Base
     price = super
     price -= self.special_offer_discount_price if with_special_offer and self.special_offer_discount_price
     price -= self.voucher_discount_price if with_voucher and self.voucher_discount_price
-    #price += tax(false) if with_tax
+    price += tax(false) if with_tax
     return ("%01.2f" % price).to_f if Currency::is_default? || !with_currency
     ("%01.2f" % (price * $currency.to_exchanges_rate(Currency::default).rate)).to_f
   end
