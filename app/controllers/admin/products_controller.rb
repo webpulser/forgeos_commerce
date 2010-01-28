@@ -147,10 +147,13 @@ private
     conditions = {}
     includes = [:globalize_translations]
     options = { :page => page, :per_page => per_page }
+    joins = []
+    joins << :globalize_translations
     
     if params[:category_id]
       conditions[:categories_elements] = { :category_id => params[:category_id] }
       includes << :product_categories
+      joins = []
     end
     if params[:ids]
       conditions[:products] = { :id => params[:ids].split(',') }
@@ -160,10 +163,8 @@ private
     options[:conditions] = conditions unless conditions.empty?
     options[:include] = includes unless includes.empty?
     options[:order] = order unless order.squeeze.blank?
-
-    joins = []
-    joins << :globalize_translations
     options[:joins] = joins
+
     options[:group] = :product_id
 
     if params[:sSearch] && !params[:sSearch].blank?
