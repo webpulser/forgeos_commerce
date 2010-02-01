@@ -60,48 +60,28 @@ class Cart < ActiveRecord::Base
     total_items == 0
   end
 
-  # Returns total price of this cart by default
-  #
-  # Returns total price of a <i>Product</i> in cart if you precise in parameters
-  #
-  # ==== Parameters
-  # * <tt>:with_tax</tt> - add tax of price if true, false by default
-  # * <tt>:product</tt> - a <i>Product</i> object
-  def total_old(with_tax=false, product=nil, with_discount=false)
-    if product.nil?
-      total = CartsProduct.find_all_by_cart_id(id).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
-      if with_discount and !self.discount.nil? 
-        self.percent.nil? ? total-=self.discount : total-= (total*self.discount)/100
+  def taxes
+    total(true) - total(false)
+  end
+
+  def total(with_tax = false, with_discount = true)
+    total = 0
+    carts_products.each do |cart_product|
+      product_price = cart_product.product.price(with_tax)
+      if with_discount
+        product_price -= cart_product.product.special_offer_discount_price if cart_product.product.special_offer_discount_price
+        product_price -= cart_product.product.voucher_discount_price if cart_product.product.voucher_discount_price
       end
-      return total
-    else
-      CartsProduct.find_all_by_cart_id_and_product_id(id, product.id).inject(0) { |total, carts_product| total + carts_product.total(with_tax) }
-    end
-  end
-
-  def total_without_discount
-    total = 0
-    carts_products.each do |cart_product|
-      total += cart_product.product.price
-    end
-    return total
-  end
-
-
-  def total
-    total = 0
-    carts_products.each do |cart_product|
-      product_price = cart_product.product.price
-      product_price -= cart_product.product.special_offer_discount_price if cart_product.product.special_offer_discount_price
-      product_price -= cart_product.product.voucher_discount_price if cart_product.product.voucher_discount_price
-      total += product_price
       #total += cart_product.product.new_price.nil? ? cart_product.product.price : cart_product.product.new_price
+      total += product_price
     end
     
-    # discount total price if there are a special offer
-    total -= self.special_offer_discount_price if self.special_offer_discount_price
-    # discount total price if there are a valid voucher
-    total -= self.voucher_discount_price if self.voucher_discount_price
+    if with_discount
+      # discount total price if there are a special offer
+      total -= self.special_offer_discount_price if self.special_offer_discount_price
+      # discount total price if there are a valid voucher
+      total -= self.voucher_discount_price if self.voucher_discount_price
+    end
     total = 0 if total < 0 
     return total
   end
