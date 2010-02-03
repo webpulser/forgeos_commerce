@@ -82,7 +82,7 @@ module CartHelper
   # * <tt>:product</tt> - a <i>Product</i> object
   # * <tt>:name</tt> - name, <i>image_tag('forgeos_commerce/remove_product.gif')</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'cart', :action => 'empty'}</i> by default
-  # * <tt>options</tt> the html options, <i>{:confirm => ForgeosCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart]}</i> by default
+  # * <tt>options</tt> the html options
   def link_to_cart_remove_product(carts_product, mini=false, name=image_tag('forgeos_commerce/remove_product.gif'), options={:confirm => I18n.t(:confirm_remove_product)})
     if mini
       link_to_remote(name,{ :url=>{:controller => 'cart', :action => 'remove_product', :id => carts_product}, :update => 'cart' }.merge(options))
@@ -94,9 +94,9 @@ module CartHelper
   # Extension of <i>link_to(name, options = {}, html_options = nil)</i>
   #
   # ==== Parameters
-  # * <tt>:name</tt> - name, <i>ForgeosCommerce::OPTIONS[:text][:empty_cart]</i> by default
+  # * <tt>:name</tt> - name
   # * <tt>:url</tt> - url, <i>{:controller => 'cart', :action => 'empty'}</i> by default
-  # * <tt>options</tt> the html options, <i>{:confirm => ForgeosCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart]}</i> by default
+  # * <tt>options</tt> the html options
   def link_to_cart_empty(mini=false,name=I18n.t('empty_cart').capitalize, url={:controller => 'cart', :action => 'empty'}, options={:confirm => I18n.t(:confirm_empty_cart)})
     if mini
       link_to_remote name, { :update => 'cart', :url => url }.merge(options)
