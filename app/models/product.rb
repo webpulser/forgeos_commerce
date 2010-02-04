@@ -29,14 +29,14 @@ class Product < ActiveRecord::Base
 
   define_index do
     indexes sku, :sortable => true
-    indexes name, :sortable => true
-    indexes url, :sortable => true
     indexes stock, :sortable => true
     indexes price, :sortable => true
-    indexes description, :sortable => true
 
     has active, deleted
+    set_property :min_prefix_len => 1
   end
+
+  define_translated_index :name, :description, :url
 
   def public_url
     unless product_categories.empty?

@@ -16,10 +16,11 @@ class Attribute < ActiveRecord::Base
   before_save :clear_attributes
 
   define_index do
-    indexes name, :sortable => true
     indexes access_method, :sortable => true
     indexes type
   end
+
+  define_translated_index :name
 
   def clone
     attribute = super

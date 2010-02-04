@@ -124,6 +124,9 @@ private
 
   def sort
     columns = %w(attributes.type attribute_translations.name access_method)
+    if params[:sSearch] && !params[:sSearch].blank?
+      columns = %w(type name access_method)
+    end
 
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
@@ -141,11 +144,13 @@ private
     options[:conditions] = conditions unless conditions.empty?
     options[:order] = order unless order.squeeze.blank?
     options[:joins] = :globalize_translations
-    options[:group] = :attribute_id
 
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:index] = "attribute_core.attribute_#{ActiveRecord::Base.locale}_core"
+      options[:sql_order] = options.delete(:order)
       @attributes = Attribute.search(params[:sSearch],options)
     else
+      options[:group] = :attribute_id
       @attributes = Attribute.paginate(:all,options)
     end
   end

@@ -139,6 +139,10 @@ private
   def sort
     columns = %w(sku product_translations.name price stock product_type_id active)
 
+    if params[:sSearch] && !params[:sSearch].blank?
+      columns = %w(sku name price stock product_type_id active)
+    end
+
     per_page = params[:iDisplayLength] ? params[:iDisplayLength].to_i : 10
     offset = params[:iDisplayStart] ? params[:iDisplayStart].to_i : 0
     page = (offset / per_page) + 1
@@ -147,17 +151,18 @@ private
     conditions = {}
     includes = [:globalize_translations]
     options = { :page => page, :per_page => per_page }
-    joins = []
-    joins << :globalize_translations
+    joins = [:globalize_translations]
     
     if params[:category_id]
       conditions[:categories_elements] = { :category_id => params[:category_id] }
       includes << :product_categories
       joins = []
     end
+
     if params[:ids]
       conditions[:products] = { :id => params[:ids].split(',') }
     end
+
     conditions[:deleted] = params[:deleted] ? true : [false,nil]
 
     options[:conditions] = conditions unless conditions.empty?
@@ -165,11 +170,13 @@ private
     options[:order] = order unless order.squeeze.blank?
     options[:joins] = joins
 
-    options[:group] = :product_id
-
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:index] = "product_core.product_#{ActiveRecord::Base.locale}_core"
+      options[:sql_order] = options.delete(:order)
+      options[:joins] += options.delete(:include)
       @products = Product.search(params[:sSearch],options)
     else
+      options[:group] = :product_id
       @products = Product.paginate(:all,options)
     end
   end
