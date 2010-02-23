@@ -1,0 +1,18 @@
+page_home_translation_en:
+  locale: en
+  page: page_home
+  title: HomePage
+  url: index
+  content: '<h1>Welcome to Forgeos Commerce</h1>
+    <h2>Administration</h2>
+    <p>Go to the <a href="/admin">back-office</a> to manage pages, 
+    sections, blocks and more...</p>
+    <p><strong>Login</strong> : admin@commerce.forgeos.com</p>
+    <p><strong>Password</strong> : admin</p>'
+
+page_404_translation_en:
+  locale: en
+  page: page_404
+  title: "Page not found"
+  content: "The requested page does not exist"
+  url: 404
