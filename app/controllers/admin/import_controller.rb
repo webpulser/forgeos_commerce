@@ -1,22 +1,34 @@
 class Admin::ImportController < Admin::BaseController
-  map_fields :create_product, %w(sku* name* description price* url* stock weight Categories product_type*)
   before_filter :commerce_models, :only => :index
 
+  map_fields :create_product, Product.new.attributes.keys + Product.new.translated_attributes.stringify_keys.keys
   def create_product
-    create_model(Product,'sku') do |row|
-      attributes = {} 
-      %w(sku name description price url stock weight).each_with_index do |attribute,i|
-        attributes[attribute.to_sym] = row[i] if row[i]
-      end
-      attributes[:product_type_id] = (ProductType.find_by_name(row[8], :select => :id) || ProductType.first(:select => :id)).id
-      attributes[:product_category_ids] = ProductCategory.find_all_by_name(row[7].split(','), :select=>'id').map(&:id) if row[7]
-      attributes
-    end
+    create_model(Product,'sku')
+  end
+
+  map_fields :create_product_type, ProductType.new.attributes.keys
+  def create_product_type
+    create_model(ProductType,'name')
+  end
+
+  map_fields :create_product_category, ProductCategory.new.attributes.keys + ProductCategory.new.translated_attributes.stringify_keys.keys
+  def create_product_category
+    create_model(ProductCategory,'name')
+  end
+
+  map_fields :create_order, Order.new.attributes.keys
+  def create_order
+    create_model(Order,'reference')
+  end
+
+  map_fields :create_order_detail, OrderDetail.new.attributes.keys
+  def create_order_detail
+    create_model(OrderDetail,'sku')
   end
 
   private
 
   def commerce_models
-    @models << 'product' << 'order'
+    @models << 'product' << 'product_type' << 'product_category' << 'order' << 'order_detail'
   end
 end
