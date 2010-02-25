@@ -42,7 +42,7 @@ function remove_order_detail(destroy_link){
   );
 
   // set order detail deleted
-  $(base_field_id+'_delete).val(1);
+  $(base_field_id+'_delete').val(1);
 
   // remove special offer and voucher discount detail
   $('.special_order_detail_'+ detail_id).remove();
