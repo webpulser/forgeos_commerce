@@ -136,6 +136,40 @@ class Product < ActiveRecord::Base
     return ("%01.2f" % (price(false, with_currency) * self.rate_tax/100)).to_f
   end
 
+  def after_initialize()
+    if product_type
+      product_type.product_attributes.each do |attribute|
+        self.class_eval <<DEF
+        def #{attribute.access_method}
+          attribute = Attribute.find(#{attribute.id})
+          if attribute.dynamic?
+            attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
+            attribute_value ? attribute_value.value : nil
+          else
+            attribute_values.find_all_by_attribute_id(attribute.id).map(&:name)
+          end
+        end
+        def #{attribute.access_method}=(new_value)
+          attribute = Attribute.find(#{attribute.id})
+          if attribute.dynamic?
+            if attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
+              attribute_value.update_attribute(:value,new_value)
+            else
+              self.dynamic_attribute_values.create(:value => new_value, :attribute_id => attribute.id)
+            end
+          else
+            self.attribute_values = AttributeValue.find_all_by_attribute_id(
+              attribute.id,
+              :joins => :globalize_translations,
+              :conditions => { :attribute_value_translations => { :name => [new_value].flatten } }
+            )
+          end
+        end
+DEF
+      end
+    end
+  end
+
   private
 
   # Call by <i>before_save</i>
@@ -148,36 +182,5 @@ class Product < ActiveRecord::Base
 
   def force_url_format
     self.url= Forgeos::url_generator(self.url)
-  end
-
-  def after_initialize()
-    if product_type
-      product_type.product_attributes.each do |attribute|
-        self.class_eval <<DEF
-        def #{attribute.access_method}
-          attribute = Attribute.find(#{attribute.id})
-          if attribute.dynamic?
-            attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
-            attribute_value ? attribute_value.value : nil
-          else
-            attribute_values.find_all_by_attribute_id(attribute.id).collect(&:name)
-          end
-        end
-        def #{attribute.access_method}=(new_value)
-          attribute = Attribute.find(#{attribute.id})
-          if attribute.dynamic?
-            if attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
-              attribute_value.update_attribute(:value,new_value)
-            else
-              self.dynamic_attribute_values.create(:value => new_value, :attribute_id => attribute.id)
-            end
-          else
-            attribute_value = AttributeValue.find_by_name(new_value, :conditions => { :attribute_id => attribute.id })
-            self.attribute_values << attribute_value if attribute_value
-          end
-        end
-DEF
-      end
-    end
   end
 end
