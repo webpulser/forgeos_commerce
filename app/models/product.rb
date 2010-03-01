@@ -24,7 +24,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :product_type_id, :sku, :url
   #validates_uniqueness_of :url
 
-  before_save :clean_strings
+  before_save :clean_strings, :force_url_format
   after_save :synchronize_stock
 
   define_index do
@@ -63,15 +63,6 @@ class Product < ActiveRecord::Base
 
   def attribute_of(attribute)
     attribute_values.find_by_attribute_id(attribute.id)
-  end
-
-
-  # Call by <i>before_save</i>
-  # convert all blank strings to nil for attribute inheritance save
-  def clean_strings
-    self.class.columns.find_all{ |column| column.type == :string }.each do |field|
-      send("#{field.name}=", nil) if self.attributes[field.name].blank?
-    end
   end
 
   def clone
@@ -155,11 +146,41 @@ class Product < ActiveRecord::Base
             attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
             attribute_value ? attribute_value.value : nil
           else
-            attribute_values.find_all_by_attribute_id(attribute.id).collect(&:name)
+            attribute_values.find_all_by_attribute_id(attribute.id).map(&:name)
+          end
+        end
+        def #{attribute.access_method}=(new_value)
+          attribute = Attribute.find(#{attribute.id})
+          if attribute.dynamic?
+            if attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
+              attribute_value.update_attribute(:value,new_value)
+            else
+              self.dynamic_attribute_values.create(:value => new_value, :attribute_id => attribute.id)
+            end
+          else
+            self.attribute_values = AttributeValue.find_all_by_attribute_id(
+              attribute.id,
+              :joins => :globalize_translations,
+              :conditions => { :attribute_value_translations => { :name => [new_value].flatten } }
+            )
           end
         end
 DEF
       end
     end
+  end
+
+  private
+
+  # Call by <i>before_save</i>
+  # convert all blank strings to nil for attribute inheritance save
+  def clean_strings
+    self.class.columns.find_all{ |column| column.type == :string }.each do |field|
+      send("#{field.name}=", nil) if self.attributes[field.name].blank?
+    end
+  end
+
+  def force_url_format
+    self.url= Forgeos::url_generator(self.url)
   end
 end
