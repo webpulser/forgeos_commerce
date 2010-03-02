@@ -1,7 +1,7 @@
 class Admin::ImportController < Admin::BaseController
   before_filter :commerce_models, :only => :index
 
-  map_fields :create_product, (Product.new.attributes.keys + Product.new.translated_attributes.stringify_keys.keys + Product.reflections.stringify_keys.keys).sort
+  map_fields :create_product, (ProductType.all.map(&:product_attributes).flatten.uniq.map(&:access_method) + Product.new.attributes.keys + Product.new.translated_attributes.stringify_keys.keys + Product.reflections.stringify_keys.keys).sort
   def create_product
     create_model(Product,'sku')
   end
