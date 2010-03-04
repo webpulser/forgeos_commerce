@@ -4,5 +4,6 @@ class RemoveTranslationsToAttributeValues < ActiveRecord::Migration
   end
 
   def self.down
+    add_column :attribute_values, :name, :string
   end
 end
