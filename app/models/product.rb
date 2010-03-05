@@ -147,8 +147,13 @@ class Product < ActiveRecord::Base
             attribute_value ? attribute_value.value : nil
           else
             values = attribute_values.find_all_by_attribute_id(attribute.id)
-            return values unless method
-            values.map(&method.to_sym)
+            value = method ? values.map(&method.to_sym) : values
+            return case attribute 
+            when RadiobuttonAttribute, PicklistAttribute
+              value.first
+            else
+              value
+            end
           end
         end
         def #{attribute.access_method}=(new_value)
