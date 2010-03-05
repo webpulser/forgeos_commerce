@@ -140,13 +140,15 @@ class Product < ActiveRecord::Base
     if product_type
       product_type.product_attributes.each do |attribute|
         self.class_eval <<DEF
-        def #{attribute.access_method}
+        def #{attribute.access_method}(method=:name)
           attribute = Attribute.find(#{attribute.id})
           if attribute.dynamic?
             attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
             attribute_value ? attribute_value.value : nil
           else
-            attribute_values.find_all_by_attribute_id(attribute.id).map(&:name)
+            values = attribute_values.find_all_by_attribute_id(attribute.id)
+            return values unless method
+            values.map(&method.to_sym)
           end
         end
         def #{attribute.access_method}=(new_value)
