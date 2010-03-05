@@ -1,5 +1,5 @@
 class ProductType < ActiveRecord::Base
-  translates :name, :url
+  translates :name, :url, :description
   has_many :products, :dependent => :destroy
   has_and_belongs_to_many_attachments
   has_and_belongs_to_many :product_attributes, :class_name => 'Attribute', :readonly => true

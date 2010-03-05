@@ -59,7 +59,8 @@ class Admin::ProductTypesController < Admin::BaseController
     else
       flash[:error] = I18n.t('product.destroy.failed').capitalize
     end
-    return redirect_to(admin_product_types_path)
+    return render(:nothing=>true) if request.xhr?
+    redirect_to(admin_product_types_path)
   end
 
 private
@@ -75,29 +76,40 @@ private
   end
   
   def sort
-    columns = %w(product_types.name product_types.name count(products.id) product_types.name)
+    columns = %w('' product_type_translations.name count(products.id) '')
+
+    if params[:sSearch] && !params[:sSearch].blank?
+      columns = %w('' name count(products.id) '')
+    end
 
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
  
-    conditions = {}
-    options = { :page => page, :per_page => per_page }
 
-    includes = []
+    conditions = {}
+    includes = [:globalize_translations]
+    options = { :page => page, :per_page => per_page }
+    joins = [:globalize_translations]
+
     includes << :products if params[:iSortCol_0].to_i == 2
 
     if params[:category_id]
       conditions[:categories_elements] = { :category_id => params[:category_id] }
       includes << :product_type_categories
+      joins = []
     end
    
     options[:conditions] = conditions unless conditions.empty?
     options[:include] = includes unless includes.empty?
     options[:order] = order unless order.squeeze.blank?
+    options[:joins] = joins
 
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:index] = "product_core.product_#{ActiveRecord::Base.locale}_core"
+      options[:sql_order] = options.delete(:order)
+      options[:joins] += options.delete(:include)
       @product_types = ProductType.search(params[:sSearch],options)
     else
       @product_types = ProductType.paginate(:all,options)

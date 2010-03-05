@@ -3,24 +3,36 @@
     = f.text_field :name
     .interact-links
       = fg_submit_tag 'save_changes'
-      = I18n.t('or')
-      = link_to I18n.t('cancel').capitalize, admin_product_types_path, :class => 'back-link'
+      = t('or')
+      = link_to t('cancel').capitalize, admin_product_types_path, :class => 'back-link'
 
   #content.grid_12.alpha.omega
     .grid_12.alpha
-      #product-types-selected-tree.a-tree.init-tree
-        = I18n.t('drag_attributes').capitalize
-        = hidden_field_tag 'product_type[attribute_ids][]'
-        %ul
-          - product_type.product_attributes.each do |attribute|
-            - id = "attribute_#{attribute.id}"
-            %li{ :id => id, :rel => 'attribute' }
-              %a{ :href => '#' }
-                = hidden_field_tag 'product_type[product_attribute_ids][]', attribute.id, :id => "product_type_product_attribute_ids_#{attribute.id}"
-                = attribute.name
-                %span.big-icons.gray-destroy-attribute.gray-destroy
-                  &nbsp;
-        .clear
+      .fieldset
+        %h3= t(:attribute,:count => 2).capitalize
+        %p= t('drag_attributes').capitalize
+        = hidden_field_tag 'product_type[product_attribute_ids][]'
+        #product-types-selected-tree.a-tree.init-tree
+          %ul
+            - product_type.product_attributes.each do |attribute|
+              - id = "attribute_#{attribute.id}"
+              %li{ :id => id, :rel => 'attribute' }
+                %a{ :href => '#' }
+                  = hidden_field_tag 'product_type[product_attribute_ids][]', attribute.id, :id => "product_type_product_attribute_ids_#{attribute.id}"
+                  = attribute.name
+                  %span.big-icons.gray-destroy-attribute.gray-destroy
+                    &nbsp;
+          .clear
+
+      %h2.permalink
+        = t('permalink').capitalize
+        \:
+        = seo_product_type_path(ProductType.new(:url=>''))
+        = f.text_field :url
+      .clear
+      = f.label :description, t('description').capitalize
+      %div{ :style => 'clear: left;'}
+        = f.text_area :description, :cols => 80, :class => 'mceEditor'
   #yellow-sidebar.grid_4.alpha.omega.yellow
     #product-types-all-tree.init-tree.a-tree
       %ul
@@ -29,5 +41,5 @@
             %li{ :rel => 'attribute', :id => "attribute_#{orphan_attribute.id}" }
               = link_to((orphan_attribute.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-attribute gray-destroy')), '#')
     .clear
-    = link_to I18n.t('attribute.create.action').capitalize, admin_attributes_path, :class => 'small-icons small-icons-verti-small-blue-plus attribute-new'
+    = link_to t('attribute.create.action').capitalize, admin_attributes_path, :class => 'small-icons small-icons-verti-small-blue-plus attribute-new'
   .clear
