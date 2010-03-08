@@ -1,7 +1,19 @@
 module ProductHelper
   
-  def product_path(object)
-    super(:id => nil, :url => object.url)
+  def product_path(options)
+    case options
+    when Product
+      super(:id => nil, :url => options.url)
+    when Array
+      if options.first.kind_of?(Product)
+        product = options.delete(0)
+        super(options.last.merge(:id => nil, :url => product.url))
+      else
+        super(options)
+      end
+    else
+      super(options)
+    end
   end
 
   def product_category_path(object)
