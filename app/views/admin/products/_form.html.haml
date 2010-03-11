@@ -123,20 +123,20 @@
         = f.check_box :on_first_page
         = t('show_on_homepage').capitalize
         %br
-          %input#limited-time-offer.check-me-it-appears{ :name => "limited-time-offer", :type => "checkbox" }
-          Limited time offer
-          .i-will-appear
-            %span
-              Stop after
-              %input#limited-time-offer-end{ :name => "limited-time-offer-end", :type => "text" , :value => 'dd/mm/yyyy'}
-          %br
-          %input#limited-sales-offer.check-me-it-appears{ :name => "limited-sales-offer", :type => "checkbox" }
-          Limited sales offer
-          .i-will-appear
-            %span
-              Stop after
-              %input#limited-sales-offer-end{ :name => "limited-sales-offer-end", :type => "text" }
-              sales
+        %input#limited-time-offer.check-me-it-appears{ :name => "limited-time-offer", :type => "checkbox" }
+        Limited time offer
+        .i-will-appear
+          %span
+            Stop after
+            %input#limited-time-offer-end{ :name => "limited-time-offer-end", :type => "text" , :value => 'dd/mm/yyyy'}
+        %br
+        %input#limited-sales-offer.check-me-it-appears{ :name => "limited-sales-offer", :type => "checkbox" }
+        Limited sales offer
+        .i-will-appear
+          %span
+            Stop after
+            %input#limited-sales-offer-end{ :name => "limited-sales-offer-end", :type => "text" }
+            sales
       .step
         - unless product.new_record?
           = link_to t('product.duplicate').capitalize, [:duplicate, :admin, product], :class => 'small-icons duplicate'
