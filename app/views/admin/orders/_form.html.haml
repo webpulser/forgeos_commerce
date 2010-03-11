@@ -10,10 +10,7 @@
     %span.header-separator
     - unless order.created_at.nil?
       %span= @order.created_at.to_s(:format => :default)
-    .interact-links
-      = submit_tag t('save_changes').capitalize, :class => 'backgrounds interact-button'
-      = t('or')
-      = link_to t('cancel').capitalize, admin_orders_path, :class => 'back-link'
+    = Forgeos_save_buttons admin_orders_path
 
   #content.grid_16.alpha.omega
     #order-see.grid_12.alpha

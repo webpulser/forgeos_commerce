@@ -1,9 +1,9 @@
 class Admin::ProductsController < Admin::BaseController
 
   before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate, :duplicate]
-	before_filter :merge_params, :only => [:update, :create]
-	before_filter :filter_radiobutton_attributes, :only => [:update, :create]
-	before_filter :new_product, :only => [:new, :create]
+  before_filter :merge_params, :only => [:update, :create]
+  before_filter :filter_radiobutton_attributes, :only => [:update, :create]
+  before_filter :new_product, :only => [:new, :create]
   before_filter :manage_tags, :only => [:create, :update]
 
   def index
@@ -128,12 +128,12 @@ private
     end
   end
 
-	def merge_params
-		if params[:pack]
+  def merge_params
+    if params[:pack]
       params[:product] ||= {}
       params[:product].merge!(params[:pack])
     end
-	end
+  end
 
   def new_product
     params[:product] = params[:pack] if params[:pack]

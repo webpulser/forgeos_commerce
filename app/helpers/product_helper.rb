@@ -1,4 +1,13 @@
 module ProductHelper
+  def seo_product_type_path(product_type)
+    product_type_path(:product_type_url=>product_type.url)
+  end
+  def seo_product_type_product_category_path(product_type,product_category)
+    product_type_product_category_path(:product_type_url=>product_type.url,:category_url=>product_category.url)
+  end
+  def seo_product_path(product)
+    product_path(:product_type_url=>product.product_type.url,:category_url=>product.product_categories.first.url,:url=>product.url)
+  end
   
   def product_path(options)
     case options

@@ -10,7 +10,7 @@ module Forgeos
       { :controller => 'admin/packs' }
     ],
     :i18n => true,
-    :html => { :class => 'left'}
+    :html => { :class => 'left last'}
   }
   AdminMenu << { :title => 'back_office.menu.site_builder',
     :url => [
