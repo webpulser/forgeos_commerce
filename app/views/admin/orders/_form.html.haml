@@ -88,7 +88,7 @@
                 %td= 1
                 %td= price_with_currency detail.total
                 %td= link_to_function '', "remove_order_detail($(this));", :class => 'small-icons destroy-link', :id => "order_detail_#{child_index}"
-                - content_for :deleted_details, detail_form.hidden_field(:_delete, :class => 'delete')
+                - content_for :deleted_details, detail_form.hidden_field(:_destroy, :class => 'delete')
                 - child_index +=1
         = link_to t('order.product.add').capitalize, '#', :class => 'small-icons add-link add-order-detail'
         #order_details= yield(:deleted_details)
@@ -196,7 +196,7 @@
 
 #empty_order_detail{:style => 'display: none;'}
   - id = "EMPTY_ID"
-  = hidden_field_tag "order[order_details_attributes][#{id}][_delete]", '', :class => 'delete'
+  = hidden_field_tag "order[order_details_attributes][#{id}][_destroy]", '', :class => 'delete'
   = hidden_field_tag "order[order_details_attributes][#{id}][product_id]"
   = hidden_field_tag "order[order_details_attributes][#{id}][name]"
   = hidden_field_tag "order[order_details_attributes][#{id}][price]"
