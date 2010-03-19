@@ -1,8 +1,8 @@
 - form_for [:admin, user], :html => { :id => 'wrap', :autocomplete => 'off' } do |f|
   .backgrounds.big-header
-    = f.select :civility, t('civility.select'), :prompt => t('please_select').capitalize
-    = f.text_field :lastname, :title => t('lastname'), :class => 'defaultValue'
-    = f.text_field :firstname, :title => t('firstname'), :class => 'defaultValue'
+    = f.select :civility, I18n.t('civility.select'), :prompt => I18n.t('please_select').capitalize
+    = f.text_field :firstname, :title => I18n.t('firstname'), :class => 'defaultValue field_name lastname'
+    = f.text_field :lastname, :title => I18n.t('lastname'), :class => 'defaultValue field_name firstname'
     .interact-links
       = submit_tag t('save_changes').capitalize, :class => 'backgrounds interact-button'
       = t('or')

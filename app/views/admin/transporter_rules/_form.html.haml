@@ -9,7 +9,7 @@
 - form_for [:admin, transporter], :html => { :id => 'wrap' } do |f|
 
   .backgrounds.big-header
-    = f.text_field :name
+    = f.text_field :name, :class => 'field_name'
     .interact-links
       = fg_submit_tag (transporter.new_record? ? 'transporter.create.action' : 'save_changes')
       = I18n.t('or')

@@ -10,7 +10,7 @@
 
 - form_tag({:action => 'create'}, :id => 'wrap') do
   .backgrounds.big-header
-    = text_field 'rule_builder', 'name', :id => 'special_offer_title'
+    = text_field 'rule_builder', 'name', :id => 'special_offer_title', :class => 'field_name'
     .interact-links
       = fg_submit_tag ('save_changes')
       /= submit_tag I18n.t('special_offer.save').capitalize, :class => 'backgrounds interact-button'
