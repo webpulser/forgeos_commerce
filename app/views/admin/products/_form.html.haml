@@ -1,6 +1,6 @@
 - form_for [:admin, product], :html => { :id => 'wrap' } do |f|
   .backgrounds.big-header
-    = f.text_field :name
+    = f.text_field :name, :class => 'field_name'
     .interact-links
       = fg_submit_tag(product.new_record? ? 'product.create.action' :'save_changes')
       = I18n.t('or')
