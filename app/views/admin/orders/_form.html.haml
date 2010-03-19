@@ -88,7 +88,7 @@
         = link_to I18n.t('order.product.add').capitalize, '#', :class => 'small-icons add-link add-order-detail'
         #order_details
           - f.fields_for :order_details do |detail_form|
-            = detail_form.hidden_field :_delete, :class => 'delete', :id => "_delete_order_detail_#{detail_form.object.id}"
+            = detail_form.hidden_field :_destroy, :class => 'delete', :id => "_delete_order_detail_#{detail_form.object.id}"
         = hidden_field_tag "transporter[rebuild]", 0
         .order-totals
           .order-subtotal= I18n.t('order.subtotal').capitalize
@@ -193,7 +193,7 @@
 
 #empty_order_detail{:style => 'display: none;'}
   - id = "EMPTY_ID"
-  = hidden_field_tag "order[order_details_attributes][#{id}][_delete]", '', :class => 'delete'
+  = hidden_field_tag "order[order_details_attributes][#{id}][_destroy]", '', :class => 'delete'
   = hidden_field_tag "order[order_details_attributes][#{id}][product_id]"
   = hidden_field_tag "order[order_details_attributes][#{id}][name]"
   = hidden_field_tag "order[order_details_attributes][#{id}][price]"
