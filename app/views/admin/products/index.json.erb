@@ -42,7 +42,7 @@
         end
 
         product_array <<
-          product.product_type.name <<
+          (product.product_type.name || ' ')<<
             link_to_remote('', :url => activate_admin_product_path(product),
              :complete => "toggleActivate('#show_#{link_id}')",
              :html => {
