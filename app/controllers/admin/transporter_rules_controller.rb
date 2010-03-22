@@ -3,6 +3,8 @@ class Admin::TransporterRulesController < Admin::BaseController
   before_filter :new_transporter, :only => [:new, :create]
   before_filter :get_transporter, :only => [ :show, :edit, :update, :destroy ]
   before_filter :get_rules, :only => [ :show, :edit ]
+  before_filter :get_product_types, :only => [ :new, :create, :show, :edit ]
+  before_filter :get_geo_zones, :only => [ :new, :create, :show, :edit ]
 
   def index
     respond_to do |format|
@@ -232,7 +234,15 @@ class Admin::TransporterRulesController < Admin::BaseController
       end
       rules.sort
     end
+    
+    def get_product_types
+      @product_types = ProductType.all(:include => :globalize_translations , :order => 'product_type_translations.name' ).collect{|c| [c.name, c.id]}
+    end
 
+    def get_geo_zones
+      @geo_zones = GeoZone.all( :order => :printable_name ).collect{|c| [c.name, c.id]}
+    end
+      
     def get_delivery_type
       db_delivery_type = @transporter.conditions.split('.')[1]
 
