@@ -1,10 +1,10 @@
 class Admin::TransporterRulesController < Admin::BaseController
 
   before_filter :new_transporter, :only => [:new, :create]
-  before_filter :get_transporter, :only => [ :show, :edit, :update, :destroy ]
+  before_filter :get_transporter, :only => [ :show, :edit, :update, :destroy, :duplicate ]
   before_filter :get_rules, :only => [ :show, :edit ]
-  before_filter :get_product_types, :only => [ :new, :create, :show, :edit ]
-  before_filter :get_geo_zones, :only => [ :new, :create, :show, :edit ]
+  before_filter :get_product_types, :only => [ :new, :create, :show, :edit, :duplicate ]
+  before_filter :get_geo_zones, :only => [ :new, :create, :show, :edit, :duplicate ]
 
   def index
     respond_to do |format|
@@ -29,6 +29,11 @@ class Admin::TransporterRulesController < Admin::BaseController
   end
   
   def new
+  end
+  
+  def duplicate
+    @transporter = @transporter.clone
+    render :action => 'new'
   end
 
   def create
