@@ -29,9 +29,10 @@ class Admin::OrdersController < Admin::BaseController
   def create
     if @order.save
       flash[:notice] = t('order.create.success').capitalize
-      redirect_to(admin_orders_path)
+      redirect_to edit_admin_order_path(@order)
     else
       flash[:error] = t('order.create.failed').capitalize
+      render(:action => 'edit')
     end
   end
 
@@ -42,12 +43,11 @@ class Admin::OrdersController < Admin::BaseController
     if @order.update_attributes(params[:order])
       flash[:notice] = t('order.update.success').capitalize
       return render(:text => true) if request.xhr?
-      redirect_to(admin_orders_path)
     else
       flash[:error] = t('order.update.failed').capitalize
       return render(:text => false) if request.xhr?
-      render(:action => 'edit')
     end
+    render(:action => 'edit')
   end
 
   def destroy

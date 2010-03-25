@@ -1,8 +1,10 @@
 class Admin::TransporterRulesController < Admin::BaseController
 
   before_filter :new_transporter, :only => [:new, :create]
-  before_filter :get_transporter, :only => [ :show, :edit, :update, :destroy ]
+  before_filter :get_transporter, :only => [ :show, :edit, :update, :destroy, :duplicate ]
   before_filter :get_rules, :only => [ :show, :edit ]
+  before_filter :get_product_types, :only => [ :new, :create, :show, :edit, :duplicate ]
+  before_filter :get_geo_zones, :only => [ :new, :create, :show, :edit, :duplicate ]
 
   def index
     respond_to do |format|
@@ -53,7 +55,7 @@ class Admin::TransporterRulesController < Admin::BaseController
 
     if result
       flash[:notice] = I18n.t('transporter.create.success').capitalize
-      return redirect_to(admin_transporters_path)
+      render :action => :edit
     else
       flash[:error] = I18n.t('transporter.create.failed').capitalize
       render :action => :new
@@ -133,11 +135,10 @@ class Admin::TransporterRulesController < Admin::BaseController
 
     if result
       flash[:notice] = I18n.t('transporter.update.success').capitalize
-      return redirect_to(admin_transporters_path)
     else
       flash[:error] = I18n.t('transporter.update.failed').capitalize
-      render :action => :edit
     end
+    render :action => :edit
   end
 
   def destroy
@@ -233,6 +234,15 @@ class Admin::TransporterRulesController < Admin::BaseController
       rules.sort
     end
 
+    
+  def get_product_types
+     @product_types = ProductType.all(:include => :globalize_translations , :order => 'product_type_translations.name' ).collect{|c| [c.name, c.id]}
+   end
+
+   def get_geo_zones
+     @geo_zones = GeoZone.all( :order => :printable_name ).collect{|c| [c.name, c.id]}
+   end
+   
     def get_delivery_type
       db_delivery_type = @transporter.conditions.split('.')[1]
 

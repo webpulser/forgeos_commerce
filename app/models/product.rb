@@ -135,7 +135,7 @@ class Product < ActiveRecord::Base
   def tax(with_currency=true)
     return ("%01.2f" % (price(false, with_currency) * self.rate_tax/100)).to_f
   end
-
+=begin
   def after_initialize()
     if product_type
       product_type.product_attributes.each do |attribute|
@@ -176,7 +176,7 @@ DEF
       end
     end
   end
-
+=end
   private
 
   # Call by <i>before_save</i>
