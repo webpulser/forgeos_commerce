@@ -81,7 +81,7 @@ en:
   confirm_remove_product: 'are you sure to remove this product from your cart ?'
   type: type
   your_account: 'your account'
-  cancel: cancel
+  cancel: back
   unaccessible_function: 'unaccessible function'
   my_informations: 'my information'
   unpaid: unpaid
@@ -135,7 +135,7 @@ en:
   email: email
   back_to_catalog: 'back to catalog'
   save: save
-  save_changes: 'save changes'
+  save_changes: save
   list: list
   civility:
     one: civility
