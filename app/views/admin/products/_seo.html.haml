@@ -1,0 +1,43 @@
+.grid_12.alpha
+  .fieldset
+    %h3.permalink
+      = t('permalink').capitalize
+      \:
+    = "#{request.protocol}#{request.host}/product/"
+    = f.text_field :url
+  / #products_tags.step.open
+  /   = link_to t(:tag, :count => 2), '#', :class => 'small-icons step-title'
+  /   .inner-step.tags
+  /     .wrap_tags
+  /       = hidden_field_tag 'tag_list[]', ''
+  /       %input#tag.backgrounds{ :name => "tag", :type => "text", :title => t('tag_enter').capitalize, :class => 'defaultValue' }
+  /       - product.tag_list.each do |tag|
+  /         %span
+  /           = tag
+  /           = hidden_field_tag 'tag_list[]', tag
+  /           = link_to '&nbsp;', '#', :class => 'big-icons gray-destroy'
+  /     .clear
+  .fieldset
+    %h3
+      = 'Meta données'
+    
+    - product.build_meta_info unless product.meta_info
+    - f.fields_for :meta_info do |meta_info|
+      %p
+        %span
+          = t('title').capitalize
+          \:
+          .clear
+        = meta_info.text_field :title, :cols => 100, :rows => 10, :class => 'text'
+      %p
+        %span
+          = t('description').capitalize
+          \:
+          .clear
+        = meta_info.text_area :description, :cols => 100, :rows => 10, :class => 'text'
+      %p
+        %span
+          = t('keyword', :count => 2).capitalize
+          \:
+          .clear
+        = meta_info.text_area :keywords, :cols => 100, :rows => 10, :class => 'text'
