@@ -16,6 +16,7 @@ map.resources :orders
 # catalog routes
 map.catalog '/catalog/:category_name/:url', :controller => 'catalog', :action => 'index', :url => nil
 map.catalog_selected_category '/catalog/:category_name/:category_choice/:url', :controller => 'catalog', :action => 'index', :url => nil
+map.product_type '/catalog/:product_type_url', :controller => 'catalog', :action => 'index'
 
 #resources :catalog
 map.selected_product_category '/product/:category_name/:category_choice/:url', :controller => 'url_catcher', :action => 'product'

@@ -7,7 +7,7 @@
 - form_for [:admin, transporter], :html => { :id => 'wrap' } do |f|
 
   .backgrounds.big-header
-    = f.text_field :name
+    = f.text_field :name, :class => 'field_name'
     .interact-links
       = Forgeos_save_buttons admin_transporters_path
 
