@@ -2,7 +2,7 @@ h1. ForgeosCommerce
 
 ForgeosCommerce is an extension of Ruby on Rails for e-commerce development 
 
-FORGEOS_COMMERCE_VERSION : 0.9.0
+VERSION : 0.9.0-rc2
 
 h1. Prerequisites
 
@@ -40,4 +40,4 @@ Launch FogeosCommerce Install :
   </code></pre>
 
 
-Powered by [http://www.webpulser.com Webpulser]
+Powered by "Webpulser":http://www.webpulser.com
