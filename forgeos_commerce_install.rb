@@ -1,19 +1,14 @@
 # Installation of ForgeosCommerce plugin by Webpulser©
-log 'Welcome to ForgeosCommerce Beta 0.9.0-rc1 install'
-log 'To proceed install you need a Forgeos Beta access (if you have not one yet go on http://www.forgeos.com).'
-
-login = ask('enter your Forgeos Beta login :')
-password = ask('enter your Forgeos Beta password :')
-
-inside('vendor/plugins') do
-  run "svn co https://src.forgeos.com/forgeos_core/tags/0.9.0-rc1 --username #{login} --password #{password} forgeos_core"
-  run "svn co https://src.forgeos.com/forgeos_cms/tags/0.9.0-rc1 --username #{login} --password #{password} forgeos_cms"
-  run "svn co https://src.forgeos.com/forgeos_commerce/tags/0.9.0-rc1 --username #{login} --password #{password} forgeos_commerce"
-end
+log 'Welcome to ForgeosCommerce Beta 0.9.0 install'
 
 plugin 'attachment_fu', :git => 'git://github.com/technoweenie/attachment_fu.git'
 plugin 'localized_dates', :git => 'git://github.com/clemens/localized_dates.git'
 plugin 'open_flash_chart', :git => 'git://github.com/pullmonkey/open_flash_chart.git'
+
+
+plugin 'forgeos_core', :git => 'git://github.com/webpulser/forgeos_core.git'
+plugin 'forgeos_cms', :git => 'git://github.com/webpulser/forgeos_cms.git'
+plugin 'forgeos_commerce', :git => 'git://github.com/webpulser/forgeos_commerce.git'
 
 file 'db/migrate/001_install_forgeos_core.rb', <<-END
 class InstallForgeosCore < ActiveRecord::Migration
@@ -56,16 +51,16 @@ environment "config.plugins = [ :forgeos_core, :forgeos_cms, :all ]"
 gem 'acts-as-taggable-on', :source => 'http://gemcutter.org'
 gem 'desert' 
 append_file 'Rakefile', "require 'desert'"
+run 'cp vendor/plugins/forgeos_core/config/attachments.example.yml config/attachments.yml'
 
 route 'map.routes_from_plugin(:forgeos_cms)'
 route 'map.routes_from_plugin(:forgeos_core)'
 route 'map.routes_from_plugin(:forgeos_commerce)'
-route "map.root :controller => 'url_catcher', :action => 'page', :url => 'home'"
+route "map.root :controller => 'url_catcher', :action => 'page', :url => 'index'"
 
 rake 'db:create'
-rake 'gems:install'
+rake 'gems:install', :sudo => true
 rake 'forgeos:commerce:install'
 
 run 'rm -rf config/locales/* public/index.html'
-run 'cp vendor/plugins/forgeos_core/config/attachments.example.yml config/attachments.yml'
 log 'Now you can happily run ./script/server and got with you favorite browser to http://localhost:3000/'
