@@ -10,6 +10,7 @@ resources :products
 resources :packs, :controller => :products
 resources :addresses
 resources :orders
+cart '/cart', :controller => 'cart'
 
 # catalog routes
 catalog '/catalog/:category_name/:url', :controller => 'catalog', :action => 'index', :url => nil
