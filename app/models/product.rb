@@ -154,13 +154,36 @@ class Product < ActiveRecord::Base
     if product_type
       product_type.product_attributes.each do |attribute|
         self.class_eval <<DEF
-        def #{attribute.access_method}
+        def #{attribute.access_method}(method=:name)
           attribute = Attribute.find(#{attribute.id})
           if attribute.dynamic?
             attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
             attribute_value ? attribute_value.value : nil
           else
-            attribute_values.find_all_by_attribute_id(attribute.id).collect(&:name)
+            values = attribute_values.find_all_by_attribute_id(attribute.id)
+            value = method ? values.map(&method.to_sym) : values
+            return case attribute 
+            when RadiobuttonAttribute, PicklistAttribute
+              value.first
+            else
+              value
+            end
+          end
+        end
+        def #{attribute.access_method}=(new_value)
+          attribute = Attribute.find(#{attribute.id})
+          if attribute.dynamic?
+            if attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
+              attribute_value.update_attribute(:value,new_value)
+            else
+              self.dynamic_attribute_values.create(:value => new_value, :attribute_id => attribute.id)
+            end
+          else
+            self.attribute_values = AttributeValue.find_all_by_attribute_id(
+              attribute.id,
+              :joins => :globalize_translations,
+              :conditions => { :attribute_value_translations => { :name => [new_value].flatten } }
+            )
           end
         end
 DEF
