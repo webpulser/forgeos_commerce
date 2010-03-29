@@ -30,6 +30,11 @@ class Admin::TransporterRulesController < Admin::BaseController
   
   def new
   end
+  
+  def duplicate
+    @transporter = @transporter.clone
+    render :action => 'new'
+  end
 
   def create
     result = true
@@ -233,16 +238,15 @@ class Admin::TransporterRulesController < Admin::BaseController
       end
       rules.sort
     end
-
     
-  def get_product_types
-     @product_types = ProductType.all(:include => :globalize_translations , :order => 'product_type_translations.name' ).collect{|c| [c.name, c.id]}
-   end
+    def get_product_types
+      @product_types = ProductType.all(:include => :globalize_translations , :order => 'product_type_translations.name' ).collect{|c| [c.name, c.id]}
+    end
 
-   def get_geo_zones
-     @geo_zones = GeoZone.all( :order => :printable_name ).collect{|c| [c.name, c.id]}
-   end
-   
+    def get_geo_zones
+      @geo_zones = GeoZone.all( :order => :printable_name ).collect{|c| [c.name, c.id]}
+    end
+      
     def get_delivery_type
       db_delivery_type = @transporter.conditions.split('.')[1]
 
