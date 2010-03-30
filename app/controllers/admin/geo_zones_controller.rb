@@ -1,6 +1,6 @@
 # This Controller Manage GeoZones
 class Admin::GeoZonesController < Admin::BaseController
-  before_filter :new_geo_zone, :only => [:create, :new]
+  before_filter :new_geo_zone, :only => [:create, :new, :add_element]
   before_filter :get_geo_zone, :except => [:create, :new, :index]
   
   # List GeoZones like a Tree.
@@ -24,6 +24,10 @@ class Admin::GeoZonesController < Admin::BaseController
       flash[:error] = I18n.t('geo_zone.create.failed').capitalize
     end
     render :action => 'new', :layout => false
+  end
+  
+  def add_element
+    render :text => @geo_zone.update_attribute(:transporter_rule_ids, @geo_zone.transporter_rule_ids << params[:element_id].to_i)
   end
 
   # Edit a GeoZone
