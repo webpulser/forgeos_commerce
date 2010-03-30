@@ -67,12 +67,13 @@ class Admin::TransporterRulesController < Admin::BaseController
     result = true
     parent_transporter_deleted = false
     @parent_id = @transporter.id
-
+    @transporter.update_attributes(params[:transporter_rule])
     # Get rules to delete
     @transporters_to_delete = params[:shipping_methods_to_delete]
     unless @transporters_to_delete.nil?
       @transporters_to_delete.each do |item_id|
           transporter = TransporterRule.find_by_id(item_id)
+
           if transporter == @transporter
             parent_transporter_deleted = true
             @transporter_name = transporter.name
@@ -252,9 +253,7 @@ class Admin::TransporterRulesController < Admin::BaseController
 
       if parent_transporter_deleted && shipping_method == @shipping_methods.first
         @parent_id = new_shipping_method.id
-        new_shipping_method.update_attribute(:name, @transporter_name)
-        new_shipping_method.update_attribute(:description, @transporter_description)
-        new_shipping_method.update_attribute(:parent_id, nil)
+        new_shipping_method.update_attributes(:name, @transporter_name, :description => @transporter_description,:parent_id => nil)
       end
       
     end
