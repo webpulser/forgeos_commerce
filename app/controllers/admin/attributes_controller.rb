@@ -34,7 +34,7 @@ class Admin::AttributesController < Admin::BaseController
   def create
     if @attribute.save
       flash[:notice] = I18n.t('attribute.create.success').capitalize
-      return redirect_to(admin_attributes_path)
+      redirect_to edit_admin_attribute_path(@attribute)
     else
       flash[:error] = I18n.t('attribute.create.failed').capitalize
       render :action => :new
@@ -50,11 +50,10 @@ class Admin::AttributesController < Admin::BaseController
   def update
     if @attribute.update_attributes(params[:attribute])
       flash[:notice] = I18n.t('attribute.update.success').capitalize
-      return redirect_to(admin_attributes_path)
     else
       flash[:error] = I18n.t('attribute.update.failed').capitalize
-      render :action => :edit
     end
+    render :action => :edit
   end
 
   # Destroy an attribute

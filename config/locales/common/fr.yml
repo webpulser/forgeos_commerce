@@ -81,7 +81,7 @@ fr:
   confirm_remove_product: 'êtes-vous sûr de vouloir supprimer ce produit de votre panier ?'
   type: type
   your_account: 'votre compte'
-  cancel: annuler
+  cancel: retour
   unaccessible_function: 'fonction inaccessible'
   my_informations: 'mes informations'
   my_cart: 'mon panier'
@@ -132,8 +132,8 @@ fr:
   name: nom
   email: email
   back_to_catalog: 'retour au catalogue'
-  save: sauvegarder
-  save_changes: 'sauvegarder'
+  save: sauver
+  save_changes: sauver
   list: lister
   civility:
     one: civilité

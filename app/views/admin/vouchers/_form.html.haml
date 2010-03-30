@@ -12,9 +12,7 @@
   .backgrounds.big-header
     = text_field 'rule_builder', 'name', :id => 'special_offer_title', :class => 'field_name'
     .interact-links
-      = fg_submit_tag ('save_changes')
-      = I18n.t(:or)
-      =link_to I18n.t(:cancel).capitalize,{:action => 'index'}, :class => 'back-link'
+      = Forgeos_save_buttons admin_vouchers_path
 
   #content.grid_12.omega.special_offers
     .inner-content

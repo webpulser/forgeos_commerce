@@ -7,7 +7,7 @@
       [
         content_tag(:div, "&nbsp;", :id => link_id, :class => 'small-icons transporters'),
         #content_tag(:div, link_to(transporter.name, [:admin, transporter]), :class => 'tranporter-name'),
-        content_tag(:div, link_to(transporter.name, admin_transporter_path(transporter)), :class => 'tranporter-name'),
+        content_tag(:div, link_to(transporter.name, edit_admin_transporter_path(transporter)), :class => 'tranporter-name'),
         link_to_remote('', :url => activate_admin_transporter_path(transporter),
          :complete => "toggleActivate('#show_#{link_id}')",
          :html => {

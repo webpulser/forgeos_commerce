@@ -1,0 +1,21 @@
+- f.fields_for :sizes do |s|
+  %table
+    %thead
+      %tr
+        %th
+          Nom
+        %th
+          Stock
+        %th
+          Afficher
+    %tbody
+      - product.sizes.each do |size|
+        %tr
+          %td
+            = s.text_field :size, :value => size.size
+          %td
+            = s.text_field :quantity, :value => size.quantity
+          %td
+            visible
+            = link_to 'supprimer', '#'
+  = link_to 'add a size', '#'

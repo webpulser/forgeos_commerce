@@ -2,9 +2,7 @@
   .backgrounds.big-header
     = f.text_field :name, :class => 'field_name'
     .interact-links
-      = fg_submit_tag 'save_changes'
-      = t('or')
-      = link_to t('cancel').capitalize, admin_product_types_path, :class => 'back-link'
+      = Forgeos_save_buttons admin_product_types_path
 
   #content.grid_12.alpha.omega
     .grid_12.alpha

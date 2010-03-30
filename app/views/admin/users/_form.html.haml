@@ -4,9 +4,7 @@
     = f.text_field :firstname, :title => I18n.t('firstname'), :class => 'defaultValue field_name lastname'
     = f.text_field :lastname, :title => I18n.t('lastname'), :class => 'defaultValue field_name firstname'
     .interact-links
-      = submit_tag t('save_changes').capitalize, :class => 'backgrounds interact-button'
-      = t('or')
-      = link_to t('cancel').capitalize, admin_users_path, :class => 'back-link'
+      = Forgeos_save_buttons admin_users_path
 
   #content.grid_16.alpha.omega
     #customer-see.grid_12.alpha.omega
