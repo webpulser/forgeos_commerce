@@ -1,9 +1,8 @@
 class WishlistController < ApplicationController
   before_filter :login_required, :only => [:send_to_friend]
-  before_filter :get_wishlist
   # Show <i>Wishlist</i>
   def index
-    flash[:notice] = I18n.t(:your_wishlist_is_empty).capitalize if @wishlist.is_empty?
+    flash[:notice] = I18n.t(:your_wishlist_is_empty).capitalize if current_wishlist.is_empty?
   end
 
   # Add a <i>Product</i> in <i>Wishlist</i>
@@ -12,7 +11,7 @@ class WishlistController < ApplicationController
   # * <tt>:id</tt> - a <i>Product</i> object
   def add_product
     reset_order_session
-    flash[:notice] = I18n.t(:product_added).capitalize if get_wishlist.add_product_id(params[:id])
+    flash[:notice] = I18n.t(:product_added).capitalize if current_wishlist.add_product_id(params[:id])
     redirect_or_update
   end
 
@@ -20,7 +19,7 @@ class WishlistController < ApplicationController
   #
   def empty
     reset_order_session
-    get_wishlist.to_empty
+    current_wishlist.to_empty
     flash[:notice] = I18n.t(:wishlist_is_empty).capitalize
     redirect_or_update
   end
@@ -31,7 +30,7 @@ class WishlistController < ApplicationController
   # * <tt>:id</tt> - a <i>Product</i> object
   def remove_product
     reset_order_session
-    flash[:notice] = I18n.t(:product_has_been_remove).capitalize if @wishlist.remove_product_id(params[:id])
+    flash[:notice] = I18n.t(:product_has_been_remove).capitalize if current_wishlist.remove_product_id(params[:id])
     redirect_or_update
   end
 
@@ -44,11 +43,11 @@ class WishlistController < ApplicationController
   # * <tt>:quantity</tt> - a <i>Product</i> object
   def update_quantity
     reset_order_session
-    @wishlist.set_quantity Product.find(params[:product_id]), params[:quantity]
+    current_wishlist.set_quantity Product.find(params[:product_id]), params[:quantity]
 
     if request.xhr?
       render(:update) do |page|
-        page.replace_html("forgeos_commerce_wishlist_products", display_wishlist_all_products_lines(@wishlist, false, params[:mini]))
+        page.replace_html("forgeos_commerce_wishlist_products", display_wishlist_all_products_lines(current_wishlist, false, params[:mini]))
         page.replace_html("forgeos_commerce_wishlist_link", link_to_wishlist)
         page.visual_effect :pulsate, 'forgeos_commerce_wishlist_link'
         page.visual_effect :highlight, 'forgeos_commerce_wishlist'
@@ -62,8 +61,8 @@ class WishlistController < ApplicationController
   end
 
   def send_to_friend
-    if request.post? && @wishlist = Wishlist.find_by_id(session[:wishlist_id])
-      UserMailer.deliver_wishlist(current_user,params[:email], @wishlist)
+    if request.post? && current_wishlist = Wishlist.find_by_id(session[:wishlist_id])
+      UserMailer.deliver_wishlist(current_user,params[:email], current_wishlist)
       return redirect_to_home
     end
     render :layout => false if request.xhr?
