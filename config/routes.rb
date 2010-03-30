@@ -32,7 +32,7 @@ map.namespace :admin do |admin|
     admin.resources "#{category}_categories", :controller => 'categories', :requirements => { :type => "#{category}_category" }
   end
   map.connect "admin/transporter_categories.json", :controller => 'admin/transporter_rules', :action => 'categories'
-  admin.resources :geo_zones
+  admin.resources :geo_zones, :member => { :add_element => :post }
   admin.resources :countries, :controller => 'geo_zones'
 
   admin.resources :attributes, :collection => { :access_method => :post }, :member => { :duplicate => :get}

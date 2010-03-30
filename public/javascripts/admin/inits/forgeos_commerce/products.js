@@ -89,4 +89,52 @@ jQuery(document).ready(function(){
     open: function(){ $('#table-files').dataTableInstance().fnDraw(); }
   });
 
+$('.add_a_size').live('click', function(){
+    var itemInTable = $('#product_sizes tbody tr').length;
+    
+    var new_tr = '';
+    new_tr += '<tr>'
+      new_tr += '<td>'
+        new_tr += '<input type="text" name="product[sizes_attributes]['+itemInTable+'][size]" />'
+      new_tr += '</td>'
+      new_tr += '<td>'
+        new_tr += '<input type="text" name="product[sizes_attributes]['+itemInTable+'][quantity]" />'
+      new_tr += '</td>'
+      new_tr += '<td>'
+        new_tr += 'visible'
+      new_tr += '</td>'
+      new_tr += '<td>'
+        new_tr += '<input type="hidden" name="product[sizes_attributes]['+itemInTable+'][id]" />'
+        new_tr += '<input type="hidden" name="product[sizes_attributes]['+itemInTable+'][_destroy]" />'
+        new_tr += '<input type="hidden" name="product[sizes_attributes]['+itemInTable+'][position]" />'
+        new_tr += '<a href="#" class="remove_this_size">supprimer</a>'
+      new_tr += '</td>'
+    new_tr += '</tr>'
+     
+    $('#product_sizes').append(new_tr);  
+  }); 
+  
+  $('.remove_this_size').live('click', function(){
+    var block = $(this).parents('tr');
+    if (parseInt(get_rails_element_id(block.find('input:first'))) < 0) {
+      console.info('- 0')
+      block.remove();
+    } else {
+      console.info('+0')
+      block.hide();
+      block.find('.delete').val(1);
+    }
+    return false;
+  });
+  
+  $('#product_sizes tr').sortable({
+    handle:'.handler',
+    placeholder: 'ui-state-highlight',
+    stop:function(event,ui){
+      console.info('hi');
+    }
+  });
+  
+  $('#product_sizes').dataTable();
+      
 });

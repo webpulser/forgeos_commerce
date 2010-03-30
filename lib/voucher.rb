@@ -13,9 +13,6 @@ class Voucher < Ruleby::Rulebook
           product = context[:pack] 
         end
         
-        logger.debug product
-        
-        
         @cart.voucher = voucher.id
                  
         # Voucher for a free product

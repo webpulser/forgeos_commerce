@@ -47,10 +47,11 @@ class Admin::ProductsController < Admin::BaseController
   def update
     if @product.update_attributes(params[:product]) && manage_dynamic_attributes
       flash[:notice] = I18n.t('product.update.success').capitalize
+      redirect_to edit_admin_product_path(@product)
     else
       flash[:error] = I18n.t('product.update.failed').capitalize
+      render :action => 'edit'
     end
-    render :action => 'edit'
   end
 
   # Destroy a Product
