@@ -52,7 +52,7 @@ class UsersController < ApplicationController
       
       PersonSession.create(@user, true)
       flash[:notice] = I18n.t('account_creation_ok').capitalize
-      get_cart
+      current_cart
       if redirect = session[:redirect]
         session[:redirect] = nil
         redirect_to(redirect)

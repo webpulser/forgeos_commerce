@@ -2,9 +2,9 @@
   .product-list
     = step_order(1)
   .cart-step-content
-    - unless @cart.is_empty?
-      /= display_cart(@cart)
-      - if @cart.is_empty?
+    - unless current_cart.is_empty?
+      /= display_cart(current_cart)
+      - if current_cart.is_empty?
         Il n'y a aucun produit dans votre panier !
       - else
         %table.products_in_cart
@@ -15,7 +15,7 @@
               %th= t(:quantity, :count => 1)
               %th= t(:total)
           %tbody
-            -@cart.carts_products.group_by(&:product_id).each do |cart_product|
+            -current_cart.carts_products.group_by(&:product_id).each do |cart_product|
             -product = cart_product[1].first.product
             -nb = cart_product[1].size
               %tr
@@ -28,7 +28,7 @@
                   = number_with_precision(nb*product.price,2)
                   = $currency.html
       .total-div
-        -@cart.carts_products.each do |carts_product|
+        -current_cart.carts_products.each do |carts_product|
           -unless carts_product.product.special_offer_discount.nil?
             %span.total-label
               ="Promo #{carts_product.product.name} #{carts_product.product.special_offer_discount}"
@@ -42,20 +42,20 @@
             ="Free product : #{product.name}"
           %span.total-price
             Free
-        - if @cart.special_offer_discount
+        - if current_cart.special_offer_discount
           %span.total-label
             Offre spécial
           %span.total-price
-            = @cart.special_offer_discount
+            = current_cart.special_offer_discount
         %span.total-label.last
           Prix total
         %span.total-price.last#cart_total
-          = number_with_precision(@cart.total,2)
+          = number_with_precision(current_cart.total,2)
           = $currency.html
       .clear
       #voucher_message
-        - if @cart.voucher
-          -voucher = VoucherRule.find_by_id(@cart.voucher)
+        - if current_cart.voucher
+          -voucher = VoucherRule.find_by_id(current_cart.voucher)
           = "With voucher code #{voucher.code} : #{voucher.name}" unless voucher.nil?
       = display_voucher
       .link_order

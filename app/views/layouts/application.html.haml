@@ -33,18 +33,18 @@
               - form_tag(:controller => 'search') do
                 = text_field_tag 'keywords', '', :class => 'input_text'
                 = submit_tag t('front.search').capitalize, :class => 'btn_ok'
-          -if !@cart.nil?
+          -if !current_cart.nil?
             .cart-box
               = link_to t('my_account_login').capitalize, login_path if !logged_in?
               .cart-icon
                 %span= link_to_cart(t('my_cart').capitalize)
                 %br
-                = "#{@cart.total_items} article(s)" if !@cart.nil?
-                - if @cart.products.length > 0
+                = "#{current_cart.total_items} article(s)" if !current_cart.nil?
+                - if current_cart.products.length > 0
                   %span.opener
-              - if @cart.products.length > 0
+              - if current_cart.products.length > 0
                 %ul.cart-products
-                  -@cart.products.group_by(&:id).each do |cart_product|
+                  -current_cart.products.group_by(&:id).each do |cart_product|
                     -product = cart_product[1].first
                     -nb = cart_product[1].size
                     %li
@@ -57,7 +57,7 @@
                   %li.last
                     %span.li-product-name= t(:total)
                     %span.li-product-qty
-                      = number_with_precision(@cart.total,2)
+                      = number_with_precision(current_cart.total,2)
                       = $currency.html
           .create-customer-space
             -if logged_in?

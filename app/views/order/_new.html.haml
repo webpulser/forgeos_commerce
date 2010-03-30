@@ -15,7 +15,7 @@
       = link_to_remote('ajouter une adresse', :url => { :controller => 'order', :action => 'add_address' })
   .clear
   %br
-  - if @cart.free_shipping
+  - if current_cart.free_shipping
     = "La livraison est offerte !"
   - else
     = display_transporters
@@ -25,7 +25,7 @@
     .total-label
       Prix Total du panier
     #transporter_price.total-price
-      = number_with_precision(@cart.total,2)
+      = number_with_precision(current_cart.total,2)
       = $currency.html
   .clear
   %br
