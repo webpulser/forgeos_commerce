@@ -1,5 +1,5 @@
-- unless @wishlist.is_empty?
-  = display_wishlist(@wishlist)
+- unless current_wishlist.is_empty?
+  = display_wishlist(current_wishlist)
   .link_empty
     = link_to_wishlist_empty
   .link_send

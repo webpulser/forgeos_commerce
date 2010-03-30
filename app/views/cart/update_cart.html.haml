@@ -1,4 +1,4 @@
-= display_cart(@cart, false, true)
+= display_cart(current_cart, false, true)
 - javascript_tag do
   - render(:update) do |page|
     = page.replace_html("forgeos_commerce_cart_link", link_to_cart)

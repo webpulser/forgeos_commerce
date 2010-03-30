@@ -12,7 +12,6 @@ class Cart < ActiveRecord::Base
   has_many :products, :through => :carts_products
   
   belongs_to :user
-  before_save :destroy_duplicates
   
   # Add a <i>product</i> in this cart
   #
@@ -25,10 +24,6 @@ class Cart < ActiveRecord::Base
     carts_products << CartsProduct.create(:product_id => product.id)
   end
 
-  def destroy_duplicates
-    Cart.destroy_all(:user_id => user_id) unless user_id.nil?
-  end
-  
   # Add a <i>product</i> in this cart
   #
   # Returns false if <i>product</i> is <i>nil</i> or not recorded

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-  before_filter :set_currency, :get_cart, :get_wishlist
-
+  before_filter :set_currency
+  helper_method :current_cart, :current_wishlist
   # Change the currency
   def change_currency(currency_id)
     # TODO - move this method in an appriate class or module.
@@ -15,37 +15,28 @@ private
   # Generate a cart and save this in session and instance <i>@cart</i>.
   #
   # If <i>session[:cart_id]</i> existing, this method instance just <i>@cart</i>
-  def get_cart
-    return redirect_to(admin_root_path) if current_user.is_a?(Administrator)
-    session[:cart_id] = current_user.cart.id if session[:cart_id].nil? && logged_in? && current_user.cart
-    session[:cart_id] = Cart.create.id if session[:cart_id].nil?
+  def current_cart
+    session[:cart_id] = current_user.cart.id if session[:cart_id].nil? && logged_in? && !current_user.is_a?(Administrator) && current_user.cart
     @cart = Cart.find_by_id(session[:cart_id])
-    # If @cart is nil because a problem of session or db.
+    # If current_cart is nil because a problem of session or db.
     # This recursive call method, risk of stack error if this problem persist.
     if @cart.nil?
-      session[:cart_id] = nil
-      get_cart
+      @cart = Cart.create
+      session[:cart_id] = @cart.id
     end
     # Associate cart with user if he's logged
-    @cart.update_attribute(:user_id, current_user.id) if logged_in? && @cart.user_id != current_user.id
+    @cart.update_attribute(:user_id, current_user.id) if logged_in?
     return @cart
   end
 
-  # Generate a wishlist and save this in session and instance <i>@wishlist</i>.
-  #
-  # If <i>session[:wishlist_id]</i> existing, this method instance just <i>@wishlist</i>
-  def get_wishlist
-    session[:wishlist_id] = current_user.wishlist.id if session[:wishlist_id].nil? && logged_in? && current_user.wishlist
-    session[:wishlist_id] = Wishlist.create.id if session[:wishlist_id].nil?
+  def current_wishlist
+    session[:wishlist_id] = current_user.wishlist.id if session[:wishlist_id].nil? && logged_in? && !current_user.is_a?(Administrator) && current_user.wishlist
     @wishlist = Wishlist.find_by_id(session[:wishlist_id])
-    # If @wishlist is nil because a problem of session or db.
-    # This recursive call method, risk of stack error if this problem persist.
     if @wishlist.nil?
-      session[:wishlist_id] = nil
-      get_wishlist
+      @wishlist = Wishlist.create
+      session[:wishlist_id] = @wishlist.id
     end
-    # Associate wishlist with user if he's logged
-    @wishlist.update_attribute(:user_id, current_user.id) if logged_in? && @wishlist.user_id != current_user.id
+    @wishlist.update_attribute(:user_id, current_user.id) if logged_in?
     return @wishlist
   end
 

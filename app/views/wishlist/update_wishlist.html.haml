@@ -1,4 +1,4 @@
-= display_cart(@wishlist, false, true)
+= display_cart(current_wishlist, false, true)
 - javascript_tag do
   - render(:update) do |page|
     = page.replace_html("forgeos_commerce_wishlist_link", link_to_wishlist)

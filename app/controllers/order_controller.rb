@@ -10,7 +10,6 @@ class OrderController < ApplicationController
   include Ruleby
   
   before_filter :can_create_order?, :only => :create
-  before_filter :get_cart, :only => [:new,:informations,:paye, :update_transporter, :add_voucher]
   before_filter :special_offer, :only => [:new, :create, :update_transporter]
   before_filter :voucher, :only =>[:new, :create, :update_transporter]
   before_filter :shipping_methods, :only => :new
@@ -33,7 +32,7 @@ class OrderController < ApplicationController
     session[:transporter_rule_id] = params[:transporter_rule_id] if params[:transporter_rule_id]
     @transporter = TransporterRule.find_by_id(session[:transporter_rule_id])
 
-    unless @transporter or @cart.free_shipping
+    unless @transporter or current_cart.free_shipping
       flash[:warning] = I18n.t('shipping_method',:count=>1).capitalize
       redirect_to(:action => 'new')
       return false
@@ -73,7 +72,7 @@ class OrderController < ApplicationController
     address_invoice = @address_invoice
     address_delivery = @address_delivery
     #shipping_method = @shipping_method
-    if @cart.free_shipping
+    if current_cart.free_shipping
       transporter_name = "Free shipping"
       transporter_price = 0
     else
@@ -106,10 +105,10 @@ class OrderController < ApplicationController
         :designation => 'toto'
         },      
       :order_shipping_attributes => { :name => transporter_name, :price =>  transporter_price},
-      :reference              => @cart.id,
-      :voucher_discount => @cart.voucher_discount_price,
-      :special_offer_discount => @cart.special_offer_discount_price,
-      :order_details_attributes => @cart.carts_products.collect do |cart_product|
+      :reference              => current_cart.id,
+      :voucher_discount => current_cart.voucher_discount_price,
+      :special_offer_discount => current_cart.special_offer_discount_price,
+      :order_details_attributes => current_cart.carts_products.collect do |cart_product|
         {
           :name => cart_product.product.name,
           :description => cart_product.product.description,
@@ -130,7 +129,7 @@ class OrderController < ApplicationController
       @order.order_details.create!(:name => product.name, :description => product.description, :price => 0, :rate_tax => 0, :sku => product.sku, :product_id => product.id, :discount => "free product", :discount_price => 0)
     end
     session.delete(:voucher_code) if session[:voucher_code]
-    @cart.destroy
+    current_cart.destroy
     flash[:notice] = I18n.t('thank_you').capitalize
     session[:order_confirmation] = @order.id
     redirect_to(:action => 'payment')
@@ -152,11 +151,11 @@ class OrderController < ApplicationController
     end
         
     
-    order_total = @cart.total + transporter_price
+    order_total = current_cart.total + transporter_price
 
     render(:update) do |page|
       #page.replace_html('order_total_price', "#{order_total} #{$currency.html}")
-      page.replace_html('transporter_price', "#{@cart.total + transporter_price} #{$currency.html}")
+      page.replace_html('transporter_price', "#{current_cart.total + transporter_price} #{$currency.html}")
       page.visual_effect :highlight, 'transporter_price'
       page.visual_effect :highlight, 'order_total_price'
     end
@@ -215,8 +214,8 @@ class OrderController < ApplicationController
 
 private
   def can_create_order?
-    @cart = Cart.find_by_id(session[:cart_id])
-    if @cart.nil? || @cart.carts_products.empty?
+    current_cart = Cart.find_by_id(session[:cart_id])
+    if current_cart.nil? || current_cart.carts_products.empty?
       flash[:error] = I18n.t('your_cart_is_empty').capitalize
       redirect_to_home
     end
@@ -239,14 +238,14 @@ private
   def special_offer
     engine :special_offer_engine do |e|
       rule_builder = SpecialOffer.new(e)
-      rule_builder.cart = @cart
+      rule_builder.cart = current_cart
       @free_product_ids = []
       rule_builder.free_product_ids = @free_product_ids
       rule_builder.rules
-      @cart.carts_products.each do |cart_product|
+      current_cart.carts_products.each do |cart_product|
         e.assert cart_product.product
       end
-      e.assert @cart
+      e.assert current_cart
       e.match
     end
   end
@@ -255,14 +254,14 @@ private
   def voucher
     engine :voucher_engine do |e|
       rule_builder = Voucher.new(e)
-      rule_builder.cart = @cart
+      rule_builder.cart = current_cart
       rule_builder.code = session[:voucher_code]
       rule_builder.free_product_ids = @free_product_ids
       rule_builder.rules
-      @cart.carts_products.each do |cart_product|
+      current_cart.carts_products.each do |cart_product|
         e.assert cart_product.product
       end
-      e.assert @cart
+      e.assert current_cart
       e.match
     end
   end
@@ -278,10 +277,10 @@ private
         rule_builder = Transporter.new(e)
         rule_builder.transporter_ids = @transporter_ids
         rule_builder.rules
-        @cart.carts_products.each do |cart_product|
+        current_cart.carts_products.each do |cart_product|
           e.assert cart_product.product
         end
-        e.assert @cart
+        e.assert current_cart
         e.match
       end
 

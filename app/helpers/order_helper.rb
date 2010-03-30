@@ -132,6 +132,11 @@ module OrderHelper
       content += '<div class="address_city">'
         content += "#{address.zip_code} #{address.city}"
       content += '</div>'
+      if address.country && address.country.respond_to?('printable_name')
+        content += '<div class="address_country">'
+          content += "#{address.country.printable_name}"
+        content += '</div>'
+      end
       content += "<div class='filters'>"
         if multiple_addresses
           content +="<div class='enhanced'>"

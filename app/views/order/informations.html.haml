@@ -5,7 +5,7 @@
     - if logged_in?
       = render :partial => 'users/edit_form'
     - else
-      -session[:redirect] = "/order/new"
+      -session[:return_to] = "/order/new"
       #login
         = render :partial => 'person_sessions/new_form'
       .order-separation
