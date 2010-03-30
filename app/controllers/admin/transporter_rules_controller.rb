@@ -1,8 +1,10 @@
 class Admin::TransporterRulesController < Admin::BaseController
 
   before_filter :new_transporter, :only => [:new, :create]
-  before_filter :get_transporter, :only => [ :show, :edit, :update, :destroy ]
+  before_filter :get_transporter, :only => [ :show, :edit, :update, :destroy, :duplicate ]
   before_filter :get_rules, :only => [ :show, :edit ]
+  before_filter :get_product_types, :only => [ :new, :create, :show, :edit, :duplicate ]
+  before_filter :get_geo_zones, :only => [ :new, :create, :show, :edit, :duplicate ]
 
   def index
     respond_to do |format|
@@ -18,7 +20,7 @@ class Admin::TransporterRulesController < Admin::BaseController
     respond_to do |format|
       format.json do
         # list categories like a tree
-        render :json => GeoZone.find_all_by_parent_id(nil).collect(&:to_jstree).to_json
+        render :json => GeoZone.find_all_by_parent_id(nil).collect{ |g| g.to_jstree(:transporter_rules)}.to_json
       end
     end
   end
@@ -27,6 +29,11 @@ class Admin::TransporterRulesController < Admin::BaseController
   end
   
   def new
+  end
+  
+  def duplicate
+    @transporter = @transporter.clone
+    render :action => 'new'
   end
 
   def create
@@ -232,7 +239,15 @@ class Admin::TransporterRulesController < Admin::BaseController
       end
       rules.sort
     end
+    
+    def get_product_types
+      @product_types = ProductType.all(:include => :globalize_translations , :order => 'product_type_translations.name' ).collect{|c| [c.name, c.id]}
+    end
 
+    def get_geo_zones
+      @geo_zones = GeoZone.all( :order => :printable_name ).collect{|c| [c.name, c.id]}
+    end
+      
     def get_delivery_type
       db_delivery_type = @transporter.conditions.split('.')[1]
 
@@ -267,16 +282,17 @@ class Admin::TransporterRulesController < Admin::BaseController
       per_page = params[:iDisplayLength].to_i
       offset =  params[:iDisplayStart].to_i
       page = (offset / per_page) + 1
-      order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+      order = "rules.#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
 
       options = {
+        :include => :geo_zones ,
         :conditions => { :parent_id => nil },
         :order => order,
         :page => page,
         :per_page => per_page
       }
       
-      options[:conditions] = ['conditions LIKE ?', '%m.geo_zone_id.==('+params[:category_id]+')%'] if params[:category_id]
+      options[:conditions] = ['geo_zones_transporter_rules.geo_zone_id = ?', params[:category_id]] if params[:category_id]
             
       if params[:sSearch] && !params[:sSearch].blank?
         @transporters = TransporterRule.search(params[:sSearch],options)

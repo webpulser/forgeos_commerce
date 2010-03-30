@@ -80,6 +80,27 @@ class Admin::VouchersController < Admin::BaseController
         rule_parent = @rule if index == 0
       end
     end
+    
+    # TODO : Update this ugly patch for vouchers to work with packs
+    if params[:rule_builder]['for'] == 'Product'
+      params[:rule_builder]['for'] = 'Pack'
+      params[:rule][:targets].each_with_index do |rule_target, index|
+        @rule_condition = []
+        @rule_condition << params[:rule_builder]['for'] << ':pack'
+        @rule = VoucherRule.new
+        @rule.parent = rule_parent
+        @rule.name = params[:rule_builder][:name]
+        @rule.code = params[:voucher_code]
+        @rule.description = params[:rule_builder][:description]
+          
+        build_a_rule(rule_target, index)
+        
+        @rule.conditions = "[#{@rule_condition.join(', ')}]" 
+        @rule.variables = variables
+        @rule.save
+        rule_parent = @rule if index == 0
+      end
+    end
     redirect_to :action => 'index'
   end
   
@@ -105,11 +126,17 @@ class Admin::VouchersController < Admin::BaseController
       end
     end
 
+    
+=begin
+     TODO : find why it was written like this 
+    
     if params[:rule][:values][index].to_i == 0
-      value = "'#{params[:rule][:values][index]}'"
+      #value = "'#{params[:rule][:values][index]}'"
     else
-      value = params[:rule][:values][index]
+      #value = params[:rule][:values][index]
     end
+=end
+    value = params[:rule][:values][index].to_i
     @rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
   end
 

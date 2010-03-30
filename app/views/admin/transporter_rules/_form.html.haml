@@ -2,8 +2,6 @@
 - @conditions_is = Hash[ I18n.t('conditions.is'), "==", I18n.t('conditions.is_not'), "not==" ]
 - @conditions =  Hash[ I18n.t('conditions.is_not'), "not==", I18n.t('conditions.is_equals_or_greater_than'), ">=", I18n.t('conditions.is_equals_or_less_than'), "<=", I18n.t('conditions.is_greater_than'), ">", I18n.t('conditions.is_less_than'), "<" ]
 - @delivery_types = Hash[ I18n.t('shipping_method.rule.type.weight').capitalize, 'weight'] #I18n.t('shipping_method.rule.type.geographic_zone').capitalize, 'geo_zone', #I18n.t('shipping_method.rule.type.product_type').capitalize, 'product_type', #I18n.t('shipping_method.rule.type.product').capitalize, 'product' ]
-- @product_types = ProductType.all( :order => :name ).collect{|c| [c.name, c.id]}
-- @geo_zones = GeoZone.all( :order => :printable_name ).collect{|c| [c.name, c.id]}
 
 = render :partial => 'tabs'
 - form_for [:admin, transporter], :html => { :id => 'wrap' } do |f|

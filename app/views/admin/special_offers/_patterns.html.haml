@@ -94,7 +94,7 @@
     %p{:class => "rule-#{attribute.delete " "} pattern"}
       %span= select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes, :selected => attribute}),{ :onchange => "change_rule(this,'rule-condition')" }
       %span= select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
-      -if Attribute.find_by_name(attribute).dynamic
+      -if Attribute.find_by_name(attribute) && Attribute.find_by_name(attribute).dynamic
         = text_field_tag 'rule[values][]'
       -else
         %span= select_tag 'rule[values][]', options_for_select(Attribute.find_by_name(attribute).attribute_values.collect(&:name))
