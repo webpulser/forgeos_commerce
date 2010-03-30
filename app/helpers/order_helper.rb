@@ -120,6 +120,7 @@ module OrderHelper
   def display_address(address, multiple_addresses=true)
     return unless address
     content = '<div class="display_address" id="order_address_' + address.class.to_s + '">'
+      content += hidden_field_tag(address.class.to_s.gsub('', '').underscore + '_id',address.id)
       content += '<div class="address_name">'
         content += "#{address.name} #{address.firstname}"
       content += '</div>'
