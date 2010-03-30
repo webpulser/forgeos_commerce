@@ -1,3 +1,4 @@
+require File.join(Rails.plugins['forgeos_core'].directory,'app','models','user')
 class User < Person
   has_one :cart
   has_one :wishlist
