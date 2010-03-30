@@ -18,9 +18,7 @@ class CartController < ApplicationController
   def add_product
     reset_order_session
     if params[:quantity]
-      params[:quantity].to_i.times do 
-        flash[:notice] = t(:product_added).capitalize if current_cart.add_product_id(params[:id])
-      end
+      flash[:notice] = t(:product_added).capitalize if current_cart.add_product_id(params[:id],params[:quantity].to_i)
     else
       flash[:notice] = t(:product_added).capitalize if current_cart.add_product_id(params[:id])
     end 
@@ -44,7 +42,7 @@ class CartController < ApplicationController
   # * <tt>:id</tt> - a <i>Product</i> object
   def remove_product
     reset_order_session
-    flash[:notice] = t(:product_has_been_remove).capitalize if current_cart.remove_product(params[:id])
+    flash[:notice] = t(:product_has_been_remove).capitalize if current_cart.remove_product_id(params[:id])
     redirect_or_update
   end
 
@@ -57,7 +55,14 @@ class CartController < ApplicationController
   # * <tt>:quantity</tt> - a <i>Product</i> object
   def update_quantity
     reset_order_session
-    current_cart.set_quantity Product.find(params[:product_id]), params[:quantity]
+    cart_product = current_cart.carts_products.find_all_by_product_id(params[:product_id])
+    quantity = params[:quantity].to_i
+    old_quantity = cart_product.size
+    if old_quantity < quantity
+      current_cart.add_product_id(params[:product_id],quantity - old_quantity)
+    else
+      current_cart.remove_product_id(params[:product_id],old_quantity - quantity)
+    end
 
     if request.xhr?
       render(:update) do |page|
@@ -70,8 +75,6 @@ class CartController < ApplicationController
     else
       redirect_to(:action => 'index')
     end
-  rescue
-    redirect_to(:action => 'index')   
   end
   
   def add_voucher

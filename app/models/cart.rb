@@ -19,9 +19,9 @@ class Cart < ActiveRecord::Base
   #
   # ==== Parameters
   # * <tt>:product</tt> - a <i>Product</i> object
-  def add_product(product)
+  def add_product(product,quantity=nil)
     return false if product.nil? || product.new_record?
-    carts_products << CartsProduct.create(:product_id => product.id)
+    add_product_id(product.id,quantity)
   end
 
   # Add a <i>product</i> in this cart
@@ -31,19 +31,22 @@ class Cart < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:product_id</tt> - an <i>id</i> of a <i>Product</i>
   # This method use <i>add_product</i>
-  def add_product_id(product_id)
-    add_product(Product.find_by_id(product_id))
-  end
-
-  # Remove a product of this cart
-  def remove_product(product_id)
-    return false if carts_products.nil?
-    # destroy the product
-    cart_product = carts_products.find_all_by_product_id(product_id)
-    cart_product.each do |product|
-      product.destroy
+  def add_product_id(product_id,quantity=1)
+    quantity.times do 
+      carts_products << CartsProduct.create(:product_id => product_id)
     end
   end
+
+  def remove_product(product,quantity=nil)
+    remove_product_id(product.id,quantity)
+  end
+
+  def remove_product_id(product_id, quantity = 1)
+    return false if self.carts_products.nil?
+    cart_product = self.carts_products.find_all_by_product_id(product_id)
+    cart_product.first(quantity).map(&:destroy)
+  end
+
 
   # Empty this cart
   def to_empty
