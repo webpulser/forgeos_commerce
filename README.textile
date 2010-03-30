@@ -2,7 +2,7 @@ h1. ForgeosCommerce
 
 ForgeosCommerce is an extension of Ruby on Rails for e-commerce development 
 
-FORGEOS_COMMERCE_VERSION : 0.9.0
+VERSION : 0.9.0-rc2
 
 h1. Prerequisites
 
@@ -14,24 +14,8 @@ h2. Plugins
 h2. Initialize
 
   <pre><code>
-  $ ./script/generate migration install_forgeos_commerce_plugin
+  $ ./script/generate plugin_migration forgeos_commerce
   </code></pre>
-
-Edit the generated file like this :
-
-  <pre><code>
-  class InstallForgeosCommerce < ActiveRecord::Migration
-    def self.up
-      migrate_plugin :forgeos_commerce, LAST_MIGRATION
-    end
-
-    def self.down
-      migrate_plugin :forgeos_commerce, 0
-    end
-  end
-  </code></pre>
-
-Note: LAST_MIGRATION is the number of the last database migration of ForgeosCommerce.
 
 Launch FogeosCommerce Install :
 
@@ -40,4 +24,4 @@ Launch FogeosCommerce Install :
   </code></pre>
 
 
-Powered by [http://www.webpulser.com Webpulser]
+Powered by "Webpulser":http://www.webpulser.com
