@@ -16,8 +16,7 @@ private
   #
   # If <i>session[:cart_id]</i> existing, this method instance just <i>@cart</i>
   def current_cart
-    return redirect_to(admin_root_path) if current_user.is_a?(Administrator)
-    session[:cart_id] = current_user.cart.id if session[:cart_id].nil? && logged_in? && current_user.cart
+    session[:cart_id] = current_user.cart.id if session[:cart_id].nil? && logged_in? && !current_user.is_a?(Administrator) && current_user.cart
     @cart = Cart.find_by_id(session[:cart_id])
     # If current_cart is nil because a problem of session or db.
     # This recursive call method, risk of stack error if this problem persist.
@@ -26,24 +25,18 @@ private
       session[:cart_id] = @cart.id
     end
     # Associate cart with user if he's logged
-    @cart.update_attribute(:user_id, current_user.id) if logged_in? && current_cart.user_id != current_user.id
+    @cart.update_attribute(:user_id, current_user.id) if logged_in?
     return @cart
   end
 
-  # Generate a wishlist and save this in session and instance <i>@wishlist</i>.
-  #
-  # If <i>session[:wishlist_id]</i> existing, this method instance just <i>@wishlist</i>
   def current_wishlist
-    session[:wishlist_id] = current_user.wishlist.id if session[:wishlist_id].nil? && logged_in? && current_user.wishlist
+    session[:wishlist_id] = current_user.wishlist.id if session[:wishlist_id].nil? && logged_in? && !current_user.is_a?(Administrator && current_user.wishlist
     @wishlist = Wishlist.find_by_id(session[:wishlist_id])
-    # If @wishlist is nil because a problem of session or db.
-    # This recursive call method, risk of stack error if this problem persist.
     if @wishlist.nil?
       @wishlist = Wishlist.create
       session[:wishlist_id] = @wishlist.id
     end
-    # Associate wishlist with user if he's logged
-    @wishlist.update_attribute(:user_id, current_user.id) if logged_in? && @wishlist.user_id != current_user.id
+    @wishlist.update_attribute(:user_id, current_user.id) if logged_in?
     return @wishlist
   end
 
