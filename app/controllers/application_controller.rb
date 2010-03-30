@@ -30,7 +30,7 @@ private
   end
 
   def current_wishlist
-    session[:wishlist_id] = current_user.wishlist.id if session[:wishlist_id].nil? && logged_in? && !current_user.is_a?(Administrator && current_user.wishlist
+    session[:wishlist_id] = current_user.wishlist.id if session[:wishlist_id].nil? && logged_in? && !current_user.is_a?(Administrator) && current_user.wishlist
     @wishlist = Wishlist.find_by_id(session[:wishlist_id])
     if @wishlist.nil?
       @wishlist = Wishlist.create
