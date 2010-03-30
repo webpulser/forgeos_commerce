@@ -12,6 +12,7 @@ map.resources :products
 map.resources :packs, :controller => :products
 map.resources :addresses
 map.resources :orders
+map.cart '/cart', :controller => 'cart'
 
 # catalog routes
 map.catalog '/catalog/:category_name/:url', :controller => 'catalog', :action => 'index', :url => nil
