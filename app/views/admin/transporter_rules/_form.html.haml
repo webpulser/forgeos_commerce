@@ -10,10 +10,7 @@
 
   .backgrounds.big-header
     = f.text_field :name, :class => 'field_name'
-    .interact-links
-      = fg_submit_tag (transporter.new_record? ? 'transporter.create.action' : 'save_changes')
-      = I18n.t('or')
-      = link_to I18n.t('cancel').capitalize, admin_transporters_path, :class => 'back-link'
+    = Forgeos_save_buttons admin_transporters_rules_path
 
   #content.grid_16.alpha.omega
     .grid_16.alpha
