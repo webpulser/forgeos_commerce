@@ -5,8 +5,8 @@
 
   #content.grid_12.alpha.omega
     .inner-content
-      .fiedset.open
-        %h2= t('attribute',:count=>2)
+      .fieldset.open
+        %h2= t(:attribute,:count=>2)
         .option-panel-content
           %p= t('drag_attributes').capitalize
           = hidden_field_tag 'product_type[product_attribute_ids][]'
