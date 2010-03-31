@@ -1,8 +1,7 @@
 - form_for [:admin , attribute], :html => { :id => 'wrap' } do |f|
   .backgrounds.big-header
     = f.text_field :name, :class => 'field_name'
-    .interact-links
-      = Forgeos_save_buttons admin_attributes_path
+    = Forgeos_save_buttons admin_attributes_path
   #content.grid_16.alpha.omega
     .grid_12.alpha
       .inner-content
