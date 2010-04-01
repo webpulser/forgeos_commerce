@@ -140,10 +140,11 @@ class Admin::TransporterRulesController < Admin::BaseController
 
     if result
       flash[:notice] = I18n.t('transporter.update.success').capitalize
+      redirect_to :action => :edit
     else
       flash[:error] = I18n.t('transporter.update.failed').capitalize
+      render :action => :edit
     end
-    render :action => :edit
   end
 
   def destroy
