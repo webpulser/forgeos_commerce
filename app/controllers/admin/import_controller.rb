@@ -6,12 +6,12 @@ class Admin::ImportController < Admin::BaseController
     create_model(Product,'sku')
   end
 
-  map_fields :create_product_type, ProductType.new.attributes.keys.sort
+  map_fields :create_product_type, (ProductType.new.attributes.keys + ProductType.new.translated_attributes.stringify_keys.keys).sort
   def create_product_type
     create_model(ProductType,'name')
   end
 
-  map_fields :create_product_category, (ProductCategory.new.attributes.keys + ProductCategory.new.translated_attributes.stringify_keys.keys).sort
+  map_fields :create_product_category, (ProductCategory.new.attributes.keys + ProductCategory.new.translated_attributes.stringify_keys.keys ).sort
   def create_product_category
     create_model(ProductCategory,'name')
   end
