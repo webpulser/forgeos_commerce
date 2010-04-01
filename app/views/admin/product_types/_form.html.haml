@@ -1,27 +1,26 @@
 - form_for [:admin , product_type], :html => { :id => 'wrap' } do |f|
   .backgrounds.big-header
     = f.text_field :name, :class => 'field_name'
-    .interact-links
-      = Forgeos_save_buttons admin_product_types_path
+    = Forgeos_save_buttons admin_product_types_path
 
   #content.grid_12.alpha.omega
-    .grid_12.alpha
-      .fieldset
-        %h3= t(:attribute,:count => 2).capitalize
-        %p= t('drag_attributes').capitalize
-        = hidden_field_tag 'product_type[product_attribute_ids][]'
-        #product-types-selected-tree.a-tree.init-tree
-          %ul
-            - product_type.product_attributes.each do |attribute|
-              - id = "attribute_#{attribute.id}"
-              %li{ :id => id, :rel => 'attribute' }
-                %a{ :href => '#' }
-                  = hidden_field_tag 'product_type[product_attribute_ids][]', attribute.id, :id => "product_type_product_attribute_ids_#{attribute.id}"
-                  = attribute.name
-                  %span.big-icons.gray-destroy-attribute.gray-destroy
-                    &nbsp;
-          .clear
-
+    .inner-content
+      .fieldset.open
+        %h2= t(:attribute,:count=>2)
+        .option-panel-content
+          %p= t('drag_attributes').capitalize
+          = hidden_field_tag 'product_type[product_attribute_ids][]'
+          #product-types-selected-tree.a-tree.init-tree
+            %ul
+              - product_type.product_attributes.each do |attribute|
+                - id = "attribute_#{attribute.id}"
+                %li{ :id => id, :rel => 'attribute' }
+                  %a{ :href => '#' }
+                    = hidden_field_tag 'product_type[product_attribute_ids][]', attribute.id, :id => "product_type_product_attribute_ids_#{attribute.id}"
+                    = attribute.name
+                    %span.big-icons.gray-destroy-attribute.gray-destroy
+                      &nbsp;
+            .clear
       %h2.permalink
         = t('permalink').capitalize
         \:

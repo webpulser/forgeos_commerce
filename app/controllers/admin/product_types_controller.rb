@@ -90,7 +90,7 @@ private
     conditions = {}
     includes = [:globalize_translations]
     options = { :page => page, :per_page => per_page }
-    joins = [:globalize_translations]
+    #joins = [:globalize_translations]
 
     includes << :products if params[:iSortCol_0].to_i == 2
 
