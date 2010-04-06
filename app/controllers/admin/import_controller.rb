@@ -11,6 +11,11 @@ class Admin::ImportController < Admin::BaseController
     create_model(ProductType,'name')
   end
 
+  map_fields :create_address, (Address.new.attributes.keys).sort
+  def create_address
+    create_model(Address,'user_id')
+  end
+
   map_fields :create_product_category, (ProductCategory.new.attributes.keys + ProductCategory.new.translated_attributes.stringify_keys.keys ).sort
   def create_product_category
     create_model(ProductCategory,'name')
@@ -33,6 +38,6 @@ class Admin::ImportController < Admin::BaseController
   private
 
   def commerce_models
-    @models << 'product' << 'product_type' << 'product_category' << 'order' << 'order_detail' << 'attribute_value'
+    @models << 'product' << 'product_type' << 'product_category' << 'order' << 'order_detail' << 'attribute_value' << 'address'
   end
 end
