@@ -57,7 +57,7 @@ jQuery(document).ready(function(){
             add_picture_to_element(path,id,name);
           }
           check_product_first_image();
-        });          
+        });
         $('#imageSelectDialog').dialog('close');
       }
     },
@@ -91,7 +91,7 @@ jQuery(document).ready(function(){
 
 $('.add_a_size').live('click', function(){
     var itemInTable = $('#product_sizes tbody tr').length;
-    
+
     var new_tr = '';
     new_tr += '<tr>'
       new_tr += '<td>'
@@ -110,10 +110,10 @@ $('.add_a_size').live('click', function(){
         new_tr += '<a href="#" class="remove_this_size">supprimer</a>'
       new_tr += '</td>'
     new_tr += '</tr>'
-     
-    $('#product_sizes').append(new_tr);  
-  }); 
-  
+
+    $('#product_sizes').append(new_tr);
+  });
+
   $('.remove_this_size').live('click', function(){
     var block = $(this).parents('tr');
     if (parseInt(get_rails_element_id(block.find('input:first'))) < 0) {
@@ -126,7 +126,7 @@ $('.add_a_size').live('click', function(){
     }
     return false;
   });
-  
+
   $('#product_sizes tr').sortable({
     handle:'.handler',
     placeholder: 'ui-state-highlight',
@@ -134,7 +134,7 @@ $('.add_a_size').live('click', function(){
       console.info('hi');
     }
   });
-  
+
   $('#product_sizes').dataTable();
-      
+
 });
