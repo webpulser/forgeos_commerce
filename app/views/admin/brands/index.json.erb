@@ -1,0 +1,31 @@
+<% 
+
+  output = {
+    	:iTotalDisplayRecords => @brands.total_entries || 0,
+    	:aaData => @brands.collect do |brand|
+      	link_id = "brand_#{brand.id}"
+      	#products_count = brand.products.count
+	  	products_count = 0
+		#THE following array represents the COLUMNS for this particular brand
+      	[
+		 #COLUMN 1, just empty with an icon
+         content_tag(:div, '<div class="handler"></div><div class="small-icons brands"></div>', :id => link_id, :class => 'handler_container'),
+		#COLUMN 2, Displays the brand name
+        content_tag(:div, link_to(brand.name, [:edit, :admin, brand]), :class => 'brand-name'),
+		#COLUMN 3, Displays the number of products in the brand
+#        "#{products_count} #{I18n.t :product, :count => products_count}",
+		#COLUMN 4, has 2 links: First link for editing the Brand, second link for Deleting the Brand (the second is an Ajax link)
+        link_to('', [:edit, :admin, brand], :class => 'small-icons edit-link') +
+        link_to_remote('', :url => [:admin, brand],
+         :method => :delete,
+         :confirm => I18n.t('brand.destroy.confirm').capitalize,
+         :success => "removedataTablesRow('#destroy_#{link_id}')",
+         :html => {
+         :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
+        })
+      ]
+    end
+  }
+-%>
+
+<%= output.to_json -%>
