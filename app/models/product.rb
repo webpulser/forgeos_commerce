@@ -2,13 +2,14 @@ class Product < ActiveRecord::Base
   translates :name, :description, :url
   attr_accessor :voucher_discount, :voucher_discount_price
   attr_accessor :special_offer_discount, :special_offer_discount_price
-  
+
   acts_as_taggable
 
   has_and_belongs_to_many_attachments
+  has_many :sizes, :dependent => :destroy
   has_and_belongs_to_many :carts
-  has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products' 
-  has_and_belongs_to_many :product_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'  
+  has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products'
+  has_and_belongs_to_many :product_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
   has_and_belongs_to_many :attribute_values, :readonly => true, :uniq => true
 
   has_many :dynamic_attribute_values, :dependent => :destroy
@@ -85,7 +86,7 @@ class Product < ActiveRecord::Base
   def cross_sellings
     Product.all(:conditions => { :active => true, :deleted => [false,nil], :id_ne => id}, :limit => 10, :order => 'RAND()')
   end
-  
+
   def activate
     self.update_attribute('active', !self.active )
   end
@@ -148,7 +149,7 @@ class Product < ActiveRecord::Base
           else
             values = attribute_values.find_all_by_attribute_id(attribute.id)
             value = method ? values.map(&method.to_sym) : values
-            return case attribute 
+            return case attribute
             when RadiobuttonAttribute, PicklistAttribute
               value.first
             else
