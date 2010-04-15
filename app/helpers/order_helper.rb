@@ -117,7 +117,7 @@ module OrderHelper
   end
 
   # Display user's addresses choice
-  def display_address(address, multiple_addresses=true)
+  def display_address(address, multiple_addresses=true, update=true)
     return unless address
     content = '<div class="display_address" id="order_address_' + address.class.to_s + '">'
       content += hidden_field_tag(address.class.to_s.gsub('', '').underscore + '_id',address.id)
@@ -151,9 +151,11 @@ module OrderHelper
           content +="</div>"
         end
       content += "</div>"
-      content += '<div class="order_address_update">'
-        content += link_to_remote(I18n.t('update').capitalize, :url => { :controller => 'order', :action => 'update_address', :id => address })
-      content += '</div>'
+      if update
+        content += '<div class="order_address_update">'
+          content += link_to_remote(I18n.t('update').capitalize, :url => { :controller => 'order', :action => 'update_address', :id => address })
+        content += '</div>'
+      end
     content += '</div>'
   end
 
