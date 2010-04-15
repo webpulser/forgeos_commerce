@@ -10,7 +10,11 @@ map.activate '/activate/:activation_code', :controller => 'users', :action => 'a
 map.resources :users
 map.resources :products
 map.resources :packs, :controller => :products
-map.resources :addresses
+map.with_options(:controller => 'addresses') do |address|
+  address.resources :addresses
+  address.resources :address_invoices
+  address.resources :address_deliveries
+end
 map.resources :orders
 map.cart '/cart', :controller => 'cart'
 
