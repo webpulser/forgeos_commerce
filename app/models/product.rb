@@ -181,8 +181,7 @@ class Product < ActiveRecord::Base
           else
             self.attribute_values = AttributeValue.find_all_by_attribute_id(
               attribute.id,
-              :joins => :globalize_translations,
-              :conditions => { :attribute_value_translations => { :name => [new_value].flatten } }
+              :conditions => { :name => [new_value].flatten }
             )
           end
         end
