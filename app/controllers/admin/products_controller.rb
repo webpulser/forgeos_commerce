@@ -152,10 +152,6 @@ private
 
     if params[:sSearch] && !params[:sSearch].blank?
       options[:sql_order] = options.delete(:order)
-<<<<<<< HEAD
-=======
-      options[:joins] += options.delete(:include)
->>>>>>> 15b93c6ed09415c7196a259dd61b80ffb07b589b
       @products = Product.search(params[:sSearch],options)
     else
       @products = Product.paginate(:all,options)
