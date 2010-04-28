@@ -151,6 +151,7 @@ private
     options[:order] = order unless order.squeeze.blank?
 
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:sql_order] = options.delete(:order)
       @products = Product.search(params[:sSearch],options)
     else
       @products = Product.paginate(:all,options)
