@@ -176,8 +176,8 @@ private
 
     if params[:sSearch] && !params[:sSearch].blank?
       options[:index] = "product_core.product_#{ActiveRecord::Base.locale}_core"
-      options[:sql_order] = options.delete(:order)
       options[:joins] += options.delete(:include)
+      options[:sql_order] = options.delete(:order)
       @products = Product.search(params[:sSearch],options)
     else
       options[:group] = :product_id

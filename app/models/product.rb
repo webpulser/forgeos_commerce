@@ -166,11 +166,11 @@ class Product < ActiveRecord::Base
               self.dynamic_attribute_values.create(:value => new_value, :attribute_id => attribute.id)
             end
           else
+            other_attributes = self.attribute_values.all(:conditions => {:attribute_id_not => attribute.id})
             self.attribute_values = AttributeValue.find_all_by_attribute_id(
               attribute.id,
-              :joins => :globalize_translations,
-              :conditions => { :attribute_value_translations => { :name => [new_value].flatten } }
-            )
+              :conditions => { :name => [new_value].flatten }
+            ) + other_attributes
           end
         end
 DEF
