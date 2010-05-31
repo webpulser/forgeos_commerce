@@ -66,14 +66,6 @@
       = f.text_area :description, :cols => 80, :class => 'mceEditor'
     = I18n.t('brand.comment_title')
     .clear
-    - f.fields_for :comments do |comment|
-      = f.label :person_id, I18n.t('brand.vendor')
-      .clear
-      = comment.collection_select :person_id, Person.all(:order => 'firstname DESC'), :id, :firstname, :prompt => t(:please_select)
-      .clear
-      = f.label :comment, I18n.t('brand.comment')
-      .clear
-      = comment.text_area :comment, :class => 'mceEditor'
   .option-panel.open
     .backgrounds.content-header
     = link_to t('attributes'), '#', :class => 'small-icons panel'
