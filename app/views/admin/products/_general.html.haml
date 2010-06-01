@@ -22,27 +22,27 @@
       .stock
         = f.label :stop_sales, t('product.stop_sales').capitalize
         = f.check_box :stop_sales
-    .tool-tip-me
-      .stock
-        %label{ :for => "product-stock" }
-          Stock
-        %div
-          %select#product-stock{ :name => "product-stock" }
-            %option{ :selected => "selected", :value => "default" }
-              Track low stock level
-      #product-in-stock.tool-tip-content
-        .content
-          = f.label :stock, t('stock', :count => 1).capitalize
-          = f.text_field(:stock, :class => 'background')
-          %label{ :for => "out-stock-action" }
-            if out of sotck
-          %div
-            %select
-              %option{ :selected => "selected", :value => "0" }
-                stop sales
-          .clear
-        .clear
-          
+    -#.tool-tip-me
+    -#  .stock
+    -#    %label{ :for => "product-stock" }
+    -#      Stock
+    -#    %div
+    -#      %select#product-stock{ :name => "product-stock" }
+    -#        %option{ :selected => "selected", :value => "default" }
+    -#          Track low stock level
+    -#  #product-in-stock.tool-tip-content
+    -#    .content
+    -#      = f.label :stock, t('stock', :count => 1).capitalize
+    -#      = f.text_field(:stock, :class => 'background')
+    -#      %label{ :for => "out-stock-action" }
+    -#        if out of stock
+    -#      %div
+    -#        %select
+    -#          %option{ :selected => "selected", :value => "0" }
+    -#            stop sales
+    -#      .clear
+    -#    .clear
+
   #product-images.grid_3.omega
     #featured-picture
       = t('media.picture.featured').capitalize

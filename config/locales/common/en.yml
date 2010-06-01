@@ -44,6 +44,8 @@ en:
   product:
     name: product name
     signal_to_a_friend: signal to a friend
+  brand:
+    one: brand
   catalog: catalog
   choose_quantity: choose quantity
   sign_up: sign up
