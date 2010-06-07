@@ -34,11 +34,11 @@
     %span.span-left= I18n.t('shipping_method.rule.when.weight').capitalize
     %div= select_tag "shipping_method[#{id}][conds][]", options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
     = text_field_tag "shipping_method[#{id}][values][]"
-    %span.span-left.unit  KG
+    %span.span-left.unit= t(:short, :scope => [:unit, :weight])
     %span.span-left= I18n.t(:and)
     %div= select_tag "shipping_method[#{id}][conds][]", options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
     = text_field_tag "shipping_method[#{id}][values][]"
-    %span.span-left.unit KG
+    %span.span-left.unit= t(:short, :scope => [:unit, :weight])
     %span.span-left= I18n.t('shipping_method.rule.shipping_is').capitalize
     = text_field_tag "shipping_method[#{id}][price][]"
     %span.span-left.unit= $currency.html
@@ -48,45 +48,43 @@
   .clear
 
 
-%div.delivery-rule.geo_zone.pattern{ :style => 'display: none' }
-  .inner-delivery-rule
-    %span.span-left= I18n.t('shipping_method.rule.when.geographic_zone').capitalize
-    %div= select_tag "shipping_method[#{id}][conds][]", options_for_select(@conditions_is.collect{|c| [c[0], c[1]] })
-    %div= select_tag "shipping_method[#{id}][values][]", options_for_select(@geo_zones)
-    %span.span-left= I18n.t('shipping_method.rule.shipping_is').capitalize
-    = text_field_tag "shipping_method[#{id}][price][]"
-    %span.span-left.unit= $currency.html
-    .clear
-  = link_to_function '', "remove_delivery_rule(this)", :class => 'small-icons red-minus'
-  = link_to_function '', "add_delivery_rule('geo_zone')", :class => 'small-icons add-green-plus'
-  .clear
-
-
-%div.delivery-rule.product_type.pattern{ :style => 'display: none' }
-  .inner-delivery-rule
-    %span.span-left= I18n.t('shipping_method.rule.when.product_type').capitalize
-    %div= select_tag "shipping_method[#{id}][conds][]", options_for_select(@conditions_is.collect{|c| [c[0], c[1]] })
-    %div= select_tag "shipping_method[#{id}][values][]", options_for_select(@product_types)
-    %span.span-left= I18n.t('shipping_method.rule.shipping_is').capitalize
-    = text_field_tag "shipping_method[#{id}][price][]"
-    %span.span-left.unit= $currency.html
-    .clear
-  = link_to_function '', "remove_delivery_rule(this)", :class => 'small-icons red-minus'
-  = link_to_function '', "add_delivery_rule('product_type')", :class => 'small-icons add-green-plus'
-  .clear
-
-
-%div.delivery-rule.product.pattern{ :style => 'display: none' }
-  .inner-delivery-rule
-    %span.span-left= I18n.t('shipping_method.rule.when.product').capitalize
-    %div= select_tag "shipping_method[#{id}][conds][]", options_for_select(@conditions_is.collect{|c| [c[0], c[1]] })
-    %div= select_tag "shipping_method[#{id}][values][]", options_from_collection_for_select(Product.all, :id, :name)
-    %span.span-left= I18n.t('shipping_method.rule.shipping_is').capitalize
-    = text_field_tag "shipping_method[#{id}][price][]"
-    %span.span-left.unit= $currency.html
-    .clear
-  = link_to_function '', "remove_delivery_rule(this)", :class => 'small-icons red-minus'
-  = link_to_function '', "add_delivery_rule('product')", :class => 'small-icons add-green-plus'
-  .clear
-
-
+//%div.delivery-rule.geo_zone.pattern{ :style => 'display: none' }
+//  .inner-delivery-rule
+//    %span.span-left= I18n.t('shipping_method.rule.when.geographic_zone').capitalize
+//    %div= select_tag "shipping_method[#{id}][conds][]", options_for_select(@conditions_is.collect{|c| [c[0], c[1]] })
+//    %div= select_tag "shipping_method[#{id}][values][]", options_for_select(@geo_zones)
+//    %span.span-left= I18n.t('shipping_method.rule.shipping_is').capitalize
+//    = text_field_tag "shipping_method[#{id}][price][]"
+//    %span.span-left.unit= $currency.html
+//    .clear
+//  = link_to_function '', "remove_delivery_rule(this)", :class => 'small-icons red-minus'
+//  = link_to_function '', "add_delivery_rule('geo_zone')", :class => 'small-icons add-green-plus'
+//  .clear
+//
+//
+//%div.delivery-rule.product_type.pattern{ :style => 'display: none' }
+//  .inner-delivery-rule
+//    %span.span-left= I18n.t('shipping_method.rule.when.product_type').capitalize
+//    %div= select_tag "shipping_method[#{id}][conds][]", options_for_select(@conditions_is.collect{|c| [c[0], c[1]] })
+//    %div= select_tag "shipping_method[#{id}][values][]", options_for_select(@product_types)
+//    %span.span-left= I18n.t('shipping_method.rule.shipping_is').capitalize
+//    = text_field_tag "shipping_method[#{id}][price][]"
+//    %span.span-left.unit= $currency.html
+//    .clear
+//  = link_to_function '', "remove_delivery_rule(this)", :class => 'small-icons red-minus'
+//  = link_to_function '', "add_delivery_rule('product_type')", :class => 'small-icons add-green-plus'
+//  .clear
+//
+//
+//%div.delivery-rule.product.pattern{ :style => 'display: none' }
+//  .inner-delivery-rule
+//    %span.span-left= I18n.t('shipping_method.rule.when.product').capitalize
+//    %div= select_tag "shipping_method[#{id}][conds][]", options_for_select(@conditions_is.collect{|c| [c[0], c[1]] })
+//    //%div= select_tag "shipping_method[#{id}][values][]", options_from_collection_for_select(Product.all, :id, :name)
+//    %span.span-left= I18n.t('shipping_method.rule.shipping_is').capitalize
+//    = text_field_tag "shipping_method[#{id}][price][]"
+//    %span.span-left.unit= $currency.html
+//    .clear
+//  = link_to_function '', "remove_delivery_rule(this)", :class => 'small-icons red-minus'
+//  = link_to_function '', "add_delivery_rule('product')", :class => 'small-icons add-green-plus'
+//  .clear

@@ -149,7 +149,7 @@
         = t(:weight).capitalize
         %br
       = f.text_field :weight, :class => 'product_weight', :id => 'weight'
-      KG
+      = t(:short, :scope => [:unit, :weight])
   .step.disabled
     = link_to t(:graphic_template, :count => 1), '#', :class => 'small-icons step-title'
     .inner-step.glossy

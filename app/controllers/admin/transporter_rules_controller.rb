@@ -20,7 +20,7 @@ class Admin::TransporterRulesController < Admin::BaseController
     respond_to do |format|
       format.json do
         # list categories like a tree
-        render :json => GeoZone.find_all_by_parent_id(nil).collect{ |g| g.to_jstree(:transporter_rules)}.to_json
+        render :json => GeoZone.find_all_by_parent_id(nil, :order => 'printable_name').collect{ |g| g.to_jstree(:transporter_rules)}.to_json
       end
     end
   end
@@ -209,9 +209,8 @@ class Admin::TransporterRulesController < Admin::BaseController
 
       @delivery_type = get_delivery_type
 
-      transporters = []
-      transporters << @transporter
-      @transporter.children.collect{ |transporter| transporters << transporter }
+      transporters = [@transporter]
+      transporters += @transporter.children
 
       rules = {}
       transporters.each do |transporter|

@@ -5,11 +5,11 @@
         %span.span-left= I18n.t('shipping_method.rule.when.weight').capitalize
         %div= select_tag 'shipping_method[0][conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] } + @conditions.collect{|c| [c[0], c[1]] })
         = text_field_tag 'shipping_method[0][values][]'
-        %span.span-left.unit KG
+        %span.span-left.unit= t(:short, :scope => [:unit, :weight])
         %span.span-left= I18n.t(:and)
         %div= select_tag 'shipping_method[0][conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] } + @conditions.collect{|c| [c[0], c[1]] })
         = text_field_tag 'shipping_method[0][values][]'
-        %span.span-left.unit KG
+        %span.span-left.unit= t(:short, :scope => [:unit, :weight])
         %span.span-left= I18n.t('shipping_method.rule.shipping_is').capitalize
         = text_field_tag 'shipping_method[0][price][]'
         %span.span-left.unit= $currency.html
@@ -26,11 +26,11 @@
               %span.span-left= I18n.t('shipping_method.rule.when.weight').capitalize
               %div= select_tag "shipping_method[#{rule[0]}][conds][]", options_for_select(@condition_is.collect{|c| [c[0], c[1]] } + @conditions.collect{|c| [c[0], c[1]] }, rule[1][0][:operator])
               = text_field_tag "shipping_method[#{rule[0]}][values][]", rule[1][0][:value]
-              %span.span-left.unit  KG
+              %span.span-left.unit= t(:short, :scope => [:unit, :weight])
               %span.span-left= I18n.t(:and)
               %div= select_tag "shipping_method[#{rule[0]}][conds][]", options_for_select(@condition_is.collect{|c| [c[0], c[1]] } + @conditions.collect{|c| [c[0], c[1]] }, rule[1][1][:operator])
               = text_field_tag "shipping_method[#{rule[0]}][values][]", rule[1][1][:value]
-              %span.span-left.unit KG
+              %span.span-left.unit= t(:short, :scope => [:unit, :weight])
               %span.span-left= I18n.t('shipping_method.rule.shipping_is').capitalize
               = text_field_tag "shipping_method[#{rule[0]}][price][]", rule[1][:price]
               %span.span-left.unit= $currency.html

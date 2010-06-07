@@ -476,7 +476,7 @@ fr:
       one: choix
       other: choix
       new: ajouter un choix
-    access_method: méthode d'accès
+    access_method: "méthode d'accès"
   text_attribute:
     one: texte
     other: textes
@@ -517,4 +517,7 @@ fr:
     other: boutons radio
     field: champ bouton radio
     preview: prévisualisation
-
+  unit:
+    weight:
+      short: KG
+      long: Kilogramme

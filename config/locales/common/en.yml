@@ -519,3 +519,7 @@ en:
     other: choices
     field: radiobutton field
     preview: preview
+  unit:
+    weight:
+      short: KG
+      long: Kilogram
