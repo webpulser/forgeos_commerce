@@ -11,25 +11,10 @@
     %tbody
       - orders.each do |order|
         %tr
+          %td= order.reference
+          %td= t(order.aasm_current_state, :scope => [:order, :status])
+          %td= order.address_delivery.designation
           %td
-            - #= order.reference
-          %td
-            = t(order.aasm_current_state).capitalize
-          %td
-            %pre
-              = t(order.address_delivery.civility, :scope => [:civility, :label])
-              \&nbsp;
-              = order.address_delivery.name
-              \&nbsp;
-              = order.address_delivery.firstname
-              = order.address_delivery.address
-              \&nbsp;
-              = order.address_delivery.address_2
-              = order.address_delivery.zip_code
-              \&nbsp;
-              = order.address_delivery.city
-              = order.address_delivery.country.name
-          %td
-            = link_to_remote t('show').capitalize, :url => order_path(order), :method => 'get', :update => 'orders'
+            = link_to t('show').capitalize, order_path(order)
             \-
             - #= link_to_remote t('destroy').capitalize, :url => order_path(order), :confirm => t('order.destroy.confirm').capitalize, :method => 'delete', :update => 'orders'
