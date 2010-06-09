@@ -7,3 +7,51 @@ fr:
     zero: "cette offre spécial s'applique à {{count}} produit"
     one: "cette offre spécial s'applique à {{count}} produit"
     other: "cette offre spécial s'applique à {{count}} produits"
+  special_offer:
+    one: offre spéciale
+    other: offres spéciales
+    all: toutes les offres spéciales
+    for: pour
+    this_condition: conditions sont
+    than: que
+    if: si
+    then: alors
+    end_offer_if: "l'offre se termine quand"
+    create:
+      action: 'créer une offre spéciale'  
+
+    _for:
+      category: une catégorie de produit
+      product_in_shop: un produit de la boutique
+      product_in_cart: un produit dans la panier
+      cart: un panier complet
+    _if:
+      all: Toutes ces
+      any: "n'importe quelle"
+      _true: vraie
+    conditions:
+      is: est
+      is_not: "n'est pas"
+      equal_or_less_than: inférieur ou égal
+      equal_or_greater_than: supérieur ou égal
+      less_than: inférieur
+      greater_than: supérieur
+    attributes:
+      disabled:
+        main: PRINCIPAUX
+        attribute: DYNAMIQUES
+    action:
+      discount: réduction sur le prix du produit
+      percent: avec un % de
+      fixed: avec un montant de
+      product: offrir le produit
+      shipping: offrir les frais de port
+    end:
+      date: Date
+      total_use: Utilisation totale
+      user_total_use: Utilisation par client
+    cart:
+      price: Total
+      quantity: Quantité
+      weight: Poid
+      shipping: Frais de port

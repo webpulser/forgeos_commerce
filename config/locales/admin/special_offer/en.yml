@@ -7,3 +7,50 @@ en:
     zero: "This Offer apply to {{count}} product"
     one: "This Offer apply to {{count}} product"
     other: "This Offer apply to {{count}} products"
+  special_offer:
+    one: special offer
+    other: special offers
+    all: all special offers
+    for: for
+    this_condition: these conditions are
+    than: than
+    if: if
+    then: then
+    create:
+      action: 'create a special offer'
+
+    _for:
+      category: a category
+      product_in_shop: a product in shop
+      product_in_cart: a product in cart
+      cart: a cart
+    _if:
+      all: All
+      any: Any
+      _true: valid
+    conditions:
+      is: is
+      is_not: is not
+      equal_or_less_than: less or equal
+      equal_or_greater_than: equal or greater
+      less_than: less
+      greater_than: greater
+    attributes:
+      disabled:
+        main: MAIN SETTINGS
+        attribute: DYNAMICS
+    action:
+      discount: discount on product price
+      percent: with a % of
+      fixed: width a amount of
+      product: offer the product
+      shipping: free shipping
+    end:
+      date: Date
+      total_use: Count of use
+      user_total_use: Count of use per customer
+    cart:
+      price: Total
+      quantity: Quantity
+      weight: Weight
+      shipping: Shipping

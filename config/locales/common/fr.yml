@@ -275,17 +275,6 @@ fr:
       failed: 'un problème est survenu lors de la suppression du détail de commande'
       confirm: 'êtes-vous sûr de vouloir supprimer ce détail de commande ?'
   sku: 'sku'
-  special_offer:
-    one: offre spéciale
-    other: offres spéciales
-    all: toutes les offres spéciales
-    for: pour
-    this_condition: ses conditions sont
-    than: que
-    if: si
-    then: alors
-    create:
-      action: 'créer une offre spéciale'  
   shipping: ports
   voucher:
     one: 'code promo'
