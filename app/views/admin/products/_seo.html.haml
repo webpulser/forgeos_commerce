@@ -1,10 +1,11 @@
 .grid_12.alpha
-  .fieldset
+  .fieldset.open
     %h3.permalink
       = t('permalink').capitalize
       \:
-    = "#{request.protocol}#{request.host}/product/"
-    = f.text_field :url
+    .option-panel-content
+      = "#{request.protocol}#{request.host}/product/"
+      = f.text_field :url
   / #products_tags.step.open
   /   = link_to t(:tag, :count => 2), '#', :class => 'small-icons step-title'
   /   .inner-step.tags
@@ -17,27 +18,26 @@
   /           = hidden_field_tag 'tag_list[]', tag
   /           = link_to '&nbsp;', '#', :class => 'big-icons gray-destroy'
   /     .clear
-  .fieldset
-    %h3
-      = 'Meta données'
-    
-    - product.build_meta_info unless product.meta_info
-    - f.fields_for :meta_info do |meta_info|
-      %p
-        %span
-          = t('title').capitalize
-          \:
-          .clear
-        = meta_info.text_field :title, :cols => 100, :rows => 10, :class => 'text'
-      %p
-        %span
-          = t('description').capitalize
-          \:
-          .clear
-        = meta_info.text_area :description, :cols => 100, :rows => 10, :class => 'text'
-      %p
-        %span
-          = t('keyword', :count => 2).capitalize
-          \:
-          .clear
-        = meta_info.text_area :keywords, :cols => 100, :rows => 10, :class => 'text'
+  .fieldset.open
+    %h3= t(:meta_info,:count => 1)
+    .option-panel-content.meta
+      - product.build_meta_info unless product.meta_info
+      - f.fields_for :meta_info do |meta_info|
+        %p
+          %span
+            = t('title').capitalize
+            \:
+            %br
+          = meta_info.text_field :title, :class => 'text', :size => 90
+        %p
+          %span
+            = t('description').capitalize
+            \:
+            %br
+          = meta_info.text_area :description, :cols => 90, :rows => 5, :class => 'text'
+        %p
+          %span
+            = t('keyword', :count => 2).capitalize
+            \:
+            %br
+          = meta_info.text_area :keywords, :cols => 90, :rows => 5, :class => 'text'

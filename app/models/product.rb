@@ -139,7 +139,7 @@ class Product < ActiveRecord::Base
   end
 
   def initialize(attr = {})
-    generate_methods_from_product_type(ProductType.find_by_id(attr[:product_type_id])) if attr[:product_type_id]
+    generate_methods_from_product_type(ProductType.find_by_id(attr[:product_type_id])) if attr && attr[:product_type_id]
     super(attr)
   end
 
