@@ -1,5 +1,5 @@
 #product.grid_12.alpha
-  .grid_12  
+  .grid_12
     = f.label :name, t(:name, :scope => :product).capitalize
     = f.text_field :name
   .grid_9.omega
@@ -8,10 +8,6 @@
       = f.text_field :price, :class => 'backgrounds grid_2 alpha omega', :id => 'price'
       %span.currency
         = $currency.html
-    %br
-    = f.label :sku, t('brand.one')
-    %div
-      = f.collection_select :brand_id, Brand.all(:order => 'name DESC'), :id, :name, { :prompt => t('please_select') }
     = f.label :sku, t('sku')
     %div
       = f.text_field :sku
@@ -43,6 +39,7 @@
     -#      .clear
     -#    .clear
 
+
   #product-images.grid_3.omega
     #featured-picture
       = t('media.picture.featured').capitalize
@@ -61,6 +58,9 @@
     = link_to t('media.picture.add').capitalize, '#', :id => 'add-picture'
   .clear
   .grid_12.omega
+    = f.label :summary, t('summary').capitalize
+    %div{ :style => 'clear: left;'}
+      = f.text_area :summary, {:cols => 80, :rows => 2}
     = f.label :description, t('description').capitalize
     %div{ :style => 'clear: left;'}
       = f.text_area :description, :cols => 80, :class => 'mceEditor'
@@ -108,10 +108,14 @@
     %div
       = f.select :active, [[t('unpublished'), 0], [t('published'), 1]], :selected => product.active ? 1 : 0
     .clear
-    .clear
       = f.label :product_type_id, "#{t('product_type', :count => 1).capitalize}<sup class=\"required\">*</sup>"
     %div
-      = f.collection_select :product_type_id, ProductType.all, :id, :name, { :prompt => t('please_select') }
+      - prompt = "#{t('please_select')} #{t('product_type.one')}"
+      = f.collection_select :product_type_id, ProductType.all(:include => :globalize_translations, :order => 'product_type_translations.name'), :id, :name, { :prompt => prompt }
+    .clear
+      = f.label :brand_id, t('brand.one')
+    %div
+      = f.collection_select :brand_id, Brand.all(:order => 'name DESC'), :id, :name, { :prompt => "#{t('please_select')} #{t('brand.one')}" }
     .clear
     -#
       = f.check_box :on_first_page

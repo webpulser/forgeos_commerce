@@ -1,5 +1,5 @@
 class Product < ActiveRecord::Base
-  translates :name, :description, :url
+  translates :name, :description, :summary, :url
   attr_accessor :voucher_discount, :voucher_discount_price
   attr_accessor :special_offer_discount, :special_offer_discount_price
 

@@ -186,6 +186,7 @@ fr:
   content_type: 'type de contenu'
   reference: 'référence'
   description: description
+  summary: 'résumé'
   rate_tax: taxe
   selling_date: 'date de mise en vente'
   weight: poids

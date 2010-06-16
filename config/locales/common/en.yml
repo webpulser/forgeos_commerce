@@ -188,6 +188,7 @@ en:
   content_type: 'content type'
   reference: reference
   description: description
+  summary: summary
   rate_tax: taxe
   selling_date: 'selling date'
   weight: weight
