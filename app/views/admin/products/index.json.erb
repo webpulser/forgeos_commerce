@@ -1,9 +1,9 @@
-<% 
+<%
   is_selection = params[:mode] == 'selection'
   output = {
     :iTotalDisplayRecords => @products.total_entries || 0,
     :aaData => @products.collect do |product|
-      
+
       picture = product.pictures.first.public_filename(:thumb) if product.pictures.first
       klass = product.active? ? 'see-on' : 'see-off'
       link_id = "product_#{product.id}"
@@ -12,7 +12,7 @@
 
       if params[:mode] && params[:mode].eql?('menu_link')
         product_array <<
-          content_tag(:div, '<div class="handler"></div>'+  image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product handler_container') 
+          content_tag(:div, '<div class="handler"></div>'+  image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product handler_container')
         product_array << content_tag(:div, product.name, :class => 'product-name')
         product_array << product.id
         product_array << link_to(product.name, [:edit, :admin, product])
@@ -57,7 +57,7 @@
                 :success => "removedataTablesRow('#destroy_#{link_id}')",
                 :html => {
                 :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-              }) << product.id << product.name << product.sku << product.price
+              }) << product.id << (product.name or '') << product.sku << product.price
       end
     end
   }
