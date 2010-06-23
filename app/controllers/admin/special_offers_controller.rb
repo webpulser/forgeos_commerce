@@ -89,21 +89,21 @@ class Admin::SpecialOffersController < Admin::BaseController
   def build_a_rule(rule_target, index)
     rule_target.downcase!
     if @main_attributes.include?(rule_target)
-      if rule_target == 'title' || rule_target == 'Title'
-        target = "m.name"
+      if rule_target == 'title'
+        target = "name"
       else
-        target = "m.#{rule_target}"
+        target = "#{rule_target}"
       end
     else
       case "#{rule_target}"
       when "total items quantity"
-        target = "m.total_items"
+        target = "total_items"
       when "total weight"
-        target = "m.weight"
+        target = "weight"
       when "total amount"
-        target = "m.total_with_tax)"
+        target = "total_with_tax"
       else
-        target = "m.#{rule_target})"
+        target = "#{rule_target}"
       end
     end
 
@@ -112,7 +112,12 @@ class Admin::SpecialOffersController < Admin::BaseController
     else
       value = params[:rule][:values][index]
     end
-    @rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
+    value_column = Product.columns_hash[target]
+    # if String type then add ''
+    if value_column.nil? or [:string, :text].include?(value_column.type)
+      value = "'#{value}'"
+    end
+    @rule_condition << "m.#{target}.#{params[:rule][:conds][index]}(#{value})"
   end
   
   def new    
@@ -121,9 +126,9 @@ class Admin::SpecialOffersController < Admin::BaseController
   def destroy
     @special_offer = SpecialOfferRule.find_by_id(params[:id])
     if @special_offer.destroy
-      flash[:notice] = "Special offer destroy"
+      flash[:notice] = t('special_offer.destroy.success')
     else
-      flash[:error] = "Special offer not destroy"
+      flash[:error] = t('special_offer.destroy.failed')
     end
     redirect_to :action => 'index'
   end
