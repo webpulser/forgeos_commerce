@@ -55,7 +55,7 @@ class Admin::SpecialOffersController < Admin::BaseController
       end
       
       if params[:rule_builder]['for'] == 'Category'
-        @rule_condition << "m.category.=(#{params[:rule_builder][:target]})"
+        @rule_condition << "m.category.==('#{params[:rule_builder][:target]}')"
       end
       
       @rule.conditions = "[#{@rule_condition.join(', ')}]" 
@@ -74,7 +74,7 @@ class Admin::SpecialOffersController < Admin::BaseController
         build_a_rule(rule_target, index)
         
         if params[:rule_builder]['for'] == 'Category'
-          @rule_condition << "m.category.=(#{params[:rule_builder][:target]})"
+          @rule_condition << "m.category.==('#{params[:rule_builder][:target]}')"
         end
         
         @rule.conditions = "[#{@rule_condition.join(', ')}]" 
