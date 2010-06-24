@@ -385,16 +385,6 @@ fr:
         success: "le prix réduit a bien été supprimé"
         failed: "un problème est survenu lors de la suppression du prix réduit"
         confirm: "êtes-vous sûr de vouloir supprimer ce prix réduit ?"
-  jquery:
-    dataTables:
-      oLanguage:
-        sProcessing: 'En cours...'
-        sLengthMenu: 'Voir _MENU_ entrées'
-        sZeroRecords: 'Aucun résultat trouvé'
-        sInfo: 'Visualisation de _START_ à _END_ sur _TOTAL_ entrées'
-        sInfoEmpty: 'Visualistation de 0 à 0 sur 0 entrées'
-        sSearch: 'Rechercher:'
-
   tag:
     one: tag
     other: tags
