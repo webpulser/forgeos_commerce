@@ -4,6 +4,7 @@
   .backgrounds.header
     = link_to content_tag(:span,I18n.t('product.create.action').capitalize, :class=>'big-icons create-product'), new_admin_product_path, :class=>'backgrounds action-button'
     = link_to content_tag(:span,I18n.t('pack.create.action').capitalize, :class=>'big-icons create-pack'), new_admin_pack_path, :class=>'backgrounds action-button'
+    = link_to_function content_tag(:span,I18n.t('category.save_sort.action').capitalize),"save_category_sort('ProductCategory',-4)", :class=>'backgrounds action-button hidden', :id => 'category_sort'
     #search.right
       = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
     .backgrounds.search-form
