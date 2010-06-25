@@ -31,7 +31,7 @@ map.product_by_url '/product/:url', :controller => 'url_catcher', :action => 'pr
 map.namespace :admin do |admin|
   admin.resources :transporters, :controller => 'transporter_rules', :member => { :activate => :post, :duplicate => :get }
   admin.resources :transporter_rules, :member => { :duplicate => :get }
-  admin.resources :vouchers
+  admin.resources :vouchers, :member => { :activate => :post }
   %w(product product_type attribute special_offer).each do |category|
     admin.resources "#{category}_categories", :controller => 'categories', :requirements => { :type => "#{category}_category" }
   end
@@ -52,6 +52,6 @@ map.namespace :admin do |admin|
   admin.resources :products, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }
   admin.resources :packs, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }, :controller => :products, :requirements => { :type => 'pack' }
   #admin.resources :special_offers, :collection => { :special_offer => [:get, :post] }
-  admin.resources :special_offers
+  admin.resources :special_offers, :member => { :activate => :post }
 end
 end

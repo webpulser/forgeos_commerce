@@ -2,6 +2,11 @@ require 'ruleby'
 
 class Admin::SpecialOffersController < Admin::BaseController
   include Ruleby
+  before_filter :get_special_offer, :only => [:activate, :show, :destroy]
+
+  def activate
+    render :text => @special_offer.activate
+  end
   
   def index
     respond_to do |format|
@@ -49,13 +54,14 @@ class Admin::SpecialOffersController < Admin::BaseController
       @rule = SpecialOfferRule.new
       @rule.name = params[:rule_builder][:name]
       @rule.description = params[:rule_builder][:description]
+      @rule.active = params[:rule_builder][:active]
       
       params[:rule][:targets].each_with_index do |rule_target, index|
         build_a_rule(rule_target, index)
       end
       
       if params[:rule_builder]['for'] == 'Category'
-        @rule_condition << "m.category.==('#{params[:rule_builder][:target]}')"
+        @rule_condition << "m.has_category_#{params[:rule_builder][:target]}.==(true)"
       end
       
       @rule.conditions = "[#{@rule_condition.join(', ')}]" 
@@ -65,7 +71,12 @@ class Admin::SpecialOffersController < Admin::BaseController
       rule_parent = nil
       params[:rule][:targets].each_with_index do |rule_target, index|
         @rule_condition = []
-        @rule_condition << params[:rule_builder]['for'] << ':product'
+        if params[:rule_builder]['for'] == 'Category'
+          @rule_condition << 'Product'
+        else
+          @rule_condition << params[:rule_builder]['for']
+        end
+        @rule_condition << ':product'
         @rule = SpecialOfferRule.new
         @rule.parent = rule_parent
         @rule.name = params[:rule_builder][:name]
@@ -74,7 +85,7 @@ class Admin::SpecialOffersController < Admin::BaseController
         build_a_rule(rule_target, index)
         
         if params[:rule_builder]['for'] == 'Category'
-          @rule_condition << "m.category.==('#{params[:rule_builder][:target]}')"
+          @rule_condition << "m.has_category_#{params[:rule_builder][:target]}.==(true))"
         end
         
         @rule.conditions = "[#{@rule_condition.join(', ')}]" 
@@ -124,7 +135,6 @@ class Admin::SpecialOffersController < Admin::BaseController
   end
   
   def destroy
-    @special_offer = SpecialOfferRule.find_by_id(params[:id])
     if @special_offer.destroy
       flash[:notice] = t('special_offer.destroy.success')
     else
@@ -134,7 +144,6 @@ class Admin::SpecialOffersController < Admin::BaseController
   end
   
   def show
-    @special_offer = SpecialOfferRule.find_by_id(params[:id])
     @selected_products = []
     engine :special_offer_engine do |e|
       rule_builder = SpecialOffer.new(e)
@@ -153,6 +162,13 @@ class Admin::SpecialOffersController < Admin::BaseController
   end
   
 private
+
+  def get_special_offer
+    unless @special_offer = SpecialOfferRule.find_by_id(params[:id])
+      flash[:error] = t('special_offer.found.failed')
+      redirect_to(admin_special_offers_path)
+    end
+  end
 
   def sort
     columns = %w(rules.name rules.name active rules.use)

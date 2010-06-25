@@ -27,7 +27,7 @@
           %div
             = select_tag 'rule_builder[for]', options_for_select(Hash['Category', "Category"].collect{|c| [c[0], c[1]]}+@for.collect{|c| [c[0], c[1]] }), {:onchange => "change_select_for(this)"}
           %div
-            = select 'rule_builder', 'target', ProductCategory.all.collect(&:name)
+            = select 'rule_builder', 'target', ProductCategory.all(:joins => [:globalize_translations], :select => 'categories.id,name', :group => 'category_id').map{|cat| [cat.name, cat.id]}
           .clear
         .specialOffers_bottom_arrow
 
@@ -97,11 +97,7 @@
   #right-sidebar.grid_4.omega
     .step.status.open
       %div
-        %select.published{ :name => "status" }
-          %option{ :selected => "selected", :value => "published" }
-            Active
-          %option{ :value => "draft" }
-            Inactive
+        = select :rule_builder, :active, [[t('unpublished'), 0], [t('published'), 1]], :selected => 1
       .clear
     .step
       /%a.small-icons.duplicate{ :href => "#" }

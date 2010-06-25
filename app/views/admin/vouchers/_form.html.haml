@@ -94,11 +94,7 @@
   #right-sidebar.grid_4.omega
     .step.status.open
       %div
-        %select.published{ :name => "status" }
-          %option{ :selected => "selected", :value => "published" }
-            Active
-          %option{ :value => "draft" }
-            Inactive
+        = select :rule_builder, :active, [[t('unpublished'), 0], [t('published'), 1]], :selected => 1
       .clear
     .step
       Voucher code :

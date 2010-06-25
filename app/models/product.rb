@@ -40,6 +40,14 @@ class Product < ActiveRecord::Base
 
   define_translated_index :name, :description, :url
 
+  def method_missing(method_id,*args)
+    if cat_id = method_id.to_s.match(/has_category_(\d+)/)
+      return product_category_ids.include?(cat_id[1].to_i)
+    else
+      super(method_id,*args)
+    end
+  end
+
   def public_url
     unless product_categories.empty?
       category = product_categories.first
@@ -79,7 +87,7 @@ class Product < ActiveRecord::Base
   end
 
   def synchronize_stock
-    if active && stock.to_i < 1
+    if stop_sales? && active? && stock.to_i < 1
       self.update_attribute('active', false)
     end
   end
@@ -89,11 +97,11 @@ class Product < ActiveRecord::Base
   end
 
   def activate
-    self.update_attribute('active', !self.active )
+    self.update_attribute('active', !self.active? )
   end
 
   def soft_delete
-    self.update_attribute('deleted', !self.deleted )
+    self.update_attribute('deleted', !self.deleted? )
   end
 
   # Returns product's price without tax by default
@@ -106,8 +114,7 @@ class Product < ActiveRecord::Base
   def price(with_tax=false, with_currency=true)
     price = super || 0
     price += tax(false) if with_tax
-    return price if Currency::is_default? || !with_currency
-    ("%01.2f" % (price * $currency.to_exchanges_rate(Currency::default).rate)).to_f
+    price
   end
 
   def new_price(with_voucher=false)
@@ -125,7 +132,7 @@ class Product < ActiveRecord::Base
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def price_to_s(with_tax=false, with_currency=true)
-    "#{price(with_tax, with_currency)} #{$currency.html}"
+    price(with_tax, with_currency).to_s
   end
 
   # Returns total product's tax

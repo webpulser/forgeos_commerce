@@ -1,6 +1,10 @@
 class Admin::VouchersController < Admin::BaseController
-  before_filter :get_voucher, :only => [:destroy]
+  before_filter :get_voucher, :only => [:activate,:destroy]
   
+  def activate
+    render :text => @voucher.activate
+  end
+
   def new
     
   end
@@ -45,6 +49,7 @@ class Admin::VouchersController < Admin::BaseController
       @rule.code = params[:voucher_code]
       @rule.name = params[:rule_builder][:name]
       @rule.description = params[:rule_builder][:description]
+      @rule.active = params[:rule_builder][:active]
       
       params[:rule][:targets].each_with_index do |rule_target, index|
         build_a_rule(rule_target, index)

@@ -2,11 +2,17 @@
   output = {
     :iTotalDisplayRecords => @special_offers.total_entries || 0,
     :aaData => @special_offers.collect do |special_offer|
+      klass = special_offer.active? ? 'see-on' : 'see-off'
       link_id = special_offer.id
       [
          content_tag(:div, '<div class="handler"></div><div class="small-icons offers"></div>', :id => link_id, :class => 'handler_container'),
         link_to(special_offer.name, admin_special_offer_path(special_offer.id)),
-        select_tag(:status, options_for_select([['Active',1], ['Inactive',0]], special_offer.active)),
+        link_to_remote('', :url => activate_admin_special_offer_path(special_offer),
+             :complete => "toggleActivate('#show_#{link_id}')",
+             :html => {
+               :class => "small-icons #{klass}",
+               :id => "show_#{link_id}"
+        }),
         special_offer.use,
         link_to_remote('', :url => { :controller => 'special_offers', :action => 'destroy', :id => special_offer.id },
            :method => :delete,
