@@ -40,14 +40,14 @@
           -unless product.special_offer_discount.nil?
             %span.old-price
               = number_with_precision(product.price,2)
-              = $currency.html
+              = current_currency.html
             %span.new-price
               = number_with_precision(product.new_price,2)
-              = $currency.html
+              = current_currency.html
           -else
             %span.price
               = number_with_precision(product.price,2)
-              = $currency.html
+              = current_currency.html
         .clear
         -if !product.product_type.product_attributes.find_by_access_method('color').nil? and !product.color.blank?
           .color-picker
@@ -103,7 +103,7 @@
               %span= truncate(product_cross.name,15,' ...')
               %span.price
                 = number_with_precision(product_cross.price,2)
-                = $currency.html
+                = current_currency.html
 - content_for :breadcrumbs do
   = link_to category.name, catalog_path(:url => nil, :category_name => category.name)
   - if @category_choice

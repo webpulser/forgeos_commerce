@@ -19,7 +19,7 @@ module CartHelper
           content += carts_product.tax.to_s
         content += "</div>"
         content += "<div class='cart_price'>"
-          content += carts_product.free == 1 ? "Free" : carts_product.total(carts_product.product).to_s + " " + $currency.html
+          content += carts_product.free == 1 ? "Free" : carts_product.total(carts_product.product).to_s + " " + current_currency.html
         content += "</div>"
       end
       content += "<div class='cart_remove'>"
@@ -42,8 +42,8 @@ module CartHelper
       content += display_cart_by_carts_product(cart, carts_product, static, mini)
     end
     content += "<div class='cart_total'><b>#{I18n.t('total').capitalize} : </b>"
-      content += cart.total(true).to_s + " " + $currency.html
-      content += " with special discount : "+ cart.total(true,nil,true).to_s + " " + $currency.html + " !!" if cart.discount
+      content += cart.total(true).to_s + " " + current_currency.html
+      content += " with special discount : "+ cart.total(true,nil,true).to_s + " " + current_currency.html + " !!" if cart.discount
     content += "</div>"
   end
   

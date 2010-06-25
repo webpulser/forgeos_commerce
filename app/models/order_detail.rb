@@ -32,8 +32,7 @@ class OrderDetail < ActiveRecord::Base
     price -= self.special_offer_discount_price if with_special_offer and self.special_offer_discount_price
     price -= self.voucher_discount_price if with_voucher and self.voucher_discount_price
     price += tax(false) if with_tax
-    return ("%01.2f" % price).to_f if Currency::is_default? || !with_currency
-    ("%01.2f" % (price * $currency.to_exchanges_rate(Currency::default).rate)).to_f
+    return price
   end
 
   # Returns total product's tax
@@ -43,7 +42,7 @@ class OrderDetail < ActiveRecord::Base
   #
   # This method use <i>price</i> : <i>price(false, with_currency)</i>
   def tax(with_currency=true)
-    ("%01.2f" % (price(false, with_currency) * rate_tax/100)).to_f
+    price(false, with_currency) * rate_tax/100.0
   end
 
   # Returns tax * quantity

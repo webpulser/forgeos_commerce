@@ -21,7 +21,7 @@
         %td= product.name
         %td
           = number_with_precision(product.price,2)
-          = $currency.html
+          = current_currency.html
         %td=# product.quantity
         %td= product.rate_tax
         %td= link_to_if false, t('cancel').capitalize, :url => :root

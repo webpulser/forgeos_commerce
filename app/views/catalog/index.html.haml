@@ -25,7 +25,7 @@
                 =link_to image_tag("/images/admin/no-image.png", :class => 'img_carousel'), product.public_url
               %span.price
                 = number_with_precision(product.price,2)
-                = $currency.html  
+                = current_currency.html  
     =render :partial => 'products/show', :locals => { :product => @selected_product, :category => @product_category }
   -else
     .no_product

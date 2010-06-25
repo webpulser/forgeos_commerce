@@ -85,7 +85,7 @@ class CartController < ApplicationController
       session[:voucher_code] = voucher.code
       render(:update) do |page|
         page.replace_html('voucher_message', "With voucher code #{voucher.code} : #{voucher.name}")
-        page.replace_html('cart_total', "#{current_cart.total} #{$curreny.html}")
+        page.replace_html('cart_total', price_with_currency(current_cart.total))
         page.visual_effect :highlight, 'cart_total'
       end
     end
@@ -131,34 +131,37 @@ protected
     voucher = VoucherRule.find_all_by_active_and_code(true,@voucher_code)
     render(:update) do |page|
       page.replace_html('voucher_message', "Le code promo #{@voucher_code} est invalide")
-      page.replace_html('cart_total', "#{current_cart.total} #{$curreny.html}")
+      page.replace_html('cart_total', price_with_currency(current_cart.total))
       session.delete(:voucher_code) if session[:voucher_code]
     end if voucher.blank? or voucher.nil?
   end
 
   def voucher
-    engine :voucher_engine do |e|
-      rule_builder = Voucher.new(e)
-      rule_builder.cart = current_cart
-      rule_builder.code = @voucher_code || session[:voucher_code]
-      rule_builder.free_product_ids = @free_product_ids
-      rule_builder.rules
-      current_cart.carts_products.each do |cart_product|
-        e.assert cart_product.product
-      end
-      e.assert current_cart
-      e.match
-    end  
+    begin
+      engine :voucher_engine do |e|
+        rule_builder = Voucher.new(e)
+        rule_builder.cart = current_cart
+        rule_builder.code = @voucher_code || session[:voucher_code]
+        rule_builder.free_product_ids = @free_product_ids
+        rule_builder.rules
+        current_cart.carts_products.each do |cart_product|
+          e.assert cart_product.product
+        end
+        e.assert current_cart
+        e.match
+      end  
+    rescue Exception
+    end
   end
-
 
   def get_cross_selling
     
     @cross_selling_products = []
     current_cart.carts_products.group_by(&:product_id).each do |cart_product|
-      product = cart_product[1].first.product
-      product.cross_sellings.each do |cross_selling_product|
-        @cross_selling_products << cross_selling_product
+      if product = cart_product[1].first.product
+        product.cross_sellings.each do |cross_selling_product|
+          @cross_selling_products << cross_selling_product
+        end
       end
     end
 

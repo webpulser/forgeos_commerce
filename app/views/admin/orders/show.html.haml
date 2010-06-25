@@ -95,7 +95,7 @@
           %br
       -#.order-totals
         %div= t('tax', :count => 2).capitalize
-        %span= "#{@order.taxes} #{$currency.html}"
+        %span= "#{@order.taxes} #{current_currency.html}"
       .order-totals.total-block
         .order-total= t('order.total').capitalize
         %span.order-total= price_with_currency @order.total

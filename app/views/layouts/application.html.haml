@@ -52,13 +52,13 @@
                       %span.li-product-qty= "x#{nb}"
                       %span.li-product-price
                         = number_with_precision(product.price*nb,2)
-                        = $currency.html
+                        = current_currency.html
                       %span.clear
                   %li.last
                     %span.li-product-name= t(:total)
                     %span.li-product-qty
                       = number_with_precision(current_cart.total,2)
-                      = $currency.html
+                      = current_currency.html
           .create-customer-space
             -if logged_in?
               = link_to "#{t(:welcome)} #{current_user.fullname}", "#"

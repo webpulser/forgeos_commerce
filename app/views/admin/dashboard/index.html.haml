@@ -1,4 +1,4 @@
-- currency = $currency.code.upcase
+- currency = current_currency.code.upcase
 - total_for_today = Forgeos::Commerce::Statistics.total_of_sales(Date.current).to_f
 - total_for_yesterday = Forgeos::Commerce::Statistics.total_of_sales(Date.current.yesterday).to_f
 - total_for_week = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(1.week)..Date.current).to_f

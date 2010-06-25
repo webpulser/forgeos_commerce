@@ -154,8 +154,8 @@ class OrderController < ApplicationController
     order_total = current_cart.total + transporter_price
 
     render(:update) do |page|
-      #page.replace_html('order_total_price', "#{order_total} #{$currency.html}")
-      page.replace_html('transporter_price', "#{current_cart.total + transporter_price} #{$currency.html}")
+      #page.replace_html('order_total_price', "#{order_total} #{current_currency.html}")
+      page.replace_html('transporter_price', "#{current_cart.total + transporter_price} #{current_currency.html}")
       page.visual_effect :highlight, 'transporter_price'
       page.visual_effect :highlight, 'order_total_price'
     end
@@ -236,33 +236,39 @@ private
 
   # check special offer rules
   def special_offer
-    engine :special_offer_engine do |e|
-      rule_builder = SpecialOffer.new(e)
-      rule_builder.cart = current_cart
-      @free_product_ids = []
-      rule_builder.free_product_ids = @free_product_ids
-      rule_builder.rules
-      current_cart.carts_products.each do |cart_product|
-        e.assert cart_product.product
+    begin
+      engine :special_offer_engine do |e|
+        rule_builder = SpecialOffer.new(e)
+        rule_builder.cart = current_cart
+        @free_product_ids = []
+        rule_builder.free_product_ids = @free_product_ids
+        rule_builder.rules
+        current_cart.carts_products.each do |cart_product|
+          e.assert cart_product.product
+        end
+        e.assert current_cart
+        e.match
       end
-      e.assert current_cart
-      e.match
+    rescue Exception
     end
   end
 
   # check voucher rules
   def voucher
-    engine :voucher_engine do |e|
-      rule_builder = Voucher.new(e)
-      rule_builder.cart = current_cart
-      rule_builder.code = session[:voucher_code]
-      rule_builder.free_product_ids = @free_product_ids
-      rule_builder.rules
-      current_cart.carts_products.each do |cart_product|
-        e.assert cart_product.product
+    begin
+      engine :voucher_engine do |e|
+        rule_builder = Voucher.new(e)
+        rule_builder.cart = current_cart
+        rule_builder.code = session[:voucher_code]
+        rule_builder.free_product_ids = @free_product_ids
+        rule_builder.rules
+        current_cart.carts_products.each do |cart_product|
+          e.assert cart_product.product
+        end
+        e.assert current_cart
+        e.match
       end
-      e.assert current_cart
-      e.match
+    rescue Exception
     end
   end
 
@@ -271,19 +277,20 @@ private
 
     def shipping_methods
       @transporter_ids = []
+      begin
+        engine :transporter_engine do |e|
 
-      engine :transporter_engine do |e|
-
-        rule_builder = Transporter.new(e)
-        rule_builder.transporter_ids = @transporter_ids
-        rule_builder.rules
-        current_cart.carts_products.each do |cart_product|
-          e.assert cart_product.product
+          rule_builder = Transporter.new(e)
+          rule_builder.transporter_ids = @transporter_ids
+          rule_builder.rules
+          current_cart.carts_products.each do |cart_product|
+            e.assert cart_product.product
+          end
+          e.assert current_cart
+          e.match
         end
-        e.assert current_cart
-        e.match
+      rescue Exception
       end
-
     end
   
 end

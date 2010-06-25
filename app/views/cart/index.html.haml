@@ -22,11 +22,11 @@
                 %td=product.name
                 %td
                   = number_with_precision(product.price,2)
-                  = $currency.html
+                  = current_currency.html
                 %td=nb
                 %td
                   = number_with_precision(nb*product.price,2)
-                  = $currency.html
+                  = current_currency.html
       .total-div
         -current_cart.carts_products.each do |carts_product|
           -unless carts_product.product.special_offer_discount.nil?
@@ -34,7 +34,7 @@
               ="Promo #{carts_product.product.name} #{carts_product.product.special_offer_discount}"
             %span.total-price
               = number_with_precision(carts_product.product.new_price,2)
-              = $currency.html
+              = current_currency.html
 
         -@free_product_ids.each do |product_id|
           -product = Product.find_by_id(product_id)
@@ -51,7 +51,7 @@
           Prix total
         %span.total-price.last#cart_total
           = number_with_precision(current_cart.total,2)
-          = $currency.html
+          = current_currency.html
       .clear
       #voucher_message
         - if current_cart.voucher
@@ -81,5 +81,5 @@
               - else
                 %img{ :src => "/images/front_demo/product_image.jpg", :alt => "image produit" }
               %span= truncate(product.name,15,' ...')
-              %span.price= "#{product.price} #{$currency.html}"
+              %span.price= "#{product.price} #{current_currency.html}"
 - content_for :title, t(:cart, :count => 1)

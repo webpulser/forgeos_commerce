@@ -1,12 +1,10 @@
 class ApplicationController < ActionController::Base
-  before_filter :set_currency
-  helper_method :current_cart, :current_wishlist
+  helper_method :current_cart, :current_wishlist, :current_currency
   # Change the currency
   def change_currency(currency_id)
-    # TODO - move this method in an appriate class or module.
-    currency = Currency.find_by_id(currency_id)
-    $currency = currency if currency # Security if currency_id don't exist
-    session[:currency] = $currency.id
+    if currency = Currency.find_by_id(currency_id)
+      session[:currency] = currency.id
+    end
     redirect_to(:back)
   end
 
@@ -16,6 +14,7 @@ private
   #
   # If <i>session[:cart_id]</i> existing, this method instance just <i>@cart</i>
   def current_cart
+    return @cart if @cart
     session[:cart_id] = current_user.cart.id if session[:cart_id].nil? && logged_in? && !current_user.is_a?(Administrator) && current_user.cart
     @cart = Cart.find_by_id(session[:cart_id])
     # If current_cart is nil because a problem of session or db.
@@ -30,6 +29,7 @@ private
   end
 
   def current_wishlist
+    return @wishlist if @wishlist
     session[:wishlist_id] = current_user.wishlist.id if session[:wishlist_id].nil? && logged_in? && !current_user.is_a?(Administrator) && current_user.wishlist
     @wishlist = Wishlist.find_by_id(session[:wishlist_id])
     if @wishlist.nil?
@@ -54,12 +54,14 @@ private
     end
   end
 
-  def set_currency
+  def current_currency
     if Currency.table_exists?
-      currency = Currency.find_by_id(session[:currency])
-      currency = Currency.find_by_code('EUR') unless currency #Locale.active.currency_code
-      $currency = currency if currency
-      session[:currency] = $currency.id 
+      #TODO move default current to Setting
+      if currency=(Currency.find_by_id(session[:currency]) || Currency.find_by_code('EUR'))
+        $currency = currency
+        session[:currency] = currency.id
+        return currency
+      end
     end
   end
 end

@@ -27,7 +27,7 @@ module WishlistHelper
           content += wishlists_product.tax.to_s
         content += "</div>"
         content += "<div class='wishlist_price'>"
-          content += wishlists_product.total(wishlists_product.product).to_s + " " + $currency.html
+          content += wishlists_product.total(wishlists_product.product).to_s + " " + current_currency.html
         content += "</div>"
       end
       content += "<div class='wishlist_remove'>"
@@ -50,7 +50,7 @@ module WishlistHelper
       content += display_wishlist_by_wishlists_product(wishlist, wishlists_product, static, mini)
     end
     content += "<div class='wishlist_total'><b>#{I18n.t('total').capitalize} : </b>"
-      content += wishlist.total(true).to_s + " " + $currency.html
+      content += wishlist.total(true).to_s + " " + current_currency.html
     content += "</div>"
   end
   

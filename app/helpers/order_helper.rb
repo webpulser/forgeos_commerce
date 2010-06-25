@@ -25,7 +25,7 @@ module OrderHelper
       content_tag :div, order_detail.quantity, :class => 'order_quantity'
       content_tag :div, order_detail.price, :class => 'order_price'
       content_tag :div, order_detail.total_tax, :class => 'order_tax'
-      content_tag :div, "#{order_detail.total(true)} #{$currency.html}", :class => 'order_price'
+      content_tag :div, "#{order_detail.total(true)} #{current_currency.html}", :class => 'order_price'
     end
   end
 
@@ -49,14 +49,14 @@ module OrderHelper
       content += display_order_by_carts_product(order, order_detail)
     end
     content += content_tag :div, order.order_shipping.name, :class=>'order_transporter'
-    content += content_tag :div, "#{price} #{$currency.html}", :class=>'order_transporter_price'
+    content += content_tag :div, "#{price} #{current_currency.html}", :class=>'order_transporter_price'
     if order.voucher
       content += content_tag :div,
-        "#{I18n.t('voucher', :count => 1)} : -#{order.voucher} #{order.voucher.percent} #{$currency.html}",
+        "#{I18n.t('voucher', :count => 1)} : -#{order.voucher} #{order.voucher.percent} #{current_currency.html}",
         :class => 'order_voucher'
     end
     content += content_tag :div, :class=>'order_total' do
-      content_tag :b, "#{I18n.t('total').capitalize} : #{order.total(true)} #{$currency.html}"
+      content_tag :b, "#{I18n.t('total').capitalize} : #{order.total(true)} #{current_currency.html}"
     end
   end
   
@@ -103,7 +103,7 @@ module OrderHelper
               )
             )
           content += transporter.name.nil? ? transporter.parent.name : transporter.name
-          content += " (#{transporter.variables} #{$currency.html})"
+          content += " (#{transporter.variables} #{current_currency.html})"
         content += '</span>'
 
         content += '<div class="order_shipping_method_description">'
@@ -180,7 +180,7 @@ module OrderHelper
   # Display the order's total price
   def display_total
     content = '<div class="order_total">'
-      content += I18n.t('total').upcase + " : <span class='order-total-price'><span id='order_total_price'></span>#{$currency.html}</span>"
+      content += I18n.t('total').upcase + " : <span class='order-total-price'><span id='order_total_price'></span>#{current_currency.html}</span>"
       content += javascript_tag remote_function(:url => { :controller => 'order', :action => 'update_total' })
     content += '</div>'
   end

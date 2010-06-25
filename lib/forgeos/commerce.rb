@@ -4,4 +4,4 @@ module Forgeos
 end
 
 require 'forgeos/commerce/float'
-$currency = Currency.find_by_code('EUR') if Currency.table_exists?
+#TODO REMOVE $currency = Currency.find_by_code('EUR') if Currency.table_exists?

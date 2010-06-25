@@ -7,7 +7,7 @@
       = label_tag :price, "#{t('price', :count => 1).capitalize}<sup class=\"required\">*</sup>"
       = f.text_field :price, :class => 'backgrounds grid_2 alpha omega', :id => 'price'
       %span.currency
-        = $currency.html
+        = current_currency.html
     = f.label :sku, t('sku')
     %div
       = f.text_field :sku
