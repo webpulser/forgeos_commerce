@@ -31,7 +31,12 @@ class Admin::SpecialOffersController < Admin::BaseController
     @main_attributes = %w(price title description weight sKU stock)
     
     @rule_condition = []
-    @rule_condition << params[:rule_builder]['for'] << ':product'
+    if params[:rule_builder]['for'] == 'Category'
+      @rule_condition << 'Product'
+    else
+      @rule_condition << params[:rule_builder]['for']
+    end
+    @rule_condition << ':product'
     
     # Build Action variables
     variables = {}
