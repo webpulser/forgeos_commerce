@@ -17,7 +17,7 @@ class Order < ActiveRecord::Base
   aasm_initial_state :unpaid
   aasm_state :unpaid
   aasm_state :paid, :after_enter => :mail_payment_confirmation
-  aasm_state :shipped
+  aasm_state :shipped, :after_enter => :enter_shipping_event
   aasm_state :canceled
   aasm_state :closed
 
@@ -118,6 +118,11 @@ class Order < ActiveRecord::Base
 
   def mail_payment_confirmation
     Notifier.deliver_order_confirmation(self.user,self) if self.user
+  end
+  
+  def enter_shipping_event
+    #TODO write a generic function for this event
+    #Override this function to do what you want
   end
 
 end
