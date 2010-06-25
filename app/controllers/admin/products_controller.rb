@@ -180,7 +180,6 @@ private
       options[:sql_order] = options.delete(:order)
       @products = Product.search(params[:sSearch],options)
     else
-      options[:group] = :product_id
       @products = Product.paginate(:all,options)
     end
   end
