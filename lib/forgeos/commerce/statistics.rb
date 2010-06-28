@@ -36,6 +36,7 @@ module Forgeos
       end
 
       def self.best_customers(date, limit = nil)
+        return [] if OrderDetail.count < 1
         OrderDetail.sum(:price,
           :conditions => { :orders => { :status => %w(paid shipped closed), :updated_at => date } },
           :include => :order,
