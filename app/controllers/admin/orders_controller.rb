@@ -91,7 +91,7 @@ class Admin::OrdersController < Admin::BaseController
     # get order_details ids
     
     if order_details = params[:order][:order_details_attributes]
-      detail_ids = order_details.values.collect{ |detail| detail['id'].to_i if detail['id'] && detail['_delete'].to_i != 1 }.uniq.compact
+      detail_ids = order_details.values.collect{ |detail| detail['id'].to_i if detail['id'] && detail['_destroy'].to_i != 1 }.uniq.compact
       editing_order.order_detail_ids = detail_ids
     end
 

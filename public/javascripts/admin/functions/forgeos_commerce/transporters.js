@@ -21,7 +21,7 @@ function remove_delivery_rule(element){
   rule_id = get_rails_element_id($(element).parent());
 
   if (rule_id > 0) {
-    _delete = '<input type="hidden" id="shipping_methods_to_delete_" name="shipping_methods_to_delete][]" value="'+ rule_id +'" />'
+    _delete = '<input type="hidden" id="shipping_methods_to_delete_" name="shipping_methods_to_delete[]" value="'+ rule_id +'" />'
     $('#delivery-rules').append(_delete);
   }
 
