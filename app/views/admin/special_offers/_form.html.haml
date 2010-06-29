@@ -27,7 +27,7 @@
           %div
             = select_tag 'rule_builder[for]', options_for_select(Hash['Category', "Category"].collect{|c| [c[0], c[1]]}+@for.collect{|c| [c[0], c[1]] }), {:onchange => "change_select_for(this)"}
           %div
-            = select 'rule_builder', 'target', ProductCategory.all(:joins => [:globalize_translations], :select => 'categories.id,name', :group => 'category_id').map{|cat| [cat.name, cat.id]}
+            = select 'rule_builder', 'target', ProductCategory.all(:joins => [:translations], :select => 'categories.id,name', :group => 'category_id').map{|cat| [cat.name, cat.id]}
           .clear
         .specialOffers_bottom_arrow
 

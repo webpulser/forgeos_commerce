@@ -136,7 +136,8 @@ class Admin::SpecialOffersController < Admin::BaseController
     @rule_condition << "m.#{target}.#{params[:rule][:conds][index]}(#{value})"
   end
   
-  def new    
+  def new
+    @products = Product.all(:joins => [:translations], :select => 'products.id,name,sku', :order => 'sku')
   end
   
   def destroy

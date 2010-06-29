@@ -19,9 +19,7 @@
     - @order.order_details.each do |product|
       %tr
         %td= product.name
-        %td
-          = number_with_precision(product.price,2)
-          = current_currency.html
+        %td= price_with_currency(product.price(false,false,true,true))
         %td=# product.quantity
         %td= product.rate_tax
         %td= link_to_if false, t('cancel').capitalize, :url => :root

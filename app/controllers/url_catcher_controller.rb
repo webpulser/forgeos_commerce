@@ -1,9 +1,9 @@
 class UrlCatcherController < ApplicationController
   def product
-    #@product = Product.find_by_url_and_deleted_and_active(params[:url],[false,nil],true,:joins => :globalize_translations)
-    @product = Product.find_by_url(params[:url],:joins => :globalize_translations)
-    @category_choice = ProductCategory.find_by_name(params[:category_choice],:joins => :globalize_translations) || ProductCategory.find_by_id(params[:category_choice])
-    @product_category = ProductCategory.find_by_name(params[:category_name],:joins => :globalize_translations)
+    #@product = Product.find_by_url_and_deleted_and_active(params[:url],[false,nil],true,:joins => :translations)
+    @product = Product.find_by_url(params[:url],:joins => :translations)
+    @category_choice = ProductCategory.find_by_name(params[:category_choice],:joins => :translations) || ProductCategory.find_by_id(params[:category_choice])
+    @product_category = ProductCategory.find_by_name(params[:category_name],:joins => :translations)
 
     if @product
       if @category_choice

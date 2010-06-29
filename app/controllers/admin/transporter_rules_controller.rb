@@ -241,7 +241,7 @@ class Admin::TransporterRulesController < Admin::BaseController
     end
     
     def get_product_types
-      @product_types = ProductType.all(:include => :globalize_translations , :order => 'product_type_translations.name' ).collect{|c| [c.name, c.id]}
+      @product_types = ProductType.all(:include => :translations , :order => 'product_type_translations.name' ).collect{|c| [c.name, c.id]}
     end
 
     def get_geo_zones

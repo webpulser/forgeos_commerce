@@ -142,7 +142,7 @@ private
 
     options[:conditions] = conditions unless conditions.empty?
     options[:order] = order unless order.squeeze.blank?
-    options[:joins] = :globalize_translations
+    options[:joins] = :translations
 
     if params[:sSearch] && !params[:sSearch].blank?
       options[:index] = "attribute_core.attribute_#{ActiveRecord::Base.locale}_core"
