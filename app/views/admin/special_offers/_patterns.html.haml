@@ -90,17 +90,18 @@
     %br
     .clear
 
-  -@attributes.each do |attribute|
-    %p{:class => "rule-#{attribute.delete " "} pattern"}
-      %span= select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes, :selected => attribute}),{ :onchange => "change_rule(this,'rule-condition')" }
+  -@attributes.each do |name, access_method|
+    %p{:class => "rule-#{name.delete(' ')} pattern"}
+      %span= select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes, :selected => name}),{ :onchange => "change_rule(this,'rule-condition')" }
       %span= select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
-      -if Attribute.find_by_name(attribute) && Attribute.find_by_name(attribute).dynamic
+      - current_attribute = Attribute.find_by_name(name)
+      -if current_attribute && current_attribute.dynamic
         = text_field_tag 'rule[values][]'
       -else
-        %span= select_tag 'rule[values][]', options_for_select(Attribute.find_by_name(attribute).attribute_values(:joins=>[:translations],:select => 'name').collect(&:name))
+        %span= select_tag 'rule[values][]', options_for_select(current_attribute.attribute_values(:joins=>[:translations],:select => 'name').collect(&:name))
       = link_to_function '', "add_rule('rule-condition')", :class => 'small-icons green-add-icon'
       = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon'
-      -if !Attribute.find_by_name(attribute).dynamic
+      -if !current_attribute.dynamic
         %br
       .clear
 
