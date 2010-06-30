@@ -7,7 +7,7 @@ class Admin::SpecialOffersController < Admin::BaseController
   def activate
     render :text => @special_offer.activate
   end
-  
+
   def index
     respond_to do |format|
       format.html
@@ -17,19 +17,19 @@ class Admin::SpecialOffersController < Admin::BaseController
       end
     end
   end
-  
+
   def create
     return flash[:error] = 'Fields' unless params[:rule_builder]
-    
+
     # GENERATE RULE !!!!!!!
-    # Parameters: {"commit"=>"Save", "rule_builder"=>{"stop"=>"0",   "title"=>"", "if"=>"Any", "target"=>"Computer", "description"=>"", "for"=>["Product"]}, 
-    #             "authenticity_token"=>"JZ3F3oEKmMB0rhQf6xHljskHTDH2aPP53unToh3SLwU=", "end_offer"=>"1", 
-    #             "end"=>{"targets"=>["Total number of offer use"], "values"=>["324"], "conds"=>["Is"]}, 
-    #             "end_offer_if"=>"Any", "act"=>{"targets"=>["Offer a product"], "values"=>["Macbook"]}, 
+    # Parameters: {"commit"=>"Save", "rule_builder"=>{"stop"=>"0",   "title"=>"", "if"=>"Any", "target"=>"Computer", "description"=>"", "for"=>["Product"]},
+    #             "authenticity_token"=>"JZ3F3oEKmMB0rhQf6xHljskHTDH2aPP53unToh3SLwU=", "end_offer"=>"1",
+    #             "end"=>{"targets"=>["Total number of offer use"], "values"=>["324"], "conds"=>["Is"]},
+    #             "end_offer_if"=>"Any", "act"=>{"targets"=>["Offer a product"], "values"=>["Macbook"]},
     #             "rule"=>{"targets"=>["Price", "Stock"], "values"=>["24", "100"], "conds"=>["==", "=="]}}
-    
+
     @main_attributes = %w(price title description weight sKU stock)
-    
+
     @rule_condition = []
     if params[:rule_builder]['for'] == 'Category'
       @rule_condition << 'Product'
@@ -37,7 +37,7 @@ class Admin::SpecialOffersController < Admin::BaseController
       @rule_condition << params[:rule_builder]['for']
     end
     @rule_condition << ':product'
-    
+
     # Build Action variables
     variables = {}
     params[:act][:targets].each_with_index do |action, index|
@@ -54,22 +54,22 @@ class Admin::SpecialOffersController < Admin::BaseController
         variables[:percent] = (params[:act][:conds][index] == "By percent" ? false : true)
       end
     end
-    
+
     if params[:rule_builder][:if] == 'All'
       @rule = SpecialOfferRule.new
       @rule.name = params[:rule_builder][:name]
       @rule.description = params[:rule_builder][:description]
       @rule.active = params[:rule_builder][:active]
-      
+
       params[:rule][:targets].each_with_index do |rule_target, index|
         build_a_rule(rule_target, index)
       end
-      
+
       if params[:rule_builder]['for'] == 'Category'
         @rule_condition << "m.has_category_#{params[:rule_builder][:target]}.==(true)"
       end
-      
-      @rule.conditions = "[#{@rule_condition.join(', ')}]" 
+
+      @rule.conditions = "[#{@rule_condition.join(', ')}]"
       @rule.variables = variables
       @rule.save
     else
@@ -86,14 +86,14 @@ class Admin::SpecialOffersController < Admin::BaseController
         @rule.parent = rule_parent
         @rule.name = params[:rule_builder][:name]
         @rule.description = params[:rule_builder][:description]
-        
+
         build_a_rule(rule_target, index)
-        
+
         if params[:rule_builder]['for'] == 'Category'
           @rule_condition << "m.has_category_#{params[:rule_builder][:target]}.==(true))"
         end
-        
-        @rule.conditions = "[#{@rule_condition.join(', ')}]" 
+
+        @rule.conditions = "[#{@rule_condition.join(', ')}]"
         @rule.variables = variables
         @rule.save
         rule_parent = @rule if index == 0
@@ -101,7 +101,7 @@ class Admin::SpecialOffersController < Admin::BaseController
     end
     redirect_to :action => 'index'
   end
-  
+
   def build_a_rule(rule_target, index)
     rule_target.downcase!
     if @main_attributes.include?(rule_target)
@@ -123,11 +123,7 @@ class Admin::SpecialOffersController < Admin::BaseController
       end
     end
 
-    if params[:rule][:values][index].to_i == 0
-      value = "'#{params[:rule][:values][index]}'"
-    else
-      value = params[:rule][:values][index]
-    end
+    value = params[:rule][:values][index]
     value_column = Product.columns_hash[target]
     # if String type then add ''
     if value_column.nil? or [:string, :text].include?(value_column.type)
@@ -139,7 +135,7 @@ class Admin::SpecialOffersController < Admin::BaseController
   def new
     @products = Product.all(:joins => [:translations], :select => 'products.id,name,sku', :order => 'sku')
   end
-  
+
   def destroy
     if @special_offer.destroy
       flash[:notice] = t('special_offer.destroy.success')
@@ -148,7 +144,7 @@ class Admin::SpecialOffersController < Admin::BaseController
     end
     redirect_to :action => 'index'
   end
-  
+
   def show
     @selected_products = []
     engine :special_offer_engine do |e|
@@ -163,10 +159,10 @@ class Admin::SpecialOffersController < Admin::BaseController
       e.match
     end
   end
-  
+
   def preview
   end
-  
+
 private
 
   def get_special_offer
