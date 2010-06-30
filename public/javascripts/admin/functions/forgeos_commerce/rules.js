@@ -71,7 +71,7 @@ function change_select_for(element){
       // then actions only => Offer a product and Offer free delivery
 
       $('#action-conditions').html('')
-      $('#action-conditions').append("<div class='condition'>"+$('.action-Offeraproduct-cart.pattern').html()+'</div>')
+      $('#action-conditions').append("<div class='condition'>"+$('.action-1-cart.pattern').html()+'</div>')
 
     }
     else{
@@ -79,9 +79,9 @@ function change_select_for(element){
 	  $('#action-conditions').html('')
 	  $('#rule-conditions').append("<div class='condition'>"+$('.rule-condition.pattern').html()+'</div>')
       if ($('#rule_builder_for :selected').text() == 'Product in Cart'){     
-        $('#action-conditions').append("<div class='condition'>"+$('.action-Discountpricethisproduct-productincart.pattern').html()+'</div>')   
+        $('#action-conditions').append("<div class='condition'>"+$('.action-0-productincart.pattern').html()+'</div>')   
       } else {
-        $('#action-conditions').append("<div class='condition'>"+$('.action-Discountpricethisproduct-productinshop.pattern').html()+'</div>')
+        $('#action-conditions').append("<div class='condition'>"+$('.action-0-productinshop.pattern').html()+'</div>')
       }
     }
   }
@@ -90,7 +90,7 @@ function change_select_for(element){
     $('#rule-conditions').html('')
     $('#rule-conditions').append("<div class='condition'>"+$('.rule-condition.pattern').html()+'</div>')
     $('#action-conditions').html('')
-    $('#action-conditions').append("<div class='condition'>"+$('.action-Discountpricethisproduct-category.pattern').html()+'</div>')
+    $('#action-conditions').append("<div class='condition'>"+$('.action-0-category.pattern').html()+'</div>')
 
   }
   rezindex();

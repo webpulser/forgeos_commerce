@@ -7,6 +7,7 @@ fr:
     zero: "cette offre spécial s'applique à {{count}} produit"
     one: "cette offre spécial s'applique à {{count}} produit"
     other: "cette offre spécial s'applique à {{count}} produits"
+  product_type_id: Type de produit
   special_offer:
     one: offre spéciale
     other: offres spéciales
@@ -23,7 +24,7 @@ fr:
     _for:
       category: une catégorie de produit
       product_in_shop: un produit de la boutique
-      product_in_cart: un produit dans la panier
+      product_in_cart: un produit dans le panier
       cart: un panier complet
     _if:
       all: Toutes ces

@@ -28,7 +28,7 @@ class Admin::SpecialOffersController < Admin::BaseController
     #             "end_offer_if"=>"Any", "act"=>{"targets"=>["Offer a product"], "values"=>["Macbook"]},
     #             "rule"=>{"targets"=>["Price", "Stock"], "values"=>["24", "100"], "conds"=>["==", "=="]}}
 
-    @main_attributes = %w(price title description weight sKU stock)
+    @main_attributes = %w(price title description weight sku stock product_type_id)
 
     @rule_condition = []
     if params[:rule_builder]['for'] == 'Category'
@@ -42,16 +42,16 @@ class Admin::SpecialOffersController < Admin::BaseController
     variables = {}
     params[:act][:targets].each_with_index do |action, index|
       case "#{action}"
-      when "Discount price this product"
+      when '0'
         variables[:discount] = params[:act][:values][index].to_i
-        variables[:fixed_discount] = (params[:act][:conds][index] == "By percent" ? false : true)
-      when "Offer a product"
+        variables[:fixed_discount] = (params[:act][:conds][index] == '0' ? false : true)
+      when '1'
         variables[:product_ids] = [params[:act][:values][index].to_i]
-      when "Offer free delivery"
+      when '2'
         variables[:shipping_ids] = params[:act][:values][index]
-      when "Discount cart"
+      when '3'
         variables[:cart_discount] = params[:act][:values][index]
-        variables[:percent] = (params[:act][:conds][index] == "By percent" ? false : true)
+        variables[:percent] = (params[:act][:conds][index] == '0' ? false : true)
       end
     end
 
