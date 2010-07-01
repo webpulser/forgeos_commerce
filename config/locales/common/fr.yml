@@ -401,7 +401,7 @@ fr:
       failed: "un problème est survenu lors de la suppression du tag"
       confirm: "êtes-vous sûr de vouloir supprimer ce tag ?"
 
-  special_offer_rule:
+  special_offer:
     one: 'offre speciale'
     other: 'offre speciales'
     create:

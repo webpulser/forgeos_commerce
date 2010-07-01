@@ -403,7 +403,7 @@ en:
       failed: 'a problem occured during the tag deletion'
       confirm: 'are you sure to delete this tag ?'
 
-  special_offer_rule:
+  special_offer:
     one: 'special offer'
     other: 'special offers'
     create:
