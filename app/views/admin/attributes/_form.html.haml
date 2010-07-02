@@ -7,11 +7,11 @@
       .inner-content
         - case attribute.class.to_s
           - when 'CheckboxAttribute'
-            = render :partial => 'checkbox', :locals => { :attribute => attribute, :form => f }
+            = render :partial => 'choice', :locals => { :attribute => attribute, :form => f, :label => 'checkbox_attribute.field' }
           - when 'PicklistAttribute'
-            = render :partial => 'picklist', :locals => { :attribute => attribute, :form => f }
+            = render :partial => 'choice', :locals => { :attribute => attribute, :form => f, :label => 'picklist_attribute.field' }
           - when 'RadiobuttonAttribute'
-            = render :partial => 'radiobutton', :locals => { :attribute => attribute, :form => f }
+            = render :partial => 'choice', :locals => { :attribute => attribute, :form => f, :label => 'radiobutton_attribute.field' }
           - when 'TextAttribute'
             = render :partial => 'text', :locals => { :attribute => attribute, :form => f }
           - when 'LongtextAttribute'
@@ -34,3 +34,4 @@
         = I18n.t('attribute.access_method')
         = f.text_field :access_method, :class => 'field'
   = javascript_tag "object_name = '#{f.object_name}'"
+= render :partial => 'attachments_popups'
