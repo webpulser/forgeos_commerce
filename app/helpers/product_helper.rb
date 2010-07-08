@@ -108,7 +108,7 @@ module ProductHelper
   def display_product_page_attributes(product)
     content = ""
     return content unless product && product.product_type
-    product.product_type.attributes.each do |attribute|
+    product.product_type.product_attributes.each do |attribute|
       content += "<div class='product_attribute_group_name'>"
         content += attribute.name + "&nbsp;:&nbsp;"
       content += "</div>"
