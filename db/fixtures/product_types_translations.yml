@@ -1,0 +1,3 @@
+default_product_type_en:
+  product_type_id: <%= Fixtures.identify(:default_product_type) %>
+  name: default product type
