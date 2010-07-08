@@ -6,25 +6,9 @@ module ProductHelper
     product_type_product_category_path(:product_type_url=>product_type.url,:category_url=>product_category.url)
   end
   def seo_product_path(product)
-    product_path(:product_type_url=>product.product_type.url,:category_url=>product.product_categories.first.url,:url=>product.url)
+    product_by_url_path(product.url)
   end
   
-  def product_path(options)
-    case options
-    when Product
-      super(:id => nil, :url => options.url)
-    when Array
-      if options.first.kind_of?(Product)
-        product = options.delete(0)
-        super(options.last.merge(:id => nil, :url => product.url))
-      else
-        super(options)
-      end
-    else
-      super(options)
-    end
-  end
-
   def product_category_path(object)
     super(:id => nil, :category_name => object.name)
   end
@@ -142,6 +126,6 @@ module ProductHelper
   
   def link_to_product(product, name=nil, options=nil)
     name = product.name if name.nil?
-    link_to name, "/product/#{product.url}", options
+    link_to name, [:seo,product], options
   end
 end
