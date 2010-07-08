@@ -4,7 +4,7 @@
       = t('permalink').capitalize
       \:
     .option-panel-content
-      = "#{request.protocol}#{request.host}/product/"
+      = "#{request.protocol}#{request.host}#{seo_product_path(f.object.class.new(:url=>'&nbsp;', :category_ids => f.object.category_ids, :product_type_id => f.object.product_type_id, :brand_id => f.object.brand_id))}"
       = f.text_field :url
   / #products_tags.step.open
   /   = link_to t(:tag, :count => 2), '#', :class => 'small-icons step-title'
