@@ -27,3 +27,20 @@ function add_products_to_pack(){
     }
   });
 }
+
+function change_redirection_product(){
+  dataTableSelectRows('#table-products', function(current_table,indexes) {
+    for(var i=0; i<indexes.length; i++){
+      var row = current_table.fnGetData(indexes[i]);
+      var id = row.slice(-4,-3);
+      var sku = row.slice(-2,-1)[0];
+      var img = $(row.slice(0,1)[0]).find('img')[0];
+      var name = row.slice(-3,-2);
+      var price = row.slice(-1);
+
+
+      $('#redirection_product_id').val(id);
+      $('#redirection_product').html('<div class="block-container"><span class="block-type">'+sku+'</span><span class="block-name">'+name+'<span class="file-size"> - '+price+'</span></span></div>');
+    }
+  });
+}

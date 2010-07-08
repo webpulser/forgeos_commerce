@@ -41,3 +41,35 @@
             \:
             %br
           = meta_info.text_area :keywords, :cols => 90, :rows => 5, :class => 'text'
+  .fieldset.open
+    %h3= t('product.redirection_product.label')
+    .option-panel-content
+      = f.hidden_field :redirection_product_id, :id => 'redirection_product_id'
+      #redirection_product
+        - if redirection_product = product.redirection_product_without_deleted
+          .block-container
+            %span.block-type= redirection_product.sku
+            %span.block-name
+              = redirection_product.name
+              %span.file-size= price_to_currency(redirection_product.price)
+
+      %a#add-redirection-product.backgrounds.button.right{ :href => "#" }
+        %span.big-icons.add-product
+          = I18n.t('product.redirection_product.change').capitalize
+#redirection-productSelectDialog.media-hoverlay
+  .media-hoverlay-header
+    = I18n.t('order.product.select').capitalize
+    #search.right.files
+      = fg_search
+    .backgrounds.search-form-files
+  .media-hoverlay-sidebar.grid_3.omega.alpha
+    .sidebar-content
+      %h2{ :class => 'small-icons products'}
+        = link_to_function I18n.t('product.all').capitalize, "select_all_elements_without_category()"
+      #product-tree.init-tree.a-tree
+  .media-hoverlay-content
+    %table#table-products.datatable.media.selectable_rows
+      %tr
+        %td
+
+= dataTables_tag :id => 'table-products', :url => admin_products_path(:format => :json, :mode => 'selection'), :columns => ["{'sClass':'th-checkbox-container th_product_popup','bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t(:name)}'}","{'sTitle':'#{I18n.t(:sku)}'}","{'sTitle':'#{I18n.t(:price, :count => 1)}'}","{'sTitle':'#{I18n.t(:stock, :count => 1)}'}","{'sTitle':'#{I18n.t(:product_type, :count => 1)}'}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}"]

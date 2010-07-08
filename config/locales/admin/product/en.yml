@@ -39,8 +39,14 @@ en:
       success: the product was successfully deleted
       failed: a problem occured during the product deletion
       confirm: are you sure to delete this product ?
+      redirection_product:
+        none: "Are you sure to delete this product ?\nyou can specify a product to redirect this product page"
+        confirm: "Are you sure to delete this product ?\nproduct page will be redirected to product {{product}} page"
       action: delete product
     duplicate: duplicate product
+    redirection_product:
+      label: deleted product page redirection
+      change: change product
   pack:
     one : pack
     other: packs

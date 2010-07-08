@@ -30,6 +30,14 @@ class Product < ActiveRecord::Base
   before_save :clean_strings, :force_url_format
   after_save :synchronize_stock
 
+  belongs_to :redirection_product, :class_name => 'Product'
+
+  def redirection_product_with_deleted
+    return (redirection_product_without_deleted && redirection_product_without_deleted.deleted? ? redirection_product_without_deleted.redirection_product : redirection_product_without_deleted)
+  end
+  alias_method_chain :redirection_product, :deleted
+
+
   define_index do
     indexes sku, :sortable => true
     indexes stock, :sortable => true
