@@ -55,7 +55,8 @@
             .inner
       %li.clear
     .clear
-    = link_to t('media.picture.add').capitalize, '#', :id => 'add-picture'
+    %a#add-picture.backgrounds.button{ :href => "#" }
+      %span.big-icons.add-picture= t('media.picture.add').capitalize
   .clear
   .grid_12.omega
     = f.label :summary, t('summary').capitalize
