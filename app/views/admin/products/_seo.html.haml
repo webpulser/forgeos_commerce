@@ -51,7 +51,7 @@
             %span.block-type= redirection_product.sku
             %span.block-name
               = redirection_product.name
-              %span.file-size= price_to_currency(redirection_product.price)
+              %span.file-size= price_with_currency(redirection_product.price)
 
       %a#add-redirection-product.backgrounds.button.right{ :href => "#" }
         %span.big-icons.add-product
