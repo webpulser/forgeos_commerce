@@ -1,3 +1,11 @@
 default_product_type_en:
   product_type_id: <%= Fixtures.identify(:default_product_type) %>
   name: default product type
+  locale: en
+  description: "It's an example of product type"
+
+default_product_type_fr:
+  product_type_id: <%= Fixtures.identify(:default_product_type) %>
+  name: type de produit par défaut
+  locale: fr
+  description: "c'est un exemple de type de produit"
