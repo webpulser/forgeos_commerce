@@ -38,10 +38,10 @@ fr:
     destroy:
       success: le produit a bien été supprimé
       failed: un problème est survenu lors de la suppression du produit
-      confirm: êtes-vous sûr de vouloir de supprimé ce produit ?
+      confirm: êtes-vous sûr de vouloir supprimer ce produit ?
       redirection_product:
-        none: "êtes-vous sûr de vouloir de supprimé ce produit ?\nvous pouvez spécifier un produit vers lequel la page de ce produit sera redirigé"
-        confirm: "êtes-vous sûr de vouloir de supprimé ce produit ?\nla page de ce produit sera redirigé vers la page du produit {{product}}"
+        none: "êtes-vous sûr de vouloir supprimer ce produit ?\nvous pouvez spécifier un produit vers lequel la page de ce produit sera redirigé"
+        confirm: "êtes-vous sûr de vouloir supprimer ce produit ?\nla page de ce produit sera redirigé vers la page du produit {{product}}"
       action: supprimer produit
     duplicate: dupliquer produit
     redirection_product:
