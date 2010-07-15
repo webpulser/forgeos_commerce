@@ -1,6 +1,6 @@
 page_home_translation_en:
   locale: en
-  page: page_home
+  page_id: <%= Fixtures.identify(:page_home) %>
   title: HomePage
   url: index
   content: '<h1>Welcome to Forgeos Commerce</h1>
@@ -12,7 +12,7 @@ page_home_translation_en:
 
 page_404_translation_en:
   locale: en
-  page: page_404
+  page_id: <%= Fixtures.identify(:page_404) %>
   title: "Page not found"
   content: "The requested page does not exist"
   url: 404

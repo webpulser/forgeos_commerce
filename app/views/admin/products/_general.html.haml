@@ -55,7 +55,8 @@
             .inner
       %li.clear
     .clear
-    = link_to t('media.picture.add').capitalize, '#', :id => 'add-picture'
+    %a#add-picture.backgrounds.button{ :href => "#" }
+      %span.big-icons.add-picture= t('media.picture.add').capitalize
   .clear
   .grid_12.omega
     = f.label :summary, t('summary').capitalize
@@ -138,7 +139,7 @@
   .step
     - unless product.new_record?
       = link_to t('product.duplicate').capitalize, [:duplicate, :admin, product], :class => 'small-icons duplicate'
-      = link_to t('product.destroy.action').capitalize, [:admin, product], :confirm => t('product.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+      = link_to t('product.destroy.action').capitalize, [:admin, product], :confirm => (product.redirection_product ? t('product.destroy.redirection_product.confirm', :product => product.redirection_product.sku) : t('product.destroy.redirection_product.none')), :method => :delete, :class => 'small-icons delete'
   #products_associated_collection.step.open
     = link_to(t('product.associated_collection', :count => 2), '#', :class => 'small-icons step-title')
     = hidden_field_tag "#{f.object_name}[product_category_ids][]" 

@@ -53,7 +53,7 @@
               link_to('', [:edit, :admin, product], :class => 'small-icons edit-link') +
               link_to_remote('', :url => [:admin, product],
                 :method => :delete,
-                :confirm => I18n.t('product.destroy.confirm').capitalize,
+                :confirm => (product.redirection_product ? t('product.destroy.redirection_product.confirm', :product => product.redirection_product.sku) : t('product.destroy.redirection_product.none')),
                 :success => "removedataTablesRow('#destroy_#{link_id}')",
                 :html => {
                 :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"

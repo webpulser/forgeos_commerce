@@ -31,7 +31,7 @@
           .specialOffer_header
             %span.conditioner= t('special_offer.for').capitalize
             %div= rule_builder.select :for, @for,{}, :onchange => 'change_select_for(this)'
-            %div= rule_builder.select :target, ProductCategory.all(:select=>'categories.id,name',:joins=>[:translations], :order => 'name').collect(&:name)
+            %div= rule_builder.select :target, ProductCategory.all(:select=>'categories.id,name',:joins=>[:translations], :order => 'name').collect{|cat| [cat.name,cat.id]}
             .clear
           .specialOffers_bottom_arrow
 
