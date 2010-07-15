@@ -1,12 +1,20 @@
-- @default_attributes = ['Price','Title','Description', 'Weight', 'SKU', 'Stock']
-- @attributes = Attribute.all.collect(&:name)
-- @cart_attributes = ['Total items quantity', 'Total weight', 'Total amount', 'Shipping method']
-- @disable_attributes = ['MAIN SETTINGS','ATTRIBUTES']
+- @default_attributes = %w(price title description weight sku stock product_type_id).collect do |n|
+  - [t(n, :count => 1), n]
+- @attributes = Attribute.all.collect{|a| [a.name, a.access_method]}
+- @cart_attributes = [[t(:quantity,:scope=>[:special_offer,:cart]),'Total items quantity'],[t(:weight,:scope=>[:special_offer,:cart]), 'Total weight'], [t(:price,:scope=>[:special_offer,:cart]),'Total amount'],[t(:shipping,:scope=>[:special_offer,:cart]),'Shipping method']]
+- @disable_attributes = t(:disabled,:scope=>[:special_offer,:attributes])
 
 - @for = Hash["Cart", "Cart"]
 
 - @condition_is = Hash["Is", "=="]
 - @conditions =  Hash["Is not", "not==","Equals or greater than",">=","Equals or less than","<=", "Greater than", ">", "Less than","<"]
+-##############################################################################
+- @end = [[t(:date,:scope=>[:special_offer,:end]),'Date'],[t(:total_use,:scope=>[:special_offer,:end]),'Total number of offer use'],[t(:user_total_use,:scope=>[:special_offer,:end]),'Customer number of offer use']]
+- @products = Product.find_all_by_active_and_deleted(true,false)
+- @discount_type = [[t(:percent,:scope=>[:special_offer,:action]),0],[t(:fixed,:scope=>[:special_offer,:action]),1]]
+- @product_attributes = [t(:main,:scope=>[:special_offer,:attributes,:disabled])]+@default_attributes+[t(:attribute,:scope=>[:special_offer,:attributes,:disabled])]+@attributes
+
+-##############################################################################
 
 - form_tag({:action => 'create'}, :id => 'wrap') do
   .backgrounds.big-header
