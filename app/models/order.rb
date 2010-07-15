@@ -42,8 +42,8 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :order_details, :allow_destroy => true
   accepts_nested_attributes_for :order_shipping
 
-  has_one :address_delivery
-  has_one :address_invoice
+  has_one :address_delivery, :dependent => :destroy
+  has_one :address_invoice, :dependent => :destroy
   accepts_nested_attributes_for :address_delivery
   accepts_nested_attributes_for :address_invoice
 
