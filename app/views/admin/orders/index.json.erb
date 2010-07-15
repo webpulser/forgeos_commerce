@@ -1,27 +1,28 @@
-<% 
-  order_states_for_select = Order.aasm_states.collect{ |state| [I18n.t(state.name, :scope => [:order,:status]),state.name.to_s] }
+<%
+  order_states_for_select = Order.aasm_states.collect{ |state| [t(state.name, :scope => [:order,:status]),state.name.to_s] }
   select_class = (params[:skin] == 'read_only' ? 'order-change-status disabled' : 'order-change-status')
-  output = { 
+  output = {
     :iTotalDisplayRecords => @orders.total_entries || 0,
     :aaData => @orders.collect do |order|
-      details_count = order.order_details.count 
-      product_names = details_count > 1 ? '<br/><p class="product-name" >'+order.order_details.all.collect{|detail| "<span class=\"#{cycle('even', 'odd')}\">#{detail.name}</span>"}.join('')+'</p>' : ''
+      products = order.order_details.count(:group=>'product_id')
+      details_count = order.order_details.count(:group=>'product_id').values.sum
+      product_names = details_count > 1 ? content_tag(:p,order.order_details.all(:group => 'product_id').collect{|detail| content_tag(:span,"#{detail.name} x #{products[detail.product_id]}", :class=>cycle('even', 'odd'))}.join(''), :class=>'product-name') : ''
       link_id = "order_#{order.id}"
       [
         (
-          details_count > 1 ? 
+          details_count > 1 ?
           content_tag(:div,
             content_tag(:div, '&nbsp;', :class=> 'image'),
             :id => link_id, :class => 'some-variants plus') : content_tag(:div, '', :id => link_id)
         ),
         order.id,
         price_with_currency(order.total),
-         content_tag(:div, 
+         content_tag(:div,
          link_to(
-           details_count != 1 ? "#{details_count} #{I18n.t('product', :count => details_count)}" : order.order_details.first.name.capitalize,
+           details_count != 1 ? "#{details_count} #{t('product', :count => details_count)}" : order.order_details.first.name.capitalize,
            [:admin,order]
          ),
-         :class => 'product-name')+product_names,
+         :class => 'product-name')+content_tag(:br)+product_names,
         order.created_at.to_s(:short),
         content_tag(:div, order.user ? link_to(order.user.fullname, [:admin, order.user]) : '', :class => 'username'),
         (
@@ -29,13 +30,13 @@
             select('order_status',order.id,
               options_for_select(order_states_for_select, order.status),
               {}, { :class => select_class }
-            ) : 
+            ) :
             content_tag(:dl, content_tag(:dt, link_to(content_tag(:span, order.status),'#', :class => 'dropdown_toggle'), :class => "dropdown #{order.status} disabled"))
         ),
         link_to('', [:edit, :admin, order], :class => 'small-icons edit-link') +
         link_to_remote('', :url => [:admin, order],
            :method => :delete,
-           :confirm => I18n.t('order.destroy.confirm').capitalize,
+           :confirm => t('order.destroy.confirm').capitalize,
            :success => "removedataTablesRow('#destroy_#{link_id}')",
            :html => {
              :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
@@ -44,4 +45,4 @@
     end
   }
 -%>
-<%= output.to_json(false) %>
+<%= output.to_json %>

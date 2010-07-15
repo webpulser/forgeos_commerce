@@ -24,16 +24,18 @@
             %p= "#{user.orders.count} #{t('order', :count => user.orders.count)} #{t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
             %p= user.phone
             %p.customer-email= user.email
-          .main-info-separation
-          .main-infos-payment
-            %h4.small-icons
-              Payment method
-            %p
-              Credit card Mastercard
-            %p
-              6565-9878-XXXX
-            %p.payment-checked
-              payment checked
+
+          /
+            .main-info-separation
+            .main-infos-payment
+              %h4.small-icons
+                Payment method
+              %p
+                Credit card Mastercard
+              %p
+                6565-9878-XXXX
+              %p.payment-checked
+                payment checked
           .main-info-separation
           .main-infos-note
             %h4.small-icons= t('order.user_note').capitalize
@@ -49,7 +51,8 @@
             %th= t('quantity', :count => 1).capitalize
             %th= t('order.total').capitalize
         %tbody
-          - @order.order_details.all(:group => 'name').each do |detail|
+          - @order.order_details.all(:group => 'sku').each do |detail|
+            - quantity = @order.order_details.count('sku',:conditions => { :sku => detail.sku })
             %tr
               - product = detail.product
               - if product && picture = product.pictures.first
@@ -62,10 +65,10 @@
                 - else
                   = detail.name
               %td= detail.sku
-              %td= detail.price
-              %td= @order.order_details.count('sku',:conditions => { :sku => detail.sku })
-              %td.total= detail.total
-                
+              %td= price_with_currency(detail.price)
+              %td= quantity
+              %td.total= price_with_currency(detail.price * quantity)
+
       .order-totals
         .order-subtotal= t('order.subtotal').capitalize
         %span.order-subtotal= price_with_currency @order.total(false,true,false,false,false)
