@@ -183,6 +183,7 @@ private
     options[:order] = order unless order.squeeze.blank?
 
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:star] = true
       @vouchers = VoucherRule.search(params[:sSearch],options)
     else
       @vouchers = VoucherRule.paginate(:all,options)

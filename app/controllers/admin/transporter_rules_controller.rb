@@ -27,10 +27,10 @@ class Admin::TransporterRulesController < Admin::BaseController
 
   def show
   end
-  
+
   def new
   end
-  
+
   def duplicate
     @transporter = @transporter.clone
     render :action => 'new'
@@ -50,7 +50,7 @@ class Admin::TransporterRulesController < Admin::BaseController
       new_shipping_method.variables = shipping_method[1][:price][0]
 
       result = new_shipping_method.save
-      
+
       unless defined?(@parent_id)
         @parent_id = new_shipping_method.id
       else
@@ -66,7 +66,7 @@ class Admin::TransporterRulesController < Admin::BaseController
       render :action => :new
     end
   end
-  
+
   def edit
   end
 
@@ -108,18 +108,18 @@ class Admin::TransporterRulesController < Admin::BaseController
         result = new_shipping_method.update_attribute(:variables, shipping_method[1][:price][0])
         # Get the new parent_id & update name/description to this one
         check_parent_transporter parent_transporter_deleted, shipping_method, new_shipping_method
-        
+
         result = new_shipping_method.update_attribute(:parent_id, @parent_id) if new_shipping_method.id != @parent_id
-        
+
       else
-        
+
         # If delivery type change
         if @delivery_type != params[:delivery_type] && shipping_method == @shipping_methods.first
           new_shipping_method = TransporterRule.find_by_id(@parent_id)
           result = new_shipping_method.update_attribute(:conditions, "[#{rule_condition.join(', ')}]")
           result = new_shipping_method.update_attribute(:variables, shipping_method[1][:price][0])
           result = new_shipping_method.update_attribute(:parent_id, @parent_id)
-          
+
         else
           new_shipping_method = TransporterRule.new
 
@@ -127,11 +127,11 @@ class Admin::TransporterRulesController < Admin::BaseController
           new_shipping_method.variables = shipping_method[1][:price][0]
 
           result = new_shipping_method.save
-          
+
           # Get the new parent_id & update name/description to this one
           check_parent_transporter parent_transporter_deleted, shipping_method, new_shipping_method
           result = new_shipping_method.update_attribute(:parent_id, @parent_id)
-          
+
         end
       end
     end
@@ -160,7 +160,7 @@ class Admin::TransporterRulesController < Admin::BaseController
   def activate
     render :text => @transporter.activate
   end
-  
+
   private
     def get_transporter
       unless @transporter = TransporterRule.find_by_id(params[:id])
@@ -182,7 +182,7 @@ class Admin::TransporterRulesController < Admin::BaseController
       if params[:delivery_type] == "weight"
         rule_condition << 'Cart'
       else
-        rule_condition << 'Product' 
+        rule_condition << 'Product'
       end
       rule_condition << ':cart'
 
@@ -239,7 +239,7 @@ class Admin::TransporterRulesController < Admin::BaseController
       end
       rules.sort
     end
-    
+
     def get_product_types
       @product_types = ProductType.all(:include => :translations , :order => 'product_type_translations.name' ).collect{|c| [c.name, c.id]}
     end
@@ -247,7 +247,7 @@ class Admin::TransporterRulesController < Admin::BaseController
     def get_geo_zones
       @geo_zones = GeoZone.all( :order => :printable_name ).collect{|c| [c.name, c.id]}
     end
-      
+
     def get_delivery_type
       db_delivery_type = @transporter.conditions.split('.')[1]
 
@@ -271,9 +271,9 @@ class Admin::TransporterRulesController < Admin::BaseController
         @parent_id = new_shipping_method.id
         new_shipping_method.update_attributes(:name, @transporter_name, :description => @transporter_description,:parent_id => nil)
       end
-      
+
     end
-    
+
     def sort
       columns = %w(id name active)
 
@@ -289,10 +289,11 @@ class Admin::TransporterRulesController < Admin::BaseController
         :page => page,
         :per_page => per_page
       }
-      
+
       options[:conditions] = ['geo_zones_transporter_rules.geo_zone_id = ?', params[:category_id]] if params[:category_id]
-            
+
       if params[:sSearch] && !params[:sSearch].blank?
+        options[:star] = true
         @transporters = TransporterRule.search(params[:sSearch],options)
       else
         @transporters = TransporterRule.paginate(:all,options)

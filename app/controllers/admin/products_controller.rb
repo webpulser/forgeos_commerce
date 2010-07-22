@@ -59,7 +59,7 @@ class Admin::ProductsController < Admin::BaseController
   # * id = Product's id
   def destroy
     @deleted = @product.deleted? ? @product.destroy : @product.update_attribute(:deleted, true)
-    
+
     if @deleted
       flash[:notice] = I18n.t('product.destroy.success').capitalize
       return redirect_to(admin_products_path) if !request.xhr?
@@ -84,7 +84,7 @@ class Admin::ProductsController < Admin::BaseController
   end
 
 private
-  
+
   # Called by :
   # <i>create_product</i>
   # <i>edit_product</i>
@@ -120,7 +120,7 @@ private
   def get_tag(name)
     return @tag = Tag.find_by_name(name) ? true : false
   end
-  
+
   def get_product
     unless @product = Product.find_by_id(params[:id])
       flash[:error] = I18n.t('product.found.failed').capitalize
@@ -156,7 +156,7 @@ private
     includes = [:translations]
     options = { :page => page, :per_page => per_page }
     joins = [:translations]
-    
+
     if params[:category_id]
       conditions[:categories_elements] = { :category_id => params[:category_id] }
       includes << :product_categories
@@ -178,6 +178,7 @@ private
       options[:index] = "product_core.product_#{ActiveRecord::Base.locale}_core"
       options[:joins] += options.delete(:include)
       options[:sql_order] = options.delete(:order)
+      options[:star] = true
       @products = Product.search(params[:sSearch],options)
     else
       @products = Product.paginate(:all,options)

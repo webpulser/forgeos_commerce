@@ -194,6 +194,7 @@ private
     options[:order] = order unless order.squeeze.blank?
 
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:star] = true
       @special_offers = SpecialOfferRule.search(params[:sSearch],options)
     else
       @special_offers = SpecialOfferRule.paginate(:all,options)

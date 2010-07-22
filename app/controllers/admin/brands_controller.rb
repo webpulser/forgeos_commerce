@@ -104,6 +104,7 @@ class Admin::BrandsController < Admin::BaseController
     options[:order] = order unless order.squeeze.blank?
 
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:star] = true
       @brands = Brand.search(params[:sSearch],options)
     else
       @brands = Brand.paginate(:all,options)

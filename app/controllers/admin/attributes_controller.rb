@@ -147,6 +147,7 @@ private
     if params[:sSearch] && !params[:sSearch].blank?
       options[:index] = "attribute_core.attribute_#{ActiveRecord::Base.locale}_core"
       options[:sql_order] = options.delete(:order)
+      options[:star] = true
       @attributes = Attribute.search(params[:sSearch],options)
     else
       options[:group] = :attribute_id

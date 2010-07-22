@@ -212,6 +212,7 @@ private
     options[:order] = order unless order.squeeze.blank?
 
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:star] = true
       @orders = Order.search(params[:sSearch],options)
     else
       @orders = Order.paginate(:all,options)

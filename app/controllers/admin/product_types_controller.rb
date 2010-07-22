@@ -4,7 +4,7 @@ class Admin::ProductTypesController < Admin::BaseController
   # List ProductType
   before_filter :get_product_type, :only => [:show, :edit, :update, :destroy]
   before_filter :new_product_type, :only => [:new, :create]
-  
+
   def index
     respond_to do |format|
       format.html
@@ -33,7 +33,7 @@ class Admin::ProductTypesController < Admin::BaseController
       render :action => :new
     end
   end
-  
+
   def edit
   end
 
@@ -73,7 +73,7 @@ private
   def new_product_type
     @product_type = ProductType.new(params[:product_type])
   end
-  
+
   def sort
     columns = %w('' product_type_translations.name count(products.id) '')
 
@@ -85,7 +85,7 @@ private
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
- 
+
 
     conditions = {}
     includes = [:translations]
@@ -99,7 +99,7 @@ private
       includes << :product_type_categories
       joins = []
     end
-   
+
     options[:conditions] = conditions unless conditions.empty?
     options[:include] = includes unless includes.empty?
     options[:order] = order unless order.squeeze.blank?
@@ -109,6 +109,7 @@ private
       options[:index] = "product_core.product_#{ActiveRecord::Base.locale}_core"
       options[:sql_order] = options.delete(:order)
       options[:joins] += options.delete(:include)
+      options[:star] = true
       @product_types = ProductType.search(params[:sSearch],options)
     else
       @product_types = ProductType.paginate(:all,options)
