@@ -117,10 +117,8 @@ $('.add_a_size').live('click', function(){
   $('.remove_this_size').live('click', function(){
     var block = $(this).parents('tr');
     if (parseInt(get_rails_element_id(block.find('input:first'))) < 0) {
-      console.info('- 0')
       block.remove();
     } else {
-      console.info('+0')
       block.hide();
       block.find('.delete').val(1);
     }
@@ -129,10 +127,7 @@ $('.add_a_size').live('click', function(){
 
   $('#product_sizes tr').sortable({
     handle:'.handler',
-    placeholder: 'ui-state-highlight',
-    stop:function(event,ui){
-      console.info('hi');
-    }
+    placeholder: 'ui-state-highlight'
   });
 
   $('#product_sizes').dataTable();
