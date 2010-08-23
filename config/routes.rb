@@ -17,6 +17,7 @@ map.with_options(:controller => 'addresses') do |address|
 end
 map.resources :orders
 map.cart '/cart', :controller => 'cart'
+map.wishlist '/wishlist', :controller => 'wishlist'
 
 # catalog routes
 map.catalog '/catalog/:category_name/:url', :controller => 'catalog', :action => 'index', :url => nil
