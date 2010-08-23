@@ -27,17 +27,5 @@
     .grid_4.alpha
       = display_visual_style(f.object_name, brand.picture)
     .clear
-    .grid_12
-      = I18n.t('brand.comment_title')
-      .clear
-      - f.fields_for :comments do |comment|
-        = comment.hidden_field :title, :value => 'brand title'
-        = f.label :person_id, I18n.t('brand.vendor')
-        .clear
-        = comment.collection_select :person_id, Vendor.all(:order => 'name DESC'), :id, :name, :prompt => t(:please_select)
-        .clear
-        = f.label :comment, I18n.t('brand.comment')
-        .clear
-        = comment.text_area :comment, :class => 'mceEditor'
 
   = render :partial => 'admin/visual/visual_popup.html.haml', :locals => {:form => f}
