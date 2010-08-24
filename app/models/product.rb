@@ -211,7 +211,7 @@ def #{attribute.access_method}=(new_value)
     other_attributes = self.attribute_values.all(:conditions => {:attribute_id_not => attribute.id})
     if new_value.nil?
       new_attributes = []
-    eslif new_value.kind_of?(Array) && new_value.first.kind_of?(AttributeValue)
+    elsif new_value.kind_of?(Array) && new_value.first.kind_of?(AttributeValue)
       new_attributes = new_value.flatten
     else
       new_attributes = AttributeValue.find_all_by_attribute_id(
