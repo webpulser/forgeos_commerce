@@ -104,7 +104,7 @@
   -@attributes.each do |name, access_method|
     %p{:class => "rule-#{access_method.delete(' ')} pattern"}
       %span= select_tag 'rule[targets][]', options_for_select(@product_attributes,{:disabled => @disable_attributes, :selected => access_method}),{ :onchange => "change_rule(this,'rule-condition')" }
-      %span= select_tag 'rule[conds][]', @conditions
+      %span= select_tag 'rule[conds][]', options_for_select(@conditions)
       - current_attribute = Attribute.find_by_access_method(access_method)
       -if current_attribute && current_attribute.dynamic
         = text_field_tag 'rule[values][]'
