@@ -15,7 +15,7 @@ fr:
       one: '{{count}} panier créé'
       other: '{{count}} paniers créés'
   empty_cart: 'vider le panier'
-  add_to_wishlist: 'ajouter à la séléction'
+  add_to_wishlist: 'ajouter à la sélection'
   wishlist:
     one: 'sélection'
     other: 'sélections'
@@ -468,9 +468,9 @@ fr:
     field: champ texte long
     preview: prévisualisation
   picklist_attribute:
-    one: séléction
-    other: séléctions
-    field: champ séléction
+    one: sélection
+    other: sélections
+    field: champ sélection
     preview: prévisualisation
   checkbox_attribute:
     one: case à cocher
