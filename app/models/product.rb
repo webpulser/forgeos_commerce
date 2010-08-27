@@ -44,6 +44,8 @@ class Product < ActiveRecord::Base
     indexes sku, :sortable => true
     indexes stock, :sortable => true
     indexes price, :sortable => true
+    indexes brand(:name), :as => :brand
+    indexes product_type(:name), :as => :ptype
 
     has active, deleted
     set_property :min_prefix_len => 1
