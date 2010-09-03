@@ -12,8 +12,8 @@ fr:
     one: panier
     other: paniers
     created:
-      one: '{{count}} panier créé'
-      other: '{{count}} paniers créés'
+      one: '%{count} panier créé'
+      other: '%{count} paniers créés'
   empty_cart: 'vider le panier'
   add_to_wishlist: 'ajouter à la sélection'
   wishlist:

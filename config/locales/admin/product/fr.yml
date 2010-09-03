@@ -13,11 +13,11 @@ fr:
     show:
       all: voir tous les produits
     sold:
-      one: "{{count}} vente"
-      other: "{{count}} ventes"
+      one: "%{count} vente"
+      other: "%{count} ventes"
     viewed:
-      one: "vu {{count}} fois"
-      other: "vu {{count}} fois"
+      one: "vu %{count} fois"
+      other: "vu %{count} fois"
     best_seller:
       one: meilleur vente
       other: meilleures ventes
@@ -41,7 +41,7 @@ fr:
       confirm: êtes-vous sûr de vouloir supprimer ce produit ?
       redirection_product:
         none: "êtes-vous sûr de vouloir supprimer ce produit ?\nvous pouvez spécifier un produit vers lequel la page de ce produit sera redirigé"
-        confirm: "êtes-vous sûr de vouloir supprimer ce produit ?\nla page de ce produit sera redirigé vers la page du produit {{product}}"
+        confirm: "êtes-vous sûr de vouloir supprimer ce produit ?\nla page de ce produit sera redirigé vers la page du produit %{product}"
       action: supprimer produit
     duplicate: dupliquer produit
     redirection_product:
@@ -59,11 +59,11 @@ fr:
     show:
       all: voir tous les packs
     sold:
-      one: "{{count}} vente"
-      other: "{{count}} ventes"
+      one: "%{count} vente"
+      other: "%{count} ventes"
     viewed:
-      one: "vu {{count}} fois"
-      other: "vu {{count}} fois"
+      one: "vu %{count} fois"
+      other: "vu %{count} fois"
     best_seller:
       one: meilleur vente
       other: meilleures ventes
