@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   
   # Return an HTML form for describing the new account
   def new
-    session[:redirect] = nil
+    session[:return_to] = nil
   end
 
   # Return an HTML form for describing the edit user
@@ -23,16 +23,16 @@ class UsersController < ApplicationController
   def update
     if current_user.update_attributes(params[:user])
       flash[:notice] = I18n.t('account_update_ok').capitalize
-      if redirect = session[:redirect]
-        session[:redirect] = nil
+      if redirect = session[:return_to]
+        session[:return_to] = nil
         return redirect_to(redirect)
       else
         return redirect_to_home
       end
     else
       flash[:error] = current_user.errors
-      if redirect = session[:redirect]
-        session[:redirect] = nil
+      if redirect = session[:return_to]
+        session[:return_to] = nil
         return redirect_to(redirect)
       else
         return render(:action => :new)
@@ -53,8 +53,8 @@ class UsersController < ApplicationController
       PersonSession.create(@user, true)
       flash[:notice] = I18n.t('account_creation_ok').capitalize
       current_cart
-      if redirect = session[:redirect]
-        session[:redirect] = nil
+      if redirect = session[:return_to]
+        session[:return_to] = nil
         redirect_to(redirect)
       else
         redirect_to_home
@@ -62,8 +62,8 @@ class UsersController < ApplicationController
     else
       flash[:error] = @user.errors
       flash[:user] = @user
-      if redirect = session[:redirect]
-        session[:redirect] = nil
+      if redirect = session[:return_to]
+        session[:return_to] = nil
         redirect_to(redirect)
       else
         render :action => 'new'

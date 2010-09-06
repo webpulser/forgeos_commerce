@@ -50,9 +50,9 @@ class OrderController < ApplicationController
  
   # Subscribe or edit user's informations
   # Link render with partials of user's views
-  # session[:redirect] is initialize with <i>{:controller => 'order', :action => 'new'}</i>
+  # session[:return_to] is initialize with <i>{:controller => 'order', :action => 'new'}</i>
   def informations
-    session[:redirect] = {:controller => 'order', :action => 'new'}
+    session[:return_to] = {:controller => 'order', :action => 'new'}
   end
 
   # Final step, this action is accessible only if <i>session[:order_confirmation]</i> is true
