@@ -20,6 +20,7 @@ class Product < ActiveRecord::Base
   has_many :product_sold_counters, :as => :element
 
   belongs_to :product_type
+  belongs_to :brand
 
   has_one :meta_info, :as => :target
   accepts_nested_attributes_for :meta_info
