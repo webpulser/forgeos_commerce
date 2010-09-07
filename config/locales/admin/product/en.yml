@@ -13,11 +13,11 @@ en:
     show:
       all: see all products
     sold:
-      one: "{{count}} sale"
-      other: "{{count}} sales"
+      one: "%{count} sale"
+      other: "%{count} sales"
     viewed:
-      one: "viewed {{count}} time"
-      other: "viewed {{count}} times"
+      one: "viewed %{count} time"
+      other: "viewed %{count} times"
     best_seller:
       one: best seller
       other: best sellers
@@ -41,7 +41,7 @@ en:
       confirm: are you sure to delete this product ?
       redirection_product:
         none: "Are you sure to delete this product ?\nyou can specify a product to redirect this product page"
-        confirm: "Are you sure to delete this product ?\nproduct page will be redirected to product {{product}} page"
+        confirm: "Are you sure to delete this product ?\nproduct page will be redirected to product %{product} page"
       action: delete product
     duplicate: duplicate product
     redirection_product:
@@ -59,11 +59,11 @@ en:
     show:
       all: see all packs
     sold:
-      one: "{{count}} sale"
-      other: "{{count}} sales"
+      one: "%{count} sale"
+      other: "%{count} sales"
     viewed:
-      one: "viewed {{count}} time"
-      other: "viewed {{count}} times"
+      one: "viewed %{count} time"
+      other: "viewed %{count} times"
     best_seller:
       one: best seller
       other: best sellers

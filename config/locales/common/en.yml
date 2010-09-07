@@ -12,8 +12,8 @@ en:
     one: cart
     other: carts
     created:
-      one: '{{count}} shopping cart created'
-      other: '{{count}} shopping carts created'
+      one: '%{count} shopping cart created'
+      other: '%{count} shopping carts created'
   empty_cart: 'empty cart'
   add_to_wishlist: 'add to wishlist'
   wishlist:

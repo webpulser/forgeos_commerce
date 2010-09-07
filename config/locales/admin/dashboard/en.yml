@@ -1,6 +1,6 @@
 en:
   dashboard:
     intro: "Welcome,<br />
-Today, <em>{{visitors}} visitors</em> see <em>{{pages}} pages</em> on your website.<br />
-<em>{{customers}} customers</em> visit your shop and bought <em>{{products}} products</em> for a total of <em>{{total}}</em>.<br />"
-    out_of_stock: "Be careful, you have <a href='#'>{{products}} products out of stock</a>."
+Today, <em>%{visitors} visitors</em> see <em>%{pages} pages</em> on your website.<br />
+<em>%{customers} customers</em> visit your shop and bought <em>%{products} products</em> for a total of <em>%{total}</em>.<br />"
+    out_of_stock: "Be careful, you have <a href='#'>%{products} products out of stock</a>."

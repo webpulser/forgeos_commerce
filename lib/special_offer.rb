@@ -1,12 +1,20 @@
 require 'ruleby'
 class SpecialOffer < Ruleby::Rulebook
-  attr_writer :cart, :free_product_ids, :rule_id, :selected_products
+  attr_writer :cart, :free_product_ids, :rule_id, :current_rules, :selected_products
   def rules
     if @rule_id
       rule_preview = SpecialOfferRule.find_by_id(@rule_id)
       rule eval(rule_preview.conditions) do |context|
         product = context[:product]
         @selected_products << product.id
+      end
+    elsif @current_rules
+      #OPTIMIZE
+      @current_rules.each do |rp|
+        rule eval(rp.conditions) do |context|
+          product = context[:product]
+          @selected_products << product
+        end
       end
     else
 

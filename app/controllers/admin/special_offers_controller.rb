@@ -131,9 +131,25 @@ class Admin::SpecialOffersController < Admin::BaseController
     end
     @rule_condition << "m.#{target}.#{params[:rule][:conds][index]}(#{value})"
   end
-  
+
   def new
-    @products = Product.all(:joins => [:translations], :select => 'products.id,name,sku', :order => 'sku')
+    t = Time.now
+    @default_attributes = %w(price title description weight sku stock product_type_id).collect do |n|
+      [t(n, :count => 1), n]
+    end
+    @attributes = Attribute.all.collect{|a| [a.name, a.access_method]}
+    @cart_attributes = [[t(:quantity,:scope=>[:special_offer,:cart]),'Total items quantity'],[t(:weight,:scope=>[:special_offer,:cart]), 'Total weight'], [t(:price,:scope=>[:special_offer,:cart]),'Total amount'],[t(:shipping,:scope=>[:special_offer,:cart]),'Shipping method']]
+    @disable_attributes = t(:disabled,:scope=>[:special_offer,:attributes])
+
+    @for = [[t(:category,:scope=>[:special_offer,:_for]), 'Category'],[t(:product_in_shop,:scope=>[:special_offer,:_for]), 'Product'],[t(:product_in_cart,:scope=>[:special_offer,:_for]), 'Product'], [t(:cart,:scope=>[:special_offer,:_for]), 'Cart']]
+
+    @conditions =  [[t(:is,:scope=>[:special_offer,:conditions]), "=="],[t(:is_not,:scope=>[:special_offer,:conditions]),"not=="],[t(:equal_or_greater_than,:scope=>[:special_offer,:conditions]),">="],[t(:equal_or_less_than,:scope=>[:special_offer,:conditions]),"<="], [t(:greater_than,:scope=>[:special_offer,:conditions]), ">"],[t(:less_than,:scope=>[:special_offer,:conditions]),"<"]]
+
+    @product_attributes = [t(:main,:scope=>[:special_offer,:attributes,:disabled])]+@default_attributes+[t(:attribute,:scope=>[:special_offer,:attributes,:disabled])]+@attributes
+    @end = [[t(:date,:scope=>[:special_offer,:end]),'Date'],[t(:total_use,:scope=>[:special_offer,:end]),'Total number of offer use'],[t(:user_total_use,:scope=>[:special_offer,:end]),'Customer number of offer use']]
+    @discount_type = [[t(:percent,:scope=>[:special_offer,:action]),0],[t(:fixed,:scope=>[:special_offer,:action]),1]]
+
+    @products = Product.find_all_by_active_and_deleted(true, false, :joins => [:translations], :select => 'products.id,name,sku', :order => 'sku')
   end
 
   def destroy

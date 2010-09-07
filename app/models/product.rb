@@ -33,6 +33,8 @@ class Product < ActiveRecord::Base
 
   belongs_to :redirection_product, :class_name => 'Product'
 
+  belongs_to :brand
+
   def redirection_product_with_deleted
     return (redirection_product_without_deleted && redirection_product_without_deleted.deleted? ? redirection_product_without_deleted.redirection_product : redirection_product_without_deleted)
   end
@@ -43,6 +45,8 @@ class Product < ActiveRecord::Base
     indexes sku, :sortable => true
     indexes stock, :sortable => true
     indexes price, :sortable => true
+    indexes brand(:name), :as => :brand
+    indexes product_type(:name), :as => :ptype
 
     has active, deleted
     set_property :min_prefix_len => 1
@@ -208,7 +212,11 @@ def #{attribute.access_method}=(new_value)
     end
   else
     other_attributes = self.attribute_values.all(:conditions => {:attribute_id_not => attribute.id})
-    if new_value.first.kind_of?(AttributeValue)
+    if new_value.nil?
+      new_attributes = []
+    elsif new_value.kind_of?(AttributeValue)
+      new_attributes = [new_value]
+    elsif new_value.kind_of?(Array) && new_value.first.kind_of?(AttributeValue)
       new_attributes = new_value.flatten
     else
       new_attributes = AttributeValue.find_all_by_attribute_id(
