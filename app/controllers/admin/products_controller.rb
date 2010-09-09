@@ -1,5 +1,6 @@
 class Admin::ProductsController < Admin::BaseController
 
+  cache_sweeper :product_sweeper, :only => [:create, :update, :destroy, :activate]
   before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate, :duplicate]
   before_filter :merge_params, :only => [:update, :create]
   before_filter :filter_radiobutton_attributes, :only => [:update, :create]
