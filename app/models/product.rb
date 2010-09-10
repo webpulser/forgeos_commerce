@@ -24,6 +24,7 @@ class Product < ActiveRecord::Base
 
   has_one :meta_info, :as => :target
   accepts_nested_attributes_for :meta_info
+  accepts_nested_attributes_for :sizes, :allow_destroy => true
 
   validates_presence_of :product_type_id, :sku, :url
   #validates_uniqueness_of :url
