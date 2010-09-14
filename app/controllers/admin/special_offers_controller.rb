@@ -165,9 +165,8 @@ class Admin::SpecialOffersController < Admin::BaseController
     @selected_products = []
     engine :special_offer_engine do |e|
       rule_builder = SpecialOffer.new(e)
-      rule_builder.rule_id = params[:id]
       rule_builder.selected_products = @selected_products
-      rule_builder.rules
+      rule_builder.rule_preview(@special_offer)
       products = Product.all(:conditions => {:active => true, :deleted=>[false, nil]})
       products.each do |product|
         e.assert product
