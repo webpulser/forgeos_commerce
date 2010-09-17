@@ -1,5 +1,5 @@
 .attribute-type
-  %span.small-icons.checkbox_attribute=t label
+  %span{ :class => ['small-icons', attribute.class.to_s.underscore] }=t label
 .choices
   %h2=t 'attribute.value', :count => 2
   %ul.nested_sortable.sortable-choices.grid_10.omega.alpha
