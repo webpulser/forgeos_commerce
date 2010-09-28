@@ -435,3 +435,5 @@ en:
     weight:
       short: KG
       long: Kilogram
+  setting:
+    godfather: patronage

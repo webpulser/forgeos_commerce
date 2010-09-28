@@ -10,9 +10,9 @@ class Cart < ActiveRecord::Base
   attr_accessor :free_shipping
   has_many :carts_products, :dependent => :destroy
   has_many :products, :through => :carts_products
-  
+
   belongs_to :user
-  
+
   # Add a <i>product</i> in this cart
   #
   # Returns false if <i>product</i> is <i>nil</i> or not recorded
@@ -32,7 +32,7 @@ class Cart < ActiveRecord::Base
   # * <tt>:product_id</tt> - an <i>id</i> of a <i>Product</i>
   # This method use <i>add_product</i>
   def add_product_id(product_id,quantity=1)
-    quantity.times do 
+    quantity.times do
       carts_products << CartsProduct.create(:product_id => product_id)
     end
   end
@@ -73,17 +73,39 @@ class Cart < ActiveRecord::Base
       #total += cart_product.product.new_price.nil? ? cart_product.product.price : cart_product.product.new_price
       total += product_price
     end
-    
+
     if with_discount
       # discount total price if there are a special offer
       total -= self.special_offer_discount_price if self.special_offer_discount_price
       # discount total price if there are a valid voucher
       total -= self.voucher_discount_price if self.voucher_discount_price
+
+      Rails.logger.info("\033[01;33m#{self.patronage_discount}\033[0m")
+      total -= self.patronage_discount
     end
-    total = 0 if total < 0 
+    total = 0 if total < 0
     return total
   end
-  
+
+  def patronage_discount
+    return 0 unless self.user
+    if self.user.has_nephew_discount?
+      if Setting.first.nephew_discount_percent?
+        self.user.patronage_discount * total(false,false) / 100
+      else
+        self.user.patronage_discount
+      end
+    elsif self.user.has_godfather_discount?
+      if Setting.first.nephew_discount_percent?
+        self.user.patronage_discount * total(false,false) / 100
+      else
+        self.user.patronage_discount
+      end
+    else
+      0
+    end
+  end
+
   # Returns weight of this cart
   def weight(product=nil)
     if product.nil?
@@ -94,13 +116,13 @@ class Cart < ActiveRecord::Base
     end
     return 0
   end
-  
+
   def total_items
     return carts_products.length
   end
-  
+
   def discount_cart(discount, percent=nil)
     percent.nil? ? self.update_attributes(:discount => discount) : self.update_attributes(:discount => discount, :percent => 1)
   end
-  
+
 end

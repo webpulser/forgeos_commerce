@@ -433,3 +433,5 @@ fr:
     weight:
       short: KG
       long: Kilogramme
+  setting:
+    godfather: parrainage
