@@ -20,6 +20,7 @@ class ProductType < ActiveRecord::Base
 
   validates_presence_of :name
 
+  has_many :brands, :through => :products, :uniq => true
 
   # Set all Products dynamic_attributes on save
   def before_save

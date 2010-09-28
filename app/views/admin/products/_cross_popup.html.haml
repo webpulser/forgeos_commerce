@@ -1,0 +1,56 @@
+- pack = form.object
+.option-panel.open
+  .backgrounds.content-header
+  = link_to I18n.t(:product, :count => 2), '#', :class => 'small-icons panel'
+  .option-panel-content
+    %a#cross-product.backgrounds.button.right.look{ :href => "#" }
+      %span.big-icons.add-product
+        = I18n.t('pack.products.add').capitalize
+    #pack-products.sortable.cross_sells_table
+      #product_id{:style => 'display: none;'}
+        = pack.id
+      %table
+        %thead
+          %tr
+            %th= 'Image'
+            %th= 'Name'
+            %th= 'Price'
+            %th= 'Stock'
+            %th= 'Suppression'
+        %tbody.looks_products
+          - pack.cross_sellings.each_with_index do |product, index|
+            = render :partial => 'cross_sell_tr', :locals => { :pack => pack, :product => product, :index => index, :_class => cycle("even", "odd")}
+  .clear
+  
+#cross-productSelectDialog.media-hoverlay
+  .media-hoverlay-header
+    = I18n.t('order.product.select').capitalize
+    #search.right.files
+      = fg_search
+    .backgrounds.search-form-files
+  .media-hoverlay-sidebar.grid_3.omega.alpha
+    .sidebar-content
+      %h2{ :class => 'small-icons products'}
+        = link_to_function I18n.t('product.all').capitalize, "select_all_elements_without_category()"
+      #cross_tree.tree-categories
+        %ul
+          - ProductType.all(:include => :translations, :order => 'product_type_translations.name').each do |p_type|
+            %li.folder
+              - link_to '#',:class => 'big-icons p_type', :id => p_type.id do
+                = p_type.name    
+                %span
+                  = p_type.products.count
+              - unless p_type.brands.empty?
+                %ul 
+                  - p_type.brands.each do |brand|
+                    %li.folder
+                      - link_to '#', :class => 'big-icons brand', :id => brand.id do
+                        = brand.name
+                        %span
+                          = Product.all( :conditions => ["brand_id = ? && product_type_id = ?", brand.id, p_type.id ] ).count
+  .media-hoverlay-content
+    %table#table-products-cross.datatable.media.selectable_rows
+      %tr
+        %td
+        
+= dataTables_tag :id => 'table-products-cross', :url => admin_products_path(:format => :json, :mode => 'selection'), :columns => ["{'sClass':'th-checkbox-container th_product_popup','bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t(:name)}'}","{'sTitle':'#{I18n.t(:sku)}'}","{'sTitle':'#{I18n.t(:price, :count => 1)}'}","{'sTitle':'#{I18n.t(:stock, :count => 1)}'}","{'sTitle':'#{I18n.t(:product_type, :count => 1)}'}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}"]

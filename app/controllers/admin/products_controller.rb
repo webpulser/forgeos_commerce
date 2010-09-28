@@ -83,6 +83,18 @@ class Admin::ProductsController < Admin::BaseController
     product = Product.find_by_id(params[:id])
     render :partial => 'attributes', :locals => { :product_type => product_type, :product => product }
   end
+  
+  def get_cross_selling_id
+    product = Product.find_by_id(params[:product_id])
+    cross_sellings = product.cross_sellings
+    index = product.cross_sellings.count + 1
+    cross_selling = Product.find_by_id(params[:cross_selling_id])
+    cross_sellings.push(cross_selling)
+    if product.update_attributes(:cross_sellings => cross_sellings)
+      render :partial => 'cross_sell_tr', :locals => { :index => index, :pack => product, :product => cross_selling, :_class => params[:class]} 
+    end
+  end
+  
 
 private
 

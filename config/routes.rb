@@ -50,6 +50,8 @@ map.namespace :admin do |admin|
     order.resources :details, :controller => 'order_details'
   end
 
+  map.connect '/admin/get_cross_selling_id', :controller => 'admin/products', :action => 'get_cross_selling_id'
+
   admin.resources :product_types
   admin.resources :products, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }
   admin.resources :packs, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }, :controller => :products, :requirements => { :type => 'pack' }

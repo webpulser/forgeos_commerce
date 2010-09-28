@@ -8,7 +8,12 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many_attachments
   has_many :sizes, :dependent => :destroy
   has_and_belongs_to_many :carts
-  has_and_belongs_to_many :cross_sellings, :class_name => 'Product', :association_foreign_key => 'cross_selling_id', :foreign_key => 'product_id', :join_table => 'cross_sellings_products'
+  
+  has_many :cross_sellings_products, :dependent => :destroy
+  has_many :cross_sellings, :through => :cross_sellings_products
+  accepts_nested_attributes_for :cross_sellings
+  accepts_nested_attributes_for :cross_sellings_products
+  
   has_and_belongs_to_many :product_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
   has_and_belongs_to_many :categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id', :class_name => 'ProductCategory'
   has_and_belongs_to_many :attribute_values, :readonly => true, :uniq => true
@@ -105,10 +110,6 @@ class Product < ActiveRecord::Base
     if stop_sales? && active? && stock.to_i < 1
       self.update_attribute('active', false)
     end
-  end
-
-  def cross_sellings
-    Product.all(:conditions => { :active => true, :deleted => [false,nil], :id_ne => id}, :limit => 10, :order => 'RAND()')
   end
 
   def activate
