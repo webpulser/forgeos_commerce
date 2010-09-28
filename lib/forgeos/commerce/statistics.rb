@@ -36,18 +36,21 @@ module Forgeos
       end
 
       def self.best_customers(date, limit = nil)
-        return [] if OrderDetail.count < 1
+        new_hash = {}
         OrderDetail.sum(:price,
           :conditions => { :orders => { :status => %w(paid shipped closed), :updated_at => date } },
           :include => :order,
-          :limit => limit,
           :group => 'orders.user_id',
           :order => 'sum_price DESC'
-        )
+        ).each_with_index do |item,index|
+          break if index < limit
+          new_hash[item.first] = item.last
+        end
+        return new_hash
       end
-      
+
       def self.new_customers(date, limit = nil)
-        User.all( 
+        User.all(
           :conditions => { :created_at => date },
           :order => 'created_at DESC',
           :limit => limit
