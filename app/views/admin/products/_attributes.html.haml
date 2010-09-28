@@ -1,5 +1,5 @@
 - unless product_type.nil?
-  - product_type.product_attributes.each do |attribute|
+  - product_type.product_attributes.uniq.each do |attribute|
     .fake-hr
       %span.option-second-title
         = attribute.name

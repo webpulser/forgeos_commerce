@@ -186,6 +186,7 @@ private
     options[:include] = includes unless includes.empty?
     options[:order] = order unless order.squeeze.blank?
     options[:joins] = joins
+    options[:group] = "product_id"
 
     if params[:sSearch] && !params[:sSearch].blank?
       options[:index] = "product_core.product_#{ActiveRecord::Base.locale}_core"
