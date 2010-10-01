@@ -39,7 +39,7 @@
 
 #fileSelectDialog.media-hoverlay
   #inner-lightbox.backgrounds
-    - %w(pdf video doc media).each do |file_type|
+    - %w(pdf audio video doc media).each do |file_type|
       = link_to_function I18n.t(:other, :scope => [:media,file_type]), "update_current_dataTable_source('#table-files','#{escape_javascript(admin_attachments_path(:mode => 'selection',:format => :json, :file_type => file_type))}')", :class => "small-icons #{file_type}"
   .media-hoverlay-header
     = link_to_function content_tag(:span, I18n.t('media.upload.action').capitalize, :class=>'big-icons add-media'), "$(\'#fileUploadDialog\').dialog(\'open\'); $(\'#fileSelectDialog\').dialog(\'close\')", :class=>'backgrounds button'
