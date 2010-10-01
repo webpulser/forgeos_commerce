@@ -1,4 +1,4 @@
-jQuery(document).ready(function(){  
+jQuery(document).ready(function(){
   $('#cross-productSelectDialog').dialog({
     autoOpen:false,
     modal:true,
@@ -18,11 +18,12 @@ jQuery(document).ready(function(){
     $('#cross-productSelectDialog').dialog('open');
     return false;
   });
-  
-  $('.delete_product_tr').live('click',function(){
+
+  $('.delete_product_tr').live('click',function(e){
+    e.preventDefault();
     $(this).parents('tr').remove();
-  });  
-  
+  });
+
   $('#cross_tree').tree({
     ui: {
       theme_path: '/stylesheets/jstree/themes/',
@@ -39,9 +40,9 @@ jQuery(document).ready(function(){
         var link = $(NODE).find('a:first');
 
         // update category id
-        
+
         params = get_json_params_from_url(url);
-        
+
         if ($(link).hasClass('brand')){
           params.type = 'brand';
           ptype_id = $(NODE).parents('ul').prev().attr('id');
@@ -49,7 +50,7 @@ jQuery(document).ready(function(){
         }else{
           params.type = 'p_type';
         }
-        
+
         params.category_id = $(link).attr('id');
         params = stringify_params_from_json(params);
 
@@ -62,7 +63,5 @@ jQuery(document).ready(function(){
       }
     }
   });
-  
-  
 
 });
