@@ -2,6 +2,7 @@ require 'ruleby'
 class ProductsController < ApplicationController
   include Ruleby
   before_filter :get_product, :only => [ :show ]
+  caches_page :show, :if => :get_product
 
   # TEST only use for mobile application
   def index
@@ -20,7 +21,8 @@ private
   def get_product
     @product = Product.find_by_id(params[:id])
     return redirect_to_home if @product.nil?
-    
+    return false if request.format == 'js'
+
     # check special offers
     engine :special_offer_engine do |e|
       rule_builder = SpecialOffer.new(e)

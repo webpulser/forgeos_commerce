@@ -8,7 +8,7 @@
 # * <tt>rate_tax</tt> - <i>Product</i> rate_tax
 # * <tt>quantity</tt> - <i>Product</i> quantity
 class OrderDetail < ActiveRecord::Base
-  
+
   belongs_to :order
   belongs_to :product
 
@@ -62,11 +62,10 @@ class OrderDetail < ActiveRecord::Base
     price(with_tax, with_currency,with_special_offer,with_voucher)
   end
 private
-  
+
   def increment_product_sold_counter
     if product
-      counter = product.product_sold_counters.new
-      counter.save unless counter.increment_counter
+      counter = product.sold_counters.new.increment_counter
     end
   end
 end

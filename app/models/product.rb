@@ -8,12 +8,12 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many_attachments
   has_many :sizes, :dependent => :destroy
   has_and_belongs_to_many :carts
-  
+
   has_many :cross_sellings_products, :dependent => :destroy
   has_many :cross_sellings, :through => :cross_sellings_products
   accepts_nested_attributes_for :cross_sellings
   accepts_nested_attributes_for :cross_sellings_products
-  
+
   has_and_belongs_to_many :product_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
   has_and_belongs_to_many :categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id', :class_name => 'ProductCategory'
   has_and_belongs_to_many :attribute_values, :readonly => true, :uniq => true
@@ -21,8 +21,8 @@ class Product < ActiveRecord::Base
   has_many :dynamic_attribute_values, :dependent => :destroy
   has_many :dynamic_attributes, :through => :dynamic_attribute_values, :class_name => 'DynamicAttribute', :source => 'product'
   accepts_nested_attributes_for :dynamic_attribute_values
-  has_many :product_viewed_counters, :as => :element
-  has_many :product_sold_counters, :as => :element
+  has_many :viewed_counters, :as => :element, :class_name => 'ProductViewedCounter'
+  has_many :sold_counters, :as => :element, :class_name => 'ProductSoldCounter'
 
   belongs_to :product_type
   belongs_to :brand
