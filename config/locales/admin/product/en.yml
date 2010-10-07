@@ -87,3 +87,14 @@ en:
       confirm: are you sure to delete this pack ?
       action: delete pack
     duplicate: duplicate pack
+  size:
+    one: size
+    other: sizes
+    many: sizes
+  cross_selling:
+    one: cross selling
+    other: cross sellings
+  price_variation:
+    one: price variation
+    other: prices variations
+    add: add price variation

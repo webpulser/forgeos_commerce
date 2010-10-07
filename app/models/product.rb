@@ -1,7 +1,8 @@
 class Product < ActiveRecord::Base
   translates :name, :description, :summary, :url
-  attr_accessor :voucher_discount, :voucher_discount_price
-  attr_accessor :special_offer_discount, :special_offer_discount_price
+  attr_accessor :voucher_discount, :voucher_discount_price,
+    :special_offer_discount, :special_offer_discount_price,
+    :price_variation_id, :price_variation
 
   acts_as_taggable
 
@@ -13,6 +14,9 @@ class Product < ActiveRecord::Base
   has_many :cross_sellings, :through => :cross_sellings_products
   accepts_nested_attributes_for :cross_sellings
   accepts_nested_attributes_for :cross_sellings_products
+
+  has_many :price_variations, :dependent => :destroy, :class_name => 'ProductPriceVariation'
+  accepts_nested_attributes_for :price_variations
 
   has_and_belongs_to_many :product_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
   has_and_belongs_to_many :categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id', :class_name => 'ProductCategory'
@@ -127,17 +131,17 @@ class Product < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def price(with_tax=false, with_currency=true)
+  def price(with_tax=false, with_currency=true, with_voucher=false,with_special_offer=false)
     price = super || 0
-    price += tax(false) if with_tax
+    price += tax(with_currency) if with_tax
+    price -= self.special_offer_discount_price if with_special_offer and self.special_offer_discount_price
+    price -= self.voucher_discount_price if with_voucher and self.voucher_discount_price
+    price -= (price * price_variation.discount) / 100 if price_variation
     price
   end
 
   def new_price(with_voucher=false)
-    price = self.price
-    price -= self.special_offer_discount_price if self.special_offer_discount_price
-    price -= self.voucher_discount_price if self.voucher_discount_price && with_voucher
-    return price
+    price(false,true,with_voucher,true)
   end
 
   # Returns price's string with currency symbol
@@ -147,8 +151,8 @@ class Product < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def price_to_s(with_tax=false, with_currency=true)
-    price(with_tax, with_currency).to_s
+  def price_to_s(*args)
+    price(args).to_s
   end
 
   # Returns total product's tax

@@ -23,7 +23,7 @@
           - when 'NumberAttribute'
             = render :partial => 'number', :locals => { :attribute => attribute, :form => f }
         - unless attribute.kind_of?(DynamicAttribute)
-          %a{:href =>"#", :class => "small-icons add-choice"}
+          %a{:href =>"#", :class => "small-icons add-link choice"}
             = I18n.t('attribute.value.new')
     #right-sidebar.grid_4.omega
       - unless attribute.new_record?

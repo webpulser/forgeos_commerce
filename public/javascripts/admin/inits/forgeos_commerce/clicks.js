@@ -19,5 +19,5 @@ jQuery(document).ready(function(){
     return false;
   });
 
-  $('.add-choice,.block-container .green-add-icon').live('click', add_item_on_add_click);
+  $('.add-link.choice,.block-container .green-add-icon').live('click', add_item_on_add_click);
 });

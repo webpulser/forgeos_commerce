@@ -66,11 +66,11 @@ function update_order_total(){
       if (request.rebuild_transporter == 1){
         // remove old transporters
         $('#order_shipping').children().remove();
-      
+
         // remove custom select
         $('.delivery-method').removeClass('enhanced');
         $('.delivery-method').children('.dropdown').remove();
-      
+
         // add new available transporters
         for (var i=0; i<request.available_transporters.length; i++){
 	      var transporter_rule = request.available_transporters[i].transporter_rule;
@@ -78,7 +78,7 @@ function update_order_total(){
 	    }
 	  }
       //$('span.order-taxes').text(request.taxes);
-      
+
       // rebuild custom select
       InitCustomSelects();
     },

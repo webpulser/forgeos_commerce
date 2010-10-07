@@ -1,4 +1,4 @@
-fr:  
+fr:
   product:
     one : produit
     other: produits
@@ -87,3 +87,14 @@ fr:
       confirm: êtes-vous sûr de vouloir de supprimé ce pack ?
       action: supprimer pack
     duplicate: dupliquer pack
+  size:
+    one: taille
+    other: tailles
+    many: toutes les tailles
+  cross_selling:
+    one: produit lié
+    other: produits liés
+  price_variation:
+    one: remise par quantité
+    other: remises par quantité
+    add: ajouter une remise par quantité

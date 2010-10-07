@@ -89,7 +89,7 @@ jQuery(document).ready(function(){
     open: function(){ $('#table-files').dataTableInstance().fnDraw(); }
   });
 
-$('.add_a_size').live('click', function(){
+  $('.add_a_size').live('click', function(){
     var itemInTable = $('#product_sizes tbody tr').length;
 
     var new_tr = '';
@@ -109,6 +109,22 @@ $('.add_a_size').live('click', function(){
     new_tr += '</tr>'
 
     $('#product_sizes').append(new_tr);
+  });
+
+  $('#add-price-variation').live('click', function(e){
+    e.preventDefault();
+    var index = $('#price-variations .line').size();
+
+    var new_price = "<div class='line'>\
+      <input class='center' type='text' size='2' name='product[price_variations_attributes]["+index+"][quantity]' />\
+      <label name='product[price_variations_attributes]["+index+"][quantity]' >"+$('#price-variations').attr('data-quantity')+"</label>\
+      <input class='center' type='text' size='2' name='product[price_variations_attributes]["+index+"][discount]' />\
+      <label name='product[price_variations_attributes]["+index+"][discount]'>"+$('#price-variations').attr('data-discount')+"</label>\
+      <a href='#' class='small-icons destroy-link destroy'></a>\
+    </div>";
+
+    $('#price-variations').append(new_price);
+    return false;
   });
 
   $('.remove_this_size').live('click', function(){

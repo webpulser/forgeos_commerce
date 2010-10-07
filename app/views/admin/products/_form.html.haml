@@ -5,6 +5,8 @@
   #content.grid_16.alpha.omega
     #general{:style => 'padding: 0'}
       = render :partial => 'general', :locals => {:product => product, :f => f}
+    #prices{:style => 'padding: 0'}
+      = render :partial => 'prices', :locals => {:product => product, :f => f}
     #sizes{:style => 'padding: 0'}
       = render :partial => 'sizes', :locals => {:product => product, :f => f}
     #seo{:style => 'padding: 0'}
