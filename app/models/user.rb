@@ -21,13 +21,10 @@ class User < Person
   end
 
   def has_nephew_discount?
-    Rails.logger.info("\033[01;33m#{self.godfather.inspect}\033[0m")
-    Rails.logger.info("\033[01;33m#{self.orders.find_all_by_status(%w(unpaid paid shipped)).inspect}\033[0m")
     self.godfather and self.orders.find_all_by_status(%w(unpaid paid shipped)).empty?
   end
 
   def has_godfather_discount?
-    Rails.logger.info("\033[01;33m#{self.patronage_count}\033[0m")
     self.patronage_count > 0
   end
 

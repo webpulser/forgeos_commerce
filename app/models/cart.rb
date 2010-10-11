@@ -80,7 +80,6 @@ class Cart < ActiveRecord::Base
       # discount total price if there are a valid voucher
       total -= self.voucher_discount_price if self.voucher_discount_price
 
-      Rails.logger.info("\033[01;33m#{self.patronage_discount}\033[0m")
       total -= self.patronage_discount
     end
     total = 0 if total < 0
