@@ -132,7 +132,7 @@ class Product < ActiveRecord::Base
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def price(with_tax=false, with_currency=true, with_voucher=false,with_special_offer=false)
-    price = super || 0
+    price = read_attribute(:price) || 0
     price += tax(with_currency) if with_tax
     price -= self.special_offer_discount_price if with_special_offer and self.special_offer_discount_price
     price -= self.voucher_discount_price if with_voucher and self.voucher_discount_price

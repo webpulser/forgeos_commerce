@@ -17,7 +17,7 @@ class OrderDetail < ActiveRecord::Base
   after_create :increment_product_sold_counter
 
   def rate_tax
-    super ? super : 1
+    read_attribute(:rate_tax) || 1
   end
   # Returns price's string with currency symbol
   #
@@ -27,8 +27,8 @@ class OrderDetail < ActiveRecord::Base
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def price(with_tax=false, with_currency=true,with_special_offer=false, with_voucher=false)
-    return nil if super.nil? # assert
-    price = super
+    return 0 unless read_attribute(:price)
+    price = read_attribute(:price)
     price -= self.special_offer_discount_price if with_special_offer and self.special_offer_discount_price
     price -= self.voucher_discount_price if with_voucher and self.voucher_discount_price
     price += tax(false) if with_tax
@@ -63,7 +63,8 @@ class OrderDetail < ActiveRecord::Base
   end
 
   def quantity
-    self.order.order_details.count(:conditions => { :product_id => self.product_id })
+    return 1 unless order
+    order.order_details.count(:conditions => { :product_id => product_id })
   end
 private
 
