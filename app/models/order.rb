@@ -75,7 +75,7 @@ class Order < ActiveRecord::Base
   def total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=true, with_voucher=true, with_patronage=true)
     amount = 0
     order_details.each do |order_detail|
-      price = order_detail.total(with_tax, with_currency,with_special_offer,with_voucher)
+      price = order_detail.price(with_tax, with_currency,with_special_offer,with_voucher)
       amount += price if price
     end
     amount += order_shipping.price if with_shipping && order_shipping && order_shipping.price
