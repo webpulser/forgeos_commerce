@@ -59,7 +59,11 @@ class OrderDetail < ActiveRecord::Base
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def total(with_tax=false, with_currency=true,with_special_offer=false,with_voucher=false)
-    price(with_tax, with_currency,with_special_offer,with_voucher)
+    price(with_tax, with_currency,with_special_offer,with_voucher) * quantity
+  end
+
+  def quantity
+    self.order.order_details.count(:conditions => { :product_id => self.product_id })
   end
 private
 
