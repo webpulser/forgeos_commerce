@@ -20,7 +20,7 @@
 
   %p.action-2-cart.pattern
     %span= select_tag 'act[targets][]', options_for_select([[t(:product,:scope=>[:special_offer,:action]),1],[t(:shipping,:scope=>[:special_offer,:action]),2]],2), {:onchange => "change_action(this,'action-condition','cart')"}
-    = link_to_function '', "add_action('action-2-cart')", :class => 'small-icons green-add-icon'  
+    = link_to_function '', "add_action('action-2-cart')", :class => 'small-icons green-add-icon'
     = link_to_function '', "remove_rule(this,'action-condition')", :class => 'small-icons red-delete-icon'
     %br
     .clear
@@ -80,7 +80,7 @@
     = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon'
     %br
     .clear
-    
+
   %p.rule-product_type_id.pattern
     %span= select_tag 'rule[targets][]', options_for_select(@product_attributes,{:disabled => @disable_attributes, :selected => 'product_type_id'}),{ :onchange => "change_rule(this,'rule-condition')" }
     %span= select_tag 'rule[conds][]', options_for_select(@conditions)
@@ -88,10 +88,19 @@
     = link_to_function '', "add_rule('rule-condition')", :class => 'small-icons green-add-icon'
     = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon'
     %br
+    .clear
 
-    .clear     
+  %p.rule-brand_id.pattern
+    %span= select_tag 'rule[targets][]', options_for_select(@product_attributes,{:disabled => @disable_attributes, :selected => 'brand_id'}),{ :onchange => "change_rule(this,'rule-condition')" }
+    %span= select_tag 'rule[conds][]', options_for_select(@conditions)
+    %span= select_tag 'rule[values][]', options_from_collection_for_select(Brand.all(:select => 'brands.id,name', :order => 'name' ),:id,:name)
+    = link_to_function '', "add_rule('rule-condition')", :class => 'small-icons green-add-icon'
+    = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon'
+    %br
+    .clear
+
   - @default_attributes.each do |name,attribute|
-    - next if attribute == 'product_type_id'
+    - next if %(brand_id product_type_id).include?(attribute)
     %p{:class => "rule-#{attribute} pattern"}
       %span= select_tag 'rule[targets][]', options_for_select(@product_attributes,{:disabled => @disable_attributes, :selected => attribute}),{ :onchange => "change_rule(this,'rule-condition')" }
       %span= select_tag 'rule[conds][]', options_for_select(@conditions)

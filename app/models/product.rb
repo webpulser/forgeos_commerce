@@ -165,6 +165,21 @@ class Product < ActiveRecord::Base
     return ("%01.2f" % (price(false, with_currency) * self.rate_tax/100)).to_f
   end
 
+  def has_special_offers?
+    selected_products = []
+    engine :special_offer_engine do |e|
+      begin
+        rule_builder = SpecialOffer.new(e)
+        rule_builder.selected_products = selected_products
+        rule_builder.rules
+      rescue Exception
+      end
+      e.assert self
+      e.match
+    end
+    !selected_products.blank?
+  end
+
   def initialize(attr = {})
     generate_methods_from_product_type(ProductType.find_by_id(attr[:product_type_id])) if attr && attr[:product_type_id]
     super(attr)

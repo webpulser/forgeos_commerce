@@ -8,6 +8,7 @@ en:
     one: "This Offer apply to %{count} product"
     other: "This Offer apply to %{count} products"
   product_type_id: Product Type
+  brand_id: Brand
   special_offer:
     one: special offer
     other: special offers

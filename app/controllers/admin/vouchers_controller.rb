@@ -1,14 +1,29 @@
 class Admin::VouchersController < Admin::BaseController
   before_filter :get_voucher, :only => [:activate,:destroy]
-  
+
   def activate
     render :text => @voucher.activate
   end
 
   def new
-    
+    @default_attributes = %w(price title description weight sku stock product_type_id brand_id).collect do |n|
+      [t(n, :count => 1), n]
+    end
+    @attributes = Attribute.all(:joins => [:translations], :select => 'access_method,name').collect{|a| [a.name, a.access_method]}
+    @cart_attributes = [[t(:quantity,:scope=>[:special_offer,:cart]),'Total items quantity'],[t(:weight,:scope=>[:special_offer,:cart]), 'Total weight'], [t(:price,:scope=>[:special_offer,:cart]),'Total amount'],[t(:shipping,:scope=>[:special_offer,:cart]),'Shipping method']]
+    @disable_attributes = t(:disabled,:scope=>[:special_offer,:attributes])
+
+    @for = Hash["Cart", "Cart"]
+
+    @condition_is = Hash["Is", "=="]
+    @conditions =  Hash["Is not", "not==","Equals or greater than",">=","Equals or less than","<=", "Greater than", ">", "Less than","<"]
+
+    @end = [[t(:date,:scope=>[:special_offer,:end]),'Date'],[t(:total_use,:scope=>[:special_offer,:end]),'Total number of offer use'],[t(:user_total_use,:scope=>[:special_offer,:end]),'Customer number of offer use']]
+    @products = Product.find_all_by_active_and_deleted(true,false, :select => 'products.id,name', :joins => [:translations])
+    @discount_type = [[t(:percent,:scope=>[:special_offer,:action]),0],[t(:fixed,:scope=>[:special_offer,:action]),1]]
+    @product_attributes = [t(:main,:scope=>[:special_offer,:attributes,:disabled])]+@default_attributes+[t(:attribute,:scope=>[:special_offer,:attributes,:disabled])]+@attributes
   end
-  
+
   def index
     respond_to do |format|
       format.html
@@ -21,12 +36,12 @@ class Admin::VouchersController < Admin::BaseController
 
   def create
     return flash[:error] = 'Fields' unless params[:rule_builder]
-      
+
     @main_attributes = %w(price title description weight sKU stock)
-    
+
     @rule_condition = []
     @rule_condition << params[:rule_builder]['for'] << ':product'
-    
+
     # Build Action variables
     variables = {}
     params[:act][:targets].each_with_index do |action, index|
@@ -43,23 +58,23 @@ class Admin::VouchersController < Admin::BaseController
         variables[:percent] = (params[:act][:conds][index] == "By percent" ? false : true)
       end
     end
-    
+
     if params[:rule_builder][:if] == 'All'
       @rule = VoucherRule.new
       @rule.code = params[:voucher_code]
       @rule.name = params[:rule_builder][:name]
       @rule.description = params[:rule_builder][:description]
       @rule.active = params[:rule_builder][:active]
-      
+
       params[:rule][:targets].each_with_index do |rule_target, index|
         build_a_rule(rule_target, index)
       end
-      
+
       if params[:rule_builder]['for'] == 'Category'
         @rule_condition << "m.category.=(#{params[:rule_builder][:target]})"
       end
-      
-      @rule.conditions = "[#{@rule_condition.join(', ')}]" 
+
+      @rule.conditions = "[#{@rule_condition.join(', ')}]"
       @rule.variables = variables
       @rule.save
     else
@@ -72,20 +87,20 @@ class Admin::VouchersController < Admin::BaseController
         @rule.name = params[:rule_builder][:name]
         @rule.code = params[:voucher_code]
         @rule.description = params[:rule_builder][:description]
-        
+
         build_a_rule(rule_target, index)
-        
+
         if params[:rule_builder]['for'] == 'Category'
           @rule_condition << "m.category.=(#{params[:rule_builder][:target]})"
         end
-        
-        @rule.conditions = "[#{@rule_condition.join(', ')}]" 
+
+        @rule.conditions = "[#{@rule_condition.join(', ')}]"
         @rule.variables = variables
         @rule.save
         rule_parent = @rule if index == 0
       end
     end
-    
+
     # TODO : Update this ugly patch for vouchers to work with packs
     if params[:rule_builder]['for'] == 'Product'
       params[:rule_builder]['for'] = 'Pack'
@@ -97,10 +112,10 @@ class Admin::VouchersController < Admin::BaseController
         @rule.name = params[:rule_builder][:name]
         @rule.code = params[:voucher_code]
         @rule.description = params[:rule_builder][:description]
-          
+
         build_a_rule(rule_target, index)
-        
-        @rule.conditions = "[#{@rule_condition.join(', ')}]" 
+
+        @rule.conditions = "[#{@rule_condition.join(', ')}]"
         @rule.variables = variables
         @rule.save
         rule_parent = @rule if index == 0
@@ -108,7 +123,7 @@ class Admin::VouchersController < Admin::BaseController
     end
     redirect_to :action => 'index'
   end
-  
+
   def build_a_rule(rule_target, index)
     rule_target.downcase!
     if @main_attributes.include?(rule_target)
@@ -131,10 +146,10 @@ class Admin::VouchersController < Admin::BaseController
       end
     end
 
-    
+
 =begin
-     TODO : find why it was written like this 
-    
+     TODO : find why it was written like this
+
     if params[:rule][:values][index].to_i == 0
       #value = "'#{params[:rule][:values][index]}'"
     else
@@ -152,7 +167,7 @@ class Admin::VouchersController < Admin::BaseController
     else
       flash[:error] = "Voucher not destroy"
     end
-    redirect_to :action => 'index'    
+    redirect_to :action => 'index'
   end
 
 private

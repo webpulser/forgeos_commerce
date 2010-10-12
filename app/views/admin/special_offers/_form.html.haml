@@ -5,7 +5,7 @@
       = Forgeos_save_buttons admin_special_offers_path
 
 
-  #content.special_offers.grid_12.omega
+  #content.special_offers.grid_12.omega.no-customselect
     .inner-content
       - fields_for :rule_builder do |rule_builder|
         %label
@@ -72,7 +72,8 @@
       //      = link_to_function '', "remove_rule(this,'end-condition')", :class => 'small-icons red-delete-icon', :style => 'display : none'
       //      .clear
 
-      
+
+    = render :partial => 'patterns'
   #right-sidebar.grid_4.omega
     .step.status.open
       %div
@@ -83,6 +84,5 @@
       /  duplicate special offer
       /%a.small-icons.delete{ :href => "#" }
       /  delete special offer
-    
+
   .clear
-= render :partial => 'patterns'

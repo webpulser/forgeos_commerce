@@ -1,4 +1,4 @@
-fr:  
+fr:
   back_to_special_offer: retours au offres spécials
   offer_used:
     one: "cette offre spécial a été utilisé %{count} fois"
@@ -8,6 +8,7 @@ fr:
     one: "cette offre spécial s'applique à %{count} produit"
     other: "cette offre spécial s'applique à %{count} produits"
   product_type_id: Type de produit
+  brand_id: Marque
   special_offer:
     one: offre spéciale
     other: offres spéciales
@@ -19,7 +20,7 @@ fr:
     then: alors
     end_offer_if: "l'offre se termine quand"
     create:
-      action: 'créer une offre spéciale'  
+      action: 'créer une offre spéciale'
 
     _for:
       category: une catégorie de produit

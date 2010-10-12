@@ -134,7 +134,7 @@ class Admin::SpecialOffersController < Admin::BaseController
 
   def new
     t = Time.now
-    @default_attributes = %w(price title description weight sku stock product_type_id).collect do |n|
+    @default_attributes = %w(price title description weight sku stock product_type_id brand_id).collect do |n|
       [t(n, :count => 1), n]
     end
     @attributes = Attribute.all.collect{|a| [a.name, a.access_method]}
@@ -163,15 +163,20 @@ class Admin::SpecialOffersController < Admin::BaseController
 
   def show
     @selected_products = []
-    engine :special_offer_engine do |e|
-      rule_builder = SpecialOffer.new(e)
-      rule_builder.selected_products = @selected_products
-      rule_builder.rule_preview(@special_offer)
-      products = Product.all(:conditions => {:active => true, :deleted=>[false, nil]})
-      products.each do |product|
-        e.assert product
+    sql_options = {:page => 1, :per_page => 100, :conditions => {:active => true, :deleted=> false} }
+    pagination = Product.paginate(sql_options)
+
+    pagination.total_pages.enum_for(:times).each do |page|
+      sql_options[:page] = page+1
+      engine :special_offer_engine do |e|
+        rule_builder = SpecialOffer.new(e)
+        rule_builder.selected_products = @selected_products
+        rule_builder.rule_preview(@special_offer)
+        Product.paginate(sql_options).each do |product|
+          e.assert product
+        end
+        e.match
       end
-      e.match
     end
   end
 
