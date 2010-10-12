@@ -1,7 +1,7 @@
 class Admin::TransporterRulesController < Admin::BaseController
 
   before_filter :new_transporter, :only => [:new, :create]
-  before_filter :get_transporter, :only => [ :show, :edit, :update, :destroy, :duplicate ]
+  before_filter :get_transporter, :only => [ :show, :edit, :update, :destroy, :duplicate, :activate ]
   before_filter :get_rules, :only => [ :show, :edit ]
   before_filter :get_product_types, :only => [ :new, :create, :show, :edit, :duplicate ]
   before_filter :get_geo_zones, :only => [ :new, :create, :show, :edit, :duplicate ]
