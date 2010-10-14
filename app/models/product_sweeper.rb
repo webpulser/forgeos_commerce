@@ -21,6 +21,7 @@ class ProductSweeper < ActionController::Caching::Sweeper
   def expire_cache_for_product(product)
     expire_page seo_product_path(product) if respond_to?('seo_product_path')
     expire_page product_path(product) if respond_to?('product_path')
+    expire_fragment("products/#{product.id}") if product.id
 
     home_page = Page.find_by_single_key('home')
     expire_page page_path(home_page.url) if home_page
