@@ -166,18 +166,22 @@ class Product < ActiveRecord::Base
   end
 
   def has_special_offers?
-    selected_products = []
-    engine :special_offer_engine do |e|
-      begin
-        rule_builder = SpecialOffer.new(e)
-        rule_builder.selected_products = selected_products
-        rule_builder.rules
-      rescue Exception
+    if product.new_price != product.price
+      return true
+    else
+      selected_products = []
+      engine :special_offer_engine do |e|
+        begin
+          rule_builder = SpecialOffer.new(e)
+          rule_builder.selected_products = selected_products
+          rule_builder.rules
+        rescue Exception
+        end
+        e.assert self
+        e.match
       end
-      e.assert self
-      e.match
+      return !selected_products.blank?
     end
-    !selected_products.blank?
   end
 
   def initialize(attr = {})
