@@ -166,7 +166,7 @@ class Product < ActiveRecord::Base
   end
 
   def has_special_offers?
-    if product.new_price != product.price
+    if self.new_price != self.price
       return true
     else
       selected_products = []
