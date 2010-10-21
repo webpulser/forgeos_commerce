@@ -25,8 +25,8 @@ class Product < ActiveRecord::Base
   has_many :dynamic_attribute_values, :dependent => :destroy
   has_many :dynamic_attributes, :through => :dynamic_attribute_values, :class_name => 'DynamicAttribute', :source => 'product'
   accepts_nested_attributes_for :dynamic_attribute_values
-  has_many :viewed_counters, :as => :element, :class_name => 'ProductViewedCounter'
-  has_many :sold_counters, :as => :element, :class_name => 'ProductSoldCounter'
+  has_many :viewed_counters, :as => :element, :class_name => 'ProductViewedCounter', :dependent => :destroy
+  has_many :sold_counters, :as => :element, :class_name => 'ProductSoldCounter', :dependent => :destroy
 
   belongs_to :product_type
   belongs_to :brand
@@ -56,10 +56,14 @@ class Product < ActiveRecord::Base
     indexes stock, :sortable => true
     indexes price, :sortable => true
     indexes brand(:name), :as => :brand
-    indexes product_type(:name), :as => :ptype
+    indexes product_type.translations(:name), :as => :product_type_name
+
+    has attachments(:name), :as => :firstnames
+    has categories.translations(:name), :as => :category_names
 
     has active, deleted
     set_property :min_prefix_len => 1
+    set_property :enable_star => 1
   end
 
   define_translated_index :name, :description, :url
