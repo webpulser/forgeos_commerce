@@ -16,7 +16,7 @@ class Order < ActiveRecord::Base
   aasm_column :status
   aasm_initial_state :unpaid
   aasm_state :unpaid
-  aasm_state :paid, :after_enter => :mail_payment_confirmation
+  aasm_state :paid, :after_enter => :payment_confirmation
   aasm_state :shipped, :after_enter => :enter_shipping_event
   aasm_state :canceled, :after_enter => :update_patronage
   aasm_state :closed
@@ -139,8 +139,14 @@ class Order < ActiveRecord::Base
 
   private
 
-  def mail_payment_confirmation
-    Notifier.deliver_order_confirmation(self.user,self) if self.user
+  def payment_confirmation
+    if self.user
+      Notifier.deliver_order_confirmation(self.user,self)
+      # decrement user's patronage_count if its use has patronage
+      User.decrement_counter(:patronage_count,self.user.id) if self.user.has_godfather_discount?
+      # increment user's godfather patronage_count if its user's first order
+      User.increment_counter(:patronage_count,self.user.godfather_id) if self.user.godfather and self.user.orders.find_by_status('paid').empty?
+    end
   end
 
   def enter_shipping_event

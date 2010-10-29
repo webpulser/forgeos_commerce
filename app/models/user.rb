@@ -41,9 +41,4 @@ class User < Person
       0
     end
   end
-
-  def godfather=(user)
-    self.godfather_id = user.id
-    User.increment_counter(:patronage_count,user.id)
-  end
 end
