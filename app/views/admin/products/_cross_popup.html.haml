@@ -18,7 +18,7 @@
             %th= 'Stock'
             %th= 'Suppression'
         %tbody.looks_products
-          - pack.cross_sellings.each_with_index do |product, index|
+          - pack.cross_sellings.all(:select => '`products`.`id`, name, price, stock', :joins => [:translations]).each_with_index do |product, index|
             = render :partial => 'cross_sell_tr', :locals => { :pack => pack, :product => product, :index => index, :_class => cycle("even", "odd")}
   .clear
 
