@@ -59,6 +59,8 @@ class Order < ActiveRecord::Base
     indexes order_details.price, :facet => true,  :sortable => true
   end
 
+  before_save :update_patronage
+
   def aasm_current_state_with_event_firing=(state)
     aasm_events_for_current_state.each do |event_name|
       event = self.class.aasm_events[event_name]
@@ -117,6 +119,7 @@ class Order < ActiveRecord::Base
   end
 
   def patronage_discount
+    return read_attribute(:patronage_discount_price) if self.patronage_discount_price
     return 0 unless self.user
     if self.user.has_nephew_discount?
       if Setting.first.nephew_discount_percent?
@@ -158,6 +161,7 @@ class Order < ActiveRecord::Base
     when :unpaid
       # FIXME
       #User.decrement_counter(:patronage_count,self.user.godfather_id)
+      self.patronage_discount_price = patronage_discount
     when :canceled
       User.increment_counter(:patronage_count,self.user.godfather_id)
     end
