@@ -21,8 +21,6 @@ class Order < ActiveRecord::Base
   aasm_state :canceled, :after_enter => :update_patronage
   aasm_state :closed
 
-  after_create :update_patronage
-
   aasm_event :pay do
     transitions :to => :paid, :from => :unpaid
   end
@@ -145,7 +143,7 @@ class Order < ActiveRecord::Base
       # decrement user's patronage_count if its use has patronage
       User.decrement_counter(:patronage_count,self.user.id) if self.user.has_godfather_discount?
       # increment user's godfather patronage_count if its user's first order
-      User.increment_counter(:patronage_count,self.user.godfather_id) if self.user.godfather and self.user.orders.find_all_by_status('paid').empty?
+      User.increment_counter(:patronage_count,self.user.godfather_id) if self.user.godfather and self.user.orders.count(:conditions => { :status => 'paid' }) == 1
     end
   end
 
@@ -158,7 +156,8 @@ class Order < ActiveRecord::Base
     return true unless self.user and self.user.has_patronage_discount?
     case aasm_current_state
     when :unpaid
-      User.decrement_counter(:patronage_count,self.user.godfather_id)
+      # FIXME
+      #User.decrement_counter(:patronage_count,self.user.godfather_id)
     when :canceled
       User.increment_counter(:patronage_count,self.user.godfather_id)
     end
