@@ -58,8 +58,8 @@ class Product < ActiveRecord::Base
     indexes brand(:name), :as => :brand
     indexes product_type.translations(:name), :as => :product_type_name
 
-    has attachments(:name), :as => :firstnames
-    has categories.translations(:name), :as => :category_names
+    indexes attachments(:name), :as => :firstnames
+    indexes categories.translations(:name), :as => :category_names
 
     has active, deleted
     set_property :min_prefix_len => 1
