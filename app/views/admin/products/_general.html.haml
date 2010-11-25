@@ -119,7 +119,11 @@
       = f.collection_select :brand_id, Brand.all(:order => 'name DESC'), :id, :name, { :prompt => "#{t('please_select')} #{t('brand.one')}" }
     .clear
     = f.check_box :on_first_page
-    = t('show_on_homepage').capitalize
+    = t('product.on_first_page').capitalize
+    .clear
+    = f.check_box :offer_month
+    = t('product.offer_month').capitalize
+
 
   .step
     - unless product.new_record?

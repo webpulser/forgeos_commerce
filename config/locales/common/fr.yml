@@ -200,8 +200,6 @@ fr:
   price:
     one: prix
     other: prix
-  offer_month: 'offre du mois ?'
-  show_on_homepage: "afficher sur la page d'accueil ?"
   action:
     one: action
     other: actions

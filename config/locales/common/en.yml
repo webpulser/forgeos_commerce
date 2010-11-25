@@ -202,8 +202,6 @@ en:
   price:
     one: price
     other: prices
-  offer_month: 'month offer ?'
-  show_on_homepage: 'show on homepage?'
   action:
     one: action
     other: actions

@@ -7,6 +7,8 @@ fr:
     stop_sales: "arréter les ventes si le produit n'est plus en stock"
     showed_on_homepage: "Affiché sur la page d'acceuil"
     linked_files: fichiers liés
+    offer_month: 'offre du mois ?'
+    on_first_page: "afficher sur la page d'accueil ?"
     variant:
       one: variant
       other: variantes
