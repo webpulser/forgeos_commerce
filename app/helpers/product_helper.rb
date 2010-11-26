@@ -1,17 +1,4 @@
 module ProductHelper
-  def seo_product_type_path(product_type)
-    product_type_path(:product_type_url=>product_type.url)
-  end
-  def seo_product_type_product_category_path(product_type,product_category)
-    product_type_product_category_path(:product_type_url=>product_type.url,:category_url=>product_category.url)
-  end
-  def seo_product_path(product)
-    product_by_url_path(product.url)
-  end
-  
-  def product_category_path(object)
-    super(:id => nil, :category_name => object.name)
-  end
 
   def display_catalog(products)
     total = (products.is_a?(WillPaginate::Collection)) ? products.total_entries : products.size
