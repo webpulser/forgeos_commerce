@@ -68,14 +68,6 @@ class Product < ActiveRecord::Base
 
   define_translated_index :name, :description, :url
 
-  def method_missing(method_id,*args)
-    if cat_id = method_id.to_s.match(/has_category_(\d+)/)
-      return product_category_ids.include?(cat_id[1].to_i)
-    else
-      super(method_id,*args)
-    end
-  end
-
   def public_url
     unless product_categories.empty?
       category = product_categories.first
@@ -188,16 +180,77 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def initialize(attr = {})
-    generate_methods_from_product_type(ProductType.find_by_id(attr[:product_type_id])) if attr && attr[:product_type_id]
-    super(attr)
+  def method_missing(method_id,*args,&block)
+    method_name = method_id.to_s
+    if cat_id = method_name.match(/has_category_(\d+)/)
+      return product_category_ids.include?(cat_id[1].to_i)
+    elsif access_method = method_name.match(/^(\w|\d|_|-)*$/) and product_type and
+      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
+      read_custom_attribute(custom_attribute, args.first)
+    elsif access_method = method_name.match(/^(\w|\d|_|-)*=$/) and product_type and
+      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
+      write_custom_attribute(custom_attribute, args.first)
+    else
+      super
+    end
   end
 
-  def after_initialize()
-    generate_methods_from_product_type(self.product_type) unless new_record?
+  def respond_to?(method, include_priv = false)
+    method_name = method.to_s
+    if access_method = method_name.match(/^(\w|\d|_|-)*$/) and product_type and
+      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
+      return true
+    elsif access_method = method_name.match(/^(\w|\d|_|-)*=$/) and product_type and
+      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
+      return true
+    else
+      super
+    end
   end
-
   private
+
+  def read_custom_attribute(attribute, method)
+    if attribute.dynamic?
+      attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
+      attribute_value ? attribute_value.send(method || :value) : nil
+    else
+      values = attribute_values.find_all_by_attribute_id(attribute.id)
+      value = method ? values.map(&method.to_sym) : values
+      return case attribute
+      when RadiobuttonAttribute, PicklistAttribute
+        value.first
+      else
+        value
+      end
+    end
+  end
+
+  def write_custom_attribute(attribute, new_value)
+    if attribute.dynamic?
+      if attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
+        self.dynamic_attribute_values_attributes= { attribute_value.id => { :id => attribute_value.id, :value => new_value } }
+      else
+        self.dynamic_attribute_values_attributes= { '-1' => { :value => new_value, :attribute_id => attribute.id} }
+      end
+    else
+      other_attributes = self.attribute_values.all(:conditions => {:attribute_id_not => attribute.id})
+      if new_value.nil?
+        new_attributes = []
+      elsif new_value.kind_of?(AttributeValue)
+        new_attributes = [new_value]
+      elsif new_value.kind_of?(Array) && new_value.first.kind_of?(AttributeValue)
+        new_attributes = new_value.flatten
+      else
+        new_attributes = AttributeValue.find_all_by_attribute_id(
+          attribute.id,
+          :include => [:translations],
+          :conditions => { :attribute_value_translations => { :name => [new_value].flatten } }
+        )
+      end
+      self.attribute_values = new_attributes + other_attributes
+    end
+
+  end
 
   # Call by <i>before_save</i>
   # convert all blank strings to nil for attribute inheritance save
@@ -209,56 +262,5 @@ class Product < ActiveRecord::Base
 
   def force_url_format
     self.url= Forgeos::url_generator(self.url)
-  end
-
-  def generate_methods_from_product_type(prod_type)
-    if prod_type
-      prod_type.product_attributes.each do |attribute|
-        self.class_eval <<DEF
-def #{attribute.access_method}(method=:name)
-  attribute = Attribute.find(#{attribute.id})
-  if attribute.dynamic?
-    attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
-    attribute_value ? attribute_value.value : nil
-  else
-    values = attribute_values.find_all_by_attribute_id(attribute.id)
-    value = method ? values.map(&method.to_sym) : values
-    return case attribute
-    when RadiobuttonAttribute, PicklistAttribute
-      value.first
-    else
-      value
-    end
-  end
-end
-def #{attribute.access_method}=(new_value)
-  attribute = Attribute.find(#{attribute.id})
-  if attribute.dynamic?
-    if attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
-      self.dynamic_attribute_values_attributes= { attribute_value.id => { :id => attribute_value.id, :value => new_value } }
-    else
-      self.dynamic_attribute_values_attributes= { '-1' => { :value => new_value, :attribute_id => attribute.id} }
-    end
-  else
-    other_attributes = self.attribute_values.all(:conditions => {:attribute_id_not => attribute.id})
-    if new_value.nil?
-      new_attributes = []
-    elsif new_value.kind_of?(AttributeValue)
-      new_attributes = [new_value]
-    elsif new_value.kind_of?(Array) && new_value.first.kind_of?(AttributeValue)
-      new_attributes = new_value.flatten
-    else
-      new_attributes = AttributeValue.find_all_by_attribute_id(
-        attribute.id,
-        :include => [:translations],
-        :conditions => { :attribute_value_translations => { :name => [new_value].flatten } }
-      )
-    end
-    self.attribute_values = new_attributes + other_attributes
-  end
-end
-DEF
-      end
-    end
   end
 end
