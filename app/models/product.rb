@@ -45,11 +45,10 @@ class Product < ActiveRecord::Base
 
   belongs_to :brand
 
-  def redirection_product_with_deleted
-    return (redirection_product_without_deleted && redirection_product_without_deleted.deleted? ? redirection_product_without_deleted.redirection_product : redirection_product_without_deleted)
-  end
-  alias_method_chain :redirection_product, :deleted
-
+  named_scope :actives, lambda { {:conditions => {:active => true, :deleted => [false, nil]}} }
+  named_scope :deleted, lambda { {:conditions => {:deleted => true}} }
+  named_scope :hiddens, lambda { {:conditions => {:active => [false, nil], :deleted => [false, nil]}} }
+  named_scope :out_of_stock, lambda { {:conditions => {:stock_lte => 0}} }
 
   define_index do
     indexes sku, :sortable => true
@@ -80,6 +79,11 @@ class Product < ActiveRecord::Base
       '#'
     end
   end
+
+  def redirection_product_with_deleted
+    return (redirection_product_without_deleted && redirection_product_without_deleted.deleted? ? redirection_product_without_deleted.redirection_product : redirection_product_without_deleted)
+  end
+  alias_method_chain :redirection_product, :deleted
 
   # Returns month's offers
   def self.get_offer_month
