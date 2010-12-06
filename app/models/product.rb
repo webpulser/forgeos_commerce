@@ -61,6 +61,7 @@ class Product < ActiveRecord::Base
     indexes categories.translations(:name), :as => :category_names
 
     has active, deleted
+    has categories(:id), :as => :category_ids
     set_property :min_prefix_len => 1
     set_property :enable_star => 1
   end
