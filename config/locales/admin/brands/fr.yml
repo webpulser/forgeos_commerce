@@ -9,7 +9,7 @@ fr:
     one : 'marque'
     other: 'marques'
     back: retour aux types
-    visual:
+    picture:
       add: ajouter un logo
       name: logo de la marque
       change: changer le logo
