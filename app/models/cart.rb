@@ -10,6 +10,7 @@ class Cart < ActiveRecord::Base
   attr_accessor :free_shipping
   has_many :carts_products, :dependent => :destroy
   has_many :products, :through => :carts_products
+  serialize :options
 
   belongs_to :user
 
@@ -124,4 +125,20 @@ class Cart < ActiveRecord::Base
     percent.nil? ? self.update_attributes(:discount => discount) : self.update_attributes(:discount => discount, :percent => 1)
   end
 
+  def address_invoice
+    AddressInvoice.find_by_id(options[:address_invoice_id])
+  end
+
+  def address_delivery
+    AddressDelivery.find_by_id(options[:address_delivery_id])
+  end
+
+  def transporter
+    TransporterRule.find_by_id(options[:transporter_rule_id])
+  end
+
+  def options
+    self.options = Hash.new unless super
+    super
+  end
 end

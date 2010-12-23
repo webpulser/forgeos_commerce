@@ -10,7 +10,6 @@ class WishlistController < ApplicationController
   # ==== Parameters
   # * <tt>:id</tt> - a <i>Product</i> object
   def add_product
-    reset_order_session
     flash[:notice] = I18n.t(:product_added).capitalize if current_wishlist.add_product_id(params[:id])
     redirect_or_update
   end
@@ -18,7 +17,6 @@ class WishlistController < ApplicationController
   # Empty the <i>Wishlist</i>
   #
   def empty
-    reset_order_session
     current_wishlist.to_empty
     flash[:notice] = I18n.t(:wishlist_is_empty).capitalize
     redirect_or_update
@@ -29,7 +27,6 @@ class WishlistController < ApplicationController
   # ==== Parameters
   # * <tt>:id</tt> - a <i>Product</i> object
   def remove_product
-    reset_order_session
     flash[:notice] = I18n.t(:product_has_been_remove).capitalize if current_wishlist.remove_product_id(params[:id])
     redirect_or_update
   end
@@ -42,7 +39,6 @@ class WishlistController < ApplicationController
   # * <tt>:product_id</tt> - a <i>Product</i> object
   # * <tt>:quantity</tt> - a <i>Product</i> object
   def update_quantity
-    reset_order_session
     current_wishlist.set_quantity Product.find(params[:product_id]), params[:quantity]
 
     if request.xhr?
@@ -57,7 +53,7 @@ class WishlistController < ApplicationController
       redirect_to(:action => 'index')
     end
   rescue
-    redirect_to(:action => 'index')   
+    redirect_to(:action => 'index')
   end
 
   def send_to_friend
@@ -69,16 +65,10 @@ class WishlistController < ApplicationController
   end
 
 protected
-  # Update <i>session[:order_shipping_method_id]</i> and <i>session[:order_voucher_ids]</i> at <i>nil</i>
-  #
-  # User must again valid the shipping method and his voucher if his <i>Wishlist</i> is updated
-  def reset_order_session
-    session[:order_shipping_method_id] = session[:order_voucher_ids] = nil
-  end
 
   def redirect_or_update
     unless request.xhr?
-      redirect_to(:action => 'index') 
+      redirect_to(:action => 'index')
     else
       render :action => 'update_wishlist', :layout => false
     end

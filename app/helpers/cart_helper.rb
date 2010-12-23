@@ -46,7 +46,7 @@ module CartHelper
       content += " with special discount : "+ cart.total(true,nil,true).to_s + " " + current_currency.html + " !!" if cart.discount
     content += "</div>"
   end
-  
+
 
   # Display a cart
   #
@@ -112,7 +112,6 @@ module CartHelper
   # * <tt>:url</tt> - url, <i>{:controller => 'cart'}</i> by default
   # * <tt>options</tt> the html options
   def link_to_cart(name=I18n.t('cart', :count => 1), url={:controller => 'cart'}, options=nil)
-    cart = Cart.find_by_id(session[:cart_id])
     #unless cart.nil?
     #  name = "#{name} (#{cart.size} #{I18n.t('product', :count => cart.size)})"
     #end

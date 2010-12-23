@@ -25,7 +25,7 @@ class Admin::OrdersController < Admin::BaseController
   def new
     render(:action => 'create')
   end
-  
+
   def create
     if @order.save
       flash[:notice] = t('order.create.success').capitalize
@@ -38,7 +38,7 @@ class Admin::OrdersController < Admin::BaseController
 
   def edit
   end
-  
+
   def update
     if @order.update_attributes(params[:order])
       flash[:notice] = t('order.update.success').capitalize
@@ -89,7 +89,7 @@ class Admin::OrdersController < Admin::BaseController
     editing_order = @order.clone
     editing_order.order_shipping = @order.order_shipping.clone
     # get order_details ids
-    
+
     if order_details = params[:order][:order_details_attributes]
       detail_ids = order_details.values.collect{ |detail| detail['id'].to_i if detail['id'] && detail['_destroy'].to_i != 1 }.uniq.compact
       editing_order.order_detail_ids = detail_ids
@@ -98,7 +98,7 @@ class Admin::OrdersController < Admin::BaseController
     # update attributes for order and order_shipping
     editing_order.attributes = params[:order]
     editing_order.order_shipping.attributes = params[:order][:order_shipping_attributes]
-    
+
     @transporter_ids = []
     if params[:transporter][:rebuild].to_i == 1
       # get new available transporters
@@ -108,16 +108,16 @@ class Admin::OrdersController < Admin::BaseController
         rule_builder.transporter_ids = @transporter_ids
         rule_builder.order = @order
         rule_builder.rules
-        @order.order_details.each do |order_detail|  
+        @order.order_details.each do |order_detail|
           e.assert order_detail.product
         end
         e.assert @order
         e.match
       end
     end
-    
+
     @available_transporters = TransporterRule.find_all_by_id(@transporter_ids.uniq)
-    
+
     #total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=false)
 
     # calculate total, subtotal and taxes
@@ -133,11 +133,11 @@ private
   def get_orders
     @orders = Order.all
   end
-  
+
   def get_order
     @order = Order.find_by_id(params[:id])
   end
-  
+
   def new_order
     @order = Order.new(params[:order])
     user = User.find_by_id(params[:user_id])
@@ -153,7 +153,7 @@ private
     @civilities = t('civility.select')
     @countries = Country.all :order => 'name ASC'
   end
-    
+
   def get_available_transporters
     @transporter_ids = []
     engine :transporter_engine do |e|
@@ -161,7 +161,7 @@ private
       rule_builder.transporter_ids = @transporter_ids
       rule_builder.order = @order
       rule_builder.rules
-      @order.order_details.each do |order_detail|  
+      @order.order_details.each do |order_detail|
         e.assert order_detail.product
       end
       e.assert @order
@@ -169,7 +169,7 @@ private
     end
     @available_transporters = TransporterRule.find_all_by_id(@transporter_ids.uniq)
   end
-    
+
   def render_list
     index
     render(:partial => 'list', :locals => { :orders => @orders })
@@ -190,6 +190,8 @@ private
       conditions[:status] = params[:status]
     when 'user'
       conditions[:user_id] = params[:user_id]
+    else
+      conditions[:status_ne] = %w(unpaid closed)
     end
 
     order_column = params[:iSortCol_0].to_i
