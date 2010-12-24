@@ -5,7 +5,7 @@
       = Forgeos_save_buttons admin_special_offers_path
 
 
-  #content.special_offers.grid_12.omega.no-customselect
+  #content.special_offers.grid_12.omega
     .inner-content
       - fields_for :rule_builder do |rule_builder|
         %label
@@ -73,7 +73,6 @@
       //      .clear
 
 
-    = render :partial => 'patterns'
   #right-sidebar.grid_4.omega
     .step.status.open
       %div
@@ -86,3 +85,4 @@
       /  delete special offer
 
   .clear
+.no-customselect= render :partial => 'patterns'

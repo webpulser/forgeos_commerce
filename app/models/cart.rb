@@ -141,4 +141,9 @@ class Cart < ActiveRecord::Base
     self.options = Hash.new unless super
     super
   end
+
+  def transporter_id
+    return 0 unless options[:transporter_rule_id]
+    options[:transporter_rule_id].to_i
+  end
 end

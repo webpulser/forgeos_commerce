@@ -4,7 +4,7 @@
     .interact-links
       = Forgeos_save_buttons admin_vouchers_path
 
-  #content.grid_12.omega.special_offers.no-customselect
+  #content.grid_12.omega.special_offers
     .inner-content
       %label
         Description
@@ -14,7 +14,7 @@
           %span.conditioner
             = I18n.t('special_offer.for').capitalize
           %div
-            = select_tag 'rule_builder[for]', options_for_select(Hash['Product in Cart','Product'].collect{|c| [c[0], c[1]]}+@for.collect{|c| [c[0], c[1]] }), {:onchange => "change_select_for(this)"}
+            = select_tag 'rule_builder[for]', options_for_select(@for), {:onchange => "change_select_for(this)"}
           .clear
         .specialOffers_bottom_arrow
 
@@ -23,21 +23,20 @@
           %span.conditioner
             = I18n.t('special_offer.if').capitalize
           %div
-            = select 'rule_builder', 'if', %w(All Any)
+            = select 'rule_builder', 'if', [[t(:all, :scope => [:special_offer,:_if]),'All'],[t(:any, :scope => [:special_offer,:_if]),'Any']]
           %span.conditioner
             = I18n.t('special_offer.this_condition')
           %div
             %select
-              %option
-                true
+              %option= t(:_true, :scope => [:special_offer,:_if])
           .clear
 
         #rule-conditions
           .condition
             %div
-              = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes}),{ :onchange => "change_rule(this,'rule-condition')" }
+              = select_tag 'rule[targets][]', options_for_select(@product_attributes,{:disabled => @disable_attributes}),{ :onchange => "change_rule(this,'rule-condition')" }
             %div
-              = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
+              = select_tag 'rule[conds][]', options_for_select(@conditions)
             = text_field_tag 'rule[values][]'
             = link_to_function '', "add_rule('rule-condition')", :class => 'small-icons green-add-icon'
             = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon', :style => 'display : none'
@@ -52,8 +51,8 @@
 
         #action-conditions
           .condition
-            %div= select_tag 'act[targets][]', options_for_select(['Discount price this product'], 'Discount price this product')
-            %div= select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
+            %div= select_tag 'act[targets][]', options_for_select([[t(:discount,:scope=>[:special_offer,:action]),0]], 0)
+            %div= select_tag 'act[conds][]', options_for_select(@discount_type)
             = text_field_tag 'act[values][]'
         .specialOffers_bottom_arrow
 
@@ -79,7 +78,6 @@
 
       /  .specialOffers_bottom_arrow
 
-    = render :partial => 'admin/special_offers/patterns'
   #right-sidebar.grid_4.omega
     .step.status.open
       %div
@@ -91,3 +89,4 @@
 
   .clear
 
+.no-customselect= render :partial => 'admin/special_offers/patterns'

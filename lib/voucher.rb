@@ -1,6 +1,6 @@
 require 'ruleby'
 class Voucher < Ruleby::Rulebook
-  
+
   attr_writer :code, :cart, :free_product_ids
 
   def rules
@@ -8,18 +8,18 @@ class Voucher < Ruleby::Rulebook
       rule eval(voucher.conditions) do |context|
         #TODO : update this fix for vouchers to work with packs
         unless context[:product].nil?
-          product = context[:product] 
+          product = context[:product]
         else
-          product = context[:pack] 
+          product = context[:pack]
         end
-        
+
         @cart.voucher = voucher.id
-                 
+
         # Voucher for a free product
         voucher.variables[:product_ids].each do |product_id|
           @free_product_ids << product_id
         end if voucher.variables[:product_ids]
-        
+
         # Voucher for a product price discount
         if voucher.variables[:discount]
           rate = voucher.variables[:discount]
@@ -27,16 +27,16 @@ class Voucher < Ruleby::Rulebook
           product.voucher_discount_price = discount_price
           voucher.variables[:fixed_discount] ? product.voucher_discount = "-#{rate}" : product.voucher_discount = "-#{rate}%"
         end
-        
-        # Voucher for a free shipping 
+
+        # Voucher for a free shipping
         if voucher.variables[:shipping]
           @cart.free_shipping = true
         end
-         
+
         # Voucher for a cart total_amount discount
         if voucher.variables[:cart_discount]
           rate = voucher.variables[:cart_discount]
-          discount_price = voucher.variables[:fixed_discount] ? rate : (@cart.total * rate) / 100         
+          discount_price = voucher.variables[:fixed_discount] ? rate : (@cart.total * rate) / 100
           @cart.voucher_discount_price = discount_price
           voucher.variables[:fixed_discount] ? @cart.voucher_discount = "-#{rate}" : @cart.voucher_discount = "-#{rate}%"
         end
