@@ -38,7 +38,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :product_type_id, :sku, :url
   #validates_uniqueness_of :url
 
-  before_save :clean_strings, :force_url_format
+  before_save :clean_strings, :force_url_format, :generate_url
   after_save :synchronize_stock
 
   belongs_to :redirection_product, :class_name => 'Product'
@@ -270,5 +270,10 @@ class Product < ActiveRecord::Base
 
   def force_url_format
     self.url= Forgeos::url_generator(self.url)
+  end
+
+  def generate_url
+    return true if url.present?
+    self.url = name.parameterize if name.present?
   end
 end
