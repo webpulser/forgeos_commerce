@@ -1,29 +1,29 @@
 require 'ruleby'
 class CatalogController < ApplicationController
   include Ruleby
-  
+
   # Show all <i>ProductDetail</i>
   def index
     @product_category = ProductCategory.find_by_name(params[:category_name]) || ProductCategory.first
-    
+
     #category_choice_id = params[:category_choice]
     @category_choice = ProductCategory.find_by_name(params[:category_choice]) || ProductCategory.find_by_id(params[:category_choice])
     unless @category_choice.nil?
-      @product_categories = @category_choice.children.collect{|c| c.id} 
+      @product_categories = @category_choice.children.collect{|c| c.id}
       @product_categories << @category_choice.id
     else
       @product_categories = @product_category.children.collect{|c| c.id}
       @product_categories << @product_category.id
     end
-        
+
     @products = Product.all(:include => :product_categories,:conditions => {:active => true, :deleted=>[false, nil], :categories_elements=>{:category_id=>@product_categories}})
-    
+
     if params[:url]
       @selected_product = Product.find_by_url(params[:url])
     else
       @selected_product = @products.first
     end
-    
+
     # rules
     engine :special_offer_engine do |e|
       @shop = true
@@ -52,5 +52,4 @@ class CatalogController < ApplicationController
 
     render :action => 'index'
   end
- 
 end
