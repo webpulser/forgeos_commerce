@@ -1,4 +1,6 @@
 class ProductType < ActiveRecord::Base
+  include Forgeos::Urlified
+
   translates :name, :url, :description
   define_translated_index :name, :url, :description
 
