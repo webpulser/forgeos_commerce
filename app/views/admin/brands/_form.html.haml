@@ -5,14 +5,15 @@
   #content.grid_16.alpha.omega
     .grid_12.omega
       = display_visual(f.object_name, brand.picture)
-      = f.label :description
-      = f.text_area :description, :class => 'mceEditor'
       %h2.permalink
         = t('permalink').capitalize
         \:
         = "#{request.protocol}#{request.host}/marques/"
         = f.text_field :url
-      = display_visual(f.object_name, brand.picture)
+      %br
+      = f.label :description
+      = f.text_area :description, :class => 'mceEditor'
+
     #right-sidebar.grid_4.omega
 
   = render :partial => 'admin/visual/visual_popup.html.haml', :locals => {:form => f}
