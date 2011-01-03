@@ -5,15 +5,18 @@
   #content.grid_16.alpha.omega
     .grid_12.omega
       = display_visual(f.object_name, brand.picture)
-      %h2.permalink
-        = t('permalink').capitalize
-        \:
-        = "#{request.protocol}#{request.host}/marques/"
-        = f.text_field :url
       %br
       = f.label :description
       = f.text_area :description, :class => 'mceEditor'
 
     #right-sidebar.grid_4.omega
-
+      .step
+        = f.label :code
+        = f.text_field :code, :size => 25
+        %br
+        - if respond_to?(:brand_path)
+          = brand_path(Brand.new(:url => '', :name => ''))
+        - else
+          = "#{request.protocol}#{request.host}/marques/"
+        = f.text_field :url, :size => 10
   = render :partial => 'admin/visual/visual_popup.html.haml', :locals => {:form => f}
