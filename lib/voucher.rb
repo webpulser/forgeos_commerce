@@ -18,7 +18,7 @@ class Voucher < Ruleby::Rulebook
           rate = voucher.variables[:discount]
           discount_price = voucher.variables[:fixed_discount] ? rate : (product.price * rate) / 100
           product.voucher_discount_price = discount_price
-          product.voucher_discount = (voucher.variables[:fixed_discount] ?  "-#{rate}" : "-#{rate}%")
+          product.voucher_discount = (voucher.variables[:fixed_discount] ? "-#{rate}" : "-#{rate}%")
         end
 
         # Voucher for a free shipping
@@ -31,7 +31,7 @@ class Voucher < Ruleby::Rulebook
           rate = voucher.variables[:cart_discount]
           discount_price = voucher.variables[:fixed_discount] ? rate : (@cart.total * rate) / 100
           @cart.voucher_discount_price = discount_price
-          @cart.voucher_discount = (voucher.variables[:fixed_discount] ?  = "-#{rate}" :  "-#{rate}%")
+          @cart.voucher_discount = (voucher.variables[:fixed_discount] ? "-#{rate}" :  "-#{rate}%")
         end
       end
     end

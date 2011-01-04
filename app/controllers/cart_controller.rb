@@ -74,21 +74,26 @@ class CartController < ApplicationController
   end
 
   def add_voucher
-    voucher = VoucherRule.find_by_id(current_cart.voucher)
-    if voucher.nil?
-      current_cart.options.delete(:voucher_code)
-      current_cart.save
-    else
+    if voucher = VoucherRule.find_by_id(current_cart.voucher)
       current_cart.options[:voucher_code] = voucher.code
-      current_cart.save
-      render(:update) do |page|
-        page.replace_html('voucher_message', "With voucher code #{voucher.code} : #{voucher.name}")
-        page.replace_html('cart_total', price_with_currency(current_cart.total))
-        page.visual_effect :highlight, 'cart_total'
+    else
+      current_cart.options.delete(:voucher_code)
+    end
+    current_cart.save
+
+    respond_to do |format|
+      format.html do
+        redirect_to(:cart)
+      end
+      format.js do
+        render(:update) do |page|
+          page.replace_html('voucher_message', "With voucher code #{voucher.code} : #{voucher.name}") if voucher
+          page.replace_html('cart_total', price_with_currency(current_cart.total))
+          page.visual_effect :highlight, 'cart_total'
+        end
       end
     end
   end
-
 
 protected
   def redirect_or_update
@@ -121,15 +126,25 @@ protected
 
   def check_voucher_code
     @voucher_code = params[:voucher_code] || current_cart.options[:voucher_code]
-    voucher = VoucherRule.find_all_by_active_and_code(true,@voucher_code)
-    render(:update) do |page|
-      page.replace_html('voucher_message', "Le code promo #{@voucher_code} est invalide")
-      page.replace_html('cart_total', price_with_currency(current_cart.total))
-      if current_cart.options[:voucher_code]
-        current_cart.options.delete(:voucher_code)
-        current_cart.save
+    unless voucher = VoucherRule.find_all_by_active_and_code(true,@voucher_code)
+      respond_to do |format|
+        format.html do
+          flash[:error] = "Le code promo #{@voucher_code} est invalide"
+          redirect_to(:cart)
+        end
+
+        format.js do
+          render(:update) do |page|
+            page.replace_html('voucher_message', "Le code promo #{@voucher_code} est invalide")
+            page.replace_html('cart_total', price_with_currency(current_cart.total))
+            if current_cart.options[:voucher_code]
+              current_cart.options.delete(:voucher_code)
+              current_cart.save
+            end
+          end
+        end
       end
-    end if voucher.blank? or voucher.nil?
+    end
   end
 
   def voucher
