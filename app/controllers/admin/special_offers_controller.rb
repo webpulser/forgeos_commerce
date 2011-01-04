@@ -36,11 +36,12 @@ class Admin::SpecialOffersController < Admin::BaseController
     @disable_attributes = t(:disabled,:scope=>[:special_offer,:attributes])
 
     @for = [
-      [t(:category,:scope=>[:special_offer,:_for]), 'Category'],
       [t(:product_in_shop,:scope=>[:special_offer,:_for]), 'Product'],
       [t(:product_in_cart,:scope=>[:special_offer,:_for]), 'Product'],
       [t(:cart,:scope=>[:special_offer,:_for]), 'Cart']
     ]
+
+    @for << [t(:category,:scope=>[:special_offer,:_for]), 'Category'] if ProductCategory.count > 0
 
     @conditions = [
       [t(:is,:scope=>[:special_offer,:conditions]), "=="],
@@ -72,62 +73,25 @@ class Admin::SpecialOffersController < Admin::BaseController
   def create
     return flash[:error] = 'Fields' unless params[:rule_builder]
 
-    @main_attributes = %w(price name description weight sku stock product_type_id)
+    @main_attributes = %w(price name description weight sku stock product_type_id brand_id)
 
-    @variables = generate_variables
-
-    if params[:rule_builder][:if] == 'All'
-      conditions = []
-      params[:rule][:targets].each_with_index do |rule_target, index|
-        conditions << generate_condition(rule_target, index)
-      end
-      if params[:rule_builder]['for'] == 'Category'
-        conditions << "m.has_category_#{params[:rule_builder][:target]}.==(true)"
-      end
-
-      if params[:rule_builder]['for'] == 'Cart'
-        generate_rule(['Cart',':cart'] + conditions, @variables)
-      else
-        generate_rule(['Product',':product'] + conditions, @variables)
-        generate_rule(['Pack',':pack'] + conditions, @variables)
-      end
-    else
-      rule_parent = nil
-      params[:rule][:targets].each_with_index do |rule_target, index|
-        conditions = [generate_condition(rule_target, index)]
-        if params[:rule_builder]['for'] == 'Cart'
-          rule = generate_rule(
-            ['Cart',
-            ':cart',
-            conditions],
-            @variables,
-            rule_parent
-          )
-          rule_parent = rule if index == 0
-        else
-          if params[:rule_builder]['for'] == 'Category'
-            conditions << "m.has_category_#{params[:rule_builder][:target]}.==(true)"
-          end
-
-          rule = generate_rule(
-            ['Product',
-            ':product',
-            conditions],
-            @variables,
-            rule_parent
-          )
-          rule_parent = rule if index == 0
-
-          pack_rule = generate_rule(
-            ['Pack',
-            ':pack',
-            conditions],
-            @variables,
-            rule_parent
-          )
-        end
-      end
+    conditions = []
+    params[:rule][:targets].each_with_index do |rule_target, index|
+      conditions << generate_condition(rule_target, index)
     end
+
+    if params[:rule_builder]['for'] == 'Category'
+      conditions << "m.has_category_#{params[:rule_builder][:target]}.==(true)"
+    end
+
+    matchers = if params[:rule_builder]['for'] == 'Cart'
+      ['Cart',':cart']
+    else
+      [':is_a?', 'Product',':product']
+    end
+
+    generate_rule(matchers, conditions, generate_variables, (params[:rule_builder][:if] == 'Any'))
+
     redirect_to :action => 'index'
   end
 
@@ -192,14 +156,17 @@ private
     return variables
   end
 
-  def generate_rule(conditions,variables, rule_parent = nil)
+  def generate_rule(matchers,conditions,variables, or_rule = false)
     rule = SpecialOfferRule.new
     rule.name = params[:rule_builder][:name]
     rule.description = params[:rule_builder][:description]
     rule.active = params[:rule_builder][:active]
-    rule.conditions = "[#{conditions.join(', ')}]"
+    rule.conditions = if or_rule
+      "OR(#{conditions.map{ |condition| "[#{(matchers + [condition]).join(', ')}]" }.join(', ')})"
+    else
+      "[#{(matchers + conditions).join(', ')}]"
+    end
     rule.variables = variables
-    rule.parent = rule_parent
     rule.save
     return rule
   end
@@ -225,8 +192,9 @@ private
     value_column = Product.columns_hash[target] ||
       Product::Translation.columns_hash[target]
     if (value_column and [:string, :text].include?(value_column.type)) or
-      Attribute.find_by_access_method(target)
+      custom_attribute = Attribute.find_by_access_method(target)
       value = "'#{value}'"
+      target = "#{target}_value" if custom_attribute
     end
 
     return "m.#{target}.#{params[:rule][:conds][index]}(#{value})"

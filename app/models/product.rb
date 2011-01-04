@@ -192,6 +192,9 @@ class Product < ActiveRecord::Base
     elsif access_method = method_name.match(/^(\w|\d|_|-)*$/) and product_type and
       custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
       read_custom_attribute(custom_attribute, args.first)
+    elsif access_method = method_name.match(/^(\w|\d|_|-)*_value$/) and product_type and
+      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('_value',''))
+      read_custom_attribute(custom_attribute, :value)
     elsif access_method = method_name.match(/^(\w|\d|_|-)*=$/) and product_type and
       custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('=',''))
       write_custom_attribute(custom_attribute, args.first)
@@ -204,6 +207,9 @@ class Product < ActiveRecord::Base
     method_name = method.to_s
     if access_method = method_name.match(/^(\w|\d|_|-)*$/) and product_type and
       custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
+      return true
+    elsif access_method = method_name.match(/^(\w|\d|_|-)*_value$/) and product_type and
+      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('_value',''))
       return true
     elsif access_method = method_name.match(/^(\w|\d|_|-)*=$/) and product_type and
       custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('=',''))
