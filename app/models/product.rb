@@ -11,7 +11,7 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :carts
 
   has_many :cross_sellings_products, :dependent => :destroy
-  has_many :cross_sellings, :through => :cross_sellings_products
+  has_many :cross_sellings, :through => :cross_sellings_products, :class_name => 'Product'
   accepts_nested_attributes_for :cross_sellings
   accepts_nested_attributes_for :cross_sellings_products
 
@@ -38,17 +38,18 @@ class Product < ActiveRecord::Base
   validates_presence_of :product_type_id, :sku, :url
   #validates_uniqueness_of :url
 
-  before_save :clean_strings, :force_url_format, :generate_url
+  before_save :clean_strings, :force_url_format
   after_save :synchronize_stock
 
   belongs_to :redirection_product, :class_name => 'Product'
 
   belongs_to :brand
 
-  named_scope :actives, lambda { {:conditions => {:active => true, :deleted => [false, nil]}} }
-  named_scope :deleted, lambda { {:conditions => {:deleted => true}} }
-  named_scope :hiddens, lambda { {:conditions => {:active => [false, nil], :deleted => [false, nil]}} }
-  named_scope :out_of_stock, lambda { {:conditions => {:stock_lte => 0}} }
+  def redirection_product_with_deleted
+    return (redirection_product_without_deleted && redirection_product_without_deleted.deleted? ? redirection_product_without_deleted.redirection_product : redirection_product_without_deleted)
+  end
+  alias_method_chain :redirection_product, :deleted
+
 
   define_index do
     indexes sku, :sortable => true
@@ -57,16 +58,23 @@ class Product < ActiveRecord::Base
     indexes brand(:name), :as => :brand
     indexes product_type.translations(:name), :as => :product_type_name
 
-    indexes attachments(:name), :as => :firstnames
-    indexes categories.translations(:name), :as => :category_names
+    has attachments(:name), :as => :firstnames
+    has categories.translations(:name), :as => :category_names
 
     has active, deleted
-    has categories(:id), :as => :category_ids
     set_property :min_prefix_len => 1
     set_property :enable_star => 1
   end
 
   define_translated_index :name, :description, :url
+
+  def method_missing(method_id,*args)
+    if cat_id = method_id.to_s.match(/has_category_(\d+)/)
+      return product_category_ids.include?(cat_id[1].to_i)
+    else
+      super(method_id,*args)
+    end
+  end
 
   def public_url
     unless product_categories.empty?
@@ -80,11 +88,6 @@ class Product < ActiveRecord::Base
       '#'
     end
   end
-
-  def redirection_product_with_deleted
-    return (redirection_product_without_deleted && redirection_product_without_deleted.deleted? ? redirection_product_without_deleted.redirection_product : redirection_product_without_deleted)
-  end
-  alias_method_chain :redirection_product, :deleted
 
   # Returns month's offers
   def self.get_offer_month
@@ -185,86 +188,16 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def method_missing(method_id,*args,&block)
-    method_name = method_id.to_s
-    if cat_id = method_name.match(/has_category_(\d+)/)
-      return product_category_ids.include?(cat_id[1].to_i)
-    elsif access_method = method_name.match(/^(\w|\d|_|-)*$/) and product_type and
-      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
-      read_custom_attribute(custom_attribute, args.first)
-    elsif access_method = method_name.match(/^(\w|\d|_|-)*_value$/) and product_type and
-      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('_value',''))
-      read_custom_attribute(custom_attribute, :value)
-    elsif access_method = method_name.match(/^(\w|\d|_|-)*=$/) and product_type and
-      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('=',''))
-      write_custom_attribute(custom_attribute, args.first)
-    else
-      super
-    end
+  def initialize(attr = {})
+    generate_methods_from_product_type(ProductType.find_by_id(attr[:product_type_id])) if attr && attr[:product_type_id]
+    super(attr)
   end
 
-  def respond_to?(method, include_priv = false)
-    method_name = method.to_s
-    if access_method = method_name.match(/^(\w|\d|_|-)*$/) and product_type and
-      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
-      return true
-    elsif access_method = method_name.match(/^(\w|\d|_|-)*_value$/) and product_type and
-      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('_value',''))
-      return true
-    elsif access_method = method_name.match(/^(\w|\d|_|-)*=$/) and product_type and
-      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('=',''))
-      return true
-    else
-      super
-    end
+  def after_initialize()
+    generate_methods_from_product_type(self.product_type) unless new_record?
   end
+
   private
-
-  def read_custom_attribute(attribute, method)
-    if attribute.dynamic?
-      if attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
-        method ? attribute_value.send(method.to_sym) : attribute_value
-      else
-        nil
-      end
-    else
-      values = attribute_values.find_all_by_attribute_id(attribute.id)
-      value = method ? values.map(&method.to_sym) : values
-      return case attribute
-      when RadiobuttonAttribute, PicklistAttribute
-        value.first
-      else
-        value
-      end
-    end
-  end
-
-  def write_custom_attribute(attribute, new_value)
-    if attribute.dynamic?
-      if attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
-        self.dynamic_attribute_values_attributes= { attribute_value.id => { :id => attribute_value.id, :value => new_value } }
-      else
-        self.dynamic_attribute_values_attributes= { '-1' => { :value => new_value, :attribute_id => attribute.id} }
-      end
-    else
-      other_attributes = self.attribute_values.all(:conditions => {:attribute_id_not => attribute.id})
-      if new_value.nil?
-        new_attributes = []
-      elsif new_value.kind_of?(AttributeValue)
-        new_attributes = [new_value]
-      elsif new_value.kind_of?(Array) && new_value.first.kind_of?(AttributeValue)
-        new_attributes = new_value.flatten
-      else
-        new_attributes = AttributeValue.find_all_by_attribute_id(
-          attribute.id,
-          :include => [:translations],
-          :conditions => { :attribute_value_translations => { :name => [new_value].flatten } }
-        )
-      end
-      self.attribute_values = new_attributes + other_attributes
-    end
-
-  end
 
   # Call by <i>before_save</i>
   # convert all blank strings to nil for attribute inheritance save
@@ -278,8 +211,54 @@ class Product < ActiveRecord::Base
     self.url= Forgeos::url_generator(self.url)
   end
 
-  def generate_url
-    return true if url.present?
-    self.url = name.parameterize if name.present?
+  def generate_methods_from_product_type(prod_type)
+    if prod_type
+      prod_type.product_attributes.each do |attribute|
+        self.class_eval <<DEF
+def #{attribute.access_method}(method=:name)
+  attribute = Attribute.find(#{attribute.id})
+  if attribute.dynamic?
+    attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
+    attribute_value ? attribute_value.value : nil
+  else
+    values = attribute_values.find_all_by_attribute_id(attribute.id)
+    value = method ? values.map(&method.to_sym) : values
+    return case attribute
+    when RadiobuttonAttribute, PicklistAttribute
+      value.first
+    else
+      value
+    end
+  end
+end
+def #{attribute.access_method}=(new_value)
+  attribute = Attribute.find(#{attribute.id})
+  if attribute.dynamic?
+    if attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
+      self.dynamic_attribute_values_attributes= { attribute_value.id => { :id => attribute_value.id, :value => new_value } }
+    else
+      self.dynamic_attribute_values_attributes= { '-1' => { :value => new_value, :attribute_id => attribute.id} }
+    end
+  else
+    other_attributes = self.attribute_values.all(:conditions => {:attribute_id_not => attribute.id})
+    if new_value.nil?
+      new_attributes = []
+    elsif new_value.kind_of?(AttributeValue)
+      new_attributes = [new_value]
+    elsif new_value.kind_of?(Array) && new_value.first.kind_of?(AttributeValue)
+      new_attributes = new_value.flatten
+    else
+      new_attributes = AttributeValue.find_all_by_attribute_id(
+        attribute.id,
+        :include => [:translations],
+        :conditions => { :attribute_value_translations => { :name => [new_value].flatten } }
+      )
+    end
+    self.attribute_values = new_attributes + other_attributes
+  end
+end
+DEF
+      end
+    end
   end
 end
