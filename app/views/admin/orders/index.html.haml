@@ -15,6 +15,7 @@
   .backgrounds.header
     - link_to new_admin_order_path, :class=>'backgrounds action-button' do
       %span.big-icons.create-order= I18n.t('order.create.action').capitalize
+    = link_to content_tag(:span,'Exportez la liste en csv'), admin_orders_path(:format => 'csv'), :class => 'backgrounds action-button'
     #search.right= fg_search
     .backgrounds.search-form
   .content-background

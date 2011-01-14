@@ -16,6 +16,31 @@ class Admin::OrdersController < Admin::BaseController
         sort
         render(:layout => false)
       end
+      format.csv do
+        params[:iDisplayLength] = 1000000
+        sort
+        csv_string = FasterCSV.generate( {:force_quotes => true}) do |csv|
+          titles = ['user']
+          titles << 'user mail'
+          titles << 'total'
+          @orders.first.attributes.keys.collect{ |key| titles << key }
+
+          csv << titles
+
+          @orders.each do |record|
+            values = [record.user.fullname]
+            values << record.user.email
+            values << record.total()
+            record.attributes.values.collect{ |val| values << val }
+
+            csv << values
+          end
+
+        end
+        send_data csv_string,
+            :type => 'text/csv; charset=utf-8; header=present',
+            :disposition => "attachment; filename=#{controller_name}.csv"
+      end
     end
   end
 
@@ -206,7 +231,7 @@ private
       includes << :user
     end
 
-    order = "#{columns[order_column]} #{params[:iSortDir_0].upcase}"
+    order = "#{columns[order_column]} #{params[:iSortDir_0].upcase if params[:iSortDir_0]}"
 
     options[:group] = group_by.join(', ') unless group_by.empty?
     options[:conditions] = conditions unless conditions.empty?
