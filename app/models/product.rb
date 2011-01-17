@@ -45,6 +45,11 @@ class Product < ActiveRecord::Base
 
   belongs_to :brand
 
+  named_scope :actives, lambda { {:conditions => {:active => true, :deleted => [false, nil]}} }
+  named_scope :deleted, lambda { {:conditions => {:deleted => true}} }
+  named_scope :hiddens, lambda { {:conditions => {:active => [false, nil], :deleted => [false, nil]}} }
+  named_scope :out_of_stock, lambda { {:conditions => {:stock_lte => 0}} }
+  
   def redirection_product_with_deleted
     return (redirection_product_without_deleted && redirection_product_without_deleted.deleted? ? redirection_product_without_deleted.redirection_product : redirection_product_without_deleted)
   end
