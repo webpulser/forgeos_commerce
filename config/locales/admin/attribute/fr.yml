@@ -70,3 +70,6 @@ fr:
     other: boutons radio
     field: champ bouton radio
     preview: prévisualisation
+  attribute_value:
+    one: "valeur d'attribut"
+    other: "valeurs d'attribut"

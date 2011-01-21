@@ -100,3 +100,6 @@ fr:
     one: remise par quantité
     other: remises par quantité
     add: ajouter une remise par quantité
+  product_category:
+    one: catégorie de produit
+    other: catégories de produit
