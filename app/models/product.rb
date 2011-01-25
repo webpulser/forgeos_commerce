@@ -50,11 +50,6 @@ class Product < ActiveRecord::Base
   named_scope :hiddens, lambda { {:conditions => {:active => [false, nil], :deleted => [false, nil]}} }
   named_scope :out_of_stock, lambda { {:conditions => {:stock_lte => 0}} }
 
-  def redirection_product_with_deleted
-    return (redirection_product_without_deleted && redirection_product_without_deleted.deleted? ? redirection_product_without_deleted.redirection_product : redirection_product_without_deleted)
-  end
-  alias_method_chain :redirection_product, :deleted
-
   define_index do
     indexes sku, :sortable => true
     indexes stock, :sortable => true
