@@ -5,25 +5,6 @@ class Admin::VouchersController < Admin::BaseController
     render :text => @voucher.activate
   end
 
-  def new
-    @default_attributes = %w(price title description weight sku stock product_type_id brand_id).collect do |n|
-      [t(n, :count => 1), n]
-    end
-    @attributes = Attribute.all(:joins => [:translations], :select => 'access_method,name').collect{|a| [a.name, a.access_method]}
-    @cart_attributes = [[t(:quantity,:scope=>[:special_offer,:cart]),'Total items quantity'],[t(:weight,:scope=>[:special_offer,:cart]), 'Total weight'], [t(:price,:scope=>[:special_offer,:cart]),'Total amount'],[t(:shipping,:scope=>[:special_offer,:cart]),'Shipping method']]
-    @disable_attributes = t(:disabled,:scope=>[:special_offer,:attributes])
-
-    @for = Hash["Cart", "Cart"]
-
-    @condition_is = Hash["Is", "=="]
-    @conditions =  Hash["Is not", "not==","Equals or greater than",">=","Equals or less than","<=", "Greater than", ">", "Less than","<"]
-
-    @end = [[t(:date,:scope=>[:special_offer,:end]),'Date'],[t(:total_use,:scope=>[:special_offer,:end]),'Total number of offer use'],[t(:user_total_use,:scope=>[:special_offer,:end]),'Customer number of offer use']]
-    @products = Product.find_all_by_active_and_deleted(true,false, :select => 'products.id,name', :joins => [:translations])
-    @discount_type = [[t(:percent,:scope=>[:special_offer,:action]),0],[t(:fixed,:scope=>[:special_offer,:action]),1]]
-    @product_attributes = [t(:main,:scope=>[:special_offer,:attributes,:disabled])]+@default_attributes+[t(:attribute,:scope=>[:special_offer,:attributes,:disabled])]+@attributes
-  end
-
   def index
     respond_to do |format|
       format.html
@@ -34,132 +15,76 @@ class Admin::VouchersController < Admin::BaseController
     end
   end
 
+  def new
+    @default_attributes = %w(price name description weight sku stock product_type_id brand_id).collect do |n|
+      [t(n, :count => 1), n]
+    end
+
+    @attributes = Attribute.all(:select => 'id, access_method').collect do |a|
+      [a.name, a.access_method]
+    end
+
+    @cart_attributes = [
+      [t(:quantity,:scope=>[:special_offer,:cart]),'Total items quantity'],
+      [t(:weight,:scope=>[:special_offer,:cart]), 'Total weight'],
+      [t(:price,:scope=>[:special_offer,:cart]),'Total amount'],
+      [t(:shipping,:scope=>[:special_offer,:cart]),'Shipping method']
+    ]
+
+    @disable_attributes = t(:disabled,:scope=>[:special_offer,:attributes])
+
+    @for = [
+      [t(:product_in_cart,:scope=>[:special_offer,:_for]), 'Product'],
+      [t(:cart,:scope=>[:special_offer,:_for]), 'Cart']
+    ]
+
+    @conditions = [
+      [t(:is,:scope=>[:special_offer,:conditions]), "=="],
+      [t(:is_not,:scope=>[:special_offer,:conditions]),"not=="],
+      [t(:equal_or_greater_than,:scope=>[:special_offer,:conditions]),">="],
+      [t(:equal_or_less_than,:scope=>[:special_offer,:conditions]),"<="],
+      [t(:greater_than,:scope=>[:special_offer,:conditions]), ">"],
+      [t(:less_than,:scope=>[:special_offer,:conditions]),"<"]
+    ]
+
+    @end = [
+      [t(:date,:scope=>[:special_offer,:end]),'Date'],
+      [t(:total_use,:scope=>[:special_offer,:end]),'Total number of offer use'],
+      [t(:user_total_use,:scope=>[:special_offer,:end]),'Customer number of offer use']
+    ]
+
+    @discount_type = [
+      [t(:percent,:scope=>[:special_offer,:action]),0],
+      [t(:fixed,:scope=>[:special_offer,:action]),1]
+    ]
+
+    @product_attributes = [t(:main,:scope=>[:special_offer,:attributes,:disabled])]+
+      @default_attributes+
+      [t(:attribute,:scope=>[:special_offer,:attributes,:disabled])]+
+      @attributes
+    @products = Product.actives(:select => 'products.id, sku', :order => 'sku')
+  end
+
   def create
     return flash[:error] = 'Fields' unless params[:rule_builder]
 
-    @main_attributes = %w(price title description weight sKU stock)
+    @main_attributes = %w(price name description weight sku stock product_type_id brand_id)
 
-    @rule_condition = []
-    @rule_condition << params[:rule_builder]['for'] << ':product'
-
-    # Build Action variables
-    variables = {}
-    params[:act][:targets].each_with_index do |action, index|
-      case "#{action}"
-      when "Discount price this product"
-        variables[:discount] = params[:act][:values][index].to_i
-        variables[:fixed_discount] = (params[:act][:conds][index] == "By percent" ? false : true)
-      when "Offer a product"
-        variables[:product_ids] = [params[:act][:values][index].to_i]
-      when "Offer free delivery"
-        variables[:shipping] = 'free'
-      when "Discount cart"
-        variables[:cart_discount] = params[:act][:values][index]
-        variables[:percent] = (params[:act][:conds][index] == "By percent" ? false : true)
-      end
+    conditions = []
+    params[:rule][:targets].each_with_index do |rule_target, index|
+      conditions << generate_condition(rule_target, index)
     end
 
-    if params[:rule_builder][:if] == 'All'
-      @rule = VoucherRule.new
-      @rule.code = params[:voucher_code]
-      @rule.name = params[:rule_builder][:name]
-      @rule.description = params[:rule_builder][:description]
-      @rule.active = params[:rule_builder][:active]
-
-      params[:rule][:targets].each_with_index do |rule_target, index|
-        build_a_rule(rule_target, index)
-      end
-
-      if params[:rule_builder]['for'] == 'Category'
-        @rule_condition << "m.category.=(#{params[:rule_builder][:target]})"
-      end
-
-      @rule.conditions = "[#{@rule_condition.join(', ')}]"
-      @rule.variables = variables
-      @rule.save
+    matchers = if params[:rule_builder]['for'] == 'Cart'
+      ['Cart',':cart']
     else
-      rule_parent = nil
-      params[:rule][:targets].each_with_index do |rule_target, index|
-        @rule_condition = []
-        @rule_condition << params[:rule_builder]['for'] << ':product'
-        @rule = VoucherRule.new
-        @rule.parent = rule_parent
-        @rule.name = params[:rule_builder][:name]
-        @rule.code = params[:voucher_code]
-        @rule.description = params[:rule_builder][:description]
-
-        build_a_rule(rule_target, index)
-
-        if params[:rule_builder]['for'] == 'Category'
-          @rule_condition << "m.category.=(#{params[:rule_builder][:target]})"
-        end
-
-        @rule.conditions = "[#{@rule_condition.join(', ')}]"
-        @rule.variables = variables
-        @rule.save
-        rule_parent = @rule if index == 0
-      end
+      [':is_a?', 'Product',':product']
     end
 
-    # TODO : Update this ugly patch for vouchers to work with packs
-    if params[:rule_builder]['for'] == 'Product'
-      params[:rule_builder]['for'] = 'Pack'
-      params[:rule][:targets].each_with_index do |rule_target, index|
-        @rule_condition = []
-        @rule_condition << params[:rule_builder]['for'] << ':pack'
-        @rule = VoucherRule.new
-        @rule.parent = rule_parent
-        @rule.name = params[:rule_builder][:name]
-        @rule.code = params[:voucher_code]
-        @rule.description = params[:rule_builder][:description]
+    generate_rule(matchers, conditions, generate_variables, (params[:rule_builder][:if] == 'Any'))
 
-        build_a_rule(rule_target, index)
-
-        @rule.conditions = "[#{@rule_condition.join(', ')}]"
-        @rule.variables = variables
-        @rule.save
-        rule_parent = @rule if index == 0
-      end
-    end
     redirect_to :action => 'index'
   end
-
-  def build_a_rule(rule_target, index)
-    rule_target.downcase!
-    if @main_attributes.include?(rule_target)
-      if rule_target == 'title' || rule_target == 'Title'
-        target = "m.name"
-      else
-        target = "m.#{rule_target}"
-      end
-    else
-      p "TARGET => #{rule_target}"
-      case "#{rule_target}"
-      when "total items quantity"
-        target = "m.total_items"
-      when "total weight"
-        target = "m.weight"
-      when "total amount"
-        target = "m.total"
-      else
-        target = "m.#{rule_target}"
-      end
-    end
-
-
-=begin
-     TODO : find why it was written like this
-
-    if params[:rule][:values][index].to_i == 0
-      #value = "'#{params[:rule][:values][index]}'"
-    else
-      #value = params[:rule][:values][index]
-    end
-=end
-    value = params[:rule][:values][index].to_i
-    @rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
-  end
-
 
   def destroy
     if @voucher.destroy
@@ -173,7 +98,76 @@ class Admin::VouchersController < Admin::BaseController
 private
 
   def get_voucher
-    @voucher = VoucherRule.find_by_id(params[:id])
+    unless @voucher = VoucherRule.find_by_id(params[:id])
+      flash[:error] = t('voucher.found.failed')
+      redirect_to(admin_vouchers_path)
+    end
+  end
+
+  def generate_variables
+    # Build Action variables
+    variables = {}
+    params[:act][:targets].each_with_index do |action, index|
+      case "#{action}"
+      when '0'
+        variables[:discount] = params[:act][:values][index].to_i
+        variables[:fixed_discount] = (params[:act][:conds][index] != '0')
+      when '1'
+        variables[:product_ids] ||= []
+        variables[:product_ids] << params[:act][:values][index].to_i
+      when '2'
+        variables[:shipping] = true
+      when '3'
+        variables[:cart_discount] = params[:act][:values][index]
+        variables[:percent] = (params[:act][:conds][index] != '0')
+      end
+    end
+    return variables
+  end
+
+  def generate_rule(matchers,conditions,variables, or_rule = false)
+    rule = VoucherRule.new
+    rule.name = params[:rule_builder][:name]
+    rule.code = params[:voucher_code]
+    rule.description = params[:rule_builder][:description]
+    rule.active = params[:rule_builder][:active]
+    rule.conditions = if or_rule
+      "OR(#{conditions.map{ |condition| "[#{(matchers + [condition]).join(', ')}]" }.join(', ')})"
+    else
+      "[#{(matchers + conditions).join(', ')}]"
+    end
+    rule.variables = variables
+    rule.save
+    return rule
+  end
+
+  def generate_condition(rule_target, index)
+    rule_target = rule_target.parameterize('_').to_s
+    target = case rule_target
+    when 'total_items_quantity'
+      'total_items'
+    when 'total_weight'
+      'weight'
+    when 'total_amount'
+      'total'
+    when 'shipping_method'
+      'transporter_id'
+    else
+      rule_target
+    end
+
+    value = params[:rule][:values][index]
+
+    # if String type then add ''
+    value_column = Product.columns_hash[target] ||
+      Product::Translation.columns_hash[target]
+    if (value_column and [:string, :text].include?(value_column.type)) or
+      custom_attribute = Attribute.find_by_access_method(target)
+      value = "'#{value}'"
+      target = "#{target}_value" if custom_attribute
+    end
+
+    return "m.#{target}.#{params[:rule][:conds][index]}(#{value})"
   end
 
   def sort

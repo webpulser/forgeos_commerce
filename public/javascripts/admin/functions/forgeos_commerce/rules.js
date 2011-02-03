@@ -6,6 +6,7 @@ function add_rule(name){
   //check_remove_icon_status(name);
   check_icons('rule-conditions');
   check_icons('end-conditions');
+  InitCustomSelects();
   rezindex();
 }
 function remove_rule(element,name){
@@ -34,6 +35,7 @@ function add_action(name){
   var action = $('p.'+name+'.pattern');
   $('#action-conditions').append("<div class='condition'>"+action.html()+"</div>");
   //check_remove_icon_status('action-condition');
+  InitCustomSelects();
   rezindex();
   check_icons('action-conditions');
 }
@@ -43,12 +45,15 @@ function change_action(element,name,type){
   var action = $(element).parent().parent();
   action.html('');
   action.append($('.action-'+selected+'-'+type+'.pattern').html());
+  InitCustomSelects();
   rezindex();
   check_icons('action-conditions');
 }
 
 function add_cart_rule(){
   $('#rule-conditions').append("<div class='condition'>"+$('.rule-Totalitemsquantity.pattern').html()+'</div>');
+  InitCustomSelects();
+  rezindex();
   check_icons('rule-conditions');
   //check_remove_icon_status('rule-condition');
 }
@@ -93,6 +98,7 @@ function change_select_for(element){
     $('#action-conditions').append("<div class='condition'>"+$('.action-0-category.pattern').html()+'</div>');
 
   }
+  InitCustomSelects();
   rezindex();
   //check_remove_icon_status('rule-condition');
   //check_remove_icon_status('action-condition');

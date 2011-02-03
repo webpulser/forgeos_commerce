@@ -44,7 +44,7 @@
   $('#imageUpload').uploadify({
   'uploader': '/images/uploadify/uploadify.swf',
   = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
-  = "'script': '#{admin_medias_path(:file_type => 'picture')}',"
+  = "'script': '#{admin_attachments_path(:file_type => 'picture')}',"
   = "'buttonImg' :'#{image_path("uploadify/choose-picture_#{I18n.locale}.png")}',"
   'width' :'154',
   'height' :'24',

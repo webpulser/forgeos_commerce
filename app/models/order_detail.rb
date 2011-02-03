@@ -62,6 +62,37 @@ class OrderDetail < ActiveRecord::Base
     price(with_tax, with_currency,with_special_offer,with_voucher) * quantity(order)
   end
 
+  def self.from_cart_product(cart_product)
+    object = self.new(
+      :name => cart_product.product.name,
+      :description => cart_product.product.description,
+      :price => cart_product.product.price(false, false),
+      :rate_tax => cart_product.product.rate_tax,
+      :sku => cart_product.product.sku,
+      :product_id => cart_product.product.id,
+      :voucher_discount => cart_product.product.voucher_discount,
+      :voucher_discount_price => cart_product.product.voucher_discount_price,
+      :special_offer_discount => cart_product.product.special_offer_discount,
+      :special_offer_discount_price => cart_product.product.special_offer_discount_price
+    )
+    self.after_from_cart_product(object,cart_product) if self.respond_to?(:after_from_cart_product)
+    return object
+  end
+
+  def self.from_free_product(gift)
+    self.new(
+      :name => gift.name,
+      :description => gift.description,
+      :price => 0,
+      :rate_tax => 0,
+      :sku => gift.sku,
+      :product_id => gift.id,
+      :special_offer_discount => I18n.t(:free_product),
+      :special_offer_discount_price => 0
+    )
+  end
+
+
   def quantity(order = self.order)
     return 1 unless order
     siblings = order.order_details.group_by(&:product_id).find do |order_detail_group|

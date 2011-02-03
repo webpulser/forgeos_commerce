@@ -3,7 +3,7 @@ class CreateProductPriceVariations < ActiveRecord::Migration
     create_table :product_price_variations do |t|
       t.belongs_to :product
       t.integer :quantity
-      t.integer :discount
+      t.float :discount
     end
   end
 

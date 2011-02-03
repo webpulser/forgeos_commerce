@@ -1,6 +1,6 @@
 module OrderHelper
   def step_order(index=1)
-    links = 
+    links =
       link_to(image_tag(step_order_image_filename(1,index)), :controller => 'cart') <<
       link_to(image_tag(step_order_image_filename(2,index)), :controller => 'order', :action => 'informations') <<
       link_to(image_tag(step_order_image_filename(3,index)), :controller => 'order', :action => 'new') <<
@@ -59,7 +59,7 @@ module OrderHelper
       content_tag :b, "#{I18n.t('total').capitalize} : #{order.total(true)} #{current_currency.html}"
     end
   end
-  
+
 
   # Display a order
   #
@@ -97,7 +97,7 @@ module OrderHelper
           content += radio_button_tag(
               'transporter_rule_id',
               transporter.id,
-              (transporter.id == session[:order_shipping_method_id]),
+              (transporter.id == current_currency.options[:transporter_rule_id]),
               :onclick => remote_function(
               :url => { :action => 'update_transporter', :id => transporter.id }
               )
@@ -112,7 +112,7 @@ module OrderHelper
       content += '</div>'
 
     end
-    
+
     content += '</div>'
   end
 
@@ -163,17 +163,17 @@ module OrderHelper
   def display_voucher
     content = '<div class="order_voucher" id="order_voucher">'
 
-    content += "#{I18n.t('voucher', :count=>1)} : " + 
-    text_field_tag(:voucher_code, "", :id => 'voucher_code') + " " + 
+    content += "#{I18n.t('voucher', :count=>1)} : " +
+    text_field_tag(:voucher_code, "", :id => 'voucher_code') + " " +
     button_to_function(
       I18n.t('add').capitalize,
-      #:url => { :controller => 'order', :action => 'add_voucher' }, 
+      #:url => { :controller => 'order', :action => 'add_voucher' },
       remote_function(
         :url => { :controller => 'cart', :action => 'add_voucher'},
         :with => "'voucher_code='+$('#voucher_code').val()"
       )
     )
-        
+
     content += '</div>'
   end
 

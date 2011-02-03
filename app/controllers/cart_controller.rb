@@ -5,10 +5,10 @@ class CartController < ApplicationController
   before_filter :check_voucher_code, :only => [:add_voucher]
   before_filter :special_offer, :only => [:index, :add_voucher]
   before_filter :voucher, :only => [:index, :add_voucher]
-  
+
   # Show <i>Cart</i>
   def index
-    flash[:notice] = t(:your_cart_is_empty).capitalize if current_cart.is_empty?    
+    flash[:notice] = t(:your_cart_is_empty).capitalize if current_cart.is_empty?
   end
 
   # Add a <i>Product</i> in <i>Cart</i>
@@ -16,12 +16,11 @@ class CartController < ApplicationController
   # ==== Parameters
   # * <tt>:id</tt> - a <i>Product</i> object
   def add_product
-    reset_order_session
     if params[:quantity]
       flash[:notice] = t(:product_added).capitalize if current_cart.add_product_id(params[:id],params[:quantity].to_i)
     else
       flash[:notice] = t(:product_added).capitalize if current_cart.add_product_id(params[:id])
-    end 
+    end
     redirect_to(:action => 'index')
     #dd
     #redirect_or_update
@@ -30,7 +29,6 @@ class CartController < ApplicationController
   # Empty the <i>Cart</i>
   #
   def empty
-    reset_order_session
     current_cart.to_empty
     flash[:notice] = t(:cart_is_empty).capitalize
     redirect_or_update
@@ -41,7 +39,6 @@ class CartController < ApplicationController
   # ==== Parameters
   # * <tt>:id</tt> - a <i>Product</i> object
   def remove_product
-    reset_order_session
     flash[:notice] = t(:product_has_been_remove).capitalize if current_cart.remove_product_id(params[:id])
     redirect_or_update
   end
@@ -54,7 +51,6 @@ class CartController < ApplicationController
   # * <tt>:product_id</tt> - a <i>Product</i> object
   # * <tt>:quantity</tt> - a <i>Product</i> object
   def update_quantity
-    reset_order_session
     cart_product = current_cart.carts_products.find_all_by_product_id(params[:product_id])
     quantity = params[:quantity].to_i
     old_quantity = cart_product.size
@@ -76,30 +72,30 @@ class CartController < ApplicationController
       redirect_to(:action => 'index')
     end
   end
-  
+
   def add_voucher
-    voucher = VoucherRule.find_by_id(current_cart.voucher)    
-    if voucher.nil?
-      session.delete(:voucher_code) 
+    if voucher = VoucherRule.find_by_id(current_cart.voucher)
+      current_cart.options[:voucher_code] = voucher.code
     else
-      session[:voucher_code] = voucher.code
-      render(:update) do |page|
-        page.replace_html('voucher_message', "With voucher code #{voucher.code} : #{voucher.name}")
-        page.replace_html('cart_total', price_with_currency(current_cart.total))
-        page.visual_effect :highlight, 'cart_total'
+      current_cart.options.delete(:voucher_code)
+    end
+    current_cart.save
+
+    respond_to do |format|
+      format.html do
+        redirect_to(:cart)
+      end
+      format.js do
+        render(:update) do |page|
+          page.replace_html('voucher_message', "With voucher code #{voucher.code} : #{voucher.name}") if voucher
+          page.replace_html('cart_total', price_with_currency(current_cart.total))
+          page.visual_effect :highlight, 'cart_total'
+        end
       end
     end
   end
-  
-  
-protected
-  # Update <i>session[:order_shipping_method_id]</i> and <i>session[:order_voucher_ids]</i> at <i>nil</i>
-  #
-  # User must again valid the shipping method and his voucher if his <i>Cart</i> is updated
-  def reset_order_session
-    session[:order_shipping_method_id] = session[:order_voucher_ids] = nil
-  end
 
+protected
   def redirect_or_update
     unless request.xhr?
       redirect_to(:action => 'index')
@@ -122,18 +118,33 @@ protected
         e.assert current_cart
         e.match
       end
+      current_cart.options[:free_product_ids] = @free_product_ids
+      current_cart.save
     rescue Exception
     end
   end
 
   def check_voucher_code
-    @voucher_code = params[:voucher_code] || session[:voucher_code]
-    voucher = VoucherRule.find_all_by_active_and_code(true,@voucher_code)
-    render(:update) do |page|
-      page.replace_html('voucher_message', "Le code promo #{@voucher_code} est invalide")
-      page.replace_html('cart_total', price_with_currency(current_cart.total))
-      session.delete(:voucher_code) if session[:voucher_code]
-    end if voucher.blank? or voucher.nil?
+    @voucher_code = params[:voucher_code] || current_cart.options[:voucher_code]
+    unless voucher = VoucherRule.find_all_by_active_and_code(true,@voucher_code)
+      respond_to do |format|
+        format.html do
+          flash[:error] = "Le code promo #{@voucher_code} est invalide"
+          redirect_to(:cart)
+        end
+
+        format.js do
+          render(:update) do |page|
+            page.replace_html('voucher_message', "Le code promo #{@voucher_code} est invalide")
+            page.replace_html('cart_total', price_with_currency(current_cart.total))
+            if current_cart.options[:voucher_code]
+              current_cart.options.delete(:voucher_code)
+              current_cart.save
+            end
+          end
+        end
+      end
+    end
   end
 
   def voucher
@@ -141,7 +152,7 @@ protected
       engine :voucher_engine do |e|
         rule_builder = Voucher.new(e)
         rule_builder.cart = current_cart
-        rule_builder.code = @voucher_code || session[:voucher_code]
+        rule_builder.code = @voucher_code || current_cart.options[:voucher_code]
         rule_builder.free_product_ids = @free_product_ids
         rule_builder.rules
         current_cart.carts_products.each do |cart_product|
@@ -149,13 +160,15 @@ protected
         end
         e.assert current_cart
         e.match
-      end  
+      end
+      current_cart.options[:free_product_ids] = @free_product_ids
+      current_cart.save
     rescue Exception
     end
   end
 
   def get_cross_selling
-    
+
     @cross_selling_products = []
     current_cart.carts_products.group_by(&:product_id).each do |cart_product|
       if product = cart_product[1].first.product

@@ -11,7 +11,7 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :carts
 
   has_many :cross_sellings_products, :dependent => :destroy
-  has_many :cross_sellings, :through => :cross_sellings_products
+  has_many :cross_sellings, :through => :cross_sellings_products, :class_name => 'Product'
   accepts_nested_attributes_for :cross_sellings
   accepts_nested_attributes_for :cross_sellings_products
 
@@ -38,7 +38,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :product_type_id, :sku, :url
   #validates_uniqueness_of :url
 
-  before_save :clean_strings, :force_url_format
+  before_save :clean_strings, :force_url_format, :generate_url
   after_save :synchronize_stock
 
   belongs_to :redirection_product, :class_name => 'Product'
@@ -192,6 +192,9 @@ class Product < ActiveRecord::Base
     elsif access_method = method_name.match(/^(\w|\d|_|-)*$/) and product_type and
       custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
       read_custom_attribute(custom_attribute, args.first)
+    elsif access_method = method_name.match(/^(\w|\d|_|-)*_value$/) and product_type and
+      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('_value',''))
+      read_custom_attribute(custom_attribute, :value)
     elsif access_method = method_name.match(/^(\w|\d|_|-)*=$/) and product_type and
       custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('=',''))
       write_custom_attribute(custom_attribute, args.first)
@@ -204,6 +207,9 @@ class Product < ActiveRecord::Base
     method_name = method.to_s
     if access_method = method_name.match(/^(\w|\d|_|-)*$/) and product_type and
       custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
+      return true
+    elsif access_method = method_name.match(/^(\w|\d|_|-)*_value$/) and product_type and
+      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('_value',''))
       return true
     elsif access_method = method_name.match(/^(\w|\d|_|-)*=$/) and product_type and
       custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('=',''))
@@ -270,5 +276,10 @@ class Product < ActiveRecord::Base
 
   def force_url_format
     self.url= Forgeos::url_generator(self.url)
+  end
+
+  def generate_url
+    return true if url.present?
+    self.url = name.parameterize if name.present?
   end
 end

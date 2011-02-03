@@ -71,3 +71,6 @@ en:
     other: choices
     field: radiobutton field
     preview: preview
+  attribute_value:
+    one: attribute value
+    other: attribute values

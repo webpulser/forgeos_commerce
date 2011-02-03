@@ -138,6 +138,32 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def self.from_cart(cart)
+    if cart and cart.user_id
+      order_details_attributes = cart.carts_products.collect do |cart_product|
+        OrderDetail.from_cart_product(cart_product).attributes
+      end + Product.find_all_by_id(cart.options[:free_product_ids]).collect do |product|
+        OrderDetail.from_free_product(product).attributes
+      end
+
+      order = self.new
+      order.attributes = {
+        :user_id => cart.user_id,
+        :voucher_discount => cart.voucher_discount_price,
+        :special_offer_discount => cart.special_offer_discount_price,
+        :order_details_attributes => order_details_attributes,
+        :reference => cart.id
+      }
+
+      order.build_order_shipping(OrderShipping.from_cart(cart).attributes)
+      order.build_address_delivery(cart.address_delivery.attributes.update(:user_id => nil))
+      order.build_address_invoice(cart.address_invoice.attributes.update(:user_id => nil))
+
+      self.after_from_cart(order,cart) if self.respond_to?(:after_from_cart)
+      return order
+    end
+  end
+
   private
 
   def payment_confirmation

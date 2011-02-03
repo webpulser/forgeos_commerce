@@ -6,7 +6,7 @@ en:
     one : 'brand'
     other: 'brands'
     back: back to brands
-    visual:
+    picture:
       add: add an icon
       name: brand icon
       change: change icon

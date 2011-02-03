@@ -5,7 +5,7 @@ class CreateProducts < ActiveRecord::Migration
         :type,
         :sku,
         :url
-      t.integer :stock
+      t.integer :stock, :default => 0
       t.float :price,
         :rate_tax,
         :default => 0.0,

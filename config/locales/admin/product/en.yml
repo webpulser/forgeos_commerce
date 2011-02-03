@@ -100,3 +100,6 @@ en:
     one: price variation
     other: prices variations
     add: add price variation
+  product_category:
+    one: product category
+    other: product categories

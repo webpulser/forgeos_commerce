@@ -5,6 +5,11 @@ class Admin::ImportController < Admin::BaseController
   def create_product
     create_model(Product,'sku')
   end
+  
+  map_fields :create_brand, (Brand.new.attributes.keys.sort + Brand.reflections.stringify_keys.keys.sort)
+  def create_brand
+    create_model(Brand,'code')
+  end
 
   map_fields :create_product_type, (ProductType.new.attributes.keys + ProductType.new.translated_attributes.stringify_keys.keys).sort
   def create_product_type
@@ -38,6 +43,6 @@ class Admin::ImportController < Admin::BaseController
   private
 
   def commerce_models
-    @models << 'product' << 'product_type' << 'product_category' << 'order' << 'order_detail' << 'attribute_value' << 'address'
+    @models << 'product' << 'product_type' << 'product_category' << 'order' << 'order_detail' << 'attribute_value' << 'address' << 'brand'
   end
 end

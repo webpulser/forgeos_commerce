@@ -19,7 +19,7 @@ class ProductsController < ApplicationController
 
 private
   def get_product
-    @product = Product.find_by_id(params[:id])
+    @product = Product.find_by_id(params[:id]) || Product.find_by_url(params[:url])
     return redirect_to_home if @product.nil?
     return false if request.format == 'js'
 

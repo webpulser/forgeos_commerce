@@ -1,31 +1,22 @@
-
-
 - form_for [:admin , brand], :html => { :id => 'wrap' } do |f|
   .backgrounds.big-header
-
-    .interact-links
-      = fg_submit_tag 'save_changes'
-      = I18n.t('or')
-      = link_to I18n.t('cancel').capitalize, admin_brands_path, :class => 'back-link'
-
+    = f.text_field :name, :class => 'field_name'
+    = Forgeos_save_buttons admin_brands_path
   #content.grid_16.alpha.omega
     .grid_12.omega
-      = f.label :name , I18n.t('brand.name')
+      = display_visual(f.object_name, brand.picture)
       %br
-      = f.text_field :name, :class => 'orange_input'
-      .clear
-      %h2.permalink
-        = t('permalink').capitalize
-        \:
-        = "#{request.protocol}#{request.host}/marques/"
-        = f.text_field :url
-      %br
-      = f.label :description, I18n.t('brand.description')
-      %br
+      = f.label :description
       = f.text_area :description, :class => 'mceEditor'
-      %br
-    .grid_4.alpha
-      = display_visual_style(f.object_name, brand.picture)
-    .clear
 
+    #right-sidebar.grid_4.omega
+      .step
+        = f.label :code
+        = f.text_field :code, :size => 25
+        %br
+        - if respond_to?(:brand_path)
+          = brand_path(Brand.new(:url => '', :name => ''))
+        - else
+          = "#{request.protocol}#{request.host}/marques/"
+        = f.text_field :url, :size => 10
   = render :partial => 'admin/visual/visual_popup.html.haml', :locals => {:form => f}
