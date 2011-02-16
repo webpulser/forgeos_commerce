@@ -1,4 +1,4 @@
-class AddIdToCrossSellinqsProduct < ActiveRecord::Migration
+class AddIdToCrossSellingsProduct < ActiveRecord::Migration
   def self.up
     change_table :cross_sellings_products do |t|
       t.column :id, :primary_key
