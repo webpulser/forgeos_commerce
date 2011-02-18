@@ -98,7 +98,7 @@
 
   function add_picture_to_element(path,id,name){
   = "object_name='#{form.object_name}';"
-  $('#product-images ul.sortable li.clear').before('<li><a href="#" onclick="$(this).parents(\'li\').remove(); check_product_first_image(); return false;" class="big-icons trash"></a><a class="big-icons edit" href="#"></a><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+id+'"/><img src="'+path+'" alt="'+name+'"/><div class="handler"><div class="inner"></div></div></li>');
+  $('#product-images ul.sortable li.clear').before('<li><a href="#" onclick="$(this).parents(\'li\').remove(); check_product_first_image(); return false;" class="big-icons trash"></a><a href="/admin/pictures/'+id+'/edit" onclick ="window.open(this.href); return false;" class="big-icons edit" href="#"></a><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+id+'"/><img src="'+path+'" alt="'+name+'"/><div class="handler"><div class="inner"></div></div></li>');
   }
 
 
@@ -142,6 +142,6 @@
   }
   function add_attachment_to_product(id,name,size,type){
   = "object_name='#{form.object_name}';"
-  $('#product-files').append('<div class="block-container"><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+id+'" /><span class="block-type"><span class="handler"><span class="inner">&nbsp;</span></span>'+type+'</span><span class="block-name">'+name+'<span class="file-size">- '+size+'</span></span><a href="#" class="big-icons gray-destroy"></a></div>');
+  $('#product-files').append('<div class="block-container"><input type="hidden" name="'+object_name+'[attachment_ids][]" value="'+id+'" /><span class="block-type"><span class="handler"><span class="inner">&nbsp;</span></span>'+type+'</span><span class="block-name">'+name+'<span class="file-size">- '+size+'</span></span><a href="/admin/'+type[0].toLowerCase()+'s/'+id+'/edit" onclick ="window.open(this.href); return false;" class="small-icons edit-link"></a><a href="#" class="big-icons gray-destroy"></a></div>');
   }
 = javascript_include_tag %w(swfobject jquery.uploadify)
