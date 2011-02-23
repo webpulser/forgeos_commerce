@@ -221,15 +221,16 @@ class Product < ActiveRecord::Base
   private
 
   def read_custom_attribute(attribute, method)
+    method ||= :value
     if attribute.dynamic?
       if attribute_value = dynamic_attribute_values.find_by_attribute_id(attribute.id)
-        method ? attribute_value.send(method.to_sym) : attribute_value
+        method != :object ? attribute_value.send(method.to_sym) : attribute_value
       else
         nil
       end
     else
       values = attribute_values.find_all_by_attribute_id(attribute.id)
-      value = method ? values.map(&method.to_sym) : values
+      value = (method != :object ? values.map(&method.to_sym) : values)
       return case attribute
       when RadiobuttonAttribute, PicklistAttribute
         value.first
