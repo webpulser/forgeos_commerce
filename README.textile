@@ -1,8 +1,8 @@
 h1. ForgeosCommerce
 
-ForgeosCommerce is an extension of Ruby on Rails for e-commerce development 
+ForgeosCommerce is an extension of Ruby on Rails for e-commerce development
 
-VERSION : 0.9.0-rc2
+VERSION : 0.9.5
 
 h1. Prerequisites
 
