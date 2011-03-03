@@ -1,6 +1,0 @@
-= display_cart(current_wishlist, false, true)
-- javascript_tag do
-  - render(:update) do |page|
-    = page.replace_html("forgeos_commerce_wishlist_link", link_to_wishlist)
-    = page.visual_effect(:pulsate, 'forgeos_commerce_wishlist_link')
-    = page.visual_effect(:highlight, 'forgeos_commerce_wishlist')
