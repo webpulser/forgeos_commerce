@@ -9,7 +9,7 @@ plugin 'forgeos_core', :git => '-b engines src.forgeos.com:forgeos/core', :submo
 plugin 'forgeos_cms', :git => '-b engines src.forgeos.com:forgeos/cms', :submodule => true
 plugin 'forgeos_commerce', :git => '-b engines src.forgeos.com:forgeos/commerce', :submodule => true
 
-environment "config.plugins = [ :forgeos_core, :all ]"
+environment "config.plugins = [:attachment_fu, :forgeos_core, :all]"
 gem 'acts-as-taggable-on', :source => 'http://gemcutter.org'
 run 'cp vendor/plugins/forgeos_core/config/attachments.example.yml config/attachments.yml'
 
