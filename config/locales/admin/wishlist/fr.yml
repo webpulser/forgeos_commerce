@@ -8,11 +8,11 @@ fr:
       show:
         all: voir tous les produits
       sold:
-        one: "{{count}} vente"
-        other: "{{count}} ventes"
+        one: "%{count} vente"
+        other: "%{count} ventes"
       viewed:
-        one: "vu {{count}} fois"
-        other: "vu {{count}} fois"
+        one: "vu %{count} fois"
+        other: "vu %{count} fois"
       best_seller:
         one: meilleur vente
         other: meilleures ventes

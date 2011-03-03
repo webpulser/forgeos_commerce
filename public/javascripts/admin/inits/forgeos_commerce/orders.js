@@ -69,7 +69,7 @@ jQuery(document).ready(function(){
     $.ajax({
       url: '/admin/orders/'+order_id,
       complete: display_notifications,
-      data: { authenticity_token: encodeURIComponent(AUTH_TOKEN), 'order[status]': state },
+      data: { authenticity_token: encodeURIComponent(AUTH_TOKEN), 'order[aasm_current_state_with_event_firing]': state },
       dataType:'text',
       type:'put'
     });

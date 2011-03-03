@@ -1,4 +1,4 @@
-fr:  
+fr:
   product:
     one : produit
     other: produits
@@ -7,17 +7,19 @@ fr:
     stop_sales: "arréter les ventes si le produit n'est plus en stock"
     showed_on_homepage: "Affiché sur la page d'acceuil"
     linked_files: fichiers liés
+    offer_month: 'offre du mois ?'
+    on_first_page: "afficher sur la page d'accueil ?"
     variant:
       one: variant
       other: variantes
     show:
       all: voir tous les produits
     sold:
-      one: "{{count}} vente"
-      other: "{{count}} ventes"
+      one: "%{count} vente"
+      other: "%{count} ventes"
     viewed:
-      one: "vu {{count}} fois"
-      other: "vu {{count}} fois"
+      one: "vu %{count} fois"
+      other: "vu %{count} fois"
     best_seller:
       one: meilleur vente
       other: meilleures ventes
@@ -38,9 +40,15 @@ fr:
     destroy:
       success: le produit a bien été supprimé
       failed: un problème est survenu lors de la suppression du produit
-      confirm: êtes-vous sûr de vouloir de supprimé ce produit ?
+      confirm: êtes-vous sûr de vouloir supprimer ce produit ?
+      redirection_product:
+        none: "êtes-vous sûr de vouloir supprimer ce produit ?\nvous pouvez spécifier un produit vers lequel la page de ce produit sera redirigé"
+        confirm: "êtes-vous sûr de vouloir supprimer ce produit ?\nla page de ce produit sera redirigé vers la page du produit %{product}"
       action: supprimer produit
     duplicate: dupliquer produit
+    redirection_product:
+      label: Redirection de page produit supprimée
+      change: changer le produit
   pack:
     one : pack
     other: packs
@@ -53,11 +61,11 @@ fr:
     show:
       all: voir tous les packs
     sold:
-      one: "{{count}} vente"
-      other: "{{count}} ventes"
+      one: "%{count} vente"
+      other: "%{count} ventes"
     viewed:
-      one: "vu {{count}} fois"
-      other: "vu {{count}} fois"
+      one: "vu %{count} fois"
+      other: "vu %{count} fois"
     best_seller:
       one: meilleur vente
       other: meilleures ventes
@@ -81,3 +89,17 @@ fr:
       confirm: êtes-vous sûr de vouloir de supprimé ce pack ?
       action: supprimer pack
     duplicate: dupliquer pack
+  size:
+    one: taille
+    other: tailles
+    many: toutes les tailles
+  cross_selling:
+    one: produit lié
+    other: produits liés
+  price_variation:
+    one: remise par quantité
+    other: remises par quantité
+    add: ajouter une remise par quantité
+  product_category:
+    one: catégorie de produit
+    other: catégories de produit

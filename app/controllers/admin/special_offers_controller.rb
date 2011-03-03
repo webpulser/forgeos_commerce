@@ -1,8 +1,12 @@
 require 'ruleby'
-
 class Admin::SpecialOffersController < Admin::BaseController
+  before_filter :get_special_offer, :only => [:activate, :show, :destroy]
   include Ruleby
-  
+
+  def activate
+    render :text => @special_offer.activate
+  end
+
   def index
     respond_to do |format|
       format.html
@@ -12,142 +16,189 @@ class Admin::SpecialOffersController < Admin::BaseController
       end
     end
   end
-  
+
+  def new
+    @default_attributes = %w(price name description weight sku stock product_type_id brand_id).collect do |n|
+      [t(n, :count => 1), n]
+    end
+
+    @attributes = Attribute.all(:select => 'id, access_method').collect do |a|
+      [a.name, a.access_method]
+    end
+
+    @cart_attributes = [
+      [t(:quantity,:scope=>[:special_offer,:cart]),'Total items quantity'],
+      [t(:weight,:scope=>[:special_offer,:cart]), 'Total weight'],
+      [t(:price,:scope=>[:special_offer,:cart]),'Total amount'],
+      [t(:shipping,:scope=>[:special_offer,:cart]),'Shipping method']
+    ]
+
+    @disable_attributes = t(:disabled,:scope=>[:special_offer,:attributes])
+
+    @for = [
+      [t(:product_in_shop,:scope=>[:special_offer,:_for]), 'Product'],
+      [t(:product_in_cart,:scope=>[:special_offer,:_for]), 'Product'],
+      [t(:cart,:scope=>[:special_offer,:_for]), 'Cart']
+    ]
+
+    @for << [t(:category,:scope=>[:special_offer,:_for]), 'Category'] if ProductCategory.count > 0
+
+    @conditions = [
+      [t(:is,:scope=>[:special_offer,:conditions]), "=="],
+      [t(:is_not,:scope=>[:special_offer,:conditions]),"not=="],
+      [t(:equal_or_greater_than,:scope=>[:special_offer,:conditions]),">="],
+      [t(:equal_or_less_than,:scope=>[:special_offer,:conditions]),"<="],
+      [t(:greater_than,:scope=>[:special_offer,:conditions]), ">"],
+      [t(:less_than,:scope=>[:special_offer,:conditions]),"<"]
+    ]
+
+    @end = [
+      [t(:date,:scope=>[:special_offer,:end]),'Date'],
+      [t(:total_use,:scope=>[:special_offer,:end]),'Total number of offer use'],
+      [t(:user_total_use,:scope=>[:special_offer,:end]),'Customer number of offer use']
+    ]
+
+    @discount_type = [
+      [t(:percent,:scope=>[:special_offer,:action]),0],
+      [t(:fixed,:scope=>[:special_offer,:action]),1]
+    ]
+
+    @product_attributes = [t(:main,:scope=>[:special_offer,:attributes,:disabled])]+
+      @default_attributes+
+      [t(:attribute,:scope=>[:special_offer,:attributes,:disabled])]+
+      @attributes
+    @products = Product.actives(:select => 'products.id, sku', :order => 'sku')
+  end
+
   def create
     return flash[:error] = 'Fields' unless params[:rule_builder]
-    
-    # GENERATE RULE !!!!!!!
-    # Parameters: {"commit"=>"Save", "rule_builder"=>{"stop"=>"0",   "title"=>"", "if"=>"Any", "target"=>"Computer", "description"=>"", "for"=>["Product"]}, 
-    #             "authenticity_token"=>"JZ3F3oEKmMB0rhQf6xHljskHTDH2aPP53unToh3SLwU=", "end_offer"=>"1", 
-    #             "end"=>{"targets"=>["Total number of offer use"], "values"=>["324"], "conds"=>["Is"]}, 
-    #             "end_offer_if"=>"Any", "act"=>{"targets"=>["Offer a product"], "values"=>["Macbook"]}, 
-    #             "rule"=>{"targets"=>["Price", "Stock"], "values"=>["24", "100"], "conds"=>["==", "=="]}}
-    
-    @main_attributes = %w(price title description weight sKU stock)
-    
-    @rule_condition = []
-    @rule_condition << params[:rule_builder]['for'] << ':product'
-    
+
+    @main_attributes = %w(price name description weight sku stock product_type_id brand_id)
+
+    conditions = []
+    params[:rule][:targets].each_with_index do |rule_target, index|
+      conditions << generate_condition(rule_target, index)
+    end
+
+    if params[:rule_builder]['for'] == 'Category'
+      conditions << "m.has_category_#{params[:rule_builder][:target]}.==(true)"
+    end
+
+    matchers = if params[:rule_builder]['for'] == 'Cart'
+      ['Cart',':cart']
+    else
+      [':is_a?', 'Product',':product']
+    end
+
+    generate_rule(matchers, conditions, generate_variables, (params[:rule_builder][:if] == 'Any'))
+
+    redirect_to :action => 'index'
+  end
+
+  def destroy
+    if @special_offer.destroy
+      flash[:notice] = t('special_offer.destroy.success')
+    else
+      flash[:error] = t('special_offer.destroy.failed')
+    end
+    redirect_to :action => 'index'
+  end
+
+  def show
+    @selected_products = []
+    sql_options = {:page => 1, :per_page => 100, :conditions => {:active => true, :deleted=> false} }
+    pagination = Product.paginate(sql_options)
+
+    pagination.total_pages.enum_for(:times).each do |page|
+      sql_options[:page] = page+1
+      engine :special_offer_engine do |e|
+        rule_builder = SpecialOffer.new(e)
+        rule_builder.selected_products = @selected_products
+        rule_builder.rule_preview(@special_offer)
+        Product.paginate(sql_options).each do |product|
+          e.assert product
+        end
+        e.match
+      end
+    end
+  end
+
+  def preview
+  end
+
+private
+
+  def get_special_offer
+    unless @special_offer = SpecialOfferRule.find_by_id(params[:id])
+      flash[:error] = t('special_offer.found.failed')
+      redirect_to(admin_special_offers_path)
+    end
+  end
+
+  def generate_variables
     # Build Action variables
     variables = {}
     params[:act][:targets].each_with_index do |action, index|
       case "#{action}"
-      when "Discount price this product"
+      when '0'
         variables[:discount] = params[:act][:values][index].to_i
-        variables[:fixed_discount] = (params[:act][:conds][index] == "By percent" ? false : true)
-      when "Offer a product"
-        variables[:product_ids] = [params[:act][:values][index].to_i]
-      when "Offer free delivery"
-        variables[:shipping_ids] = params[:act][:values][index]
-      when "Discount cart"
+        variables[:fixed_discount] = (params[:act][:conds][index] != '0')
+      when '1'
+        variables[:product_ids] ||= []
+        variables[:product_ids] << params[:act][:values][index].to_i
+      when '2'
+        variables[:shipping] = true
+      when '3'
         variables[:cart_discount] = params[:act][:values][index]
-        variables[:percent] = (params[:act][:conds][index] == "By percent" ? false : true)
+        variables[:percent] = (params[:act][:conds][index] != '0')
       end
     end
-    
-    if params[:rule_builder][:if] == 'All'
-      @rule = SpecialOfferRule.new
-      @rule.name = params[:rule_builder][:name]
-      @rule.description = params[:rule_builder][:description]
-      
-      params[:rule][:targets].each_with_index do |rule_target, index|
-        build_a_rule(rule_target, index)
-      end
-      
-      if params[:rule_builder]['for'] == 'Category'
-        @rule_condition << "m.category.=(#{params[:rule_builder][:target]})"
-      end
-      
-      @rule.conditions = "[#{@rule_condition.join(', ')}]" 
-      @rule.variables = variables
-      @rule.save
-    else
-      rule_parent = nil
-      params[:rule][:targets].each_with_index do |rule_target, index|
-        @rule_condition = []
-        @rule_condition << params[:rule_builder]['for'] << ':product'
-        @rule = SpecialOfferRule.new
-        @rule.parent = rule_parent
-        @rule.name = params[:rule_builder][:name]
-        @rule.description = params[:rule_builder][:description]
-        
-        build_a_rule(rule_target, index)
-        
-        if params[:rule_builder]['for'] == 'Category'
-          @rule_condition << "m.category.=(#{params[:rule_builder][:target]})"
-        end
-        
-        @rule.conditions = "[#{@rule_condition.join(', ')}]" 
-        @rule.variables = variables
-        @rule.save
-        rule_parent = @rule if index == 0
-      end
-    end
-    redirect_to :action => 'index'
+    return variables
   end
-  
-  def build_a_rule(rule_target, index)
-    rule_target.downcase!
-    if @main_attributes.include?(rule_target)
-      if rule_target == 'title' || rule_target == 'Title'
-        target = "m.name"
-      else
-        target = "m.#{rule_target}"
-      end
+
+  def generate_rule(matchers,conditions,variables, or_rule = false)
+    rule = SpecialOfferRule.new
+    rule.name = params[:rule_builder][:name]
+    rule.description = params[:rule_builder][:description]
+    rule.active = params[:rule_builder][:active]
+    rule.conditions = if or_rule
+      "OR(#{conditions.map{ |condition| "[#{(matchers + [condition]).join(', ')}]" }.join(', ')})"
     else
-      case "#{rule_target}"
-      when "total items quantity"
-        target = "m.total_items"
-      when "total weight"
-        target = "m.weight"
-      when "total amount"
-        target = "m.total_with_tax)"
-      else
-        target = "m.#{rule_target})"
-      end
+      "[#{(matchers + conditions).join(', ')}]"
+    end
+    rule.variables = variables
+    rule.save
+    return rule
+  end
+
+  def generate_condition(rule_target, index)
+    rule_target = rule_target.parameterize('_').to_s
+    target = case rule_target
+    when 'total_items_quantity'
+      'total_items'
+    when 'total_weight'
+      'weight'
+    when 'total_amount'
+      'total'
+    when 'shipping_method'
+      'transporter_id'
+    else
+      rule_target
     end
 
-    if params[:rule][:values][index].to_i == 0
-      value = "'#{params[:rule][:values][index]}'"
-    else
-      value = params[:rule][:values][index]
+    value = params[:rule][:values][index]
+
+    # if String type then add ''
+    value_column = Product.columns_hash[target] ||
+      Product::Translation.columns_hash[target]
+    if (value_column and [:string, :text].include?(value_column.type)) or
+      custom_attribute = Attribute.find_by_access_method(target)
+      value = "'#{value}'"
+      target = "#{target}_value" if custom_attribute
     end
-    @rule_condition << "#{target}.#{params[:rule][:conds][index]}(#{value})"
+
+    return "m.#{target}.#{params[:rule][:conds][index]}(#{value})"
   end
-  
-  def new    
-  end
-  
-  def destroy
-    @special_offer = SpecialOfferRule.find_by_id(params[:id])
-    if @special_offer.destroy
-      flash[:notice] = "Special offer destroy"
-    else
-      flash[:error] = "Special offer not destroy"
-    end
-    redirect_to :action => 'index'
-  end
-  
-  def show
-    @special_offer = SpecialOfferRule.find_by_id(params[:id])
-    @selected_products = []
-    engine :special_offer_engine do |e|
-      rule_builder = SpecialOffer.new(e)
-      rule_builder.rule_id = params[:id]
-      rule_builder.selected_products = @selected_products
-      rule_builder.rules
-      products = Product.all(:conditions => {:active => true, :deleted=>[false, nil]})
-      products.each do |product|
-        e.assert product
-      end
-      e.match
-    end
-  end
-  
-  def preview
-  end
-  
-private
 
   def sort
     columns = %w(rules.name rules.name active rules.use)
@@ -171,6 +222,7 @@ private
     options[:order] = order unless order.squeeze.blank?
 
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:star] = true
       @special_offers = SpecialOfferRule.search(params[:sSearch],options)
     else
       @special_offers = SpecialOfferRule.paginate(:all,options)

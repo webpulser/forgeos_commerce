@@ -34,7 +34,7 @@ class Admin::AttributesController < Admin::BaseController
   def create
     if @attribute.save
       flash[:notice] = I18n.t('attribute.create.success').capitalize
-      return redirect_to(admin_attributes_path)
+      redirect_to edit_admin_attribute_path(@attribute)
     else
       flash[:error] = I18n.t('attribute.create.failed').capitalize
       render :action => :new
@@ -50,11 +50,10 @@ class Admin::AttributesController < Admin::BaseController
   def update
     if @attribute.update_attributes(params[:attribute])
       flash[:notice] = I18n.t('attribute.update.success').capitalize
-      return redirect_to(admin_attributes_path)
     else
       flash[:error] = I18n.t('attribute.update.failed').capitalize
-      render :action => :edit
     end
+    render :action => :edit
   end
 
   # Destroy an attribute
@@ -123,7 +122,10 @@ private
   end
 
   def sort
-    columns = %w(attributes.type attributes.name access_method)
+    columns = %w(attributes.type attribute_translations.name access_method)
+    if params[:sSearch] && !params[:sSearch].blank?
+      columns = %w(type name access_method)
+    end
 
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
@@ -140,10 +142,15 @@ private
 
     options[:conditions] = conditions unless conditions.empty?
     options[:order] = order unless order.squeeze.blank?
+    options[:joins] = :translations
 
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:index] = "attribute_core.attribute_#{ActiveRecord::Base.locale}_core"
+      options[:sql_order] = options.delete(:order)
+      options[:star] = true
       @attributes = Attribute.search(params[:sSearch],options)
     else
+      options[:group] = :attribute_id
       @attributes = Attribute.paginate(:all,options)
     end
   end

@@ -1,5 +1,5 @@
 <% 
-  order_states_for_select = Order.aasm_states.collect{ |state| [state.name, I18n.t(state.name, :scope => [:order,:status])] }
+  order_states_for_select = Order.aasm_states.collect{ |state| [state.name, t(state.name, :scope => [:order,:status])] }
   output = {
     :iTotalDisplayRecords => @orders.total_entries || 0,
     :aaData =>  @orders.collect do |order|
@@ -9,10 +9,10 @@
       [
         (details_count > 1 ? content_tag(:div, '<div class="image">&nbsp;</div>', :id => link_id, :class => 'some-variants plus') : content_tag(:div, '', :id => link_id)),
         order.id,
-        "#{order.total} #{$currency.html}",
+        price_with_currency order.total,
         content_tag(:div,
            link_to(
-             details_count != 1 ? "#{details_count} #{I18n.t('product', :count => details_count)}" : order.order_details.first.name.capitalize,
+             details_count != 1 ? "#{details_count} #{t('product', :count => details_count)}" : order.order_details.first.name.capitalize,
              [:admin,order]
            ),
            :class => 'product-name')+
@@ -22,7 +22,7 @@
         link_to('', [:edit, :admin, order], :class => 'small-icons edit-link') +
         link_to_remote('', :url => [:admin, order],
           :method => :delete,
-          :confirm => I18n.t('order.destroy.confirm').capitalize,
+          :confirm => t('order.destroy.confirm').capitalize,
           :success => "removedataTablesRow('#destroy_#{link_id}')",
           :html => {
             :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"

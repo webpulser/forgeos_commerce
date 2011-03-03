@@ -4,9 +4,9 @@ class CreateCurrencies < ActiveRecord::Migration
       t.string :name,
         :html,
         :code
-      t.boolean  :default
+      t.boolean  :default, :default => false, :null => false
       t.timestamps
-    end  
+    end
   end
 
   def self.down

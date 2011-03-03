@@ -1,0 +1,82 @@
+#imageUploadDialog.upload-lightbox-container.white
+  #imageUpload
+    = form.file_field :uploaded_data
+    = hidden_field_tag :target, params[:target]
+    = hidden_field_tag :target_id, params[:target_id]
+    = form.submit I18n.t('save').capitalize
+  %span= I18n.t('or')
+  = link_to_function I18n.t('media.add_form_library'), "$('#imageSelectDialog').dialog('open');"
+
+#imageSelectDialog.media-hoverlay
+  .media-hoverlay-header
+    = link_to_function content_tag(:span, I18n.t('media.picture.upload.action').capitalize, :class=>'big-icons add-picture'), "$(\'#imageUploadDialog\').dialog(\'open\'); $(\'#imageSelectDialog\').dialog(\'close\')", :class=>'backgrounds button'
+    .display-mode
+      .heading-separator
+      .display-thumbnails
+      .display-list.off
+    #search.right.image
+      %a.small-icons.left.search-link{ :href => "#" }
+        %span.small-icons.search-span
+          Search
+    .backgrounds.search-form-image
+    .backgrounds.search-form-thumbnails
+  .media-hoverlay-sidebar.grid_3.omega.alpha
+    .sidebar-content
+      %h2{ :class => 'small-icons picture'}
+        = link_to_function I18n.t('media.picture.all').capitalize, "select_all_elements_without_category('picture-attachment-tree')"
+      #picture-attachment-tree.init-tree.a-tree
+  .media-hoverlay-content.thumbnails
+    .table#thumbnail-table.datatable.media.selectable_rows
+  .media-hoverlay-content.table.hidden
+    %table#image-table.datatable.media.selectable_rows
+      %tr
+        %td
+
+= dataSlides_tag :id => 'thumbnail-table', :url => admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture', :mode => 'selection'), :columns => [ '{ "bSortable": true, "bSearchable": true, "sType": "string", "bUseRendered": true, "fnRender": null, "iDataSort": 0, "nTf": null, "nTh": function(){$(".thead").find(".th");}, "sWidth": "0px"}','{"bVisible": false}', '{ "bVisible": false }', '{ "bVisible": false}' ]
+= dataTables_tag :id => 'image-table', :url => admin_attachments_path(:format => :json, :file_type => 'picture', :mode => 'selection'), :columns => ["{'sClass':'th-checkbox-container', 'bSortable': false }","{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
+
+
+-# TODO move to base.js
+- session_key = ActionController::Base.session_options[:key]
+- javascript_tag do
+  function initImageUpload(link){
+  $('#imageUploadDialog').html('<div id="imageUpload"></div><div class="library-add"><span>or</span><a href="#" onclick="$(\'#imageUploadDialog\').dialog(\'close\'); $(\'#imageSelectDialog\').dialog(\'open\'); return false;">add from library</a></div>');
+  $('#imageUpload').uploadify({
+  'uploader': '/images/uploadify/uploadify.swf',
+  = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
+  = "'script': '#{admin_attachments_path(:file_type => 'picture')}',"
+  = "'buttonImg' :'#{image_path("uploadify/choose-picture_#{I18n.locale}.png")}',"
+  'width' :'154',
+  'height' :'24',
+  'scriptData': {
+  'format': 'json',
+  = "'authenticity_token': encodeURIComponent('#{u form_authenticity_token}')," if protect_against_forgery?
+  = "'#{session_key}': encodeURIComponent('#{cookies[session_key]}')"
+  },
+  'ScriptAccess': 'always',
+  'multi': 'true',
+  'displayData': 'speed',
+  'onComplete': function(e,queueID,fileObj,response,data){
+  if(typeof JSON=="object" && typeof JSON.parse=="function")
+  {
+  result = JSON.parse(response);
+  }
+  else{
+  result = eval('(' + response + ')');
+  }
+  if (result.result == 'success'){
+  path = result.path;
+  id = result.id;
+  name = fileObj.name
+  add_picture_to_brand_item(link,path,id,name);
+  } else {
+  display_notification_message('error',result.error)
+  }
+  },
+  'onAllComplete': function(){
+  $('#imageUploadDialog').dialog('close');
+  }
+  });}
+  function add_picture_to_element(path,id,name){ add_picture_to_brand_item($('#' + current_brand_link),path,id,name); }
+
+= javascript_include_tag %w(swfobject jquery.uploadify)

@@ -1,16 +1,20 @@
+= render :partial => 'tabs'
 = render :partial => 'admin/sidebars/left_sidebar', :locals => {:icon_class => 'products', :sidebar_title => 'product.all', :tree_id =>'product-tree' }
 #content.grid_12.alpha.omega
   .backgrounds.header
     = link_to content_tag(:span,I18n.t('product.create.action').capitalize, :class=>'big-icons create-product'), new_admin_product_path, :class=>'backgrounds action-button'
     = link_to content_tag(:span,I18n.t('pack.create.action').capitalize, :class=>'big-icons create-pack'), new_admin_pack_path, :class=>'backgrounds action-button'
+    = link_to_function content_tag(:span,I18n.t('category.save_sort.action').capitalize),"save_category_sort('ProductCategory',-4)", :class=>'backgrounds action-button hidden', :id => 'category_sort'
     #search.right
       = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
     .backgrounds.search-form
   .content-background
   %table#table.datatable.draggable_rows
+    %tr
+      %td
 
-  #add-product-link.backgrounds.header.add-products
-    /= link_to content_tag(:span, 'Add existing products to this collection', :class => 'big-icons'),'#'
+  /#add-product-link.backgrounds.header.add-products
+  /  = link_to content_tag(:span, 'Add existing products to this collection', :class => 'big-icons'),'#'
 
 
 = dataTables_tag :url => admin_products_path(:format => :json), :columns => ["{'sClass': 'image_product_td', 'bSearchable':false,'bSortable':false}","{'sClass': 'biggest_td', 'sTitle':'#{I18n.t(:name)}'}","{'sTitle':'#{I18n.t(:price, :count => 1)}'}","{'sTitle':'#{I18n.t(:stock, :count => 1)}'}","{'sClass': 'product_type_td', 'sTitle':'#{I18n.t(:product_type, :count => 1)}'}","{'sClass': 'see_td', 'sTitle':'#{I18n.t(:show)}'}","{ 'sClass': 'actions-td', 'bSortable': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}"], :save_state => true

@@ -7,7 +7,7 @@
   %>
   [
   '<%= escape_javascript content_tag(:div, "<div class='handler'></div><div class='small-icons #{attribute.class.to_s.underscore}'></div>", :id => link_id, :class => 'handler_container') -%>',
-  '<%= escape_javascript content_tag(:div, link_to(attribute.name, admin_attribute_path(attribute)), :class => 'product-name') -%>',
+  '<%= escape_javascript content_tag(:div, link_to(attribute.name, edit_admin_attribute_path(attribute)), :class => 'product-name') -%>',
   '<%= attribute.access_method %> ',
   '<%= escape_javascript(
     link_to('', duplicate_admin_attribute_path(attribute), :class => 'small-icons duplicate-link') +

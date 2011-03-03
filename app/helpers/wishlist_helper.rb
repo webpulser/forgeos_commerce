@@ -27,7 +27,7 @@ module WishlistHelper
           content += wishlists_product.tax.to_s
         content += "</div>"
         content += "<div class='wishlist_price'>"
-          content += wishlists_product.total(wishlists_product.product).to_s + " " + $currency.html
+          content += wishlists_product.total(wishlists_product.product).to_s + " " + current_currency.html
         content += "</div>"
       end
       content += "<div class='wishlist_remove'>"
@@ -50,7 +50,7 @@ module WishlistHelper
       content += display_wishlist_by_wishlists_product(wishlist, wishlists_product, static, mini)
     end
     content += "<div class='wishlist_total'><b>#{I18n.t('total').capitalize} : </b>"
-      content += wishlist.total(true).to_s + " " + $currency.html
+      content += wishlist.total(true).to_s + " " + current_currency.html
     content += "</div>"
   end
   
@@ -90,7 +90,7 @@ module WishlistHelper
   # * <tt>:product</tt> - a <i>Product</i> object
   # * <tt>:name</tt> - name, <i>image_tag('forgeos_commerce/remove_product.gif')</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'wishlist', :action => 'empty'}</i> by default
-  # * <tt>options</tt> the html options, <i>{:confirm => ForgeosCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_wishlist]}</i> by default
+  # * <tt>options</tt> the html options
   def link_to_wishlist_remove_product(product, mini=false, name=image_tag('forgeos_commerce/remove_product.gif'), options={:confirm => I18n.t(:confirm_remove_product)})
     if mini
       link_to_remote(name,{ :url=>{:controller => 'wishlist', :action => 'remove_product', :id => product}, :update => 'wishlist' }.merge(options))
@@ -102,9 +102,9 @@ module WishlistHelper
   # Extension of <i>link_to(name, options = {}, html_options = nil)</i>
   #
   # ==== Parameters
-  # * <tt>:name</tt> - name, <i>ForgeosCommerce::OPTIONS[:text][:empty_wishlist]</i> by default
+  # * <tt>:name</tt> - name
   # * <tt>:url</tt> - url, <i>{:controller => 'wishlist', :action => 'empty'}</i> by default
-  # * <tt>options</tt> the html options, <i>{:confirm => ForgeosCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_wishlist]}</i> by default
+  # * <tt>options</tt> the html options
   def link_to_wishlist_empty(mini=false,name=I18n.t('empty_wishlist').capitalize, url={:controller => 'wishlist', :action => 'empty'}, options={:confirm => I18n.t(:confirm_empty_wishlist)})
     if mini
       link_to_remote name, { :update => 'wishlist', :url => url }.merge(options)
@@ -135,14 +135,8 @@ module WishlistHelper
     end
   end
 
-  # Extension of <i>link_to(name, options = {}, html_options = nil)</i> with a <i>Product</i> object of first parameter
-  #
-  # ==== Parameters
-  # * <tt>:product</tt> - a <i>Product</i> object
-  # * <tt>:name</tt> - name, <i>
-  # * <tt>:url</tt> - url, <i>{:controller => 'wishlist', :action => 'add_product'}</i> by default
-  # * <tt>options</tt> the html options
-  def link_to_add_wishlist(product, name='add_to_wishlist', url={:controller => 'wishlist', :action => 'add_product'}, options=nil)
-    link_to I18n.t(name).capitalize, url.merge({:id => product.id}), options
+  def button_add_to_wishlist(product, name=I18n.t('add_to_wishlist'), options={})
+    url = {:controller => 'wishlist', :action => 'add_product', :id => product.id}
+    button_to(name, url, { :id => 'add_to_wishlist' }.merge(options))
   end
 end

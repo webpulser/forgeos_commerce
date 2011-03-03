@@ -1,40 +1,36 @@
 - form_for [:admin, user], :html => { :id => 'wrap', :autocomplete => 'off' } do |f|
   .backgrounds.big-header
-    = f.select :civility, I18n.t('civility.select'), :prompt => I18n.t('please_select').capitalize
+    .civility= f.select :civility, I18n.t('civility.select'), :prompt => I18n.t('please_select').capitalize
     = f.text_field :firstname, :title => I18n.t('firstname'), :class => 'defaultValue field_name lastname'
     = f.text_field :lastname, :title => I18n.t('lastname'), :class => 'defaultValue field_name firstname'
     .interact-links
-      = submit_tag I18n.t('save_changes').capitalize, :class => 'backgrounds interact-button'
-      = I18n.t('or')
-      = link_to I18n.t('cancel').capitalize, admin_users_path, :class => 'back-link'
+      = Forgeos_save_buttons admin_users_path
 
   #content.grid_16.alpha.omega
     #customer-see.grid_12.alpha.omega
       - unless user.new_record?
         .customer-header.backgrounds
           - if user.orders.empty?
-            = I18n.t(:order, :count => 0).capitalize
+            = t(:order, :count => 0).capitalize
           - else
-            %span.small-icons.order
-              = user.orders.all.sum(&:total)
-              = $currency.html
-            = "#{I18n.t('user.spent_on')} #{user.orders.length}"
-            = I18n.t('order', :count => user.orders.length)
+            %span.small-icons.order= price_with_currency user.orders.all.sum(&:total)
+            = "#{t('user.spent_on')} #{user.orders.length}"
+            = t('order', :count => user.orders.length)
 
       - unless user.new_record? || user.orders.empty?
         %table#table.datatable
-        = dataTables_tag :url => admin_orders_path(:filter => 'user', :user_id => user.id, :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false}","{'sTitle':'#{I18n.t(:id)}'}","{'sTitle':'#{I18n.t(:total)}'}","{'sTitle':'#{I18n.t(:product, :count => 1)}'}","{'sTitle':'#{I18n.t(:created_on)}'}","{'sTitle':'#{I18n.t(:customer, :count => 1)}','bVisible': false}","{'sTitle':'#{I18n.t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
+        = dataTables_tag :url => admin_orders_path(:filter => 'user', :user_id => user.id, :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false}","{'sTitle':'#{t(:id)}'}","{'sTitle':'#{t(:total)}'}","{'sTitle':'#{t(:product, :count => 1)}'}","{'sTitle':'#{t(:created_on)}'}","{'sTitle':'#{t(:customer, :count => 1)}','bVisible': false}","{'sTitle':'#{t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
 
       .padding-wrap
         = render :partial => 'fieldset_account_informations', :locals => { :user => user, :f => f }
 
         = render :partial => 'fields_for_addresses_deliveries', :locals => { :user => user, :f => f }
         .fieldset.noborder
-          = I18n.t('address.billing_same_as_delivery').capitalize
+          = t('address.billing_same_as_delivery').capitalize
           = radio_button_tag :same_as_delivery, :true, false
-          = I18n.t(:_yes).capitalize
+          = t(:_yes).capitalize
           = radio_button_tag :same_as_delivery, :false, true
-          = I18n.t(:_no).capitalize
+          = t(:_no).capitalize
         .clear
         = render :partial => 'fields_for_addresses_invoices', :locals => { :user => user, :f => f }
 
@@ -62,7 +58,7 @@
               .clear
               %a.backgrounds.button{ :href => '#' }
                 Send message
-              = I18n.t('or').capitalize
+              = t('or').capitalize
               %a.back-link{ :href => '#' }
                 Cancel
 
@@ -71,22 +67,22 @@
       #right-sidebar.grid_4.omega.alpha
         .step
           = mail_to @user.email, 'Contact customer', :class => 'small-icons contact'
-          = link_to I18n.t('order.create.action').capitalize, new_admin_order_path, :class=>'small-icons duplicate'
-          = link_to I18n.t('user.destroy.action').capitalize, [:admin, user], :confirm => I18n.t('user.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+          = link_to t('order.create.action').capitalize, new_admin_order_path, :class=>'small-icons duplicate'
+          = link_to t('user.destroy.action').capitalize, [:admin, user], :confirm => t('user.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
         #users_special_offer.step.open.disabled
           %a.small-icons.step-title{ :href => '#' }
-            = I18n.t('special_offer', :count => 2).capitalize
+            = t('special_offer', :count => 2).capitalize
         #users_newsletter.step.open.disabled
           %a.small-icons.step-title{ :href => '#' }
-            = I18n.t('newsletter', :count => 2).capitalize
+            = t('newsletter', :count => 2).capitalize
         #users_history.step.open.disabled
           %a.small-icons.step-title{ :href => '#' }
-            = I18n.t('user.history').capitalize
+            = t('user.history').capitalize
           .inner-step
             %p
-              = I18n.t('created_on').capitalize
+              = t('created_on').capitalize
               =@user.created_at.to_date
               %br
-              = I18n.t('by')
+              = t('by')
               =@user.fullname
       .clear

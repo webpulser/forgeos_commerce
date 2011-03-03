@@ -35,7 +35,7 @@ fr:
       closed: 'fermé'
     lastest:
       one: 'la dernière commande'
-      other: 'les dernières commandes'
+      other: "les %{count} dernières commandes"
     pendings: 
       one: 'commande en attente'
       other: 'commandes en attentes'

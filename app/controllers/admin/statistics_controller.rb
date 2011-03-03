@@ -23,7 +23,7 @@ class Admin::StatisticsController < Admin::BaseController
 
     sales = @date.collect do |day| 
       { :value => Forgeos::Commerce::Statistics.total_of_sales(day),
-        :tip => "#{day.to_s(:short)} :<br>#val# #{$currency.html}"
+        :tip => "#{day.to_s(:short)} :<br>#val# #{current_currency.html}"
       }
     end
 

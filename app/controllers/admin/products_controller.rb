@@ -1,5 +1,6 @@
 class Admin::ProductsController < Admin::BaseController
 
+  cache_sweeper :product_sweeper, :only => [:create, :update, :destroy, :activate]
   before_filter :get_product, :only => [:edit, :destroy, :show, :update, :activate, :duplicate]
   before_filter :merge_params, :only => [:update, :create]
   before_filter :filter_radiobutton_attributes, :only => [:update, :create]
@@ -34,7 +35,7 @@ class Admin::ProductsController < Admin::BaseController
   def create
     if @product.save && manage_dynamic_attributes
       flash[:notice] = I18n.t('product.create.success').capitalize
-      return redirect_to(admin_products_path)
+      redirect_to edit_admin_product_path(@product)
     else
       flash[:error] = I18n.t('product.create.failed').capitalize
       render :new
@@ -47,7 +48,7 @@ class Admin::ProductsController < Admin::BaseController
   def update
     if @product.update_attributes(params[:product]) && manage_dynamic_attributes
       flash[:notice] = I18n.t('product.update.success').capitalize
-      return redirect_to(admin_products_path)
+      redirect_to edit_admin_product_path(@product)
     else
       flash[:error] = I18n.t('product.update.failed').capitalize
       render :action => 'edit'
@@ -59,7 +60,7 @@ class Admin::ProductsController < Admin::BaseController
   # * id = Product's id
   def destroy
     @deleted = @product.deleted? ? @product.destroy : @product.update_attribute(:deleted, true)
-    
+
     if @deleted
       flash[:notice] = I18n.t('product.destroy.success').capitalize
       return redirect_to(admin_products_path) if !request.xhr?
@@ -82,9 +83,21 @@ class Admin::ProductsController < Admin::BaseController
     product = Product.find_by_id(params[:id])
     render :partial => 'attributes', :locals => { :product_type => product_type, :product => product }
   end
+  
+  def get_cross_selling_id
+    product = Product.find_by_id(params[:product_id])
+    cross_sellings = product.cross_sellings
+    index = product.cross_sellings.count + 1
+    cross_selling = Product.find_by_id(params[:cross_selling_id])
+    cross_sellings.push(cross_selling)
+    if product.update_attributes(:cross_sellings => cross_sellings)
+      render :partial => 'cross_sell_tr', :locals => { :index => index, :pack => product, :product => cross_selling, :_class => params[:class]} 
+    end
+  end
+  
 
 private
-  
+
   # Called by :
   # <i>create_product</i>
   # <i>edit_product</i>
@@ -120,7 +133,7 @@ private
   def get_tag(name)
     return @tag = Tag.find_by_name(name) ? true : false
   end
-  
+
   def get_product
     unless @product = Product.find_by_id(params[:id])
       flash[:error] = I18n.t('product.found.failed').capitalize
@@ -141,7 +154,11 @@ private
   end
 
   def sort
-    columns = %w(sku products.name price stock product_type_id active)
+    columns = %w(sku product_translations.name price stock product_type_id active)
+
+    if params[:sSearch] && !params[:sSearch].blank?
+      columns = %w(sku name price stock product_type_id active)
+    end
 
     per_page = params[:iDisplayLength] ? params[:iDisplayLength].to_i : 10
     offset = params[:iDisplayStart] ? params[:iDisplayStart].to_i : 0
@@ -149,24 +166,33 @@ private
     order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0] ? params[:iSortDir_0].upcase : 'ASC'}"
 
     conditions = {}
-    includes = []
+    includes = [:translations]
     options = { :page => page, :per_page => per_page }
-    
+    joins = [:translations]
+
     if params[:category_id]
       conditions[:categories_elements] = { :category_id => params[:category_id] }
       includes << :product_categories
+      joins = []
     end
+
     if params[:ids]
       conditions[:products] = { :id => params[:ids].split(',') }
     end
+
     conditions[:deleted] = params[:deleted] ? true : [false,nil]
 
     options[:conditions] = conditions unless conditions.empty?
     options[:include] = includes unless includes.empty?
     options[:order] = order unless order.squeeze.blank?
+    options[:joins] = joins
+    options[:group] = "product_id"
 
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:index] = "product_core.product_#{ActiveRecord::Base.locale}_core"
+      options[:joins] += options.delete(:include)
       options[:sql_order] = options.delete(:order)
+      options[:star] = true
       @products = Product.search(params[:sSearch],options)
     else
       @products = Product.paginate(:all,options)

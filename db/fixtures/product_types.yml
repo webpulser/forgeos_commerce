@@ -1,2 +1,2 @@
 default_product_type:
-  name: default product type
+  id: <%= Fixtures.identify(:default_product_type) %>

@@ -7,17 +7,19 @@ en:
     stop_sales: stop sales if out of stock
     showed_on_homepage: showed on homepage
     linked_files: linked files
+    offer_month: 'month offer ?'
+    on_first_page: 'show on homepage?'
     variant:
       one: variant
       other: variants
     show:
       all: see all products
     sold:
-      one: "{{count}} sale"
-      other: "{{count}} sales"
+      one: "%{count} sale"
+      other: "%{count} sales"
     viewed:
-      one: "viewed {{count}} time"
-      other: "viewed {{count}} times"
+      one: "viewed %{count} time"
+      other: "viewed %{count} times"
     best_seller:
       one: best seller
       other: best sellers
@@ -39,8 +41,14 @@ en:
       success: the product was successfully deleted
       failed: a problem occured during the product deletion
       confirm: are you sure to delete this product ?
+      redirection_product:
+        none: "Are you sure to delete this product ?\nyou can specify a product to redirect this product page"
+        confirm: "Are you sure to delete this product ?\nproduct page will be redirected to product %{product} page"
       action: delete product
     duplicate: duplicate product
+    redirection_product:
+      label: deleted product page redirection
+      change: change product
   pack:
     one : pack
     other: packs
@@ -53,11 +61,11 @@ en:
     show:
       all: see all packs
     sold:
-      one: "{{count}} sale"
-      other: "{{count}} sales"
+      one: "%{count} sale"
+      other: "%{count} sales"
     viewed:
-      one: "viewed {{count}} time"
-      other: "viewed {{count}} times"
+      one: "viewed %{count} time"
+      other: "viewed %{count} times"
     best_seller:
       one: best seller
       other: best sellers
@@ -81,3 +89,17 @@ en:
       confirm: are you sure to delete this pack ?
       action: delete pack
     duplicate: duplicate pack
+  size:
+    one: size
+    other: sizes
+    many: sizes
+  cross_selling:
+    one: cross selling
+    other: cross sellings
+  price_variation:
+    one: price variation
+    other: prices variations
+    add: add price variation
+  product_category:
+    one: product category
+    other: product categories

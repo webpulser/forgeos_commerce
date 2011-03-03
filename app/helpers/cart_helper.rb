@@ -19,7 +19,7 @@ module CartHelper
           content += carts_product.tax.to_s
         content += "</div>"
         content += "<div class='cart_price'>"
-          content += carts_product.free == 1 ? "Free" : carts_product.total(carts_product.product).to_s + " " + $currency.html
+          content += carts_product.free == 1 ? "Free" : carts_product.total(carts_product.product).to_s + " " + current_currency.html
         content += "</div>"
       end
       content += "<div class='cart_remove'>"
@@ -42,11 +42,11 @@ module CartHelper
       content += display_cart_by_carts_product(cart, carts_product, static, mini)
     end
     content += "<div class='cart_total'><b>#{I18n.t('total').capitalize} : </b>"
-      content += cart.total(true).to_s + " " + $currency.html
-      content += " with special discount : "+ cart.total(true,nil,true).to_s + " " + $currency.html + " !!" if cart.discount
+      content += cart.total(true).to_s + " " + current_currency.html
+      content += " with special discount : "+ cart.total(true,nil,true).to_s + " " + current_currency.html + " !!" if cart.discount
     content += "</div>"
   end
-  
+
 
   # Display a cart
   #
@@ -82,7 +82,7 @@ module CartHelper
   # * <tt>:product</tt> - a <i>Product</i> object
   # * <tt>:name</tt> - name, <i>image_tag('forgeos_commerce/remove_product.gif')</i> by default
   # * <tt>:url</tt> - url, <i>{:controller => 'cart', :action => 'empty'}</i> by default
-  # * <tt>options</tt> the html options, <i>{:confirm => ForgeosCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart]}</i> by default
+  # * <tt>options</tt> the html options
   def link_to_cart_remove_product(carts_product, mini=false, name=image_tag('forgeos_commerce/remove_product.gif'), options={:confirm => I18n.t(:confirm_remove_product)})
     if mini
       link_to_remote(name,{ :url=>{:controller => 'cart', :action => 'remove_product', :id => carts_product}, :update => 'cart' }.merge(options))
@@ -94,9 +94,9 @@ module CartHelper
   # Extension of <i>link_to(name, options = {}, html_options = nil)</i>
   #
   # ==== Parameters
-  # * <tt>:name</tt> - name, <i>ForgeosCommerce::OPTIONS[:text][:empty_cart]</i> by default
+  # * <tt>:name</tt> - name
   # * <tt>:url</tt> - url, <i>{:controller => 'cart', :action => 'empty'}</i> by default
-  # * <tt>options</tt> the html options, <i>{:confirm => ForgeosCommerce::OPTIONS[:text][:are_you_sure_to_empty_your_cart]}</i> by default
+  # * <tt>options</tt> the html options
   def link_to_cart_empty(mini=false,name=I18n.t('empty_cart').capitalize, url={:controller => 'cart', :action => 'empty'}, options={:confirm => I18n.t(:confirm_empty_cart)})
     if mini
       link_to_remote name, { :update => 'cart', :url => url }.merge(options)
@@ -112,7 +112,6 @@ module CartHelper
   # * <tt>:url</tt> - url, <i>{:controller => 'cart'}</i> by default
   # * <tt>options</tt> the html options
   def link_to_cart(name=I18n.t('cart', :count => 1), url={:controller => 'cart'}, options=nil)
-    cart = Cart.find_by_id(session[:cart_id])
     #unless cart.nil?
     #  name = "#{name} (#{cart.size} #{I18n.t('product', :count => cart.size)})"
     #end

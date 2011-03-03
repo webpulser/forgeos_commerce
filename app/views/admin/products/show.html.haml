@@ -1,30 +1,32 @@
+= render :partial => 'admin/menus/lang_switcher'
+= render :partial => 'tabs'
 .backgrounds.big-header
   %h1= @product.name
   .interact-links
-    = link_to I18n.t('product.update.action').capitalize, [:edit, :admin, @product], :class => 'backgrounds interact-button'
-    = I18n.t('or')
-    = link_to I18n.t('back_to_catalog').capitalize, admin_products_path, :class => 'back-link'
+    = link_to t('product.update.action').capitalize, [:edit, :admin, @product], :class => 'backgrounds interact-button'
+    = t('or')
+    = link_to t('back_to_catalog').capitalize, admin_products_path, :class => 'back-link'
 
 #content.grid_16.alpha.omega
   #product-see.grid_12.alpha
     .grid_8.omega
       - permalink = "#{request.protocol}#{request.host_with_port}/product/#{@product.url}"
       %h2.permalink
-        = I18n.t('permalink', :count => 1).capitalize
+        = t('permalink', :count => 1).capitalize
         \:
         = link_to permalink, permalink
       .prices
-        .normal-price= "#{@product.price} #{$currency.html}"
+        .normal-price= price_with_currency @product.price
         .promo
           &nbsp;
         .stock
           = @product.stock
           &nbsp;
-          = I18n.t('product.in_stock')
+          = t('product.in_stock')
       .clear
       %p
         %em
-          = I18n.t('product_type', :count => 1).capitalize
+          = t('product_type', :count => 1).capitalize
           \:
         = link_to @product.product_type.name, [:admin,@product.product_type], :class => 'product-type-link'
       %p
@@ -34,7 +36,7 @@
         = @product.sku
       .description
         %em
-          = I18n.t('description').capitalize
+          = t('description').capitalize
           \:
         = @product.description
     #product-images.grid_4.omega
@@ -43,7 +45,7 @@
           - if picture == @product.pictures.first
             %li.first-image
               = image_tag picture.public_filename('')
-              .featured= I18n.t('media.picture.featured')
+              .featured= t('media.picture.featured')
           - else
             %li= image_tag picture.public_filename('')
         %li.clear
@@ -53,7 +55,7 @@
     .option-panel.open
       .backgrounds.content-header
         &nbsp;
-      %span.panel= I18n.t('media.linked', :count => 2)
+      %span.panel= t('media.linked', :count => 2)
       .option-panel-content
         .grid_9
           - @product.attachments.all(:conditions => '`attachments`.`type` != "Picture"').each do |attachment|
@@ -70,7 +72,7 @@
       .option-panel.open
         .backgrounds.content-header
         &nbsp;
-        %span.panel= I18n.t(:product, :count => 2)
+        %span.panel= t(:product, :count => 2)
         .option-panel-content
           .grid_9
             - @product.products.each do |product|
@@ -78,7 +80,9 @@
                 %span.block-type= product.sku
                 %span.block-name
                   = product.name
-                  %span.file-size= " - #{product.price} #{$currency.html}"
+                  %span.file-size
+                    \ - 
+                    = price_with_currency product.price
                 - unless product == @product.products.last
                   %hr.block-separator 
       .clear
@@ -86,7 +90,7 @@
     .option-panel.open
       .backgrounds.content-header
         &nbsp;
-      %span.panel= I18n.t(:attributes)
+      %span.panel= t(:attributes)
       .option-panel-content
         - @product.product_type.product_attributes.each do |attribute|
           .fake-hr
@@ -100,22 +104,22 @@
   #right-sidebar.grid_4.omega
     .step.status.open
       %div
-        - status = [[I18n.t('unpublished'), 'draft'], [I18n.t('published'), 'active']]
+        - status = [[t('unpublished'), 'draft'], [t('published'), 'active']]
         = select_tag 'product[active]', options_for_select(status, @product.active ? 'active' : 'draft' )
         .clear
       - if @product.on_first_page
-        = I18n.t('product.showed_on_homepage').capitalize
+        = t('product.showed_on_homepage').capitalize
 
     .step
-      = link_to I18n.t('product.duplicate').capitalize, duplicate_admin_product_path(@product), :class => 'small-icons duplicate'
+      = link_to t('product.duplicate').capitalize, duplicate_admin_product_path(@product), :class => 'small-icons duplicate'
 
     #products_show_associated_collection.step.open
-      %a.small-icons.step-title{:href => '#'}= I18n.t('product.associated_collection', :count => 2).capitalize
+      %a.small-icons.step-title{:href => '#'}= t('product.associated_collection', :count => 2).capitalize
       #association-tree.inner-step.init-tree
         Coming Soon
 
     #products_show_tags.step.open
-      %a.small-icons.step-title{:href => '#'}= I18n.t('tag', :count => 2).capitalize
+      %a.small-icons.step-title{:href => '#'}= t('tag', :count => 2).capitalize
       .inner-step.tags
         - @product.tags.each do |tag|
           %span
@@ -123,21 +127,21 @@
         .clear
     #products_show_meta.step.open
       %a.small-icons.step-title{ :href => '#' }
-        = I18n.t('meta_description').capitalize
+        = t('meta_description').capitalize
       .inner-step.meta
         %p
           %span
-            = I18n.t('title').capitalize
+            = t('title').capitalize
             \:
           = @product.meta_info.title if @product.meta_info
         %p
           %span
-            = I18n.t('description').capitalize
+            = t('description').capitalize
             \:
           = @product.meta_info.description if @product.meta_info
         %p
           %span
-            = I18n.t('keyword', :count => 2).capitalize
+            = t('keyword', :count => 2).capitalize
             \:
           = @product.meta_info.keywords if @product.meta_info
   

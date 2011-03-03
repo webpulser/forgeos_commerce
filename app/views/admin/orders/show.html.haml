@@ -1,55 +1,58 @@
 .backgrounds.big-header
-  %span.order-price= "#{@order.total} #{$currency.html}"
+  %span.order-price= price_with_currency @order.total
   %span.header-separator
   %span
-    = I18n.t('order',:count =>1).capitalize
+    = t('order',:count =>1).capitalize
     n°
     = @order.id
   %span.header-separator
   %span= @order.created_at.to_s(:format => :default)
   .interact-links
-    = link_to I18n.t('order.update.action').capitalize, [:edit, :admin, @order], :class => 'backgrounds interact-button'
-    = I18n.t('or')
-    = link_to I18n.t('back').capitalize, admin_orders_path, :class => 'back-link'
+    = link_to t('order.update.action').capitalize, [:edit, :admin, @order], :class => 'backgrounds interact-button'
+    = t('or')
+    = link_to t('back').capitalize, admin_orders_path, :class => 'back-link'
 #content.grid_16.alpha.omega
   #order-see.grid_12.alpha
     .order-see-wrap
       .fieldset
-        %h3= I18n.t('order.main_infos')
+        %h3= t('order.main_infos')
         .main-infos
           - user = @order.user
           .main-infos-cutomer
-            %h4.small-icons= I18n.t('user', :count => 1).capitalize
+            %h4.small-icons= t('user', :count => 1).capitalize
             = link_to user.fullname, [:admin, user]
-            %p= "#{user.orders.count} #{I18n.t('order', :count => user.orders.count)} #{I18n.t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
+            %p= "#{user.orders.count} #{t('order', :count => user.orders.count)} #{t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
             %p= user.phone
             %p.customer-email= user.email
-          .main-info-separation
-          .main-infos-payment
-            %h4.small-icons
-              Payment method
-            %p
-              Credit card Mastercard
-            %p
-              6565-9878-XXXX
-            %p.payment-checked
-              payment checked
+
+          /
+            .main-info-separation
+            .main-infos-payment
+              %h4.small-icons
+                Payment method
+              %p
+                Credit card Mastercard
+              %p
+                6565-9878-XXXX
+              %p.payment-checked
+                payment checked
           .main-info-separation
           .main-infos-note
-            %h4.small-icons= I18n.t('order.user_note').capitalize
+            %h4.small-icons= t('order.user_note').capitalize
             =# @order.user_note
         .clear
       %table.datatable
         %thead
           %tr
             %th &nbsp;
-            %th.product-th= I18n.t('product', :count => 1).capitalize
-            %th= I18n.t('sku').capitalize
-            %th= I18n.t('price', :count => 1).capitalize
-            %th= I18n.t('quantity', :count => 1).capitalize
-            %th= I18n.t('order.total').capitalize
+            %th.product-th= t('product', :count => 1).capitalize
+            %th= t('sku').capitalize
+            %th= t('price', :count => 1).capitalize
+            %th= t('quantity', :count => 1).capitalize
+            %th= t('order.total').capitalize
         %tbody
-          - @order.order_details.all(:group => 'name').each do |detail|
+          - @order.order_details.all(:group => 'sku').each do |detail|
+            - quantity = @order.order_details.count('sku',:conditions => { :sku => detail.sku })
             %tr
               - product = detail.product
               - if product && picture = product.pictures.first
@@ -62,48 +65,48 @@
                 - else
                   = detail.name
               %td= detail.sku
-              %td= detail.price
-              %td= @order.order_details.count('sku',:conditions => { :sku => detail.sku })
-              %td.total= detail.total
-                
+              %td= price_with_currency(detail.price)
+              %td= quantity
+              %td.total= price_with_currency(detail.price * quantity)
+
       .order-totals
-        .order-subtotal= I18n.t('order.subtotal').capitalize
-        %span.order-subtotal= "#{@order.total(false,true,false,false,false)} #{$currency.html}"
+        .order-subtotal= t('order.subtotal').capitalize
+        %span.order-subtotal= price_with_currency @order.total(false,true,false,false,false)
         - if @order.order_shipping
-          %div= I18n.t('shipping').capitalize
-          %span.order_shipping= "#{@order.order_shipping.price} #{$currency.html}"
+          %div= t('shipping').capitalize
+          %span.order_shipping= price_with_currency @order.order_shipping.price
       .order-totals
-        %div= I18n.t('special_offer', :count => 2).capitalize
+        %div= t('special_offer', :count => 2).capitalize
         %br
         - if @order.special_offer_discount
-          %div= I18n.t('order.total_discount').capitalize
-          %span= "- #{@order.special_offer_discount} #{$currency.html}"
+          %div= t('order.total_discount').capitalize
+          %span= "- #{price_with_currency @order.special_offer_discount}"
           %br
         - @order.special_offer_discount_products.each do |product|
           %div= "#{product.name}"
-          %span= "- #{product.special_offer_discount_price} #{$currency.html}"
+          %span= "- #{price_with_currency product.special_offer_discount_price}"
           %br
-        %div= I18n.t('voucher', :count => 1).capitalize
+        %div= t('voucher', :count => 1).capitalize
         %br
         - if @order.voucher_discount
-          %div= I18n.t('order.total_discount').capitalize
-          %span= "- #{@order.voucher_discount} #{$currency.html}"
+          %div= t('order.total_discount').capitalize
+          %span= "- #{price_with_currency @order.voucher_discount}"
           %br
         - @order.voucher_discount_products.each do |product|
           %div= "#{product.name}"
-          %span= "- #{product.voucher_discount_price} #{$currency.html}"
+          %span= "- #{price_with_currency product.voucher_discount_price}"
           %br
       -#.order-totals
-        %div= I18n.t('tax', :count => 2).capitalize
-        %span= "#{@order.taxes} #{$currency.html}"
+        %div= t('tax', :count => 2).capitalize
+        %span= "#{@order.taxes} #{current_currency.html}"
       .order-totals.total-block
-        .order-total= I18n.t('order.total').capitalize
-        %span.order-total= "#{@order.total} #{$currency.html}"
+        .order-total= t('order.total').capitalize
+        %span.order-total= price_with_currency @order.total
       .fieldset
-        %h3= I18n.t('order.delivery')
+        %h3= t('order.delivery')
         .order-delivery
           .order-delivery-adress
-            %h4.small-icons= I18n.t('address.delivery', :count => 1).capitalize
+            %h4.small-icons= t('address.delivery', :count => 1).capitalize
             %p= @order.address_delivery.address
             %p
               = @order.address_delivery.zip_code
@@ -111,7 +114,7 @@
             %p= @order.address_delivery.country.name
           .main-info-separation
           .order-billing-adress
-            %h4.small-icons= I18n.t('address.invoice', :count => 1).capitalize
+            %h4.small-icons= t('address.invoice', :count => 1).capitalize
             %p= @order.address_invoice.address
             %p
               = @order.address_invoice.zip_code
@@ -119,10 +122,10 @@
             %p= @order.address_invoice.country.name
           .main-info-separation
           .order-delivery-method
-            %h4.small-icons= I18n.t('shipping_method', :count => 1).capitalize
+            %h4.small-icons= t('shipping_method', :count => 1).capitalize
             - if @order.order_shipping
               %p= @order.order_shipping.name
-              %p= "#{@order.order_shipping.price} #{$currency.html}"
+              %p= price_with_currency @order.order_shipping.price
               %p= @order.order_shipping.track_number
         .clear
   #right-sidebar.grid_4.omega
@@ -134,7 +137,7 @@
               %span= @order.status
       .clear
     .step
-      -#= link_to I18n.t('order.invoice.show'), [:bill, :admin, @order], :class => 'small-icons preview'
-      = content_tag :span, I18n.t('order.invoice.show').capitalize, :class => 'small-icons preview disabled'
-      = link_to I18n.t('order.destroy.action'), [:admin, @order], :method => :delete, :confirm => I18n.t('order.destroy.confirm'), :class => 'small-icons delete'
+      -#= link_to t('order.invoice.show'), [:bill, :admin, @order], :class => 'small-icons preview'
+      = content_tag :span, t('order.invoice.show').capitalize, :class => 'small-icons preview disabled'
+      = link_to t('order.destroy.action'), [:admin, @order], :method => :delete, :confirm => t('order.destroy.confirm'), :class => 'small-icons delete'
   .clear

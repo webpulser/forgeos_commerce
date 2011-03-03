@@ -1,4 +1,5 @@
 en:
+  forgeos: Forgeos Commerce
 # FrontOffice
   welcome: 'welcome'
   all: all
@@ -11,8 +12,8 @@ en:
     one: cart
     other: carts
     created:
-      one: '{{count}} shopping cart created'
-      other: '{{count}} shopping carts created'
+      one: '%{count} shopping cart created'
+      other: '%{count} shopping carts created'
   empty_cart: 'empty cart'
   add_to_wishlist: 'add to wishlist'
   wishlist:
@@ -44,6 +45,8 @@ en:
   product:
     name: product name
     signal_to_a_friend: signal to a friend
+  brand:
+    one: brand
   catalog: catalog
   choose_quantity: choose quantity
   sign_up: sign up
@@ -81,7 +84,7 @@ en:
   confirm_remove_product: 'are you sure to remove this product from your cart ?'
   type: type
   your_account: 'your account'
-  cancel: cancel
+  cancel: back
   unaccessible_function: 'unaccessible function'
   my_informations: 'my information'
   unpaid: unpaid
@@ -135,7 +138,7 @@ en:
   email: email
   back_to_catalog: 'back to catalog'
   save: save
-  save_changes: 'save changes'
+  save_changes: save
   list: list
   civility:
     one: civility
@@ -185,6 +188,7 @@ en:
   content_type: 'content type'
   reference: reference
   description: description
+  summary: summary
   rate_tax: taxe
   selling_date: 'selling date'
   weight: weight
@@ -198,8 +202,6 @@ en:
   price:
     one: price
     other: prices
-  offer_month: 'month offer ?'
-  show_on_homepage: 'show on homepage?'
   action:
     one: action
     other: actions
@@ -275,17 +277,6 @@ en:
       confirm: 'are you sure to delete this order detail ?'
   shipping: shipping
   sku: 'sku'
-  special_offer:
-    one: special offer
-    other: special offers
-    all: all special offers
-    for: for
-    this_condition: these conditions are
-    than: than
-    if: if
-    then: then
-    create:
-      action: 'create a special offer'
   voucher:
     one: voucher
     other: vouchers
@@ -394,16 +385,6 @@ en:
       success: 'the price cut was successfully deleted'
       failed: 'a problem occured during the price cut deletion'
       confirm: 'are you sure to delete this price cut ?'
-  jquery:
-    dataTables:
-      oLanguage:
-        sProcessing: 'Processing...'
-        sLengthMenu: 'Show _MENU_ entries'
-        sZeroRecords: 'No matching records found'
-        sInfo: 'Showing _START_ to _END_ of _TOTAL_ entries'
-        sInfoEmpty: 'Showing 0 to 0 of 0 entries'
-        sSearch: 'Search:'
-
   tag:
     one: tag
     other: tags
@@ -420,7 +401,7 @@ en:
       failed: 'a problem occured during the tag deletion'
       confirm: 'are you sure to delete this tag ?'
 
-  special_offer_rule:
+  special_offer:
     one: 'special offer'
     other: 'special offers'
     create:
@@ -448,71 +429,9 @@ en:
       current: 'this month'
       previous: 'last month'
     lifetime: 'lifetime sales'
-  attribute:
-    one: attribute
-    all: all attributes
-    other: attributes
-    back: back to attributes
-    not_exist: the requested attribute does not exist
-    create:
-      text: create a field
-      choice: create a choice
-      success: the attribute was successfully created
-      failed: a problem occured during the attribute creation
-      action: create an attribute
-    update:
-      success: the attribute was successfully updated
-      failed: a problem occured during the attribute update
-      action: edit attribute
-    destroy:
-      success: the attribute was successfully deleted
-      failed: a problem occured during the attribute deletion
-      confirm: are you sure to delete this attribute ?
-      action: delete attribute
-    duplicate:
-      action: duplicate attribute
-    value:
-      one: choice
-      other: choices
-      new: add choice
-    access_method: access method
-  text_attribute:
-    one: text
-    other: texts
-    field: text field
-    preview: preview
-  longtext_attribute:
-    one: longtext
-    other: longtexts
-    field: longtext field
-    preview: preview
-  picklist_attribute:
-    one: picklist
-    other: picklists
-    field: picklist field
-    preview: preview
-  checkbox_attribute:
-    one: checkbox
-    other: checkboxes
-    field: checkbox field
-    preview: preview
-  date_attribute:
-    one: date
-    other: dates
-    field: date field
-    preview: preview
-  number_attribute:
-    one: number
-    other: numbers
-    field: number field
-    preview: preview
-  url_attribute:
-    one: url
-    other: urls
-    field: url field
-    preview: preview
-  radiobutton_attribute:
-    one: choice
-    other: choices
-    field: radiobutton field
-    preview: preview
+  unit:
+    weight:
+      short: KG
+      long: Kilogram
+  setting:
+    godfather: patronage

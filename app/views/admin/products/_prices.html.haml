@@ -1,0 +1,17 @@
+.grid_12.omega
+  .fieldset.open
+    %h3= t(:price_variation, :count => 2)
+    .option-panel-content
+      #price-variations{ 'data-quantity' => t(:quantity, :scope => [:helpers,:label,:product_price_variation]), 'data-discount' => t(:discount, :scope => [:helpers,:label,:product_price_variation])}
+        - f.fields_for :price_variations do |price_variation|
+          .line
+            = price_variation.text_field :quantity, :size => 2, :class => 'center'
+            = price_variation.label :quantity
+            = price_variation.text_field :discount, :size => 2, :class => 'center'
+            = price_variation.label :discount
+            = link_to '', '#', :class => 'small-icons destroy-link destroy'
+            = price_variation.hidden_field :_destroy, :class => 'destroy'
+      = link_to t('price_variation.add'), '#', :class => 'small-icons add-link gray', :id => 'add-price-variation'
+      .clear
+
+#right-sidebar.grid_4.omega

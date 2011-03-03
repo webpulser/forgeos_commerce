@@ -8,7 +8,7 @@
 # * <tt>rate_tax</tt> - <i>Product</i> rate_tax
 # * <tt>quantity</tt> - <i>Product</i> quantity
 class OrderDetail < ActiveRecord::Base
-  
+
   belongs_to :order
   belongs_to :product
 
@@ -16,6 +16,9 @@ class OrderDetail < ActiveRecord::Base
   validates_presence_of :name, :price, :sku
   after_create :increment_product_sold_counter
 
+  def rate_tax
+    read_attribute(:rate_tax) || 1
+  end
   # Returns price's string with currency symbol
   #
   # This method is an overload of <i>price</i> attribute.
@@ -24,13 +27,12 @@ class OrderDetail < ActiveRecord::Base
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def price(with_tax=false, with_currency=true,with_special_offer=false, with_voucher=false)
-    return nil if super.nil? # assert
-    price = super
+    return 0 unless read_attribute(:price)
+    price = read_attribute(:price)
     price -= self.special_offer_discount_price if with_special_offer and self.special_offer_discount_price
     price -= self.voucher_discount_price if with_voucher and self.voucher_discount_price
-    #price += tax(false) if with_tax
-    return ("%01.2f" % price).to_f if Currency::is_default? || !with_currency
-    ("%01.2f" % (price * $currency.to_exchanges_rate(Currency::default).rate)).to_f
+    price += tax(false) if with_tax
+    return price
   end
 
   # Returns total product's tax
@@ -40,7 +42,7 @@ class OrderDetail < ActiveRecord::Base
   #
   # This method use <i>price</i> : <i>price(false, with_currency)</i>
   def tax(with_currency=true)
-    ("%01.2f" % (price(false, with_currency) * rate_tax/100)).to_f
+    price(false, with_currency) * rate_tax/100.0
   end
 
   # Returns tax * quantity
@@ -56,15 +58,53 @@ class OrderDetail < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def total(with_tax=false, with_currency=true,with_special_offer=false,with_voucher=false)
-    price(with_tax, with_currency,with_special_offer,with_voucher)
+  def total(with_tax=false, with_currency=true,with_special_offer=false,with_voucher=false, order = self.order)
+    price(with_tax, with_currency,with_special_offer,with_voucher) * quantity(order)
+  end
+
+  def self.from_cart_product(cart_product)
+    object = self.new(
+      :name => cart_product.product.name,
+      :description => cart_product.product.description,
+      :price => cart_product.product.price(false, false),
+      :rate_tax => cart_product.product.rate_tax,
+      :sku => cart_product.product.sku,
+      :product_id => cart_product.product.id,
+      :voucher_discount => cart_product.product.voucher_discount,
+      :voucher_discount_price => cart_product.product.voucher_discount_price,
+      :special_offer_discount => cart_product.product.special_offer_discount,
+      :special_offer_discount_price => cart_product.product.special_offer_discount_price
+    )
+    self.after_from_cart_product(object,cart_product) if self.respond_to?(:after_from_cart_product)
+    return object
+  end
+
+  def self.from_free_product(gift)
+    self.new(
+      :name => gift.name,
+      :description => gift.description,
+      :price => 0,
+      :rate_tax => 0,
+      :sku => gift.sku,
+      :product_id => gift.id,
+      :special_offer_discount => I18n.t(:free_product),
+      :special_offer_discount_price => 0
+    )
+  end
+
+
+  def quantity(order = self.order)
+    return 1 unless order
+    siblings = order.order_details.group_by(&:product_id).find do |order_detail_group|
+      order_detail_group[1].first.product_id == product_id
+    end
+    return siblings ? siblings[1].size : 1
   end
 private
-  
+
   def increment_product_sold_counter
-    counter = product.product_sold_counters.new
-    unless counter.increment_counter
-      counter.save
+    if product
+      counter = product.sold_counters.new.increment_counter
     end
   end
 end

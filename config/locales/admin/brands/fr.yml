@@ -1,0 +1,27 @@
+fr:
+  brand:
+    name: nom de la marque
+    description: description de la marque
+    comment_title: commentaire du vendeur
+    vendor: vendeur
+    comment: commentaire
+    all: tous les marques
+    one : 'marque'
+    other: 'marques'
+    back: retour aux types
+    picture:
+      add: ajouter un logo
+      name: logo de la marque
+      change: changer le logo
+    create:
+      success: 'la marque a bien été créée'
+      failed: 'un problème est survenu lors de la création de la marque'
+      action: 'créer une marque'
+    update:
+      success: 'la marque a bien été mis à jour'
+      failed: 'un problème est survenu lors de la mise à jour de la marque'
+      action: 'éditer la marque'
+    destroy:
+      success: 'la marque a bien été supprimée'
+      failed: 'un problème est survenu lors de la suppression de la marque'
+      confirm: 'êtes-vous sûr de vouloir de supprimé cette marque ?'

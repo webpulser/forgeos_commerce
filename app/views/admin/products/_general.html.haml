@@ -1,0 +1,156 @@
+#product.grid_12.alpha
+  .grid_12
+    = f.label :name, t(:name, :scope => :product).capitalize
+    = f.text_field :name
+  .grid_9.omega
+    .grid_4.alpha.omega
+      = label_tag :price, "#{t('price', :count => 1).capitalize}<sup class=\"required\">*</sup>"
+      = f.text_field :price, :class => 'backgrounds grid_2 alpha omega', :id => 'price'
+      %span.currency
+        = current_currency.html
+    = f.label :sku, t('sku')
+    %div
+      = f.text_field :sku
+    .tool-tip-me
+      .stock
+        = f.label :stock, t('stock', :count => 1).capitalize
+        = f.text_field(:stock, :size => 5)
+      .stock
+        = f.label :stop_sales, t('product.stop_sales').capitalize
+        = f.check_box :stop_sales
+    -#.tool-tip-me
+    -#  .stock
+    -#    %label{ :for => "product-stock" }
+    -#      Stock
+    -#    %div
+    -#      %select#product-stock{ :name => "product-stock" }
+    -#        %option{ :selected => "selected", :value => "default" }
+    -#          Track low stock level
+    -#  #product-in-stock.tool-tip-content
+    -#    .content
+    -#      = f.label :stock, t('stock', :count => 1).capitalize
+    -#      = f.text_field(:stock, :class => 'background')
+    -#      %label{ :for => "out-stock-action" }
+    -#        if out of stock
+    -#      %div
+    -#        %select
+    -#          %option{ :selected => "selected", :value => "0" }
+    -#            stop sales
+    -#      .clear
+    -#    .clear
+
+
+  #product-images.grid_3.omega
+    #featured-picture
+      = t('media.picture.featured').capitalize
+    = hidden_field_tag "#{f.object_name}[attachment_ids][]"
+    %ul.sortable
+      - product.pictures.each do |picture|
+        %li{ :class => (picture.id == product.picture_ids.first) ? 'first-image' : ''}
+          = link_to_function '', "$(this).parents('li').remove(); check_product_first_image() ", :title => t('media.picture.destroy.confirm').capitalize, :class => 'big-icons trash'
+          = link_to '', [:edit, :admin, picture], :class => 'big-icons edit', :popup => true
+          = hidden_field_tag "#{f.object_name}[attachment_ids][]", picture.id, :id => "attachment_#{picture.id}"
+          = image_tag picture.public_filename('')
+          .handler
+            .inner
+      %li.clear
+    .clear
+    %a#add-picture.backgrounds.button{ :href => "#" }
+      %span.big-icons.add-picture= t('media.picture.add').capitalize
+  .clear
+  .grid_12.omega
+    = f.label :summary, t('summary').capitalize
+    %div{ :style => 'clear: left;'}
+      = f.text_area :summary, {:cols => 80, :rows => 2}
+    = f.label :description, t('description').capitalize
+    %div{ :style => 'clear: left;'}
+      = f.text_area :description, :cols => 80, :class => 'mceEditor'
+    .clear
+  .option-panel.open
+    .backgrounds.content-header
+    = link_to t('attributes'), '#', :class => 'small-icons panel'
+    #product-types-panel.option-panel-content
+      = render :partial => 'attributes', :locals => { :product_type => product.product_type, :product => product }
+      .clear
+  .option-panel
+    .backgrounds.content-header
+    = link_to t('media.linked'), '#', :class => 'small-icons panel'
+    .option-panel-content
+      %a#add-file.backgrounds.button.right{ :href => "#" }
+        %span.big-icons.add-media
+          = t('add_file').capitalize
+      #product-files.grid_9.sortable
+        - product.attachments.all(:conditions => '`attachments`.`type` != "Picture"').each do |attachment|
+          = block_container f.object_name, 'attachment', attachment do
+            = attachment.filename
+            %span.file-size
+              = "- #{attachment.size} Ko"
+      .clear
+  .option-panel.disabled
+    .backgrounds.content-header
+    = link_to t('product.variant', :count => 2), '#', :class => 'small-icons panel'
+    .option-panel-content
+      %a.backgrounds.button.right{ :href => "#" }
+        %span.small-icons.add-variant
+          Create a variant
+      .block-container
+        %span.block-type
+        %span.block-name
+          %a.small-icons.panel{ :href => "#" }
+            Domaine de Villemont 2008 37cl
+        .variant
+      .clear
+
+  - if product.kind_of?(Pack)
+    = render :partial => 'products_popup', :locals => { :form => f }
+
+#right-sidebar.grid_4.omega
+  .step.status.open
+    %div
+      = f.select :active, [[t('unpublished'), 0], [t('published'), 1]], :selected => product.active ? 1 : 0
+    .clear
+      = f.label :product_type_id, "#{t('product_type', :count => 1).capitalize}<sup class=\"required\">*</sup>"
+    %div
+      - prompt = "#{t('please_select')} #{t('product_type.one')}"
+      = f.collection_select :product_type_id, ProductType.all(:include => :translations, :order => 'product_type_translations.name'), :id, :name, { :prompt => prompt }
+    .clear
+      = f.label :brand_id, t('brand.one')
+    %div
+      = f.collection_select :brand_id, Brand.all(:order => 'name DESC'), :id, :name, { :prompt => "#{t('please_select')} #{t('brand.one')}" }
+    .clear
+    = f.check_box :on_first_page
+    = t('product.on_first_page').capitalize
+    .clear
+    = f.check_box :offer_month
+    = t('product.offer_month').capitalize
+
+
+  .step
+    - unless product.new_record?
+      = link_to t('product.duplicate').capitalize, [:duplicate, :admin, product], :class => 'small-icons duplicate'
+      = link_to t('product.destroy.action').capitalize, [:admin, product], :confirm => (product.redirection_product ? t('product.destroy.redirection_product.confirm', :product => product.redirection_product.sku) : t('product.destroy.redirection_product.none')), :method => :delete, :class => 'small-icons delete'
+  #products_associated_collection.step.open
+    = link_to(t('product.associated_collection', :count => 2), '#', :class => 'small-icons step-title')
+    = hidden_field_tag "#{f.object_name}[product_category_ids][]" 
+    #association-product-tree.inner-step
+      %ul
+        = render :partial => 'admin/categories/associated_elements', :locals => { :association_id => 'product_category_ids', :element => product, :category_ids => product.product_category_ids, :categories => ProductCategory.find_all_by_parent_id(nil) }
+  #products_delivery.step.open
+    = link_to t(:delivery), '#', :class => 'small-icons step-title'
+    .inner-step.weight
+      %label{ :for => "weight" }
+        = t(:weight).capitalize
+        %br
+      = f.text_field :weight, :class => 'product_weight', :id => 'weight'
+      = t(:short, :scope => [:unit, :weight])
+  .step.disabled
+    = link_to t(:graphic_template, :count => 1), '#', :class => 'small-icons step-title'
+    .inner-step.glossy
+      %select{ :name => "design" }
+        %option{ :selected => "selected", :value => "default" }
+          Corporate blue design
+        %option{ :value => "no" }
+          Corporate green design
+    .clear
+  .clear
+  = render :partial => 'attachments_popups', :locals => {:form => f}

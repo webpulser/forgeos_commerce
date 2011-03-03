@@ -47,6 +47,7 @@ private
     options[:include] = includes unless includes.empty?
 
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:star] = true
       @users = User.search(params[:sSearch],options)
     else
       @users = User.paginate(:all,options)
@@ -90,6 +91,7 @@ private
     options[:order] = order unless order.squeeze.blank?
 
     if params[:sSearch] && !params[:sSearch].blank?
+      options[:star] = true
       @orders = Order.search(params[:sSearch],options)
     else
       @orders = Order.paginate(:all,options)

@@ -1,4 +1,4 @@
-- currency = $currency.code.upcase
+- currency = current_currency.code.upcase
 - total_for_today = Forgeos::Commerce::Statistics.total_of_sales(Date.current).to_f
 - total_for_yesterday = Forgeos::Commerce::Statistics.total_of_sales(Date.current.yesterday).to_f
 - total_for_week = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(1.week)..Date.current).to_f
@@ -20,75 +20,70 @@
   .left-dashboard.grid_12.alpha.omega
     .padding-wrap
       %p.summary
-        = I18n.t('dashboard.intro', :visitors => online_visitors, :customers => today_users, :pages => pages_viewed_today, :products => products_sales_today, :total => "#{total_for_today.to_i} #{$currency.html}")
+        = t('dashboard.intro', :visitors => online_visitors, :customers => today_users, :pages => pages_viewed_today, :products => products_sales_today, :total => price_with_currency(total_for_today.to_i))
         - if out_of_stock_products > 0
-          = I18n.t('dashboard.out_of_stock', :products => out_of_stock_products)
+          = t('dashboard.out_of_stock', :products => out_of_stock_products)
       .quick-actions
         - link_to new_admin_page_path, :class => 'quick-action-button' do
           %span.big-icons.create-page
-            = I18n.t('page.create.action').capitalize
+            = t('page.create.action').capitalize
         - link_to new_admin_product_path, :class => 'quick-action-button' do
           %span.big-icons.create-product
-            = I18n.t('product.create.action').capitalize
+            = t('product.create.action').capitalize
         - link_to new_admin_special_offer_path, :class => 'quick-action-button' do
           %span.big-icons.create-offer
-            = I18n.t('special_offer_rule.create.action').capitalize
+            = t('special_offer.create.action').capitalize
         - link_to admin_statistics_path, :class => 'quick-action-button' do
           %span.small-icons.see-stats
-            = I18n.t('statistic.show.all').capitalize
+            = t('statistic.show.all').capitalize
       .clear
 
       - pending_orders = Order.all(:order => 'created_at DESC', :conditions => { :status => %w(unpaid accepted)})
       - lastest_orders_count = 5
       - lastest_orders = Order.all(:order => 'created_at DESC', :limit => lastest_orders_count)
       %h2.small-icons.orders
-        = I18n.t('order', :count => 2).capitalize
+        = t('order', :count => 2).capitalize
       #to-tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
         %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
           %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active
             %a{ :href => "#last-orders" }
-              = lastest_orders_count
-              = I18n.t('order.lastest', :count => lastest_orders_count).capitalize
+              = t('order.lastest', :count => lastest_orders_count).capitalize
           %li.ui-state-default.ui-corner-top
             %a{ :href => "#pending-orders" }
               = pending_orders.size
-              = I18n.t('order.pendings', :count => pending_orders.size).capitalize
+              = t('order.pendings', :count => pending_orders.size).capitalize
         #last-orders.ui-tabs-panel.ui-widget-content.ui-corner-bottom
           %table
             %tbody
               - lastest_orders.each do |order|
                 %tr{ :class => cycle('','even')}
-                  %td.table-price
-                    = number_with_precision(order.total, :precision => 2)
-                    = $currency.html
+                  %td.table-price= price_with_currency order.total
                   %td.table-product
                     = order.order_details.count
-                    = I18n.t(:product, :count => order.order_details.count).capitalize
+                    = t(:product, :count => order.order_details.count).capitalize
                   %td{ :class => "table-state #{order.status}"}
-                    = I18n.t(order.status, :scope => [:order,:status]).capitalize
+                    = t(order.status, :scope => [:order,:status]).capitalize
                   %td.table-customer
                     = order.user.fullname if order.user
                   %td.table-time
                     = t(:ago, :time => time_ago_in_words(order.created_at))
-          = link_to I18n.t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
+          = link_to t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
         #pending-orders.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide
           %table
             %tbody
               - pending_orders.each do |order|
                 %tr{ :class => cycle('','even')}
-                  %td.table-price
-                    = order.total
-                    = $currency.html
+                  %td.table-price= price_with_currency order.total
                   %td.table-product
                     = order.order_details.count
-                    = I18n.t(:product, :count => order.order_details.count).capitalize
+                    = t(:product, :count => order.order_details.count).capitalize
                   %td{ :class => "table-state #{order.status}"}
-                    = I18n.t(order.status, :scope => [:order,:status]).capitalize
+                    = t(order.status, :scope => [:order,:status]).capitalize
                   %td.table-customer
                     = order.user.fullname if order.user
                   %td.table-time
                     = t(:ago, :time => time_ago_in_words(order.created_at))
-          = link_to I18n.t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
+          = link_to t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
 
       /
         %h2.small-icons.activity
@@ -138,47 +133,47 @@
                   2 hours before
   .right-dahsboard.grid_4
     %h2.small-icons.sales
-      = I18n.t(:sale, :count => 2).capitalize
+      = t(:sale, :count => 2).capitalize
     .sales-info-block
       .today-sales.first-block
         %span.left
-          = I18n.t('sale.day.current').capitalize
+          = t('sale.day.current').capitalize
         %span.right
           = total_for_today.floor
           %sup
             - decimal = total_for_today.decimal
-            = "#{I18n.t(:separator, :scope => :number)}#{decimal}" if decimal > 0
+            = "#{t(:separator, :scope => :number)}#{decimal}" if decimal > 0
             = currency
         .clear
       .yesterday-sales.second-block
         %span.left
-          = I18n.t('sale.day.previous').capitalize
+          = t('sale.day.previous').capitalize
         %span.right
           = total_for_yesterday.floor
           %sup
             - decimal = total_for_yesterday.decimal
-            = "#{I18n.t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
+            = "#{t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
             = currency
         .clear
     .sales-info-block
       .week-sales.first-block
         %span.left
-          = I18n.t('sale.week.current').capitalize
+          = t('sale.week.current').capitalize
         %span.right
           = total_for_week.floor
           %sup
             - decimal = total_for_week.decimal
-            = "#{I18n.t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
+            = "#{t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
             = currency
         .clear
       .last-week-sales.second-block
         %span.left
-          = I18n.t('sale.week.previous').capitalize
+          = t('sale.week.previous').capitalize
         %span.right
           = total_for_last_week.floor
           %sup
             - decimal = total_for_last_week.decimal
-            = "#{I18n.t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
+            = "#{t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
             = currency
       - if week_diff >= 0
         %div{ :class => 'diff-positive' }
@@ -190,22 +185,22 @@
     .sales-info-block
       .month-sales.first-block
         %span.left
-          = I18n.t('sale.month.current').capitalize
+          = t('sale.month.current').capitalize
         %span.right
           = total_for_month.floor
           %sup
             - decimal = total_for_month.decimal
-            = "#{I18n.t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
+            = "#{t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
             = currency
         .clear
       .last-month-sales.second-block
         %span.left
-          = I18n.t('sale.month.previous').capitalize
+          = t('sale.month.previous').capitalize
         %span.right
           = total_for_last_month.floor
           %sup
             - decimal = total_for_last_month.decimal
-            = "#{I18n.t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
+            = "#{t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
             = currency
       - if month_diff >= 0
         %div{ :class => 'diff-positive' }
@@ -217,18 +212,18 @@
     .sales-info-block
       .life-time-sales
         %span.left
-          = I18n.t('sale.lifetime').capitalize
+          = t('sale.lifetime').capitalize
         %span.right
           = lifetime_sales.floor
           %sup
             - decimal = lifetime_sales.decimal
-            = "#{I18n.t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
+            = "#{t(:separator, :scope => [:number, :format])}#{decimal}" if decimal > 0
             = currency
         .clear
     %h2.small-icons.live-stats
-      = I18n.t('statistic.live', :count => 2).capitalize
+      = t('statistic.live', :count => 2).capitalize
     .live-stats-content
-      %span= I18n.t('visitor.online', :count => online_visitors)
-      %span= I18n.t('user.online', :count => online_users)
-      %span= I18n.t('cart.created', :count => Cart.count(:conditions => '`products`.`id` IS NOT NULL', :include => :products))
+      %span= t('visitor.online', :count => online_visitors)
+      %span= t('user.online', :count => online_users)
+      %span= t('cart.created', :count => Cart.count(:conditions => '`products`.`id` IS NOT NULL', :include => :products))
   .clear

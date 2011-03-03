@@ -1,0 +1,23 @@
+%table#product_sizes
+  %thead
+    %tr
+      %th
+        Nom
+      %th
+        Stock
+      %th
+        Suppression
+  %tbody
+    - f.fields_for :sizes do |s|
+      %tr{ :class => cycle('even','odd')}
+        %td
+          = s.text_field :name
+        %td
+          = s.text_field :quantity
+        %td
+          = s.hidden_field :id
+          = s.hidden_field :_destroy, :class => 'delete'
+          = s.hidden_field :position
+          = link_to 'supprimer', '#', :class => 'remove_this_size'
+= link_to 'add a size', '#', :class => 'add_a_size'
+

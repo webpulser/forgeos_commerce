@@ -1,0 +1,11 @@
+%ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
+  %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to t('product', :count => 2).capitalize, '#content'
+#blocks-header.backgrounds.big-header.settings.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
+  %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
+    %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to 'Principal', '#general', :class => 'selected'
+    %li.ui-state-default.ui-corner-top= link_to t(:price, :count => 2), '#prices'
+    %li.ui-state-default.ui-corner-top= link_to t(:size, :count => 2), '#sizes'
+    %li.ui-state-default.ui-corner-top= link_to 'SEO', '#seo'
+    %li.ui-state-default.ui-corner-top= link_to t(:cross_selling, :count => 2), '#cross_sells'
+  = Forgeos_save_buttons admin_products_path
+  .clear

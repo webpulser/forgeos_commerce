@@ -15,7 +15,9 @@
             = product.sku
           %span.block-name
             = product.name
-            %span.file-size= " - #{product.price} #{$currency.html}"
+            %span.file-size
+              \ - 
+              = price_with_currency product.price
           = link_to('', '#', :class => 'big-icons gray-destroy')
           = hidden_field_tag("pack[product_ids][]", product.id, :class => 'block-selected')
   .clear

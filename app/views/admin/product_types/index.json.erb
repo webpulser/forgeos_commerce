@@ -6,12 +6,12 @@
       products_count = product_type.products.count
       [
          content_tag(:div, '<div class="handler"></div><div class="small-icons product-types"></div>', :id => link_id, :class => 'handler_container'),
-        content_tag(:div, link_to(product_type.name, [:admin, product_type]), :class => 'product-name'),
-        "#{products_count} #{I18n.t :product, :count => products_count}",
+        content_tag(:div, link_to(product_type.name, [:edit, :admin, product_type]), :class => 'product-name'),
+        "#{products_count} #{t :product, :count => products_count}",
         link_to('', [:edit, :admin, product_type], :class => 'small-icons edit-link') +
         link_to_remote('', :url => [:admin, product_type],
          :method => :delete,
-         :confirm => I18n.t('product.destroy.confirm').capitalize,
+         :confirm => t('product_type.destroy.confirm').capitalize,
          :success => "removedataTablesRow('#destroy_#{link_id}')",
          :html => {
          :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"

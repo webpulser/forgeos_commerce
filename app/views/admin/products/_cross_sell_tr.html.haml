@@ -1,0 +1,13 @@
+%tr.ui-sortable{:class => _class}
+  %td
+    = image_tag product.pictures.first.public_filename(:thumb) unless product.pictures.empty?
+  %td
+    = product.name
+  %td
+    = price_with_currency product.price, 0
+  %td
+    .stocks
+      = product.stock
+  %td{:style => 'position: relative'}
+    = link_to('Supprimer', '#', :class => 'delete_product_tr')
+    = hidden_field_tag("product[cross_selling_ids][]", product.id, :class => 'block-selected')

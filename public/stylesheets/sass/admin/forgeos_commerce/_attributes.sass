@@ -9,18 +9,28 @@
     padding-top: 2px
 .sortable-choices
   .block-container
+    height: auto
     :background-color = !whiteGray
     .block-type
       width: 30px
       :background-color = !whiteGray
       :border = 1px solid !whiteGray
     .block-name
-      margin-left: 40px
+      margin-left: 0px
       padding: 7px
       :background-color = !whiteGray
       :color = !black
+      display: inline
     .block-type .handler .inner
       height: 25px
+    .red-delete-icon
+      background-position: 0 -4105px
+    .block-image
+      .edit
+        background-position: 0px -824px
+      img
+        height: 50px
+        width: 50px
 .image-attribute
   position: absolute
   top: 2px
@@ -37,3 +47,10 @@
     +left()
     margin-left: 5px
     line-height: 2.5em
+.tree-product-types-selected
+  .edit-link
+    position: absolute
+    top: 5px
+    right: 55px
+    height: 18px
+    width: 18px

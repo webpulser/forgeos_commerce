@@ -8,11 +8,11 @@ en:
       show:
         all: see all products
       sold:
-        one: "{{count}} sale"
-        other: "{{count}} sales"
+        one: "%{count} sale"
+        other: "%{count} sales"
       viewed:
-        one: "viewed {{count}} time"
-        other: "viewed {{count}} times"
+        one: "viewed %{count} time"
+        other: "viewed %{count} times"
       best_seller:
         one: best seller
         other: best sellers

@@ -1,28 +1,76 @@
 en:
-  attributes: attributes 
-  attribute: 
+  attributes: attributes
+  attribute:
     zero: attribute
     one: attribute
-    other: attributes
-    create: 
-      action: create an attribute
-      choice: choose an attribute
-      access_method: attribute
-    value: value
     all: all attributes
+    other: attributes
+    back: back to attributes
+    not_exist: the requested attribute does not exist
+    create:
+      text: create a field
+      choice: create a choice
+      success: the attribute was successfully created
+      failed: a problem occured during the attribute creation
+      action: create an attribute
+      access_method: attribute
     update:
-      action: update attribute
-    back: back
+      success: the attribute was successfully updated
+      failed: a problem occured during the attribute update
+      action: edit attribute
+    destroy:
+      success: the attribute was successfully deleted
+      failed: a problem occured during the attribute deletion
+      confirm: are you sure to delete this attribute ?
+      action: delete attribute
     duplicate:
       action: duplicate attribute
-    destroy:
-      action: delete attribute
+    value:
+      one: choice
+      other: choices
+      new: add choice
     access_method: access method
-  text_attribute: text
-  longtext_attribute: long text
-  url_attribute: url
-  number_attribute: number
-  date_attribute: date
-  picklist_attribute: picklist
-  checkbox_attribute: checkbox
-  radiobutton_attribute: radio button
+
+  text_attribute:
+    one: text
+    other: texts
+    field: text field
+    preview: preview
+  longtext_attribute:
+    one: longtext
+    other: longtexts
+    field: longtext field
+    preview: preview
+  picklist_attribute:
+    one: picklist
+    other: picklists
+    field: picklist field
+    preview: preview
+  checkbox_attribute:
+    one: checkbox
+    other: checkboxes
+    field: checkbox field
+    preview: preview
+  date_attribute:
+    one: date
+    other: dates
+    field: date field
+    preview: preview
+  number_attribute:
+    one: number
+    other: numbers
+    field: number field
+    preview: preview
+  url_attribute:
+    one: url
+    other: urls
+    field: url field
+    preview: preview
+  radiobutton_attribute:
+    one: choice
+    other: choices
+    field: radiobutton field
+    preview: preview
+  attribute_value:
+    one: attribute value
+    other: attribute values

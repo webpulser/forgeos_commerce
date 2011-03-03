@@ -1,0 +1,75 @@
+.grid_12.alpha
+  .fieldset.open
+    %h3.permalink
+      = t('permalink').capitalize
+      \:
+    .option-panel-content
+      = "#{request.protocol}#{request.host}#{seo_product_path(f.object.class.new(:url=>'&nbsp;', :category_ids => f.object.category_ids, :product_type_id => f.object.product_type_id, :brand_id => f.object.brand_id))}"
+      = f.text_field :url
+  / #products_tags.step.open
+  /   = link_to t(:tag, :count => 2), '#', :class => 'small-icons step-title'
+  /   .inner-step.tags
+  /     .wrap_tags
+  /       = hidden_field_tag 'tag_list[]', ''
+  /       %input#tag.backgrounds{ :name => "tag", :type => "text", :title => t('tag_enter').capitalize, :class => 'defaultValue' }
+  /       - product.tag_list.each do |tag|
+  /         %span
+  /           = tag
+  /           = hidden_field_tag 'tag_list[]', tag
+  /           = link_to '&nbsp;', '#', :class => 'big-icons gray-destroy'
+  /     .clear
+  .fieldset.open
+    %h3= t(:meta_info,:count => 1)
+    .option-panel-content.meta
+      - product.build_meta_info unless product.meta_info
+      - f.fields_for :meta_info do |meta_info|
+        %p
+          %span
+            = t('title').capitalize
+            \:
+            %br
+          = meta_info.text_field :title, :class => 'text', :size => 90
+        %p
+          %span
+            = t('description').capitalize
+            \:
+            %br
+          = meta_info.text_area :description, :cols => 90, :rows => 5, :class => 'text'
+        %p
+          %span
+            = t('keyword', :count => 2).capitalize
+            \:
+            %br
+          = meta_info.text_area :keywords, :cols => 90, :rows => 5, :class => 'text'
+  .fieldset.open
+    %h3= t('product.redirection_product.label')
+    .option-panel-content
+      = f.hidden_field :redirection_product_id, :id => 'redirection_product_id'
+      #redirection_product
+        - if redirection_product = product.redirection_product_without_deleted
+          .block-container
+            %span.block-type= redirection_product.sku
+            %span.block-name
+              = redirection_product.name
+              %span.file-size= price_with_currency(redirection_product.price)
+
+      %a#add-redirection-product.backgrounds.button.right{ :href => "#" }
+        %span.big-icons.add-product
+          = I18n.t('product.redirection_product.change').capitalize
+#redirection-productSelectDialog.media-hoverlay
+  .media-hoverlay-header
+    = I18n.t('order.product.select').capitalize
+    #search.right.files
+      = fg_search
+    .backgrounds.search-form-files
+  .media-hoverlay-sidebar.grid_3.omega.alpha
+    .sidebar-content
+      %h2{ :class => 'small-icons products'}
+        = link_to_function I18n.t('product.all').capitalize, "select_all_elements_without_category()"
+      #product-tree.init-tree.a-tree
+  .media-hoverlay-content
+    %table#table-products.datatable.media.selectable_rows
+      %tr
+        %td
+
+= dataTables_tag :id => 'table-products', :url => admin_products_path(:format => :json, :mode => 'selection'), :columns => ["{'sClass':'th-checkbox-container th_product_popup','bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t(:name)}'}","{'sTitle':'#{I18n.t(:sku)}'}","{'sTitle':'#{I18n.t(:price, :count => 1)}'}","{'sTitle':'#{I18n.t(:stock, :count => 1)}'}","{'sTitle':'#{I18n.t(:product_type, :count => 1)}'}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}"]

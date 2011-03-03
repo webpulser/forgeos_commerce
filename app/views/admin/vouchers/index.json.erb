@@ -2,11 +2,17 @@
   output = {
     :iTotalDisplayRecords => @vouchers.total_entries || 0,
     :aaData => @vouchers.collect do |voucher|
+      klass = voucher.active? ? 'see-on' : 'see-off'
       link_id = voucher.id
       [
         content_tag(:div, '', :id => link_id),
         voucher.name,
-        select_tag(:status, options_for_select([['Active',1], ['Inactive',0]], voucher.active)),
+        link_to_remote('', :url => activate_admin_voucher_path(voucher),
+             :complete => "toggleActivate('#show_#{link_id}')",
+             :html => {
+               :class => "small-icons #{klass}",
+               :id => "show_#{link_id}"
+        }),
         voucher.use,
         voucher.code,
         link_to_remote('', :url => { :controller => 'vouchers', :action => 'destroy', :id => voucher.id },

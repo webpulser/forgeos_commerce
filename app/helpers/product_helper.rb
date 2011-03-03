@@ -1,18 +1,10 @@
 module ProductHelper
-  
-  def product_path(object)
-    super(:id => nil, :url => object.url)
-  end
-
-  def product_category_path(object)
-    super(:id => nil, :category_name => object.name)
-  end
 
   def display_catalog(products)
     total = (products.is_a?(WillPaginate::Collection)) ? products.total_entries : products.size
     content = pluralize total, "result"
 
-    products.in_groups_of(ForgeosCommerce::OPTIONS[:product_in_groups_of]).each do |products_|
+    products.in_groups_of(4).each do |products_|
       products_.each do |product|
         content += display_product(product) if product
       end
@@ -103,7 +95,7 @@ module ProductHelper
   def display_product_page_attributes(product)
     content = ""
     return content unless product && product.product_type
-    product.product_type.attributes.each do |attribute|
+    product.product_type.product_attributes.each do |attribute|
       content += "<div class='product_attribute_group_name'>"
         content += attribute.name + "&nbsp;:&nbsp;"
       content += "</div>"
@@ -121,6 +113,6 @@ module ProductHelper
   
   def link_to_product(product, name=nil, options=nil)
     name = product.name if name.nil?
-    link_to name, "/product/#{product.url}", options
+    link_to name, [:seo,product], options
   end
 end

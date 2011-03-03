@@ -5,7 +5,7 @@ class CreateProducts < ActiveRecord::Migration
         :type,
         :sku,
         :url
-      t.integer :stock
+      t.integer :stock, :default => 0
       t.float :price,
         :rate_tax,
         :default => 0.0,
@@ -19,8 +19,8 @@ class CreateProducts < ActiveRecord::Migration
         :offer_month,
         :on_first_page,
         :deleted,
-        :default => false
-      t.boolean :active, :default => true
+        :default => false, :null => false
+      t.boolean :active, :default => true, :null => false
       t.timestamps
     end
   end

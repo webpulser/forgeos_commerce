@@ -1,8 +1,9 @@
-<% 
+<%
+  is_selection = params[:mode] == 'selection'
   output = {
     :iTotalDisplayRecords => @products.total_entries || 0,
     :aaData => @products.collect do |product|
-      
+
       picture = product.pictures.first.public_filename(:thumb) if product.pictures.first
       klass = product.active? ? 'see-on' : 'see-off'
       link_id = "product_#{product.id}"
@@ -11,35 +12,37 @@
 
       if params[:mode] && params[:mode].eql?('menu_link')
         product_array <<
-          content_tag(:div, '<div class="handler"></div>'+  image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product handler_container') 
+          content_tag(:div, '<div class="handler"></div>'+  image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product handler_container')
         product_array << content_tag(:div, product.name, :class => 'product-name')
         product_array << product.id
-        product_array << link_to(product.name, [:admin, product])
+        product_array << link_to(product.name, [:edit, :admin, product])
 
       else
-        if product.kind_of? Pack
+        if product.kind_of?(Pack) && !is_selection
 
           product_array <<
-            content_tag(:div, '<div class="image"><div class="handler"></div>&nbsp'+ image_tag(picture || 'admin/no-image.png') +'</div>', :id => link_id, :class => 'some-variants plus handler_container') <<
-              content_tag(:div, params[:mode] == 'selection' ? product.name : link_to(product.name, [:admin, product]) + content_tag(:span, product.products.count), :class => 'product-name') +
-                content_tag(:p, product.products.collect { |variant| content_tag(:span,variant.name, :class => cycle('even','odd')) }, :class=>'product-name') <<
-                  content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'currency'), :class => 'price') +
-                    content_tag(:p, product.products.collect{ |p| "#{p.price} #{$currency.html}"}.join('<br />')) <<
-                      content_tag(:div, product.stock, :class => 'stocks' ) + '<br /><p class="stocks">' + product.products.collect(&:stock).join('<br />') + '</p>'
+          content_tag(:div, '<div class="image"><div class="handler"></div>&nbsp'+ image_tag(picture || 'admin/no-image.png') +'</div>', :id => link_id, :class => 'some-variants plus handler_container') <<
+          content_tag(:div, link_to(product.name, [:edit, :admin, product]) + content_tag(:span, product.products.count), :class => 'product-name') +
+          content_tag(:p, product.products.collect { |variant| content_tag(:span,variant.name, :class => cycle('even','odd')) }, :class=>'product-name')
+          product_array <<
+          content_tag(:div, price_with_currency(product.price), :class => 'price') +
+          content_tag(:p, product.products.collect{ |p| price_with_currency(p.price)}.join('<br />')) <<
+          content_tag(:div, product.stock, :class => 'stocks' ) + '<br /><p class="stocks">' + product.products.collect(&:stock).join('<br />') + '</p>'
+
         else
 
           product_array <<
             content_tag(:div,'<div class="handler"></div>'+  image_tag(picture || 'admin/no-image.png'), :id => link_id, :class => 'one-product handler_container') <<
-              content_tag(:div, params[:mode] == 'selection' ? product.name : link_to(product.name, [:admin, product]), :class => 'product-name')
-          product_array << content_tag(:div, product.sku) if params[:mode] == 'selection'
+            content_tag(:div, is_selection ? product.name : link_to(product.name, [:edit, :admin, product]), :class => 'product-name')
+          product_array << content_tag(:div, product.sku) if is_selection
           product_array <<
-            content_tag(:div, product.price.to_s + content_tag(:span, $currency.html, :class => 'tcurrency'), :class => 'price') <<
-              content_tag(:div, product.stock, :class => 'stocks' )
+            content_tag(:div, price_with_currency(product.price), :class => 'price') <<
+            content_tag(:div, product.stock, :class => 'stocks' )
 
         end
 
         product_array <<
-          product.product_type.name <<
+          (product.product_type.name || ' ')<<
             link_to_remote('', :url => activate_admin_product_path(product),
              :complete => "toggleActivate('#show_#{link_id}')",
              :html => {
@@ -50,11 +53,11 @@
               link_to('', [:edit, :admin, product], :class => 'small-icons edit-link') +
               link_to_remote('', :url => [:admin, product],
                 :method => :delete,
-                :confirm => I18n.t('product.destroy.confirm').capitalize,
+                :confirm => (product.redirection_product ? t('product.destroy.redirection_product.confirm', :product => product.redirection_product.sku) : t('product.destroy.redirection_product.none')),
                 :success => "removedataTablesRow('#destroy_#{link_id}')",
                 :html => {
                 :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-              }) << product.id << product.name << product.sku << product.price
+              }) << product.id << (product.name or '') << product.sku << product.price
       end
     end
   }

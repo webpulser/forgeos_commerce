@@ -4,3 +4,15 @@ fr:
     models:
       product: produit
       shipping_method: "méthode d'expédition"
+      setting: préférences
+  helpers:
+    label:
+      setting:
+        godfather_discount_price: montant de la remise pour le parrain
+        godfather_discount_percent: en pourcentage du montant du panier
+        nephew_discount_price: montant de la remise pour le filleul
+        nephew_discount_percent: en pourcentage du montant du panier
+
+      product_price_variation:
+        quantity: unités ou plus
+        discount: % de réduction

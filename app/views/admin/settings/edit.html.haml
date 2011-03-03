@@ -1,0 +1,20 @@
+= render :partial => 'tabs'
+- form_for @setting, :url => admin_setting_path do |f|
+  .backgrounds.big-header
+    = f.text_field :name, :class => 'defaultValue field_name', :title => t('setting.shop_name')
+    .interact-links
+      = Forgeos_save_buttons admin_static_content_blocks_path
+  #content.grid_16.alpha.omega
+    .grid_16.alpha
+      .padding-wrap
+        #general.content_setting_div
+          = render :partial => 'general', :locals => { :f => f }
+        #mailer.content_setting_div
+          = render :partial => 'mailer', :locals => { :f => f }
+        #display.content_setting_div
+          = render :partial => 'display', :locals => { :f => f }
+        #backup.content_setting_div
+          = render :partial => 'backup', :locals => { :f => f }
+        #godfather.content_setting_div
+          = render :partial => 'godfather', :locals => { :f => f }
+        .clear

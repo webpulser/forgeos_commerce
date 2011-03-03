@@ -1,4 +1,5 @@
 fr:
+  forgeos: Forgeos Commerce
 # FrontOffice
   welcome : Bienvenue
   all: Tous
@@ -11,10 +12,10 @@ fr:
     one: panier
     other: paniers
     created:
-      one: '{{count}} panier créé'
-      other: '{{count}} paniers créés'
+      one: '%{count} panier créé'
+      other: '%{count} paniers créés'
   empty_cart: 'vider le panier'
-  add_to_wishlist: 'ajouter à la séléction'
+  add_to_wishlist: 'ajouter à la sélection'
   wishlist:
     one: 'sélection'
     other: 'sélections'
@@ -44,6 +45,8 @@ fr:
   product:
     name: nom du produit
     signal_to_a_friend: Je signale ce produit à un ami
+  brand:
+    one: marque
   catalog: catalogue
   choose_quantity: choisir votre quantité
   sign_up: Je crée mon Espace Client
@@ -62,7 +65,7 @@ fr:
     safe: paiement sécurisé
   no_product: 'aucun produit'
   total: total
-  unit_price: "prix à l'unité" 
+  unit_price: "prix à l'unité"
   tax:
     one: taxe
     other: taxes
@@ -81,7 +84,7 @@ fr:
   confirm_remove_product: 'êtes-vous sûr de vouloir supprimer ce produit de votre panier ?'
   type: type
   your_account: 'votre compte'
-  cancel: annuler
+  cancel: retour
   unaccessible_function: 'fonction inaccessible'
   my_informations: 'mes informations'
   my_cart: 'mon panier'
@@ -132,8 +135,8 @@ fr:
   name: nom
   email: email
   back_to_catalog: 'retour au catalogue'
-  save: sauvegarder
-  save_changes: 'sauvegarder'
+  save: sauver
+  save_changes: sauver
   list: lister
   civility:
     one: civilité
@@ -183,6 +186,7 @@ fr:
   content_type: 'type de contenu'
   reference: 'référence'
   description: description
+  summary: 'résumé'
   rate_tax: taxe
   selling_date: 'date de mise en vente'
   weight: poids
@@ -196,8 +200,6 @@ fr:
   price:
     one: prix
     other: prix
-  offer_month: 'offre du mois ?'
-  show_on_homepage: "afficher sur la page d'accueil ?"
   action:
     one: action
     other: actions
@@ -272,17 +274,6 @@ fr:
       failed: 'un problème est survenu lors de la suppression du détail de commande'
       confirm: 'êtes-vous sûr de vouloir supprimer ce détail de commande ?'
   sku: 'sku'
-  special_offer:
-    one: offre spéciale
-    other: offres spéciales
-    all: toutes les offres spéciales
-    for: pour
-    this_condition: ses conditions sont
-    than: que
-    if: si
-    then: alors
-    create:
-      action: 'créer une offre spéciale'  
   shipping: ports
   voucher:
     one: 'code promo'
@@ -392,16 +383,6 @@ fr:
         success: "le prix réduit a bien été supprimé"
         failed: "un problème est survenu lors de la suppression du prix réduit"
         confirm: "êtes-vous sûr de vouloir supprimer ce prix réduit ?"
-  jquery:
-    dataTables:
-      oLanguage:
-        sProcessing: 'En cours...'
-        sLengthMenu: 'Voir _MENU_ entrées'
-        sZeroRecords: 'Aucun résultat trouvé'
-        sInfo: 'Visualisation de _START_ à _END_ sur _TOTAL_ entrées'
-        sInfoEmpty: 'Visualistation de 0 à 0 sur 0 entrées'
-        sSearch: 'Rechercher:'
-
   tag:
     one: tag
     other: tags
@@ -418,7 +399,7 @@ fr:
       failed: "un problème est survenu lors de la suppression du tag"
       confirm: "êtes-vous sûr de vouloir supprimer ce tag ?"
 
-  special_offer_rule:
+  special_offer:
     one: 'offre speciale'
     other: 'offre speciales'
     create:
@@ -446,72 +427,9 @@ fr:
       current: 'ce mois ci'
       previous: 'le mois dernier'
     lifetime: 'total des ventes'
-  attribute:
-    one: attribut
-    all: tous les attributs
-    other: attributs
-    back: retour aux attributs
-    not_exist: "l'attribut demandé n'existe pas"
-    create:
-      text: créer un champ
-      choice: créer un choix
-      success: "l'attribut a bien été créé"
-      failed: "un problème est survenu lors de la création de l'attribut"
-      action: créer un attribut
-    update:
-      success: "l'attribut a bien été mis à jour"
-      failed: "un problème est survenu lors de la mise à jour de l'attribut"
-      action: "éditer l'attribut"
-    destroy:
-      success: "l'attribut a bien été supprimé"
-      failed: "un problème est survenu lors de la suppression de l'attribut"
-      confirm: "êtes-vous sûr de vouloir supprimer cet attribut ?" 
-      action: "supprimer l'attribut"
-    duplicate:
-      action: "dupliquer l'attribut"
-    value:
-      one: choix
-      other: choix
-      new: ajouter un choix
-    access_method: méthode d'accès
-  text_attribute:
-    one: texte
-    other: textes
-    field: champ texte
-    preview: prévisualisation
-  longtext_attribute:
-    one: texte long
-    other: textes longs
-    field: champ texte long
-    preview: prévisualisation
-  picklist_attribute:
-    one: séléction
-    other: séléctions
-    field: champ séléction
-    preview: prévisualisation
-  checkbox_attribute:
-    one: case à cocher
-    other: cases à cocher
-    field: champ case à cocher
-    preview: prévisualisation
-  date_attribute:
-    one: date
-    other: date
-    field: champ date
-    preview: prévisualisation
-  number_attribute:
-    one: nombre
-    other: nombres
-    field: champ nombre
-    preview: prévisualisation
-  url_attribute:
-    one: lien
-    other: liens
-    field: champ lien
-    preview: prévisualisation
-  radiobutton_attribute:
-    one: bouton radio
-    other: boutons radio
-    field: champ bouton radio
-    preview: prévisualisation
-
+  unit:
+    weight:
+      short: KG
+      long: Kilogramme
+  setting:
+    godfather: parrainage

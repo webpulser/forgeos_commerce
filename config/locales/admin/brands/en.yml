@@ -1,0 +1,24 @@
+en:
+  brand:
+    name: brand name
+    description: brand description
+    all: all brands
+    one : 'brand'
+    other: 'brands'
+    back: back to brands
+    picture:
+      add: add an icon
+      name: brand icon
+      change: change icon
+    create:
+      success: 'The brand has been created'
+      failed: 'Ooops something went wrong'
+      action: 'create a brand'
+    update:
+      success: 'The brand has been updated'
+      failed: 'Ooops something went wrong'
+      action: 'Edit a brand'
+    destroy:
+      success: 'The brand has been deleted'
+      failed: 'Ooops something went wrong'
+      confirm: 'You really want to delete this brand ?'

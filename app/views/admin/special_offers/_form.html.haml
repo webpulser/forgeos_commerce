@@ -1,119 +1,88 @@
-- @default_attributes = ['Price','Title','Description', 'Weight', 'SKU', 'Stock']
-- @attributes = Attribute.all.collect(&:name)
-- @cart_attributes = ['Total items quantity', 'Total weight', 'Total amount', 'Shipping method']
-- @disable_attributes = ['MAIN SETTINGS','ATTRIBUTES']
-
-- @for = Hash["Product in Shop", "Product", "Product in Cart", "Product", "Cart", "Cart"]
-
-- @condition_is = Hash["Is", "=="]
-- @conditions =  Hash["Is not", "not==","Equals or greater than",">=","Equals or less than","<=", "Greater than", ">", "Less than","<"]
-
 - form_tag({:action => 'create'}, :id => 'wrap') do
   .backgrounds.big-header
     = text_field 'rule_builder', 'name', :id => 'special_offer_title', :class => 'field_name'
     .interact-links
-      = fg_submit_tag ('save_changes')
-      /= submit_tag I18n.t('special_offer.save').capitalize, :class => 'backgrounds interact-button'
-      = I18n.t(:or)
-      =link_to I18n.t(:cancel).capitalize,{:action => 'index'}, :class => 'back-link'
+      = Forgeos_save_buttons admin_special_offers_path
 
 
   #content.special_offers.grid_12.omega
     .inner-content
-      %label
-        Description
-      = text_area 'rule_builder', 'description', :rows => 2
-      .specialOfferFor
-        .specialOffer_header
-          %span.conditioner
-            = I18n.t('special_offer.for').capitalize
-          %div
-            = select_tag 'rule_builder[for]', options_for_select(Hash['Category', "Category"].collect{|c| [c[0], c[1]]}+@for.collect{|c| [c[0], c[1]] }), {:onchange => "change_select_for(this)"}
-          %div
-            = select 'rule_builder', 'target', ProductCategory.all.collect(&:name)
-          .clear
-        .specialOffers_bottom_arrow
-
-      .specialOfferIf
-        .specialOffer_header
-          %span.conditioner
-            = I18n.t('special_offer.if').capitalize
-          %div
-            = select 'rule_builder', 'if', %w(All Any)
-          %span.conditioner
-            = I18n.t('special_offer.this_condition')
-          %div
-            %select
-              %option
-                true
-          .clear
-
-        #rule-conditions
-          .condition
-            %div
-              = select_tag 'rule[targets][]', options_for_select(['MAIN SETTINGS']+@default_attributes+['ATTRIBUTES']+@attributes,{:disabled => @disable_attributes}),{ :onchange => "change_rule(this,'rule-condition')" }
-            %div
-              = select_tag 'rule[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
-            = text_field_tag 'rule[values][]'
-            = link_to_function '', "add_rule('rule-condition')", :class => 'small-icons green-add-icon'
-            = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon', :style => 'display : none'
+      - fields_for :rule_builder do |rule_builder|
+        %label
+          Description
+        = rule_builder.text_area :description, :rows => 2
+        .specialOfferFor
+          .specialOffer_header
+            %span.conditioner= t('special_offer.for').capitalize
+            %div= rule_builder.select :for, @for,{}, :onchange => 'change_select_for(this)'
+            %div= rule_builder.select :target, ProductCategory.all(:select=>'categories.id,name',:joins=>[:translations], :order => 'name').collect{|cat| [cat.name,cat.id]}
             .clear
-        .specialOffers_bottom_arrow
+          .specialOffers_bottom_arrow
+
+        .specialOfferIf
+          .specialOffer_header
+            %span.conditioner= t('special_offer.if').capitalize
+            %div= rule_builder.select :if, [[t(:all, :scope => [:special_offer,:_if]),'All'],[t(:any, :scope => [:special_offer,:_if]),'Any']]
+            %span.conditioner= t('special_offer.this_condition')
+            %div
+              %select
+                %option= t(:_true, :scope => [:special_offer,:_if])
+            .clear
+
+          #rule-conditions
+            .condition
+              %div= select_tag 'rule[targets][]', options_for_select(@product_attributes,{:disabled => @disable_attributes}),{ :onchange => "change_rule(this,'rule-condition')" }
+              %div= select_tag 'rule[conds][]', options_for_select(@conditions)
+              = text_field_tag 'rule[values][]'
+              = link_to_function '', "add_rule('rule-condition')", :class => 'small-icons green-add-icon'
+              = link_to_function '', "remove_rule(this,'rule-condition')", :class => 'small-icons red-delete-icon', :style => 'display : none'
+              .clear
+            .clear
+          .specialOffers_bottom_arrow
 
       .specialOfferIf
         .specialOffer_header
-          %span.conditioner
-            = I18n.t('special_offer.then').capitalize
+          %span.conditioner= t('special_offer.then').capitalize
           .clear
 
         #action-conditions
           .condition
-            %div= select_tag 'act[targets][]', options_for_select(['Discount price this product'], 'Discount price this product')
-            %div= select_tag 'act[conds][]', options_for_select(['By percent','By fixed amount'])
+            %div= select_tag 'act[targets][]', options_for_select([[t(:discount,:scope=>[:special_offer,:action]),0]], 0)
+            %div= select_tag 'act[conds][]', options_for_select(@discount_type)
             = text_field_tag 'act[values][]'
         .specialOffers_bottom_arrow
 
-      .specialOfferIf
-        .specialOffer_header
-          %span.conditioner
-            = check_box_tag 'end_offer'
-            End offer if
-          %span= select_tag 'end_offer_if', options_for_select(%w(Any All))
-          %span.conditioner
-            of these conditions are true
-          .clear
+      //.specialOfferIf
+      //  .specialOffer_header
+      //    %span.conditioner
+      //      = check_box_tag 'end_offer'
+      //      = t('special_offer.end_offer_if')
+      //    %span= select_tag 'end_offer_if', options_for_select([[t(:all, :scope => [:special_offer,:_if]),'All'],[t(:any, :scope => [:special_offer,:_if]),'Any']])
+      //    %span.conditioner
+      //      =t('special_offer.this_condition')
+      //      =t(:_true, :scope => [:special_offer,:_if])
+      //    .clear
 
-        #end-conditions
-          .condition
-            %div= select_tag 'end[targets][]', options_for_select(['Date','Total number of offer use','Customer number of offer use'])
-            %div= select_tag 'end[conds][]', options_for_select(@condition_is.collect{|c| [c[0], c[1]] }+ @conditions.collect{|c| [c[0], c[1]] })
-            = text_field_tag 'end[values][]'
-            = link_to_function '', "add_rule('end-condition')", :class => 'small-icons green-add-icon'
-            = link_to_function '', "remove_rule(this,'end-condition')", :class => 'small-icons red-delete-icon', :style => 'display : none'
-            .clear
-
-
-        .specialOffers_bottom_arrow
+      //  #end-conditions
+      //    .condition
+      //      %div= select_tag 'end[targets][]', options_for_select(@end)
+      //      %div= select_tag 'end[conds][]', options_for_select(@conditions)
+      //      = text_field_tag 'end[values][]'
+      //      = link_to_function '', "add_rule('end-condition')", :class => 'small-icons green-add-icon'
+      //      = link_to_function '', "remove_rule(this,'end-condition')", :class => 'small-icons red-delete-icon', :style => 'display : none'
+      //      .clear
 
 
-      
   #right-sidebar.grid_4.omega
     .step.status.open
       %div
-        %select.published{ :name => "status" }
-          %option{ :selected => "selected", :value => "published" }
-            Active
-          %option{ :value => "draft" }
-            Inactive
+        = select :rule_builder, :active, [[t('unpublished'), 0], [t('published'), 1]], :selected => 1
       .clear
     .step
       /%a.small-icons.duplicate{ :href => "#" }
       /  duplicate special offer
       /%a.small-icons.delete{ :href => "#" }
       /  delete special offer
-    
+
   .clear
-
-
-
-= render :partial => 'patterns'
+.no-customselect= render :partial => 'patterns'

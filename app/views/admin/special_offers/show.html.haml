@@ -21,8 +21,8 @@
               .th
           .tbody
             -@selected_products.each do |product|
-              -product = Product.find_by_id(product)
+              -product = Product.find_by_id(product, :joins => :translations, :select => 'name, products.id')
               .tr
                 .td
-                  =image_tag(product.pictures.first.public_filename(:thumb)) if product.pictures
+                  =image_tag(product.pictures.first.public_filename(:thumb)) unless product.pictures.empty?
                   =link_to product.name, admin_product_path(product.id)

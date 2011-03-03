@@ -1,5 +1,5 @@
 - unless product_type.nil?
-  - product_type.product_attributes.each do |attribute|
+  - product_type.product_attributes.uniq.each do |attribute|
     .fake-hr
       %span.option-second-title
         = attribute.name
@@ -7,15 +7,15 @@
       - dynamic_attribute_value = product.dynamic_attribute_values.find_by_attribute_id(attribute.id) if product
       - case attribute
       - when TextAttribute
-        = text_field "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?), :id => "attribute_value_#{attribute.id}"
+        = text_field "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?), :id => "attribute_#{attribute.id}"
       - when NumberAttribute
-        = text_field "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?), :id => "attribute_value_#{attribute.id}"
+        = text_field "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?), :id => "attribute_#{attribute.id}"
       - when DateAttribute
-        = text_field "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?), :id => "attribute_value_#{attribute.id}", :class => 'date-picker'
+        = text_field "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?), :id => "attribute_#{attribute.id}", :class => 'date-picker'
       - when UrlAttribute
-        = text_field "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?), :id => "attribute_value_#{attribute.id}"
+        = text_field "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?), :id => "attribute_#{attribute.id}"
       - when LongtextAttribute
-        = text_area "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?), :id => "attribute_value_#{attribute.id}", :class => 'mceEditor'
+        = text_area "dynamic_attribute_values[#{attribute.id}]", 'value', :value => (dynamic_attribute_value.value unless dynamic_attribute_value.nil?), :id => "attribute_#{attribute.id}", :class => 'mceEditor'
     - else
       - case attribute
       - when CheckboxAttribute

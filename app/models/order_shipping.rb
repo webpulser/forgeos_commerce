@@ -1,7 +1,15 @@
 class OrderShipping < ActiveRecord::Base
   belongs_to :order
-  def price(with_currency = true)
-    return super if Currency::is_default? || !with_currency || super.nil?
-    ("%01.2f" % (super * $currency.to_exchanges_rate(Currency::default).rate)).to_f
+
+  def self.from_cart(cart)
+    options = {}
+    if cart.free_shipping
+      options[:name] = I18n.t(:free_shipping)
+      options[:price] = 0
+    elsif transporter = TransporterRule.find_by_id(cart.options[:transporter_rule_id])
+      options[:name] = transporter.name
+      options[:price] = transporter.variables
+    end
+    self.new(options)
   end
 end

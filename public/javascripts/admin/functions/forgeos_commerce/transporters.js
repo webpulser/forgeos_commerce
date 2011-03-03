@@ -21,7 +21,7 @@ function remove_delivery_rule(element){
   rule_id = get_rails_element_id($(element).parent());
 
   if (rule_id > 0) {
-    _delete = '<input type="hidden" id="shipping_methods_to_delete_" name="shipping_methods_to_delete][]" value="'+ rule_id +'" />'
+    _delete = '<input type="hidden" id="shipping_methods_to_delete_" name="shipping_methods_to_delete[]" value="'+ rule_id +'" />'
     $('#delivery-rules').append(_delete);
   }
 
@@ -36,13 +36,13 @@ function change_rule_for(element){
   delivery_rules = $('#delivery-rules');
 
   delivery_rules.html('');
-  
+
   rule = '<div id="item_0" class="delivery-rule">'
   rule += $('.delivery-rule.'+ delivery_type +'.pattern').html().replace(/undefined_id/g, 0);
   rule += '</div>';
-  
+
   delivery_rules.append(rule);
-      
+
   check_remove_icon_status('delivery-rule');
   rezindex();
   false_id = -1;
@@ -53,7 +53,7 @@ function change_rule_for(element){
 function check_remove_icon_status(name){
   var c = $('#' + name + 's .' + name);
   var icon = c.find('a.red-minus:first');
-  
+
   if (c.size() == 1) {
     $(icon).hide();
   } else {
