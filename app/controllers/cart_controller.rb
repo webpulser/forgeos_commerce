@@ -119,6 +119,7 @@ protected
         e.match
       end
       current_cart.options[:free_product_ids] = @free_product_ids
+      current_cart.options[:free_shipping] = current_cart.free_shipping
       current_cart.save
     rescue Exception
     end
