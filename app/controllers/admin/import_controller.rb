@@ -18,7 +18,7 @@ class Admin::ImportController < Admin::BaseController
 
   map_fields :create_address, (Address.new.attributes.keys).sort
   def create_address
-    create_model(Address,'user_id')
+    create_model(Address,'person_id')
   end
 
   map_fields :create_product_category, (ProductCategory.new.attributes.keys + ProductCategory.new.translated_attributes.stringify_keys.keys ).sort

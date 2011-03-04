@@ -18,7 +18,7 @@ module RoutesHelper
   end
 
   def seo_product_path(*args)
-    super(extract_product_options(args))
+    super(extract_product_options(args)) rescue '/'
   end
 
   def seo_product_url(*args)

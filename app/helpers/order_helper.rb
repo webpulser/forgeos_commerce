@@ -143,7 +143,7 @@ module OrderHelper
           content +="<div class='enhanced'>"
           content +="<label>Selectionnez une autre de vos adresses</label>"
           content += select_tag address.class.to_s.gsub('', '').underscore + '_id',
-                          options_for_select(address.class.find_all_by_user_id(address.user_id).collect { |address_| [address_.designation, address_.id] }, address.id),
+                          options_for_select(address.class.find_all_by_person_id(address.person_id).collect { |address_| [address_.designation, address_.id] }, address.id),
                           :onchange => remote_function(
                             :url => { :controller => 'order', :action => 'change_address' },
                             :with => "'id=' + this.value"

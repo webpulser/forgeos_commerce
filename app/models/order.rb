@@ -156,8 +156,8 @@ class Order < ActiveRecord::Base
       }
 
       order.build_order_shipping(OrderShipping.from_cart(cart).attributes)
-      order.build_address_delivery(cart.address_delivery.attributes.update(:user_id => nil))
-      order.build_address_invoice(cart.address_invoice.attributes.update(:user_id => nil))
+      order.build_address_delivery(cart.address_delivery.attributes.update(:person_id => nil))
+      order.build_address_invoice(cart.address_invoice.attributes.update(:person_id => nil))
 
       self.after_from_cart(order,cart) if self.respond_to?(:after_from_cart)
       return order
