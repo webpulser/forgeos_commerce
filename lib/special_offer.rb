@@ -44,7 +44,7 @@ class SpecialOffer < Ruleby::Rulebook
       # Product in Shop
       apply_discount_on_product(special_offer,product)
       @selected_products << product if @selected_products.kind_of?(Array) or @selected_products.kind_of?(Set)
-      retract product
+      retract product if product
     end
   end
 
