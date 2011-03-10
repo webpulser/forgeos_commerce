@@ -145,6 +145,10 @@ class Product < ActiveRecord::Base
     price(false,true,with_voucher,true)
   end
 
+  def reduction
+    self.price-self.new_price
+  end
+
   # Returns price's string with currency symbol
   #
   # This method is an overload of <i>price</i> attribute.
