@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_currency
+  helper_method :current_currency, :current_cart, :current_wishlist
   # Change the currency
   def change_currency(currency_id)
     if currency = Currency.find_by_id(currency_id)
-      session[:currency] = currency.id
+      session[:currency_id] = currency.id
     end
     redirect_to(:back)
   end
@@ -14,34 +14,42 @@ private
   #
   # If <i>session[:cart_id]</i> existing, this method instance just <i>@cart</i>
   def current_cart
-    session[:cart_id] = current_user.cart.id if session[:cart_id].nil? && logged_in? && !current_user.is_a?(Administrator) && current_user.cart
+    return @cart if @cart
     @cart = Cart.find_by_id(session[:cart_id])
+
+    @cart = current_user.cart if logged_in? &&
+      !current_user.is_a?(Administrator) &&
+      current_user.cart &&
+      (@cart.nil? or (@cart and @cart.is_empty?))
     # If current_cart is nil because a problem of session or db.
     # This recursive call method, risk of stack error if this problem persist.
-    if @cart.nil?
-      @cart = Cart.create
-      session[:cart_id] = @cart.id
-    end
+    @cart = Cart.create unless @cart
     # Associate cart with user if he's logged
     @cart.update_attribute(:user_id, current_user.id) if logged_in?
+    session[:cart_id] = @cart.id
     return @cart
   end
 
   def current_wishlist
-    session[:wishlist_id] = current_user.wishlist.id if session[:wishlist_id].nil? && logged_in? && !current_user.is_a?(Administrator) && current_user.wishlist
+    return @wishlist if @wishlist
     @wishlist = Wishlist.find_by_id(session[:wishlist_id])
-    if @wishlist.nil?
-      @wishlist = Wishlist.create
-      session[:wishlist_id] = @wishlist.id
-    end
+
+    @wishlist = current_user.wishlist if logged_in? &&
+      !current_user.is_a?(Administrator) &&
+      current_user.wishlist &&
+      (@wishlist.nil? or (@wishlist and @wishlist.is_empty?))
+
+    @wishlist = Wishlist.create unless @wishlist
+
     @wishlist.update_attribute(:user_id, current_user.id) if logged_in?
+    session[:wishlist_id] = @wishlist.id
     return @wishlist
   end
 
   # A short cut for redirect user to the homepage
   def redirect_to_home
     # TODO - controller/action generalize.
-    redirect_to :locale => params[:locale], :controller => 'home', :action => 'index'
+    redirect_to :locale => params[:locale], :controller => 'url_catcher', :action => 'root'
   end
 
   # Redirect to new session page if user isn't logged
@@ -55,10 +63,12 @@ private
   def current_currency
     return @current_currency if @current_currency
     #TODO move default current to Setting
-    if Currency.table_exists? and currency=(Currency.find_by_id(session[:currency], :select => '`id`, `default`, `html`') || Currency.find_by_code('EUR', :select => '`id`, `default`, `html`'))
-      @current_currency = $currency = currency
-      session[:currency] = currency.id
-      return currency
+    if Currency.table_exists? and
+      @current_currency = (Currency.find_by_id(session[:currency_id], :select => '`id`, `default`, `html`, `code`') ||
+        Currency.find_by_code('EUR', :select => '`id`, `default`, `html`, `code`'))
+      $currency = @current_currency
+      session[:currency_id] = @current_currency.id
+      return @current_currency
     end
   end
 end
