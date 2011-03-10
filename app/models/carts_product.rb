@@ -37,4 +37,9 @@ class CartsProduct < ActiveRecord::Base
   def tax(with_currency=true)
     ("%01.2f" % (total(true, with_currency) - total)).to_f
   end
+  
+  def quantity
+    return self.cart.carts_products.count('product_id', :conditions => {:product_id => self.product.id})
+  end
+  
 end
