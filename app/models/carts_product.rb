@@ -29,7 +29,10 @@ class CartsProduct < ActiveRecord::Base
     return product_price  
   end
 
-
+  def quantity
+    return self.cart.carts_products.count('product_id', :conditions => {:product_id => self.product.id})
+  end
+  
   # Returns total tax for this <i>Product</i>
   #
   # ==== Parameters
