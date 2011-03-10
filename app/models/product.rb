@@ -156,6 +156,10 @@ class Product < ActiveRecord::Base
     price(args).to_s
   end
 
+  def reduction
+    self.price-self.new_price
+  end
+
   # Returns total product's tax
   #
   # ==== Parameters
