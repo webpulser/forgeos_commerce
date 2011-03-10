@@ -1,17 +1,4 @@
 module OrderHelper
-  def step_order(index=1)
-    links =
-      link_to(image_tag(step_order_image_filename(1,index)), :controller => 'cart') <<
-      link_to(image_tag(step_order_image_filename(2,index)), :controller => 'order', :action => 'informations') <<
-      link_to(image_tag(step_order_image_filename(3,index)), :controller => 'order', :action => 'new') <<
-      link_to(image_tag(step_order_image_filename(4,index)), :controller => 'order', :action => 'payment') <<
-      link_to(image_tag(step_order_image_filename(5,index)), :controller => 'order', :action => 'confirmation')
-    content_tag :div, links, :class => 'step_order'
-  end
-
-  def step_order_image_filename(step,index)
-    "front_demo/steps/step#{step}_#{((index == step) ? 'on' : 'go')}_#{I18n.locale}.gif"
-  end
 
   # Display a cart's product
   #
@@ -156,24 +143,6 @@ module OrderHelper
           content += link_to_remote(I18n.t('update').capitalize, :url => { :controller => 'order', :action => 'update_address', :id => address })
         content += '</div>'
       end
-    content += '</div>'
-  end
-
-  # Display the voucher's form_tag or the activate voucher
-  def display_voucher
-    content = '<div class="order_voucher" id="order_voucher">'
-
-    content += "#{I18n.t('voucher', :count=>1)} : " +
-    text_field_tag(:voucher_code, "", :id => 'voucher_code') + " " +
-    button_to_function(
-      I18n.t('add').capitalize,
-      #:url => { :controller => 'order', :action => 'add_voucher' },
-      remote_function(
-        :url => { :controller => 'cart', :action => 'add_voucher'},
-        :with => "'voucher_code='+$('#voucher_code').val()"
-      )
-    )
-
     content += '</div>'
   end
 
