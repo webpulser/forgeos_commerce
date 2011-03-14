@@ -12,7 +12,7 @@
   - @product_options = options_from_collection_for_select(@products, :id, :name)
 
   %p.action-1-cart.pattern
-    %span= select_tag 'act[targets][]', options_for_select([[t(:product,:scope=>[:special_offer,:action]),1],[t(:shipping,:scope=>[:special_offer,:action]),2]],1), {:onchange => "change_action(this,'action-condition','cart')"}
+    %span= select_tag 'act[targets][]', options_for_select([[t(:product,:scope=>[:special_offer,:action]),1],[t(:shipping,:scope=>[:special_offer,:action]),2],[t(:cart,:scope=>[:special_offer,:action]),3]],1), {:onchange => "change_action(this,'action-condition','cart')"}
     %span= select_tag 'act[values][]', @product_options
     = link_to_function '', "add_action('action-1-cart')", :class => 'small-icons green-add-icon'
     = link_to_function '', "remove_rule(this,'action-condition')", :class => 'small-icons red-delete-icon'
@@ -20,12 +20,21 @@
     .clear
 
   %p.action-2-cart.pattern
-    %span= select_tag 'act[targets][]', options_for_select([[t(:product,:scope=>[:special_offer,:action]),1],[t(:shipping,:scope=>[:special_offer,:action]),2]],2), {:onchange => "change_action(this,'action-condition','cart')"}
+    %span= select_tag 'act[targets][]', options_for_select([[t(:product,:scope=>[:special_offer,:action]),1],[t(:shipping,:scope=>[:special_offer,:action]),2],[t(:cart,:scope=>[:special_offer,:action]),3]],2), {:onchange => "change_action(this,'action-condition','cart')"}
     %span= hidden_field_tag 'act[values][]'
     = link_to_function '', "add_action('action-2-cart')", :class => 'small-icons green-add-icon'
     = link_to_function '', "remove_rule(this,'action-condition')", :class => 'small-icons red-delete-icon'
     %br
     .clear
+    
+  %p.action-3-cart.pattern
+    %span= select_tag 'act[targets][]', options_for_select([[t(:product,:scope=>[:special_offer,:action]),1],[t(:shipping,:scope=>[:special_offer,:action]),2],[t(:cart,:scope=>[:special_offer,:action]),3]],3), {:onchange => "change_action(this,'action-condition','cart')"}
+    %span= select_tag 'act[conds][]', options_for_select(@discount_type)
+    = text_field_tag 'act[values][]'
+    = link_to_function '', "add_action('action-1-cart')", :class => 'small-icons green-add-icon'
+    = link_to_function '', "remove_rule(this,'action-condition')", :class => 'small-icons red-delete-icon'
+    %br
+    .clear    
 
 
   %p.action-1-productincart.pattern

@@ -150,7 +150,7 @@ private
         variables[:shipping] = true
       when '3'
         variables[:cart_discount] = params[:act][:values][index]
-        variables[:percent] = (params[:act][:conds][index] != '0')
+        variables[:fixed_discount] = (params[:act][:conds][index] != '0')
       end
     end
     return variables

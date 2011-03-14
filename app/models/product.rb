@@ -124,27 +124,27 @@ class Product < ActiveRecord::Base
   def soft_delete
     self.update_attribute('deleted', !self.deleted? )
   end
-
-  # Returns product's price without tax by default
-  #
-  # The currency of user is considered by default
-  #
-  # ==== Parameters
-  # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
-  # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def price(with_tax=false, with_currency=true, with_voucher=false,with_special_offer=false)
+    
+  def price(options = {})
+    options = {:tax => true, 
+               :voucher_discount => true, 
+               :special_offer_discount => true, 
+               :variation => false}.update(options.symbolize_keys)
     price = read_attribute(:price) || 0
-    price += tax(with_currency) if with_tax
-    price -= self.special_offer_discount_price if with_special_offer and self.special_offer_discount_price
-    price -= self.voucher_discount_price if with_voucher and self.voucher_discount_price
-    price -= (price * price_variation.discount) / 100 if price_variation
+    price += tax(false)
+    price -= self.special_offer_discount_price || 0 if options[:special_offer_discount]
+    price -= self.voucher_discount_price || 0 if options[:voucher_discount]
+    price -= (price * price_variation.discount).to_f / 100 if options[:variation] && price_variation
     price
   end
-
-  def new_price(with_voucher=false)
-    price(false,true,with_voucher,true)
+  
+  def old_price
+    price({:voucher_discount => false, :special_offer_discount => false})
   end
 
+  def has_discount?
+    return discount != 0
+  end
   # Returns price's string with currency symbol
   #
   # This method is an overload of <i>price</i> attribute.
@@ -156,8 +156,8 @@ class Product < ActiveRecord::Base
     price(args).to_s
   end
 
-  def reduction
-    self.price-self.new_price
+  def discount
+    self.special_offer_discount_price
   end
 
   # Returns total product's tax
@@ -167,7 +167,8 @@ class Product < ActiveRecord::Base
   #
   # This method use <i>price</i> : <i>price(false, with_currency)</i>
   def tax(with_currency=true)
-    return ("%01.2f" % (price(false, with_currency) * self.rate_tax/100)).to_f
+    return 0
+    #return ("%01.2f" % (price(false, with_currency) * self.rate_tax/100)).to_f
   end
 
   def has_special_offers?

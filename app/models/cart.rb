@@ -60,33 +60,32 @@ class Cart < ActiveRecord::Base
   end
 
   def taxes
-    total(true) - total(false)
+    #total(true) - total(false)
   end
-
-  def total(with_tax = false, with_discount = true)
-    total = 0
-    carts_products.each do |cart_product|
-      product_price = cart_product.product.price(with_tax)
-      if with_discount
-        product_price -= cart_product.product.special_offer_discount_price if cart_product.product.special_offer_discount_price
-        product_price -= cart_product.product.voucher_discount_price if cart_product.product.voucher_discount_price
+  
+  def discount
+    self.total({:cart_voucher_discount => false, :cart_special_offer_discount => false, :product_voucher_discount => false})-self.total
+  end
+  
+  def total(options = {})
+      options = {:tax => true, 
+                 :cart_voucher_discount => true, 
+                 :cart_special_offer_discount => true,
+                 :product_voucher_discount => true,
+                 :product_special_offer_discount => true,
+                 :patronage => true}.update(options.symbolize_keys)
+         
+      total = 0
+      carts_products.each do |cart_product|
+        total += cart_product.product.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount]})
       end
-      #total += cart_product.product.new_price.nil? ? cart_product.product.price : cart_product.product.new_price
-      total += product_price
-    end
-
-    if with_discount
-      # discount total price if there are a special offer
-      total -= self.special_offer_discount_price if self.special_offer_discount_price
-      # discount total price if there are a valid voucher
-      total -= self.voucher_discount_price if self.voucher_discount_price
-
-      total -= self.patronage_discount
-    end
-    total = 0 if total < 0
-    return total
+      total -= self.voucher_discount_price.to_f || 0 if options[:cart_voucher_discount]
+      total -= self.special_offer_discount_price.to_f || 0 if options[:cart_special_offer_discount]
+      total -= self.patronage_discount.to_f || 0 if options[:patronage]
+      total = 0 if total < 0
+      return total
   end
-
+  
   def patronage_discount
     return 0 unless self.user
     if self.user.has_nephew_discount?

@@ -47,6 +47,7 @@ en:
       fixed: width a amount of
       product: offer the product
       shipping: free shipping
+      cart: discount on cart
     end:
       date: Date
       total_use: Count of use

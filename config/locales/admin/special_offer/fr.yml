@@ -47,6 +47,7 @@ fr:
       percent: avec un % de
       fixed: avec un montant de
       product: offrir le produit
+      cart: remise sur le panier
       shipping: offrir les frais de port
     end:
       date: Date
