@@ -140,7 +140,7 @@ class Order < ActiveRecord::Base
 
   def self.from_cart(cart)
     if cart and cart.user_id
-      order_details_attributes = cart.carts_products.collect do |cart_product|
+      order_details_attributes = cart.cart_items.collect do |cart_product|
         OrderDetail.from_cart_product(cart_product).attributes
       end + Product.find_all_by_id(cart.options[:free_product_ids]).collect do |product|
         OrderDetail.from_free_product(product).attributes

@@ -143,7 +143,7 @@ class OrderController < ApplicationController
 
 private
   def can_create_order?
-    if current_cart.nil? || current_cart.carts_products.empty?
+    if current_cart.nil? || current_cart.cart_items.empty?
       flash[:error] = I18n.t('your_cart_is_empty').capitalize
       redirect_to_home
     end
@@ -171,7 +171,7 @@ private
         @free_product_ids = []
         rule_builder.free_product_ids = @free_product_ids
         rule_builder.rules
-        current_cart.carts_products.each do |cart_product|
+        current_cart.cart_items.each do |cart_product|
           e.assert cart_product.product
         end
         e.assert current_cart
@@ -193,7 +193,7 @@ private
         rule_builder.code = current_cart.options[:voucher_code]
         rule_builder.free_product_ids = @free_product_ids
         rule_builder.rules
-        current_cart.carts_products.each do |cart_product|
+        current_cart.cart_items.each do |cart_product|
           e.assert cart_product.product
         end
         e.assert current_cart
@@ -216,7 +216,7 @@ private
           rule_builder = Transporter.new(e)
           rule_builder.transporter_ids = @transporter_ids
           rule_builder.rules
-          current_cart.carts_products.each do |cart_product|
+          current_cart.cart_items.each do |cart_product|
             e.assert cart_product.product
           end
           e.assert current_cart

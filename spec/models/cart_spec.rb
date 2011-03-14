@@ -21,17 +21,17 @@ describe Cart do
       before :each do
         product_type = ProductType.create!({:name => "type"})
         @products = []
-        @carts_products = []
+        @cart_items = []
         (1..20).each do |i|
           product = product_type.products.create!({:url => "url_#{i}", :name => "test", :sku => i})
-          cart_product = @cart.carts_products.create!({:product => product})
+          cart_product = @cart.cart_items.create!({:product => product})
           @products << product
-          @carts_products << cart_product
+          @cart_items << cart_product
         end
       end
       
       it "should have cart products" do
-        @cart.carts_products.all.should == @carts_products
+        @cart.cart_items.all.should == @cart_items
       end
 
       it "should have products" do
@@ -93,7 +93,7 @@ describe Cart do
       product_type = ProductType.create!({:name => "type"})
       (1..5).each do |i|
         product = product_type.products.create!({:url => "url_#{i}", :name => "test", :sku => i})
-        cart_product = @cart.carts_products.create!({:product => product})
+        cart_product = @cart.cart_items.create!({:product => product})
       end  
     end
     
@@ -103,7 +103,7 @@ describe Cart do
       Cart.last.should_not == @cart
     end
     
-    it 'should destroy the carts_product' do
+    it 'should destroy the cart_item' do
       CartsProduct.all.length.should == 5
       @cart.destroy
       CartsProduct.all.length.should == 0
