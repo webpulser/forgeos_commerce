@@ -4,19 +4,19 @@
 # * <tt>product</tt> - <i>Product</i>
 # * <tt>cart</tt> - <i>Cart</i>
 
-class CartsProduct < ActiveRecord::Base
+class CartItem < ActiveRecord::Base
   belongs_to :product
   belongs_to :cart
   validates_presence_of :cart_id, :product_id
-  
+
   def total
     return self.product.price({:voucher_discount => false})*quantity
   end
-  
+
   def quantity
-    return self.cart.carts_products.count('product_id', :conditions => {:product_id => self.product.id})
+    return self.cart.cart_items.count('product_id', :conditions => {:product_id => self.product.id})
   end
-  
+
   # Returns total tax for this <i>Product</i>
   #
   # ==== Parameters

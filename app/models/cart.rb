@@ -2,14 +2,22 @@
 # * <tt>user</tt> - <i>User</i>
 #
 # ==== has_many
-# * <tt>carts_product</tt> - <i>CartsProduct</i>
+# * <tt>cart_items</tt> - <i>CartItem</i>
 # * <tt>products</tt> - <i>Product</i>
 class Cart < ActiveRecord::Base
   attr_accessor :voucher_discount, :voucher_discount_price, :voucher
   attr_accessor :special_offer_discount, :special_offer_discount_price
   attr_accessor :free_shipping
-  has_many :carts_products, :dependent => :destroy
-  has_many :products, :through => :carts_products
+  has_many :cart_items, :dependent => :destroy
+
+  [:carts_products, :carts_products=, :carts_product_ids, :carts_products_ids].each do |method_sym|
+    define_method method_sym do |*args|
+      ActiveSupport::Deprecation.warn('use cart_items instead of carts_products')
+      self.send("cart_item#{method_sym.to_s.gsub(/^carts_product/, '')}", args)
+    end
+  end
+
+  has_many :products, :through => :cart_items
   serialize :options
 
   belongs_to :user
@@ -34,7 +42,7 @@ class Cart < ActiveRecord::Base
   # This method use <i>add_product</i>
   def add_product_id(product_id,quantity=1)
     quantity.times do
-      carts_products << CartsProduct.create(:product_id => product_id)
+      cart_items << CartItem.create(:product_id => product_id)
     end
   end
 
@@ -43,15 +51,15 @@ class Cart < ActiveRecord::Base
   end
 
   def remove_product_id(product_id, quantity = 1)
-    return false if self.carts_products.nil?
-    cart_product = self.carts_products.find_all_by_product_id(product_id)
-    cart_product.first(quantity).map(&:destroy)
+    return false if self.cart_items.nil?
+    cart_item = self.cart_items.find_all_by_product_id(product_id)
+    cart_item.first(quantity).map(&:destroy)
   end
 
 
   # Empty this cart
   def to_empty
-    carts_products.destroy_all
+    cart_items.destroy_all
   end
 
   # Returns true if cart is empty, returns false else
@@ -62,21 +70,21 @@ class Cart < ActiveRecord::Base
   def taxes
     #total(true) - total(false)
   end
-  
+
   def discount
     self.total({:cart_voucher_discount => false, :cart_special_offer_discount => false, :product_voucher_discount => false})-self.total
   end
-  
+
   def total(options = {})
-      options = {:tax => true, 
-                 :cart_voucher_discount => true, 
+      options = {:tax => true,
+                 :cart_voucher_discount => true,
                  :cart_special_offer_discount => true,
                  :product_voucher_discount => true,
                  :product_special_offer_discount => true,
                  :patronage => true}.update(options.symbolize_keys)
-         
+
       total = 0
-      carts_products.each do |cart_product|
+      cart_items.each do |cart_product|
         total += cart_product.product.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount]})
       end
       total -= self.voucher_discount_price.to_f || 0 if options[:cart_voucher_discount]
@@ -85,7 +93,7 @@ class Cart < ActiveRecord::Base
       total = 0 if total < 0
       return total
   end
-  
+
   def patronage_discount
     return 0 unless self.user
     if self.user.has_nephew_discount?
@@ -108,16 +116,16 @@ class Cart < ActiveRecord::Base
   # Returns weight of this cart
   def weight(product=nil)
     if product.nil?
-      return carts_products.inject(0) { |total, carts_product| total + carts_product.product.weight }
+      return cart_items.inject(0) { |total, cart_item| total + cart_item.product.weight }
     else
-      carts_product = carts_products.find_by_product_id(product.id)
-      return product.weight unless carts_product.nil?
+      cart_item = cart_items.find_by_product_id(product.id)
+      return product.weight unless cart_item.nil?
     end
     return 0
   end
 
   def total_items
-    return carts_products.length
+    return cart_items.length
   end
 
   def discount_cart(discount, percent=nil)

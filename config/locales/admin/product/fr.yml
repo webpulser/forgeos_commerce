@@ -1,5 +1,6 @@
 fr:
   product:
+    zero: produit
     one : produit
     other: produits
     all: tous les produits
