@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :transporter_rules, :member => { :duplicate => :get }
     admin.resources :vouchers, :member => { :activate => :post }
     admin.resources :brands
-    %w(product product_type attribute special_offer).each do |category|
+    %w(brand product product_type attribute special_offer).each do |category|
       admin.resources "#{category}_categories", :controller => 'categories', :requirements => { :type => "#{category}_category" }
     end
     map.connect "admin/transporter_categories.json", :controller => 'admin/transporter_rules', :action => 'categories'

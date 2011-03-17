@@ -14,9 +14,16 @@
         = f.label :code
         = f.text_field :code, :size => 25
         %br
-        - if respond_to?(:brand_path)
-          = brand_path(Brand.new(:url => '', :name => ''))
+        - if respond_to?(:brand_url)
+          = brand_url(Brand.new(:url => '', :name => ''))
         - else
-          = "#{request.protocol}#{request.host}/marques/"
+          = url_for(:controller => '/brands', :action => 'index', :only_path => false, :trailing_slash => true)
         = f.text_field :url, :size => 10
+      .step.open
+        = link_to(t('product.associated_collection', :count => 2), '#', :class => 'small-icons step-title')
+        = hidden_field_tag "#{f.object_name}[brand_category_ids][]"
+        #association-brand-tree.inner-step
+          %ul
+            = render :partial => 'admin/categories/associated_elements', :locals => { :association_id => 'brand_category_ids', :element => f.object, :category_ids => f.object.category_ids, :categories => BrandCategory.roots }
+
   = render :partial => 'admin/visual/visual_popup.html.haml', :locals => {:form => f}
