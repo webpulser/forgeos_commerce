@@ -11,6 +11,7 @@ class Attribute < ActiveRecord::Base
   validates_uniqueness_of :access_method
 
   has_and_belongs_to_many :product_types, :readonly => true
+  has_and_belongs_to_many :forms, :readonly => true
   has_many :products, :through => :dynamic_attribute_values, :readonly => true
 
   before_save :clear_attributes

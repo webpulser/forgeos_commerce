@@ -1,0 +1,21 @@
+<% 
+  output = {
+    :iTotalDisplayRecords => @forms.total_entries || 0,
+    :aaData => @forms.collect do |form|
+      form_id = form.id
+      [
+        content_tag(:div, '', :id => form_id),
+        form.name,
+        form.model,
+        link_to_remote('', :url => { :controller => 'forms', :action => 'destroy', :id => form.id },
+           :method => :delete,
+           :confirm => I18n.t('form.destroy.confirm').capitalize,
+           :success => "removedataTablesRow('#destroy_#{form_id}')",
+           :html => {
+             :class => 'small-icons destroy-link', :id => "destroy_#{form_id}"
+        })
+      ]
+    end
+  }
+-%>
+<%= output.to_json -%>

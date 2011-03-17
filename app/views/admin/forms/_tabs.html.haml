@@ -1,6 +1,6 @@
 %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
   %li.ui-state-default.ui-corner-top= link_to I18n.t('product_type', :count => 2).capitalize, admin_product_types_path
-  %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to I18n.t('brand.other').capitalize,'#content' 
+  %li.ui-state-default.ui-corner-top= link_to I18n.t('brand.other').capitalize, admin_brands_path 
   %li.ui-state-default.ui-corner-top= link_to I18n.t('attribute', :count => 2).capitalize, admin_attributes_path
   %li.ui-state-default.ui-corner-top= link_to I18n.t('graphic_template', :count => 2).capitalize, ''
-  %li.ui-state-default.ui-corner-top= link_to "Formulaires", admin_forms_path
+  %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to "Formulaires", '#content'

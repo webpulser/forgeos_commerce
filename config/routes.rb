@@ -29,6 +29,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :packs, :collection => { :url => :post }, :member => { :activate => :post, :update_attributes_list => :post, :duplicate => :get }, :controller => :products, :requirements => { :type => 'pack' }
     #admin.resources :special_offers, :collection => { :special_offer => [:get, :post] }
     admin.resources :special_offers, :member => { :activate => :post }
+    admin.resources :forms
   end
 
 end

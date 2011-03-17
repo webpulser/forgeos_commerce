@@ -1,0 +1,38 @@
+- form_for [:admin , form], :html => { :id => 'wrap' } do |f|
+  .backgrounds.big-header
+    = f.text_field :name, :class => 'field_name'
+    = Forgeos_save_buttons admin_forms_path
+
+  #content.grid_12.alpha.omega
+    .inner-content
+      .fieldset.open
+        %h2= t(:attribute,:count=>2)
+        .option-panel-content
+          %p= t('drag_attributes').capitalize
+          = hidden_field_tag 'form[form_attribute_ids][]'
+          #product-types-selected-tree.a-tree.init-tree
+            %ul
+              - form.form_attributes.each do |attribute|
+                - id = "attribute_#{attribute.id}"
+                %li{ :id => id, :rel => 'attribute' }
+                  %a{ :href => '#' }
+                    = hidden_field_tag 'form[form_attribute_ids][]', attribute.id, :id => "form_form_attribute_ids_#{attribute.id}"
+                    = attribute.name
+                    %em.small-icons.edit-link{ :onclick => "window.open('#{url_for [:edit, :admin, attribute]}'); return false;" }
+                    %span.big-icons.gray-destroy-attribute.gray-destroy
+                      &nbsp;
+          .clear
+      .clear
+      = f.label :model, "Model"
+      %div{ :style => 'clear: left;'}
+        = f.text_field :model
+  #yellow-sidebar.grid_4.alpha.omega.yellow
+    #product-types-all-tree.init-tree.a-tree
+      %ul
+        - Attribute.all(:include => :attribute_categories, :conditions => { :categories => { :id => nil }}).each do |orphan_attribute|
+          - unless orphan_attribute.forms.include? @form
+            %li{ :rel => 'attribute', :id => "attribute_#{orphan_attribute.id}" }
+              = link_to((orphan_attribute.name + content_tag(:em, '&nbsp;', :class => 'small-icons edit-link', :onclick => "window.open('#{url_for [:edit, :admin, orphan_attribute]}'); return false;") + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-attribute gray-destroy')), '#')
+    .clear
+    = link_to t('attribute.create.action').capitalize, admin_attributes_path, :class => 'small-icons small-icons-verti-small-blue-plus attribute-new'
+  .clear
