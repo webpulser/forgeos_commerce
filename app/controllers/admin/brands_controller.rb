@@ -94,10 +94,10 @@ class Admin::BrandsController < Admin::BaseController
     includes = []
     includes << :products if params[:iSortCol_0].to_i == 2
 
-    #if params[:category_id]
-    #  conditions[:categories_elements] = { :category_id => params[:category_id] }
-    #  includes << :brand_categories
-    #end
+    if params[:category_id]
+      conditions[:categories_elements] = { :category_id => params[:category_id] }
+      includes << :brand_categories
+    end
 
     options[:conditions] = conditions unless conditions.empty?
     options[:include] = includes unless includes.empty?
