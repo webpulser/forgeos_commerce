@@ -72,18 +72,43 @@ class Order < ActiveRecord::Base
 
 
   # Returns order's amount
-  def total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=true, with_voucher=true, with_patronage=true)
-    amount = 0
+  def total(options = {})
+    options = {:tax => true,
+               :cart_voucher_discount => true,
+               :cart_special_offer_discount => true,
+               :product_voucher_discount => true,
+               :product_special_offer_discount => true,
+               :patronage => true,
+               :with_shipping => true}.update(options.symbolize_keys)
+
+    total = 0
     order_details.each do |order_detail|
-      price = order_detail.price(with_tax, with_currency,with_special_offer,with_voucher)
-      amount += price if price
+      total += order_detail.product.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount]})
     end
-    amount += order_shipping.price if with_shipping && order_shipping && order_shipping.price
-    amount -= self.special_offer_discount if with_special_offer && self.special_offer_discount
-    amount -= self.voucher_discount if with_voucher && self.voucher_discount
-    amount -= self.patronage_discount if with_patronage
-    return ("%01.2f" % amount).to_f
+    total += order_shipping.price if options[:with_shipping] && order_shipping && order_shipping.price
+    total -= self.voucher_discount.to_f || 0 if options[:cart_voucher_discount] && self.voucher_discount
+    total -= self.special_offer_discount.to_f || 0 if options[:cart_special_offer_discount] && self.special_offer_discount
+    total -= self.patronage_discount.to_f || 0 if options[:patronage]
+    total = 0 if total < 0
+    return total
   end
+  
+  def discount
+    self.total({:cart_voucher_discount => false, :cart_special_offer_discount => false, :product_voucher_discount => false})-self.total
+  end
+  
+#  def total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=true, with_voucher=true, with_patronage=true)
+#    amount = 0
+#    .each do |order_detail|
+#      price = order_detail.price(with_tax, with_currency,with_special_offer,with_voucher)
+#      amount += price if price
+#    end
+#    amount += order_shipping.price if with_shipping && order_shipping && order_shipping.price
+#    amount -= self.special_offer_discount if with_special_offer && self.special_offer_discount
+#    amount -= self.voucher_discount if with_voucher && self.voucher_discount
+#    amount -= self.patronage_discount if with_patronage
+#    return ("%01.2f" % amount).to_f
+#  end
 
   def taxes
     ("%01.2f" % (total(true) - total)).to_f
@@ -163,6 +188,16 @@ class Order < ActiveRecord::Base
       return order
     end
   end
+  
+  def valid_shipment?
+    # AddressInvoice and AddressDelivery is obligatory for valid an order
+    return self.address_invoice.valid? && self.address_delivery.valid?
+  end
+
+  def valid_for_payment?
+    return self.valid_shipment?
+  end
+
 
   private
 

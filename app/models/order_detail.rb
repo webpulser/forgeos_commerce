@@ -66,7 +66,9 @@ class OrderDetail < ActiveRecord::Base
     object = self.new(
       :name => cart_product.product.name,
       :description => cart_product.product.description,
-      :price => cart_product.product.price(false, false),
+      :price => cart_product.product.price({ 
+          :voucher_discount => false, 
+           :special_offer_discount => false }),
       :rate_tax => cart_product.product.rate_tax,
       :sku => cart_product.product.sku,
       :product_id => cart_product.product.id,
