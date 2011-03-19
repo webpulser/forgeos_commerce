@@ -111,7 +111,7 @@ class Order < ActiveRecord::Base
 #  end
 
   def taxes
-    ("%01.2f" % (total(true) - total)).to_f
+    ("%01.2f" % (total - total(:tax => false))).to_f
   end
 
   def total_items
