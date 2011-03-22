@@ -124,17 +124,24 @@ class Product < ActiveRecord::Base
   def soft_delete
     self.update_attribute('deleted', !self.deleted? )
   end
+  
+  def packaging_price
+    #TODO get real variable
+    return 0
+  end
     
   def price(options = {})
     options = {:tax => true, 
                :voucher_discount => true, 
                :special_offer_discount => true, 
-               :variation => false}.update(options.symbolize_keys)
+               :variation => false,
+               :packaging => false}.update(options.symbolize_keys)
     price = read_attribute(:price) || 0
     price += tax(false)
     price -= self.special_offer_discount_price || 0 if options[:special_offer_discount]
     price -= self.voucher_discount_price || 0 if options[:voucher_discount]
     price -= (price * price_variation.discount).to_f / 100 if options[:variation] && price_variation
+    price += self.packaging_price.to_f || 0 if options[:packaging]
     price
   end
   

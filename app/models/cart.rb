@@ -81,17 +81,25 @@ class Cart < ActiveRecord::Base
                  :cart_special_offer_discount => true,
                  :product_voucher_discount => true,
                  :product_special_offer_discount => true,
-                 :patronage => true}.update(options.symbolize_keys)
+                 :patronage => true,
+                 :cart_packaging => true,
+                 :product_packaging=> true }.update(options.symbolize_keys)
 
       total = 0
       cart_items.each do |cart_product|
-        total += cart_product.product.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount]})
+        total += cart_product.product.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount], :packaging => options[:product_packaging] })
       end
       total -= self.voucher_discount_price.to_f || 0 if options[:cart_voucher_discount]
       total -= self.special_offer_discount_price.to_f || 0 if options[:cart_special_offer_discount]
       total -= self.patronage_discount.to_f || 0 if options[:patronage]
+      total += self.packaging_price.to_f || 0 if options[:cart_packaging]
       total = 0 if total < 0
       return total
+  end
+  
+  def packaging_price
+     #TODO get carts options from config
+    return 0
   end
 
   def patronage_discount

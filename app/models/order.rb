@@ -79,16 +79,19 @@ class Order < ActiveRecord::Base
                :product_voucher_discount => true,
                :product_special_offer_discount => true,
                :patronage => true,
+               :cart_packaging => true,
+               :product_packaging => true,
                :with_shipping => true}.update(options.symbolize_keys)
 
     total = 0
     order_details.each do |order_detail|
-      total += order_detail.product.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount]})
+      total += order_detail.product.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount], :packaging => options[:product_packaging] })
     end
     total += order_shipping.price if options[:with_shipping] && order_shipping && order_shipping.price
     total -= self.voucher_discount.to_f || 0 if options[:cart_voucher_discount] && self.voucher_discount
     total -= self.special_offer_discount.to_f || 0 if options[:cart_special_offer_discount] && self.special_offer_discount
     total -= self.patronage_discount.to_f || 0 if options[:patronage]
+    total += self.packaging_price.to_f || 0 if options[:cart_packaging]
     total = 0 if total < 0
     return total
   end
@@ -196,6 +199,11 @@ class Order < ActiveRecord::Base
 
   def valid_for_payment?
     return self.valid_shipment?
+  end
+  
+  def packaging_price
+    #TODO get config from cart config
+    return 0
   end
 
 
