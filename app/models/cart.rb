@@ -93,6 +93,7 @@ class Cart < ActiveRecord::Base
       total -= self.special_offer_discount_price.to_f || 0 if options[:cart_special_offer_discount]
       total -= self.patronage_discount.to_f || 0 if options[:patronage]
       total += self.packaging_price.to_f || 0 if options[:cart_packaging]
+      total = self.after_total(total, options) if self.respond_to?(:after_total)
       total = 0 if total < 0
       return total
   end
