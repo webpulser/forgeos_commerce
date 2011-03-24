@@ -92,7 +92,7 @@
         = hidden_field_tag "transporter[rebuild]", 0
         .order-totals
           .order-subtotal= t('order.subtotal').capitalize
-          %span.order-subtotal= number_with_precision order.total(false,true,false,false,false), :precision => 2
+          %span.order-subtotal= number_with_precision order.total(:tax => false, :with_shipping => false, :with_special_offer => false, :with_shipping => false), :precision => 2
           %span.order-subtotal-currency= current_currency.html
           - if order.order_shipping
             %div= t('shipping').capitalize
