@@ -212,7 +212,7 @@ class Order < ActiveRecord::Base
 
     total = 0
     order_details.each do |order_detail|
-      total += order_detail.product.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount], :packaging => options[:product_packaging] })
+      total += order_detail.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount], :packaging => options[:product_packaging] })
     end
     total += order_shipping.price if options[:with_shipping] && order_shipping && order_shipping.price
     total -= self.voucher_discount.to_f || 0 if options[:cart_voucher_discount] && self.voucher_discount
@@ -223,11 +223,11 @@ class Order < ActiveRecord::Base
     total = 0 if total < 0
     return total
   end
-  
+
   def discount
     self.total({:cart_voucher_discount => false, :cart_special_offer_discount => false, :product_voucher_discount => false})-self.total
   end
-  
+
 #  def total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=true, with_voucher=true, with_patronage=true)
 #    amount = 0
 #    .each do |order_detail|
@@ -319,7 +319,7 @@ class Order < ActiveRecord::Base
       return order
     end
   end
-  
+
   def valid_shipment?
     # AddressInvoice and AddressDelivery is obligatory for valid an order
     return self.address_invoice.valid? && self.address_delivery.valid?
@@ -328,7 +328,7 @@ class Order < ActiveRecord::Base
   def valid_for_payment?
     return self.valid_shipment?
   end
-  
+
   def packaging_price
     #TODO get config from cart config
     return 0

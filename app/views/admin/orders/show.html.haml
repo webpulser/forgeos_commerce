@@ -71,7 +71,8 @@
 
       .order-totals
         .order-subtotal= t('order.subtotal').capitalize
-        %span.order-subtotal= price_with_currency @order.total(false,true,false,false,false)
+        %span.order-subtotal
+          = price_with_currency(@order.total(:tax => false, :with_shipping => false, :with_special_offer => false, :with_shipping => false))
         - if @order.order_shipping
           %div= t('shipping').capitalize
           %span.order_shipping= price_with_currency @order.order_shipping.price

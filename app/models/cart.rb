@@ -10,7 +10,7 @@ class Cart < ActiveRecord::Base
   attr_accessor :free_shipping
   has_many :cart_items, :dependent => :destroy
 
-  [:carts_products, :carts_products=, :carts_product_ids, :carts_products_ids].each do |method_sym|
+  [:carts_products, :carts_products=, :carts_product_ids, :carts_product_ids=].each do |method_sym|
     define_method method_sym do |*args|
       ActiveSupport::Deprecation.warn('use cart_items instead of carts_products')
       self.send("cart_item#{method_sym.to_s.gsub(/^carts_product/, '')}", args)
