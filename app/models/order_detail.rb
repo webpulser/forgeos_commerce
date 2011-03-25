@@ -18,7 +18,7 @@ class OrderDetail < ActiveRecord::Base
 
   def rate_tax
     value = read_attribute(:rate_tax)
-    (value and value > 0.0) ? value : 1.0
+    (not value or value < 1.0) ? 1.0 : value
   end
   # Returns price's string with currency symbol
   #
@@ -37,9 +37,9 @@ class OrderDetail < ActiveRecord::Base
 
     price = read_attribute(:price) || 0
     price *= rate_tax if options[:tax]
-    #price -= self.special_offer_discount_price || 0 if options[:special_offer_discount]
-    #price -= self.voucher_discount_price || 0 if options[:voucher_discount]
-    #price += self.packaging_price.to_f || 0 if options[:packaging]
+    price -= self.special_offer_discount_price || 0 if options[:special_offer_discount]
+    price -= self.voucher_discount_price || 0 if options[:voucher_discount]
+    price += self.packaging_price.to_f || 0 if options[:packaging]
     price
   end
 
@@ -87,8 +87,8 @@ class OrderDetail < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def total(with_tax=false, with_currency=true,with_special_offer=false,with_voucher=false, order = self.order)
-    price(with_tax, with_currency,with_special_offer,with_voucher) * quantity(order)
+  def total(*args)
+    price(*args) * quantity(order)
   end
 
   def self.from_cart_product(cart_product)
