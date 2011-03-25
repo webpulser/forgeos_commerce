@@ -5,9 +5,13 @@ class Setting < ActiveRecord::Base
   
   
   def payment_method_list
-    YAML.load(self.payment_methods) || {}
+    if self.payment_methods
+      return YAML.load(self.payment_methods)
+    else
+     return {}
+    end
   end
-  
+ 
   def cheque_message(order)
     return "" unless order.is_a? Order
     if payment_method_list[:cheque] && payment_method_list[:cheque][:active]
@@ -18,10 +22,6 @@ class Setting < ActiveRecord::Base
       message = ""
     end
     message
-  end
-  
-  def payment_methods
-    super || ""
   end
   
 private
