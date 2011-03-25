@@ -20,6 +20,10 @@ class Setting < ActiveRecord::Base
     message
   end
   
+  def payment_methods
+    super || {}
+  end
+  
 private
   def update_payment_methods
     unless self.payment_methods.empty?
