@@ -141,3 +141,22 @@
     width: 150px !important
     ul li a
       :color = !blueLink
+      
+.waiting_for_cheque
+  a.dropdown_toggle
+    background-image: url(/images/admin/selects/big-purple-right.png)
+    :color = !white !important
+  &.disabled a.dropdown_toggle
+    background-image: url(/images/admin/selects/big-purple-right-on.png)
+    :color = !white !important
+  a.dropdown_toggle span
+    background-image: url(/images/admin/selects/big-purple-left.png)
+    :color = !white !important
+    
+.waiting_for_cheque a.dropdown_toggle
+  background-image: url(/images/admin/selects/small-purple-right.png)
+tr:hover .waiting_for_cheque a.dropdown_toggle
+  background-image: url(/images/admin/selects/small-purple-right-on.png)
+.waiting_for_cheque a.dropdown_toggle span
+  background-image: url(/images/admin/selects/small-purple-left.png)
+  :color = !white

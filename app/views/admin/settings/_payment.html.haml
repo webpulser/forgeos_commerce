@@ -1,0 +1,109 @@
+%div#accordion_payments
+  - f.fields_for :payment_methods, f.object.payment_methods do |payment|
+    %h3
+      =t('cheque', :scope => [:payment], :count => 1).capitalize
+    %div
+      - checked = (f.object.payment_method_list[:cheque][:active] == 1 if f.object.payment_method_list[:cheque])
+      = payment.label  :cheque, t(:active, :scope => [:payment, :cheque])
+      = payment.check_box :cheque, :checked => checked, :onchange => "$(this).next().toggle('highlight', 500)"
+      .infos{ :style => checked ? 'display: block;': 'display: none;'}
+        .wrapping
+          .cheque_message
+            = payment.label :cheque_image, t(:image, :scope => [:payment, :cheque])
+            = payment.text_field :cheque_image, :value => (f.object.payment_method_list[:cheque].nil? ? '' : f.object.payment_method_list[:cheque][:image])
+            %br
+            = payment.label  :cheque_message, t(:message, :scope => [:payment, :cheque])
+            %br
+            = payment.text_area :cheque_message, :value => (f.object.payment_method_list[:cheque].nil? ? '' : f.object.payment_method_list[:cheque][:message]), :class => 'mceEditor'
+          .tool-tip-settings
+            = t(:infos, :scope => [:payment, :cheque])
+          .clear
+
+
+    %h3
+      =t('paypal', :scope => [:payment], :count => 1).capitalize
+    %div
+      - checked = (f.object.payment_method_list[:paypal][:active] == 1 if f.object.payment_method_list[:paypal])
+      = payment.label :paypal, t(:active, :scope => [:payment, :paypal])
+      = payment.check_box :paypal, :checked => checked, :onchange => "$(this).next().toggle('highlight', 500)"
+      .infos{ :style => checked ? 'display: block;': 'display: none;'}
+        - checked = (f.object.payment_method_list[:paypal][:test] == 1 if f.object.payment_method_list[:paypal])
+        = payment.label :paypal_test, t(:test, :scope => [:payment, :paypal])
+        = payment.check_box :paypal_test, :checked => checked
+        %br
+        = payment.label :paypal_image, t(:image, :scope => [:payment, :paypal])
+        = payment.text_field :paypal_image, :value => (f.object.payment_method_list[:paypal].nil? ? '' : f.object.payment_method_list[:paypal][:image])
+        .clear
+        .grid_7
+          %h4
+            Development
+          - %w(email secret cert_id url url_ok auto_response currency).each do |element|
+            = payment.label "paypal_dev_#{element}".to_sym, t(element, :scope => [:payment, :paypal, :development])
+            %br
+            = payment.text_field "paypal_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:paypal].nil? ? '' : f.object.payment_method_list[:paypal][:development][element.to_sym])
+            %br
+        .grid_7
+          %h4
+            Production
+          - %w(email secret cert_id url url_ok auto_response currency).each do |element|
+            = payment.label "paypal_prod_#{element}".to_sym, t(element, :scope => [:payment, :paypal, :production])
+            %br
+            = payment.text_field "paypal_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:paypal].nil? ? '' : f.object.payment_method_list[:paypal][:production][element.to_sym])
+            %br
+      
+    %h3
+      =t('cmc_cic', :scope => [:payment], :count => 1).capitalize
+    %div
+      - checked = (f.object.payment_method_list[:cmc_cic][:active] == 1 if f.object.payment_method_list[:cmc_cic])
+      = payment.label :cmc_cic, t(:active, :scope => [:payment, :cmc_cic])
+      = payment.check_box :cmc_cic, :checked => checked, :onchange => "$(this).next().toggle('highlight', 500)"
+      .infos{ :style => checked ? 'display: block;': 'display: none;'}
+        - checked = (f.object.payment_method_list[:cmc_cic][:test] == 1 if f.object.payment_method_list[:cmc_cic])
+        = payment.label :cmc_cic_test, t(:test, :scope => [:payment, :cmc_cic])
+        = payment.check_box :cmc_cic_test, :checked => checked
+        %br
+        = payment.label :cmc_cic_image, t('image', :scope => [:payment, :cmc_cic])
+        = payment.text_field :cmc_cic_image, :value => (f.object.payment_method_list[:cmc_cic].nil? ? '' : f.object.payment_method_list[:cmc_cic][:image])
+        .grid_7
+          %h4
+            Development
+          - %w(cle tpe version serveur code_societe url_ok url_ko url_return).each do |element|
+            = payment.label "cmc_cic_dev_#{element}".to_sym, t(element, :scope => [:payment, :cmc_cic, :development])
+            %br
+            = payment.text_field "cmc_cic_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:cmc_cic].nil? ? '' : f.object.payment_method_list[:cmc_cic][:development][element.to_sym])
+        .grid_7
+          %h4
+            Production
+          - %w(cle tpe version serveur code_societe url_ok url_ko url_return).each do |element|
+            = payment.label "cmc_cic_prod_#{element}".to_sym, t(element, :scope => [:payment, :cmc_cic, :production])
+            %br
+            = payment.text_field "cmc_cic_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:cmc_cic].nil? ? '' : f.object.payment_method_list[:cmc_cic][:production][element.to_sym])
+      
+      
+    %h3
+      = t('cyberplus', :scope => [:payment], :count => 1).capitalize
+    %div
+      - checked = (f.object.payment_method_list[:cyberplus][:active] == 1 if f.object.payment_method_list[:cyberplus])
+      = payment.label :cyberplus, t(:active, :scope => [:payment, :cyberplus])
+      = payment.check_box :cyberplus, :checked => checked, :onchange => "$(this).next().toggle('highlight', 500)"
+      .infos{ :style => checked ? 'display: block;': 'display: none;'}
+        - checked = (f.object.payment_method_list[:cyberplus][:test] == 1 if f.object.payment_method_list[:cyberplus])
+        = payment.label :cyberplus_test, t(:test, :scope => [:payment, :cyberplus])
+        = payment.check_box :cyberplus_test, :checked => checked
+        %br
+        = payment.label :cyberplus_image, t('image', :scope => [:payment, :cyberplus])
+        = payment.text_field :cyberplus_image, :value => (f.object.payment_method_list[:cyberplus].nil? ? '' : f.object.payment_method_list[:cyberplus][:image])
+        .grid_7
+          %h4
+            Development
+          - %w(key site_id currency version payment_cards payment_config url_ok url_ko url_return url_referral ).each do |element|
+            = payment.label "cyberplus_dev_#{element}".to_sym, t(element, :scope => [:payment, :cyberplus, :development])
+            %br
+            = payment.text_field "cyberplus_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:cyberplus].nil? ? '' : f.object.payment_method_list[:cyberplus][:development][element.to_sym])
+        .grid_7
+          %h4
+            Production
+          - %w(key site_id currency version payment_cards payment_config url_ok url_ko url_return url_referral).each do |element|
+            = payment.label "cyberplus_prod_#{element}".to_sym, t(element, :scope => [:payment, :cyberplus, :production])
+            %br
+            = payment.text_field "cyberplus_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:cyberplus].nil? ? '' : f.object.payment_method_list[:cyberplus][:production][element.to_sym])

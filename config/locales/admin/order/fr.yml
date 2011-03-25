@@ -30,6 +30,7 @@ fr:
     status:
       unpaid: 'non payée'
       paid: 'payée'
+      waiting_for_cheque: 'chèque en attente'
       canceled: 'annulée'
       shipped: 'expédiée'
       closed: 'fermé'

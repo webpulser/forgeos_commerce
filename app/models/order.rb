@@ -11,11 +11,16 @@
 # ==== Attributes
 # * <tt>transporter</tt> - <i>Transporter</i> name
 # * <tt>transporter_price</tt> - <i>ShippingMethod</i> price
+require 'sha1'
+require 'CMCIC_Config'
+require 'CMCIC_Tpe'
+require 'cgi'
 class Order < ActiveRecord::Base
   include AASM
   aasm_column :status
   aasm_initial_state :unpaid
   aasm_state :unpaid
+  aasm_state :waiting_for_cheque, :after_enter => :waiting_for_cheque_notification
   aasm_state :paid, :after_enter => :payment_confirmation
   aasm_state :shipped, :after_enter => :enter_shipping_event
   aasm_state :canceled, :after_enter => :update_patronage
@@ -25,6 +30,10 @@ class Order < ActiveRecord::Base
     transitions :to => :paid, :from => :unpaid
   end
 
+  aasm_event :wait_for_cheque do
+    transitions :to => :waiting_for_cheque, :from => :unpaid
+  end
+  
   aasm_event :start_shipping do
     transitions :to => :shipped, :from => :paid
   end
@@ -70,6 +79,124 @@ class Order < ActiveRecord::Base
 
   alias_method :aasm_current_state_with_event_firing, :aasm_current_state
 
+  PAYPAL_CERT_PEM = File.exist?("#{Rails.root}/certs/paypal_cert.pem") ? File.read("#{Rails.root}/certs/paypal_cert.pem") : ''
+  APP_CERT_PEM = File.exist?("#{Rails.root}/certs/app_cert.pem") ? File.read("#{Rails.root}/certs/app_cert.pem") : ''
+  APP_KEY_PEM = File.exist?("#{Rails.root}/certs/app_key.pem") ? File.read("#{Rails.root}/certs/app_key.pem") : ''
+  
+  # GENERATE ENCRYPTED FORM FOR CHECKOUT
+  def paypal_encrypted
+    setting = Setting.first
+    paypal = setting.payment_method_list[:paypal]
+    env = paypal[:test] == 1 ? :development : :production
+    values = {
+      :business => paypal[env][:email],
+      :cmd => '_cart',
+      :upload => 1,
+      :return => paypal[env][:url_ok],
+      :invoice => id,
+      :notify_url => paypal[env][:auto_response],
+      :cert_id => paypal[env][:cert_id],
+      :currency_code => paypal[env][:currency],
+      :handling_cart => self.order_shipping.price.nil? ? 0 : self.order_shipping.price.round(2)
+    }
+    order_details.all( :group => 'product_id').each_with_index do |item, index|
+      values.merge!({
+        "amount_#{index+1}" => (item.price).round(2),
+        "item_name_#{index+1}" => item.product.name,
+        "item_number_#{index+1}" => item.id,
+        "quantity_#{index+1}" => item.quantity
+      })
+    end
+    encrypt_for_paypal(values)
+  end
+  
+  def encrypt_for_paypal(values)
+    begin
+      signed = OpenSSL::PKCS7::sign(OpenSSL::X509::Certificate.new(APP_CERT_PEM), OpenSSL::PKey::RSA.new(APP_KEY_PEM, ''), values.map { |k, v| "#{k}=#{v}" }.join("\n"), [], OpenSSL::PKCS7::BINARY)
+      OpenSSL::PKCS7::encrypt([OpenSSL::X509::Certificate.new(PAYPAL_CERT_PEM)], signed.to_der, OpenSSL::Cipher::Cipher::new("DES3"), OpenSSL::PKCS7::BINARY).to_s.gsub("\n", "")
+    rescue
+      ''
+    end
+  end
+  
+  
+  def cyberplus_encrypted
+    ts = Time.now
+    setting = Setting.first
+    cyberplus_tmp = setting.payment_method_list[:cyberplus]
+    env = cyberplus_tmp[:test] == 1 ? :development : :production
+    cyberplus = cyberplus_tmp[env]
+    payment = {
+      :version => cyberplus[:version],
+      :site_id => cyberplus[:site_id],
+      :ctx_mode => cyberplus_tmp[:test] == 1 ? 'TEST' : 'PRODUCTION',
+      :trans_id => ts.strftime('%H%M%S'),
+      :trans_date => ts.strftime('%Y%m%d%H%M%S'),
+      :validation_mode => '',
+      :capture_delay => '',
+      :payment_config => cyberplus[:payment_config],
+      :payment_cards => cyberplus[:payment_cards],
+      :amount => (total*100).to_i,
+      :currency => cyberplus[:currency],
+      :key => cyberplus[:key],
+      :url_cancel => cyberplus[:url_ko],
+      :url_success => cyberplus[:url_ok],
+      :url_refused => cyberplus[:url_ko],
+      :url_return => cyberplus[:url_return],
+      :url_referral => cyberplus[:url_referral],
+      :order_id => id
+    }
+
+    sign = [:version, :site_id, :ctx_mode, :trans_id,
+             :trans_date, :validation_mode, :capture_delay,
+             :payment_config, :payment_cards, :amount,
+             :currency, :key].map{ |key| payment[key] }
+             
+    payment[:signature] = SHA1.new(sign.join('+'))
+    return payment
+  end
+  
+  def cmc_cic_encrypted
+    setting = Setting.first
+    cmc_cic_tmp = setting.payment_method_list[:cmc_cic]
+    env = cmc_cic_tmp[:test] == 1 ? :development : :production
+    cmc_cic = cmc_cic_tmp[env]
+    
+    sReference = "#{rand(1000)}A#{reference}" # Reference: unique, alphaNum (A-Z a-z 0-9), 12 characters max
+    sMontant = '%.2f' % total # Amount : format  "xxxxx.yy" (no spaces)
+    sDevise  = "EUR" # Currency : ISO 4217 compliant
+    sTexteLibre = ""
+    sDate = DateTime.now().strftime("%d/%m/%Y:%H:%M:%S") # transaction date : format dd/mm/YYYY:HH:mm:ss
+    sLangue = "FR" # Language of the company code
+    sUrlOk = CMCIC_URLOK
+    sUrlKo = CMCIC_URLKO
+    sUrlReturn = CMCIC_URL_RETURN
+    sEmail = user.email # customer email
+    sOptions = ""
+    oTpe = CMCIC_Tpe.new(sLangue)
+    oMac = CMCIC_Hmac.new(oTpe)
+    sNbrEch = sDateEcheance1 = sMontantEcheance1 = sDateEcheance2 = sMontantEcheance2 = sDateEcheance3 = sMontantEcheance3 = sDateEcheance4 = sMontantEcheance4 = nil
+    sChaineDebug = "V1.04.sha1.rb--[CtlHmac" + oTpe.sVersion + oTpe.sNumero + "]-" + oMac.computeHMACSHA1("CtlHmac" + oTpe.sVersion + oTpe.sNumero) # Control String for support
+    sChaineMAC = [oTpe.sNumero, sDate, "#{sMontant}#{sDevise}", sReference, sTexteLibre, oTpe.sVersion, sLangue, oTpe.sCodeSociete, sEmail, sNbrEch, sDateEcheance1, sMontantEcheance1, sDateEcheance2, sMontantEcheance2, sDateEcheance3, sMontantEcheance3, sDateEcheance4, sMontantEcheance4, sOptions].join("*") # Data to certify
+    payment = {
+      :version => oTpe.sVersion,
+      :TPE =>  oTpe.sNumero,
+      :date => sDate,
+      :montant => "#{sMontant}#{sDevise}",
+      :reference => sReference,
+      :MAC => oMac.computeHMACSHA1(sChaineMAC),
+      :url_retour => sUrlReturn,
+      :url_retour_ok => sUrlOk,
+      :url_retour_err => sUrlKo,
+      :lgue => sLangue,
+      :societe => oTpe.sCodeSociete,
+      :debug => sChaineDebug,
+      :mail => sEmail,
+      :bouton => oTpe.sNumero,
+      :url_payment => oTpe.sUrlPaiement
+    }
+    return payment
+  end
 
   # Returns order's amount
   def total(options = {})
@@ -217,6 +344,12 @@ class Order < ActiveRecord::Base
       User.decrement_counter(:patronage_count,self.user.id) if self.user.has_godfather_discount?
       # increment user's godfather patronage_count if its user's first order
       User.increment_counter(:patronage_count,self.user.godfather_id) if self.user.godfather and self.user.orders.count(:conditions => { :status => 'paid' }) == 1
+    end
+  end
+  
+  def waiting_for_cheque_notification
+    if self.user
+      Notifier.deliver_waiting_for_cheque_notification(self)
     end
   end
 
