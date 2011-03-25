@@ -5,9 +5,7 @@ class Setting < ActiveRecord::Base
   
   
   def payment_method_list
-    payment = YAML.load(self.payment_methods)
-    payment = {} if payment.nil?
-    return payment
+    YAML.load(self.payment_methods) || {}
   end
   
   def cheque_message(order)
