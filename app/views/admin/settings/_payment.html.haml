@@ -38,18 +38,20 @@
           %h4
             Development
           - %w(email secret cert_id url url_ok auto_response currency).each do |element|
-            = payment.label "paypal_dev_#{element}".to_sym, t(element, :scope => [:payment, :paypal, :development])
-            %br
-            = payment.text_field "paypal_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:paypal].nil? ? '' : f.object.payment_method_list[:paypal][:development][element.to_sym])
-            %br
+            .grid_3.omega
+              = payment.label "paypal_dev_#{element}".to_sym, t(element, :scope => [:payment, :paypal, :development])
+            .grid_4.alpha
+              = payment.text_field "paypal_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:paypal].nil? ? '' : f.object.payment_method_list[:paypal][:development][element.to_sym])
+            .clear
         .grid_7
           %h4
             Production
           - %w(email secret cert_id url url_ok auto_response currency).each do |element|
-            = payment.label "paypal_prod_#{element}".to_sym, t(element, :scope => [:payment, :paypal, :production])
-            %br
-            = payment.text_field "paypal_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:paypal].nil? ? '' : f.object.payment_method_list[:paypal][:production][element.to_sym])
-            %br
+            .grid_3.omega
+              = payment.label "paypal_prod_#{element}".to_sym, t(element, :scope => [:payment, :paypal, :production])
+            .grid_4.alpha
+              = payment.text_field "paypal_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:paypal].nil? ? '' : f.object.payment_method_list[:paypal][:production][element.to_sym])
+            .clear
       
     %h3
       =t('cmc_cic', :scope => [:payment], :count => 1).capitalize
@@ -64,21 +66,25 @@
         %br
         = payment.label :cmc_cic_image, t('image', :scope => [:payment, :cmc_cic])
         = payment.text_field :cmc_cic_image, :value => (f.object.payment_method_list[:cmc_cic].nil? ? '' : f.object.payment_method_list[:cmc_cic][:image])
+        .clear
         .grid_7
           %h4
             Development
           - %w(cle tpe version serveur code_societe url_ok url_ko url_return).each do |element|
-            = payment.label "cmc_cic_dev_#{element}".to_sym, t(element, :scope => [:payment, :cmc_cic, :development])
-            %br
-            = payment.text_field "cmc_cic_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:cmc_cic].nil? ? '' : f.object.payment_method_list[:cmc_cic][:development][element.to_sym])
+            .grid_3.omega
+              = payment.label "cmc_cic_dev_#{element}".to_sym, t(element, :scope => [:payment, :cmc_cic, :development])
+            .grid_4.alpha
+              = payment.text_field "cmc_cic_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:cmc_cic].nil? ? '' : f.object.payment_method_list[:cmc_cic][:development][element.to_sym])
+            .clear
         .grid_7
           %h4
             Production
           - %w(cle tpe version serveur code_societe url_ok url_ko url_return).each do |element|
-            = payment.label "cmc_cic_prod_#{element}".to_sym, t(element, :scope => [:payment, :cmc_cic, :production])
-            %br
-            = payment.text_field "cmc_cic_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:cmc_cic].nil? ? '' : f.object.payment_method_list[:cmc_cic][:production][element.to_sym])
-      
+            .grid_3.omega
+              = payment.label "cmc_cic_prod_#{element}".to_sym, t(element, :scope => [:payment, :cmc_cic, :production])
+            .grid_4.alpha
+              = payment.text_field "cmc_cic_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:cmc_cic].nil? ? '' : f.object.payment_method_list[:cmc_cic][:production][element.to_sym])
+            .clear
       
     %h3
       = t('cyberplus', :scope => [:payment], :count => 1).capitalize
@@ -93,17 +99,22 @@
         %br
         = payment.label :cyberplus_image, t('image', :scope => [:payment, :cyberplus])
         = payment.text_field :cyberplus_image, :value => (f.object.payment_method_list[:cyberplus].nil? ? '' : f.object.payment_method_list[:cyberplus][:image])
+        .clear
         .grid_7
           %h4
             Development
           - %w(key site_id currency version payment_cards payment_config url_ok url_ko url_return url_referral ).each do |element|
-            = payment.label "cyberplus_dev_#{element}".to_sym, t(element, :scope => [:payment, :cyberplus, :development])
-            %br
-            = payment.text_field "cyberplus_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:cyberplus].nil? ? '' : f.object.payment_method_list[:cyberplus][:development][element.to_sym])
+            .grid_3.omega
+              = payment.label "cyberplus_dev_#{element}".to_sym, t(element, :scope => [:payment, :cyberplus, :development])
+            .grid_4.alpha
+              = payment.text_field "cyberplus_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:cyberplus].nil? ? '' : f.object.payment_method_list[:cyberplus][:development][element.to_sym])
+            .clear
         .grid_7
           %h4
             Production
           - %w(key site_id currency version payment_cards payment_config url_ok url_ko url_return url_referral).each do |element|
-            = payment.label "cyberplus_prod_#{element}".to_sym, t(element, :scope => [:payment, :cyberplus, :production])
-            %br
-            = payment.text_field "cyberplus_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:cyberplus].nil? ? '' : f.object.payment_method_list[:cyberplus][:production][element.to_sym])
+            .grid_3.omega
+              = payment.label "cyberplus_prod_#{element}".to_sym, t(element, :scope => [:payment, :cyberplus, :production])
+            .grid_4.alpha
+              = payment.text_field "cyberplus_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:cyberplus].nil? ? '' : f.object.payment_method_list[:cyberplus][:production][element.to_sym])
+            .clear

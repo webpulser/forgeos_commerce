@@ -1,4 +1,13 @@
 #accordion_payments
+  label
+    color: #444
+  .ui-accordion-header
+    padding-left: 30px
+    line-height: 30px
+    text-transform: uppercase
+    &.ui-state-active
+      background: #AAA
+      font-weight: bold
   input[type="text"]
     +borderCorner(3px,3px,3px,3px)
     background:
@@ -10,6 +19,12 @@
   .grid_7
     input[type="text"]
       width: 100%
+    h4
+      background:
+        color: #AAA
+      padding: 5px
+      margin: 10px 0
+      
   .cheque_message
     float: left
   .tool-tip-settings

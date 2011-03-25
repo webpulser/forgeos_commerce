@@ -5,12 +5,13 @@ fr:
     not_active: "Ce paiement n'est pas activé'"
     cheque:
       infos: "<strong>utiliser les variables :</strong><ol><li>#{ORDER_ID} - Référence de la commande</li><li>#{USER_NAME} - Nom du client</li></ol>"
-      one : "chèque"
+      one : "paiement par chèque"
       image: lien vers le logo paiement par chèque
       active: activer le paiement par chèque
       message: message
     paypal:
-      one: paypal
+      test: activer le mode test
+      one: paiement par paypal
       image: lien vers le logo paypal
       active: activer paypal
       development:
@@ -18,15 +19,22 @@ fr:
         secret: clé secrète
         cert_id: identifiant du certificat
         url: url
+        url_ok: url commande validée
+        auto_response: url d'autoréponse
+        currency: monnaie
       production:
         email: email
         secret: clé secrète
         cert_id: identifiant du certificat
         url: url
+        url_ok: url commande validée
+        auto_response: url d'autoréponse
+        currency: monnaie
     cmc_cic:
-      one: CMC_CIC
-      image: lien vers le logo CMC_CIC
-      active: activer CMC_CIC
+      test: activer le mode test
+      one: carte bancaire CMC CIC
+      image: lien vers le logo CMC CIC
+      active: activer CMC CIC
       development:
         cle: clé
         tpe: code tpe
@@ -35,6 +43,7 @@ fr:
         code_societe: code société
         url_ok: url de confirmation
         url_ko: "url d'erreur"
+        url_return: url de retour
       production:
         cle: clé
         tpe: code tpe
@@ -43,7 +52,9 @@ fr:
         code_societe: code société
         url_ok: url de confirmation
         url_ko: "url d'erreur"
+        url_return: url de retour
     cyberplus:
+      test: activer le mode test
       one: Carte banquaire cyberplus
       image: lien vers le logo cyberplus
       active: activer cyberplus
