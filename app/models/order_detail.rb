@@ -17,7 +17,8 @@ class OrderDetail < ActiveRecord::Base
   after_create :increment_product_sold_counter
 
   def rate_tax
-    read_attribute(:rate_tax) || 1
+    value = read_attribute(:rate_tax)
+    (not value or value < 1.0) ? 1.0 : value
   end
   # Returns price's string with currency symbol
   #
@@ -26,13 +27,41 @@ class OrderDetail < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def price(with_tax=false, with_currency=true,with_special_offer=false, with_voucher=false)
-    return 0 unless read_attribute(:price)
-    price = read_attribute(:price)
-    price -= self.special_offer_discount_price if with_special_offer and self.special_offer_discount_price
-    price -= self.voucher_discount_price if with_voucher and self.voucher_discount_price
-    price += tax(false) if with_tax
-    return price
+  def price(options = {})
+    options = {
+      :tax => true,
+      :voucher_discount => true,
+      :special_offer_discount => true,
+      :packaging => false,
+    }.update(options.symbolize_keys)
+
+    price = read_attribute(:price) || 0
+    price *= rate_tax if options[:tax]
+    price -= self.special_offer_discount_price || 0 if options[:special_offer_discount]
+    price -= self.voucher_discount_price || 0 if options[:voucher_discount]
+    price += self.packaging_price.to_f || 0 if options[:packaging]
+    price
+  end
+
+  def discount(options = {})
+    options = {
+      :voucher_discount => true,
+      :special_offer_discount => true,
+    }.update(options.symbolize_keys)
+
+    discount = 0
+    discount += self.special_offer_discount_price || 0 if options[:special_offer_discount]
+    discount += self.voucher_discount_price || 0 if options[:voucher_discount]
+    discount
+  end
+
+  def old_price(with_tax=false, with_currency=true, with_special_offer=false, with_voucher=false)
+    ActiveSupport::Deprecation.warn('use price instead of old_price')
+    price({
+      :tax => with_tax,
+      :special_offer_discount => with_special_offer,
+      :voucher_discount => with_voucher,
+    })
   end
 
   # Returns total product's tax
@@ -42,7 +71,7 @@ class OrderDetail < ActiveRecord::Base
   #
   # This method use <i>price</i> : <i>price(false, with_currency)</i>
   def tax(with_currency=true)
-    price(false, with_currency) * rate_tax/100.0
+    price(:tax => true, :with_currency => with_currency) / rate_tax
   end
 
   # Returns tax * quantity
@@ -58,8 +87,8 @@ class OrderDetail < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def total(with_tax=false, with_currency=true,with_special_offer=false,with_voucher=false, order = self.order)
-    price(with_tax, with_currency,with_special_offer,with_voucher) * quantity(order)
+  def total(*args)
+    price(*args) * quantity(order)
   end
 
   def self.from_cart_product(cart_product)

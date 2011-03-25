@@ -30,6 +30,7 @@ en:
     status:
       unpaid: unpaid
       paid: paid
+      waiting_for_cheque: waiting for cheque
       canceled: canceled
       shipped: shipped
       closed: closed

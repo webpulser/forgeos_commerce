@@ -120,3 +120,65 @@ td.th_product_popup:first-child
   td, th
     &.actions
       width: 17px !important
+      
+//--------------------- ----------       
+// TREE
+//--------------------- ----------
+.a-tree
+  ul
+    padding-left: 10px
+    display: block
+  li
+    display: block
+    margin: 2px 0
+    position: relative
+    a
+      background-position: 0 -272px
+      padding: 3px 24px
+      :color = !darkBrown
+      font-weight: bold
+      font-size: 0.8em
+      display: block
+      position: relative
+      span
+        height: 13px
+        width: 19px
+        font-size: 0.7em
+        background-image: url(/stylesheets/jstree/themes/product_category/bubble-quantity-products.png)
+        background-repeat: no-repeat
+        background-position: -1px -4px
+        text-align: center
+        :color = !darkBrown
+        position: absolute
+        right: 10px
+        top: 3px
+        line-height: 1.5em
+        padding: 0 5px 2px 1px
+      &:hover, &.hover
+        :color = !orange
+  span.colours
+    display: block
+    width: 16px
+    height: 16px
+    position: absolute
+    top: 5px
+    left: 0
+    +borderCorner()
+    &.unpaid
+      :background
+        :color = !unpaid
+    &.waiting_for_cheque
+      :background
+        :color = #5B4681
+    &.paid
+      :background
+        :color = !paid
+    &.shipped
+      :background
+        :color = !shipped
+    &.closed
+      :background
+        :color = !closed
+    &.canceled
+      :background
+        :color = !canceled

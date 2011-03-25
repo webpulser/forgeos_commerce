@@ -10,7 +10,7 @@ class Cart < ActiveRecord::Base
   attr_accessor :free_shipping
   has_many :cart_items, :dependent => :destroy
 
-  [:carts_products, :carts_products=, :carts_product_ids, :carts_products_ids].each do |method_sym|
+  [:carts_products, :carts_products=, :carts_product_ids, :carts_product_ids=].each do |method_sym|
     define_method method_sym do |*args|
       ActiveSupport::Deprecation.warn('use cart_items instead of carts_products')
       self.send("cart_item#{method_sym.to_s.gsub(/^carts_product/, '')}", args)
@@ -93,6 +93,7 @@ class Cart < ActiveRecord::Base
       total -= self.special_offer_discount_price.to_f || 0 if options[:cart_special_offer_discount]
       total -= self.patronage_discount.to_f || 0 if options[:patronage]
       total += self.packaging_price.to_f || 0 if options[:cart_packaging]
+      total = self.after_total(total, options) if self.respond_to?(:after_total)
       total = 0 if total < 0
       return total
   end

@@ -1,0 +1,71 @@
+fr:
+  payment:
+    one: paiement
+    other: paiements
+    not_active: "Ce paiement n'est pas activé'"
+    cheque:
+      infos: "<strong>utiliser les variables :</strong><ol><li>#{ORDER_ID} - Référence de la commande</li><li>#{USER_NAME} - Nom du client</li></ol>"
+      one : "chèque"
+      image: lien vers le logo paiement par chèque
+      active: activer le paiement par chèque
+      message: message
+    paypal:
+      one: paypal
+      image: lien vers le logo paypal
+      active: activer paypal
+      development:
+        email: email
+        secret: clé secrète
+        cert_id: identifiant du certificat
+        url: url
+      production:
+        email: email
+        secret: clé secrète
+        cert_id: identifiant du certificat
+        url: url
+    cmc_cic:
+      one: CMC_CIC
+      image: lien vers le logo CMC_CIC
+      active: activer CMC_CIC
+      development:
+        cle: clé
+        tpe: code tpe
+        version: version
+        serveur: serveur
+        code_societe: code société
+        url_ok: url de confirmation
+        url_ko: "url d'erreur"
+      production:
+        cle: clé
+        tpe: code tpe
+        version: version
+        serveur: serveur
+        code_societe: code société
+        url_ok: url de confirmation
+        url_ko: "url d'erreur"
+    cyberplus:
+      one: Carte banquaire cyberplus
+      image: lien vers le logo cyberplus
+      active: activer cyberplus
+      development:
+        key: clé
+        currency: monnaie
+        version: version
+        site_id: identifiant du site
+        payment_cards: cartes de paiement
+        payment_config: configuration de paiement
+        url_ok: url de confirmation
+        url_ko: "url d'erreur"
+        url_return: url de retour
+        url_referral: url de référence
+      production:
+        key: clé
+        currency: monnaie
+        version: version
+        site_id: identifiant du site
+        payment_cards: cartes de paiement
+        payment_config: configuration de paiement
+        url_ok: url de confirmation
+        url_ko: "url d'erreur"
+        url_return: url de retour
+        url_referral: url de référence

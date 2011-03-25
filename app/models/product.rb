@@ -5,10 +5,10 @@ class Product < ActiveRecord::Base
     :price_variation_id, :price_variation
 
   acts_as_taggable
-
   has_and_belongs_to_many_attachments
+
   has_many :sizes, :dependent => :destroy
-  has_and_belongs_to_many :carts
+  accepts_nested_attributes_for :sizes, :allow_destroy => true
 
   has_many :cross_sellings_products, :dependent => :destroy
   has_many :cross_sellings, :through => :cross_sellings_products, :class_name => 'Product'
@@ -25,25 +25,21 @@ class Product < ActiveRecord::Base
   has_many :dynamic_attribute_values, :dependent => :destroy
   has_many :dynamic_attributes, :through => :dynamic_attribute_values, :class_name => 'DynamicAttribute', :source => 'product'
   accepts_nested_attributes_for :dynamic_attribute_values
+
   has_many :viewed_counters, :as => :element, :class_name => 'ProductViewedCounter', :dependent => :destroy
   has_many :sold_counters, :as => :element, :class_name => 'ProductSoldCounter', :dependent => :destroy
 
   belongs_to :product_type
   belongs_to :brand
+  belongs_to :redirection_product, :class_name => 'Product'
 
   has_one :meta_info, :as => :target
   accepts_nested_attributes_for :meta_info
-  accepts_nested_attributes_for :sizes, :allow_destroy => true
 
   validates_presence_of :product_type_id, :sku, :url
-  #validates_uniqueness_of :url
 
-  before_save :clean_strings, :force_url_format, :generate_url
+  before_save :generate_url, :clean_strings, :force_url_format
   after_save :synchronize_stock
-
-  belongs_to :redirection_product, :class_name => 'Product'
-
-  belongs_to :brand
 
   named_scope :actives, lambda { {:conditions => {:active => true, :deleted => [false, nil]}} }
   named_scope :deleted, lambda { {:conditions => {:deleted => true}} }
@@ -124,16 +120,16 @@ class Product < ActiveRecord::Base
   def soft_delete
     self.update_attribute('deleted', !self.deleted? )
   end
-  
+
   def packaging_price
     #TODO get real variable
     return 0
   end
-    
+
   def price(options = {})
-    options = {:tax => true, 
-               :voucher_discount => true, 
-               :special_offer_discount => true, 
+    options = {:tax => true,
+               :voucher_discount => true,
+               :special_offer_discount => true,
                :variation => false,
                :packaging => false}.update(options.symbolize_keys)
     price = read_attribute(:price) || 0
@@ -144,7 +140,7 @@ class Product < ActiveRecord::Base
     price += self.packaging_price.to_f || 0 if options[:packaging]
     price
   end
-  
+
   def old_price
     price({:voucher_discount => false, :special_offer_discount => false})
   end
@@ -288,7 +284,7 @@ class Product < ActiveRecord::Base
   end
 
   def force_url_format
-    self.url= Forgeos::url_generator(self.url)
+    self.url = self.url.parameterize if self.url.present?
   end
 
   def generate_url

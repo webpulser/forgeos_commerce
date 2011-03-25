@@ -12,7 +12,7 @@ module OrderHelper
       content_tag :div, order_detail.quantity, :class => 'order_quantity'
       content_tag :div, order_detail.price, :class => 'order_price'
       content_tag :div, order_detail.total_tax, :class => 'order_tax'
-      content_tag :div, "#{order_detail.total(true)} #{current_currency.html}", :class => 'order_price'
+      content_tag :div, "#{order_detail.total(:tax => true)} #{current_currency.html}", :class => 'order_price'
     end
   end
 
