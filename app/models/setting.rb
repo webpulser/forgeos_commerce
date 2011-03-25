@@ -21,7 +21,7 @@ class Setting < ActiveRecord::Base
   end
   
   def payment_methods
-    super || {}
+    super || ""
   end
   
 private
