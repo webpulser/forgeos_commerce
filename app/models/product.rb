@@ -160,7 +160,7 @@ class Product < ActiveRecord::Base
   end
 
   def discount
-    self.special_offer_discount_price
+    self.special_offer_discount_price || 0
   end
 
   # Returns total product's tax
