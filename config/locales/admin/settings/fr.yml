@@ -55,7 +55,7 @@ fr:
         url_return: url de retour
     cyberplus:
       test: activer le mode test
-      one: Carte banquaire cyberplus
+      one: Carte bancaire cyberplus
       image: lien vers le logo cyberplus
       active: activer cyberplus
       development:
