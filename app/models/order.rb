@@ -27,7 +27,7 @@ class Order < ActiveRecord::Base
   aasm_state :closed
 
   aasm_event :pay do
-    transitions :to => :paid, :from => :unpaid
+    transitions :to => :paid, :from => [:unpaid, :waiting_for_cheque]
   end
 
   aasm_event :wait_for_cheque do
