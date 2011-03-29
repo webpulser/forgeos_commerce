@@ -51,9 +51,9 @@ private
             :secret => payment_methods[:paypal_prod_secret],
             :cert_id => payment_methods[:paypal_prod_cert_id],
             :url => payment_methods[:paypal_prod_url],
-            :url_ok => payment_methods[:paypal_dev_url_ok],
-            :auto_response => payment_methods[:paypal_dev_auto_response],
-            :currency => payment_methods[:paypal_dev_currency]
+            :url_ok => payment_methods[:paypal_prod_url_ok],
+            :auto_response => payment_methods[:paypal_prod_auto_response],
+            :currency => payment_methods[:paypal_prod_currency]
           }
         },
         :cmc_cic => {
