@@ -201,7 +201,7 @@ private
   end
 
   def sort
-    columns = %w(id id sum(order_details.price) count(order_details.id) created_at people.lastname status)
+    columns = %w(id reference sum(order_details.price) count(order_details.id) created_at people.lastname status)
 
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i

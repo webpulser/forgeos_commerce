@@ -88,7 +88,7 @@ class OrderDetail < ActiveRecord::Base
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
   def total(*args)
-    price(*args) * quantity(order)
+    price(*args) * quantity
   end
 
   def self.from_cart_product(cart_product)
@@ -124,6 +124,7 @@ class OrderDetail < ActiveRecord::Base
   end
 
 
+=begin
   def quantity(order = self.order)
     return 1 unless order
     siblings = order.order_details.group_by(&:product_id).find do |order_detail_group|
@@ -131,6 +132,8 @@ class OrderDetail < ActiveRecord::Base
     end
     return siblings ? siblings[1].size : 1
   end
+=end
+
 private
 
   def increment_product_sold_counter

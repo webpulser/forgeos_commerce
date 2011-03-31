@@ -1,6 +1,10 @@
 class AddPaymentTypeToOrder < ActiveRecord::Migration
   def self.up
-    add_column :orders, :payment_type, :string
+    begin
+      add_column :orders, :payment_type, :string
+    rescue
+      p "already exists"
+    end
   end
 
   def self.down

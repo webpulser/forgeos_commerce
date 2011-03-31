@@ -15,7 +15,7 @@
             content_tag(:div, '&nbsp;', :class=> 'image'),
             :id => link_id, :class => 'some-variants plus') : content_tag(:div, '', :id => link_id)
         ),
-        order.id,
+        order.reference,
         price_with_currency(order.total),
          content_tag(:div,
          link_to(

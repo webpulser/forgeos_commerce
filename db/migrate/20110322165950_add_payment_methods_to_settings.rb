@@ -1,6 +1,10 @@
 class AddPaymentMethodsToSettings < ActiveRecord::Migration
   def self.up
-    add_column :settings, :payment_methods, :text
+    begin
+      add_column :settings, :payment_methods, :text, :force => true
+    rescue
+      p "already exists"
+    end
   end
 
   def self.down

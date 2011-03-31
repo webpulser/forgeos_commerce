@@ -13,9 +13,11 @@ class CartItem < ActiveRecord::Base
     return self.product.price({:voucher_discount => false})*quantity
   end
 
+=begin
   def quantity
     return self.cart.cart_items.count('product_id', :conditions => {:product_id => self.product.id})
   end
+=end
 
   # Returns total tax for this <i>Product</i>
   #
