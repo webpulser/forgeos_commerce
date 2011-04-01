@@ -41,8 +41,10 @@ class Cart < ActiveRecord::Base
   # * <tt>:product_id</tt> - an <i>id</i> of a <i>Product</i>
   # This method use <i>add_product</i>
   def add_product_id(product_id,quantity=1)
-    quantity.times do
-      cart_items << CartItem.create(:product_id => product_id)
+    if cart_item = self.cart_items.find_by_product_id(product_id)
+      cart_item.update_attributes(:quantity => cart_item.quantity+quantity)
+    else
+      CartItem.create!(:product_id => product_id, :quantity => quantity, :cart_id => self.id)
     end
   end
 
@@ -87,7 +89,8 @@ class Cart < ActiveRecord::Base
 
       total = 0
       cart_items.each do |cart_product|
-        total += cart_product.product.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount], :packaging => options[:product_packaging] })
+        product_price = cart_product.product.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount], :packaging => options[:product_packaging]})
+        total += product_price * cart_product.quantity
       end
       total -= self.voucher_discount_price.to_f || 0 if options[:cart_voucher_discount]
       total -= self.special_offer_discount_price.to_f || 0 if options[:cart_special_offer_discount]

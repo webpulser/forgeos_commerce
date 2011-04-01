@@ -6,7 +6,7 @@
     %span
       = t('order',:count =>1).capitalize
       n°
-      = order.id
+      = order.reference
     %span.header-separator
     - unless order.created_at.nil?
       %span= @order.created_at.to_s(:format => :default)
@@ -54,7 +54,7 @@
             .clear
           .clear
 
-        %table#table-order-details.datatable
+        %table.datatable
           %thead
             %tr
               %th &nbsp;
@@ -63,7 +63,7 @@
               %th= t('price', :count => 1).capitalize
               %th= t('quantity', :count => 1).capitalize
               %th= t('order.total').capitalize
-              %th.actions &nbsp;
+              -#%th.actions &nbsp;
           %tbody
             - child_index = 0
             - f.fields_for :order_details do |detail_form|
@@ -81,13 +81,13 @@
                   - else
                     = detail.name
                 %td= detail.sku
-                %td= detail.price
-                %td= 1
+                %td= price_with_currency detail.price
+                %td= detail.quantity
                 %td= price_with_currency detail.total
-                %td= link_to_function '', "remove_order_detail($(this));", :class => 'small-icons destroy-link', :id => "order_detail_#{child_index}"
-                - content_for :deleted_details, detail_form.hidden_field(:_destroy, :class => 'delete')
-                - child_index +=1
-        = link_to t('order.product.add').capitalize, '#', :class => 'small-icons add-link add-order-detail'
+                -#%td=# link_to_function '', "remove_order_detail($(this));", :class => 'small-icons destroy-link', :id => "order_detail_#{child_index}"
+                -# content_for :deleted_details, detail_form.hidden_field(:_destroy, :class => 'delete')
+                -# child_index +=1
+        =# link_to t('order.product.add').capitalize, '#', :class => 'small-icons add-link add-order-detail'
         #order_details= yield(:deleted_details)
         = hidden_field_tag "transporter[rebuild]", 0
         .order-totals

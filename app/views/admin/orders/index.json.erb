@@ -4,9 +4,8 @@
   output = {
     :iTotalDisplayRecords => @orders.total_entries || 0,
     :aaData => @orders.collect do |order|
-      products = order.order_details.count(:group=>'product_id')
-      details_count = order.order_details.count(:group=>'product_id').values.sum
-      product_names = details_count > 1 ? content_tag(:p,order.order_details.all(:group => 'product_id').collect{|detail| content_tag(:span,"#{detail.name} x #{products[detail.product_id]}", :class=>cycle('even', 'odd'))}.join(''), :class=>'product-name') : ''
+      details_count = order.order_details.count
+      product_names = details_count > 1 ? content_tag(:p,order.order_details.all(:group => 'product_id').collect{|detail| content_tag(:span,"#{detail.name} x #{detail.quantity}", :class=>cycle('even', 'odd'))}.join(''), :class=>'product-name') : ''
       link_id = "order_#{order.id}"
       [
         (
@@ -22,7 +21,7 @@
            details_count != 1 ? "#{details_count} #{t('product', :count => details_count)}" : order.order_details.first.name.capitalize,
            [:admin,order]
          ),
-         :class => 'product-name')+content_tag(:br)+product_names,
+         :class => 'product-name')+product_names,
         order.created_at.to_s(:short),
         content_tag(:div, order.user ? link_to(order.user.fullname, [:admin, order.user]) : '', :class => 'username'),
         (

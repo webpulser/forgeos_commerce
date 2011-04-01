@@ -87,8 +87,8 @@ class OrderDetail < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def total(*args)
-    price(*args) * quantity
+  def total
+    price.to_f * quantity.to_f
   end
 
   def self.from_cart_product(cart_product)
@@ -104,7 +104,8 @@ class OrderDetail < ActiveRecord::Base
       :voucher_discount => cart_product.product.voucher_discount,
       :voucher_discount_price => cart_product.product.voucher_discount_price,
       :special_offer_discount => cart_product.product.special_offer_discount,
-      :special_offer_discount_price => cart_product.product.special_offer_discount_price
+      :special_offer_discount_price => cart_product.product.special_offer_discount_price,
+      :quantity => cart_product.quantity
     )
     self.after_from_cart_product(object,cart_product) if self.respond_to?(:after_from_cart_product)
     return object

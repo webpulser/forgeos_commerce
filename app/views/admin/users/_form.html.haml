@@ -19,7 +19,7 @@
 
       - unless user.new_record? || user.orders.empty?
         %table#table.datatable
-        = dataTables_tag :url => admin_orders_path(:filter => 'user', :user_id => user.id, :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false}","{'sTitle':'#{t(:id)}'}","{'sTitle':'#{t(:total)}'}","{'sTitle':'#{t(:product, :count => 1)}'}","{'sTitle':'#{t(:created_on)}'}","{'sTitle':'#{t(:customer, :count => 1)}','bVisible': false}","{'sTitle':'#{t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
+        = dataTables_tag :url => admin_orders_path(:filter => 'user', :user_id => user.id, :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false, 'sClass': 'small-td'}","{'sTitle':'#{t(:id)}'}","{'sTitle':'#{t(:total)}'}","{'sTitle':'#{t(:product, :count => 1)}'}","{'sTitle':'#{t(:created_on)}'}","{'sTitle':'#{t(:customer, :count => 1)}','bVisible': false}","{'sTitle':'#{t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
 
       .padding-wrap
         = render :partial => 'fieldset_account_informations', :locals => { :user => user, :f => f }

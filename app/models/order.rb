@@ -212,7 +212,8 @@ class Order < ActiveRecord::Base
 
     total = 0
     order_details.each do |order_detail|
-      total += order_detail.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount], :packaging => options[:product_packaging] })
+      product_price = order_detail.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount], :packaging => options[:product_packaging] })
+      total += product_price * order_detail.quantity
     end
     total += order_shipping.price if options[:with_shipping] && order_shipping && order_shipping.price
     total -= self.voucher_discount.to_f || 0 if options[:cart_voucher_discount] && self.voucher_discount
