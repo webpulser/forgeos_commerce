@@ -1,9 +1,9 @@
 class AddQuantityToOrderDetails < ActiveRecord::Migration
   def self.up
     begin
-      add_column :order_details, :quantity, :int
+      add_column :order_details, :quantity, :int, :default => 1
     rescue
-      p "already exxists"
+      change_column :order_details, :quantity, :int, :default => 1
     end
   end
 

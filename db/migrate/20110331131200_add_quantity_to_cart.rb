@@ -1,9 +1,9 @@
 class AddQuantityToCart < ActiveRecord::Migration
   def self.up
     begin
-      add_column :cart_items, :quantity, :int
+      add_column :cart_items, :quantity, :int, :default => 1
     rescue
-      p "already exxists"
+      change_column :cart_items, :quantity, :int, :default => 1
     end
   end
 
