@@ -118,3 +118,36 @@
             .grid_4.alpha
               = payment.text_field "cyberplus_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:cyberplus].nil? ? '' : f.object.payment_method_list[:cyberplus][:production][element.to_sym])
             .clear
+
+    %h3
+      =t('elysnet', :scope => [:payment], :count => 1).capitalize
+    %div
+      - checked = (f.object.payment_method_list[:elysnet][:active] == 1 if f.object.payment_method_list[:elysnet])
+      = payment.label :elysnet, t(:active, :scope => [:payment, :elysnet])
+      = payment.check_box :elysnet, :checked => checked, :onchange => "$(this).next().toggle('highlight', 500)"
+      .infos{ :style => checked ? 'display: block;': 'display: none;'}
+        - checked = (f.object.payment_method_list[:elysnet][:test] == 1 if f.object.payment_method_list[:elysnet])
+        = payment.label :elysnet_test, t(:test, :scope => [:payment, :elysnet])
+        = payment.check_box :elysnet_test, :checked => checked
+        %br
+        = payment.label :elysnet_image, t('image', :scope => [:payment, :elysnet])
+        = payment.text_field :elysnet_image, :value => (f.object.payment_method_list[:elysnet].nil? ? '' : f.object.payment_method_list[:elysnet][:image])
+        .clear
+        .grid_7
+          %h4
+            Development
+          - %w(url_ok url_ko auto_response merchant_id).each do |element|
+            .grid_3.omega
+              = payment.label "elysnet_dev_#{element}".to_sym, t(element, :scope => [:payment, :elysnet, :development])
+            .grid_4.alpha
+              = payment.text_field "elysnet_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:elysnet].nil? ? '' : f.object.payment_method_list[:elysnet][:development][element.to_sym])
+            .clear
+        .grid_7
+          %h4
+            Production
+          - %w(url_ok url_ko auto_response merchant_id).each do |element|
+            .grid_3.omega
+              = payment.label "elysnet_prod_#{element}".to_sym, t(element, :scope => [:payment, :elysnet, :production])
+            .grid_4.alpha
+              = payment.text_field "elysnet_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:elysnet].nil? ? '' : f.object.payment_method_list[:elysnet][:production][element.to_sym])
+            .clear

@@ -109,6 +109,23 @@ private
             :url_return => payment_methods[:cyberplus_prod_url_return],
             :url_referral => payment_methods[:cyberplus_prod_url_referral]
           }
+        },
+        :elysnet => {
+          :image => payment_methods[:elysnet_image],
+          :active => payment_methods[:elysnet].to_i,
+          :test => payment_methods[:elysnet_test].to_i,
+          :development => {
+            :url_ok => payment_methods[:elysnet_dev_url_ok],
+            :url_ko => payment_methods[:elysnet_dev_url_ko],
+            :auto_response => payment_methods[:elysnet_dev_auto_response],
+            :merchant_id => payment_methods[:elysnet_dev_merchant_id]
+          },
+          :production => {
+            :url_ok => payment_methods[:elysnet_production_url_ok],
+            :url_ko => payment_methods[:elysnet_production_url_ko],
+            :auto_response => payment_methods[:elysnet_production_auto_response],
+            :merchant_id => payment_methods[:elysnet_production_merchant_id]
+          }
         }
       }
       self.payment_methods = payment

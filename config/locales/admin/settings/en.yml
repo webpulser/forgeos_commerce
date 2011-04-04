@@ -67,3 +67,7 @@ en:
         url_ko: "url d'erreur"
         url_return: url de retour
         url_referral: url de référence
+      elysnet:
+        test: activer le mode test
+        one: carte bancaire elysnet
+
