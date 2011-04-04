@@ -147,7 +147,7 @@
             Production
           - %w(url_ok url_ko auto_response merchant_id).each do |element|
             .grid_3.omega
-              = payment.label "elysnet_prod_#{element}".to_sym, t(element, :scope => [:payment, :elysnet, :production])
+              = payment.label "elysnet_production_#{element}".to_sym, t(element, :scope => [:payment, :elysnet, :production])
             .grid_4.alpha
-              = payment.text_field "elysnet_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:elysnet].nil? ? '' : f.object.payment_method_list[:elysnet][:production][element.to_sym])
+              = payment.text_field "elysnet_production_#{element}".to_sym, :value => (f.object.payment_method_list[:elysnet].nil? ? '' : f.object.payment_method_list[:elysnet][:production][element.to_sym])
             .clear
