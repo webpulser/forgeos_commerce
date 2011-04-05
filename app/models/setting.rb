@@ -1,12 +1,20 @@
 require File.join(Rails.plugins[:forgeos_core].directory,'app','models','setting')
 class Setting < ActiveRecord::Base
-  before_save :update_payment_methods
+  before_save :update_payment_methods, :update_so_colissimo_methods
   serialize :payment_methods
-  
+  serialize :colissimo_methods
   
   def payment_method_list
     if self.payment_methods
       return YAML.load(self.payment_methods)
+    else
+     return {}
+    end
+  end
+ 
+  def colissimo_method_list
+    if self.colissimo_methods
+      return YAML.load(self.colissimo_methods)
     else
      return {}
     end
@@ -25,6 +33,24 @@ class Setting < ActiveRecord::Base
   end
   
 private
+
+  def update_so_colissimo_methods
+    unless self.colissimo_methods.empty?
+      colissimo = {
+        :active => colissimo_methods[:active].to_i,
+        :sha => colissimo_methods[:sha],
+        :forwarding_charges => colissimo_methods[:forwarding_charges],
+        :preparation_time => colissimo_methods[:preparation_time],
+        :urlok => colissimo_methods[:urlok],
+        :urlko => colissimo_methods[:urlko],
+        :fo => colissimo_methods[:fo],
+        :url_prod => colissimo_methods[:url_prod],
+        :url_test => colissimo_methods[:url_test]
+      }
+      self.colissimo_methods = colissimo
+    end
+  end
+
   def update_payment_methods
     unless self.payment_methods.empty?
       payment = {
