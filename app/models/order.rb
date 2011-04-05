@@ -204,23 +204,20 @@ class Order < ActiveRecord::Base
     env = elysnet_tmp[:test] == 1 ? :development : :production
     elysnet = elysnet_tmp[env]
 
-    logger.debug elysnet_tmp
     parm = "merchant_id=#{elysnet[:merchant_id]}"
-    logger.warn parm
     parm += " merchant_country=fr"
-    parm += " amount=#{total}"
+    parm += " amount=#{(total*100).to_i}"
     parm += " currency_code=978"
     parm += " pathfile=" + $pathfile
     parm += " normal_return_url=#{elysnet[:url_ok]}"
     parm += " cancel_return_url=#{elysnet[:url_ko]}"
-    parm += " automatic_response_url=#{elysnet[:autoresponse]}"
+    parm += " automatic_response_url=#{elysnet[:auto_response]}"
     parm += " language=fr"
     parm += " payment_means=CB,1,VISA,1,MASTERCARD,1"
     parm += " header_flag=no"
     parm += " customer_email=#{self.user.email}"
     parm += " order_id=#{self.id}"
     result = `./lib/elysnet/bin/request #{parm}` #execution of request script
-    logger.warn result
     tab = result.split("!")
     payment = tab[3]
     return payment
