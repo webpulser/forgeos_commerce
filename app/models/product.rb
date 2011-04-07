@@ -7,6 +7,8 @@ class Product < ActiveRecord::Base
   acts_as_taggable
   has_and_belongs_to_many_attachments
 
+  has_and_belongs_to_many :packs
+
   has_many :sizes, :dependent => :destroy
   accepts_nested_attributes_for :sizes, :allow_destroy => true
 
