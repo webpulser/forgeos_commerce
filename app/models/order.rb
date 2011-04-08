@@ -338,13 +338,12 @@ class Order < ActiveRecord::Base
       }
 
       order.build_address_invoice(cart.address_invoice.attributes.update(:person_id => nil))
+      order.build_order_shipping(OrderShipping.from_cart(cart).attributes)
 
       if cart.options[:colissimo].nil?
-        order.build_order_shipping(OrderShipping.from_cart(cart).attributes)
         order.build_address_delivery(cart.address_delivery.attributes.update(:person_id => nil))
       else
-        order.build_order_shipping(OrderShipping.from_colissimo(cart.options[:colissimo]))
-        order.build_address_delivery(cart.address_from_colissimo)
+        order.build_address_delivery(cart.address_from_colissimo.attributes)
       end
 
       self.after_from_cart(order,cart) if self.respond_to?(:after_from_cart)
@@ -406,7 +405,7 @@ class Order < ActiveRecord::Base
     case params[:DELIVERYMODE]
     when 'DOM', 'RDV', 'DOS'
       self.update_attributes(
-        :order_shipping_attributes => { :name => 'So Colissimo', :price =>  params[:DYFORWARDINGCHARGES], :colisssimo_type => params[:DELIVERYMODE]},
+        :order_shipping_attributes => { :name => 'So Colissimo', :price =>  params[:DYFORWARDINGCHARGES], :colissimo_type => params[:DELIVERYMODE]},
         :address_delivery_attributes =>{
           :designation => 'So colissimo',
           :civility => params[:CECIVILITY],
@@ -423,7 +422,7 @@ class Order < ActiveRecord::Base
       )
     else
       self.update_attributes(
-        :order_shipping_attributes => { :name => 'So Colissimo', :price =>  params[:DYFORWARDINGCHARGES], :colisssimo_type => params[:DELIVERYMODE]},
+        :order_shipping_attributes => { :name => 'So Colissimo', :price =>  params[:DYFORWARDINGCHARGES], :colissimo_type => params[:DELIVERYMODE]},
         :address_delivery_attributes => {
           :designation => 'So colissimo',
           :civility => params[:CECIVILITY],
