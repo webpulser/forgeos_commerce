@@ -8,9 +8,14 @@ class Transporter < Ruleby::Rulebook
       condition = transporter.conditions
       condition.gsub!(/Cart/,'Order') if @order
       rule eval(condition) do |context|
-        @transporter_ids << transporter.id
+        if @order && @order.address_delivery && transporter.country && transporter.country.id == @order.address_delivery.country.id
+          @transporter_ids << transporter.id
+        else
+          @transporter_ids << transporter.id
+        end
       end
     end
     @transporter_ids
   end
+  
 end

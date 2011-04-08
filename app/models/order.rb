@@ -337,9 +337,14 @@ class Order < ActiveRecord::Base
         :reference => cart.id
       }
 
-      order.build_order_shipping(OrderShipping.from_cart(cart).attributes)
-      order.build_address_delivery(cart.address_delivery.attributes.update(:person_id => nil))
       order.build_address_invoice(cart.address_invoice.attributes.update(:person_id => nil))
+      order.build_order_shipping(OrderShipping.from_cart(cart).attributes)
+
+      if cart.options[:colissimo].nil?
+        order.build_address_delivery(cart.address_delivery.attributes.update(:person_id => nil))
+      else
+        order.build_address_delivery(cart.address_from_colissimo.attributes)
+      end
 
       self.after_from_cart(order,cart) if self.respond_to?(:after_from_cart)
       return order
@@ -358,6 +363,86 @@ class Order < ActiveRecord::Base
   def packaging_price
     #TODO get config from cart config
     return 0
+  end
+
+
+  def to_colissimo_params
+    setting = Setting.first
+    colissimo = setting.colissimo_method_list
+    require "digest/sha1"
+    order_id = "#{rand(1000)}m#{self.reference}"
+
+    signature_tmp = "#{colissimo[:fo]}#{self.user.lastname}#{colissimo[:preparation_time]}#{colissimo[:forwarding_charges]}#{self.user_id}#{self.reference}#{order_id}#{colissimo[:sha]}"
+    signature = Digest::SHA1.hexdigest(signature_tmp)
+    unless user.civility.nil?
+      civ = I18n.t("civility.label.#{self.user.civility}").upcase
+    else
+      civ = 'MR'
+    end
+
+    if transporter = TransporterRule.find_by_id(cart.options[:transporter_rule_id])
+      price = transporter.variables
+    else
+      price = colissimo[:forwarding_charges]
+    end
+    
+    infos = {
+        :ceAdress3 => self.address_delivery.address,
+        :ceAdress4 => self.address_delivery.address_2,
+        :ceZipCode => self.address_delivery.zip_code,
+        :ceTown => self.address_delivery.city,
+        #:cePhoneNumber => self.address_delivery.phone,
+        :ceCivility => civ,
+        :ceName => self.user.lastname,
+        :ceFirstName => self.user.firstname,
+        :ceEmail => self.user.email,
+        :trClientNumber => self.user_id,
+        :dyForwardingCharges => price,
+        :dyPreparationTime => colissimo[:preparation_time],
+        :trOrderNumber => self.reference,
+        :orderId => order_id,
+        :signature => signature,
+        :pudoFOId => colissimo[:fo]
+    }
+    infos
+  end
+
+  def update_attributes_from_colissimo(params)
+    case params[:DELIVERYMODE]
+    when 'DOM', 'RDV', 'DOS'
+      self.update_attributes(
+        :order_shipping_attributes => { :name => 'So Colissimo', :price =>  params[:DYFORWARDINGCHARGES], :colissimo_type => params[:DELIVERYMODE]},
+        :address_delivery_attributes =>{
+          :designation => 'So colissimo',
+          :civility => params[:CECIVILITY],
+          :name => params[:CENAME],
+          :firstname => params[:CEFIRSTNAME],
+          :city => params[:CETOWN],
+          :zip_code => params[:CEZIPCODE],
+          :address => params[:CEADRESS3],
+          :address_2 => params[:CEADRESS4],
+          :country_id => Country.find_by_name('FRANCE').id,
+          :form_attributes => { :other_phone => params[:CEPHONENUMBER], :phone => params[:CEPHONENUMBER],:email => params[:CEEMAIL] }
+
+        }
+      )
+    else
+      self.update_attributes(
+        :order_shipping_attributes => { :name => 'So Colissimo', :price =>  params[:DYFORWARDINGCHARGES], :colissimo_type => params[:DELIVERYMODE]},
+        :address_delivery_attributes => {
+          :designation => 'So colissimo',
+          :civility => params[:CECIVILITY],
+          :name => params[:PRNAME],
+          :firstname => params[:CEFIRSTNAME],
+          :city => params[:PRTOWN],
+          :zip_code => params[:PRZIPCODE],
+          :address => params[:PRADRESS1],
+          :address_2 => params[:PRADRESS2],
+          :country_id => Country.find_by_name('FRANCE').id,
+          :form_attributes => { :colisssimo_point_id => params[:PRID], :other_phone => params[:CEPHONENUMBER], :phone => params[:CEPHONENUMBER],:email => params[:CEEMAIL] }
+        }
+      )
+    end
   end
 
 
