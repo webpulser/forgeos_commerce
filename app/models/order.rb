@@ -363,7 +363,7 @@ class Order < ActiveRecord::Base
 
   def to_colissimo_params
     setting = Setting.first
-    colissimo = setting.colissimo_methods
+    colissimo = setting.colissimo_method_list
     require "digest/sha1"
     order_id = "#{rand(1000)}m#{self.reference}"
 
@@ -374,12 +374,13 @@ class Order < ActiveRecord::Base
     else
       civ = 'MR'
     end
+    
     infos = {
         :ceAdress3 => self.address_delivery.address,
         :ceAdress4 => self.address_delivery.address_2,
         :ceZipCode => self.address_delivery.zip_code,
         :ceTown => self.address_delivery.city,
-        :cePhoneNumber => self.address_delivery.other_phone,
+        #:cePhoneNumber => self.address_delivery.phone,
         :ceCivility => civ,
         :ceName => self.user.lastname,
         :ceFirstName => self.user.firstname,
