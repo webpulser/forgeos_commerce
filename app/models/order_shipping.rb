@@ -12,4 +12,17 @@ class OrderShipping < ActiveRecord::Base
     end
     self.new(options)
   end
+
+  def self.from_colissimo(params)
+    case params[:DELIVERYMODE]
+      when 'DOM', 'RDV', 'DOS'
+        self.update_attributes(
+          :name => 'So Colissimo', :price =>  params[:DYFORWARDINGCHARGES], :colisssimo_type => params[:DELIVERYMODE]
+        )
+      else
+        self.update_attributes(
+          :name => 'So Colissimo', :price =>  params[:DYFORWARDINGCHARGES], :colisssimo_type => params[:DELIVERYMODE]
+        )
+    end
+  end
 end

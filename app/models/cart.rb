@@ -165,4 +165,37 @@ class Cart < ActiveRecord::Base
     return 0 unless options[:transporter_rule_id]
     options[:transporter_rule_id].to_i
   end
+
+  def from_colissimo
+    if params = self.options[:colissimo]
+      case params[:DELIVERYMODE]
+        when 'DOM', 'RDV', 'DOS'
+          AddressDelivery.create(
+            :designation => 'So colissimo',
+            :civility => params[:CECIVILITY],
+            :name => params[:CENAME],
+            :firstname => params[:CEFIRSTNAME],
+            :city => params[:CETOWN],
+            :zip_code => params[:CEZIPCODE],
+            :address => params[:CEADRESS3],
+            :address_2 => params[:CEADRESS4],
+            :country_id => Country.find_by_name('FRANCE').id,
+            :form_attributes => { :other_phone => params[:CEPHONENUMBER], :phone => params[:CEPHONENUMBER],:email => params[:CEEMAIL] }
+          )
+        else
+          AddressDelivery.create(
+            :designation => 'So colissimo',
+            :civility => params[:CECIVILITY],
+            :name => params[:PRNAME],
+            :firstname => params[:CEFIRSTNAME],
+            :city => params[:PRTOWN],
+            :zip_code => params[:PRZIPCODE],
+            :address => params[:PRADRESS1],
+            :address_2 => params[:PRADRESS2],
+            :country_id => Country.find_by_name('FRANCE').id,
+            :form_attributes => { :colisssimo_point_id => params[:PRID], :other_phone => params[:CEPHONENUMBER], :phone => params[:CEPHONENUMBER], :email => params[:CEEMAIL] }
+          )
+      end
+    end
+  end
 end

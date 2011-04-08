@@ -337,9 +337,15 @@ class Order < ActiveRecord::Base
         :reference => cart.id
       }
 
-      order.build_order_shipping(OrderShipping.from_cart(cart).attributes)
-      order.build_address_delivery(cart.address_delivery.attributes.update(:person_id => nil))
       order.build_address_invoice(cart.address_invoice.attributes.update(:person_id => nil))
+
+      if cart.options[:colissimo].nil?
+        order.build_order_shipping(OrderShipping.from_cart(cart).attributes)
+        order.build_address_delivery(cart.address_delivery.attributes.update(:person_id => nil))
+      else
+        order.build_order_shipping(OrderShipping.from_colissimo(cart.options[:colissimo]))
+        order.build_address_delivery(cart.address_from_colissimo)
+      end
 
       self.after_from_cart(order,cart) if self.respond_to?(:after_from_cart)
       return order
@@ -406,14 +412,13 @@ class Order < ActiveRecord::Base
           :civility => params[:CECIVILITY],
           :name => params[:CENAME],
           :firstname => params[:CEFIRSTNAME],
-          :email => params[:CEEMAIL],
-          :other_phone => params[:CEPHONENUMBER],
-          :phone => params[:CEPHONENUMBER],
           :city => params[:CETOWN],
           :zip_code => params[:CEZIPCODE],
           :address => params[:CEADRESS3],
           :address_2 => params[:CEADRESS4],
-          :country_id => Country.find_by_name('FRANCE').id
+          :country_id => Country.find_by_name('FRANCE').id,
+          :form_attributes => { :other_phone => params[:CEPHONENUMBER], :phone => params[:CEPHONENUMBER],:email => params[:CEEMAIL] }
+
         }
       )
     else
@@ -424,15 +429,12 @@ class Order < ActiveRecord::Base
           :civility => params[:CECIVILITY],
           :name => params[:PRNAME],
           :firstname => params[:CEFIRSTNAME],
-          :email => params[:CEEMAIL],
-          :other_phone => params[:CEPHONENUMBER],
-          :phone => params[:CEPHONENUMBER],
           :city => params[:PRTOWN],
           :zip_code => params[:PRZIPCODE],
           :address => params[:PRADRESS1],
           :address_2 => params[:PRADRESS2],
           :country_id => Country.find_by_name('FRANCE').id,
-          :form_attributes => { :colisssimo_point_id => params[:PRID] }
+          :form_attributes => { :colisssimo_point_id => params[:PRID], :other_phone => params[:CEPHONENUMBER], :phone => params[:CEPHONENUMBER],:email => params[:CEEMAIL] }
         }
       )
     end
