@@ -1,4 +1,4 @@
-require File.join(Rails.plugins[:forgeos_core].directory,'app','models','setting')
+require File.join(Rails.root,'vendor','plugins','forgeos_core','app','models','setting')
 class Setting < ActiveRecord::Base
   before_save :update_payment_methods, :update_so_colissimo_methods
   serialize :payment_methods
