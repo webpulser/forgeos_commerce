@@ -400,7 +400,7 @@ class Order < ActiveRecord::Base
     case params[:DELIVERYMODE]
     when 'DOM', 'RDV', 'DOS'
       self.update_attributes(
-        :order_shipping_attributes => { :name => 'So Colissimo', :price =>  params[:DYFORWARDINGCHARGES], :_type => params[:DELIVERYMODE]},
+        :order_shipping_attributes => { :name => 'So Colissimo', :price =>  params[:DYFORWARDINGCHARGES], :colisssimo_type => params[:DELIVERYMODE]},
         :address_delivery_attributes =>{
           :designation => 'So colissimo',
           :civility => params[:CECIVILITY],
@@ -418,7 +418,7 @@ class Order < ActiveRecord::Base
       )
     else
       self.update_attributes(
-        :order_shipping_attributes => { :name => 'So Colissimo', :price =>  params[:DYFORWARDINGCHARGES], :_type => params[:DELIVERYMODE]},
+        :order_shipping_attributes => { :name => 'So Colissimo', :price =>  params[:DYFORWARDINGCHARGES], :colisssimo_type => params[:DELIVERYMODE]},
         :address_delivery_attributes => {
           :designation => 'So colissimo',
           :civility => params[:CECIVILITY],
@@ -432,7 +432,7 @@ class Order < ActiveRecord::Base
           :address => params[:PRADRESS1],
           :address_2 => params[:PRADRESS2],
           :country_id => Country.find_by_name('FRANCE').id,
-          :get_point_id => params[:PRID],
+          :form_attributes => { :colisssimo_point_id => params[:PRID] }
         }
       )
     end
