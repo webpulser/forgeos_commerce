@@ -379,6 +379,12 @@ class Order < ActiveRecord::Base
     else
       civ = 'MR'
     end
+
+    if transporter = TransporterRule.find_by_id(cart.options[:transporter_rule_id])
+      price = transporter.variables
+    else
+      price = colissimo[:forwarding_charges]
+    end
     
     infos = {
         :ceAdress3 => self.address_delivery.address,
@@ -391,7 +397,7 @@ class Order < ActiveRecord::Base
         :ceFirstName => self.user.firstname,
         :ceEmail => self.user.email,
         :trClientNumber => self.user_id,
-        :dyForwardingCharges => colissimo[:forwarding_charges],
+        :dyForwardingCharges => price,
         :dyPreparationTime => colissimo[:preparation_time],
         :trOrderNumber => self.reference,
         :orderId => order_id,
@@ -438,8 +444,6 @@ class Order < ActiveRecord::Base
       )
     end
   end
-
-
 
 
   private

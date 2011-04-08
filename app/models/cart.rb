@@ -166,7 +166,7 @@ class Cart < ActiveRecord::Base
     options[:transporter_rule_id].to_i
   end
 
-  def from_colissimo
+  def address_from_colissimo
     if params = self.options[:colissimo]
       case params[:DELIVERYMODE]
         when 'DOM', 'RDV', 'DOS'
