@@ -6,7 +6,7 @@ class OrderController < ApplicationController
   before_filter :can_create_order?, :only => :create
   before_filter :special_offer, :only => [:new, :create, :update_transporter]
   before_filter :voucher, :only =>[:new, :create, :update_transporter]
-  before_filter :shipping_methods, :only => :new
+  #before_filter :shipping_methods, :only => :new
 
   # Save in session <i>address_invoice_id</i> and <i>address_delivery_id</i>.
   # Returns false if miss an address or if <i>shipping_method</i> is not validate by user, returns true else

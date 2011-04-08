@@ -371,8 +371,15 @@ class Order < ActiveRecord::Base
     colissimo = setting.colissimo_method_list
     require "digest/sha1"
     order_id = "#{rand(1000)}m#{self.reference}"
+    cart = Cart.find_by_id(self.reference)
 
-    signature_tmp = "#{colissimo[:fo]}#{self.user.lastname}#{colissimo[:preparation_time]}#{colissimo[:forwarding_charges]}#{self.user_id}#{self.reference}#{order_id}#{colissimo[:sha]}"
+    if transporter = TransporterRule.find_by_id(cart.options[:transporter_rule_id])
+      price = transporter.variables
+    else
+      price = colissimo[:forwarding_charges]
+    end
+
+    signature_tmp = "#{colissimo[:fo]}#{self.user.lastname}#{colissimo[:preparation_time]}#{price}#{self.user_id}#{self.reference}#{order_id}#{colissimo[:sha]}"
     signature = Digest::SHA1.hexdigest(signature_tmp)
     unless user.civility.nil?
       civ = I18n.t("civility.label.#{self.user.civility}").upcase
@@ -380,12 +387,7 @@ class Order < ActiveRecord::Base
       civ = 'MR'
     end
 
-    if transporter = TransporterRule.find_by_id(cart.options[:transporter_rule_id])
-      price = transporter.variables
-    else
-      price = colissimo[:forwarding_charges]
-    end
-    
+
     infos = {
         :ceAdress3 => self.address_delivery.address,
         :ceAdress4 => self.address_delivery.address_2,
