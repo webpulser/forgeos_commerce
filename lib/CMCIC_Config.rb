@@ -4,7 +4,7 @@
 # You may for instance put this file in another directory and/or change its name       #
 ########################################################################################
 setting = Setting.first
-if cmc_cic_tmp = setting.payment_method_list[:cmc_cic]
+if setting and cmc_cic_tmp = setting.payment_method_list[:cmc_cic]
   env = cmc_cic_tmp[:test] == 1 ? :development : :production
   cmc_cic = cmc_cic_tmp[env]
 
