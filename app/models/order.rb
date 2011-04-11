@@ -379,7 +379,7 @@ class Order < ActiveRecord::Base
       price = colissimo[:forwarding_charges]
     end
 
-    signature_tmp = "#{colissimo[:fo]}#{self.user.lastname}#{colissimo[:preparation_time]}#{price}#{self.user_id}#{self.reference}#{order_id}#{colissimo[:sha]}"
+    signature_tmp = "#{colissimo[:fo]}#{self.user.lastname.to_s.parameterize(' ').upcase}#{colissimo[:preparation_time]}#{price}#{self.user_id}#{self.reference}#{order_id}#{colissimo[:sha]}"
     signature = Digest::SHA1.hexdigest(signature_tmp)
     unless user.civility.nil?
       civ = I18n.t("civility.label.#{self.user.civility}").upcase
@@ -389,14 +389,14 @@ class Order < ActiveRecord::Base
 
 
     infos = {
-        :ceAdress3 => self.address_delivery.address,
-        :ceAdress4 => self.address_delivery.address_2,
-        :ceZipCode => self.address_delivery.zip_code,
-        :ceTown => self.address_delivery.city,
+        :ceAdress3 => cart.address_delivery.address.to_s.parameterize(' ').upcase,
+        :ceAdress4 => cart.address_delivery.address_2.to_s.parameterize(' ').upcase,
+        :ceZipCode => cart.address_delivery.zip_code,
+        :ceTown => cart.address_delivery.city.to_s.parameterize(' ').upcase,
         #:cePhoneNumber => self.address_delivery.phone,
         :ceCivility => civ,
-        :ceName => self.user.lastname,
-        :ceFirstName => self.user.firstname,
+        :ceName => self.user.lastname.to_s.parameterize(' ').upcase,
+        :ceFirstName => self.user.firstname.to_s.parameterize(' ').upcase,
         :ceEmail => self.user.email,
         :trClientNumber => self.user_id,
         :dyForwardingCharges => price,
