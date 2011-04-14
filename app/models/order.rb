@@ -328,7 +328,9 @@ class Order < ActiveRecord::Base
         OrderDetail.from_free_product(product).attributes
       end
 
-      order = self.new
+      order = self.find_or_initialize_by_reference(cart.id)
+      order.order_details.destroy_all
+
       order.attributes = {
         :user_id => cart.user_id,
         :voucher_discount => cart.voucher_discount_price,
