@@ -181,16 +181,19 @@ private
 
   def get_available_transporters
     @transporter_ids = []
-    engine :transporter_engine do |e|
-      rule_builder = Transporter.new(e)
-      rule_builder.transporter_ids = @transporter_ids
-      rule_builder.order = @order
-      rule_builder.rules
-      @order.order_details.each do |order_detail|
-        e.assert order_detail.product
+    begin
+      engine :transporter_engine do |e|
+        rule_builder = Transporter.new(e)
+        rule_builder.transporter_ids = @transporter_ids
+        rule_builder.order = @order
+        rule_builder.rules
+        @order.order_details.each do |order_detail|
+          e.assert order_detail.product
+        end
+        e.assert @order
+        e.match
       end
-      e.assert @order
-      e.match
+    rescue Exception
     end
     @available_transporters = TransporterRule.find_all_by_id(@transporter_ids.uniq)
   end
