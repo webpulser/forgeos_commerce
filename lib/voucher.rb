@@ -15,7 +15,7 @@ class Voucher < Ruleby::Rulebook
 
         # Voucher for a product price discount
         if voucher.variables[:discount] and product = (context[:product] || context[:pack])
-          rate = voucher.variables[:discount]
+          rate = voucher.variables[:discount].to_f
           options = {:voucher_discount => false}
           discount_price = voucher.variables[:fixed_discount] ? rate : (product.price(options) * rate).to_f / 100
           product.voucher_discount_price = discount_price
