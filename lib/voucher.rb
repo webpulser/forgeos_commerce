@@ -29,8 +29,9 @@ class Voucher < Ruleby::Rulebook
 
         # Voucher for a cart total_amount discount
         if voucher.variables[:cart_discount]
-          rate = voucher.variables[:cart_discount]
+          rate = voucher.variables[:cart_discount].to_f
           discount_price = voucher.variables[:fixed_discount] ? rate : (@cart.total({:cart_voucher_discount => false, :product_voucher_discount => false}) * rate).to_f / 100
+          p "discount_price : #{discount_price}"
           @cart.voucher_discount_price = discount_price
           @cart.voucher_discount = (voucher.variables[:fixed_discount] ? "-#{rate}" :  "-#{rate}%")
         end
