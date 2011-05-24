@@ -47,13 +47,15 @@ class Order < ActiveRecord::Base
   end
 
   has_many :order_details, :dependent => :destroy
-  has_one :order_shipping, :dependent => :destroy
   accepts_nested_attributes_for :order_details, :allow_destroy => true
+  has_many :products, :through => :order_details
+
+  has_one :order_shipping, :dependent => :destroy
   accepts_nested_attributes_for :order_shipping
 
   has_one :address_delivery, :dependent => :destroy
-  has_one :address_invoice, :dependent => :destroy
   accepts_nested_attributes_for :address_delivery
+  has_one :address_invoice, :dependent => :destroy
   accepts_nested_attributes_for :address_invoice
 
   belongs_to :user
@@ -84,7 +86,7 @@ class Order < ActiveRecord::Base
   PAYPAL_CERT_PEM = File.exist?("#{Rails.root}/certs/paypal_cert.pem") ? File.read("#{Rails.root}/certs/paypal_cert.pem") : ''
   APP_CERT_PEM = File.exist?("#{Rails.root}/certs/app_cert.pem") ? File.read("#{Rails.root}/certs/app_cert.pem") : ''
   APP_KEY_PEM = File.exist?("#{Rails.root}/certs/app_key.pem") ? File.read("#{Rails.root}/certs/app_key.pem") : ''
-  
+
   # GENERATE ENCRYPTED FORM FOR CHECKOUT
   def paypal_encrypted
     setting = Setting.first
@@ -111,7 +113,7 @@ class Order < ActiveRecord::Base
     end
     encrypt_for_paypal(values)
   end
-  
+
   def encrypt_for_paypal(values)
     begin
       signed = OpenSSL::PKCS7::sign(OpenSSL::X509::Certificate.new(APP_CERT_PEM), OpenSSL::PKey::RSA.new(APP_KEY_PEM, ''), values.map { |k, v| "#{k}=#{v}" }.join("\n"), [], OpenSSL::PKCS7::BINARY)
@@ -120,8 +122,8 @@ class Order < ActiveRecord::Base
       ''
     end
   end
-  
-  
+
+
   def cyberplus_encrypted
     ts = Time.now
     setting = Setting.first
@@ -153,17 +155,17 @@ class Order < ActiveRecord::Base
              :trans_date, :validation_mode, :capture_delay,
              :payment_config, :payment_cards, :amount,
              :currency, :key].map{ |key| payment[key] }
-             
+
     payment[:signature] = SHA1.new(sign.join('+'))
     return payment
   end
-  
+
   def cmc_cic_encrypted
     setting = Setting.first
     cmc_cic_tmp = setting.payment_method_list[:cmc_cic]
     env = cmc_cic_tmp[:test] == 1 ? :development : :production
     cmc_cic = cmc_cic_tmp[env]
-    
+
     sReference = "#{rand(1000)}A#{reference}" # Reference: unique, alphaNum (A-Z a-z 0-9), 12 characters max
     sMontant = '%.2f' % total # Amount : format  "xxxxx.yy" (no spaces)
     sDevise  = "EUR" # Currency : ISO 4217 compliant
@@ -199,7 +201,7 @@ class Order < ActiveRecord::Base
     }
     return payment
   end
-  
+
   def elysnet_encrypted
     setting = Setting.first
     elysnet_tmp = setting.payment_method_list[:elysnet]
@@ -223,7 +225,7 @@ class Order < ActiveRecord::Base
     tab = result.split("!")
     payment = tab[3]
     return payment
-  end 
+  end
 
   # Returns order's amount
   def total(options = {})
@@ -287,11 +289,7 @@ class Order < ActiveRecord::Base
   end
 
   def weight
-    weight=0
-    self.order_details.each do |product|
-      weight+=product.product.weight
-    end
-    return weight
+    products.sum(:weight)
   end
 
   def special_offer_discount_products
@@ -357,16 +355,16 @@ class Order < ActiveRecord::Base
 
   def valid_shipment?
     # AddressInvoice and AddressDelivery is obligatory for valid an order
-    return self.address_invoice.valid? && self.address_delivery.valid?
+    (address_invoice and address_invoice.valid?) and (address_delivery and address_delivery.valid?)
   end
 
   def valid_for_payment?
-    return self.valid_shipment?
+    valid_shipment?
   end
 
   def packaging_price
     #TODO get config from cart config
-    return 0
+    0
   end
 
 
