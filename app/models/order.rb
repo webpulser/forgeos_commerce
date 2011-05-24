@@ -58,7 +58,9 @@ class Order < ActiveRecord::Base
 
   belongs_to :user
   validates_presence_of :user_id
-  validates_associated :address_delivery, :address_invoice, :order_shipping
+  validates_associated :address_delivery, :if => :needs_address_delivery?
+  validates_associated :address_invoice, :if => :needs_address_invoice?
+  validates_associated :order_shipping, :if => :needs_order_shipping?
 
   define_index do
     indexes status, :sortable => true
@@ -479,5 +481,17 @@ class Order < ActiveRecord::Base
     when :canceled
       User.increment_counter(:patronage_count,self.user.godfather_id)
     end
+  end
+
+  def needs_order_shipping?
+    true
+  end
+
+  def needs_address_delivery?
+    true
+  end
+
+  def needs_address_invoice?
+    true
   end
 end
