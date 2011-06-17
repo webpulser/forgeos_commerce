@@ -20,10 +20,10 @@
           - user = @order.user
           .main-infos-cutomer
             %h4.small-icons= t('user', :count => 1).capitalize
-            = link_to user.fullname, [:admin, user]
+            = link_to h(user.fullname), [:admin, user]
             %p= "#{user.orders.count} #{t('order', :count => user.orders.count)} #{t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
-            %p= user.phone
-            %p.customer-email= user.email
+            %p=h user.phone
+            %p.customer-email=h user.email
           .main-info-separation
           .main-infos-note
             %h4.small-icons= t('order.user_note').capitalize
@@ -94,18 +94,18 @@
         .order-delivery
           .order-delivery-adress
             %h4.small-icons= t('address.delivery', :count => 1).capitalize
-            %p= @order.address_delivery.address
+            %p=h @order.address_delivery.address
             %p
-              = @order.address_delivery.zip_code
-              = @order.address_delivery.city
+              =h @order.address_delivery.zip_code
+              =h @order.address_delivery.city
             %p= @order.address_delivery.country.name
           .main-info-separation
           .order-billing-adress
             %h4.small-icons= t('address.invoice', :count => 1).capitalize
-            %p= @order.address_invoice.address
+            %p=h @order.address_invoice.address
             %p
-              = @order.address_invoice.zip_code
-              = @order.address_invoice.city
+              =h @order.address_invoice.zip_code
+              =h @order.address_invoice.city
             %p= @order.address_invoice.country.name
           .main-info-separation
           .order-delivery-method

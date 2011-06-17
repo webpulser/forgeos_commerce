@@ -94,7 +94,7 @@
               - if user = User.find_by_id(user_id)
                 %tr{:class => cycle('odd','even')}
                   %td.customer-bought-amount= price_with_currency total
-                  %td= user ? link_to(user.fullname, [:admin, user]) : ''
+                  %td= user ? link_to(h(user.fullname), [:admin, user]) : ''
           .clear
           = link_to t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
 
@@ -104,13 +104,13 @@
               - @customers_new.each do |customer|
                 %tr{ :class => cycle('odd','even') }
                   %td
-                    = link_to customer.fullname, [:admin, customer]
+                    = link_to h(customer.fullname), [:admin, customer]
                   %td
                     = t('user.joined_on').capitalize
                     = customer.created_at.to_s(:short)
                   %td.email
-                    = mail_to customer.email, customer.email
-            
+                    = mail_to h(customer.email), customer.email
+
           .clear
           = link_to t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
 

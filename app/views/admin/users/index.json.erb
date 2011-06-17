@@ -6,8 +6,8 @@
       klass = user.active? ? 'see-on' : 'see-off'
       [
       content_tag(:div, '<div class="handler"></div><div class="small-icons user-ico"></div>', :id => link_id, :class => 'handler_container'),
-      content_tag(:div, link_to(user.fullname, [:edit, :admin, user]), :class => 'user-name'),
-      content_tag(:div, mail_to(user.email, user.email, :class => 'truncate', :title => user.email), :class => 'email'),
+      content_tag(:div, link_to(h(user.fullname), [:edit, :admin, user]), :class => 'user-name'),
+      content_tag(:div, mail_to(h(user.email), user.email, :class => 'truncate', :title => user.email), :class => 'email'),
       user.orders.count,
       user.total_orders.blank? ? t('none').capitalize : content_tag(:div, price_with_currency(user.total_orders)),
       content_tag( :div, (user.orders.empty? ?  t('none').capitalize : user.orders.last(:order => 'created_at DESC' ).created_at.to_date), :class => 'last-date'),

@@ -64,7 +64,7 @@
                   %td{ :class => "table-state #{order.status}"}
                     = t(order.status, :scope => [:order,:status]).capitalize
                   %td.table-customer
-                    = order.user.fullname if order.user
+                    =h order.user.fullname if order.user
                   %td.table-time
                     = t(:ago, :time => time_ago_in_words(order.created_at))
           = link_to t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
@@ -80,7 +80,7 @@
                   %td{ :class => "table-state #{order.status}"}
                     = t(order.status, :scope => [:order,:status]).capitalize
                   %td.table-customer
-                    = order.user.fullname if order.user
+                    =h order.user.fullname if order.user
                   %td.table-time
                     = t(:ago, :time => time_ago_in_words(order.created_at))
           = link_to t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'

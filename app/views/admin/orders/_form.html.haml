@@ -15,11 +15,11 @@
   #content.grid_16.alpha.omega
     #order-see.grid_12.alpha
       .order-see-wrap
+        - user = order.user
         - if order.new_record?
           .fieldset
             %h3= t('order.main_infos')
             .main-infos
-              - user = order.user
               .main-infos-cutomer
                 %h4.small-icons= t('user', :count => 1).capitalize
                 = f.select :user_id, User.all(:order => 'firstname ASC, lastname ASC').collect {|u| [u.fullname, u.id]}, {:prompt => t('please_select')}
@@ -31,11 +31,10 @@
             .main-infos
               .main-infos-cutomer
                 %h4.small-icons= t('user', :count => 1).capitalize
-                - user = order.user
-                = link_to user.fullname, [:admin, user]
+                = link_to h(user.fullname), [:admin, user]
                 %p= "#{user.orders.count} #{t('order', :count => user.orders.count)} #{t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
-                %p= user.phone
-                %p.customer-email= user.email
+                %p=h user.phone
+                %p.customer-email=h user.email
               .main-info-separation
               /
                 .main-infos-payment
@@ -50,7 +49,7 @@
                 .main-info-separation
               .main-infos-note
                 %h4.small-icons= t('order.user_note').capitalize
-                =# order.user_note
+                =#h order.user_note
             .clear
           .clear
 

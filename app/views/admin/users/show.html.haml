@@ -1,6 +1,6 @@
 - order_states_for_select = Order.aasm_states.collect{ |state| [t(state.name, :scope => [:order,:status]),state.name.to_s] }
 .backgrounds.big-header
-  %h1= @user.fullname
+  %h1=h @user.fullname
   .interact-links
     = link_to t('user.update.action'), [:edit, :admin, @user], :class => 'backgrounds interact-button'
     = t(:or)
@@ -15,7 +15,7 @@
         %span.small-icons.order= price_with_currency @user.orders.all.sum(&:total)
         = "#{t('user.spent_on')} #{@user.orders.length}"
         = t('order', :count => @user.orders.length)
-    %table#table.datatable    
+    %table#table.datatable
     = dataTables_tag :url => admin_orders_path(:filter => 'user', :user_id => @user.id, :skin => 'read_only', :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false}","{'sTitle':'#{t(:id)}'}","{'sTitle':'#{t(:total)}'}","{'sTitle':'#{t(:product, :count => 1)}'}","{'sTitle':'#{t(:created_on)}'}","{'sTitle':'#{t(:customer, :count => 1)}','bVisible': false}","{'sTitle':'#{t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
     .padding-wrap
       .fieldset
@@ -23,32 +23,32 @@
         .main-infos
           .main-infos-cutomer
             %h4.small-icons= t('user.contact_infos').capitalize
-            %p= @user.phone
-            %p.customer-email= @user.email
+            %p=h @user.phone
+            %p.customer-email=h @user.email
           .main-info-separation.big-separation
           .order-delivery-adress
             %h4.small-icons= t('address.delivery', :count => 1).capitalize
             -@user.address_deliveries.each do |address_delivery|
-              %p= address_delivery.address
-              %p= address_delivery.address_2 if address_delivery.address_2
+              %p=h address_delivery.address
+              %p=h address_delivery.address_2 if address_delivery.address_2
               %p
-                = address_delivery.zip_code
-                = address_delivery.city
-              %p= address_delivery.country.name
+                =h address_delivery.zip_code
+                =h address_delivery.city
+              %p=h address_delivery.country.name
               %br
               -if address_delivery == @user.address_deliveries.first and @user.address_deliveries.length > 1
                 %h4= t('address.delivery', :count => 2).capitalize
           .main-info-separation.big-separation
           .order-billing-adress
             %h4.small-icons= t('address.invoice', :count => 1).capitalize
-            %p= @user.address_invoice.address
-            %p= @user.address_invoice.address_2 if @user.address_invoice.address_2
+            %p=h @user.address_invoice.address
+            %p=h @user.address_invoice.address_2 if @user.address_invoice.address_2
             %p
-              = @user.address_invoice.zip_code
-              = @user.address_invoice.city
+              =h @user.address_invoice.zip_code
+              =h @user.address_invoice.city
             %p= @user.address_invoice.country.name
         .clear
-      
+
   #right-sidebar.grid_4.omega.alpha
     .step
       =mail_to @user.email, t('user.contact').capitalize, :class => 'small-icons contact'
@@ -69,5 +69,5 @@
           = @user.created_at.to_date
           %br
           = t('by')
-          = @user.fullname
+          =h @user.fullname
   .clear
