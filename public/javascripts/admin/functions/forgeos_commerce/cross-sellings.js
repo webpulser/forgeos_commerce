@@ -8,11 +8,11 @@ function add_cross_to_product(){
       var id = row.slice(-4,-3);
       var price = row.slice(-1);
       var sku = row.slice(-2,-1);
-      var nb_tr = $('.looks_products').find('tr').length;
+      var nb_tr = jQuery('.looks_products').find('tr').length;
       var class = 'even';
 	  
 	  if (nb_tr != 0){
-      	var class =  $('.looks_products').find('tr:last').attr('class');
+      	var class =  jQuery('.looks_products').find('tr:last').attr('class');
 		if(class.match('even')){
 			class = 'odd'
 		}else{
@@ -20,12 +20,12 @@ function add_cross_to_product(){
 		}
 	  }
 		
-      $.get('/admin/get_cross_selling_id', {
-        product_id: parseInt($('#product_id').html()),
+      jQuery.get('/admin/get_cross_selling_id', {
+        product_id: parseInt(jQuery('#product_id').html()),
         cross_selling_id: id,
 		class: class,
       }, function(data){
-        $('.looks_products').append(data);
+        jQuery('.looks_products').append(data);
       })
     }
   });

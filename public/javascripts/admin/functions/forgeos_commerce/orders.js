@@ -1,29 +1,29 @@
 function node_to_string(node){
   node.wrap('<div id="clone_wrapper"></div>');
-  var output = $('#clone_wrapper').html();
-  $('#clone_wrapper').remove();
+  var output = jQuery('#clone_wrapper').html();
+  jQuery('#clone_wrapper').remove();
   return output;
 }
 
 function add_product_to_order_detail(id, name, sku, price, price_with_currency, img){
   // add order detail to datatable
-  var current_table = $('#table-order-details').dataTableInstance();
-  var remove_link = '<a id="order_detail_'+false_id+'" class="small-icons destroy-link" onclick="remove_order_detail($(this));; return false;" href="#"/>';
+  var current_table = jQuery('#table-order-details').dataTableInstance();
+  var remove_link = '<a id="order_detail_'+false_id+'" class="small-icons destroy-link" onclick="remove_order_detail(jQuery(this));; return false;" href="#"/>';
 
 
   // add hidden field for new order detail and update total
-  var new_order_detail = $('<div id="order_detail_' + false_id + '">').html($('#empty_order_detail').html().replace(/EMPTY_ID/g, false_id));
+  var new_order_detail = jQuery('<div id="order_detail_' + false_id + '">').html(jQuery('#empty_order_detail').html().replace(/EMPTY_ID/g, false_id));
   var base_field_id = '#order_order_details_attributes_'+false_id+'_';
 
-  $(new_order_detail).find(base_field_id+'product_id').val(id);
-  $(new_order_detail).find(base_field_id+'name').val(name);
-  $(new_order_detail).find(base_field_id+'price').val(price);
-  $(new_order_detail).find(base_field_id+'sku').val(sku);
-  $('#order_details').append(new_order_detail);
+  jQuery(new_order_detail).find(base_field_id+'product_id').val(id);
+  jQuery(new_order_detail).find(base_field_id+'name').val(name);
+  jQuery(new_order_detail).find(base_field_id+'price').val(price);
+  jQuery(new_order_detail).find(base_field_id+'sku').val(sku);
+  jQuery('#order_details').append(new_order_detail);
 
-  name = name + node_to_string($(new_order_detail).find(base_field_id+'product_id')) + node_to_string($(new_order_detail).find(base_field_id+'name'));
-  sku = sku + node_to_string($(new_order_detail).find(base_field_id+'sku'));
-  price = price + node_to_string($(new_order_detail).find(base_field_id+'price'));
+  name = name + node_to_string(jQuery(new_order_detail).find(base_field_id+'product_id')) + node_to_string(jQuery(new_order_detail).find(base_field_id+'name'));
+  sku = sku + node_to_string(jQuery(new_order_detail).find(base_field_id+'sku'));
+  price = price + node_to_string(jQuery(new_order_detail).find(base_field_id+'price'));
 
   current_table.fnAddData([img,name,sku,price,'1',price_with_currency,remove_link]);
   //update_order_total();
@@ -32,49 +32,49 @@ function add_product_to_order_detail(id, name, sku, price, price_with_currency, 
 
 // hide order detail container and set order detail delete value to 1
 function remove_order_detail(destroy_link){
-  var current_table = $('#table-order-details').dataTableInstance();
+  var current_table = jQuery('#table-order-details').dataTableInstance();
   var base_field_id = '#order_order_details_attributes_'+get_rails_element_id(destroy_link)+'_';
-  var detail_id = $(base_field_id+'id').val();
+  var detail_id = jQuery(base_field_id+'id').val();
 
   // remove row
   current_table.fnDeleteRow(
-      current_table.fnGetPosition($(destroy_link).parents('tr:first')[0])
+      current_table.fnGetPosition(jQuery(destroy_link).parents('tr:first')[0])
   );
 
   // set order detail deleted
-  $(base_field_id+'_destroy').val(1);
+  jQuery(base_field_id+'_destroy').val(1);
 
   // remove special offer and voucher discount detail
-  $('.special_order_detail_'+ detail_id).remove();
-  $('.voucher_order_detail_'+ detail_id).remove();
+  jQuery('.special_order_detail_'+ detail_id).remove();
+  jQuery('.voucher_order_detail_'+ detail_id).remove();
 
   update_order_total();
 }
 
 function update_order_total(){
-  var form = $('form.edit_order');
-  var url = $(form).attr('action') + '/total';
+  var form = jQuery('form.edit_order');
+  var url = jQuery(form).attr('action') + '/total';
 
-  $.ajax({
+  jQuery.ajax({
     url: url,
-    data: $(form).serialize(),
+    data: jQuery(form).serialize(),
     success:function(request){
-      $('span.order-price').text(request.total);
-      $('span.order-total').text(request.total);
-      $('span.order-subtotal').text(request.subtotal);
-      $('#transporter_rebuild').val(0);
+      jQuery('span.order-price').text(request.total);
+      jQuery('span.order-total').text(request.total);
+      jQuery('span.order-subtotal').text(request.subtotal);
+      jQuery('#transporter_rebuild').val(0);
       if (request.rebuild_transporter == 1){
         // remove old transporters
-        $('#order_shipping').children().remove();
+        jQuery('#order_shipping').children().remove();
 
         // remove custom select
-        $('.delivery-method').removeClass('enhanced');
-        $('.delivery-method').children('.dropdown').remove();
+        jQuery('.delivery-method').removeClass('enhanced');
+        jQuery('.delivery-method').children('.dropdown').remove();
 
         // add new available transporters
         for (var i=0; i<request.available_transporters.length; i++){
 	      var transporter_rule = request.available_transporters[i].transporter_rule;
-	      $('#order_shipping').append('<option value="'+transporter_rule.variables+'">'+transporter_rule.name+'</options>');
+	      jQuery('#order_shipping').append('<option value="'+transporter_rule.variables+'">'+transporter_rule.name+'</options>');
 	    }
 	  }
       //$('span.order-taxes').text(request.taxes);

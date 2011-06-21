@@ -11,7 +11,7 @@ function add_item_on_add_click() {
   new_choice += '</li>';
 
   false_id--;
-  $('.sortable-choices').append(new_choice);
+  jQuery('.sortable-choices').append(new_choice);
   return false;
 }
 

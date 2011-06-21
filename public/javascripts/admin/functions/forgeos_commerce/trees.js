@@ -1,5 +1,5 @@
 function init_transporter_tree(selector, type, source) {
-  $(selector).tree({
+  jQuery(selector).tree({
     data:{
       type: 'json',
       opts: {
@@ -13,17 +13,17 @@ function init_transporter_tree(selector, type, source) {
     },
     callback: {
       onload: function(TREE_OBJ){
-        tree_id = $(TREE_OBJ.container).attr('id');
+        tree_id = jQuery(TREE_OBJ.container).attr('id');
         display_notifications();
-        $(TREE_OBJ.container).removeClass('tree-default');
-        $(TREE_OBJ.container).find('a').each(function(index,selector){
-          var category_id = get_rails_element_id($(selector).parent('li'));
-          $(selector).droppable({
+        jQuery(TREE_OBJ.container).removeClass('tree-default');
+        jQuery(TREE_OBJ.container).find('a').each(function(index,selector){
+          var category_id = get_rails_element_id(jQuery(selector).parent('li'));
+          jQuery(selector).droppable({
             hoverClass: 'ui-state-hover',
             drop:function(ev, ui){
-              $.ajax({
-              data: {element_id:get_rails_element_id($(ui.draggable)), authenticity_token: encodeURIComponent(AUTH_TOKEN)},
-              success:function(request){$.tree.focused().refresh();},
+              jQuery.ajax({
+              data: {element_id:get_rails_element_id(jQuery(ui.draggable)), authenticity_token: encodeURIComponent(window._forgeos_js_vars.token)},
+              success:function(request){jQuery.tree.focused().refresh();},
               type:'post',
               url:'/admin/geo_zones/' + category_id + '/add_element'
               });
