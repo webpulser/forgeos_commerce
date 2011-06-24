@@ -11,10 +11,13 @@ jQuery(document).ready(function(){
        jQuery('#cross-productSelectDialog').dialog('close');
      }
     },
-    open: function(){ jQuery('table-products-cross').dataTableInstance().fnDraw(); }
+    open: function(e,ui){
+      eval(jQuery('#table-products-cross').data('dataTables_init_function')+'()');
+    }
   });
 
-  jQuery('#cross-product.look').click(function(){
+  jQuery('#cross-product.look').click(function(e){
+    e.preventDefault();
     jQuery('#cross-productSelectDialog').dialog('open');
     return false;
   });

@@ -26,7 +26,7 @@
     = link_to_function '', "remove_rule(this,'action-condition')", :class => 'small-icons red-delete-icon'
     %br
     .clear
-    
+
   %p.action-3-cart.pattern
     %span= select_tag 'act[targets][]', options_for_select([[t(:product,:scope=>[:special_offer,:action]),1],[t(:shipping,:scope=>[:special_offer,:action]),2],[t(:cart,:scope=>[:special_offer,:action]),3]],3), {:onchange => "change_action(this,'action-condition','cart')"}
     %span= select_tag 'act[conds][]', options_for_select(@discount_type)
@@ -34,7 +34,7 @@
     = link_to_function '', "add_action('action-1-cart')", :class => 'small-icons green-add-icon'
     = link_to_function '', "remove_rule(this,'action-condition')", :class => 'small-icons red-delete-icon'
     %br
-    .clear    
+    .clear
 
 
   %p.action-1-productincart.pattern

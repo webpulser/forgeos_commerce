@@ -14,7 +14,6 @@ function init_transporter_tree(selector, type, source) {
     callback: {
       onload: function(TREE_OBJ){
         tree_id = jQuery(TREE_OBJ.container).attr('id');
-        display_notifications();
         jQuery(TREE_OBJ.container).removeClass('tree-default');
         jQuery(TREE_OBJ.container).find('a').each(function(index,selector){
           var category_id = get_rails_element_id(jQuery(selector).parent('li'));

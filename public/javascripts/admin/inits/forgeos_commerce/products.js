@@ -61,7 +61,9 @@ jQuery(document).ready(function(){
         jQuery('#imageSelectDialog').dialog('close');
       }
     },
-    open: function(){ jQuery('#image-table:visible,#thumbnail-table:visible').dataTableInstance().fnDraw(); }
+    open: function(e,ui){
+      eval(jQuery('#image-table:visible,#thumbnail-table:visible').data('dataTables_init_function')+'()');
+    }
   });
 
   jQuery('#fileSelectDialog').dialog({
@@ -86,7 +88,9 @@ jQuery(document).ready(function(){
         jQuery('#fileSelectDialog').dialog('close');
       }
     },
-    open: function(){ jQuery('#table-files').dataTableInstance().fnDraw(); }
+    open: function(e,ui){
+      eval(jQuery('#table-files').data('dataTables_init_function')+'()');
+    }
   });
 
   jQuery('.add_a_size').live('click', function(){
@@ -127,7 +131,8 @@ jQuery(document).ready(function(){
     return false;
   });
 
-  jQuery('.remove_this_size').live('click', function(){
+  jQuery('.remove_this_size').live('click', function(e){
+    e.preventDefault();
     var block = jQuery(this).parents('tr');
     if (parseInt(get_rails_element_id(block.find('input:first'))) < 0) {
       block.remove();

@@ -11,10 +11,13 @@ jQuery(document).ready(function(){
        jQuery('#pack-productSelectDialog').dialog('close');
      }
     },
-    open: function(){ jQuery('table-products').dataTableInstance().fnDraw(); }
+    open: function(e,ui){
+      eval(jQuery('#table-products').data('dataTables_init_function')+'()');
+    }
   });
 
-  jQuery('#add-product').live('click',function(){
+  jQuery('#add-product').live('click',function(e){
+    e.preventDefault();
     jQuery('#pack-productSelectDialog').dialog('open');
     return false;
   });
@@ -31,13 +34,12 @@ jQuery(document).ready(function(){
        jQuery('#redirection-productSelectDialog').dialog('close');
      }
     },
-    open: function(){ jQuery('table-products').dataTableInstance().fnDraw(); }
+    open: function(){ eval(jQuery('#table-redirections').data('dataTables_init_function')+'()');}
   });
 
-  jQuery('#add-redirection-product').live('click',function(){
+  jQuery('#add-redirection-product').live('click',function(e){
+    e.preventDefault();
     jQuery('#redirection-productSelectDialog').dialog('open');
     return false;
   });
-
-
 });

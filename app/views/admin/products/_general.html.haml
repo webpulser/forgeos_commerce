@@ -107,7 +107,7 @@
 #right-sidebar.grid_4.omega
   .step.status.open
     %div
-      = f.select :active, [[t('unpublished'), 0], [t('published'), 1]], :selected => product.active ? 1 : 0
+      = f.select :active, [[t('unpublished'), 0], [t('published'), 1]], { :selected => (product.active ? 1 : 0) }
     .clear
       = f.label :product_type_id, "#{t('product_type', :count => 1).capitalize}<sup class=\"required\">*</sup>"
     %div

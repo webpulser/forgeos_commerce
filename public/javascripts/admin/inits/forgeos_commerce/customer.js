@@ -41,10 +41,10 @@ jQuery(document).ready(function(){
       var val_firstname = jQuery('#user_firstname').val();
       var val_civility = jQuery('#user_civility').val();
       var custom_select_civility = jQuery('#user_civility').siblings('.dropdown').find('.dropdown_toggle').html();
-      
+
       jQuery('#user_address_deliveries_attributes_0_name').val(val_name);
       jQuery('#user_address_deliveries_attributes_0_firstname').val(val_firstname);
-      jQuery('#user_address_deliveries_attributes_0_civility').val(val_civility); 
+      jQuery('#user_address_deliveries_attributes_0_civility').val(val_civility);
       jQuery('#user_address_deliveries_attributes_0_civility').siblings('.dropdown').find('.dropdown_toggle').html(custom_select_civility);
     } else {
       jQuery('#user_address_deliveries_attributes_0_name').val('');

@@ -1,6 +1,6 @@
 <%
   order_states_for_select = Order.aasm_states.collect{ |state| [t(state.name, :scope => [:order,:status]),state.name.to_s] }
-  select_class = (params[:skin] == 'read_only' ? 'order-change-status disabled' : 'order-change-status')
+  select_class = (params[:skin] == 'read_only' ? 'customize order-change-status disabled' : 'customize order-change-status')
   output = {
     :iTotalDisplayRecords => @orders.total_entries || 0,
     :aaData => @orders.collect do |order|

@@ -32,8 +32,9 @@
       %tr
         %td
 
-= dataSlides_tag :id => 'thumbnail-table', :url => admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture', :mode => 'selection'), :columns => [ '{ "bSortable": true, "bSearchable": true, "sType": "string", "bUseRendered": true, "fnRender": null, "iDataSort": 0, "nTf": null, "nTh": function(){$(".thead").find(".th");}, "sWidth": "0px"}','{"bVisible": false}', '{ "bVisible": false }', '{ "bVisible": false}' ]
-= dataTables_tag :id => 'image-table', :url => admin_attachments_path(:format => :json, :file_type => 'picture', :mode => 'selection'), :columns => ["{'sClass':'th-checkbox-container', 'bSortable': false }","{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}']
+= dataSlides_tag :id => 'thumbnail-table', :url => admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture', :mode => 'selection'), :columns => [ '{ "bSortable": true, "bSearchable": true, "sType": "string", "bUseRendered": true, "fnRender": null, "iDataSort": 0, "nTf": null, "nTh": function(){$(".thead").find(".th");}, "sWidth": "0px"}','{"bVisible": false}', '{ "bVisible": false }', '{ "bVisible": false}' ], :autostart => false
+
+= dataTables_tag :id => 'image-table', :url => admin_attachments_path(:format => :json, :file_type => 'picture', :mode => 'selection'), :columns => ["{'sClass':'th-checkbox-container', 'bSortable': false }","{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}'], :autostart => false
 
 
 -# TODO move to base.js

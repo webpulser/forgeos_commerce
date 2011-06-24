@@ -1,5 +1,6 @@
 jQuery(document).ready(function(){
-  jQuery('.add-order-detail').live('click',function(){
+  jQuery('.add-order-detail').live('click',function(e){
+    e.preventDefault();
     jQuery('#productSelectDialog').dialog('open');
     return false;
   });
@@ -14,7 +15,7 @@ jQuery(document).ready(function(){
        Ok: function(){
          dataTableSelectRows('#table-products', function(current_table, indexes) {
            for(var i=0; i<indexes.length; i++){
-             var row = current_table.fnGetData(indexes[i]); 
+             var row = current_table.fnGetData(indexes[i]);
              var id = row.slice(-4,-3);
              var name = row.slice(-3,-2)[0];
              var sku = row.slice(-2,-1);
@@ -30,7 +31,9 @@ jQuery(document).ready(function(){
          jQuery('#productSelectDialog').dialog('close');
        }
      },
-     open: function(){ jQuery('#table-products').dataTableInstance().fnDraw(); }
+     open: function(e,ui){
+       eval(jQuery('#table-products').data('dataTables_init_function')+'()');
+     }
   });
 
   // update voucher value and hide/show
@@ -67,11 +70,14 @@ jQuery(document).ready(function(){
     var state = jQuery(this).val();
     var order_id = get_rails_element_id(this);
     jQuery.ajax({
-      url: '/admin/orders/'+order_id,
-      complete: display_notifications,
-      data: { authenticity_token: encodeURIComponent(window._forgeos_js_vars.token), 'order[aasm_current_state_with_event_firing]': state },
-      dataType:'text',
-      type:'put'
+      "url": '/admin/orders/'+order_id,
+      "complete": display_notifications,
+      "data": {
+        "authenticity_token": encodeURIComponent(window._forgeos_js_vars.token),
+        "order[aasm_current_state_with_event_firing]": state
+      },
+      "dataType": 'text',
+      "type": 'put'
     });
   });
 });

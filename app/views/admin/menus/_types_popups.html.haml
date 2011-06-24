@@ -19,4 +19,4 @@
       %label= "#{t(:url).capitalize} :"
       = text_field_tag "url", '', :id => "overlay-url"
 
-= dataTables_tag :id => 'table-files', :url => admin_pages_path(:format => :json, :mode => 'menu_link'), :columns => ["{'sClass':'th-checkbox-container', 'bSortable': false }","{ 'sTitle': '#{I18n.t(:name)}'}","{'bVisible': false}", "{'bVisible': false}"]
+= dataTables_tag :id => 'table-files', :url => admin_pages_path(:format => :json, :mode => 'menu_link'), :columns => ["{'sClass':'th-checkbox-container', 'bSortable': false }","{ 'sTitle': '#{I18n.t(:name)}'}","{'bVisible': false}", "{'bVisible': false}"], :autostart => false

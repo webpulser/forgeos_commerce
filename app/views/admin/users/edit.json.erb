@@ -18,7 +18,7 @@
            :class => 'product-name')+
            product_names,
         order.created_at.to_s(:short),
-        select_tag(:status, options_for_select(order_states_for_select, order.status)),
+        select_tag(:status, options_for_select(order_states_for_select, order.status), :class => 'customize'),
         link_to('', [:edit, :admin, order], :class => 'small-icons edit-link') +
         link_to_remote('', :url => [:admin, order],
           :method => :delete,

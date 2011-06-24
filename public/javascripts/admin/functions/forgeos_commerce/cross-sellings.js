@@ -5,7 +5,6 @@ function add_cross_to_product() {
       var id = row.slice(-4,-3);
       var nb_tr = jQuery('.looks_products').find('tr').length;
       var klass = ((nb_tr != 0 && jQuery('.looks_products').find('tr:last').attr('class').match('even')) ? 'odd' : 'even');
-      }
 
       jQuery.get('/admin/get_cross_selling_id', {
         "product_id": parseInt(jQuery('#product_id').html()),

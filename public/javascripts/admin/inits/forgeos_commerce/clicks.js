@@ -3,7 +3,8 @@ jQuery(document).ready(function(){
    *Add click function on .gray-destroy items
    *Those items are links to remove their parents (i.e. blocks)
    **/
-  jQuery('.red-delete-icon').live('click', function(){
+  jQuery('.red-delete-icon').live('click', function(e){
+    e.preventDefault();
     var block = jQuery(this).parents(':first');
     if (parseInt(get_rails_element_id(block.find('input:first'))) < 0) {
       block.remove();
@@ -14,7 +15,8 @@ jQuery(document).ready(function(){
     return false;
   });
 
-  jQuery('.gray-destroy-tattribute').live('click', function(){
+  jQuery('.gray-destroy-tattribute').live('click', function(e){
+    e.preventDefault();
     jQuery(this).parents('li').remove();
     return false;
   });
