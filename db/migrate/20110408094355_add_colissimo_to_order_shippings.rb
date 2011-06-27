@@ -4,6 +4,6 @@ class AddColissimoToOrderShippings < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :order_shippings, :colissimo_type
+    remove_column :order_shippings, :colissimo_type
   end
 end
