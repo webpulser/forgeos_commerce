@@ -9,13 +9,13 @@ plugin 'forgeos_core', :git => '-b engines src.forgeos.com:forgeos/core', :submo
 plugin 'forgeos_cms', :git => '-b engines src.forgeos.com:forgeos/cms', :submodule => true
 plugin 'forgeos_commerce', :git => '-b engines src.forgeos.com:forgeos/commerce', :submodule => true
 
-environment "config.plugins = [:attachment_fu, :forgeos_core, :all]"
-gem 'acts-as-taggable-on', :source => 'http://rubygems.org'
-run 'cp vendor/plugins/forgeos_core/config/attachments.example.yml config/attachments.yml'
+environment "config.plugins = [ :forgeos_core, :all]"
+gem 'acts-as-taggable-on'
 
-route "map.page '/*url', :controller => 'url_catcher', :action => 'page'"
+route "map.page '/*url', :controller => 'pages', :action => 'show'"
 route "map.connect ':controller/:action/:id.:format'"
 route "map.connect ':controller/:action/:id'"
+route "map.root :controller => 'pages', :action => 'index'"
 
 rake 'db:create'
 run './script/generate plugin_migration'
