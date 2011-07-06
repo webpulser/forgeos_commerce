@@ -2,7 +2,6 @@ require 'ruleby'
 
 class Admin::OrdersController < Admin::BaseController
   include Ruleby
-  before_filter :get_orders, :only => [:index]
   before_filter :new_order, :only => [:new, :create]
   before_filter :get_order, :only => [:show, :edit, :update, :destroy, :pay, :accept, :sent, :total]
   before_filter :get_civilities_and_countries, :only => [:new, :edit, :create, :update]
@@ -19,7 +18,7 @@ class Admin::OrdersController < Admin::BaseController
       format.csv do
         params[:iDisplayLength] = 1000000
         sort
-        csv_string = FasterCSV.generate( {:force_quotes => true}) do |csv|
+        csv_string = FasterCSV.generate({:force_quotes => true}) do |csv|
           titles = ['user']
           titles << 'user mail'
           titles << 'total'
@@ -154,10 +153,6 @@ class Admin::OrdersController < Admin::BaseController
   end
 
 private
-
-  def get_orders
-    @orders = Order.all
-  end
 
   def get_order
     @order = Order.find_by_id(params[:id])
