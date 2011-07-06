@@ -35,7 +35,7 @@ class Setting < ActiveRecord::Base
 private
 
   def update_so_colissimo_methods
-    unless self.colissimo_methods.empty?
+    unless self.colissimo_methods.blank?
       colissimo = {
         :active => colissimo_methods[:active].to_i,
         :sha => colissimo_methods[:sha],
@@ -52,7 +52,7 @@ private
   end
 
   def update_payment_methods
-    unless self.payment_methods.empty?
+    unless self.payment_methods.blank?
       payment = {
         :cheque => {
           :image => payment_methods[:cheque_image],
