@@ -3,12 +3,18 @@ class Admin::ImportController < Admin::BaseController
 
   map_fields :create_product, (Product.new.attributes.keys.sort + Product.new.translated_attributes.stringify_keys.keys.sort + ProductType.all.map(&:product_attributes).flatten.uniq.map(&:access_method).sort + Product.reflections.stringify_keys.keys.sort)
   def create_product
-    create_model(Product,'sku')
+    create_model(Product,'sku') do |attributes|
+      attributes[:category_ids] = attributes.delete(:categories) unless attributes[:categories].blank?
+      attributes
+    end
   end
-  
+
   map_fields :create_brand, (Brand.new.attributes.keys.sort + Brand.reflections.stringify_keys.keys.sort)
   def create_brand
-    create_model(Brand,'code')
+    create_model(Brand,'code') do |attributes|
+      attributes[:category_ids] = attributes.delete(:categories) unless attributes[:categories].blank?
+      attributes
+    end
   end
 
   map_fields :create_product_type, (ProductType.new.attributes.keys + ProductType.new.translated_attributes.stringify_keys.keys).sort
