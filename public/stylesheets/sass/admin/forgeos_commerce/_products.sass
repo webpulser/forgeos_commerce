@@ -1,25 +1,26 @@
-//--------------------- ----------       
-// PRODUCT BUTTONS     
+//--------------------- ----------
+// PRODUCT BUTTONS
 //--------------------- ----------
 .add-products
   text-align: center
   font-size: 0.8em
   font-weight: bold
   line-height: 40px
-  :border-top = 1px solid !contentHeaderBorder
-  :border-bottom = 1px solid !contentHeaderBorder
+  border-top: 1px solid $contentHeaderBorder
+  border-bottom: 1px solid $contentHeaderBorder
   padding: 0
   height: 40px
   a
-    +block()
+    +block
     width: 100%
     margin: auto
-    :color = !lightGray
+    color: $lightGray
     span
       background-position: 0px -5px
       padding-left: 25px
-//--------------------- ----------       
-// PRODUCT COMMONS     
+
+//--------------------- ----------
+// PRODUCT COMMONS
 //--------------------- ----------
 #product-filter
   padding: 10px
@@ -27,13 +28,13 @@
   font-size: 0.7em
   height: 22px
   input
-    :border = 1px solid !contentHeaderBorder
+    border: 1px solid $contentHeaderBorder
     padding: 3px
     margin: 0px 5px
-    +left()
+    +left
   select
     margin: 0px 5px
-    +left()
+    +left
   .enhanced .dropdown
     width: 170px
     min-width: 170px
@@ -41,13 +42,15 @@
     a
       padding-right: 14px
       span
-        :color = !black
+        color: $black
         text-transform: none
+
 .wrap
   width: 683px
   height: 90px
   overflow: hidden
-  +left()
+  +left
+
 #existing-products
   display: none
   position: relative
@@ -60,101 +63,110 @@
       width: 33%
       padding: 6px
       a
-        color = !blueLink
+        color: $blueLink
         line-height: 25px
         height: 25px
         font-size: 0.9em
         img
-          border = 1px solid !contentHeaderBorder
+          border: 1px solid $contentHeaderBorder
           width: 25px
           height: 25px
-          +left()
+          +left
         span
-          +left()
+          +left
           margin-left: 10px
     .odd
       background: none
+
 a.product-type-link
-  :color = !blueLink
+  color: $blueLink
   text-decoration: underline
+
 .block-container
   .block-type
     width: 130px
   .block-name
     padding: 5px
-    :color = !blueLink
-    +block()
+    color: $blueLink
+    +block
     margin-left: 150px
-    :background = !white
+    background: $white
     .file-size
-      :color = !greenBlue
+      color: $greenBlue
     a
-      :color = !blueLink
+      color: $blueLink
+
 #product
   font-size: 0.7em
-  :color = !lightGray
+  color: $lightGray
   input
-    +left()
+    +left
     clear: left
     border: 1px solid #b2b2b2
-    +borderCorner(3px,3px,3px,3px)
+    +borderCorner(3px, 3px, 3px, 3px)
     background-position: 0 -595px
-    :color = !lightGray
+    color: $lightGray
   label
-    +left()
+    +left
     clear: left
     margin-top: 10px
   .enhanced,
   select
     clear: left
-    :float left
+    float: left
   #price
-    :color = !lightGreen
+    color: $lightGreen
   .tool-tip-content
     .content
       input
         width: 50px
-        +left()
+        +left
         clear: none
         margin-left: 10px
       label
         margin-top: 0
   .block-container
     margin: 5px 0
-    border = 1px solid !contentHeaderBorder
+    border: 1px solid $contentHeaderBorder
+
 .inner-step.weight
-  :color = !greenBlue
+  color: $greenBlue
   font-size: 0.9em
+
 .product_weight
-  +borderCorner(3px,3px,3px,3px)
-  :border = 1px solid !contentHeaderBorder
+  +borderCorner(3px, 3px, 3px, 3px)
+  border: 1px solid $contentHeaderBorder
   clear: left
-  :color = !lightGray
+  color: $lightGray
   width: 50px
   margin-right: 10px
+
 sup.required
   color: red
+
 #stock-keeping
   width: 200px
+
 .sortable
   padding: 0
   margin: 0
-//--------------------- ----------       
-// PRODUCT SEE     
-//--------------------- ----------   
+
+//--------------------- ----------
+// PRODUCT SEE
+//--------------------- ----------
 #product-see
   .block-container
     border-width: 0
     background-color: transparent
-    font-size: .9em
+    font-size: 0.9em
     .block-type
       display: inline
       width: auto
       padding: 1px 4px
       margin-top: 4px
   .block-separator
-    border-top: 1px solid #FAFAFA
-    border-bottom: 1px solid #EAEAEA
+    border-top: 1px solid #fafafa
+    border-bottom: 1px solid #eaeaea
     border-left: 0
     border-right: 0
     height: 1px
@@ -177,27 +189,29 @@ sup.required
   #product-images ul li
     margin: 5px
     .featured
-      :background-color = !whiteGray
-      :border=  1px solid !whiteGray - #010101
+      background-color: $whiteGray
+      border: 1px solid $whiteGray - #010101
       margin-top: -5px
       padding: 3px 0
       width: 158px
       text-align: center
       text-transform: uppercase
-//--------------------- ----------       
-// PRODUCT IMAGES   
+
+//--------------------- ----------
+// PRODUCT IMAGES
 //--------------------- ----------
 #featured-picture
-  :background-color = !lightGreenBg
-  :color = !white
+  background-color: $lightGreenBg
+  color: $white
   font-size: 0.9em
   padding: 5px
   text-transform: uppercase
   text-align: center
   margin-top: 10px
-#product-images 
+
+#product-images
   li
-    +left()
+    +left
     position: relative
     width: 50px
     height: 65px
@@ -207,7 +221,7 @@ sup.required
     img
       width: 50px
       height: 50px
-      :border = 1px solid !contentHeaderBorder
+      border: 1px solid $contentHeaderBorder
     &.first-image
       width: 100%
       height: 100%
@@ -232,8 +246,8 @@ sup.required
         height: 24px !important
         width: 24px !important
     .handler
-      background-color: #F2F2F2
-      :border = 1px solid !contentHeaderBorder
+      background-color: #f2f2f2
+      border: 1px solid $contentHeaderBorder
       margin-top: -5px
       padding: 3px 0
       width: 100%
@@ -247,75 +261,81 @@ sup.required
     width: 110px
     margin: auto
     font-size: 0.9em
-    +block()
-//--------------------- ----------       
-// PRODUCT PRICES     
-//--------------------- ----------    
+    +block
+
+//--------------------- ----------
+// PRODUCT PRICES
+//--------------------- ----------
 .prices
   margin: 10px 0
   .normal-price, .promo, .stock
-    :border = 1px solid !contentHeaderBorder
+    border: 1px solid $contentHeaderBorder
     padding: 5px
     font-size: 1.3em
-    +block()
-    +left()
+    +block
+    +left
   .normal-price
     border-right: 0
-    :background = !white
-    :color = !black
+    background: $white
+    color: $black
     font-weight: bold
   .promo
     text-decoration: line-through
-    :background = !whiteGray
-    :color = !lightGray
+    background: $whiteGray
+    color: $lightGray
     border-left: 0
   .stock
-    :background-color = !lightGreen
-    :color = !white
+    background-color: $lightGreen
+    color: $white
     margin: 1px 15px
     padding: 9px
     border: 0
-    font-size: .9em
+    font-size: 0.9em
+
 #price,
 #compared-price
   font-size: 1.7em
   font-weight: bold
+
 #compared-price
-  :color =  !orangeRed
+  color: $orangeRed
   text-decoration: line-through
+
 .currency
   position: absolute
   bottom: 0
   right: 85px
-//--------------------- ----------       
-// PRODUCT TREE     
+
+//--------------------- ----------
+// PRODUCT TREE
 //--------------------- ----------
 #product-types-options-tree
   margin-top: 20px
   margin-left: 20px
   height: 50px
   li
-    :background-color = !whiteGray - #080808
-    +borderCorner(3px,3px,3px,3px)
+    background-color: $whiteGray - #080808
+    +borderCorner(3px, 3px, 3px, 3px)
     padding-left: 40px
-    :border = 1px solid !whiteGray - #010101
+    border: 1px solid $whiteGray - #010101
     &.open
       background: url(dark-blue-minus.png) 0 0 no-repeat
     &.closed
       background: url("dark-blue-plus.png") 0 1px no-repeat
     a
       padding: 0 5px 0 24px
-      :color = !lightGray
+      color: $lightGray
       font-weight: bold
       font-size: 1em
       height: 20px
       position: relative
-      :background-color = !white
-      +block()
+      background-color: $white
+      +block
       &:hover
-        :background-color = !white
-//--------------------- ----------       
-// SOME VARIANTS    
+        background-color: $white
+
+//--------------------- ----------
+// SOME VARIANTS
 //--------------------- ----------
 .stocks, .some-variants .stocks p
-  :color = !lightGreen
+  color: $lightGreen

@@ -1,41 +1,43 @@
 #transporter
-  :padding 0
+  padding: 0
   .inner-content
-    :padding 10px
+    padding: 10px
   textarea
-    :width 98%
-    :padding 2px
-    :border = 1px solid !darkGray
-    +borderCorner(3px,3px,3px,3px)
-    :background
-      :position 0 -600px
-      :image url(/images/admin/backgrounds-verti.png)
-      :repeat repeat-x
+    width: 98%
+    padding: 2px
+    border: 1px solid $darkGray
+    +borderCorner(3px, 3px, 3px, 3px)
+    background:
+      position: 0 -600px
+      image: url(/images/admin/backgrounds-verti.png)
+      repeat: repeat-x
   label
-    :color = !lightGray
-    :font-size .7em
-    +block()
-    :margin
-      :left 5px
-      :bottom 2px
+    color: $lightGray
+    font-size: 0.7em
+    +block
+    margin:
+      left: 5px
+      bottom: 2px
+
 .type-of-delivery
   padding: 10px 10px
-  :background-color = !lightYellowBg
-  :color = !darkBrown
+  background-color: $lightYellowBg
+  color: $darkBrown
   .type-delivery-title
-    +left()
+    +left
     margin-right: 10px
-    font-size: .7em
+    font-size: 0.7em
     line-height: 2em
     font-weight: bold
+
 .delivery-rule
   margin: 5px 0
   padding: 0 25px
   input
-    :background-color = !lightBlueBg
-    :border = 1px solid !lightBlueBorder
+    background-color: $lightBlueBg
+    border: 1px solid $lightBlueBorder
     width: 30px
-    :color = !greenBlue
+    color: $greenBlue
     font-weight: bold
     margin-left: 2px
     margin-top: 2px
@@ -46,28 +48,33 @@
       margin-left: 2px
       margin-right: 10px
       font-weight: bold
-      :color = !greenBlue
+      color: $greenBlue
+
 .inner-delivery-rule
-  +left()
+  +left
   margin-right: 5px
   padding: 4px
-  font-size: .7em
-  :color = !lightGray
+  font-size: 0.7em
+  color: $lightGray
   font-weight: bold
   line-height: 2.1em
+
 .even .inner-delivery-rule
-  :background-color = !oddBg
+  background-color: $oddBg
+
 .delivery-rule
   .red-minus, .add-green-plus
     display: block
-    +left()
+    +left
     height: 0
     margin-top: 7px
   &:hover
     .red-minus, .add-green-plus
       height: 16px
+
 .red-minus
   background-position: 0 -4103px
+
 .view-tree.inner-step ul
   padding-left: 0
   li ul

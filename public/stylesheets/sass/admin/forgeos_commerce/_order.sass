@@ -1,93 +1,108 @@
 #order-see .fieldset,
 #customer-see .fieldset
-  font-size: .8em
+  font-size: 0.8em
   h4
     padding-top: 2px
     margin: 2px 0 2px -20px
   .main-infos, .order-delivery
     clear: both
     a
-      :color = !blueLink
+      color: $blueLink
+
 .main-infos-note
-  :background-color = !lightYellow
+  background-color: $lightYellow
+
 .main-infos div, .order-delivery div
-  +left()
+  +left
   width: 26%
   padding: 10px 0 10px 3%
+
 .main-infos div.main-info-separation, .order-delivery div.main-info-separation
   height: 90px
   margin: 15px 3%
   width: 1px
-  :background-color = !whiteGray
+  background-color: $whiteGray
   padding: 0
+
 #order-see .datatable
-  :border = 1px solid !whiteGray
+  border: 1px solid $whiteGray
   margin-bottom: 10px
   td
     vertical-align: middle
     img
       width: 45px
       height: 45px
-      :border-bottom = 1px solid !whiteGray
+      border-bottom: 1px solid $whiteGray
       margin: 5px
   .total
     font-weight: bold
-    :color = !lightDark
+    color: $lightDark
+
 .order-totals
   float: right
   clear: both
   width: 300px
-  :border-bottom = 1px solid !whiteGray
+  border-bottom: 1px solid $whiteGray
   padding: 5px
-  font-size: .9em
+  font-size: 0.9em
   line-height: 1.4em
-  :color = !lightDark
+  color: $lightDark
   div
-    +left()
+    +left
     clear: both
     width: 200px
     text-align: right
     margin-right: 10px
   span
     &.voucher, &.order_shipping
-      +left()
+      +left
   .enhanced .dropdown .options
     text-align: left !important
     a span
-      :color = !blueLink
+      color: $blueLink
       text-transform: none
+
 .order-subtotal, .order-subtotal-currency
   font-weight: bold
+
 .total-block
   margin-bottom: 10px
   border: 0
+
 .order-total, .order-currency
   font-weight: bold
-  :color = !orange
+  color: $orange
   font-size: 1.1em
+
 .payment-checked
-  :color = !lightGreen
+  color: $lightGreen
+
 .customer-email
   text-decoration: underline
+
 #order-see .datatable td input
-  :border = 1px solid !darkGray
-  +borderCorner(3px,3px,3px,3px)
-  :background
-    :position 0 -600px
-    :image url(/images/admin/backgrounds-verti.png)
-    :repeat repeat-x
+  border: 1px solid $darkGray
+  +borderCorner(3px, 3px, 3px, 3px)
+  background:
+    position: 0 -600px
+    image: url(/images/admin/backgrounds-verti.png)
+    repeat: repeat-x
   padding: 2px 0
+
 .sku-input
   width: 110px
+
 .price-input
   width: 45px
+
 .qty-input
   width: 30px
-  +left()
+  +left
+
 .more-quantity
-  :color = !white
-  :background-color = !darkGray
-  +borderCorner(2px,2px,2px,2px)
+  color: $white
+  background-color: $darkGray
+  +borderCorner(2px, 2px, 2px, 2px)
   width: 10px
   height: 10px
   text-align: center
@@ -95,10 +110,11 @@
   display: block
   margin-left: 35px
   outline: none
+
 .less-quantity
-  :color = !white
-  :background-color = !darkGray
-  +borderCorner(2px,2px,2px,2px)
+  color: $white
+  background-color: $darkGray
+  +borderCorner(2px, 2px, 2px, 2px)
   width: 10px
   height: 10px
   text-align: center
@@ -107,21 +123,25 @@
   margin-left: 35px
   outline: none
   margin-top: 1px
+
 #order-see .fieldset .street-input
   clear: both
+
 .th_product_popup
   width: 15% !important
+
 td.th_product_popup:first-child
   line-height: 50px
   .one-product
     padding: 0 !important
     float: right
+
 #table-order-details
   td, th
     &.actions
       width: 17px !important
-      
-//--------------------- ----------       
+
+//--------------------- ----------
 // TREE
 //--------------------- ----------
 .a-tree
@@ -135,7 +155,7 @@ td.th_product_popup:first-child
     a
       background-position: 0 -272px
       padding: 3px 24px
-      :color = !darkBrown
+      color: $darkBrown
       font-weight: bold
       font-size: 0.8em
       display: block
@@ -148,14 +168,14 @@ td.th_product_popup:first-child
         background-repeat: no-repeat
         background-position: -1px -4px
         text-align: center
-        :color = !darkBrown
+        color: $darkBrown
         position: absolute
         right: 10px
         top: 3px
         line-height: 1.5em
         padding: 0 5px 2px 1px
       &:hover, &.hover
-        :color = !orange
+        color: $orange
   span.colours
     display: block
     width: 16px
@@ -163,25 +183,25 @@ td.th_product_popup:first-child
     position: absolute
     top: 5px
     left: 0
-    +borderCorner()
+    +borderCorner
     &.unpaid
-      :background
-        :color = !unpaid
+      background:
+        color: $unpaid
     &.waiting_for_cheque
-      :background
-        :color = #5B4681
+      background:
+        color: #5b4681
     &.paid
-      :background
-        :color = !paid
+      background:
+        color: $paid
     &.shipped
-      :background
-        :color = !shipped
+      background:
+        color: $shipped
     &.closed
-      :background
-        :color = !closed
+      background:
+        color: $closed
     &.canceled
-      :background
-        :color = !canceled
+      background:
+        color: $canceled
 
 #customer-see
   .small-td

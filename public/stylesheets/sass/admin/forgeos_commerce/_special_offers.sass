@@ -1,198 +1,198 @@
-//--------------------- ----------       
-// SPECIAL OFFERS CONTENT     
+//--------------------- ----------
+// SPECIAL OFFERS CONTENT
 //--------------------- ----------
 .special_offers
-  :padding 0
+  padding: 0
   width: 700px !important
   border: 0 !important
   .inner-content
-    :padding 10px
-    //--------------------- ----------       
-    // SPECIAL OFFERS HEADER     
+    padding: 10px
+    //--------------------- ----------
+    // SPECIAL OFFERS HEADER
     //--------------------- ----------
     .specialOffer_header
-      :background-color = !whiteGray
-      +borderCorner(8px,8px,8px,8px)
-      :padding 8px 15px
-    //--------------------- ----------       
-    // SPECIAL OFFERS FORM ELEMENTS     
+      background-color: $whiteGray
+      +borderCorner(8px, 8px, 8px, 8px)
+      padding: 8px 15px
+    //--------------------- ----------
+    // SPECIAL OFFERS FORM ELEMENTS
     //--------------------- ----------
     span.conditioner
-      +left()
-      :color = !lightGray
+      +left
+      color: $lightGray
     textarea
-      :width 98%
-      :padding 2px
-      :border = 1px solid !darkGray
-      +borderCorner(3px,3px,3px,3px)
-      :background
-        :position 0 -600px
-        :image url(/images/admin/backgrounds-verti.png)
-        :repeat repeat-x
+      width: 98%
+      padding: 2px
+      border: 1px solid $darkGray
+      +borderCorner(3px, 3px, 3px, 3px)
+      background:
+        position: 0 -600px
+        image: url(/images/admin/backgrounds-verti.png)
+        repeat: repeat-x
     label
-      :color = !lightGray
-      :font-size .7em
-      +block()
-      :margin
-        :left 5px
-        :bottom 2px
+      color: $lightGray
+      font-size: 0.7em
+      +block
+      margin:
+        left: 5px
+        bottom: 2px
     .specialOfferFor
-      :background-color = !whiteGray
-      :border = 1px solid !whiteGray - #080808
-      :position relative
-      +borderCorner(8px,8px,8px,8px)
-      :font-size .8em
-      :margin
-        :right 8px
-        :top 20px
+      background-color: $whiteGray
+      border: 1px solid $whiteGray - #080808
+      position: relative
+      +borderCorner(8px, 8px, 8px, 8px)
+      font-size: 0.8em
+      margin:
+        right: 8px
+        top: 20px
     .specialOffers_bottom_arrow
-      :background
-        :image url(/images/admin/borders/specialOffers_black_arrow.png)
-        :position center top
-        :repeat no-repeat
-      :height 18px
-      :position absolute
-      :bottom -18px
-      :width 100%
+      background:
+        image: url(/images/admin/borders/specialOffers_black_arrow.png)
+        position: center top
+        repeat: no-repeat
+      height: 18px
+      position: absolute
+      bottom: -18px
+      width: 100%
     input[type="text"]
-      :background-color = !lightBlueBg
-      :border = 1px solid !lightBlueBorder
+      background-color: $lightBlueBg
+      border: 1px solid $lightBlueBorder
       width: 30px
-      :color = !blueLink
+      color: $blueLink
       font-weight: bold
       margin-left: 5px
       padding: 2px
     checkbox,
     select
-      +left()
+      +left
   .specialOfferIf
-    :background-color = !white
-    :border = 1px solid !whiteGray - #080808
-    :position relative
-    +borderCorner(8px,8px,8px,8px)
-    :font-size .8em
-    :margin
-      :right 8px
-      :top 30px
+    background-color: $white
+    border: 1px solid $whiteGray - #080808
+    position: relative
+    +borderCorner(8px, 8px, 8px, 8px)
+    font-size: 0.8em
+    margin:
+      right: 8px
+      top: 30px
     .specialOffer_header
-      :background-color = !whiteGray
-      +borderCorner(8px,8px,0,0)
-      :padding 8px 15px
+      background-color: $whiteGray
+      +borderCorner(8px, 8px, 0, 0)
+      padding: 8px 15px
     span.conditioner
-      +left()
-      :color = !lightGray
+      +left
+      color: $lightGray
     .specialOffers_bottom_arrow
-      :background
-        :image url(/images/admin/borders/specialOffers_white_arrow.png)
-        :position center top
-        :repeat no-repeat
-      :height 18px
-      :position absolute
-      :bottom -18px
-      :width 100%
+      background:
+        image: url(/images/admin/borders/specialOffers_white_arrow.png)
+        position: center top
+        repeat: no-repeat
+      height: 18px
+      position: absolute
+      bottom: -18px
+      width: 100%
     .condition
-      :padding 8px 0
-      :margin 0 10px
-      :line-height 1.5em
+      padding: 8px 0
+      margin: 0 10px
+      line-height: 1.5em
       position: relative
       &.last
-        :border 0
+        border: 0
     input[type="text"]
-      :background-color = !lightBlueBg
-      :border = 1px solid !lightBlueBorder
+      background-color: $lightBlueBg
+      border: 1px solid $lightBlueBorder
       width: 30px
-      :color = !blueLink
+      color: $blueLink
       font-weight: bold
       margin-left: 5px
       padding: 2px
     checkbox,
     select
-      +left()
-  //--------------------- ----------       
-  // SPECIAL OFFERS PRODUCTS     
+      +left
+  //--------------------- ----------
+  // SPECIAL OFFERS PRODUCTS
   //--------------------- ----------
   .specialOffers_products
-    :margin
-      :right 8px
-      :top 30px
+    margin:
+      right: 8px
+      top: 30px
     .specialOffers_products_header
-      :color = !white
-      :background-color = !lightGreenBg
-      +borderCorner(8px,8px,0,0)
-      :text-align center
-      :padding 5px 0
+      color: $white
+      background-color: $lightGreenBg
+      +borderCorner(8px, 8px, 0, 0)
+      text-align: center
+      padding: 5px 0
     #specialOffers_products_table_wrapper,
     #specialOffers_products_table
-      :border = 1px solid !whiteGray - #080808
-      :border-top 0
-      +borderCorner(0,0,8px,8px)
+      border: 1px solid $whiteGray - #080808
+      border-top: 0
+      +borderCorner(0, 0, 8px, 8px)
       #specialOffers_products_table_length,
       #specialOffers_products_table_filter
-        :display none
+        display: none
       .tbody
         .tr
-          :float left
-          :width 30%
-          :margin 0 1%
-          :padding 5px 0
-          :font-size .9em
+          float: left
+          width: 30%
+          margin: 0 1%
+          padding: 5px 0
+          font-size: 0.9em
           &.even,
           &.odd
-            :background-color = !white
+            background-color: $white
           .td
-            :padding 10px
+            padding: 10px
             img
-              :width 54px
-              :height 54px
-              :float left
-              :border = 1px solid !whiteGray
+              width: 54px
+              height: 54px
+              float: left
+              border: 1px solid $whiteGray
             a
-              :margin-left 65px
-              +block()
+              margin-left: 65px
+              +block
             span
-              :margin-left 65px
-              +block()
-              :font-size .8em
-              :color = !gray
-      //--------------------- ----------       
-      // SPECIAL OFFERS PRODUCTS  PAGINATE    
+              margin-left: 65px
+              +block
+              font-size: 0.8em
+              color: $gray
+      //--------------------- ----------
+      // SPECIAL OFFERS PRODUCTS  PAGINATE
       //--------------------- ----------
       #specialOffers_products_table_paginate
-        :background-color = !whiteGray
-        :margin 0
-        :padding 5px 0
-        :text-align center
-        +borderCorner(8px,8px,0,0)
+        background-color: $whiteGray
+        margin: 0
+        padding: 5px 0
+        text-align: center
+        +borderCorner(8px, 8px, 0, 0)
         #specialOffers_products_table_previous,
         #specialOffers_products_table_next
-          :color = !white
-          :background-color = !gray
-          +borderCorner(3px,3px,3px,3px)
+          color: $white
+          background-color: $gray
+          +borderCorner(3px, 3px, 3px, 3px)
         #specialOffers_products_table_previous
-          :background
-            :image url(/images/admin/small-icons-16-16-verti.png)
-            :position 0 -4134px
-            :repeat no-repeat
+          background:
+            image: url(/images/admin/small-icons-16-16-verti.png)
+            position: 0 -4134px
+            repeat: no-repeat
         #specialOffers_products_table_next
-          :background
-            :image url(/images/admin/small-icons-16-16-verti.png)
-            :position right -4170px
-            :repeat no-repeat
+          background:
+            image: url(/images/admin/small-icons-16-16-verti.png)
+            position: right -4170px
+            repeat: no-repeat
         .paginate_active
-          :background-color = !lightGray
-          :color = !white
-          +borderCorner(2px,2px,2px,2px)
+          background-color: $lightGray
+          color: $white
+          +borderCorner(2px, 2px, 2px, 2px)
         .paginate_button
-          :color = !lightGray
+          color: $lightGray
   .red-delete-icon, .green-add-icon
-    :position absolute
-    +block()
-    :width 16px
-    :height 16px
-    :padding 0
-    :top 40%
+    position: absolute
+    +block
+    width: 16px
+    height: 16px
+    padding: 0
+    top: 40%
   .green-add-icon
-    :right 5px
+    right: 5px
   .red-delete-icon
-    :right 25px
+    right: 25px
     background-position: 0px -4105px

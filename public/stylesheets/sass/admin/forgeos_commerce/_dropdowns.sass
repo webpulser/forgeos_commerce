@@ -1,5 +1,5 @@
-//--------------------- ----------       
-// PRODUCT DROPDOWNS     
+//--------------------- ----------
+// PRODUCT DROPDOWNS
 //--------------------- ----------
 #product
   .dropdown
@@ -12,11 +12,11 @@
     span
       background: url(/images/admin/selects/product-select-left.png) no-repeat
       height: 16px
-      :color = !black
+      color: $black
       text-transform: none
   .tool-tip-content .content
     .enhanced
-      +left()
+      +left
       clear: none
     .dropdown
       width: 100px
@@ -29,8 +29,9 @@
         height: auto
         text-decoration: underline
         padding: 5px 0 0 10px
-//--------------------- ----------       
-// VOUCHERS DROPDOWNS     
+
+//--------------------- ----------
+// VOUCHERS DROPDOWNS
 //--------------------- ----------
 .change-voucher
   .dropdown
@@ -43,11 +44,12 @@
     span
       background: none
       text-decoration: underline
-      :color = !blueLink
+      color: $blueLink
       text-transform: none
-//--------------------- ----------       
-// DELIVERIES DROPDOWNS     
-//--------------------- ----------    
+
+//--------------------- ----------
+// DELIVERIES DROPDOWNS
+//--------------------- ----------
 .delivery-method
   a.dropdown_toggle
     background: url(/images/admin/small-icons/bottom-arrow.png) right 5px no-repeat
@@ -56,20 +58,23 @@
     span
       background: none
       text-decoration: underline
-      :color = !blueLink
+      color: $blueLink
       text-transform: none
       padding-left: 0px
   &.enhanced .dropdown .options ul li a span
     text-transform: none
-    font-size: .9em
-    :color = !blueLink
+    font-size: 0.9em
+    color: $blueLink
     margin-left: 5px !important
+
 .type-of-delivery
   .enhanced, select
-    +left()
+    +left
+
 .delivery-rule
   .enhanced, .span-left, input
-    +left()
+    +left
+
 .type-of-delivery
   .dropdown
     margin-left: 0
@@ -80,8 +85,9 @@
     span
       background: url(/images/admin/selects/product-select-left.png) no-repeat
       height: 16px
-      :color = !black
+      color: $black
       text-transform: none
+
 .delivery-rule
   margin: 5px 0
   padding: 0 25px
@@ -97,25 +103,26 @@
     span
       background: none
       height: auto
-      :color = !blueLink
+      color: $blueLink
       text-transform: none
       text-decoration: underline
   .options
     top: 18px
     text-transform: none
-    font-size: .9em
-    :color = !blueLink
+    font-size: 0.9em
+    color: $blueLink
     width: 150px !important
     ul li a
-      :color = !blueLink
-//--------------------- ----------       
-// SPECIAL-OFFERS DROPDOWNS     
-//--------------------- ----------    
+      color: $blueLink
+
+//--------------------- ----------
+// SPECIAL-OFFERS DROPDOWNS
+//--------------------- ----------
 .special_offers
   .dropdown
-    :margin
-      :left 0
-      :right 5px
+    margin:
+      left: 0
+      right: 5px
     width: auto
   a.dropdown_toggle
     background: url(/images/admin/small-icons/bottom-arrow.png) right 3px no-repeat
@@ -125,38 +132,40 @@
     span
       background: none
       height: auto
-      :color = !blueLink
+      color: $blueLink
       text-transform: none
       text-decoration: underline
-      :line-height 1em
-      :padding
-        :top 4px
-        :right 2px
-      :font-weight bold
+      line-height: 1em
+      padding:
+        top: 4px
+        right: 2px
+      font-weight: bold
   .options
     top: 18px
     text-transform: none
-    font-size: .9em
-    :color = !blueLink
+    font-size: 0.9em
+    color: $blueLink
     width: 150px !important
     ul li a
-      :color = !blueLink
-      
+      color: $blueLink
+
 .waiting_for_cheque
   a.dropdown_toggle
     background-image: url(/images/admin/selects/big-purple-right.png)
-    :color = !white !important
+    color: $white !important
   &.disabled a.dropdown_toggle
     background-image: url(/images/admin/selects/big-purple-right-on.png)
-    :color = !white !important
+    color: $white !important
   a.dropdown_toggle span
     background-image: url(/images/admin/selects/big-purple-left.png)
-    :color = !white !important
-    
+    color: $white !important
+
 .waiting_for_cheque a.dropdown_toggle
   background-image: url(/images/admin/selects/small-purple-right.png)
+
 tr:hover .waiting_for_cheque a.dropdown_toggle
   background-image: url(/images/admin/selects/small-purple-right-on.png)
+
 .waiting_for_cheque a.dropdown_toggle span
   background-image: url(/images/admin/selects/small-purple-left.png)
-  :color = !white
+  color: $white

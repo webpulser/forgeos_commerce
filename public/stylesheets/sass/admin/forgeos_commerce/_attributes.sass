@@ -1,25 +1,26 @@
 .tattribute-type
-  :background-color = !lightYellow
+  background-color: $lightYellow
   padding: 3px 5px
-  :color = !darkBrown
+  color: $darkBrown
   text-transform: uppercase
-  font-size: .7em
+  font-size: 0.7em
   font-weight: bold
   span
     padding-top: 2px
+
 .sortable-choices
   .block-container
     height: auto
-    :background-color = !whiteGray
+    background-color: $whiteGray
     .block-type
       width: 30px
-      :background-color = !whiteGray
-      :border = 1px solid !whiteGray
+      background-color: $whiteGray
+      border: 1px solid $whiteGray
     .block-name
       margin-left: 0px
       padding: 7px
-      :background-color = !whiteGray
-      :color = !black
+      background-color: $whiteGray
+      color: $black
       display: inline
     .block-type .handler .inner
       height: 25px
@@ -31,6 +32,7 @@
       img
         height: 50px
         width: 50px
+
 .image-attribute
   position: absolute
   top: 2px
@@ -38,15 +40,16 @@
   img
     width: 28px
     height: 28px
-    +left()
-    :border = 1px solid !whiteGray
+    +left
+    border: 1px solid $whiteGray
   a
-    :color = !darkGray
+    color: $darkGray
     text-decoration: underline
-    font-size: .8em
-    +left()
+    font-size: 0.8em
+    +left
     margin-left: 5px
     line-height: 2.5em
+
 .tree-product-types-selected
   .edit-link
     position: absolute

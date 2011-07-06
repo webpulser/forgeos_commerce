@@ -1,20 +1,25 @@
-.street-input 
+.street-input
   input
     width: 395px
+
 .phone-input input
   width: 240px
+
 .town-input
-  +left()
+  +left
   margin-left: 20px
   input
     width: 283px
+
 .zip-code-input
-  +left()
+  +left
   input
     width: 90px
+
 .country-select,
 .civility-select
   clear: both
+
 .delivery-method
   clear: both
   .messages-fieldset
@@ -22,51 +27,57 @@
     padding-right: 0
     h3
       margin-left: 15px
+
 .different-adress
-  +left()
+  +left
+
 .sent-message
-  :background-color = !oddBg
+  background-color: $oddBg
   padding: 5px
-  :clear both
+  clear: both
   a
-    :color = !blueLink
+    color: $blueLink
     font-size: 1.1em
     font-weight: bold
     padding-left: 30px
     background-position: 0 -3025px
   span
     float: right
-    :color = !lightGray
+    color: $lightGray
     display: block
     width: 150px
+
 .received-message
-  :background-color = !white
+  background-color: $white
   padding: 5px
-  :clear both
+  clear: both
   a
     background-position: 0 -2738px
-    :color = !blueLink
+    color: $blueLink
     font-size: 1.1em
     font-weight: bold
     padding-left: 30px
   span
     float: right
-    :color = !lightGray
+    color: $lightGray
     display: block
     width: 150px
+
 .send-message-link
   margin: 5px 0 0 10px
   display: block
-  color = !lightGray
+  color: $lightGray
   text-decoration: underline
+
 .send-message
   padding: 0 10px
-  color = !lightGray
+  color: $lightGray
+
 .send-message
   textarea
     width: 100%
-    :border =  1px solid !gray
-    +borderCorner(3px,3px,3px,3px)
+    border: 1px solid $gray
+    +borderCorner(3px, 3px, 3px, 3px)
     background-position: 0 -600px
     background-image: url(/images/admin/backgrounds-verti.png)
     background-repeat: repeat-x
