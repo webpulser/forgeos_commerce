@@ -132,7 +132,8 @@ class Order < ActiveRecord::Base
     cyberplus = cyberplus_tmp[env]
 
     payment_config = if cyberplus[:payment_config] =~ /^MULTI:.*count=(\d+)/i and self.payment_plans
-      "#{cyberplus[:payment_config]};first=#{(total*100).to_i / $1.to_i}"
+      count = $1.to_i
+      cyberplus[:payment_config].sub('#PRICE',"#{(total*100).to_i / count}")
     else
       'SINGLE'
     end
