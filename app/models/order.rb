@@ -130,6 +130,13 @@ class Order < ActiveRecord::Base
     cyberplus_tmp = setting.payment_method_list[:cyberplus]
     env = cyberplus_tmp[:test] == 1 ? :development : :production
     cyberplus = cyberplus_tmp[env]
+
+    payment_config = if cyberplus[:payment_config] =~ /^MULTI:.*count=(\d+)/i and self.payment_plans
+      "#{cyberplus[:payment_config]};first=#{(total*100).to_i / $1.to_i}"
+    else
+      'SINGLE'
+    end
+
     payment = {
       :version => cyberplus[:version],
       :site_id => cyberplus[:site_id],
@@ -138,7 +145,7 @@ class Order < ActiveRecord::Base
       :trans_date => ts.strftime('%Y%m%d%H%M%S'),
       :validation_mode => '',
       :capture_delay => '',
-      :payment_config => cyberplus[:payment_config],
+      :payment_config => payment_config,
       :payment_cards => cyberplus[:payment_cards],
       :amount => (total*100).to_i,
       :currency => cyberplus[:currency],
