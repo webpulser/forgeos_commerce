@@ -9,7 +9,7 @@ class SpecialOfferRule < Rule
         rule_builder = SpecialOffer.new(e)
         rule_builder.selected_products = []
         rule_builder.rule_preview(self)
-        Product.actives(:limit => 10).each do |product|
+        Product.actives.all(:limit => 100).each do |product|
           e.assert product
         end
         e.match
