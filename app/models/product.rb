@@ -198,7 +198,7 @@ class Product < ActiveRecord::Base
   def method_missing(method_id,*args,&block)
     method_name = method_id.to_s
     if cat_id = method_name.match(/has_category_(\d+)/)
-      return product_category_ids.include?(cat_id[1].to_i)
+      return product_categories.find_by_id(cat_id[1].to_i, :select => 'id').present?
     elsif access_method = method_name.match(/^(\w|\d|_|-)*$/) and product_type and
       custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
       read_custom_attribute(custom_attribute, args.first)
