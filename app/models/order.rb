@@ -90,7 +90,7 @@ class Order < ActiveRecord::Base
   # GENERATE ENCRYPTED FORM FOR CHECKOUT
   def paypal_encrypted
     setting = Setting.first
-    paypal = setting.payment_method_list[:paypal]
+    paypal = setting.payment_methods[:paypal]
     env = paypal[:test] == 1 ? :development : :production
     values = {
       :business => paypal[env][:email],
@@ -127,7 +127,7 @@ class Order < ActiveRecord::Base
   def cyberplus_encrypted
     ts = Time.now
     setting = Setting.first
-    cyberplus_tmp = setting.payment_method_list[:cyberplus]
+    cyberplus_tmp = setting.payment_methods[:cyberplus]
     env = cyberplus_tmp[:test] == 1 ? :development : :production
     cyberplus = cyberplus_tmp[env]
 
@@ -170,7 +170,7 @@ class Order < ActiveRecord::Base
 
   def cmc_cic_encrypted
     setting = Setting.first
-    cmc_cic_tmp = setting.payment_method_list[:cmc_cic]
+    cmc_cic_tmp = setting.payment_methods[:cmc_cic]
     env = cmc_cic_tmp[:test] == 1 ? :development : :production
     cmc_cic = cmc_cic_tmp[env]
 
@@ -212,7 +212,7 @@ class Order < ActiveRecord::Base
 
   def elysnet_encrypted
     setting = Setting.first
-    elysnet_tmp = setting.payment_method_list[:elysnet]
+    elysnet_tmp = setting.payment_methods[:elysnet]
     env = elysnet_tmp[:test] == 1 ? :development : :production
     elysnet = elysnet_tmp[env]
 

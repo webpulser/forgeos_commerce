@@ -1,20 +1,16 @@
 %div#accordion_payments
-  - f.fields_for :payment_methods, f.object.payment_methods do |payment|
+  - payment = (f.object.payment_methods || {})
+  - f.fields_for :payment_methods, payment do |payment_form|
     %h3
       =t('cheque', :scope => [:payment], :count => 1).capitalize
     %div
-      - checked = (f.object.payment_method_list[:cheque][:active] == 1 if f.object.payment_method_list[:cheque])
-      = payment.label  :cheque, t(:active, :scope => [:payment, :cheque])
-      = payment.check_box :cheque, :checked => checked, :onchange => "$(this).next().toggle('highlight', 500)"
-      .infos{ :style => checked ? 'display: block;': 'display: none;'}
+      = serialized_field(payment_form, payment, :check_box, :cheque, :active)
+      .infos
         .wrapping
           .cheque_message
-            = payment.label :cheque_image, t(:image, :scope => [:payment, :cheque])
-            = payment.text_field :cheque_image, :value => (f.object.payment_method_list[:cheque].nil? ? '' : f.object.payment_method_list[:cheque][:image])
+            = serialized_field(payment_form, payment, :text_field, :cheque, :image)
             %br
-            = payment.label  :cheque_message, t(:message, :scope => [:payment, :cheque])
-            %br
-            = payment.text_area :cheque_message, :value => (f.object.payment_method_list[:cheque].nil? ? '' : f.object.payment_method_list[:cheque][:message]), :class => 'mceEditor'
+            = serialized_field(payment_form, payment, :text_area, :cheque, :message)
           .tool-tip-settings
             = t(:infos, :scope => [:payment, :cheque])
           .clear
@@ -23,131 +19,45 @@
     %h3
       =t('paypal', :scope => [:payment], :count => 1).capitalize
     %div
-      - checked = (f.object.payment_method_list[:paypal][:active] == 1 if f.object.payment_method_list[:paypal])
-      = payment.label :paypal, t(:active, :scope => [:payment, :paypal])
-      = payment.check_box :paypal, :checked => checked, :onchange => "$(this).next().toggle('highlight', 500)"
-      .infos{ :style => checked ? 'display: block;': 'display: none;'}
-        - checked = (f.object.payment_method_list[:paypal][:test] == 1 if f.object.payment_method_list[:paypal])
-        = payment.label :paypal_test, t(:test, :scope => [:payment, :paypal])
-        = payment.check_box :paypal_test, :checked => checked
+      = serialized_field(payment_form, payment, :check_box, :paypal, :active)
+      .infos
         %br
-        = payment.label :paypal_image, t(:image, :scope => [:payment, :paypal])
-        = payment.text_field :paypal_image, :value => (f.object.payment_method_list[:paypal].nil? ? '' : f.object.payment_method_list[:paypal][:image])
+        = serialized_field(payment_form, payment, :text_field, :paypal, :image)
         .clear
-        .grid_7
-          %h4
-            Development
-          - %w(email secret cert_id url url_ok auto_response currency).each do |element|
-            .grid_3.omega
-              = payment.label "paypal_dev_#{element}".to_sym, t(element, :scope => [:payment, :paypal, :development])
-            .grid_4.alpha
-              = payment.text_field "paypal_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:paypal].nil? ? '' : f.object.payment_method_list[:paypal][:development][element.to_sym])
-            .clear
-        .grid_7
-          %h4
-            Production
-          - %w(email secret cert_id url url_ok auto_response currency).each do |element|
-            .grid_3.omega
-              = payment.label "paypal_prod_#{element}".to_sym, t(element, :scope => [:payment, :paypal, :production])
-            .grid_4.alpha
-              = payment.text_field "paypal_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:paypal].nil? ? '' : f.object.payment_method_list[:paypal][:production][element.to_sym])
-            .clear
-      
+        = payment_fields_with_env payment_form, payment, :paypal, %w(email secret cert_id url url_ok auto_response currency)
+
     %h3
       =t('cmc_cic', :scope => [:payment], :count => 1).capitalize
     %div
-      - checked = (f.object.payment_method_list[:cmc_cic][:active] == 1 if f.object.payment_method_list[:cmc_cic])
-      = payment.label :cmc_cic, t(:active, :scope => [:payment, :cmc_cic])
-      = payment.check_box :cmc_cic, :checked => checked, :onchange => "$(this).next().toggle('highlight', 500)"
-      .infos{ :style => checked ? 'display: block;': 'display: none;'}
-        - checked = (f.object.payment_method_list[:cmc_cic][:test] == 1 if f.object.payment_method_list[:cmc_cic])
-        = payment.label :cmc_cic_test, t(:test, :scope => [:payment, :cmc_cic])
-        = payment.check_box :cmc_cic_test, :checked => checked
+      = serialized_field(payment_form, payment, :check_box, :cmc_cic, :active)
+      .infos
+        = serialized_field(payment_form, payment, :check_box, :cmc_cic, :test)
         %br
-        = payment.label :cmc_cic_image, t('image', :scope => [:payment, :cmc_cic])
-        = payment.text_field :cmc_cic_image, :value => (f.object.payment_method_list[:cmc_cic].nil? ? '' : f.object.payment_method_list[:cmc_cic][:image])
+        = serialized_field(payment_form, payment, :text_field, :cmc_cic, :image)
         .clear
-        .grid_7
-          %h4
-            Development
-          - %w(cle tpe version serveur code_societe url_ok url_ko url_return).each do |element|
-            .grid_3.omega
-              = payment.label "cmc_cic_dev_#{element}".to_sym, t(element, :scope => [:payment, :cmc_cic, :development])
-            .grid_4.alpha
-              = payment.text_field "cmc_cic_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:cmc_cic].nil? ? '' : f.object.payment_method_list[:cmc_cic][:development][element.to_sym])
-            .clear
-        .grid_7
-          %h4
-            Production
-          - %w(cle tpe version serveur code_societe url_ok url_ko url_return).each do |element|
-            .grid_3.omega
-              = payment.label "cmc_cic_prod_#{element}".to_sym, t(element, :scope => [:payment, :cmc_cic, :production])
-            .grid_4.alpha
-              = payment.text_field "cmc_cic_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:cmc_cic].nil? ? '' : f.object.payment_method_list[:cmc_cic][:production][element.to_sym])
-            .clear
-      
+        = payment_fields_with_env payment_form, payment, :cmc_cic, %w(cle tpe version serveur code_societe url_ok url_ko url_return)
+
     %h3
       = t('cyberplus', :scope => [:payment], :count => 1).capitalize
     %div
-      - checked = (f.object.payment_method_list[:cyberplus][:active] == 1 if f.object.payment_method_list[:cyberplus])
-      = payment.label :cyberplus, t(:active, :scope => [:payment, :cyberplus])
-      = payment.check_box :cyberplus, :checked => checked, :onchange => "$(this).next().toggle('highlight', 500)"
-      .infos{ :style => checked ? 'display: block;': 'display: none;'}
-        - checked = (f.object.payment_method_list[:cyberplus][:test] == 1 if f.object.payment_method_list[:cyberplus])
-        = payment.label :cyberplus_test, t(:test, :scope => [:payment, :cyberplus])
-        = payment.check_box :cyberplus_test, :checked => checked
-        %br
-        = payment.label :cyberplus_image, t('image', :scope => [:payment, :cyberplus])
-        = payment.text_field :cyberplus_image, :value => (f.object.payment_method_list[:cyberplus].nil? ? '' : f.object.payment_method_list[:cyberplus][:image])
-        .clear
-        .grid_7
-          %h4
-            Development
-          - %w(key site_id currency version payment_cards payment_config url_ok url_ko url_return url_referral ).each do |element|
-            .grid_3.omega
-              = payment.label "cyberplus_dev_#{element}".to_sym, t(element, :scope => [:payment, :cyberplus, :development])
-            .grid_4.alpha
-              = payment.text_field "cyberplus_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:cyberplus].nil? ? '' : f.object.payment_method_list[:cyberplus][:development][element.to_sym])
-            .clear
-        .grid_7
-          %h4
-            Production
-          - %w(key site_id currency version payment_cards payment_config url_ok url_ko url_return url_referral).each do |element|
-            .grid_3.omega
-              = payment.label "cyberplus_prod_#{element}".to_sym, t(element, :scope => [:payment, :cyberplus, :production])
-            .grid_4.alpha
-              = payment.text_field "cyberplus_prod_#{element}".to_sym, :value => (f.object.payment_method_list[:cyberplus].nil? ? '' : f.object.payment_method_list[:cyberplus][:production][element.to_sym])
-            .clear
+      = serialized_field(payment_form, payment, :check_box, :cyberplus, :active)
 
+      .infos
+        = serialized_field(payment_form, payment, :check_box, :cyberplus, :test)
+        %br
+        = serialized_field(payment_form, payment, :text_field, :cyberplus, :image)
+        %br
+        = serialized_field(payment_form, payment, :text_field, :cyberplus, :image_multi)
+        .clear
+        = payment_fields_with_env payment_form, payment, :cyberplus, %w(key site_id currency version payment_cards payment_config multi_minimum_cart multi_message url_ok url_ko url_return url_referral)
     %h3
       =t('elysnet', :scope => [:payment], :count => 1).capitalize
     %div
-      - checked = (f.object.payment_method_list[:elysnet][:active] == 1 if f.object.payment_method_list[:elysnet])
-      = payment.label :elysnet, t(:active, :scope => [:payment, :elysnet])
-      = payment.check_box :elysnet, :checked => checked, :onchange => "$(this).next().toggle('highlight', 500)"
-      .infos{ :style => checked ? 'display: block;': 'display: none;'}
-        - checked = (f.object.payment_method_list[:elysnet][:test] == 1 if f.object.payment_method_list[:elysnet])
-        = payment.label :elysnet_test, t(:test, :scope => [:payment, :elysnet])
-        = payment.check_box :elysnet_test, :checked => checked
+      = serialized_field(payment_form, payment, :check_box, :elysnet, :active)
+
+      .infos
+        = serialized_field(payment_form, payment, :check_box, :elysnet, :test)
         %br
-        = payment.label :elysnet_image, t('image', :scope => [:payment, :elysnet])
-        = payment.text_field :elysnet_image, :value => (f.object.payment_method_list[:elysnet].nil? ? '' : f.object.payment_method_list[:elysnet][:image])
+        = serialized_field(payment_form, payment, :text_field, :elysnet, :image)
         .clear
-        .grid_7
-          %h4
-            Development
-          - %w(url_ok url_ko auto_response merchant_id).each do |element|
-            .grid_3.omega
-              = payment.label "elysnet_dev_#{element}".to_sym, t(element, :scope => [:payment, :elysnet, :development])
-            .grid_4.alpha
-              = payment.text_field "elysnet_dev_#{element}".to_sym, :value => (f.object.payment_method_list[:elysnet].nil? ? '' : f.object.payment_method_list[:elysnet][:development][element.to_sym])
-            .clear
-        .grid_7
-          %h4
-            Production
-          - %w(url_ok url_ko auto_response merchant_id).each do |element|
-            .grid_3.omega
-              = payment.label "elysnet_production_#{element}".to_sym, t(element, :scope => [:payment, :elysnet, :production])
-            .grid_4.alpha
-              = payment.text_field "elysnet_production_#{element}".to_sym, :value => (f.object.payment_method_list[:elysnet].nil? ? '' : f.object.payment_method_list[:elysnet][:production][element.to_sym])
-            .clear
+        = payment_fields_with_env payment_form, payment, :elysnet, %w(url_ok url_ko auto_response merchant_id)

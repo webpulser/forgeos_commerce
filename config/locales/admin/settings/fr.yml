@@ -2,7 +2,7 @@ fr:
   payment:
     one: paiement
     other: paiements
-    not_active: "Ce paiement n'est pas activé'"
+    not_active: "Ce paiement n'est pas activé"
     cheque:
       infos: "<strong>utiliser les variables :</strong><ol><li>#{ORDER_ID} - Référence de la commande</li><li>#{USER_NAME} - Nom du client</li></ol>"
       one : "paiement par chèque"
@@ -14,72 +14,50 @@ fr:
       one: paiement par paypal
       image: lien vers le logo paypal
       active: activer paypal
-      development:
-        email: email
-        secret: clé secrète
-        cert_id: identifiant du certificat
-        url: url
-        url_ok: url commande validée
-        auto_response: url d'autoréponse
-        currency: monnaie
-      production:
-        email: email
-        secret: clé secrète
-        cert_id: identifiant du certificat
-        url: url
-        url_ok: url commande validée
-        auto_response: url d'autoréponse
-        currency: monnaie
+      email: email
+      secret: clé secrète
+      cert_id: identifiant du certificat
+      url: url
+      url_ok: url commande validée
+      auto_response: url d'autoréponse
+      currency: monnaie
     cmc_cic:
       test: activer le mode test
       one: carte bancaire CMC CIC
       image: lien vers le logo CMC CIC
       active: activer CMC CIC
-      development:
-        cle: clé
-        tpe: code tpe
-        version: version
-        serveur: serveur
-        code_societe: code société
-        url_ok: url de confirmation
-        url_ko: "url d'erreur"
-        url_return: url de retour
-      production:
-        cle: clé
-        tpe: code tpe
-        version: version
-        serveur: serveur
-        code_societe: code société
-        url_ok: url de confirmation
-        url_ko: "url d'erreur"
-        url_return: url de retour
+      cle: clé
+      tpe: code tpe
+      version: version
+      serveur: serveur
+      code_societe: code société
+      url_ok: url de confirmation
+      url_ko: "url d'erreur"
+      url_return: url de retour
     cyberplus:
       test: activer le mode test
       one: Carte bancaire cyberplus
       image: lien vers le logo cyberplus
+      image_multi: lien vers le logo cyberplus multi
       active: activer cyberplus
-      development:
-        key: clé
-        currency: monnaie
-        version: version
-        site_id: identifiant du site
-        payment_cards: cartes de paiement
-        payment_config: configuration de paiement
-        url_ok: url de confirmation
-        url_ko: "url d'erreur"
-        url_return: url de retour
-        url_referral: url de référence
-      production:
-        key: clé
-        currency: monnaie
-        version: version
-        site_id: identifiant du site
-        payment_cards: cartes de paiement
-        payment_config: configuration de paiement
-        url_ok: url de confirmation
-        url_ko: "url d'erreur"
-        url_return: url de retour
-        url_referral: url de référence
+      key: clé
+      currency: monnaie
+      version: version
+      site_id: identifiant du site
+      payment_cards: cartes de paiement
+      payment_config: configuration de paiement
+      multi_minimum_cart: Montant minimum pour le paiement en plusieurs fois
+      multi_message: Message pour inciter le client à payer en plusieurs fois
+      url_ok: url de confirmation
+      url_ko: "url d'erreur"
+      url_return: url de retour
+      url_referral: url de référence
     elysnet:
+      active: activer elysnet
       test: activer le mode test
+      image: lien vers le logo elysnet
       one: carte bancaire elysnet
+      merchant_id: identifiant du site
+      url_ok: url de confirmation
+      url_ko: "url d'erreur"
+      auto_response: url de retour
