@@ -89,18 +89,16 @@ class Order < ActiveRecord::Base
 
   # GENERATE ENCRYPTED FORM FOR CHECKOUT
   def paypal_encrypted
-    setting = Setting.first
-    paypal = setting.payment_methods[:paypal]
-    env = paypal[:test] == 1 ? :development : :production
+    paypal = Setting.current.payment_method_setting_with_env(:paypal)
     values = {
-      :business => paypal[env][:email],
+      :business => paypal[:email],
       :cmd => '_cart',
       :upload => 1,
-      :return => paypal[env][:url_ok],
+      :return => paypal[:url_ok],
       :invoice => id,
-      :notify_url => paypal[env][:auto_response],
-      :cert_id => paypal[env][:cert_id],
-      :currency_code => paypal[env][:currency],
+      :notify_url => paypal[:auto_response],
+      :cert_id => paypal[:cert_id],
+      :currency_code => paypal[:currency],
       :handling_cart => self.order_shipping.price.nil? ? 0 : self.order_shipping.price.round(2)
     }
     order_details.all( :group => 'product_id').each_with_index do |item, index|
@@ -126,10 +124,7 @@ class Order < ActiveRecord::Base
 
   def cyberplus_encrypted
     ts = Time.now
-    setting = Setting.first
-    cyberplus_tmp = setting.payment_methods[:cyberplus]
-    env = cyberplus_tmp[:test] == 1 ? :development : :production
-    cyberplus = cyberplus_tmp[env]
+    cyberplus = Setting.current.payment_method_setting_with_env(:cyberplus)
 
     payment_config = if cyberplus[:payment_config] =~ /^MULTI:.*count=(\d+)/i and self.payment_plans
       count = $1.to_i
@@ -141,7 +136,7 @@ class Order < ActiveRecord::Base
     payment = {
       :version => cyberplus[:version],
       :site_id => cyberplus[:site_id],
-      :ctx_mode => cyberplus_tmp[:test] == 1 ? 'TEST' : 'PRODUCTION',
+      :ctx_mode => Setting.current.payment_method_for_test?(:cyberplus) ? 'TEST' : 'PRODUCTION',
       :trans_id => ts.strftime('%H%M%S'),
       :trans_date => ts.strftime('%Y%m%d%H%M%S'),
       :validation_mode => '',
@@ -169,10 +164,7 @@ class Order < ActiveRecord::Base
   end
 
   def cmc_cic_encrypted
-    setting = Setting.first
-    cmc_cic_tmp = setting.payment_methods[:cmc_cic]
-    env = cmc_cic_tmp[:test] == 1 ? :development : :production
-    cmc_cic = cmc_cic_tmp[env]
+    cmc_cic = Setting.currency.payment_method_setting_with_env(:cmc_cic)
 
     sReference = "#{rand(1000)}A#{reference}" # Reference: unique, alphaNum (A-Z a-z 0-9), 12 characters max
     sMontant = '%.2f' % total # Amount : format  "xxxxx.yy" (no spaces)
@@ -212,9 +204,7 @@ class Order < ActiveRecord::Base
 
   def elysnet_encrypted
     setting = Setting.first
-    elysnet_tmp = setting.payment_methods[:elysnet]
-    env = elysnet_tmp[:test] == 1 ? :development : :production
-    elysnet = elysnet_tmp[env]
+    elysnet = Setting.current.payment_settings_with_env(:elysnet)
 
     parm = "merchant_id=#{elysnet[:merchant_id]}"
     parm += " merchant_country=fr"

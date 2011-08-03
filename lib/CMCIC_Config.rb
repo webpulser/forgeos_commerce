@@ -4,7 +4,7 @@
 # You may for instance put this file in another directory and/or change its name       #
 ########################################################################################
 setting = Setting.current
-if setting and cmc_cic_tmp = setting.payment_method_settings(:cmc_cic)
+if setting and cmc_cic = setting.payment_method_settings_with_env(:cmc_cic)
   CMCIC_CLE = cmc_cic[:cle]
   CMCIC_TPE = cmc_cic[:tpe]
   CMCIC_VERSION = cmc_cic[:version]
