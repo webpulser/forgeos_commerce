@@ -28,6 +28,10 @@ class Setting < ActiveRecord::Base
     payment_methods[k.to_sym] && payment_methods[k.to_sym][:active] == '1'
   end
 
+  def payment_method_availables
+    payment_methods.keys.reject_if { |k| not setting.payment_method_available?(k) }
+  end
+
   def payment_method_for_test?(k)
     payment_methods[k.to_sym] && payment_methods[k.to_sym][:test] == '1'
   end
