@@ -29,7 +29,7 @@ class Setting < ActiveRecord::Base
   end
 
   def payment_method_availables
-    payment_methods.keys.reject_if { |k| not setting.payment_method_available?(k) }
+    payment_methods.keys.reject { |k| not payment_method_available?(k) }
   end
 
   def payment_method_for_test?(k)
