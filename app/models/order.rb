@@ -89,7 +89,7 @@ class Order < ActiveRecord::Base
 
   # GENERATE ENCRYPTED FORM FOR CHECKOUT
   def paypal_encrypted
-    paypal = Setting.current.payment_method_setting_with_env(:paypal)
+    paypal = Setting.current.payment_method_settings_with_env(:paypal)
     values = {
       :business => paypal[:email],
       :cmd => '_cart',
@@ -124,7 +124,7 @@ class Order < ActiveRecord::Base
 
   def cyberplus_encrypted
     ts = Time.now
-    cyberplus = Setting.current.payment_method_setting_with_env(:cyberplus)
+    cyberplus = Setting.current.payment_method_settings_with_env(:cyberplus)
 
     payment_config = if cyberplus[:payment_config] =~ /^MULTI:.*count=(\d+)/i and self.payment_plans
       count = $1.to_i
@@ -164,7 +164,7 @@ class Order < ActiveRecord::Base
   end
 
   def cmc_cic_encrypted
-    cmc_cic = Setting.currency.payment_method_setting_with_env(:cmc_cic)
+    cmc_cic = Setting.currency.payment_method_settings_with_env(:cmc_cic)
 
     sReference = "#{rand(1000)}A#{reference}" # Reference: unique, alphaNum (A-Z a-z 0-9), 12 characters max
     sMontant = '%.2f' % total # Amount : format  "xxxxx.yy" (no spaces)
