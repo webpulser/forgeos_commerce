@@ -41,11 +41,11 @@ class Setting < ActiveRecord::Base
   end
 
   def payment_method_settings(k)
-    payment_methods[k.to_sym][payment_method_env(k)] if payment_method_available?(k)
+    payment_methods[k.to_sym] if payment_method_available?(k)
   end
 
   def payment_method_settings_with_env(k)
-    payment_methods[k.to_sym][payment_method_env(k)][payment_method_env(k)] if payment_method_available?(k)
+    payment_method_settings(k)[payment_method_env(k)] if payment_method_available?(k)
   end
 
   def payment_methods
