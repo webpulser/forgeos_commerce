@@ -5,11 +5,7 @@ class Setting < ActiveRecord::Base
   serialize :colissimo_methods
 
   def colissimo_method_list
-    if self.colissimo_methods
-      return YAML.load(self.colissimo_methods)
-    else
-     return {}
-    end
+    self.colissimo_methods || {}
   end
 
   def cheque_message(order)
@@ -50,6 +46,10 @@ class Setting < ActiveRecord::Base
 
   def payment_methods
     read_attribute(:payment_methods)
+  end
+
+  def colissimo_methods
+    read_attribute(:colissimo_methods)
   end
 
 private
