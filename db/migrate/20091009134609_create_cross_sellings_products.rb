@@ -1,6 +1,6 @@
 class CreateCrossSellingsProducts < ActiveRecord::Migration
   def self.up
-    create_table :cross_sellings_products, :id => false do |t|
+    create_table :cross_sellings_products do |t|
       t.belongs_to :cross_selling, :product
     end
   end

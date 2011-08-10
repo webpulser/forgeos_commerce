@@ -4,6 +4,7 @@ class CreateSizes < ActiveRecord::Migration
       t.string :name
       t.integer :quantity
       t.belongs_to :product
+      t.integer :position
       t.timestamps
     end
   end

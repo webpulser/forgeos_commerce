@@ -4,6 +4,7 @@ class CreateCarts < ActiveRecord::Migration
       t.belongs_to  :user
       t.float    :discount
       t.integer  :percent
+      t.text :options
       t.timestamps
     end
   end

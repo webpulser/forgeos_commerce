@@ -9,9 +9,11 @@ class CreateOrderDetails < ActiveRecord::Migration
       t.float :price,
         :rate_tax,
         :voucher_discount_price,
-        :special_offer_discount_price
+        :special_offer_discount_price,
+        :packaging_price
       t.belongs_to :order,
         :product
+      t.integer :quantity, :default => 1, :null => false
       t.timestamps
     end
   end

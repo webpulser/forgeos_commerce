@@ -5,6 +5,7 @@ class CreateOrderShippings < ActiveRecord::Migration
         :track_number
       t.float :price
       t.belongs_to :order
+      t.string :colissimo_type, :default => 'DOS', :null => false
       t.timestamps
     end
   end
