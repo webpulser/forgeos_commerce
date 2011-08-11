@@ -1,4 +1,6 @@
-class Admin::ImportController < Admin::BaseController
+load File.join(Gem.loaded_specs['forgeos_cms'].full_gem_path, 'app', 'controllers', 'admin', 'import_controller.rb')
+
+Admin::ImportController.class_eval do
   before_filter :commerce_models, :only => :index
 
   map_fields :create_product, (Product.new.attributes.keys.sort + Product.new.translated_attributes.stringify_keys.keys.sort + ProductType.all.map(&:product_attributes).flatten.uniq.map(&:access_method).sort + Product.reflections.stringify_keys.keys.sort)

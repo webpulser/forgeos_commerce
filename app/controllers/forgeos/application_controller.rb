@@ -1,4 +1,6 @@
-class ApplicationController < ActionController::Base
+load File.join(Gem.loaded_specs['forgeos_cms'].full_gem_path, 'app', 'controllers', 'forgeos', 'application_controller.rb')
+
+Forgeos::ApplicationController.class_eval do
   helper_method :current_currency, :current_cart, :current_wishlist
   # Change the currency
   def change_currency(currency_id)
@@ -49,7 +51,7 @@ private
   # A short cut for redirect user to the homepage
   def redirect_to_home
     # TODO - controller/action generalize.
-    redirect_to :locale => params[:locale], :controller => 'url_catcher', :action => 'root'
+    redirect_to(root_path(:locale => params[:locale]))
   end
 
   # Redirect to new session page if user isn't logged
@@ -66,7 +68,6 @@ private
     if Currency.table_exists? and
       @current_currency = (Currency.find_by_id(session[:currency_id], :select => '`id`, `default`, `html`, `code`') ||
         Currency.find_by_code('EUR', :select => '`id`, `default`, `html`, `code`'))
-      $currency = @current_currency
       session[:currency_id] = @current_currency.id
       return @current_currency
     end
