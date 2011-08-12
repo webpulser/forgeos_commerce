@@ -1,6 +1,6 @@
-class CreateCartsItems < ActiveRecord::Migration
+class CreateCartItems < ActiveRecord::Migration
   def self.up
-    create_table :carts_items do |t|
+    create_table :cart_items do |t|
       t.belongs_to :cart,
         :product
       t.integer :quantity, :null => false, :default => 1
@@ -9,6 +9,6 @@ class CreateCartsItems < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :carts_items
+    drop_table :cart_items
   end
 end
