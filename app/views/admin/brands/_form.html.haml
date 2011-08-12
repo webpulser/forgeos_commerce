@@ -1,7 +1,7 @@
-- form_for [:admin , brand], :html => { :id => 'wrap' } do |f|
+- form_for [forgeos_commerce, :admin , brand], :html => { :id => 'wrap' } do |f|
   .backgrounds.big-header
     = f.text_field :name, :class => 'field_name'
-    = Forgeos_save_buttons admin_brands_path
+    = Forgeos_save_buttons [forgeos_commerce, :admin, :brands]
   #content.grid_16.alpha.omega
     .grid_12.omega
       = display_visual(f.object_name, brand.picture)

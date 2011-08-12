@@ -131,7 +131,7 @@ private
   def get_special_offer
     unless @special_offer = SpecialOfferRule.find_by_id(params[:id])
       flash[:error] = t('special_offer.found.failed')
-      redirect_to(admin_special_offers_path)
+      redirect_to([forgeos_commerce, :admin, :special_offers])
     end
   end
 

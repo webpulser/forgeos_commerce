@@ -7,7 +7,7 @@
         content_tag(:div, '', :id => form_id),
         form.name,
         form.model,
-        link_to_remote('', :url => { :controller => 'forms', :action => 'destroy', :id => form.id },
+        link_to_remote('', :url => [forgeos_commerce, :admin, form.id],
            :method => :delete,
            :confirm => I18n.t('form.destroy.confirm').capitalize,
            :success => "removedataTablesRow('#destroy_#{form_id}')",

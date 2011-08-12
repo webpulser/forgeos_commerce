@@ -48,7 +48,7 @@
       - product.pictures.each do |picture|
         %li{ :class => (picture.id == product.picture_ids.first) ? 'first-image' : ''}
           = link_to_function '', "$(this).parents('li').remove(); check_product_first_image() ", :title => t('media.picture.destroy.confirm').capitalize, :class => 'big-icons trash'
-          = link_to '', [:edit, :admin, picture], :class => 'big-icons edit', :popup => true
+          = link_to '', [forgeos_core, :edit, :admin, picture], :class => 'big-icons edit', :popup => true
           = hidden_field_tag "#{f.object_name}[attachment_ids][]", picture.id, :id => "attachment_#{picture.id}"
           = image_tag picture.public_filename('')
           .handler
@@ -127,8 +127,8 @@
 
   .step
     - unless product.new_record?
-      = link_to t('product.duplicate').capitalize, [:duplicate, :admin, product], :class => 'small-icons duplicate'
-      = link_to t('product.destroy.action').capitalize, [:admin, product], :confirm => (product.redirection_product ? t('product.destroy.redirection_product.confirm', :product => product.redirection_product.sku) : t('product.destroy.redirection_product.none')), :method => :delete, :class => 'small-icons delete'
+      = link_to t('product.duplicate').capitalize, [forgeos_commerce, :duplicate, :admin, product], :class => 'small-icons duplicate'
+      = link_to t('product.destroy.action').capitalize, [forgeos_commerce, :admin, product], :confirm => (product.redirection_product ? t('product.destroy.redirection_product.confirm', :product => product.redirection_product.sku) : t('product.destroy.redirection_product.none')), :method => :delete, :class => 'small-icons delete'
   #products_associated_collection.step.open
     = link_to(t('product.associated_collection', :count => 2), '#', :class => 'small-icons step-title')
     = hidden_field_tag "#{f.object_name}[product_category_ids][]" 

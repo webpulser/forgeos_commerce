@@ -1,7 +1,7 @@
 load File.join(Gem.loaded_specs['forgeos_cms'].full_gem_path, 'app', 'controllers', 'admin', 'base_controller.rb')
 Admin::BaseController.class_eval do
   skip_before_filter :set_currency, :only => [:notifications, :url]
-  before_filter :forgeos_commece_javascripts_files
+  before_filter :forgeos_commerce_javascripts_files
 
 private
 

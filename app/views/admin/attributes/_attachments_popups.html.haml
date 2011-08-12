@@ -28,9 +28,9 @@
       %tr
         %td
 
-= dataSlides_tag :id => 'thumbnail-table', :url => admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture', :mode => 'selection'), :columns => [ '{ "bSortable": true, "bSearchable": true, "sType": "string", "bUseRendered": true, "fnRender": null, "iDataSort": 0, "nTf": null, "nTh": function(){$(".thead").find(".th");}, "sWidth": "0px"}','{"bVisible": false}', '{ "bVisible": false }', '{ "bVisible": false}' ], :autostart => false
+= dataSlides_tag :id => 'thumbnail-table', :url => forgeos_core.admin_attachments_path(:format => :json, :skin => 'thumbnail', :file_type => 'picture', :mode => 'selection'), :columns => [ '{ "bSortable": true, "bSearchable": true, "sType": "string", "bUseRendered": true, "fnRender": null, "iDataSort": 0, "nTf": null, "nTh": function(){$(".thead").find(".th");}, "sWidth": "0px"}','{"bVisible": false}', '{ "bVisible": false }', '{ "bVisible": false}' ], :autostart => false
 
-= dataTables_tag :id => 'image-table', :url => admin_attachments_path(:format => :json, :file_type => 'picture', :mode => 'selection'), :columns => ["{'sClass':'th-checkbox-container', 'bSortable': false }","{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}'], :autostart => false
+= dataTables_tag :id => 'image-table', :url => forgeos_core.admin_attachments_path(:format => :json, :file_type => 'picture', :mode => 'selection'), :columns => ["{'sClass':'th-checkbox-container', 'bSortable': false }","{ 'sTitle': '#{I18n.t('media.filename')}'}","{ 'sTitle': '#{I18n.t('media.content_type')}'}","{ 'sTitle': '#{I18n.t('media.updated_at')}'}","{ 'sTitle': '#{I18n.t('media.size')}'}", '{"bVisible": false}', '{ "bVisible": false }','{ "bVisible": false}','{ "bVisible": false}','{ "bVisible": false}'], :autostart => false
 
 
 -# TODO move to base.js
@@ -41,7 +41,6 @@
   $('#imageUpload').uploadify({
   'uploader': '/images/uploadify/uploadify.swf',
   = "'cancelImg': '#{image_path('admin/big-icons/delete-icon.png')}',"
-  = "'script': '#{admin_attachments_path(:file_type => 'picture')}',"
   = "'buttonImg' :'#{image_path("uploadify/choose-picture_#{I18n.locale}.png")}',"
   'width' :'154',
   'height' :'24',

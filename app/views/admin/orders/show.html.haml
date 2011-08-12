@@ -8,9 +8,9 @@
   %span.header-separator
   %span= @order.created_at.to_s(:format => :default)
   .interact-links
-    = link_to t('order.update.action').capitalize, [:edit, :admin, @order], :class => 'backgrounds interact-button'
+    = link_to t('order.update.action').capitalize, [forgeos_commerce, :edit, :admin, @order], :class => 'backgrounds interact-button'
     = t('or')
-    = link_to t('back').capitalize, admin_orders_path, :class => 'back-link'
+    = link_to t('back').capitalize, [forgeos_commerce, :admin, :orders], :class => 'back-link'
 #content.grid_16.alpha.omega
   #order-see.grid_12.alpha
     .order-see-wrap
@@ -20,7 +20,7 @@
           - user = @order.user
           .main-infos-cutomer
             %h4.small-icons= t('user', :count => 1).capitalize
-            = link_to h(user.fullname), [:admin, user]
+            = link_to h(user.fullname), [forgeos_core, :admin, user]
             %p= "#{user.orders.count} #{t('order', :count => user.orders.count)} #{t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
             %p=h user.phone
             %p.customer-email=h user.email
@@ -47,7 +47,7 @@
                 %td= image_tag('admin/no-image.png')
               %td.product-name
                 - if product
-                  = link_to detail.name, [:admin, detail.product]
+                  = link_to detail.name, [forgeos_commerce, :admin, detail.product]
                 - else
                   = detail.name
               %td= detail.sku
@@ -126,5 +126,5 @@
     .step
       -#= link_to t('order.invoice.show'), [:bill, :admin, @order], :class => 'small-icons preview'
       = content_tag :span, t('order.invoice.show').capitalize, :class => 'small-icons preview disabled'
-      = link_to t('order.destroy.action'), [:admin, @order], :method => :delete, :confirm => t('order.destroy.confirm'), :class => 'small-icons delete'
+      = link_to t('order.destroy.action'), [forgeos_commerce, :admin, @order], :method => :delete, :confirm => t('order.destroy.confirm'), :class => 'small-icons delete'
   .clear

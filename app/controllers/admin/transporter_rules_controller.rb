@@ -154,7 +154,7 @@ class Admin::TransporterRulesController < Admin::BaseController
     else
       flash[:error] = I18n.t('transporter.destroy.failed').capitalize
     end
-    redirect_to(admin_transporters_path)
+    redirect_to([forgeos_commerce, :admin, :transporters])
   end
 
   def activate
@@ -165,7 +165,7 @@ class Admin::TransporterRulesController < Admin::BaseController
     def get_transporter
       unless @transporter = TransporterRule.find_by_id(params[:id])
         flash[:notice] = I18n.t('transporter.not_exist').capitalize
-        return redirect_to(admin_transporters_path)
+        return redirect_to([forgeos_commerce, :admin, :transporters])
       end
     end
 

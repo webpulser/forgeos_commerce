@@ -100,7 +100,7 @@ private
   def get_voucher
     unless @voucher = VoucherRule.find_by_id(params[:id])
       flash[:error] = t('voucher.found.failed')
-      redirect_to(admin_vouchers_path)
+      return redirect_to([forgeos_commerce, :admin, :vouchers])
     end
   end
 

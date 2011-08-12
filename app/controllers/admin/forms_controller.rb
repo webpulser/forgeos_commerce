@@ -24,7 +24,7 @@ class Admin::FormsController < Admin::BaseController
   def create
     if @form.save
       flash[:notice] = "Création du formulaire réussi"
-      redirect_to edit_admin_form_path(@form)
+      redirect_to([forgeos_commerce, :edit, :admin, @form])
     else
       flash[:error] = "Création du formulaire échoué"
       render :action => :new

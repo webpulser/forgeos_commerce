@@ -6,19 +6,19 @@
       klass = user.active? ? 'see-on' : 'see-off'
       [
       content_tag(:div, '<div class="handler"></div><div class="small-icons user-ico"></div>', :id => link_id, :class => 'handler_container'),
-      content_tag(:div, link_to(h(user.fullname), [:edit, :admin, user]), :class => 'user-name'),
+      content_tag(:div, link_to(h(user.fullname), [forgeos_core, :edit, :admin, user]), :class => 'user-name'),
       content_tag(:div, mail_to(h(user.email), user.email, :class => 'truncate', :title => user.email), :class => 'email'),
       user.orders.count,
       user.total_orders.blank? ? t('none').capitalize : content_tag(:div, price_with_currency(user.total_orders)),
       content_tag( :div, (user.orders.empty? ?  t('none').capitalize : user.orders.last(:order => 'created_at DESC' ).created_at.to_date), :class => 'last-date'),
-        link_to_remote('', :url => activate_admin_user_path(user),
+        link_to_remote('', :url => [forgeos_core, :activate, :admin, user],
          :complete => "toggleActivate('#show_#{link_id}')",
          :html => {
            :class => "small-icons #{klass}",
            :id => "show_#{link_id}"
         }),
-        link_to('', [:edit, :admin, user], :class => 'small-icons edit-link') +
-        link_to_remote('', :url => [:admin, user],
+        link_to('', [forgeos_core, :edit, :admin, user], :class => 'small-icons edit-link') +
+        link_to_remote('', :url => [forgeos_core, :admin, user],
          :method => :delete,
          :confirm => t('user.destroy.confirm').capitalize,
          :success => "removedataTablesRow('#destroy_#{link_id}')",

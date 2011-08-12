@@ -1,6 +1,6 @@
 - content_for :tools, link_to(I18n.t('list').capitalize, url_for(:action => :index), :class => 'house' )
 - if price_cut && !(price_cut.new_record?)
   - content_for :tools do
-    = link_to(I18n.t('show').capitalize, admin_price_cut_path(price_cut))
-    = link_to(I18n.t('edit').capitalize, edit_admin_price_cut_path(price_cut))
-    = link_to(I18n.t('destroy').capitalize, admin_price_cut_path(price_cut), :confirm => I18n.t('price_cut.destroy.confirm').capitalize, :method => :delete)
+    = link_to(I18n.t('show').capitalize, [forgeos_commerce, :admin, price_cut])
+    = link_to(I18n.t('edit').capitalize, [forgeos_commerce, :edit, :admin, price_cut])
+    = link_to(I18n.t('destroy').capitalize, [forgeos_commerce, :admin, price_cut], :confirm => I18n.t('price_cut.destroy.confirm').capitalize, :method => :delete)

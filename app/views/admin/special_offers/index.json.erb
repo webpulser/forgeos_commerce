@@ -14,7 +14,7 @@
                :id => "show_#{link_id}"
         }),
         special_offer.use,
-        link_to_remote('', :url => { :controller => 'special_offers', :action => 'destroy', :id => special_offer.id },
+        link_to_remote('', :url => [forgeos_commerce, :admin, special_offer],
            :method => :delete,
            :confirm => I18n.t('special_offer.destroy.confirm').capitalize,
            :success => "removedataTablesRow('#destroy_#{link_id}')",

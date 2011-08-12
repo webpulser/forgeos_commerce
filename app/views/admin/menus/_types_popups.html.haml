@@ -1,9 +1,9 @@
 #menuLinkTypeDialog.media-hoverlay
   #inner-lightbox.backgrounds
     = link_to_function ExternalLink.human_name, "toggleSelectedOverlay('#inner-lightbox.backgrounds .external'); toggle_menu_types_overlays('external-link')", :class => "small-icons external selected"
-    = link_to_function PageLink.human_name, "toggleSelectedOverlay('#inner-lightbox.backgrounds .page'); update_current_dataTable_source('#table-files','#{escape_javascript(admin_pages_path(:mode => 'menu_link',:format => :json))}'); toggle_menu_types_overlays('target-link');", :class => "small-icons page"
-    = link_to_function ProductLink.human_name, "toggleSelectedOverlay('#inner-lightbox.backgrounds .product'); update_current_dataTable_source('#table-files','#{escape_javascript(admin_products_path(:mode => 'menu_link',:format => :json))}'); toggle_menu_types_overlays('target-link')", :class => "small-icons product"
-    = link_to_function CategoryLink.human_name, "toggleSelectedOverlay('#inner-lightbox.backgrounds .category'); update_current_dataTable_source('#table-files','#{escape_javascript(admin_categories_path(:types => ['page', 'product'], :mode => 'menu_link', :format => :json))}'); toggle_menu_types_overlays('target-link')", :class => "small-icons category"
+    = link_to_function PageLink.human_name, "toggleSelectedOverlay('#inner-lightbox.backgrounds .page'); update_current_dataTable_source('#table-files','#{escape_javascript(forgeos_cms.admin_pages_path(:mode => 'menu_link',:format => :json))}'); toggle_menu_types_overlays('target-link');", :class => "small-icons page"
+    = link_to_function ProductLink.human_name, "toggleSelectedOverlay('#inner-lightbox.backgrounds .product'); update_current_dataTable_source('#table-files','#{escape_javascript(forgeos_commerce.admin_products_path(:mode => 'menu_link',:format => :json))}'); toggle_menu_types_overlays('target-link')", :class => "small-icons product"
+    = link_to_function CategoryLink.human_name, "toggleSelectedOverlay('#inner-lightbox.backgrounds .category'); update_current_dataTable_source('#table-files','#{escape_javascript(forgeos_core.admin_categories_path(:types => ['page', 'product'], :mode => 'menu_link', :format => :json))}'); toggle_menu_types_overlays('target-link')", :class => "small-icons category"
 
   .media-hoverlay-header
     #search.right.files
@@ -19,4 +19,4 @@
       %label= "#{t(:url).capitalize} :"
       = text_field_tag "url", '', :id => "overlay-url"
 
-= dataTables_tag :id => 'table-files', :url => admin_pages_path(:format => :json, :mode => 'menu_link'), :columns => ["{'sClass':'th-checkbox-container', 'bSortable': false }","{ 'sTitle': '#{I18n.t(:name)}'}","{'bVisible': false}", "{'bVisible': false}"], :autostart => false
+= dataTables_tag :id => 'table-files', :url => forgeos_cms.admin_pages_path(:format => :json, :mode => 'menu_link'), :columns => ["{'sClass':'th-checkbox-container', 'bSortable': false }","{ 'sTitle': '#{I18n.t(:name)}'}","{'bVisible': false}", "{'bVisible': false}"], :autostart => false

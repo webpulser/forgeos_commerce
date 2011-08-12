@@ -13,14 +13,14 @@
         content_tag(:div,
            link_to(
              details_count != 1 ? "#{details_count} #{t('product', :count => details_count)}" : order.order_details.first.name.capitalize,
-             [:admin,order]
+             [forgeos_commerce, :admin,order]
            ),
            :class => 'product-name')+
            product_names,
         order.created_at.to_s(:short),
         select_tag(:status, options_for_select(order_states_for_select, order.status), :class => 'customize'),
-        link_to('', [:edit, :admin, order], :class => 'small-icons edit-link') +
-        link_to_remote('', :url => [:admin, order],
+        link_to('', [forgeos_commerce, :edit, :admin, order], :class => 'small-icons edit-link') +
+        link_to_remote('', :url => [forgeos_commerce, :admin, order],
           :method => :delete,
           :confirm => t('order.destroy.confirm').capitalize,
           :success => "removedataTablesRow('#destroy_#{link_id}')",

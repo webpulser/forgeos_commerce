@@ -20,10 +20,10 @@
         %td
           = order.transporter
         %td
-          = link_to_remote(I18n.t('pay').capitalize, :url => { :controller => 'admin/orders', :action => 'pay', :id => order.id }, :update => 'orders' ) + ' -' if order.aasm_current_state == :unpaid
-          = link_to_remote(I18n.t('accept').capitalize, :url => { :controller => 'admin/orders', :action => 'accept', :id => order.id }, :update => 'orders' ) + ' -' if order.aasm_current_state == :paid
-          = link_to_remote(I18n.t('send').capitalize, :url => { :controller => 'admin/orders', :action => 'sent', :id => order.id }, :update => 'orders' ) + ' -' if order.aasm_current_state == :accepted
-          = link_to I18n.t('edit').capitalize, edit_admin_order_path(order)
+          = link_to_remote(I18n.t('pay').capitalize, :url => [forgeos_commerce, :pay, :admin, order], :update => 'orders' ) + ' -' if order.aasm_current_state == :unpaid
+          = link_to_remote(I18n.t('accept').capitalize, :url => [forgeos_commerce, :accept, :admin, order], :update => 'orders' ) + ' -' if order.aasm_current_state == :paid
+          = link_to_remote(I18n.t('send').capitalize, :url => [forgeos_commerce, :sent, :admin, order], :update => 'orders' ) + ' -' if order.aasm_current_state == :accepted
+          = link_to I18n.t('edit').capitalize, [forgeos_commerce, :edit, :admin, order]
           \-
-          = link_to_remote(I18n.t('destroy').capitalize, :url => admin_order_path(order), :method => 'delete',:update => 'orders', :confirm => I18n.t('order.destroy.confirm').capitalize)
-- content_for :tools, link_to(I18n.t('order.create.action').capitalize, new_admin_order_path, :class => 'add' )
+          = link_to_remote(I18n.t('destroy').capitalize, :url => [forgeos_commerce, :admin, order], :method => 'delete',:update => 'orders', :confirm => I18n.t('order.destroy.confirm').capitalize)
+- content_for :tools, link_to(I18n.t('order.create.action').capitalize, [forgeos_commerce, :new, :admin, :order], :class => 'add' )

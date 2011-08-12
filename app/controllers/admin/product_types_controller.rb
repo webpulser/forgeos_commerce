@@ -27,7 +27,7 @@ class Admin::ProductTypesController < Admin::BaseController
   def create
     if @product_type.save
       flash[:notice] = I18n.t('product_type.create.success').capitalize
-      redirect_to edit_admin_product_type_path(@product_type)
+      redirect_to([forgeos_commerce, :edit, :admin @product_type])
     else
       flash[:error] = I18n.t('product_type.create.failed').capitalize
       render :action => :new
@@ -59,14 +59,14 @@ class Admin::ProductTypesController < Admin::BaseController
       flash[:error] = I18n.t('product.destroy.failed').capitalize
     end
     return render(:nothing=>true) if request.xhr?
-    redirect_to(admin_product_types_path)
+    redirect_to([forgeos_commerce, :admin, :product_types])
   end
 
 private
   def get_product_type
     unless @product_type = ProductType.find_by_id(params[:id])
       flash[:error] = I18n.t('product_type.found.failed').capitalize
-      return redirect_to(admin_product_types_path)
+      return redirect_to([forgeos_commerce, :admin, :product_types])
     end
   end
 

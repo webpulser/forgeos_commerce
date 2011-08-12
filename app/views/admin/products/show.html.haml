@@ -3,9 +3,9 @@
 .backgrounds.big-header
   %h1= @product.name
   .interact-links
-    = link_to t('product.update.action').capitalize, [:edit, :admin, @product], :class => 'backgrounds interact-button'
+    = link_to t('product.update.action').capitalize, [forgeos_commerce, :edit, :admin, @product], :class => 'backgrounds interact-button'
     = t('or')
-    = link_to t('back_to_catalog').capitalize, admin_products_path, :class => 'back-link'
+    = link_to t('back_to_catalog').capitalize, [forgeos_commerce, :admin, :products], :class => 'back-link'
 
 #content.grid_16.alpha.omega
   #product-see.grid_12.alpha
@@ -28,7 +28,7 @@
         %em
           = t('product_type', :count => 1).capitalize
           \:
-        = link_to @product.product_type.name, [:admin,@product.product_type], :class => 'product-type-link'
+        = link_to @product.product_type.name, [forgeos_commerce, :admin,@product.product_type], :class => 'product-type-link'
       %p
         %em
           = t :sku
@@ -111,7 +111,7 @@
         = t('product.showed_on_homepage').capitalize
 
     .step
-      = link_to t('product.duplicate').capitalize, duplicate_admin_product_path(@product), :class => 'small-icons duplicate'
+      = link_to t('product.duplicate').capitalize, [forgeos_commerce, :duplicate, :admin, @product], :class => 'small-icons duplicate'
 
     #products_show_associated_collection.step.open
       %a.small-icons.step-title{:href => '#'}= t('product.associated_collection', :count => 2).capitalize

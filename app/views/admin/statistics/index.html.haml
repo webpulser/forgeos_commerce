@@ -28,7 +28,7 @@
                   = image_tag('admin/no-image.png')
                 %span.stat-product-sells
                   = t('product.sold', :count => counter)
-                = link_to product.name, [:admin, product], :class => 'product-name truncate', :title => product.name
+                = link_to product.name, [forgeos_commerce, :admin, product], :class => 'product-name truncate', :title => product.name
                 %span.stat-prodcut-title
                   = price_with_currency product.price
           .clear
@@ -44,7 +44,7 @@
                   = image_tag('admin/no-image.png')
                 %span.stat-product-sells
                   = t('product.viewed', :count => counter)
-                = link_to product.name, [:admin, product], :class => 'product-name truncate', :title => product.name
+                = link_to product.name, [forgeos_commerce, :admin, product], :class => 'product-name truncate', :title => product.name
                 %span.stat-product-title
                   = price_with_currency product.price
               .clear
@@ -61,7 +61,7 @@
               - @pages_most_viewed.each do |page_id, counter|
                 - if page = Page.find_by_id(page_id)
                   %tr{ :class => cycle('odd','even') }
-                    %td.table-product= link_to page.title, [:admin, page]
+                    %td.table-product= link_to page.title, [forgeos_cms, :admin, page]
                     %td= t('page.viewed', :count => counter)
           .clear
           %a.see-all-orders{ :href => "#" }
@@ -94,7 +94,7 @@
               - if user = User.find_by_id(user_id)
                 %tr{:class => cycle('odd','even')}
                   %td.customer-bought-amount= price_with_currency total
-                  %td= user ? link_to(h(user.fullname), [:admin, user]) : ''
+                  %td= user ? link_to(h(user.fullname), [forgeos_core, :admin, user]) : ''
           .clear
           = link_to t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
 
@@ -104,7 +104,7 @@
               - @customers_new.each do |customer|
                 %tr{ :class => cycle('odd','even') }
                   %td
-                    = link_to h(customer.fullname), [:admin, customer]
+                    = link_to h(customer.fullname), [forgeos_core, :admin, customer]
                   %td
                     = t('user.joined_on').capitalize
                     = customer.created_at.to_s(:short)

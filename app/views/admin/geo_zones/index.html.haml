@@ -1,7 +1,7 @@
 = display_standard_flashes
 %h1
   = I18n.t('geo_zone', :count=>2).capitalize
-- content_for :tools, link_to(I18n.t('geo_zone.create.action').capitalize, new_admin_geo_zone_path, :class => 'add' )
+- content_for :tools, link_to(I18n.t('geo_zone.create.action').capitalize, [forgeos_commerce, :new, :admin, :geo_zone], :class => 'add' )
 #geo_zones
   %ul
     = render :partial => 'list', :locals => { :geo_zones => @geo_zones }
@@ -17,7 +17,7 @@
   = "label: '#{I18n.t('geo_zone.create.action')}',"
   icon : 'create.png',
   visible : function (NODE, TREE_OBJ) { if(NODE.length != 1) return false; return TREE_OBJ.check('creatable', NODE); },
-  = "action: function(NODE){ current_url = '#{new_admin_geo_zone_path}'; current_node = NODE; $('#dialog').dialog('open'); }"
+  = "action: function(NODE){ current_url = '#{url_for([forgeos_commerce, :new, :admin, :geo_zone])}'; current_node = NODE; $('#dialog').dialog('open'); }"
   },
   {
   id: 'edit',
@@ -32,7 +32,7 @@
   icon : 'remove.png',
   visible : function (NODE, TREE_OBJ) { if(NODE.length != 1) return false; return TREE_OBJ.check('deletable', NODE); },
   action: function(NODE, TREE_OBJ){
-  = remote_function(:url => { :controller => 'geo_zones', :action => 'destroy' }, :with => "'id=' + $(NODE).attr('id').replace('geo_zone_','')", :confirm => I18n.t('geo_zone.destroy.confirm'), :success => '$.each(NODE, function () { TREE_OBJ.remove(this); });' )
+  = remote_function(:url => [forgeos_commerce, :admin, :geo_zones], :method => :delete, :with => "'id=' + $(NODE).attr('id').replace('geo_zone_','')", :confirm => I18n.t('geo_zone.destroy.confirm'), :success => '$.each(NODE, function () { TREE_OBJ.remove(this); });' )
   ; }
   }
   ] }

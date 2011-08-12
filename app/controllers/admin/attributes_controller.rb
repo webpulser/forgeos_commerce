@@ -5,7 +5,7 @@ class Admin::AttributesController < Admin::BaseController
   before_filter :get_attributes, :only => [:index]
   before_filter :get_attribute, :only => [:edit, :update, :destroy, :show, :duplicate]
   before_filter :new_attribute, :only => [:new, :create]
-  
+
   # List attributes
   def index
     respond_to do |format|
@@ -22,7 +22,7 @@ class Admin::AttributesController < Admin::BaseController
 
   def new
   end
- 
+
   def duplicate
     @attribute = @attribute.clone
     render :new
@@ -34,13 +34,13 @@ class Admin::AttributesController < Admin::BaseController
   def create
     if @attribute.save
       flash[:notice] = I18n.t('attribute.create.success').capitalize
-      redirect_to edit_admin_attribute_path(@attribute)
+      redirect_to([forgeos_commerce, :edit, :admin, @attribute])
     else
       flash[:error] = I18n.t('attribute.create.failed').capitalize
       render :action => :new
     end
   end
-  
+
   # Edit an attribute
   # ==== Params
   # * id = attribute's id
@@ -65,7 +65,7 @@ class Admin::AttributesController < Admin::BaseController
     else
       flash[:error] = I18n.t('attribute.destroy.failed').capitalize
     end
-    return redirect_to(admin_attributes_path)
+    redirect_to([forgeos_commerce, :admin, :attributes])
   end
 
   def access_method
@@ -76,20 +76,20 @@ private
   def get_attributes
     @attributes = Attribute.all
   end
-  
+
   def get_attribute
     unless @attribute = Attribute.find_by_id(params[:id])
       flash[:error] = I18n.t('attribute.not_exist').capitalize
-      return redirect_to(admin_attributes_path)
+      return redirect_to([forgeos_commerce, :admin, :attributes])
     end
     %w(checkbox_attribute picklist_attribute radiobutton_attribute
        text_attribute longtext_attribute number_attribute
        date_attribute url_attribute).each do |key|
-      
+
     params[:attribute] = params[key] if params[key]
     end
   end
-  
+
   def new_attribute
     case params[:type]
     when 'checkbox'

@@ -7,32 +7,27 @@
         = I18n.t('attribute.create.text').capitalize
       %span.small-icons.arrow
       %span.choices_list
-        %span.widget-item
-          = link_to content_tag(:span,I18n.t(:text_attribute, :count => 1), :class=>'small-icons text_attribute'),new_admin_text_attribute_path
-        %span.widget-item
-          = link_to content_tag(:span,I18n.t(:longtext_attribute, :count => 1), :class=>'small-icons longtext_attribute'),new_admin_longtext_attribute_path
-        %span.widget-item
-          = link_to content_tag(:span,I18n.t(:url_attribute, :count => 1), :class=>'small-icons url_attribute'),new_admin_url_attribute_path
-        %span.widget-item
-          = link_to content_tag(:span,I18n.t(:number_attribute, :count => 1), :class=>'small-icons number_attribute'),new_admin_number_attribute_path
-        %span.widget-item
-          = link_to content_tag(:span,I18n.t(:date_attribute, :count => 1), :class=>'small-icons date_attribute'),new_admin_date_attribute_path
+        - %w(text longtext url number date).each do |type|
+          %span.widget-item
+            - attribute = "#{type}_attibute"
+            - link_to [forgeos_commerce, :new, :admin, attribute] do
+              %span{ :class => "small-icons #{attribute}"}= t(attribute, :count => 1)
 
     %span.backgrounds.action-button.attribute-choice-action.select_choice
       %span.big-icons.create-choice-attribute
         = I18n.t('attribute.create.choice').capitalize
       %span.small-icons.arrow
       %span.choices_list
-        %span.widget-item
-          = link_to content_tag(:span,I18n.t(:picklist_attribute, :count => 1), :class=>'small-icons picklist_attribute'),new_admin_picklist_attribute_path
-        %span.widget-item
-          = link_to content_tag(:span,I18n.t(:checkbox_attribute, :count => 1), :class=>'small-icons checkbox_attribute'), new_admin_checkbox_attribute_path
-        %span.widget-item
-          = link_to content_tag(:span,I18n.t(:radiobutton_attribute, :count => 1), :class=>'small-icons radiobutton_attribute'),new_admin_radiobutton_attribute_path
+        - %w(picklist checkbox radiobutton).each do |type|
+          %span.widget-item
+            - attribute = "#{type}_attibute"
+            - link_to [forgeos_commerce, :new, :admin, attribute] do
+              %span{ :class => "small-icons #{attribute}"}= t(attribute, :count => 1)
+
     #search.right
       = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class =>'small-icons left search-link'
     .backgrounds.search-form
   .content-background
   %table#table.datatable.draggable_rows
 
-= dataTables_tag :url => admin_attributes_path(:format => :json), :columns => ["{'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':\"#{I18n.t 'attribute.access_method'}\"}","{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]
+= dataTables_tag :url => forgeos_commerce.admin_attributes_path(:format => :json), :columns => ["{'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':\"#{I18n.t 'attribute.access_method'}\"}","{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]

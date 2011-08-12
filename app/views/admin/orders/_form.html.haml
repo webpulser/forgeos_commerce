@@ -1,4 +1,4 @@
-- form_for [:admin, order], :html => { :id => 'wrap', :class => 'edit_order' } do |f|
+- form_for [forgeos_commerce, :admin, order], :html => { :id => 'wrap', :class => 'edit_order' } do |f|
   .backgrounds.big-header
     %span.order-price= number_with_precision order.total, :precision => 2
     %span.order-currency= current_currency.html
@@ -10,7 +10,7 @@
     %span.header-separator
     - unless order.created_at.nil?
       %span= @order.created_at.to_s(:format => :default)
-    = Forgeos_save_buttons admin_orders_path
+    = Forgeos_save_buttons [forgeos_commerce, :admin, :orders]
 
   #content.grid_16.alpha.omega
     #order-see.grid_12.alpha
@@ -31,7 +31,7 @@
             .main-infos
               .main-infos-cutomer
                 %h4.small-icons= t('user', :count => 1).capitalize
-                = link_to h(user.fullname), [:admin, user]
+                = link_to h(user.fullname), [forgeos_core, :admin, user]
                 %p= "#{user.orders.count} #{t('order', :count => user.orders.count)} #{t('since')} #{user.orders.first.created_at.to_date.to_s(:long)}"
                 %p=h user.phone
                 %p.customer-email=h user.email
@@ -76,7 +76,7 @@
                     = image_tag('admin/no-image.png')
                 %td
                   - if product
-                    = link_to detail.name, [:admin, detail.product]
+                    = link_to detail.name, [forgeos_commerce, :admin, detail.product]
                   - else
                     = detail.name
                 %td= detail.sku
@@ -179,8 +179,8 @@
       .step
         = link_to t('order.product.add'), '#', :class => 'small-icons small-icons-verti-small-blue-plus add-order-detail'
         - unless order.new_record?
-          = link_to t('order.invoice.show').capitalize, user_order_path(order, :format => :pdf), :class => 'small-icons preview'
-          = link_to t('order.destroy.action'), [:admin, order], :method => :delete, :confirm => t('order.destroy.confirm'), :class => 'small-icons delete'
+          = link_to t('order.invoice.show').capitalize, forgeos_commerce.user_order_path(order, :format => :pdf), :class => 'small-icons preview'
+          = link_to t('order.destroy.action'), [forgeos_commerce, :admin, order], :method => :delete, :confirm => t('order.destroy.confirm'), :class => 'small-icons delete'
       - unless order.new_record?
         .step.disabled
           %a.small-icons.step-title{ :href => "#" }

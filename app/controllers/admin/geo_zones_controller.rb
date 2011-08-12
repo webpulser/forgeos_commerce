@@ -64,7 +64,7 @@ private
   def get_geo_zone
     unless @geo_zone = GeoZone.find_by_id(params[:id])
       flash[:error] = I18n.t('geo_zone.not_exist').capitalize
-      redirect_to admin_geo_zones_path
+      return redirect_to([forgeos_commerce, :admin, :geo_zones])
     end
   end
 

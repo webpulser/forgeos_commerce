@@ -1,11 +1,11 @@
 = render :partial => 'tabs'
 #content.grid_16.alpha.omega
   .backgrounds.header
-    = link_to content_tag(:span,"Créer un formulaire", :class=>'big-icons create-product'), new_admin_form_path, :class=>'backgrounds action-button'
+    = link_to content_tag(:span,"Créer un formulaire", :class=>'big-icons create-product'), [forgeos_commerce, :new, :admin, :form], :class=>'backgrounds action-button'
     #search.right
       = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
     .backgrounds.search-form
   .content-background
   %table#table.datatable.draggable_rows
 
-= dataTables_tag :url => admin_forms_path(:format => :json), :columns => ["{'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'model'}","{'sClass':'actions-td','bSearchable':false}"]
+= dataTables_tag :url => forgeos_commerce.admin_forms_path(:format => :json), :columns => ["{'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'model'}","{'sClass':'actions-td','bSearchable':false}"]

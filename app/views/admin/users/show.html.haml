@@ -1,10 +1,10 @@
 .backgrounds.big-header
   %h1=h @user.fullname
   .interact-links
-    = link_to t('user.update.action'), [:edit, :admin, @user], :class => 'backgrounds interact-button'
+    = link_to t('user.update.action'), [forgeos_core, :edit, :admin, @user], :class => 'backgrounds interact-button'
     = t(:or)
     %a.back-link{ :href => "#" }
-      =link_to t('user.back'), admin_users_path, :class => 'back-link'
+      =link_to t('user.back'), [forgeos_core, :admin, :users], :class => 'back-link'
 #content.grid_16.alpha.omega
   #customer-see.grid_12.alpha.omega
     .customer-header.backgrounds
@@ -52,7 +52,7 @@
     .step
       =mail_to @user.email, t('user.contact').capitalize, :class => 'small-icons contact'
       = link_to t('order.create.action').capitalize, new_admin_order_path(:user_id => @user.id), :class=>'small-icons duplicate'
-      = link_to t('user.destroy.action').capitalize, [:admin, @user], :confirm => t('user.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+      = link_to t('user.destroy.action').capitalize, [forgeos_core, :admin, @user], :confirm => t('user.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
     #users_show_special_offer.step.open
       %a.small-icons.step-title.disable{ :href => '#' }
         = t('special_offer', :count => 2).capitalize

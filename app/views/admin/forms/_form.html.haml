@@ -1,7 +1,7 @@
-- form_for [:admin , form], :html => { :id => 'wrap' } do |f|
+- form_for [forgeos_commerce, :admin , form], :html => { :id => 'wrap' } do |f|
   .backgrounds.big-header
     = f.text_field :name, :class => 'field_name'
-    = Forgeos_save_buttons admin_forms_path
+    = Forgeos_save_buttons [forgeos_commerce, :admin, :forms]
 
   #content.grid_12.alpha.omega
     .inner-content
@@ -18,7 +18,7 @@
                   %a{ :href => '#' }
                     = hidden_field_tag 'form[form_attribute_ids][]', attribute.id, :id => "form_form_attribute_ids_#{attribute.id}"
                     = attribute.name
-                    %em.small-icons.edit-link{ :onclick => "window.open('#{url_for [:edit, :admin, attribute]}'); return false;" }
+                    %em.small-icons.edit-link{ :onclick => "window.open('#{url_for [forgeos_commerce, :edit, :admin, attribute]}'); return false;" }
                     %span.big-icons.gray-destroy-attribute.gray-destroy
                       &nbsp;
           .clear
@@ -32,7 +32,7 @@
         - Attribute.all(:include => :attribute_categories, :conditions => { :categories => { :id => nil }}).each do |orphan_attribute|
           - unless orphan_attribute.forms.include? @form
             %li{ :rel => 'attribute', :id => "attribute_#{orphan_attribute.id}" }
-              = link_to((orphan_attribute.name + content_tag(:em, '&nbsp;', :class => 'small-icons edit-link', :onclick => "window.open('#{url_for [:edit, :admin, orphan_attribute]}'); return false;") + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-attribute gray-destroy')), '#')
+              = link_to((orphan_attribute.name + content_tag(:em, '&nbsp;', :class => 'small-icons edit-link', :onclick => "window.open('#{url_for [forgeos_commerce, :edit, :admin, orphan_attribute]}'); return false;") + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-attribute gray-destroy')), '#')
     .clear
-    = link_to t('attribute.create.action').capitalize, admin_attributes_path, :class => 'small-icons small-icons-verti-small-blue-plus attribute-new'
+    = link_to t('attribute.create.action').capitalize, [forgeos_commerce, :admin, :attributes], :class => 'small-icons small-icons-verti-small-blue-plus attribute-new'
   .clear

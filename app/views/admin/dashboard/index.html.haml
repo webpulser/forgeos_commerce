@@ -1,39 +1,40 @@
-- currency = current_currency.code.upcase
-- total_for_today = Forgeos::Commerce::Statistics.total_of_sales(Date.current).to_f
-- total_for_yesterday = Forgeos::Commerce::Statistics.total_of_sales(Date.current.yesterday).to_f
-- total_for_week = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(1.week)..Date.current).to_f
-- total_for_last_week = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(2.week)..Date.current.ago(1.week)).to_f
-- week_diff = total_for_week.diff(total_for_last_week)
-- total_for_month = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(1.month)..Date.current).to_f
-- total_for_last_month = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(2.month)..Date.current.ago(1.month)).to_f
-- month_diff = total_for_month.diff(total_for_last_month)
-- lifetime_sales = Forgeos::Commerce::Statistics.total_of_sales.to_f
-- online_users = User.count(:conditions => { :updated_at_gt => Time.now - 10.minutes })
-- today_users = User.count(:conditions => { :updated_at => Date.current.beginning_of_day..Date.current.end_of_day })
-- online_visitors = Forgeos::Statistics.total_of_visitors(Date.current)
-- out_of_stock_products = Product.count(:conditions => { :deleted => false, :active => true, :stock_lt => 5 })
-- pages_viewed_today = Forgeos::CMS::Statistics.total_of_pages(Date.current)
-- products_sales_today = Forgeos::Commerce::Statistics.total_of_sold_products(Date.current)
+:ruby
+  currency = current_currency.code.upcase
+  total_for_today = Forgeos::Commerce::Statistics.total_of_sales(Date.current).to_f
+  total_for_yesterday = Forgeos::Commerce::Statistics.total_of_sales(Date.current.yesterday).to_f
+  total_for_week = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(1.week)..Date.current).to_f
+  total_for_last_week = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(2.week)..Date.current.ago(1.week)).to_f
+  week_diff = total_for_week.diff(total_for_last_week)
+  total_for_month = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(1.month)..Date.current).to_f
+  total_for_last_month = Forgeos::Commerce::Statistics.total_of_sales(Date.current.ago(2.month)..Date.current.ago(1.month)).to_f
+  month_diff = total_for_month.diff(total_for_last_month)
+  lifetime_sales = Forgeos::Commerce::Statistics.total_of_sales.to_f
+  online_users = User.where{{ :updated_at.gt => (Time.now - 10.minutes) }}.count
+  today_users = User.count(:conditions => { :updated_at => Date.current.beginning_of_day..Date.current.end_of_day })
+  online_visitors = Forgeos::Statistics.total_of_visitors(Date.current)
+  out_of_stock_products = Product.where{{ :deleted => false, :active => true, :stock.lt => 5 }}.count
+  pages_viewed_today = Forgeos::Cms::Statistics.total_of_pages(Date.current)
+  products_sales_today = Forgeos::Commerce::Statistics.total_of_sold_products(Date.current)
 
 
 #dashboard.grid_16.alpha.omega
   .left-dashboard.grid_12.alpha.omega
     .padding-wrap
       %p.summary
-        = t('dashboard.intro', :visitors => online_visitors, :customers => today_users, :pages => pages_viewed_today, :products => products_sales_today, :total => price_with_currency(total_for_today.to_i))
+        = raw t('dashboard.intro', :visitors => online_visitors, :customers => today_users, :pages => pages_viewed_today, :products => products_sales_today, :total => price_with_currency(total_for_today.to_i))
         - if out_of_stock_products > 0
           = t('dashboard.out_of_stock', :products => out_of_stock_products)
       .quick-actions
-        - link_to new_admin_page_path, :class => 'quick-action-button' do
+        - link_to [forgeos_cms, :new, :admin, :page], :class => 'quick-action-button' do
           %span.big-icons.create-page
             = t('page.create.action').capitalize
-        - link_to new_admin_product_path, :class => 'quick-action-button' do
+        - link_to [forgeos_commerce, :new, :admin, :product], :class => 'quick-action-button' do
           %span.big-icons.create-product
             = t('product.create.action').capitalize
-        - link_to new_admin_special_offer_path, :class => 'quick-action-button' do
+        - link_to [forgeos_commerce, :new, :admin, :special_offer], :class => 'quick-action-button' do
           %span.big-icons.create-offer
             = t('special_offer.create.action').capitalize
-        - link_to admin_statistics_path, :class => 'quick-action-button' do
+        - link_to [forgeos_core, :admin, :statistics], :class => 'quick-action-button' do
           %span.small-icons.see-stats
             = t('statistic.show.all').capitalize
       .clear
@@ -67,7 +68,7 @@
                     =h order.user.fullname if order.user
                   %td.table-time
                     = t(:ago, :time => time_ago_in_words(order.created_at))
-          = link_to t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
+          = link_to t('order.show.all').capitalize, [forgeos_commerce, :admin, :orders], :class => 'see-all-orders'
         #pending-orders.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide
           %table
             %tbody
@@ -83,7 +84,7 @@
                     =h order.user.fullname if order.user
                   %td.table-time
                     = t(:ago, :time => time_ago_in_words(order.created_at))
-          = link_to t('order.show.all').capitalize, admin_orders_path, :class => 'see-all-orders'
+          = link_to t('order.show.all').capitalize, [forgeos_commerce, :admin, :orders], :class => 'see-all-orders'
 
       /
         %h2.small-icons.activity

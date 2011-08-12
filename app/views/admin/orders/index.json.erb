@@ -19,11 +19,11 @@
          content_tag(:div,
          link_to(
            details_count != 1 ? "#{details_count} #{t('product', :count => details_count)}" : order.order_details.first.name.capitalize,
-           [:admin,order]
+           [forgeos_commerce, :admin,order]
          ),
          :class => 'product-name')+product_names,
         order.created_at.to_s(:short),
-        content_tag(:div, order.user ? link_to(order.user.fullname, [:admin, order.user]) : '', :class => 'username'),
+        content_tag(:div, order.user ? link_to(order.user.fullname, [forgeos_core,:admin, order.user]) : '', :class => 'username'),
         (
           params[:skin] != 'read_only' ?
             select('order_status',order.id,
@@ -32,8 +32,8 @@
             ) :
             content_tag(:dl, content_tag(:dt, link_to(content_tag(:span, order.status),'#', :class => 'dropdown_toggle'), :class => "dropdown #{order.status} disabled"))
         ),
-        link_to('', [:edit, :admin, order], :class => 'small-icons edit-link') +
-        link_to_remote('', :url => [:admin, order],
+        link_to('', [forgeos_commerce, :edit, :admin, order], :class => 'small-icons edit-link') +
+        link_to_remote('', :url => [forgeos_commerce, :admin, order],
            :method => :delete,
            :confirm => t('order.destroy.confirm').capitalize,
            :success => "removedataTablesRow('#destroy_#{link_id}')",

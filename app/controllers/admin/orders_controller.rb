@@ -53,7 +53,7 @@ class Admin::OrdersController < Admin::BaseController
   def create
     if @order.save
       flash[:notice] = t('order.create.success').capitalize
-      redirect_to edit_admin_order_path(@order)
+      redirect_to([forgeos_commerce, :edit, :admin, @order])
     else
       flash[:error] = t('order.create.failed').capitalize
       render(:action => 'edit')
@@ -77,7 +77,7 @@ class Admin::OrdersController < Admin::BaseController
   def destroy
     if @order.destroy
       flash[:notice] = t('order.destroy.success').capitalize
-      return redirect_to(admin_orders_path) if !request.xhr?
+      return redirect_to([forgeos_commerce, :admin, :orders]) if !request.xhr?
     else
       flash[:error] = t('order.destroy.failed').capitalize
     end

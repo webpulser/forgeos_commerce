@@ -1,9 +1,9 @@
 = render :partial => 'tabs'
-- form_for @setting, :url => admin_setting_path do |f|
+- form_for @setting, :url => [forgeos_core, :admin, :setting] do |f|
   .backgrounds.big-header
     = f.text_field :name, :class => 'defaultValue field_name', :title => t('setting.shop_name')
     .interact-links
-      = Forgeos_save_buttons admin_static_content_blocks_path
+      = Forgeos_save_buttons [forgeos_cms, :admin, :static_content_blocks]
   #content.grid_16.alpha.omega
     .grid_16.alpha
       .padding-wrap

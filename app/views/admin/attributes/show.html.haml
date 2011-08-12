@@ -3,9 +3,9 @@
   .backgrounds.big-header
     %h1= @attribute.name
     .interact-links
-      = link_to I18n.t('attribute.update.action').capitalize, [:edit, :admin, @attribute ], :class => 'backgrounds interact-button'
+      = link_to I18n.t('attribute.update.action').capitalize, [forgeos_commerce, :edit, :admin, @attribute ], :class => 'backgrounds interact-button'
       = I18n.t('or')
-      = link_to I18n.t('attribute.back').capitalize, admin_attributes_path, :class => 'back-link'
+      = link_to I18n.t('attribute.back').capitalize, [forgeos_core, :admin, :attributes], :class => 'back-link'
   #content.grid_16.alpha.omega
     .grid_12.alpha
       .inner-content
@@ -43,8 +43,8 @@
     #right-sidebar.grid_4.omega
       - unless @attribute.new_record?
         .step
-          = link_to I18n.t('attribute.duplicate.action'), duplicate_admin_attribute_path(@attribute), :class => 'small-icons duplicate'
-          = link_to I18n.t('attribute.destroy.action').capitalize, [:admin, @attribute], :confirm => I18n.t('attribute.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+          = link_to I18n.t('attribute.duplicate.action'), [forgeos_commerce, :duplicate, :admin, @attribute], :class => 'small-icons duplicate'
+          = link_to I18n.t('attribute.destroy.action').capitalize, [forgeos_commerce, :admin, @attribute], :confirm => I18n.t('attribute.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
       .step
         = I18n.t('attribute.access_method')
         \:

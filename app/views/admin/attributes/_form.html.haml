@@ -1,7 +1,7 @@
-- form_for [:admin , attribute], :html => { :id => 'wrap' } do |f|
+- form_for [forgeos_commerce, :admin , attribute], :html => { :id => 'wrap' } do |f|
   .backgrounds.big-header
     = f.text_field :name, :class => 'field_name'
-    = Forgeos_save_buttons admin_attributes_path
+    = Forgeos_save_buttons [forgeos_commerce, :admin, :attributes]
   #content.grid_16.alpha.omega
     .grid_12.alpha
       .inner-content
@@ -28,8 +28,8 @@
     #right-sidebar.grid_4.omega
       - unless attribute.new_record?
         .step
-          = link_to I18n.t('attribute.duplicate.action').capitalize, duplicate_admin_attribute_path(attribute), :class => 'small-icons duplicate'
-          = link_to I18n.t('attribute.destroy.action').capitalize, [:admin, attribute], :confirm => I18n.t('attribute.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
+          = link_to I18n.t('attribute.duplicate.action').capitalize, [forgeos_commerce, :duplicate, :admin, attribute], :class => 'small-icons duplicate'
+          = link_to I18n.t('attribute.destroy.action').capitalize, [forgeos_commerce, :admin, attribute], :confirm => I18n.t('attribute.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
       .step
         = I18n.t('attribute.access_method')
         = f.text_field :access_method, :class => 'field'

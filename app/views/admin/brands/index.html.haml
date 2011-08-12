@@ -3,7 +3,7 @@
 
 #content.grid_12.alpha.omega
   .backgrounds.header
-    = link_to content_tag(:span,I18n.t('brand.create.action').capitalize, :class=>'big-icons create-brand'), new_admin_brand_path, :class=>'backgrounds action-button'
+    = link_to content_tag(:span,I18n.t('brand.create.action').capitalize, :class=>'big-icons create-brand'), [forgeos_commerce, :new, :admin, :brand], :class=>'backgrounds action-button'
     #search.right
       = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
     .backgrounds.search-form
@@ -12,4 +12,4 @@
 
 
 
-= dataTables_tag :url => admin_brands_path(:format => :json), :columns => ["{'bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t :name}'}", "{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]
+= dataTables_tag :url => forgeos_commerce.admin_brands_path(:format => :json), :columns => ["{'bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t :name}'}", "{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]

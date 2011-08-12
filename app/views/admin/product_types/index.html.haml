@@ -4,11 +4,11 @@
 
 #content.grid_12.alpha.omega
   .backgrounds.header
-    = link_to content_tag(:span,I18n.t('product_type.create.action').capitalize, :class=>'big-icons create-product-type'), new_admin_product_type_path, :class=>'backgrounds action-button'
+    = link_to content_tag(:span,I18n.t('product_type.create.action').capitalize, :class=>'big-icons create-product-type'), [forgeos_commerce, :new, :admin, :product_type], :class=>'backgrounds action-button'
     #search.right
       = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
     .backgrounds.search-form
   .content-background
   %table#table.datatable.draggable_rows
 
-= dataTables_tag :url => admin_product_types_path(:format => :json), :columns => ["{'bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'#{I18n.t :product, :count => 2}'}","{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]
+= dataTables_tag :url => forgeos_commerce.admin_product_types_path(:format => :json), :columns => ["{'bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'#{I18n.t :product, :count => 2}'}","{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]

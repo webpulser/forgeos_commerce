@@ -15,7 +15,7 @@
         }),
         voucher.use,
         voucher.code,
-        link_to_remote('', :url => { :controller => 'vouchers', :action => 'destroy', :id => voucher.id },
+        link_to_remote('', :url => [forgeos_commerce, :admin, voucher],
            :method => :delete,
            :confirm => I18n.t('voucher.destroy.confirm').capitalize,
            :success => "removedataTablesRow('#destroy_#{link_id}')",

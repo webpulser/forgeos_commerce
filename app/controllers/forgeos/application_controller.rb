@@ -58,7 +58,7 @@ private
   def must_to_be_logged
     unless logged_in?
       flash[:warning] = "You must be connected"
-      redirect_to new_person_session_path(:locale => params[:locale])
+      redirect_to(forgeos_core.new_person_session_path(:locale => params[:locale]))
     end
   end
 

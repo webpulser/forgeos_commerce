@@ -11,12 +11,12 @@
 		 #COLUMN 1, just empty with an icon
          content_tag(:div, '<div class="handler"></div><div class="small-icons brands"></div>', :id => link_id, :class => 'handler_container'),
 		#COLUMN 2, Displays the brand name
-        content_tag(:div, link_to(brand.name, [:edit, :admin, brand]), :class => 'brand-name'),
+        content_tag(:div, link_to(brand.name, [forgeos_commerce, :edit, :admin, brand]), :class => 'brand-name'),
 		#COLUMN 3, Displays the number of products in the brand
 #        "#{products_count} #{I18n.t :product, :count => products_count}",
 		#COLUMN 4, has 2 links: First link for editing the Brand, second link for Deleting the Brand (the second is an Ajax link)
-        link_to('', [:edit, :admin, brand], :class => 'small-icons edit-link') +
-        link_to_remote('', :url => [:admin, brand],
+        link_to('', [forgeos_commerce, :edit, :admin, brand], :class => 'small-icons edit-link') +
+        link_to_remote('', :url => [forgeos_commerce, :admin, brand],
          :method => :delete,
          :confirm => I18n.t('brand.destroy.confirm').capitalize,
          :success => "removedataTablesRow('#destroy_#{link_id}')",

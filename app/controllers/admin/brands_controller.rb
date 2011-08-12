@@ -25,7 +25,7 @@ class Admin::BrandsController < Admin::BaseController
   def create
     if @brand.save
       flash[:notice] = I18n.t('brand.create.success').capitalize
-      return redirect_to(admin_brands_path)
+      redirect_to([forgeos_commerce, :admin, :brands])
     else
       flash[:error] = I18n.t('brand.create.failed').capitalize
       render :action => :new
@@ -58,7 +58,7 @@ class Admin::BrandsController < Admin::BaseController
     else
       flash[:error] = I18n.t('brand.destroy.failed').capitalize
     end
-    return redirect_to(admin_brands_path)
+    redirect_to([forgeos_commerce, :admin, :brands])
   end
 
   def url
@@ -71,7 +71,7 @@ class Admin::BrandsController < Admin::BaseController
   def get_brand
     unless @brand = Brand.find_by_id(params[:id])
       flash[:error] = I18n.t('brand.found.failed').capitalize
-      return redirect_to(admin_brands_path)
+      return redirect_to[forgeos_commerce, :admin, :brands])
     end
   end
 
