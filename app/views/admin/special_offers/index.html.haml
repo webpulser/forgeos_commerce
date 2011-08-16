@@ -3,7 +3,7 @@
 
 #content.grid_12.alpha.omega
   .backgrounds.header
-    = link_to content_tag(:span,I18n.t('special_offer.create.action').capitalize, :class=>'big-icons create-product'), new_admin_special_offer_path, :class=>'backgrounds action-button'
+    = link_to content_tag(:span,I18n.t('special_offer.create.action').capitalize, :class=>'big-icons create-product'), [forgeos_commerce, :new, :admin, :special_offer], :class=>'backgrounds action-button'
     #search.right
       = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
     .backgrounds.search-form
@@ -11,5 +11,5 @@
   %table#table.datatable.draggable_rows
 
 
-= dataTables_tag :url => admin_special_offers_path(:format => :json), :columns => ["{'sClass': 'image_product_td', 'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'Status'}","{'sTitle':'Used'}","{'sClass':'actions-td','bSearchable':false}"]
+= dataTables_tag :url => forgeos_commerce.admin_special_offers_path(:format => :json), :columns => ["{'sClass': 'image_product_td', 'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'Status'}","{'sTitle':'Used'}","{'sClass':'actions-td','bSearchable':false}"]
 

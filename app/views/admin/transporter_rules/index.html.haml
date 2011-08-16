@@ -3,11 +3,11 @@
 
 #content.grid_12.alpha.omega
   .backgrounds.header
-    = link_to content_tag(:span,I18n.t('transporter.create.action').capitalize, :class=>'big-icons transporters'), new_admin_transporter_path, :class=>'backgrounds action-button'
+    = link_to content_tag(:span,I18n.t('transporter.create.action').capitalize, :class=>'big-icons transporters'), [forgeos_commerce, :new, :admin, :transporter], :class=>'backgrounds action-button'
     #search.right
       = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
     .backgrounds.search-form
   .content-background
   %table#table.datatable.draggable_rows
 
-= dataTables_tag :url => admin_transporters_path(:format => :json), :columns => ["{'bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'#{I18n.t( :status , :count => 2)}'}","{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]
+= dataTables_tag :url => forgeos_commerce.admin_transporters_path(:format => :json), :columns => ["{'bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'#{I18n.t( :status , :count => 2)}'}","{'sClass':'actions-td','bSearchable':false,'bSortable':false}"]

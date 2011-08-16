@@ -3,7 +3,7 @@
 
 #content.grid_12.alpha.omega
   .backgrounds.header
-    = link_to content_tag(:span,I18n.t('voucher.create.action').capitalize, :class=>'big-icons create-product'), new_admin_voucher_path, :class=>'backgrounds action-button'
+    = link_to content_tag(:span,I18n.t('voucher.create.action').capitalize, :class=>'big-icons create-product'), [forgeos_commerce, :new, :admin, :voucher], :class=>'backgrounds action-button'
     #search.right
       = link_to content_tag(:span, I18n.t('search').capitalize, :class => 'small-icons search-span'), '#', :class => 'small-icons left search-link'
     .backgrounds.search-form
@@ -11,5 +11,5 @@
   %table#table.datatable.draggable_rows
 
 
-= dataTables_tag :url => admin_vouchers_path(:format => :json), :columns => ["{'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'Status'}","{'sTitle':'Used'}","{'sTitle':'Code'}","{'sClass':'actions-td','bSearchable':false}"]
+= dataTables_tag :url => forgeos_commerce.admin_vouchers_path(:format => :json), :columns => ["{'bSearchable':false}","{'sTitle':'#{I18n.t :name}'}","{'sTitle':'Status'}","{'sTitle':'Used'}","{'sTitle':'Code'}","{'sClass':'actions-td','bSearchable':false}"]
 

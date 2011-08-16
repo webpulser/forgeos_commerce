@@ -9,7 +9,7 @@
   .interact-links
     = link_to I18n.t('transporter.update.action').capitalize, [forgeos_commerce, :edit, :admin, @transporter], :class => 'backgrounds interact-button'
     = I18n.t('or')
-    = link_to I18n.t('back_to_catalog').capitalize, admin_transporters_path, :class => 'back-link'
+    = link_to I18n.t('back_to_catalog').capitalize, [forgeos_commerce, :admin, :transporters], :class => 'back-link'
 
 #content.grid_16.alpha.omega
   .grid_16.alpha

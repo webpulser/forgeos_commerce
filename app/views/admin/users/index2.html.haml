@@ -30,4 +30,4 @@
 #users
   = render :partial => 'list', :locals => { :users => @users }
 
-- content_for :tools, link_to(I18n.t('newsletter.export').capitalize, admin_users_path, :class => 'report_seo' )
+- content_for :tools, link_to(I18n.t('newsletter.export').capitalize, [forgeos_core, :admin, :users], :class => 'report_seo' )

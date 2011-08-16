@@ -1,7 +1,7 @@
 .backgrounds.big-header
   %h1= @special_offer.name
   .interact-links
-    = link_to I18n.t('back_to_special_offer').capitalize, admin_special_offers_path, :class => 'backgrounds interact-button'
+    = link_to I18n.t('back_to_special_offer').capitalize, [forgeos_commerce, :admin, :special_offers], :class => 'backgrounds interact-button'
     /= I18n.t('or')
     /= link_to I18n.t('back_to_special_offer').capitalize,admin_special_offers_path, :class => 'back-link'
 
@@ -25,4 +25,4 @@
               .tr
                 .td
                   =image_tag(product.pictures.first.public_filename(:thumb)) unless product.pictures.empty?
-                  =link_to product.name, admin_product_path(product.id)
+                  =link_to product.name, [forgeos_commerce, :admin, product]

@@ -15,7 +15,7 @@
         = "#{t('user.spent_on')} #{@user.orders.length}"
         = t('order', :count => @user.orders.length)
     %table#table.datatable
-    = dataTables_tag :url => admin_orders_path(:filter => 'user', :user_id => @user.id, :skin => 'read_only', :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false}","{'sTitle':'#{t(:id)}'}","{'sTitle':'#{t(:total)}'}","{'sTitle':'#{t(:product, :count => 1)}'}","{'sTitle':'#{t(:created_on)}'}","{'sTitle':'#{t(:customer, :count => 1)}','bVisible': false}","{'sTitle':'#{t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
+    = dataTables_tag :url => forgeos_commerce.admin_orders_path(:filter => 'user', :user_id => @user.id, :skin => 'read_only', :format => :json), :columns => ["{'bSearchable':false, 'bSortable':false}","{'sTitle':'#{t(:id)}'}","{'sTitle':'#{t(:total)}'}","{'sTitle':'#{t(:product, :count => 1)}'}","{'sTitle':'#{t(:created_on)}'}","{'sTitle':'#{t(:customer, :count => 1)}','bVisible': false}","{'sTitle':'#{t(:status, :count => 1)}'}","{'sClass':'actions-td','bSearchable':false, 'bSortable':false}"]
     .padding-wrap
       .fieldset
         %h3= t('user.customer_infos').capitalize
@@ -51,7 +51,7 @@
   #right-sidebar.grid_4.omega.alpha
     .step
       =mail_to @user.email, t('user.contact').capitalize, :class => 'small-icons contact'
-      = link_to t('order.create.action').capitalize, new_admin_order_path(:user_id => @user.id), :class=>'small-icons duplicate'
+      = link_to t('order.create.action').capitalize, forgeos_commerce.new_admin_order_path(:user_id => @user.id), :class=>'small-icons duplicate'
       = link_to t('user.destroy.action').capitalize, [forgeos_core, :admin, @user], :confirm => t('user.destroy.confirm').capitalize, :method => :delete, :class => 'small-icons delete'
     #users_show_special_offer.step.open
       %a.small-icons.step-title.disable{ :href => '#' }

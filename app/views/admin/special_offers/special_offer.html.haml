@@ -10,7 +10,7 @@
 
 
 %h1 Create a special offer
-- form_tag special_offer_admin_special_offers_path do
+- form_tag [forgeos_commerce, :admin, :special_offers] do
   %p
     = label 'rule_builder', 'name'
     = text_field 'rule_builder', 'name'

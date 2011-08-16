@@ -5,7 +5,7 @@
     .padding-wrap
       %h2.small-icons.see-stats= t('statistic.trends').capitalize
       .trend_filter
-        - form_tag admin_statistics_path, :id => 'form_stats' do |f|
+        - form_tag [forgeos_core, :admin, :statistics], :id => 'form_stats' do |f|
           %label
             = "#{t('statistic.show.for').capitalize} :"
           = select_tag :timestamp, options_for_select([[t('please_select'), nil], [t('statistic.last.month'), 'month'], [t('statistic.last.week'), 'week']], params[:timestamp]), :onchange => "$('#form_stats').submit()"
@@ -96,7 +96,7 @@
                   %td.customer-bought-amount= price_with_currency total
                   %td= user ? link_to(h(user.fullname), [forgeos_core, :admin, user]) : ''
           .clear
-          = link_to t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
+          = link_to t('user.show.all').capitalize, [forgeos_core, :admin, :users], :class => 'see-all-orders'
 
         #new-customers.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide
           %table
@@ -112,7 +112,7 @@
                     = mail_to h(customer.email), customer.email
 
           .clear
-          = link_to t('user.show.all').capitalize, admin_users_path, :class => 'see-all-orders'
+          = link_to t('user.show.all').capitalize, [forgeos_core, :admin, :users], :class => 'see-all-orders'
 
       %h2.small-icons.search= t('search').capitalize
       .to-tab.ui-tabs.ui-widget.ui-widget-content.ui-corner-all

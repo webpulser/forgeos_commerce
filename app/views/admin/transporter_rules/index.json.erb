@@ -8,13 +8,13 @@
       [
         content_tag(:div, "&nbsp;", :id => polymorphic_html_id(transporter), :class => 'small-icons transporters'),
         #content_tag(:div, link_to(transporter.name, [forgeos_commerce, :admin, transporter]), :class => 'tranporter-name'),
-        content_tag(:div, link_to(transporter.name, edit_admin_transporter_path(transporter)), :class => 'tranporter-name'),
+        content_tag(:div, link_to(transporter.name, [forgeos_commerce, :edit, :admin, transporter], :class => 'tranporter-name'),
         link_to('', [forgeos_commerce, :activate, :admin, transporter],
           :remote => true,
           :class => "small-icons #{klass}",
           :id => polymorphic_html_id(transporter, 'show')
         ),
-        link_to('', edit_admin_transporter_path(transporter), :class => 'small-icons edit-link') +
+        link_to('', [forgeos_commerce, :edit, :admin, transporter], :class => 'small-icons edit-link') +
         link_to('', [forgeos_commerce, :admin, transporter],
           :remote => true,
           :method => :delete,
