@@ -3,7 +3,7 @@
 .choices
   %h2=t 'attribute.value', :count => 2
   %ul.nested_sortable.sortable-choices.grid_10.omega.alpha
-    - form.fields_for :attribute_values  do |attribute_value|
+    = form.fields_for :attribute_values  do |attribute_value|
       %li.block-container
         %span.block-type
           %span.handler
@@ -15,7 +15,7 @@
           = attribute_value.hidden_field "picture_ids"
           = link_to('', '#', :class => 'big-icons edit change-picture', :id => "change_picture_#{link_id}")
         %span.block-name
-          = attribute_value.text_field :name
+          = attribute_value.text_field :value
           = attribute_value.hidden_field :id
           = attribute_value.hidden_field :_destroy, :class => 'delete'
           = attribute_value.hidden_field :position

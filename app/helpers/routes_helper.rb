@@ -1,10 +1,10 @@
 module RoutesHelper
   def seo_product_type_path(*args)
-    product_type_path(extract_product_type_options(args))
+    forgeos_commerce.product_type_path(extract_product_type_options(args)) rescue '/'
   end
 
   def seo_product_type_url(*args)
-    product_type_url(extract_product_type_options(args))
+    forgeos_commerce.product_type_url(extract_product_type_options(args)) rescue '/'
   end
 
   def extract_product_type_options(args)
@@ -37,11 +37,11 @@ module RoutesHelper
   end
 
   def product_category_path(*args)
-    super(extract_product_category_options(args))
+    forgeos_commerce.product_category_path(extract_product_category_options(args))
   end
 
   def product_category_url(*args)
-    super(extract_product_category_options(args))
+    forgeos_commerce.product_category_url(extract_product_category_options(args))
   end
 
   def extract_product_category_options(args)

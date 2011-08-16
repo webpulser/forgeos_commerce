@@ -39,21 +39,21 @@ jQuery(document).ready(function(){
     rules: { multiple:'on' },
     callback: {
       onload: function(TREE_OBJ){
-        tree_id = jQuery(TREE_OBJ.container).attr('id');
+        var tree_id = jQuery(TREE_OBJ.container).attr('id');
         jQuery(TREE_OBJ.container).removeClass('tree-default');
       },
       onrgtclk: function(NODE,TREE_OBJ,EV){
         EV.preventDefault(); EV.stopPropagation(); return false
       },
       onselect: function(NODE,TREE_OBJ){
-        object_name = jQuery(NODE).attr('id').split('_')[0];
-        category_id = get_rails_element_id(NODE);
+        var object_name = jQuery(NODE).attr('id').split('_')[0];
+        var category_id = get_rails_element_id(NODE);
         jQuery(NODE).append('<input type="hidden" id="'+object_name+'_product_category_'+category_id+'" name="'+object_name+'[product_category_ids][]" value="'+category_id+'" />');
         jQuery(NODE).addClass('clicked');
       },
       ondeselect: function(NODE,TREE_OBJ){
-        object_name = jQuery(NODE).attr('id').split('_')[0];
-        category_id = get_rails_element_id(NODE);
+        var object_name = jQuery(NODE).attr('id').split('_')[0];
+        var category_id = get_rails_element_id(NODE);
         jQuery(NODE).children('input').remove();
         jQuery(NODE).removeClass('clicked');
       }
@@ -77,11 +77,11 @@ jQuery(document).ready(function(){
    },
    callback: {
       onload: function(TREE_OBJ){
-        tree_id = jQuery(TREE_OBJ.container).attr('id');
+        var tree_id = jQuery(TREE_OBJ.container).attr('id');
         jQuery(TREE_OBJ.container).removeClass('tree-default');
       },
       onmove: function(NODE) {
-        option_id = get_rails_element_id(NODE);
+        var option_id = get_rails_element_id(NODE);
         jQuery('#product_type_option_ids_'+option_id).remove();
       }
    }
@@ -104,11 +104,11 @@ jQuery(document).ready(function(){
     },
     callback: {
       onload: function(TREE_OBJ){
-        tree_id = jQuery(TREE_OBJ.container).attr('id');
+        var tree_id = jQuery(TREE_OBJ.container).attr('id');
         jQuery(TREE_OBJ.container).removeClass('tree-default');
       },
       oncopy  : function(NODE) {
-        option_id = NODE.id.split('_')[1];
+        var option_id = NODE.id.split('_')[1];
 
         if (!jQuery('#product_type_option_ids_'+option_id).is(':empty')) {
           NODE.id = 'option_'+option_id;

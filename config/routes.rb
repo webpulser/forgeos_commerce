@@ -51,7 +51,14 @@ Forgeos::Commerce::Engine.routes.draw do
     end
 
     %w(checkbox radiobutton picklist text longtext number date url).each do |attribute_type|
-      resources "#{attribute_type}_attributes", :controller => 'attributes', :type => attribute_type
+      resources "#{attribute_type}_attributes", :controller => :attributes, :type => attribute_type do
+        collection do
+          post :access_method
+        end
+        member do
+          get :duplicate
+        end
+      end
     end
 
     resources :orders do

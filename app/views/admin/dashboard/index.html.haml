@@ -23,7 +23,7 @@
       %p.summary
         = raw t('dashboard.intro', :visitors => online_visitors, :customers => today_users, :pages => pages_viewed_today, :products => products_sales_today, :total => price_with_currency(total_for_today.to_i))
         - if out_of_stock_products > 0
-          = t('dashboard.out_of_stock', :products => out_of_stock_products)
+          = raw t('dashboard.out_of_stock', :products => out_of_stock_products)
       .quick-actions
         = link_to [forgeos_cms, :new, :admin, :page], :class => 'quick-action-button' do
           %span.big-icons.create-page

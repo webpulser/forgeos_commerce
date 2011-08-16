@@ -1,4 +1,3 @@
-# Groups of <i>Attribute</i>
 class Attribute < ActiveRecord::Base
   translates :name
   has_and_belongs_to_many :attribute_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
@@ -7,14 +6,14 @@ class Attribute < ActiveRecord::Base
   accepts_nested_attributes_for :attribute_values, :allow_destroy => true
   has_many :dynamic_attribute_values, :dependent => :destroy
 
-  validates_presence_of :name, :access_method
-  validates_uniqueness_of :access_method
+  validates :name, :presence => true
+  validates :access_method, :presence => true, :uniqueness => true
 
   has_and_belongs_to_many :product_types, :readonly => true
   has_and_belongs_to_many :forms, :readonly => true
   has_many :products, :through => :dynamic_attribute_values, :readonly => true
 
-  before_save :clear_attributes
+  before_update :clear_attributes, :if => :dynamic?
 
   define_index do
     indexes access_method, :sortable => true
@@ -34,6 +33,6 @@ class Attribute < ActiveRecord::Base
 
 private
   def clear_attributes
-    self.attribute_values.destroy_all if self.dynamic?
+    attribute_values.destroy_all
   end
 end

@@ -1,3 +1,2 @@
 class TextFieldAttribute < Attribute
-
 end
