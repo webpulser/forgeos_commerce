@@ -128,10 +128,10 @@
       = link_to t('product.destroy.action').capitalize, [forgeos_commerce, :admin, product], :confirm => (product.redirection_product ? t('product.destroy.redirection_product.confirm', :product => product.redirection_product.sku) : t('product.destroy.redirection_product.none')), :method => :delete, :class => 'small-icons delete'
   #products_associated_collection.step.open
     = link_to(t('product.associated_collection', :count => 2), '#', :class => 'small-icons step-title')
-    = hidden_field_tag "#{f.object_name}[product_category_ids][]" 
+    = hidden_field_tag "#{f.object_name}[category_ids][]"
     #association-product-tree.inner-step
       %ul
-        = render :partial => 'admin/categories/associated_elements', :locals => { :association_id => 'product_category_ids', :element => product, :category_ids => product.product_category_ids, :categories => ProductCategory.find_all_by_parent_id(nil) }
+        = render :partial => 'admin/categories/associated_elements', :locals => { :association_id => 'category_ids', :element => product, :category_ids => product.category_ids, :categories => ProductCategory.find_all_by_parent_id(nil) }
   #products_delivery.step.open
     = link_to t(:delivery), '#', :class => 'small-icons step-title'
     .inner-step.weight

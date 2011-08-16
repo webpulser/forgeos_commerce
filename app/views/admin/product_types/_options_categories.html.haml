@@ -3,7 +3,7 @@
 
 - unless categories.nil? or categories.blank?
   - categories.each do |category|
-    %li{ :rel => 'attribute-category', :id => "attribute_category_#{category.id}" }
+    %li{ :rel => 'attribute-category', :id => "category_#{category.id}" }
       = link_to((category.name + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy')), '#')
       - unless category.elements.empty?
         %ul

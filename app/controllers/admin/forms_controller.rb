@@ -1,7 +1,7 @@
 class Admin::FormsController < Admin::BaseController
   before_filter :get_form, :only => [:show, :edit, :update, :destroy]
   before_filter :new_form, :only => [:new, :create]
-  
+
   def index
     respond_to do |format|
       format.html
@@ -14,13 +14,13 @@ class Admin::FormsController < Admin::BaseController
 
   def show
   end
-  
+
   def edit
   end
 
   def new
   end
-  
+
   def create
     if @form.save
       flash[:notice] = "Création du formulaire réussi"
@@ -53,14 +53,14 @@ private
       @forms = Form.paginate(options)
     end
   end
-  
+
   def new_form
     @form = Form.new(params[:form])
   end
-  
+
   def get_form
     @form = Form.find(params[:id])
   end
-  
+
 
 end

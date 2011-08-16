@@ -176,7 +176,7 @@ private
 
     if params[:category_id]
       conditions[:categories_elements] = { :category_id => params[:category_id] }
-      includes << :product_categories
+      includes << :categories
       joins = []
     end
 

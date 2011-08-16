@@ -48,7 +48,7 @@ jQuery(document).ready(function(){
       onselect: function(NODE,TREE_OBJ){
         var object_name = jQuery(NODE).attr('id').split('_')[0];
         var category_id = get_rails_element_id(NODE);
-        jQuery(NODE).append('<input type="hidden" id="'+object_name+'_product_category_'+category_id+'" name="'+object_name+'[product_category_ids][]" value="'+category_id+'" />');
+        jQuery(NODE).append('<input type="hidden" id="'+object_name+'_category_'+category_id+'" name="'+object_name+'[category_ids][]" value="'+category_id+'" />');
         jQuery(NODE).addClass('clicked');
       },
       ondeselect: function(NODE,TREE_OBJ){

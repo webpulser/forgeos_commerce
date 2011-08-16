@@ -1,4 +1,4 @@
-= form_for [forgeos_commerce, :admin , form], :html => { :id => 'wrap' } do |f|
+= form_for [forgeos_commerce, :admin , @form], :html => { :id => 'wrap' } do |f|
   .backgrounds.big-header
     = f.text_field :name, :class => 'field_name'
     = Forgeos_save_buttons [forgeos_commerce, :admin, :forms]
@@ -12,7 +12,7 @@
           = hidden_field_tag 'form[form_attribute_ids][]'
           #product-types-selected-tree.a-tree.init-tree
             %ul
-              - form.form_attributes.each do |attribute|
+              - f.object.form_attributes.each do |attribute|
                 - id = "attribute_#{attribute.id}"
                 %li{ :id => id, :rel => 'attribute' }
                   %a{ :href => '#' }
@@ -29,7 +29,7 @@
   #yellow-sidebar.grid_4.alpha.omega.yellow
     #product-types-all-tree.init-tree.a-tree
       %ul
-        - Attribute.all(:include => :attribute_categories, :conditions => { :categories => { :id => nil }}).each do |orphan_attribute|
+        - Attribute.all(:include => :categories, :conditions => { :categories => { :id => nil }}).each do |orphan_attribute|
           - unless orphan_attribute.forms.include? @form
             %li{ :rel => 'attribute', :id => "attribute_#{orphan_attribute.id}" }
               = link_to((orphan_attribute.name + content_tag(:em, '&nbsp;', :class => 'small-icons edit-link', :onclick => "window.open('#{url_for [forgeos_commerce, :edit, :admin, orphan_attribute]}'); return false;") + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-attribute gray-destroy')), '#')

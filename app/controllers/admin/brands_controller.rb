@@ -101,7 +101,7 @@ class Admin::BrandsController < Admin::BaseController
 
     if params[:category_id]
       conditions[:categories_elements] = { :category_id => params[:category_id] }
-      includes << :brand_categories
+      includes << :categories
     end
 
     options[:conditions] = conditions unless conditions.empty?

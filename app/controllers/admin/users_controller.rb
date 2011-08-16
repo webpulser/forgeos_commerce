@@ -33,7 +33,7 @@ private
 
     if params[:category_id]
       conditions[:categories_elements] = { :category_id => params[:category_id] }
-      includes << :user_categories
+      includes << :categories
     end
 
     case order_column

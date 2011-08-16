@@ -20,7 +20,6 @@ class Product < ActiveRecord::Base
   has_many :price_variations, :dependent => :destroy, :class_name => 'ProductPriceVariation'
   accepts_nested_attributes_for :price_variations
 
-  has_and_belongs_to_many :product_categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id'
   has_and_belongs_to_many :categories, :readonly => true, :join_table => 'categories_elements', :foreign_key => 'element_id', :association_foreign_key => 'category_id', :class_name => 'ProductCategory'
   has_and_belongs_to_many :attribute_values, :readonly => true, :uniq => true
 
@@ -32,21 +31,23 @@ class Product < ActiveRecord::Base
   has_many :sold_counters, :as => :element, :class_name => 'ProductSoldCounter', :dependent => :destroy
 
   belongs_to :product_type
+  validates_associated :product_type
+
   belongs_to :brand
   belongs_to :redirection_product, :class_name => 'Product'
 
   has_one :meta_info, :as => :target
   accepts_nested_attributes_for :meta_info
 
-  validates_presence_of :product_type_id, :sku, :url
+  validates :sku, :url, :presence => true
 
-  before_save :generate_url, :clean_strings, :force_url_format
+  before_save :clean_strings, :force_url_format
   after_save :synchronize_stock
 
-  named_scope :actives, lambda { {:conditions => {:active => true, :deleted => [false, nil]}} }
-  named_scope :deleted, lambda { {:conditions => {:deleted => true}} }
-  named_scope :hiddens, lambda { {:conditions => {:active => [false, nil], :deleted => [false, nil]}} }
-  named_scope :out_of_stock, lambda { {:conditions => {:stock_lte => 0}} }
+  scope :actives, where(:active => true, :deleted => false)
+  scope :deleted, where(:deleted => true)
+  scope :hiddens, where(:active => false, :deleted => false)
+  #scope :out_of_stock, where{:stock.lte => 0}
 
   define_index do
     indexes sku, :sortable => true
@@ -65,19 +66,6 @@ class Product < ActiveRecord::Base
   end
 
   define_translated_index :name, :description, :url
-
-  def public_url
-    unless product_categories.empty?
-      category = product_categories.first
-      if category.ancestors.empty?
-        "/product/#{category.name}/#{self.url}"
-      else
-        "/product/#{category.ancestors.first.name}/#{category.name}/#{self.url}"
-      end
-    else
-      '#'
-    end
-  end
 
   def redirection_product_with_deleted
     return (redirection_product_without_deleted && redirection_product_without_deleted.deleted? ? redirection_product_without_deleted.redirection_product : redirection_product_without_deleted)
@@ -103,7 +91,7 @@ class Product < ActiveRecord::Base
     product_cloned.meta_info = meta_info.clone if meta_info
     product_cloned.translations = translations.clone unless translations.empty?
     product_cloned.dynamic_attribute_values = dynamic_attribute_values.collect(&:clone)
-    %w(attachment_ids picture_ids tag_list product_category_ids attribute_value_ids).each do |assoc|
+    %w(attachment_ids picture_ids tag_list category_ids attribute_value_ids).each do |assoc|
       product_cloned.send(assoc+'=', self.send(assoc))
     end
     return product_cloned
@@ -128,28 +116,35 @@ class Product < ActiveRecord::Base
     return 0
   end
 
-  def price(options = {})
-    options = {:tax => true,
-               :voucher_discount => true,
-               :special_offer_discount => true,
-               :variation => false,
-               :packaging => false}.update(options.symbolize_keys)
-    price = read_attribute(:price) || 0
+  def price(*args)
+    passed_options = args.extract_options!
+    options = {
+      :tax => true,
+      :voucher_discount => true,
+      :special_offer_discount => true,
+      :variation => false,
+      :packaging => false
+    }.update(passed_options.symbolize_keys)
+
+    price = read_attribute(:price) || 0.0
     price += tax(false)
-    price -= self.special_offer_discount_price || 0 if options[:special_offer_discount]
-    price -= self.voucher_discount_price || 0 if options[:voucher_discount]
-    price -= (price * price_variation.discount).to_f / 100 if options[:variation] && price_variation
-    price += self.packaging_price.to_f || 0 if options[:packaging]
+    price -= self.discount if options[:special_offer_discount]
+    price -= self.voucher_discount_price || 0.0 if options[:voucher_discount]
+    price -= (price * price_variation.discount).to_f / 100.0 if options[:variation] && price_variation
+    price += self.packaging_price.to_f || 0.0 if options[:packaging]
+    price = 0.0 if price < 0
+
     price
   end
 
   def old_price
-    price({:voucher_discount => false, :special_offer_discount => false})
+    price(:voucher_discount => false, :special_offer_discount => false)
   end
 
   def has_discount?
-    return discount != 0
+    not discount.zero?
   end
+
   # Returns price's string with currency symbol
   #
   # This method is an overload of <i>price</i> attribute.
@@ -162,7 +157,7 @@ class Product < ActiveRecord::Base
   end
 
   def discount
-    self.special_offer_discount_price || 0
+    self.special_offer_discount_price || 0.0
   end
 
   # Returns total product's tax
@@ -172,7 +167,7 @@ class Product < ActiveRecord::Base
   #
   # This method use <i>price</i> : <i>price(false, with_currency)</i>
   def tax(with_currency=true)
-    return 0
+    return 0.0
     #return ("%01.2f" % (price(false, with_currency) * self.rate_tax/100)).to_f
   end
 
@@ -198,15 +193,10 @@ class Product < ActiveRecord::Base
   def method_missing(method_id,*args,&block)
     method_name = method_id.to_s
     if cat_id = method_name.match(/has_category_(\d+)/)
-      return product_categories.find_by_id(cat_id[1].to_i, :select => 'id').present?
-    elsif access_method = method_name.match(/^(\w|\d|_|-)*$/) and product_type and
-      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
-      read_custom_attribute(custom_attribute, args.first)
-    elsif access_method = method_name.match(/^(\w|\d|_|-)*_value$/) and product_type and
-      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('_value',''))
-      read_custom_attribute(custom_attribute, :value)
-    elsif access_method = method_name.match(/^(\w|\d|_|-)*=$/) and product_type and
-      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('=',''))
+      return categories.find_by_id(cat_id[1].to_i, :select => 'id').present?
+    elsif custom_attribute = load_custom_attribute(method_name, ['_value'])
+      read_custom_attribute(custom_attribute, args.first || :value)
+    elsif custom_attribute = load_custom_attribute(method_name, ['='])
       write_custom_attribute(custom_attribute, args.first)
     else
       super
@@ -215,20 +205,24 @@ class Product < ActiveRecord::Base
 
   def respond_to?(method, include_priv = false)
     method_name = method.to_s
-    if access_method = method_name.match(/^(\w|\d|_|-)*$/) and product_type and
-      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0])
-      return true
-    elsif access_method = method_name.match(/^(\w|\d|_|-)*_value$/) and product_type and
-      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('_value',''))
-      return true
-    elsif access_method = method_name.match(/^(\w|\d|_|-)*=$/) and product_type and
-      custom_attribute = product_type.product_attributes.find_by_access_method(access_method[0].gsub('=',''))
-      return true
+    if load_custom_attribute(method_name)
+      true
     else
       super
     end
   end
   private
+
+  def load_custom_attribute(method_name, suffix = ['_value', '='])
+    skipped_method_names = ("#{self.class}::Translation".constantize.column_names + self.class.column_names).map{ |n| "_#{n}" } + %w(to_ary product_type)
+
+    if not skipped_method_names.include?(method_name) and
+      access_method = method_name.match(/^(\w|\d|_|-)*(#{suffix.join('|')})*$/) and
+      product_type
+
+      product_type.product_attributes.find_by_access_method(access_method[0].sub(/(#{suffix.join('|')})/,''))
+    end
+  end
 
   def read_custom_attribute(attribute, method)
     method ||= :value
@@ -286,11 +280,10 @@ class Product < ActiveRecord::Base
   end
 
   def force_url_format
-    self.url = self.url.parameterize if self.url.present?
-  end
-
-  def generate_url
-    return true if url.present?
-    self.url = name.parameterize if name.present?
+    if url.present?
+      self.url = url.parameterize
+    elsif name.present?
+      self.url = name.parameterize
+    end
   end
 end

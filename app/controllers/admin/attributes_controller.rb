@@ -142,7 +142,7 @@ private
 
     if params[:category_id]
       conditions[:categories_elements] = { :category_id => params[:category_id] }
-      options[:include] = :attribute_categories
+      options[:include] = :categories
     end
 
     options[:conditions] = conditions unless conditions.empty?

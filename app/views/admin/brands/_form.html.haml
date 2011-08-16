@@ -21,9 +21,9 @@
         = f.text_field :url, :size => 10
       .step.open
         = link_to(t('product.associated_collection', :count => 2), '#', :class => 'small-icons step-title')
-        = hidden_field_tag "#{f.object_name}[brand_category_ids][]"
+        = hidden_field_tag "#{f.object_name}[category_ids][]"
         #association-brand-tree.inner-step
           %ul
-            = render :partial => 'admin/categories/associated_elements', :locals => { :association_id => 'brand_category_ids', :element => f.object, :category_ids => f.object.category_ids, :categories => BrandCategory.roots }
+            = render :partial => 'admin/categories/associated_elements', :locals => { :association_id => 'category_ids', :element => f.object, :category_ids => f.object.category_ids, :categories => BrandCategory.roots }
 
   = render :partial => 'admin/visual/visual_popup.html.haml', :locals => {:form => f}

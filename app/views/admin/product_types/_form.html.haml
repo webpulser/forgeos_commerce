@@ -34,7 +34,7 @@
   #yellow-sidebar.grid_4.alpha.omega.yellow
     #product-types-all-tree.init-tree.a-tree
       %ul
-        - Attribute.all(:include => :attribute_categories, :conditions => { :categories => { :id => nil }}).each do |orphan_attribute|
+        - Attribute.all(:include => :categories, :conditions => { :categories => { :id => nil }}).each do |orphan_attribute|
           - unless orphan_attribute.product_types.include? @product_type
             %li{ :rel => 'attribute', :id => "attribute_#{orphan_attribute.id}" }
               = link_to((orphan_attribute.name + content_tag(:em, '&nbsp;', :class => 'small-icons edit-link', :onclick => "window.open('#{url_for [forgeos_commerce, :edit, :admin, orphan_attribute]}'); return false;") + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-attribute gray-destroy')), '#')
