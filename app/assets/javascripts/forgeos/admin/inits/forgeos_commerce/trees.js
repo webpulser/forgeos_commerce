@@ -11,7 +11,7 @@ jQuery(document).ready(function(){
   init_transporter_tree("#transporter-tree",'TransporterCategory','/admin/transporter_categories.json');
 
   //init the zone modify tree
-   jQuery("#zone-tree").tree({
+   jQuery("#zone-tree").jstree({
     ui: {
       theme_path: '/stylesheets/jstree/themes/',
       theme_name : 'zone-tree',
@@ -27,7 +27,7 @@ jQuery(document).ready(function(){
   });
 
   //init the tree for products/blocks associations
-  jQuery("#association-product-tree").tree({
+  jQuery("#association-product-tree").jstree({
     ui: {
       theme_path: '/stylesheets/jstree/themes/',
       theme_name : 'association_product',
@@ -61,7 +61,7 @@ jQuery(document).ready(function(){
   });
 
   //init the tree for product-types
-  jQuery("#product-types-all-tree").tree({
+  jQuery("#product-types-all-tree").jstree({
     ui: {
       theme_path: '/stylesheets/jstree/themes/',
       theme_name : 'product-types-all',
@@ -87,7 +87,7 @@ jQuery(document).ready(function(){
    }
   });
   //init the tree for product-types-selected
-  jQuery("#product-types-selected-tree").tree({
+  jQuery("#product-types-selected-tree").jstree({
     ui: {
       theme_path: '/stylesheets/jstree/themes/',
       theme_name : 'product-types-selected',

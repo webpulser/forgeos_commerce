@@ -27,7 +27,7 @@ jQuery(document).ready(function(){
     jQuery(this).parents('tr').remove();
   });
 
-  jQuery('#cross_tree').tree({
+  jQuery('#cross_tree').jstree({
     ui: {
       theme_path: '/stylesheets/jstree/themes/',
       theme_name : 'categories',

@@ -1,5 +1,5 @@
 function init_transporter_tree(selector, type, source) {
-  jQuery(selector).tree({
+  jQuery(selector).jstree({
     data:{
       type: 'json',
       opts: {
