@@ -80,7 +80,7 @@
         %span.big-icons.add-media
           = t('add_file').capitalize
       #product-files.grid_9.sortable
-        - product.attachments.all(:conditions => '`attachments`.`type` != "Picture"').each do |attachment|
+        - product.attachments.where{{ :attachments => { :type.not_eq => 'Picture'}}}.each do |attachment|
           = block_container f.object_name, 'attachment', attachment do
             = attachment.filename
             %span.file-size

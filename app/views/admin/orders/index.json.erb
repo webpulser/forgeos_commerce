@@ -2,17 +2,18 @@
   order_states_for_select = Order.aasm_states.collect{ |state| [t(state.name, :scope => [:order,:status]),state.name.to_s] }
   select_class = (params[:skin] == 'read_only' ? 'customize order-change-status disabled' : 'customize order-change-status')
   output = {
-    :iTotalDisplayRecords => @orders.total_entries || 0,
+    :sEcho => params[:sEcho],
+    :iTotalRecords => @orders.total_entries || 0,
+    :iTotalDisplayRecords => @orders.size,
     :aaData => @orders.collect do |order|
       details_count = order.order_details.count
       product_names = details_count > 1 ? content_tag(:p,order.order_details.all(:group => 'product_id').collect{|detail| content_tag(:span,"#{detail.name} x #{detail.quantity}", :class=>cycle('even', 'odd'))}.join(''), :class=>'product-name') : ''
-      link_id = "order_#{order.id}"
       [
         (
           details_count > 1 ?
           content_tag(:div,
             content_tag(:div, '&nbsp;', :class=> 'image'),
-            :id => link_id, :class => 'some-variants plus') : content_tag(:div, '', :id => link_id)
+            :id => polymorphic_html_id(order), :class => 'some-variants plus') : content_tag(:div, '', :id => polymorphic_html_id(order))
         ),
         order.reference,
         price_with_currency(order.total),
@@ -33,15 +34,15 @@
             content_tag(:dl, content_tag(:dt, link_to(content_tag(:span, order.status),'#', :class => 'dropdown_toggle'), :class => "dropdown #{order.status} disabled"))
         ),
         link_to('', [forgeos_commerce, :edit, :admin, order], :class => 'small-icons edit-link') +
-        link_to_remote('', :url => [forgeos_commerce, :admin, order],
-           :method => :delete,
-           :confirm => t('order.destroy.confirm').capitalize,
-           :success => "removedataTablesRow('#destroy_#{link_id}')",
-           :html => {
-             :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-        })
+        link_to('', [forgeos_commerce, :admin, order],
+          :remote => true,
+          :method => :delete,
+          :confirm => t('order.destroy.confirm').capitalize,
+          :class => 'small-icons destroy-link',
+          :id => polymorphic_html_id(order, 'destroy')
+        )
       ]
     end
   }
 -%>
-<%= output.to_json %>
+<%= raw output.to_json %>

@@ -58,7 +58,12 @@ class Admin::BrandsController < Admin::BaseController
     else
       flash[:error] = I18n.t('brand.destroy.failed').capitalize
     end
-    redirect_to([forgeos_commerce, :admin, :brands])
+    respond_to do |wants|
+      wants.html do
+        redirect_to([forgeos_commerce, :admin, :brands])
+      end
+      wants.js
+    end
   end
 
   def url
@@ -86,7 +91,7 @@ class Admin::BrandsController < Admin::BaseController
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
-    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:sSortDir_0].upcase}"
 
     conditions = {}
     options = { :page => page, :per_page => per_page }
@@ -107,7 +112,7 @@ class Admin::BrandsController < Admin::BaseController
       options[:star] = true
       @brands = Brand.search(params[:sSearch],options)
     else
-      @brands = Brand.paginate(:all,options)
+      @brands = Brand.paginate(options)
     end
   end
 

@@ -27,7 +27,7 @@ class Admin::ProductTypesController < Admin::BaseController
   def create
     if @product_type.save
       flash[:notice] = I18n.t('product_type.create.success').capitalize
-      redirect_to([forgeos_commerce, :edit, :admin @product_type])
+      redirect_to([forgeos_commerce, :edit, :admin, @product_type])
     else
       flash[:error] = I18n.t('product_type.create.failed').capitalize
       render :action => :new
@@ -58,8 +58,12 @@ class Admin::ProductTypesController < Admin::BaseController
     else
       flash[:error] = I18n.t('product.destroy.failed').capitalize
     end
-    return render(:nothing=>true) if request.xhr?
-    redirect_to([forgeos_commerce, :admin, :product_types])
+    respond_to do |wants|
+      wants.html do
+        redirect_to([forgeos_commerce, :admin, :product_types])
+      end
+      wants.js
+    end
   end
 
 private
@@ -84,7 +88,7 @@ private
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
-    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:sSortDir_0].upcase}"
 
 
     conditions = {}
@@ -112,7 +116,7 @@ private
       options[:star] = true
       @product_types = ProductType.search(params[:sSearch],options)
     else
-      @product_types = ProductType.paginate(:all,options)
+      @product_types = ProductType.paginate(options)
     end
   end
 end

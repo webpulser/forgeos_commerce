@@ -3,7 +3,7 @@
     %h3= t(:price_variation, :count => 2)
     .option-panel-content
       #price-variations{ 'data-quantity' => t(:quantity, :scope => [:helpers,:label,:product_price_variation]), 'data-discount' => t(:discount, :scope => [:helpers,:label,:product_price_variation])}
-        - f.fields_for :price_variations do |price_variation|
+        = f.fields_for :price_variations do |price_variation|
           .line
             = price_variation.text_field :quantity, :size => 2, :class => 'center'
             = price_variation.label :quantity

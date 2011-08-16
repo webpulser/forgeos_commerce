@@ -92,7 +92,12 @@ class Admin::VouchersController < Admin::BaseController
     else
       flash[:error] = "Voucher not destroy"
     end
-    redirect_to :action => 'index'
+    respond_to do |wants|
+      wants.html do
+        redirect_to([forgeos_commerce, :admin, :vouchers])
+      end
+      wants.js
+    end
   end
 
 private
@@ -176,7 +181,7 @@ private
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
-    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:sSortDir_0].upcase}"
 
     conditions = { :parent_id => nil }
     options = { :page => page, :per_page => per_page }
@@ -195,7 +200,7 @@ private
       options[:star] = true
       @vouchers = VoucherRule.search(params[:sSearch],options)
     else
-      @vouchers = VoucherRule.paginate(:all,options)
+      @vouchers = VoucherRule.paginate(options)
     end
   end
 

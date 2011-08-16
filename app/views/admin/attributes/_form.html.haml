@@ -1,4 +1,4 @@
-- form_for [forgeos_commerce, :admin , attribute], :html => { :id => 'wrap' } do |f|
+= form_for [forgeos_commerce, :admin , attribute], :html => { :id => 'wrap' } do |f|
   .backgrounds.big-header
     = f.text_field :name, :class => 'field_name'
     = Forgeos_save_buttons [forgeos_commerce, :admin, :attributes]

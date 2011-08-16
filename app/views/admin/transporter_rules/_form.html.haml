@@ -4,7 +4,7 @@
 - @delivery_types = Hash[ I18n.t('shipping_method.rule.type.weight').capitalize, 'weight'] #I18n.t('shipping_method.rule.type.geographic_zone').capitalize, 'geo_zone', #I18n.t('shipping_method.rule.type.product_type').capitalize, 'product_type', #I18n.t('shipping_method.rule.type.product').capitalize, 'product' ]
 
 = render :partial => 'tabs'
-- form_for [forgeos_commerce, :admin, transporter], :html => { :id => 'wrap' } do |f|
+= form_for [forgeos_commerce, :admin, transporter], :html => { :id => 'wrap' } do |f|
 
   .backgrounds.big-header
     = f.text_field :name, :class => 'field_name'

@@ -8,7 +8,7 @@
       %th
         Suppression
   %tbody
-    - f.fields_for :sizes do |s|
+    = f.fields_for :sizes do |s|
       %tr{ :class => cycle('even','odd')}
         %td
           = s.text_field :name

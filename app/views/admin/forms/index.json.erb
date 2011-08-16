@@ -1,21 +1,20 @@
-<% 
+<%
   output = {
     :iTotalDisplayRecords => @forms.total_entries || 0,
     :aaData => @forms.collect do |form|
-      form_id = form.id
       [
-        content_tag(:div, '', :id => form_id),
+        content_tag(:div, '', :id => polymorphic_html_id(form)),
         form.name,
         form.model,
-        link_to_remote('', :url => [forgeos_commerce, :admin, form.id],
-           :method => :delete,
-           :confirm => I18n.t('form.destroy.confirm').capitalize,
-           :success => "removedataTablesRow('#destroy_#{form_id}')",
-           :html => {
-             :class => 'small-icons destroy-link', :id => "destroy_#{form_id}"
-        })
+        link_to('', :url => [forgeos_commerce, :admin, form],
+          :remote => true,
+          :method => :delete,
+          :confirm => I18n.t('form.destroy.confirm').capitalize,
+          :class => 'small-icons destroy-link',
+          :id => polymorphic_html_id(form, 'destroy')
+        )
       ]
     end
   }
 -%>
-<%= output.to_json -%>
+<%= raw output.to_json -%>

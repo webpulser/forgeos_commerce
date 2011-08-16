@@ -24,7 +24,7 @@ private
     offset = params[:iDisplayStart] ? params[:iDisplayStart].to_i : 0
     page = (offset / per_page) + 1
     order_column = params[:iSortCol_0].to_i
-    order = "#{columns[order_column]} #{params[:iSortDir_0] ? params[:iSortDir_0].upcase : 'ASC'}"
+    order = "#{columns[order_column]} #{params[:sSortDir_0] ? params[:sSortDir_0].upcase : 'ASC'}"
 
     conditions = {}
     includes = []
@@ -50,7 +50,7 @@ private
       options[:star] = true
       @users = User.search(params[:sSearch],options)
     else
-      @users = User.paginate(:all,options)
+      @users = User.paginate(options)
     end
   end
 
@@ -83,7 +83,7 @@ private
       includes << :user
     end
 
-    order = "#{columns[order_column]} #{params[:iSortDir_0] ? params[:iSortDir_0].upcase : 'ASC'}"
+    order = "#{columns[order_column]} #{params[:sSortDir_0] ? params[:sSortDir_0].upcase : 'ASC'}"
 
     options[:group] = group_by.join(', ') unless group_by.empty?
     options[:conditions] = conditions unless conditions.empty?
@@ -94,7 +94,7 @@ private
       options[:star] = true
       @orders = Order.search(params[:sSearch],options)
     else
-      @orders = Order.paginate(:all,options)
+      @orders = Order.paginate(options)
     end
   end
 end

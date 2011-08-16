@@ -1,26 +1,24 @@
-{
-'iTotalDisplayRecords': <%= @attributes.total_entries || 0 %>,
-'aaData': [
-<% @attributes.each do |attribute| %>
-  <% 
-    link_id = "attribute_#{attribute.id}"
-  %>
-  [
-  '<%= escape_javascript content_tag(:div, "<div class='handler'></div><div class='small-icons #{attribute.class.to_s.underscore}'></div>", :id => link_id, :class => 'handler_container') -%>',
-  '<%= escape_javascript content_tag(:div, link_to(attribute.name, [forgeos_commerce, :edit, :admin, attribute]), :class => 'product-name') -%>',
-  '<%= attribute.access_method %> ',
-  '<%= escape_javascript(
-    link_to('', [forgeos_commerce, :duplicate, :admin, attribute], :class => 'small-icons duplicate-link') +
-    link_to('', [forgeos_commerce, :edit, :admin, attribute], :class => 'small-icons edit-link') +
-    link_to_remote('', :url => [forgeos_commerce, :admin, attribute],
-         :method => :delete,
-         :confirm => I18n.t('attribute.destroy.confirm').capitalize,
-         :success => "removedataTablesRow('#destroy_#{link_id}')",
-         :html => {
-         :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-       })
-  ) -%>'
-    ] <%= ',' unless @attributes.last == attribute %>
-<% end %>
-]
-}
+<%
+  output = {
+    :sEcho => params[:sEcho],
+    :iTotalRecords => @attributes.total_entries || 0,
+    :iTotalDisplayRecords => @attributes.size,
+    :aaData => @attributes.map do |attribute|
+    [
+      content_tag(:div, content_tag(:div, '', :class=>'handler') + content_tag(:div, '', :class=> "small-icons #{attribute.class.to_s.underscore}"), :id => polymorphic_html_id(attribute), :class => 'handler_container'),
+      content_tag(:div, link_to(attribute.name, [forgeos_commerce, :edit, :admin, attribute]), :class => 'product-name'),
+      attribute.access_method,
+      link_to('', [forgeos_commerce, :duplicate, :admin, attribute], :class => 'small-icons duplicate-link') +
+      link_to('', [forgeos_commerce, :edit, :admin, attribute], :class => 'small-icons edit-link') +
+      link_to('', [forgeos_commerce, :admin, attribute],
+        :remote => true,
+        :method => :delete,
+        :confirm => I18n.t('attribute.destroy.confirm').capitalize,
+        :class => 'small-icons destroy-link',
+        :id => polymorphic_html_id(attribute, 'destroy')
+      )
+    ]
+    end
+  }
+-%>
+<%= raw output.to_json -%>

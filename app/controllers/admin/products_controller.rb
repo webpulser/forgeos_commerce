@@ -63,11 +63,15 @@ class Admin::ProductsController < Admin::BaseController
 
     if @deleted
       flash[:notice] = I18n.t('product.destroy.success').capitalize
-      return redirect_to([forgeos_commerce, :admin, :products]) if !request.xhr?
     else
       flash[:error] = I18n.t('product.destroy.failed').capitalize
     end
-    render :nothing => true
+    respond_to do |wants|
+      wants.html do
+        redirect_to([forgeos_commerce, :admin, :products])
+      end
+      wants.js
+    end
   end
 
   def url
@@ -163,7 +167,7 @@ private
     per_page = params[:iDisplayLength] ? params[:iDisplayLength].to_i : 10
     offset = params[:iDisplayStart] ? params[:iDisplayStart].to_i : 0
     page = (offset / per_page) + 1
-    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0] ? params[:iSortDir_0].upcase : 'ASC'}"
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:sSortDir_0] ? params[:sSortDir_0].upcase : 'ASC'}"
 
     conditions = {}
     includes = [:translations]
@@ -186,7 +190,6 @@ private
     options[:include] = includes unless includes.empty?
     options[:order] = order unless order.squeeze.blank?
     options[:joins] = joins
-    options[:group] = "product_translations.product_id"
 
     if params[:sSearch] && !params[:sSearch].blank?
       options[:index] = "product_core.product_#{ActiveRecord::Base.locale}_core"
@@ -195,7 +198,7 @@ private
       options[:star] = true
       @products = Product.search(params[:sSearch],options)
     else
-      @products = Product.paginate(:all,options)
+      @products = Product.paginate(options)
     end
   end
 end

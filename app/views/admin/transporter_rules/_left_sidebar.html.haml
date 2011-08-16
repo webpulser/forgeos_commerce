@@ -5,5 +5,5 @@
     %h2.small-icons{ :class => icon_class }
       = link_to_function I18n.t(sidebar_title).capitalize, "select_all_elements_without_category()"
     .init-tree.a-tree.category-tree{ :id => tree_id }
-    - form_for [forgeos_core, :admin, Category.new], :html => { :multipart => true } do |f|
+    = form_for [forgeos_core, :admin, Category.new], :html => { :multipart => true } do |f|
       = render :partial => 'admin/sidebars/attachments_popups', :locals => {:form => f}

@@ -101,7 +101,12 @@ class Admin::SpecialOffersController < Admin::BaseController
     else
       flash[:error] = t('special_offer.destroy.failed')
     end
-    redirect_to :action => 'index'
+    respond_to do |wants|
+      wants.html do
+        redirect_to([forgeos_commerce, :admin, :special_offers])
+      end
+      wants.js
+    end
   end
 
   def show
@@ -206,7 +211,7 @@ private
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
-    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:sSortDir_0].upcase}"
 
     conditions = { :parent_id => nil }
     options = { :page => page, :per_page => per_page }
@@ -225,7 +230,7 @@ private
       options[:star] = true
       @special_offers = SpecialOfferRule.search(params[:sSearch],options)
     else
-      @special_offers = SpecialOfferRule.paginate(:all,options)
+      @special_offers = SpecialOfferRule.paginate(options)
     end
   end
 end

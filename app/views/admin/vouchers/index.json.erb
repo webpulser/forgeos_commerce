@@ -1,29 +1,28 @@
 <% 
   output = {
-    :iTotalDisplayRecords => @vouchers.total_entries || 0,
+    :sEcho => params[:sEcho],
+    :iTotalRecords => @vouchers.total_entries || 0,
+    :iTotalDisplayRecords => @vouchers.size,
     :aaData => @vouchers.collect do |voucher|
       klass = voucher.active? ? 'see-on' : 'see-off'
-      link_id = voucher.id
       [
-        content_tag(:div, '', :id => link_id),
+        content_tag(:div, '', :id => polymorphic_html_id(voucher)),
         voucher.name,
-        link_to_remote('', :url => activate_admin_voucher_path(voucher),
-             :complete => "toggleActivate('#show_#{link_id}')",
-             :html => {
-               :class => "small-icons #{klass}",
-               :id => "show_#{link_id}"
-        }),
+        link_to('', [forgeos_commerce, :activate, :admin, voucher],
+          :remote => true,
+          :class => "small-icons #{klass}",
+          :id => polymorphic_html_id(voucher, 'show')
+        ),
         voucher.use,
         voucher.code,
-        link_to_remote('', :url => [forgeos_commerce, :admin, voucher],
-           :method => :delete,
-           :confirm => I18n.t('voucher.destroy.confirm').capitalize,
-           :success => "removedataTablesRow('#destroy_#{link_id}')",
-           :html => {
-             :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-        })
+        link_to('', [forgeos_commerce, :admin, voucher],
+          :method => :delete,
+          :confirm => I18n.t('voucher.destroy.confirm').capitalize,
+          :class => 'small-icons destroy-link',
+          :id => polymorphic_html_id(voucher, 'destroy')
+        )
       ]
     end
   }
 -%>
-<%= output.to_json -%>
+<%= raw output.to_json -%>

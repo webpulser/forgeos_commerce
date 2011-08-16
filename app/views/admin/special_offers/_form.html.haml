@@ -7,7 +7,7 @@
 
   #content.special_offers.grid_12.omega
     .inner-content
-      - fields_for :rule_builder do |rule_builder|
+      = fields_for :rule_builder do |rule_builder|
         %label
           Description
         = rule_builder.text_area :description, :rows => 2

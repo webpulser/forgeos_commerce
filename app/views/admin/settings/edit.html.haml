@@ -1,5 +1,5 @@
 = render :partial => 'tabs'
-- form_for @setting, :url => [forgeos_core, :admin, :setting] do |f|
+= form_for @setting, :url => [forgeos_core, :admin, :setting] do |f|
   .backgrounds.big-header
     = f.text_field :name, :class => 'defaultValue field_name', :title => t('setting.shop_name')
     .interact-links

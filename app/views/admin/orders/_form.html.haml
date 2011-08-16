@@ -1,4 +1,4 @@
-- form_for [forgeos_commerce, :admin, order], :html => { :id => 'wrap', :class => 'edit_order' } do |f|
+= form_for [forgeos_commerce, :admin, order], :html => { :id => 'wrap', :class => 'edit_order' } do |f|
   .backgrounds.big-header
     %span.order-price= number_with_precision order.total, :precision => 2
     %span.order-currency= current_currency.html
@@ -65,7 +65,7 @@
               -#%th.actions &nbsp;
           %tbody
             - child_index = 0
-            - f.fields_for :order_details do |detail_form|
+            = f.fields_for :order_details do |detail_form|
               %tr
                 - detail = detail_form.object
                 - product = detail.product
@@ -138,18 +138,18 @@
 
         .fieldset.open
           - order.build_address_delivery if order.address_delivery.nil?
-          - f.fields_for :address_delivery do |delivery_address_form|
+          = f.fields_for :address_delivery do |delivery_address_form|
             = link_to t('address.delivery', :count => 1).capitalize, '#', :class => "small-icons panel"
             = render :partial => 'address_form', :locals => {:form => delivery_address_form, :civilities => civilities, :countries => countries}
         .fieldset.closed
           - order.build_address_invoice if order.address_invoice.nil?
-          - f.fields_for :address_invoice do |invoice_address_form|
+          = f.fields_for :address_invoice do |invoice_address_form|
             = link_to t('address.invoice', :count => 1).capitalize, "#", :class => "small-icons panel"
             = render :partial => 'address_form', :locals => {:form => invoice_address_form, :civilities => civilities, :countries => countries}
 
         .fieldset.open
           - order.build_order_shipping if order.order_shipping.nil?
-          - f.fields_for :order_shipping do |order_shipping_form|
+          = f.fields_for :order_shipping do |order_shipping_form|
             = link_to t('delivery').capitalize, '#', :class => "small-icons panel"
             .option-panel-content
               .delivery-method

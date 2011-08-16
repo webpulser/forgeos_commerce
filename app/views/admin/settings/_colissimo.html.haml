@@ -1,5 +1,5 @@
 %div#accordion_payments
-  - f.fields_for :colissimo_methods, f.object.colissimo_methods do |colissimo|
+  = f.fields_for :colissimo_methods, f.object.colissimo_methods do |colissimo|
     %h3
       =t('colissimo', :scope => [:colissimo], :count => 1).capitalize
     %div

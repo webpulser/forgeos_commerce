@@ -154,7 +154,12 @@ class Admin::TransporterRulesController < Admin::BaseController
     else
       flash[:error] = I18n.t('transporter.destroy.failed').capitalize
     end
-    redirect_to([forgeos_commerce, :admin, :transporters])
+    respond_to do |wants|
+      wants.html do
+        redirect_to([forgeos_commerce, :admin, :transporters])
+      end
+      wants.js
+    end
   end
 
   def activate
@@ -280,7 +285,7 @@ class Admin::TransporterRulesController < Admin::BaseController
       per_page = params[:iDisplayLength].to_i
       offset =  params[:iDisplayStart].to_i
       page = (offset / per_page) + 1
-      order = "rules.#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+      order = "rules.#{columns[params[:iSortCol_0].to_i]} #{params[:sSortDir_0].upcase}"
 
       options = {
         :include => :geo_zones ,
@@ -296,7 +301,7 @@ class Admin::TransporterRulesController < Admin::BaseController
         options[:star] = true
         @transporters = TransporterRule.search(params[:sSearch],options)
       else
-        @transporters = TransporterRule.paginate(:all,options)
+        @transporters = TransporterRule.paginate(options)
       end
     end
 end

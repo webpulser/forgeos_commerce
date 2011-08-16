@@ -77,11 +77,15 @@ class Admin::OrdersController < Admin::BaseController
   def destroy
     if @order.destroy
       flash[:notice] = t('order.destroy.success').capitalize
-      return redirect_to([forgeos_commerce, :admin, :orders]) if !request.xhr?
     else
       flash[:error] = t('order.destroy.failed').capitalize
     end
-    render(:nothing => true)
+    respond_to do |wants|
+      wants.html do
+        redirect_to([forgeos_commerce, :admin, :orders])
+      end
+      wants.js
+    end
   end
 
   def pay
@@ -229,7 +233,7 @@ private
       includes << :user
     end
 
-    order = "#{columns[order_column]} #{params[:iSortDir_0].upcase if params[:iSortDir_0]}"
+    order = "#{columns[order_column]} #{params[:sSortDir_0].upcase if params[:sSortDir_0]}"
 
     options[:group] = group_by.join(', ') unless group_by.empty?
     options[:conditions] = conditions unless conditions.empty?
@@ -240,7 +244,7 @@ private
       options[:star] = true
       @orders = Order.search(params[:sSearch],options)
     else
-      @orders = Order.paginate(:all,options)
+      @orders = Order.paginate(options)
     end
   end
 end

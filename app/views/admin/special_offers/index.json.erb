@@ -1,28 +1,28 @@
 <% 
   output = {
-    :iTotalDisplayRecords => @special_offers.total_entries || 0,
+    :sEcho => params[:sEcho],
+    :iTotalRecords => @special_offers.total_entries || 0,
+    :iTotalDisplayRecords => @special_offers.size,
     :aaData => @special_offers.collect do |special_offer|
       klass = special_offer.active? ? 'see-on' : 'see-off'
-      link_id = special_offer.id
       [
-         content_tag(:div, '<div class="handler"></div><div class="small-icons offers"></div>', :id => link_id, :class => 'handler_container'),
-        link_to(special_offer.name, admin_special_offer_path(special_offer.id)),
-        link_to_remote('', :url => activate_admin_special_offer_path(special_offer),
-             :complete => "toggleActivate('#show_#{link_id}')",
-             :html => {
-               :class => "small-icons #{klass}",
-               :id => "show_#{link_id}"
-        }),
+        content_tag(:div, content_tag(:div, '', :class => 'handler') + content_tag(:div, '', :class => 'small-icons offers'), :id => polymorphic_html_id(special_offer), :class => 'handler_container'),
+        link_to(special_offer.name, [forgeos_commerce, :admin, special_offer]),
+        link_to('', [forgeos_commerce, :activate, :admin, special_offer],
+          :remote => true,
+          :class => "small-icons #{klass}",
+          :id => polymorphic_html_id(special_offer, 'show')
+        ),
         special_offer.use,
-        link_to_remote('', :url => [forgeos_commerce, :admin, special_offer],
-           :method => :delete,
-           :confirm => I18n.t('special_offer.destroy.confirm').capitalize,
-           :success => "removedataTablesRow('#destroy_#{link_id}')",
-           :html => {
-             :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-        })
+        link_to('', [forgeos_commerce, :admin, special_offer],
+          :remote => true,
+          :method => :delete,
+          :confirm => I18n.t('special_offer.destroy.confirm').capitalize,
+          :class => 'small-icons destroy-link',
+          :id => polymorphic_html_id(special_offer, 'destroy')
+        )
       ]
     end
   }
 -%>
-<%= output.to_json -%>
+<%= raw output.to_json -%>

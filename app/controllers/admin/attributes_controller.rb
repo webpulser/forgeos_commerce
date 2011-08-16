@@ -65,7 +65,12 @@ class Admin::AttributesController < Admin::BaseController
     else
       flash[:error] = I18n.t('attribute.destroy.failed').capitalize
     end
-    redirect_to([forgeos_commerce, :admin, :attributes])
+    respond_to do |wants|
+      wants.html do
+        redirect_to([forgeos_commerce, :admin, :attributes])
+      end
+      wants.js
+    end
   end
 
   def access_method
@@ -130,7 +135,7 @@ private
     per_page = params[:iDisplayLength].to_i
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
-    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:iSortDir_0].upcase}"
+    order = "#{columns[params[:iSortCol_0].to_i]} #{params[:sSortDir_0].upcase}"
 
     conditions = {}
     options = { :page => page, :per_page => per_page }
@@ -150,8 +155,7 @@ private
       options[:star] = true
       @attributes = Attribute.search(params[:sSearch],options)
     else
-      options[:group] = :attribute_id
-      @attributes = Attribute.paginate(:all,options)
+      @attributes = Attribute.paginate(options)
     end
   end
 end

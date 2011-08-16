@@ -9,8 +9,8 @@
       %span.choices_list
         - %w(text longtext url number date).each do |type|
           %span.widget-item
-            - attribute = "#{type}_attibute"
-            - link_to [forgeos_commerce, :new, :admin, attribute] do
+            - attribute = "#{type}_attribute"
+            = link_to [forgeos_commerce, :new, :admin, attribute] do
               %span{ :class => "small-icons #{attribute}"}= t(attribute, :count => 1)
 
     %span.backgrounds.action-button.attribute-choice-action.select_choice
@@ -20,8 +20,8 @@
       %span.choices_list
         - %w(picklist checkbox radiobutton).each do |type|
           %span.widget-item
-            - attribute = "#{type}_attibute"
-            - link_to [forgeos_commerce, :new, :admin, attribute] do
+            - attribute = "#{type}_attribute"
+            = link_to [forgeos_commerce, :new, :admin, attribute] do
               %span{ :class => "small-icons #{attribute}"}= t(attribute, :count => 1)
 
     #search.right

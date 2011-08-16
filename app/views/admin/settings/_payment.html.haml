@@ -1,6 +1,6 @@
 %div#accordion_payments
   - payment = (f.object.payment_methods || {})
-  - f.fields_for :payment_methods, payment do |payment_form|
+  = f.fields_for :payment_methods, payment do |payment_form|
     %h3
       =t('cheque', :scope => [:payment], :count => 1).capitalize
     %div

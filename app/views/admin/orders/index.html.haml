@@ -13,7 +13,7 @@
 
 #content.grid_12.alpha.omega
   .backgrounds.header
-    - link_to [forgeos_commerce, :new, :admin, :order], :class=>'backgrounds action-button' do
+    = link_to [forgeos_commerce, :new, :admin, :order], :class=>'backgrounds action-button' do
       %span.big-icons.create-order= I18n.t('order.create.action').capitalize
     = link_to content_tag(:span,'Exportez la liste en csv'), forgeos_commerce.admin_orders_path(:format => 'csv'), :class => 'backgrounds action-button'
     #search.right= fg_search

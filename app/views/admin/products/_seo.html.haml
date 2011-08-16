@@ -22,7 +22,7 @@
     %h3= t(:meta_info,:count => 1)
     .option-panel-content.meta
       - product.build_meta_info unless product.meta_info
-      - f.fields_for :meta_info do |meta_info|
+      = f.fields_for :meta_info do |meta_info|
         %p
           %span
             = t('title').capitalize
@@ -72,4 +72,4 @@
       %tr
         %td
 
-= dataTables_tag :id => 'table-redirections', :url => admin_products_path(:format => :json, :mode => 'selection'), :columns => ["{'sClass':'th-checkbox-container th_product_popup','bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t(:name)}'}","{'sTitle':'#{I18n.t(:sku)}'}","{'sTitle':'#{I18n.t(:price, :count => 1)}'}","{'sTitle':'#{I18n.t(:stock, :count => 1)}'}","{'sTitle':'#{I18n.t(:product_type, :count => 1)}'}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}"], :autostart => false
+= dataTables_tag :id => 'table-redirections', :url => forgeos_commerce.admin_products_path(:format => :json, :mode => 'selection'), :columns => ["{'sClass':'th-checkbox-container th_product_popup','bSearchable':false,'bSortable':false}","{'sTitle':'#{I18n.t(:name)}'}","{'sTitle':'#{I18n.t(:sku)}'}","{'sTitle':'#{I18n.t(:price, :count => 1)}'}","{'sTitle':'#{I18n.t(:stock, :count => 1)}'}","{'sTitle':'#{I18n.t(:product_type, :count => 1)}'}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}","{ 'bVisible': false}"], :autostart => false

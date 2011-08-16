@@ -1,30 +1,30 @@
 <%
   output = {
-    :iTotalDisplayRecords => @transporters.total_entries || 0,
+    :sEcho => params[:sEcho],
+    :iTotalRecords => @transporters.total_entries || 0,
+    :iTotalDisplayRecords => @transporters.size,
     :aaData => @transporters.collect do |transporter|
-      link_id = "transporter_#{transporter.id}"
       klass = transporter.active? ? 'see-on' : 'see-off'
       [
-        content_tag(:div, "&nbsp;", :id => link_id, :class => 'small-icons transporters'),
+        content_tag(:div, "&nbsp;", :id => polymorphic_html_id(transporter), :class => 'small-icons transporters'),
         #content_tag(:div, link_to(transporter.name, [forgeos_commerce, :admin, transporter]), :class => 'tranporter-name'),
         content_tag(:div, link_to(transporter.name, edit_admin_transporter_path(transporter)), :class => 'tranporter-name'),
-        link_to_remote('', :url => activate_admin_transporter_path(transporter),
-         :complete => "toggleActivate('#show_#{link_id}')",
-         :html => {
-           :class => "small-icons #{klass}",
-           :id => "show_#{link_id}"
-        }),
+        link_to('', [forgeos_commerce, :activate, :admin, transporter],
+          :remote => true,
+          :class => "small-icons #{klass}",
+          :id => polymorphic_html_id(transporter, 'show')
+        ),
         link_to('', edit_admin_transporter_path(transporter), :class => 'small-icons edit-link') +
-        link_to_remote('', :url => [forgeos_commerce, :admin, transporter],
-         :method => :delete,
-         :confirm => I18n.t('transporter.destroy.confirm').capitalize,
-         :success => "removedataTablesRow('#destroy_#{link_id}')",
-         :html => {
-         :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-        })
+        link_to('', [forgeos_commerce, :admin, transporter],
+          :remote => true,
+          :method => :delete,
+          :confirm => I18n.t('transporter.destroy.confirm').capitalize,
+          :class => 'small-icons destroy-link',
+          :id => polymorphic_html_id(transporter, 'destroy')
+        )
       ]
     end
   }
 -%>
 
-<%= output.to_json -%>
+<%= raw output.to_json -%>

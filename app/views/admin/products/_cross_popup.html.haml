@@ -36,7 +36,7 @@
         %ul
           - ProductType.all(:include => :translations, :order => 'product_type_translations.name').each do |p_type|
             %li.folder
-              - link_to '#',:class => 'big-icons p_type', :id => p_type.id do
+              = link_to '#',:class => 'big-icons p_type', :id => p_type.id do
                 = p_type.name
                 %span
                   = p_type.products.count
@@ -44,7 +44,7 @@
                 %ul
                   - p_type.brands.each do |brand|
                     %li.folder
-                      - link_to '#', :class => 'big-icons brand', :id => brand.id do
+                      = link_to '#', :class => 'big-icons brand', :id => brand.id do
                         = brand.name
                         %span
                           = Product.all( :conditions => ["brand_id = ? && product_type_id = ?", brand.id, p_type.id ] ).count

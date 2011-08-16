@@ -25,16 +25,16 @@
         - if out_of_stock_products > 0
           = t('dashboard.out_of_stock', :products => out_of_stock_products)
       .quick-actions
-        - link_to [forgeos_cms, :new, :admin, :page], :class => 'quick-action-button' do
+        = link_to [forgeos_cms, :new, :admin, :page], :class => 'quick-action-button' do
           %span.big-icons.create-page
             = t('page.create.action').capitalize
-        - link_to [forgeos_commerce, :new, :admin, :product], :class => 'quick-action-button' do
+        = link_to [forgeos_commerce, :new, :admin, :product], :class => 'quick-action-button' do
           %span.big-icons.create-product
             = t('product.create.action').capitalize
-        - link_to [forgeos_commerce, :new, :admin, :special_offer], :class => 'quick-action-button' do
+        = link_to [forgeos_commerce, :new, :admin, :special_offer], :class => 'quick-action-button' do
           %span.big-icons.create-offer
             = t('special_offer.create.action').capitalize
-        - link_to [forgeos_core, :admin, :statistics], :class => 'quick-action-button' do
+        = link_to [forgeos_core, :admin, :statistics], :class => 'quick-action-button' do
           %span.small-icons.see-stats
             = t('statistic.show.all').capitalize
       .clear

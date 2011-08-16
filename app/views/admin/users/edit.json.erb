@@ -1,13 +1,14 @@
 <% 
   order_states_for_select = Order.aasm_states.collect{ |state| [state.name, t(state.name, :scope => [:order,:status])] }
   output = {
-    :iTotalDisplayRecords => @orders.total_entries || 0,
+    :sEcho => params[:sEcho],
+    :iTotalRecords => @orders.total_entries || 0,
+    :iTotalDisplayRecords => @orders.size,
     :aaData =>  @orders.collect do |order|
       details_count = order.order_details.count
-      link_id = "order_#{order.id}"
       product_names = details_count > 1 ? '<br/><p class="product-name" >'+order.order_details.collect(&:name).join('<br />')+'</p>' : ''
       [
-        (details_count > 1 ? content_tag(:div, '<div class="image">&nbsp;</div>', :id => link_id, :class => 'some-variants plus') : content_tag(:div, '', :id => link_id)),
+        (details_count > 1 ? content_tag(:div, content_tag(:div, '&nbsp;', :class => 'image'), :id => polymorphic_html_id(order), :class => 'some-variants plus') : content_tag(:div, '', :id => polymorphic_html_id(order))),
         order.id,
         price_with_currency order.total,
         content_tag(:div,
@@ -20,16 +21,15 @@
         order.created_at.to_s(:short),
         select_tag(:status, options_for_select(order_states_for_select, order.status), :class => 'customize'),
         link_to('', [forgeos_commerce, :edit, :admin, order], :class => 'small-icons edit-link') +
-        link_to_remote('', :url => [forgeos_commerce, :admin, order],
+        link_to('', [forgeos_commerce, :admin, order],
+          :remote => true,
           :method => :delete,
           :confirm => t('order.destroy.confirm').capitalize,
-          :success => "removedataTablesRow('#destroy_#{link_id}')",
-          :html => {
-            :class => 'small-icons destroy-link', :id => "destroy_#{link_id}"
-          }
+          :class => 'small-icons destroy-link',
+          :id => polymorphic_html_id(order, 'destroy')
         )
       ]
     end
   }
 -%>
-<%= output.to_json %>
+<%= raw output.to_json %>
