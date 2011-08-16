@@ -1,16 +1,16 @@
-%div#accordion_payments
+#accordion_payments
   - payment = (f.object.payment_methods || {})
-  = f.fields_for :payment_methods, payment do |payment_form|
+  = f.fields_for :payment_methods do |payment_form|
     %h3
       =t('cheque', :scope => [:payment], :count => 1).capitalize
     %div
-      = serialized_field(payment_form, payment, :check_box, :cheque, :active)
+      = payment_field(payment_form, payment, :check_box, :cheque, :active, :class => 'toggle-infos')
       .infos
         .wrapping
           .cheque_message
-            = serialized_field(payment_form, payment, :text_field, :cheque, :image)
+            = payment_field(payment_form, payment, :text_field, :cheque, :image)
             %br
-            = serialized_field(payment_form, payment, :text_area, :cheque, :message)
+            = payment_field(payment_form, payment, :text_area, :cheque, :message, :class => 'mceEditor')
           .tool-tip-settings
             = t(:infos, :scope => [:payment, :cheque])
           .clear
@@ -19,45 +19,45 @@
     %h3
       =t('paypal', :scope => [:payment], :count => 1).capitalize
     %div
-      = serialized_field(payment_form, payment, :check_box, :paypal, :active)
+      = payment_field(payment_form, payment, :check_box, :paypal, :active, :class => 'toggle-infos')
       .infos
         %br
-        = serialized_field(payment_form, payment, :text_field, :paypal, :image)
+        = payment_field(payment_form, payment, :text_field, :paypal, :image)
         .clear
         = payment_fields_with_env payment_form, payment, :paypal, %w(email secret cert_id url url_ok auto_response currency)
 
     %h3
       =t('cmc_cic', :scope => [:payment], :count => 1).capitalize
     %div
-      = serialized_field(payment_form, payment, :check_box, :cmc_cic, :active)
+      = payment_field(payment_form, payment, :check_box, :cmc_cic, :active, :class => 'toggle-infos')
       .infos
-        = serialized_field(payment_form, payment, :check_box, :cmc_cic, :test)
+        = payment_field(payment_form, payment, :check_box, :cmc_cic, :test)
         %br
-        = serialized_field(payment_form, payment, :text_field, :cmc_cic, :image)
+        = payment_field(payment_form, payment, :text_field, :cmc_cic, :image)
         .clear
         = payment_fields_with_env payment_form, payment, :cmc_cic, %w(cle tpe version serveur code_societe url_ok url_ko url_return)
 
     %h3
       = t('cyberplus', :scope => [:payment], :count => 1).capitalize
     %div
-      = serialized_field(payment_form, payment, :check_box, :cyberplus, :active)
+      = payment_field(payment_form, payment, :check_box, :cyberplus, :active, :class => 'toggle-infos')
 
       .infos
-        = serialized_field(payment_form, payment, :check_box, :cyberplus, :test)
+        = payment_field(payment_form, payment, :check_box, :cyberplus, :test)
         %br
-        = serialized_field(payment_form, payment, :text_field, :cyberplus, :image)
+        = payment_field(payment_form, payment, :text_field, :cyberplus, :image)
         %br
-        = serialized_field(payment_form, payment, :text_field, :cyberplus, :image_multi)
+        = payment_field(payment_form, payment, :text_field, :cyberplus, :image_multi)
         .clear
         = payment_fields_with_env payment_form, payment, :cyberplus, %w(key site_id currency version payment_cards payment_config multi_minimum_cart multi_message url_ok url_ko url_return url_referral)
     %h3
       =t('elysnet', :scope => [:payment], :count => 1).capitalize
     %div
-      = serialized_field(payment_form, payment, :check_box, :elysnet, :active)
+      = payment_field(payment_form, payment, :check_box, :elysnet, :active, :class => 'toggle-infos')
 
       .infos
-        = serialized_field(payment_form, payment, :check_box, :elysnet, :test)
+        = payment_field(payment_form, payment, :check_box, :elysnet, :test)
         %br
-        = serialized_field(payment_form, payment, :text_field, :elysnet, :image)
+        = payment_field(payment_form, payment, :text_field, :elysnet, :image)
         .clear
         = payment_fields_with_env payment_form, payment, :elysnet, %w(url_ok url_ko auto_response merchant_id)

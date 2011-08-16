@@ -1,17 +1,7 @@
-%div#accordion_payments
-  = f.fields_for :colissimo_methods, f.object.colissimo_methods do |colissimo|
-    %h3
-      =t('colissimo', :scope => [:colissimo], :count => 1).capitalize
-    %div
-      = colissimo.label  :active, t(:active, :scope => [:colissimo, :cheque])
-      - checked = (f.object.colissimo_method_list[:active] == 1 if f.object.colissimo_method_list)
-      = colissimo.check_box :active, :checked => checked, :onchange => "$(this).next().toggle('highlight', 500)"
-      .infos{ :style => checked ? 'display: block;': 'display: none;'}
-        .grid_7
-          %h4
-          - %w(sha forwarding_charges preparation_time urlok urlko fo url_prod url_test).each do |element|
-            .grid_3.omega
-              = colissimo.label "#{element}".to_sym, t(element, :scope => :colissimo)
-            .grid_4.alpha
-              = colissimo.text_field "#{element}".to_sym, :value => (f.object.colissimo_method_list.nil? ? '' : f.object.colissimo_method_list[element.to_sym])
-            .clear
+- colissimo = f.object.colissimo_methods || {}
+= f.fields_for :colissimo_methods  do |colissimo_fields|
+  = serialized_field(colissimo_fields, colissimo, :check_box, :active, :class => 'toggle-infos')
+  .infos
+    - %w(sha forwarding_charges preparation_time urlok urlko fo url_prod url_test).each do |element|
+      = serialized_field(colissimo_fields, colissimo, :text_field, element)
+      %br

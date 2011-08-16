@@ -1,26 +1,33 @@
 = render :partial => 'tabs'
 = form_for @setting, :url => [forgeos_core, :admin, :setting] do |f|
-  .backgrounds.big-header
-    = f.text_field :name, :class => 'defaultValue field_name', :title => t('setting.shop_name')
-    .interact-links
-      = Forgeos_save_buttons [forgeos_cms, :admin, :static_content_blocks]
-  #content.grid_16.alpha.omega
-    .grid_16.alpha
-      .padding-wrap
-        #general.content_setting_div
-          = render :partial => 'general', :locals => { :f => f }
-        #mailer.content_setting_div
-          = render :partial => 'mailer', :locals => { :f => f }
-        #display.content_setting_div
-          = render :partial => 'display', :locals => { :f => f }
-        #backup.content_setting_div
-          = render :partial => 'backup', :locals => { :f => f }
-        #godfather.content_setting_div
-          = render :partial=> 'godfather', :locals => { :f => f }
-        #payment.content_setting_div
-          = render :partial=> 'payment', :locals => { :f => f }
-        #colissimo.content_setting_div
-          = render :partial => 'colissimo', :locals => { :f => f }
-        #google.content_setting_div
-          = render :partial => 'google_shopping', :locals => { :f => f }
-        .clear
+  #blocks-header.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
+    %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
+      %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to t(:general, :scope => :setting).capitalize, '#general', :class => 'selected'
+      %li.ui-state-default.ui-corner-top= link_to t(:mailer, :scope => :setting).capitalize, '#mailer'
+      %li.ui-state-default.ui-corner-top= link_to t(:display, :scope => :setting).capitalize, '#display'
+      %li.ui-state-default.ui-corner-top= link_to t(:backup, :scope => :setting).capitalize, '#backup'
+      %li.ui-state-default.ui-corner-top= link_to t(:godfather, :scope => :setting).capitalize, '#godfather'
+      %li.ui-state-default.ui-corner-top= link_to t(:payment, :count => 2).capitalize, '#payment'
+      %li.ui-state-default.ui-corner-top= link_to t(:colissimo, :scope => :setting).capitalize, '#colissimo'
+      %li.ui-state-default.ui-corner-top= link_to "Google", '#google'
+    .backgrounds.big-header
+      = f.text_field :name, :class => 'defaultValue field_name', :title => t('setting.shop_name')
+      .interact-links
+        = Forgeos_save_buttons [forgeos_core, :admin, :setting]
+    #general.grid_16.alpha.omega
+      = render :partial => 'general', :locals => { :f => f }
+    #mailer
+      = render :partial => 'mailer', :locals => { :f => f }
+    #display
+      = render :partial => 'display', :locals => { :f => f }
+    #backup
+      = render :partial => 'backup', :locals => { :f => f }
+    #godfather
+      = render :partial=> 'godfather', :locals => { :f => f }
+    #payment
+      = render :partial=> 'payment', :locals => { :f => f }
+    #colissimo
+      = render :partial => 'colissimo', :locals => { :f => f }
+    #google
+      = render :partial => 'google_shopping', :locals => { :f => f }
+    .clear

@@ -1,0 +1,90 @@
+en:
+  payment:
+    one: paiement gateway
+    other: paiement gateways
+    not_active: Gateway disabled
+    cheque:
+      one: Paycheck
+      infos: "<strong>use following variables :</strong><ol><li>#{ORDER_ID} - Order ID</li><li>#{USER_NAME} - User name</li></ol>"
+    paypal:
+      one: Paypal
+    cmc_cic:
+      one: CMC CIC gateway
+    cyberplus:
+      one: Cyberplus
+    elysnet:
+      one: Elysnet
+
+  colissimo:
+    one: colissimo
+  setting:
+    colissimo: colissimo
+  helpers:
+    label:
+      setting:
+        google_account: Google Account (UA-XXXXX-X)
+        google_affiliation_store_name: Google Affiliation store name
+      "setting[colissimo_methods]":
+        active: Activate SoColissimo Shipping
+        sha: sha1 key
+        forwarding_charges: price
+        preparation_time: preparation duration
+        urlok: validated order url
+        urlko: error url
+        fo: Front Office ID
+        url_prod: production service url
+        url_test: test service url
+
+      "setting[payment_methods]":
+        cheque:
+          image: paycheck logo url
+          active: activate paycheck
+          message: message
+        paypal:
+          test: test mode activated
+          image: paypal logo url
+          active: activate paypal
+          email: email
+          secret: secret key
+          cert_id: certificate id
+          url: url
+          url_ok: validated order url
+          auto_response: autoresponse url
+          currency: currency
+        cmc_cic:
+          test: test mode activated
+          image: CMC CIC logo url
+          active: activate CMC CIC
+          cle: key
+          tpe: TPE code
+          version: version
+          serveur: server
+          code_societe: company code
+          url_ok: validated order url
+          url_ko: error url
+          url_return: back order url
+        cyberplus:
+          test: test mode activated
+          image: Cyberplus logo url
+          image_multi: Cyberplus multi logo url
+          active: activate Cyberplus
+          key: key
+          currency: currency
+          version: version
+          site_id: site id
+          payment_cards: available payment cards
+          payment_config: payment configuration
+          multi_minimum_cart: Order minimum price for Cyberplus multi
+          multi_message: Cyberplus multi message
+          url_ok: validated order url
+          url_ko: error url
+          url_return: back order url
+          url_referral: referral url
+        elysnet:
+          active: activate Elysnet
+          test: test mode activated
+          image: Elysnet logo url
+          merchant_id: site id
+          url_ok: validated order url
+          url_ko: error url
+          auto_response: back order url
