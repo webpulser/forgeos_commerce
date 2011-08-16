@@ -1,10 +1,7 @@
 #product.grid_12.alpha
-  .grid_12
-    = f.label :name, t(:name, :scope => :product).capitalize
-    = f.text_field :name
   .grid_9.omega
     .grid_4.alpha.omega
-      = label_tag :price, "#{t('price', :count => 1).capitalize}<sup class=\"required\">*</sup>"
+      = label_tag :price, "#{t('price', :count => 1).capitalize}<sup class=\"required\">*</sup>".html_safe
       = f.text_field :price, :class => 'backgrounds grid_2 alpha omega', :id => 'price'
       %span.currency
         = current_currency.html

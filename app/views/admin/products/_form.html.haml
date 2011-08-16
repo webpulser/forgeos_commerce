@@ -1,15 +1,26 @@
 = render :partial => 'admin/menus/lang_switcher'
+= render :partial => 'tabs'
 = form_for [forgeos_commerce, :admin, product], :html => { :id => 'wrap' } do |f|
-  = render :partial => 'tabs_product_show'
-
-  #content.grid_16.alpha.omega
-    #general{:style => 'padding: 0'}
+  #blocks-header.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
+    %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
+      %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to 'Principal', '#general', :class => 'selected'
+      %li.ui-state-default.ui-corner-top= link_to t(:price, :count => 2), '#prices'
+      %li.ui-state-default.ui-corner-top= link_to t(:size, :count => 2), '#sizes'
+      %li.ui-state-default.ui-corner-top= link_to 'SEO', '#seo'
+      %li.ui-state-default.ui-corner-top= link_to t(:cross_selling, :count => 2), '#cross_sells'
+    .backgrounds.big-header
+      = f.text_field :name, :class => 'field_name big_orange_input'
+      .interact-links
+        = Forgeos_save_buttons [forgeos_commerce, :admin, :products]
+    #general
       = render :partial => 'general', :locals => {:product => product, :f => f}
-    #prices{:style => 'padding: 0'}
+      .clear
+    #prices
       = render :partial => 'prices', :locals => {:product => product, :f => f}
-    #sizes{:style => 'padding: 0'}
+    #sizes
       = render :partial => 'sizes', :locals => {:product => product, :f => f}
-    #seo{:style => 'padding: 0'}
+    #seo
       = render :partial => 'seo', :locals => {:product => product, :f => f}
-    #cross_sells{:style => 'padding: 0'}
+    #cross_sells
       = render :partial => 'cross_sells', :locals => {:product => product, :f => f}
+    .clear
