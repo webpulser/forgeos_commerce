@@ -1,21 +1,9 @@
-# This model use ActsAsStateMachine
-#
-# ==== belongs_to
-# * <tt>address_delivery</tt> - <i>AddressDelivery</i>
-# * <tt>address_invoice</tt> - <i>AddressInvoice </i>
-# * <tt>user</tt> - <i>User</i>
-#
-# ==== has_many
-# * <tt>order_details</tt> - <i>OrdersDetail</i>
-#
-# ==== Attributes
-# * <tt>transporter</tt> - <i>Transporter</i> name
-# * <tt>transporter_price</tt> - <i>ShippingMethod</i> price
-require 'sha1'
-require 'CMCIC_Config'
-require 'CMCIC_Tpe'
-require 'cgi'
 class Order < ActiveRecord::Base
+  autoload :SHA1, 'sha1'
+  autoload :CGI, 'cgi'
+  autoload :CMCIC_Config, 'CMCIC_Config'
+  autoload :CMCIC_Tpe, 'CMCIC_Tpe'
+
   include AASM
   aasm_column :status
   aasm_initial_state :unpaid
@@ -55,11 +43,12 @@ class Order < ActiveRecord::Base
 
   has_one :address_delivery, :dependent => :destroy
   accepts_nested_attributes_for :address_delivery
+
   has_one :address_invoice, :dependent => :destroy
   accepts_nested_attributes_for :address_invoice
 
   belongs_to :user
-  validates_presence_of :user_id
+  validates_associated :user
   validates_associated :address_delivery, :if => :needs_address_delivery?
   validates_associated :address_invoice, :if => :needs_address_invoice?
   validates_associated :order_shipping, :if => :needs_order_shipping?
@@ -237,23 +226,23 @@ class Order < ActiveRecord::Base
                :product_packaging => true,
                :with_shipping => true}.update(options.symbolize_keys)
 
-    total = 0
+    total = 0.0
     order_details.each do |order_detail|
       product_price = order_detail.price({:tax => options[:tax], :voucher_discount => options[:product_voucher_discount], :special_offer_discount => options[:product_special_offer_discount], :packaging => options[:product_packaging] })
       total += product_price * order_detail.quantity
     end
     total += order_shipping.price if options[:with_shipping] && order_shipping && order_shipping.price
-    total -= self.voucher_discount.to_f || 0 if options[:cart_voucher_discount] && self.voucher_discount
-    total -= self.special_offer_discount.to_f || 0 if options[:cart_special_offer_discount] && self.special_offer_discount
-    total -= self.patronage_discount.to_f || 0 if options[:patronage]
-    total += self.packaging_price.to_f || 0 if options[:cart_packaging]
+    total -= self.voucher_discount.to_f || 0.0 if options[:cart_voucher_discount] && self.voucher_discount
+    total -= self.special_offer_discount.to_f || 0.0 if options[:cart_special_offer_discount] && self.special_offer_discount
+    total -= self.patronage_discount.to_f || 0.0 if options[:patronage]
+    total += self.packaging_price.to_f || 0.0 if options[:cart_packaging]
     total = self.after_total(total, options) if self.respond_to?(:after_total)
-    total = 0 if total < 0
+    total = 0.0 if total < 0
     return total
   end
 
   def discount
-    self.total({:cart_voucher_discount => false, :cart_special_offer_discount => false, :product_voucher_discount => false})-self.total
+    self.total(:cart_voucher_discount => false, :cart_special_offer_discount => false, :product_voucher_discount => false) - self.total
   end
 
 #  def total(with_tax=false, with_currency=true,with_shipping=true,with_special_offer=true, with_voucher=true, with_patronage=true)
@@ -287,7 +276,7 @@ class Order < ActiveRecord::Base
   end
 
   def weight
-    products.sum(:weight)
+    order_details.map(&:weight).sum
   end
 
   def special_offer_discount_products
@@ -295,7 +284,7 @@ class Order < ActiveRecord::Base
   end
 
   def voucher_discount_products
-    return order_details.all(:conditions =>['voucher_discount_price IS NOT NULL'])
+    return order_details.all(:conditions => ['voucher_discount_price IS NOT NULL'])
   end
 
   def patronage_discount
@@ -368,7 +357,7 @@ class Order < ActiveRecord::Base
 
   def to_colissimo_params
     setting = Setting.first
-    colissimo = setting.colissimo_method_list
+    colissimo = setting.colissimo_methods
     require "digest/sha1"
     order_id = "#{rand(1000)}m#{self.reference}"
     cart = Cart.find_by_id(self.reference)
@@ -453,10 +442,11 @@ class Order < ActiveRecord::Base
   def payment_confirmation
     if self.user
       # decrement user's patronage_count if its use has patronage
-      User.decrement_counter(:patronage_count,self.user.id) if self.user.has_godfather_discount?
+      user.decrement(:patronage_count) if user.has_godfather_discount?
       # increment user's godfather patronage_count if its user's first order
-      User.increment_counter(:patronage_count,self.user.godfather_id) if self.user.godfather and self.user.orders.count(:conditions => { :status => 'paid' }) == 1
+      user.godfather.increment(:patronage_count) if user.godfather and user.orders.count(:conditions => { :status => 'paid' }) == 1
     end
+    order_details.map(&:increment_product_sold_counter)
   end
 
   def waiting_for_cheque_event
@@ -475,7 +465,7 @@ class Order < ActiveRecord::Base
       #User.decrement_counter(:patronage_count,self.user.godfather_id)
       self.patronage_discount_price = patronage_discount
     when :canceled
-      User.increment_counter(:patronage_count,self.user.godfather_id)
+      user.godfather.increment(:patronage_count)
     end
   end
 

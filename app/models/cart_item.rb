@@ -1,29 +1,21 @@
-# Relation between <i>Cart</i> and <i>Product</i>
-#
-# ==== belongs_to
-# * <tt>product</tt> - <i>Product</i>
-# * <tt>cart</tt> - <i>Cart</i>
-
 class CartItem < ActiveRecord::Base
   belongs_to :product
+  validates_associated :product
+
   belongs_to :cart
-  validates_presence_of :cart_id, :product_id
+  validates_associated :cart
 
-  def total
-    return self.product.price({:voucher_discount => false})*quantity
+  def total(options = {})
+    product.price(options.update(:voucher_discount => false)) * quantity
   end
 
-=begin
-  def quantity
-    return self.cart.cart_items.count('product_id', :conditions => {:product_id => self.product.id})
-  end
-=end
+  def tax(options = {})
+    options = { :currency => true }.update(options.symbolize_keys)
 
-  # Returns total tax for this <i>Product</i>
-  #
-  # ==== Parameters
-  # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def tax(with_currency=true)
-    ("%01.2f" % (total(true, with_currency) - total)).to_f
+    ("%01.2f" % (total(options) - total)).to_f
+  end
+
+  def weight
+    product.weight * quantity
   end
 end

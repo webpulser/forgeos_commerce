@@ -24,7 +24,7 @@ class ProductSweeper < ActionController::Caching::Sweeper
     expire_fragment("products/#{product.id}") if product.id
 
     home_page = Page.find_by_single_key('home')
-    expire_page page_path(home_page.url) if home_page
+    expire_page forgeos_cms.page_path(home_page.url) if home_page
   end
 
 end

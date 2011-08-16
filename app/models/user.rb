@@ -1,5 +1,5 @@
-require File.join(Rails.plugins['forgeos_core'].directory,'app','models','user')
-class User < Person
+load File.join(Gem.loaded_specs['forgeos_core'].full_gem_path,'app','models','user.rb')
+User.class_eval do
   has_one :cart, :dependent => :destroy
   has_one :wishlist, :dependent => :destroy
   has_one :address_delivery, :foreign_key => :person_id, :order => 'id desc'

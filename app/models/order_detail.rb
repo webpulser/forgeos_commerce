@@ -1,25 +1,16 @@
-# ==== belongs_to
-# * <tt>order</tt> - <i>Order</i>
-#
-# ==== Attributes
-# * <tt>name</tt> - <i>Product</i> name
-# * <tt>description</tt> - <i>Product</i> description
-# * <tt>price</tt> - <i>Product</i> price
-# * <tt>rate_tax</tt> - <i>Product</i> rate_tax
-# * <tt>quantity</tt> - <i>Product</i> quantity
 class OrderDetail < ActiveRecord::Base
 
   belongs_to :order
   belongs_to :product
 
   #validates_presence_of :name, :price, :rate_tax, :order_id, :sku
-  validates_presence_of :name, :price, :sku
-  after_create :increment_product_sold_counter
+  validates :name, :price, :sku, :presence => true
 
   def rate_tax
     value = read_attribute(:rate_tax)
     (not value or value < 1.0) ? 1.0 : value
   end
+
   # Returns price's string with currency symbol
   #
   # This method is an overload of <i>price</i> attribute.
@@ -27,31 +18,33 @@ class OrderDetail < ActiveRecord::Base
   # ==== Parameters
   # * <tt>:with_tax</tt> - false by defaults. Returns price with tax if true
   # * <tt>:with_currency</tt> - true by defaults. The currency of user is considered if true
-  def price(options = {})
+  def price(*args)
+    passed_options = args.extract_options!
     options = {
       :tax => true,
       :voucher_discount => true,
       :special_offer_discount => true,
       :packaging => false,
-    }.update(options.symbolize_keys)
+    }.update(passed_options.symbolize_keys)
 
-    price = read_attribute(:price) || 0
+    price = read_attribute(:price) || 0.0
     price *= rate_tax if options[:tax]
-    price -= self.special_offer_discount_price || 0 if options[:special_offer_discount]
-    price -= self.voucher_discount_price || 0 if options[:voucher_discount]
-    price += self.packaging_price.to_f || 0 if options[:packaging]
+    price -= self.special_offer_discount_price || 0.0 if options[:special_offer_discount]
+    price -= self.voucher_discount_price || 0.0 if options[:voucher_discount]
+    price += self.packaging_price.to_f || 0.0 if options[:packaging]
     price
   end
 
-  def discount(options = {})
+  def discount(*args)
+    passed_options = args.extract_options!
     options = {
       :voucher_discount => true,
       :special_offer_discount => true,
-    }.update(options.symbolize_keys)
+    }.update(passed_options.symbolize_keys)
 
-    discount = 0
-    discount += self.special_offer_discount_price || 0 if options[:special_offer_discount]
-    discount += self.voucher_discount_price || 0 if options[:voucher_discount]
+    discount = 0.0
+    discount += self.special_offer_discount_price.to_f || 0.0 if options[:special_offer_discount]
+    discount += self.voucher_discount_price.to_f || 0.0 if options[:voucher_discount]
     discount
   end
 
@@ -95,9 +88,10 @@ class OrderDetail < ActiveRecord::Base
     object = self.new(
       :name => cart_product.product.name,
       :description => cart_product.product.description,
-      :price => cart_product.product.price({ 
-          :voucher_discount => false, 
-           :special_offer_discount => false }),
+      :price => cart_product.product.price(
+          :voucher_discount => false,
+          :special_offer_discount => false
+      ),
       :rate_tax => cart_product.product.rate_tax,
       :sku => cart_product.product.sku,
       :product_id => cart_product.product.id,
@@ -125,21 +119,11 @@ class OrderDetail < ActiveRecord::Base
   end
 
 
-=begin
-  def quantity(order = self.order)
-    return 1 unless order
-    siblings = order.order_details.group_by(&:product_id).find do |order_detail_group|
-      order_detail_group[1].first.product_id == product_id
-    end
-    return siblings ? siblings[1].size : 1
-  end
-=end
-
-private
-
   def increment_product_sold_counter
     if product
-      counter = product.sold_counters.new.increment_counter
+      quantity.times do
+        product.sold_counters.new.increment_counter
+      end
     end
   end
 end

@@ -1,12 +1,7 @@
-require File.join(Rails.plugins[:forgeos_core].directory,'app','models','setting')
+load File.join(Gem.loaded_specs['forgeos_core'].full_gem_path, 'app', 'models', 'setting.rb')
 class Setting < ActiveRecord::Base
-  before_save :update_so_colissimo_methods
   serialize :payment_methods
   serialize :colissimo_methods
-
-  def colissimo_method_list
-    self.colissimo_methods || {}
-  end
 
   def cheque_message(order)
     return "" unless order.is_a? Order
@@ -44,30 +39,8 @@ class Setting < ActiveRecord::Base
     payment_method_settings(k)[payment_method_env(k)] if payment_method_available?(k)
   end
 
-  def payment_methods
-    read_attribute(:payment_methods)
+  def colissimo_method_available?
+    colissimo_methods[:active] == '1' if colissimo_methods
   end
 
-  def colissimo_methods
-    read_attribute(:colissimo_methods)
-  end
-
-private
-
-  def update_so_colissimo_methods
-    unless self.colissimo_methods.blank?
-      colissimo = {
-        :active => colissimo_methods[:active].to_i,
-        :sha => colissimo_methods[:sha],
-        :forwarding_charges => colissimo_methods[:forwarding_charges],
-        :preparation_time => colissimo_methods[:preparation_time],
-        :urlok => colissimo_methods[:urlok],
-        :urlko => colissimo_methods[:urlko],
-        :fo => colissimo_methods[:fo],
-        :url_prod => colissimo_methods[:url_prod],
-        :url_test => colissimo_methods[:url_test]
-      }
-      self.colissimo_methods = colissimo
-    end
-  end
 end
