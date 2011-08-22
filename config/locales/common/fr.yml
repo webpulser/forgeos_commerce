@@ -136,18 +136,7 @@ fr:
   save: sauver
   save_changes: sauver
   list: lister
-  civility:
-    one: civilité
-    other: civilités
-    select:
-      - [Mr, 0]
-      - [Mme, 1]
-      - [Mlle, 2]
-    label:
-      '0': Mr
-      '1': Mme
-      '2': Mlle
-  address: 
+  address:
     one: adresse
     other:  adresses
     invoice:

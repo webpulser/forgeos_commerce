@@ -15,4 +15,4 @@ fr:
 
       product_price_variation:
         quantity: unités ou plus
-        discount: % de réduction
+        discount: "% de réduction"
