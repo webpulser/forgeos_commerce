@@ -76,7 +76,7 @@ class Admin::BrandsController < Admin::BaseController
   def get_brand
     unless @brand = Brand.find_by_id(params[:id])
       flash[:error] = I18n.t('brand.found.failed').capitalize
-      return redirect_to[forgeos_commerce, :admin, :brands])
+      return redirect_to([forgeos_commerce, :admin, :brands])
     end
   end
 
