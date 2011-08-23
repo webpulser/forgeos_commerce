@@ -1,7 +1,7 @@
-load File.join(Gem.loaded_specs['forgeos_cms'].full_gem_path, 'app', 'controllers', 'forgeos', 'application_controller.rb')
+load File.join(Gem.loaded_specs['forgeos_cms'].full_gem_path, 'app', 'controllers', 'application_controller.rb')
 
-Forgeos::ApplicationController.class_eval do
-  helper_method :current_currency, :current_cart, :current_wishlist
+ApplicationController.class_eval do
+  :x
   # Change the currency
   def change_currency(currency_id)
     if currency = Currency.find_by_id(currency_id)
