@@ -25,7 +25,7 @@
                 - if picture = product.pictures.first
                   = image_tag(picture.public_filename(:thumb))
                 - else
-                  = image_tag('admin/no-image.png')
+                  = image_tag('forgeos/admin/no-image.png')
                 %span.stat-product-sells
                   = t('product.sold', :count => counter)
                 = link_to product.name, [forgeos_commerce, :admin, product], :class => 'product-name truncate', :title => product.name
@@ -41,7 +41,7 @@
                 - if picture = product.pictures.first
                   = image_tag(picture.public_filename(:thumb))
                 - else
-                  = image_tag('admin/no-image.png')
+                  = image_tag('forgeos/admin/no-image.png')
                 %span.stat-product-sells
                   = t('product.viewed', :count => counter)
                 = link_to product.name, [forgeos_commerce, :admin, product], :class => 'product-name truncate', :title => product.name

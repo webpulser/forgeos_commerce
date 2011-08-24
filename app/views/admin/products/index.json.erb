@@ -13,7 +13,7 @@
 
       if params[:mode] && params[:mode].eql?('menu_link')
         product_array <<
-        content_tag(:div, content_tag(:div, '', :class=>'handler') + image_tag(picture || 'admin/no-image.png'), :id => polymorphic_html_id(product), :class => 'one-product handler_container')
+        content_tag(:div, content_tag(:div, '', :class=>'handler') + image_tag(picture || 'forgeos/admin/no-image.png'), :id => polymorphic_html_id(product), :class => 'one-product handler_container')
         product_array << content_tag(:div, product.name, :class => 'product-name')
         product_array << product.id
         product_array << link_to(product.name, [forgeos_commerce, :edit, :admin, product])
@@ -22,7 +22,7 @@
         if product.kind_of?(Pack) && !is_selection
 
           product_array <<
-          content_tag(:div, content_tag(:div, content_tag(:div, '', :class => 'handler') + image_tag(picture || 'admin/no-image.png'), :class=>'image'), :id => polymorphic_html_id(product), :class => 'some-variants plus handler_container') <<
+          content_tag(:div, content_tag(:div, content_tag(:div, '', :class => 'handler') + image_tag(picture || 'forgeos/admin/no-image.png'), :class=>'image'), :id => polymorphic_html_id(product), :class => 'some-variants plus handler_container') <<
           content_tag(:div, link_to(product.name, [forgeos_commerce, :edit, :admin, product]) + content_tag(:span, product.products.count), :class => 'product-name') +
           content_tag(:p, product.products.collect { |variant| content_tag(:span,variant.name, :class => cycle('even','odd')) }, :class=>'product-name')
           product_array <<
@@ -33,7 +33,7 @@
         else
 
           product_array <<
-            content_tag(:div, content_tag(:div, :class => 'handler') + image_tag(picture || 'admin/no-image.png'), :id => polymorphic_html_id(product), :class => 'one-product handler_container') <<
+            content_tag(:div, content_tag(:div, '', :class => 'handler') + image_tag(picture || 'forgeos/admin/no-image.png'), :id => polymorphic_html_id(product), :class => 'one-product handler_container') <<
             content_tag(:div, is_selection ? product.name : link_to(product.name, [forgeos_commerce, :edit, :admin, product]), :class => 'product-name')
           product_array << content_tag(:div, product.sku) if is_selection
           product_array <<
@@ -44,7 +44,7 @@
 
         product_array <<
           (product.product_type.name || ' ')<<
-            link_to('', [forgeos_commerce, :activate, :admin, :product],
+            link_to('', [forgeos_commerce, :activate, :admin, product],
               :remote => true,
               :class => "small-icons #{klass}",
               :id => polymorphic_html_id(product, 'show')

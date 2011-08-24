@@ -73,7 +73,7 @@
                   - if product && picture = product.pictures.first
                     = image_tag(picture.public_filename(:thumb))
                   - else
-                    = image_tag('admin/no-image.png')
+                    = image_tag('forgeos/admin/no-image.png')
                 %td
                   - if product
                     = link_to detail.name, [forgeos_commerce, :admin, detail.product]

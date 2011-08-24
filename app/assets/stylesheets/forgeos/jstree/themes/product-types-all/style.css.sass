@@ -1,6 +1,6 @@
-.tree-product-types-all
+.jstree-product-types-all
   margin: 20px 0
-  .locked li a
+  .jstree-locked li a
     color: gray
   ul
     width: 87%
@@ -14,9 +14,9 @@
     li
       background-position: right 8px
       &.last
-        background-image: url("lastli_rtl.gif")
+        background-image: image_url("forgeos/jstree/themes/product-types-all/lastli_rtl.gif")
         background-position: right top
-  .no_dots
+  .jstree-no_dots
     background: transparent
     ul
       background: transparent
@@ -24,34 +24,34 @@
       background-image: none
       background-color: transparent
   li
-    &.open
-      background: url("dark-blue-minus.png") 0 0 no-repeat
-    &.closed
-      background: url("dark-blue-plus.png") 0 1px no-repeat
+    &.jstree-open
+      background: image_url("forgeos/jstree/themes/product-types-all/dark-blue-minus.png") 0 0 no-repeat
+    &.jstree-closed
+      background: image_url("forgeos/jstree/themes/product-types-all/dark-blue-plus.png") 0 1px no-repeat
 
-#jstree-dragged.tree-product-types-all li li.open
-  background: url("dark-blue-plus.png") 0 1px no-repeat
+#jstree-dragged.jstree-product-types-all li li.open
+  background: image_url("forgeos/jstree/themes/product-types-all/dark-blue-plus.png") 0 1px no-repeat
 
-.tree-product-types-all .rtl li
+.jstree-product-types-all .rtl li
   margin-right: 1px
   &.last
     margin-right: 0
     padding-right: 16px
   &.open
-    background: url("fminus_rtl.gif") right 6px no-repeat
+    background: image_url("forgeos/jstree/themes/product-types-all/fminus_rtl.gif") right 6px no-repeat
     margin-right: 0
     padding-right: 16px
   &.closed
-    background: url("fplus_rtl.gif") right 4px no-repeat
+    background: image_url("fplus_rtl.gif") right 4px no-repeat
     margin-right: 0
     padding-right: 16px
 
-#jstree-dragged.tree-product-types-all .rtl li li.open
-  background: url("fplus_rtl.gif") right 4px no-repeat
+#jstree-dragged.jstree-product-types-all .rtl li li.open
+  background: image_url("forgeos/jstree/themes/product-types-all/fplus_rtl.gif") right 4px no-repeat
   margin-right: 0
   padding-right: 16px
 
-.tree-product-types-all li
+.jstree-product-types-all li
   a
     padding: 0px 5px 0px 24px
     width: auto
@@ -61,70 +61,13 @@
     height: 20px
     position: relative
   &[rel=attribute-category] a
-    background: url("folder.png") no-repeat left bottom
+    background: image_url("forgeos/jstree/themes/product-types-all/folder.png") no-repeat left bottom
   a
     span
       display: none
-    &.loading
-      background-image: url("throbber.gif")
+    &.jstree-loading
+      background-image: image_url("forgeos/jstree/themes/product-types-all/throbber.gif")
 
-.tree-product-types-all-context
-  width: 160px
-  background: #f0f0f0 url("context.gif") 22px 0 repeat-y
-  border: 1px solid silver
-  position: absolute
-  a
-    display: block
-    text-decoration: none
-    color: black
-    line-height: 20px
-    background-repeat: no-repeat
-    background-position: 2px center
-    padding: 1px 0 1px 25px
-    background-color: transparent
-    border: 1px solid #f0f0f0
-    border-width: 0 1px
-    margin: 0
-    &.disabled:hover
-      display: block
-      text-decoration: none
-      color: black
-      line-height: 20px
-      background-repeat: no-repeat
-      background-position: 2px center
-      padding: 1px 0 1px 25px
-      background-color: transparent
-      border: 1px solid #f0f0f0
-      border-width: 0 1px
-      margin: 0
-    &:hover
-      background-color: #e7f4f9
-      border: 1px solid #d8f0fa
-      padding: 0 0 0 25px
-      margin: 0
-    &.disabled
-      color: silver
-      opacity: 0.5
-      -ms-filter: "alpha(opacity=50)"
-      filter: alpha(opacity = 50)
-      zoom: 1
-      &:hover
-        color: silver
-        opacity: 0.5
-        -ms-filter: "alpha(opacity=50)"
-        filter: alpha(opacity = 50)
-        zoom: 1
-  .separator
-    background: white
-    border-top: 1px solid #e0e0e0
-    font-size: 1px
-    height: 1px
-    line-height: 1px
-    margin: 0 2px 0 24px
-    min-height: 1px
-    display: block
-
-.tree-product-types-all li
   li
     padding-left: 15px
   &[rel=attribute].leaf
@@ -134,6 +77,6 @@
     padding-left: 0
     border: 1px solid #f1b122
     a
-      background: url("drag-drop.png") no-repeat left center
+      background: image_url("forgeos/jstree/themes/product-types-all/drag-drop.png") no-repeat left center
       padding-top: 3px
       padding-left: 30px

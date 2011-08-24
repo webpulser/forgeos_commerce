@@ -11,9 +11,9 @@
     &.leaf
       margin: 0
     &.open
-      background: url("dark-blue-minus.png") 0 4px no-repeat
+      background: image_url("dark-blue-minus.png") 0 4px no-repeat
     &.closed
-      background: url("dark-blue-plus.png") 0 5px no-repeat
+      background: image_url("dark-blue-plus.png") 0 5px no-repeat
     a
       font-size: 1.1em
       text-align: left
@@ -29,7 +29,7 @@
       line-height: auto
     &.leaf a
       font-size: .8em
-      background-image: url("check-unchecked.png")
+      background-image: image_url("check-unchecked.png")
       background-repeat: no-repeat
       background-position: 0 0
       padding: 2px 0 2px 20px
@@ -37,7 +37,7 @@
       border: 0
       font-weight: bold
       &.clicked
-        background-image: url("check-checked.png")
+        background-image: image_url("check-checked.png")
         color: #009640
         background-position: 0 1px
 
@@ -45,7 +45,7 @@
 
 .tree-zone-tree-context
   width: 160px
-  background: #f0f0f0 url("context.gif") 22px 0 repeat-y
+  background: #f0f0f0 image_url("context.gif") 22px 0 repeat-y
   border: 1px solid silver
   position: absolute
   a
