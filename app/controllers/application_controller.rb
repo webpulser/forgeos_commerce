@@ -1,7 +1,7 @@
 load File.join(Gem.loaded_specs['forgeos_cms'].full_gem_path, 'app', 'controllers', 'application_controller.rb')
 
 ApplicationController.class_eval do
-  :x
+  helper_method :current_currency, :current_cart, :current_wishlist
   # Change the currency
   def change_currency(currency_id)
     if currency = Currency.find_by_id(currency_id)
@@ -10,7 +10,7 @@ ApplicationController.class_eval do
     redirect_to(:back)
   end
 
-private
+  private
 
   # Generate a cart and save this in session and instance <i>@cart</i>.
   #
