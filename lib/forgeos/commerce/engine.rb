@@ -1,4 +1,7 @@
 require 'forgeos/cms/engine'
+require 'aasm'
+require 'ruleby'
+
 module Forgeos
   module Commerce
     class Engine < Rails::Engine
