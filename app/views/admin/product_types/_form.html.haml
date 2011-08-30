@@ -8,19 +8,19 @@
       .fieldset.open
         %h2= t(:attribute,:count=>2)
         .option-panel-content
-          %p= t('drag_attributes').capitalize
           = hidden_field_tag 'product_type[product_attribute_ids][]'
-          #product-types-selected-tree.a-tree.init-tree
+          #product-types-selected-tree.jstree-drop
             %ul
-              - product_type.product_attributes.each do |attribute|
-                - id = "attribute_#{attribute.id}"
-                %li{ :id => id, :rel => 'attribute' }
-                  %a{ :href => '#' }
-                    = hidden_field_tag 'product_type[product_attribute_ids][]', attribute.id, :id => "product_type_product_attribute_ids_#{attribute.id}"
-                    = attribute.name
-                    %em.small-icons.edit-link{ :onclick => "window.open('#{url_for [forgeos_commerce, :edit, :admin, attribute]}'); return false;" }
-                    %span.big-icons.gray-destroy-attribute.gray-destroy
-                      &nbsp;
+              %li
+                = link_to t('drag_attributes').capitalize, '#'
+                %ul
+                  - product_type.product_attributes.each do |attribute|
+                    %li{ :id => "attribute_#{attribute.id}", :rel => 'attribute' }
+                      = hidden_field_tag 'product_type[product_attribute_ids][]', attribute.id, :id => "product_type_product_attribute_ids_#{attribute.id}"
+                      = link_to '#' do
+                        = attribute.name
+                        %em.small-icons.edit-link{ :onclick => "window.open('#{url_for [forgeos_commerce, :edit, :admin, attribute]}'); return false;" }
+                        %span.big-icons.gray-destroy-attribute.gray-destroy
           .clear
       %h2.permalink
         = t('permalink').capitalize
@@ -32,12 +32,15 @@
       %div{ :style => 'clear: left;'}
         = f.text_area :description, :cols => 80, :class => 'mceEditor'
   #yellow-sidebar.grid_4.alpha.omega.yellow
-    #product-types-all-tree.init-tree.a-tree
+    #product-types-all-tree.jstree-drop
       %ul
         - Attribute.all.each do |attribute|
           - unless attribute.product_types.include? @product_type
             %li{ :rel => 'attribute', :id => "attribute_#{attribute.id}" }
-              = link_to((attribute.name.html_safe + content_tag(:em, '', :class => 'small-icons edit-link', :onclick => "window.open('#{url_for [forgeos_commerce, :edit, :admin, attribute]}'); return false;") + content_tag(:span, '', :class => 'big-icons gray-destroy-attribute gray-destroy')), '#')
+              = link_to '#' do
+                = attribute.name.html_safe
+                %em.small-icons.edit-link{ :onclick => "window.open('#{url_for [forgeos_commerce, :edit, :admin, attribute]}'); return false;" }
+                %span.big-icons.gray-destroy-attribute.gray-destroy
     .clear
       = link_to t('attribute.create.action').capitalize, [forgeos_commerce, :admin, :attributes], :class => 'small-icons small-icons-verti-small-blue-plus attribute-new'
   .clear

@@ -11,112 +11,61 @@ jQuery(document).ready(function(){
   init_transporter_tree("#transporter-tree",'TransporterCategory','/admin/transporter_categories.json');
 
   //init the zone modify tree
-   jQuery("#zone-tree").jstree({
-    ui: {
-      theme_path: '/stylesheets/jstree/themes/',
-      theme_name : 'zone-tree',
-      selected_parent_close: false
+  jQuery("#zone-tree").jstree({
+    "themes": {
+      "theme": 'zone-tree'
     },
-    rules: { multiple:'on' },
-    callback: {
-      onload: function(TREE_OBJ){
-        tree_id = jQuery(TREE_OBJ.container).attr('id');
-        jQuery(TREE_OBJ.container).removeClass('tree-default');
-      }
-    }
+    "ui": {
+      "selected_parent_close": false
+    },
+    "plugins": ['ui', 'theme', "html_data"]
   });
 
   //init the tree for products/blocks associations
-  jQuery("#association-product-tree").jstree({
-    ui: {
-      theme_path: '/stylesheets/jstree/themes/',
-      theme_name : 'association_product',
-      selected_parent_close: false
+  jQuery("#association-product-tree").bind('select_node.jstree', function(e, data){
+    var NODE = data.rslt.obj;
+    var object_name = jQuery(NODE).attr('id').split('_')[0];
+    var category_id = get_rails_element_id(NODE);
+    jQuery(NODE).append('<input type="hidden" id="'+object_name+'_category_'+category_id+'" name="'+object_name+'[category_ids][]" value="'+category_id+'" />');
+  }).bind('deselect_node.jstree', function(e, data){
+    jQuery(data.rslt.obj).children('input').remove();
+  }).jstree({
+    "themes": {
+      "theme": 'association_product'
     },
-    plugins:{
-      'contextmenu': {}
+    "ui": {
+      "selected_parent_close": false
     },
-    rules: { multiple:'on' },
-    callback: {
-      onload: function(TREE_OBJ){
-        var tree_id = jQuery(TREE_OBJ.container).attr('id');
-        jQuery(TREE_OBJ.container).removeClass('tree-default');
-      },
-      onrgtclk: function(NODE,TREE_OBJ,EV){
-        EV.preventDefault(); EV.stopPropagation(); return false
-      },
-      onselect: function(NODE,TREE_OBJ){
-        var object_name = jQuery(NODE).attr('id').split('_')[0];
-        var category_id = get_rails_element_id(NODE);
-        jQuery(NODE).append('<input type="hidden" id="'+object_name+'_category_'+category_id+'" name="'+object_name+'[category_ids][]" value="'+category_id+'" />');
-        jQuery(NODE).addClass('clicked');
-      },
-      ondeselect: function(NODE,TREE_OBJ){
-        var object_name = jQuery(NODE).attr('id').split('_')[0];
-        var category_id = get_rails_element_id(NODE);
-        jQuery(NODE).children('input').remove();
-        jQuery(NODE).removeClass('clicked');
+    "plugins": ['themes','html_data', 'ui', 'crrm']
+  });
+
+  //init the tree for product-types-selected
+  jQuery("#product-types-selected-tree").jstree({
+    "themes": {
+      "theme": 'product-types',
+      "dots": false,
+      "icons": false
+    },
+    "types": {
+      "default": {
+        "max_depth": 0
       }
-    }
+    },
+    "plugins": ['html_data', 'themes', 'crrm', 'types', 'dnd']
+  }).bind('move_node.jstree', function(e, data) {
+    var option_id = get_rails_element_id(data.rslt.o);
+    jQuery(data.rslt.o).prepend('<input type="hidden" name="product_type[product_attribute_ids][]" value="' + option_id + '" />');
   });
 
   //init the tree for product-types
-  jQuery("#product-types-all-tree").jstree({
-    ui: {
-      theme_path: '/stylesheets/jstree/themes/',
-      theme_name : 'product-types-all',
-      selected_parent_close: false
+  jQuery("#product-types-all-tree").bind('move_node.jstree', function(e, data) {
+    jQuery(data.rslt.o).find('input').remove();
+  }).jstree({
+    "themes": {
+      "theme": 'product-types',
+      "dots": false,
+      "icons": false
     },
-    rules: {
-        multitree : true,
-        type_attr : 'rel',
-        draggable : ['attribute'],
-        clickable: ['attribute'],
-        dragrules :['attribute after attribute','attribute before attribute'],
-        drag_copy : 'on'
-   },
-   callback: {
-      onload: function(TREE_OBJ){
-        var tree_id = jQuery(TREE_OBJ.container).attr('id');
-        jQuery(TREE_OBJ.container).removeClass('tree-default');
-      },
-      onmove: function(NODE) {
-        var option_id = get_rails_element_id(NODE);
-        jQuery('#product_type_option_ids_'+option_id).remove();
-      }
-   }
-  });
-  //init the tree for product-types-selected
-  jQuery("#product-types-selected-tree").jstree({
-    ui: {
-      theme_path: '/stylesheets/jstree/themes/',
-      theme_name : 'product-types-selected',
-      selected_parent_close: false
-    },
-    types: {
-      "default": {
-        max_depth: 0
-      }
-    },
-    rules: {
-        multitree : true,
-        type_attr : 'rel',
-    },
-    callback: {
-      onload: function(TREE_OBJ){
-        var tree_id = jQuery(TREE_OBJ.container).attr('id');
-        jQuery(TREE_OBJ.container).removeClass('tree-default');
-      },
-      oncopy  : function(NODE) {
-        var option_id = NODE.id.split('_')[1];
-
-        if (!jQuery('#product_type_option_ids_'+option_id).is(':empty')) {
-          NODE.id = 'option_'+option_id;
-          jQuery('a', NODE).prepend('<input type="hidden" id="product_type_product_attribute_ids_'+option_id+'" name="product_type[product_attribute_ids][]" value="'+option_id+'" />');
-        } else {
-          jQuery('#option_'+option_id+'_copy').remove();
-        }
-      }
-    }
+    "plugins": ['themes', 'html_data', 'crrm', 'dnd']
   });
 });
