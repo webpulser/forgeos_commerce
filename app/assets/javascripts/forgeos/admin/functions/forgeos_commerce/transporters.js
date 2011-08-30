@@ -12,7 +12,6 @@ function add_delivery_rule(name) {
   delivery_rules.append(new_rule);
   check_remove_icon_status('delivery-rule');
 
-  rezindex();
   false_id--;
   odd_even++;
 }
@@ -44,7 +43,6 @@ function change_rule_for(element){
   delivery_rules.append(rule);
 
   check_remove_icon_status('delivery-rule');
-  rezindex();
   false_id = -1;
   odd_even = 1;
 

@@ -1,4 +1,4 @@
-= form_for [forgeos_core, :admin, user], :html => { :id => 'wrap', :autocomplete => 'off' } do |f|
+= form_for [forgeos_core, :admin, user], :html => { :id => 'wrap',, "data-object_name" => user.class.model_name.singular :autocomplete => 'off' } do |f|
   .backgrounds.big-header
     = f.select :civility, I18n.t('civility.select'), :prompt => I18n.t('please_select').capitalize
     = f.text_field :firstname, :title => I18n.t('firstname'), :class => 'defaultValue field_name lastname'

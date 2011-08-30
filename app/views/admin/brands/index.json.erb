@@ -1,7 +1,7 @@
-<% 
+<%
   output = {
     :sEcho => params[:sEcho],
-    :iTotalRecords => @brands.total_entries || 0
+    :iTotalRecords => @brands.total_entries || 0,
     :iTotalDisplayRecords => @brands.size,
     :aaData => @brands.collect do |brand|
     [

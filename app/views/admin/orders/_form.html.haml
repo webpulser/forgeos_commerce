@@ -1,4 +1,4 @@
-= form_for [forgeos_commerce, :admin, order], :html => { :id => 'wrap', :class => 'edit_order' } do |f|
+= form_for [forgeos_commerce, :admin, order], :html => { :id => 'wrap', "data-object_name" => order.class.model_name.singular, :class => 'edit_order' } do |f|
   .backgrounds.big-header
     %span.order-price= number_with_precision order.total, :precision => 2
     %span.order-currency= current_currency.html

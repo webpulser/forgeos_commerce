@@ -6,8 +6,6 @@ function add_rule(name){
   //check_remove_icon_status(name);
   check_icons('rule-conditions');
   check_icons('end-conditions');
-  InitCustomSelects();
-  rezindex();
 }
 function remove_rule(element,name){
   //if (!jQuery(element).hasClass('disabled')) {
@@ -35,8 +33,6 @@ function add_action(name){
   var action = jQuery('p.'+name+'.pattern');
   jQuery('#action-conditions').append("<div class='condition'>"+action.html()+"</div>");
   //check_remove_icon_status('action-condition');
-  InitCustomSelects();
-  rezindex();
   check_icons('action-conditions');
 }
 
@@ -45,15 +41,11 @@ function change_action(element,name,type){
   var action = jQuery(element).parent().parent();
   action.html('');
   action.append(jQuery('.action-'+selected+'-'+type+'.pattern').html());
-  InitCustomSelects();
-  rezindex();
   check_icons('action-conditions');
 }
 
 function add_cart_rule(){
   jQuery('#rule-conditions').append("<div class='condition'>"+jQuery('.rule-Totalitemsquantity.pattern').html()+'</div>');
-  InitCustomSelects();
-  rezindex();
   check_icons('rule-conditions');
   //check_remove_icon_status('rule-condition');
 }
@@ -98,8 +90,6 @@ function change_select_for(element){
     jQuery('#action-conditions').append("<div class='condition'>"+jQuery('.action-0-category.pattern').html()+'</div>');
 
   }
-  InitCustomSelects();
-  rezindex();
   //check_remove_icon_status('rule-condition');
   //check_remove_icon_status('action-condition');
   check_icons('action-conditions');

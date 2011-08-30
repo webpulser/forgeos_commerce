@@ -1,6 +1,6 @@
 = render :partial => 'admin/menus/lang_switcher'
 = render :partial => 'tabs'
-= form_for [forgeos_commerce, :admin, product], :html => { :id => 'wrap' } do |f|
+= form_for [forgeos_commerce, :admin, product], :html => { :id => 'wrap', 'data-object_name' => product.class.model_name.singular } do |f|
   #blocks-header.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
     %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
       %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active= link_to 'Principal', '#general', :class => 'selected'

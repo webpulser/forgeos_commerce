@@ -52,7 +52,7 @@
             .inner
       %li.clear
     .clear
-    %a#add-picture.backgrounds.button{ :href => "#" }
+    %a.add-image.backgrounds.button{ :href => "#", "data-callback" => 'add_picture_to_product' }
       %span.big-icons.add-picture= t('media.picture.add').capitalize
   .clear
   .grid_12.omega
@@ -73,7 +73,7 @@
     .backgrounds.content-header
     = link_to t('media.linked'), '#', :class => 'small-icons panel'
     .option-panel-content
-      %a#add-file.backgrounds.button.right{ :href => "#" }
+      %a.add-file.backgrounds.button.right{ :href => "#", "data-callback" => 'add_attachment_to_product' }
         %span.big-icons.add-media
           = t('add_file').capitalize
       #product-files.grid_9.sortable
@@ -150,4 +150,4 @@
           Corporate green design
     .clear
   .clear
-  = render :partial => 'attachments_popups', :locals => {:form => f}
+  = render :partial => 'attachments_popups'

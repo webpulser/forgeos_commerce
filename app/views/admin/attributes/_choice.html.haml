@@ -10,7 +10,7 @@
             %span.inner
         %span.block-image
           - link_id = "item_#{attribute_value.object.id}"
-          - carousel_image = image_tag attribute_value.object.pictures.first ? attribute_value.object.pictures.first.public_filename(:thumb) : 'admin/no-image_50x50.png', :id => "#{link_id}_image"
+          - carousel_image = image_tag attribute_value.object.pictures.first ? attribute_value.object.pictures.first.public_filename(:thumb) : 'forgeos/admin/no-image_50x50.png', :id => "#{link_id}_image"
           = carousel_image
           = attribute_value.hidden_field "picture_ids"
           = link_to('', '#', :class => 'big-icons edit change-picture', :id => "change_picture_#{link_id}")

@@ -1,4 +1,4 @@
-= form_for [forgeos_commerce, :admin , product_type], :html => { :id => 'wrap' } do |f|
+= form_for [forgeos_commerce, :admin , product_type], :html => { :id => 'wrap' , "data-object_name" => product_type.class.model_name.singular} do |f|
   .backgrounds.big-header
     = f.text_field :name, :class => 'field_name'
     = Forgeos_save_buttons [forgeos_commerce, :admin, :product_types]
@@ -34,10 +34,10 @@
   #yellow-sidebar.grid_4.alpha.omega.yellow
     #product-types-all-tree.init-tree.a-tree
       %ul
-        - Attribute.all(:include => :categories, :conditions => { :categories => { :id => nil }}).each do |orphan_attribute|
-          - unless orphan_attribute.product_types.include? @product_type
-            %li{ :rel => 'attribute', :id => "attribute_#{orphan_attribute.id}" }
-              = link_to((orphan_attribute.name + content_tag(:em, '&nbsp;', :class => 'small-icons edit-link', :onclick => "window.open('#{url_for [forgeos_commerce, :edit, :admin, orphan_attribute]}'); return false;") + content_tag(:span, '&nbsp;', :class => 'big-icons gray-destroy-attribute gray-destroy')), '#')
+        - Attribute.all.each do |attribute|
+          - unless attribute.product_types.include? @product_type
+            %li{ :rel => 'attribute', :id => "attribute_#{attribute.id}" }
+              = link_to((attribute.name.html_safe + content_tag(:em, '', :class => 'small-icons edit-link', :onclick => "window.open('#{url_for [forgeos_commerce, :edit, :admin, attribute]}'); return false;") + content_tag(:span, '', :class => 'big-icons gray-destroy-attribute gray-destroy')), '#')
     .clear
       = link_to t('attribute.create.action').capitalize, [forgeos_commerce, :admin, :attributes], :class => 'small-icons small-icons-verti-small-blue-plus attribute-new'
   .clear
