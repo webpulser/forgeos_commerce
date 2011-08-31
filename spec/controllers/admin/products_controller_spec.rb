@@ -11,13 +11,13 @@ describe Admin::ProductsController do
     @product.stub!(:destroy).and_return @product
     @product.stub!(:save).and_return false
   end
- 
+
   describe 'index' do
     it "should assign @products" do
       get :index, :format => 'json'
       assigns[:products].should_not == nil
     end
-    
+
     it "should render the index template" do
       get :index
       response.should render_template(:index)
@@ -27,17 +27,17 @@ describe Admin::ProductsController do
   end
 
   describe 'new' do
- 
+
     it "should load the required product" do
       Product.should_receive(:new)
       get :new
     end
-    
+
     it "should assign @product" do
       get :new
       assigns[:product].should == @product
     end
-    
+
     it "should render the new template" do
       get :new
       response.should render_template(:new)
@@ -45,17 +45,17 @@ describe Admin::ProductsController do
   end
 
   describe 'edit' do
-  
+
     it "should load the required product" do
       Product.should_receive(:find_by_id).with('1')
       get :edit, :id => 1
     end
-    
+
     it "should assign @product" do
       get :edit, :id => 1
       assigns[:product].should == @product
     end
-    
+
     it "should render the edit template" do
       get :edit, :id => 1
       response.should render_template(:edit)
@@ -72,35 +72,35 @@ describe Admin::ProductsController do
       end
     end
   end
-  
+
   describe 'create' do
-  
+
     it "should build a new product" do
       Product.should_receive(:new).with('name' => 'Wash Machine', 'price' => 100).and_return(@product)
       post :create, :product => {:name => 'Wash Machine', :price => 100}
     end
-  
+
     it "should save the product" do
       @product.should_receive(:save)
       post :create
     end
-    
+
     context "when the product saves successfully" do
       before(:each) do
         @product.stub!(:save).and_return true
       end
-      
+
       it "should set a flash[:notice] message" do
         post :create
         flash[:notice].should_not == nil
       end
-      
+
       it "should redirect to the products index" do
         post :create
         response.should redirect_to(admin_products_path)
       end
     end
-    
+
     context "when the product fails to save" do
       before(:each) do
         @product.stub!(:save).and_return false
@@ -110,21 +110,21 @@ describe Admin::ProductsController do
         post :create
         assigns[:product].should == @product
       end
-      
+
       it "should put a message in flash[:error]" do
         post :create
         flash[:error].should_not == nil
       end
-      
+
       it "should render the new template" do
         post :create
         response.should render_template(:new)
       end
     end
   end
-  
+
   describe 'update' do
-    
+
     context "when the product saves successfully" do
       before(:each) do
         @product.stub!(:update_attributes).and_return true
@@ -139,12 +139,12 @@ describe Admin::ProductsController do
         @product.should_receive(:update_attributes).with('name' => 'Wash Machine', 'price' => 100).and_return(true)
         put :update, :product => {:name => 'Wash Machine', :price => 100}
       end
-      
+
       it "should set a flash[:notice] message" do
         put :update
         flash[:notice].should_not == nil
       end
-      
+
       it "should redirect to the products index" do
         put :update
         response.should redirect_to(admin_products_path)
@@ -166,22 +166,22 @@ describe Admin::ProductsController do
         response.should redirect_to(admin_products_path)
       end
     end
-    
+
     context "when the product fails to save" do
       before(:each) do
         @product.stub!(:update_attributes).and_return false
       end
-      
+
       it "should assign @product" do
         put :update
         assigns[:product].should == @product
       end
-      
+
       it "should put a message in flash[:error]" do
         put :update
         flash[:error].should_not == nil
       end
-      
+
       it "should render the edit template" do
         put :update
         response.should render_template(:edit)
@@ -190,7 +190,7 @@ describe Admin::ProductsController do
   end
 
   describe 'destroy' do
-  
+
     context "when product does not exist" do
       before(:each) do
         Product.stub!(:find_by_id).and_return nil
@@ -207,13 +207,13 @@ describe Admin::ProductsController do
       end
     end
 
-    
+
     shared_examples_for 'the product is successfully destroyed' do
       it "should set a flash[:notice] message" do
         delete :destroy, :id => 1
         flash[:notice].should_not == nil
       end
-      
+
       it "should render products list" do
         delete :destroy, :id => 1
         response.should nil
@@ -230,7 +230,7 @@ describe Admin::ProductsController do
         delete :destroy, :id => 1
         flash[:error].should_not == nil
       end
-      
+
       it "should render products list" do
         delete :destroy, :id => 1
         response.should nil
@@ -256,7 +256,7 @@ describe Admin::ProductsController do
         before(:each) do
           @product.stub!(:update_attribute).and_return false
         end
-        
+
         it_should_behave_like 'the product fails to destroy'
       end
     end
@@ -280,7 +280,7 @@ describe Admin::ProductsController do
         before(:each) do
           @product.stub!(:destroy).and_return false
         end
-        
+
         it_should_behave_like 'the product fails to destroy'
       end
     end

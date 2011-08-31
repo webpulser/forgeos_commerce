@@ -1,42 +1,42 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Attribute do
-  
+
   describe 'one attribute' do
     before :each do
       @attribute = Attribute.create!({:name => "Color", :access_method => 'color'})
     end
-   
+
     it "should have name Color" do
       @attribute.name.should == 'Color'
     end
-    
+
     it "should have access_method color" do
       @attribute.access_method.should == 'color'
     end
-    
+
     it "should have a unique access_method" do
       @second_attribute = Attribute.new({:name => "Color", :access_method => 'color'})
       @second_attribute.should_not be_valid
       @second_attribute.should have(1).errors_on(:access_method)
     end
-    
+
     it "must have a name" do
       @attribute = Attribute.new({:access_method => 'access'})
       @attribute.should_not be_valid
       @attribute.should have(1).errors_on(:name)
     end
-    
+
     it "must have a access_method" do
       @attribute = Attribute.new({:name => 'color'})
       @attribute.should_not be_valid
       @attribute.should have(1).errors_on(:access_method)
     end
-    
+
     it "should find a attribute with find_by_id" do
       Attribute.find_by_id(@attribute.id).should == @attribute
     end
-    
+
     it "should have attribute_values" do
       @attribute_values = []
       (1..5).each do |i|
@@ -45,7 +45,7 @@ describe Attribute do
       end
       @attribute.attribute_values.all.should == @attribute_values
     end
-    
+
     it "should have dynamic_attribute_values" do
       @dynamic_attribute_values = []
       (1..20).each do |i|
@@ -54,7 +54,7 @@ describe Attribute do
       end
       @attribute.dynamic_attribute_values.all.should == @dynamic_attribute_values
     end
-    
+
     it "should have attachments" do
       @attachments = []
       (1..20).each do |i|
@@ -63,7 +63,7 @@ describe Attribute do
       end
       @attribute.attachments.all.should == @attachments
     end
-    
+
     it "should have attribute_categories" do
       @attribute_categories = []
       (1..20).each do |i|
@@ -72,9 +72,9 @@ describe Attribute do
       end
       @attribute.attribute_categories.all.should == @attribute_categories
     end
-    
+
   end
-  
+
   describe 'all attributes' do
     it "should list all attributes" do
       expected_attributes = []
@@ -87,12 +87,12 @@ describe Attribute do
       @attributes.should == expected_attributes
     end
   end
-  
+
   describe 'new attribute' do
     before(:each) do
       @attribute = Attribute.new({:name => "Color", :access_method => 'color'})
     end
-    
+
     it "should be valid" do
       @attribute.valid?.should == true
       @attribute.name.should == "Color"
@@ -104,12 +104,12 @@ describe Attribute do
       Attribute.last.should == @attribute
     end
   end
-    
+
   describe 'edit/delete attribute' do
     before :each do
       @attribute = Attribute.create!({:name => "Color", :access_method => 'color'})
     end
-    
+
     # update
     it 'should update attributes' do
       @attribute.update_attributes(:name => "new_color", :access_method => 'new_color').should == true
@@ -133,7 +133,7 @@ describe Attribute do
       @new_attribute.should_not == nil
       @new_attribute.access_method.should == 'color'
     end
-  
+
     # delete
     it 'should destroy the attribute' do
       @attribute.destroy
@@ -159,19 +159,17 @@ describe Attribute do
     end
 
   end
-  
+
   describe 'clone attribute' do
     before :each do
       @attribute = Attribute.create!({:name => "Color", :access_method => 'color'})
       @attribute_clone = @attribute.clone
     end
-    
+
     it "should have the same name and access_method" do
       @attribute_clone.should_not == nil
       @attribute_clone.name.should == @attribute.name
       @attribute_clone.access_method.should == @attribute.access_method
     end
   end
-  
-  
 end
