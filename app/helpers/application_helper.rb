@@ -1,5 +1,4 @@
 load File.join(Gem.loaded_specs['forgeos_core'].full_gem_path, 'app', 'helpers', 'application_helper.rb')
-load File.join(Gem.loaded_specs['forgeos_cms'].full_gem_path, 'app', 'helpers', 'application_helper.rb')
 module ApplicationHelper
   include CartHelper
   include WishlistHelper

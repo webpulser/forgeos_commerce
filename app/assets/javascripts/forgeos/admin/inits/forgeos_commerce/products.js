@@ -2,9 +2,9 @@ jQuery(document).ready(function(){
   //init sortable
   jQuery('.sortable').each(function(){
     jQuery(this).sortable({
-      handle:'.handler',
-      placeholder: 'ui-state-highlight',
-      stop:function(event,ui){
+      "handle": '.handler',
+      "placeholder": 'ui-state-highlight',
+      "stop": function(event,ui){
         jQuery('#product-images .sortable li').removeClass('first-image');
         check_product_first_image();
       }
@@ -28,69 +28,19 @@ jQuery(document).ready(function(){
 
   jQuery('#product_product_type_id, #pack_product_type_id').live('change',function(e){
       jQuery.ajax({
-        before: function(){ tmce_unload_children('#product-types-panel');},
-        data: { product_type_id: jQuery(e.target).val(), authenticity_token: window._forgeos_js_vars.token, id: get_id_from_rails_url() },
-        success: function(request){
+        "before": function(){ tmce_unload_children('#product-types-panel');},
+        "data": {
+          "product_type_id": jQuery(e.target).val(),
+          "authenticity_token": window._forgeos_js_vars.token,
+          "id": get_id_from_rails_url()
+        },
+        "success": function(request){
           jQuery('#product-types-panel').html(request);
-          InitCustomSelects();
           tmce_load_children('#product-types-panel');
         },
-        type:'post',
-        url:'/admin/products/update_attributes_list'
+        "type": 'post',
+        "url": '/admin/products/update_attributes_list'
       });
-  });
-
-  jQuery('#imageSelectDialog').dialog({
-    autoOpen:false,
-    modal:true,
-    minHeight: 380,
-    width: 800,
-    resizable:'se',
-    buttons: {
-      Ok: function(){
-        dataTableSelectRows('#image-table:visible,#thumbnail-table:visible',function(current_table,indexes){
-          for(var i=0; i<indexes.length; i++){
-            var row = current_table.fnGetData(indexes[i]);
-            var path = row.slice(-3,-2);
-            var id = row.slice(-2,-1);
-            var name = row.slice(-1);
-            add_picture_to_element(path,id,name);
-          }
-          check_product_first_image();
-        });
-        jQuery('#imageSelectDialog').dialog('close');
-      }
-    },
-    open: function(e,ui){
-      eval(jQuery('#image-table:visible,#thumbnail-table:visible').data('dataTables_init_function')+'()');
-    }
-  });
-
-  jQuery('#fileSelectDialog').dialog({
-    autoOpen:false,
-    modal:true,
-    minHeight: 380,
-    width: 800,
-    resizable:'se',
-    buttons: {
-      Ok: function(){
-        dataTableSelectRows('#table-files', function(current_table, indexes) {
-          for(var i=0; i<indexes.length; i++){
-            var row = current_table.fnGetData(indexes[i]);
-            var size = row.slice(-6,-5);
-            var type = row.slice(-8,-7);
-            var id = row.slice(-2,-1);
-            var name = row.slice(-1);
-
-            add_attachment_to_product(id,name,size,type);
-          }
-        });
-        jQuery('#fileSelectDialog').dialog('close');
-      }
-    },
-    open: function(e,ui){
-      eval(jQuery('#table-files').data('dataTables_init_function')+'()');
-    }
   });
 
   jQuery('.add_a_size').live('click', function(){
