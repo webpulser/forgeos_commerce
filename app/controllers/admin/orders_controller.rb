@@ -209,16 +209,16 @@ private
     offset =  params[:iDisplayStart].to_i
     page = (offset / per_page) + 1
 
-    conditions = {}
-    options = { :page => page, :per_page => per_page }
+    Order.per_page = per_page
+    conditions = Order.page(page)
 
     case params[:filter]
     when 'status'
-      conditions[:status] = params[:status]
+      conditions = conditions.where(:status => params[:status])
     when 'user'
-      conditions[:user_id] = params[:user_id]
+      conditions = conditions.where(:user_id => params[:user_id])
     else
-      conditions[:status_ne] = %w(unpaid closed)
+      conditions = conditions.where{ status << %w(unpaid closed) }
     end
 
     order_column = params[:iSortCol_0].to_i
@@ -235,16 +235,14 @@ private
 
     order = "#{columns[order_column]} #{params[:sSortDir_0].upcase if params[:sSortDir_0]}"
 
-    options[:group] = group_by.join(', ') unless group_by.empty?
-    options[:conditions] = conditions unless conditions.empty?
-    options[:include] = includes unless includes.empty?
-    options[:order] = order unless order.squeeze.blank?
+    conditions = conditions.group(group_by.join(', ')) unless group_by.empty?
+    conditions = conditions.includes(includes) unless includes.empty?
+    conditions = conditions.order(order) unless order.squeeze.blank?
 
     if params[:sSearch] && !params[:sSearch].blank?
-      options[:star] = true
-      @orders = Order.search(params[:sSearch],options)
+      @orders = conditions.search(params[:sSearch], { :star => true })
     else
-      @orders = Order.paginate(options)
+      @orders = conditions
     end
   end
 end

@@ -4,7 +4,7 @@
   output = {
     :sEcho => params[:sEcho],
     :iTotalRecords => @orders.total_entries || 0,
-    :iTotalDisplayRecords => @orders.size,
+    :iTotalDisplayRecords => @orders.count,
     :aaData => @orders.collect do |order|
       details_count = order.order_details.count
       product_names = details_count > 1 ? content_tag(:p,order.order_details.all(:group => 'product_id').collect{|detail| content_tag(:span,"#{detail.name} x #{detail.quantity}", :class=>cycle('even', 'odd'))}.join(''), :class=>'product-name') : ''
