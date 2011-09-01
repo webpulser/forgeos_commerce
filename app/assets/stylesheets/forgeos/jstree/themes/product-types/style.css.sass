@@ -1,3 +1,50 @@
+#product-types-all-tree, #product-types-selected-tree
+  ul
+    margin-left: 5px
+    li
+      margin-bottom: 2px
+      float: left
+    .jstree-leaf
+      background: white
+      border: 1px solid #F1B122
+      min-height: 20px
+      padding: 0
+      .jstree-icon
+        float: left
+        width: 0
+        height: 0
+      a
+        float: left
+        background: image_url("forgeos/jstree/themes/product-types/drag-drop.png") no-repeat top left transparent
+        height: 20px
+        width: 85%
+        .jstree-icon
+          width: 20px
+          height: 20px
+          margin-right: 5px
+        .small-icons
+          margin-left: 5px
+          padding-bottom: 4px
+          background-position: 0 -334px
+        .gray-destroy
+          display: block
+          top: 2px
+      &:hover
+        background-color: #ffeea9
+
+#product-types-selected-tree
+  ul
+    .jstree-leaf
+      border: 1px solid #E7E7E7
+      a
+        background: image_url("forgeos/jstree/themes/product-types/grey-drag-drop.png") no-repeat top left transparent
+        width: 95%
+        .small-icons
+          position: absolute
+          right: 20px
+          height: 20px
+      &:hover
+        background-color: #f3f3f3
 .jstree-product-types
   margin: 20px 0
   .jstree-locked li a
