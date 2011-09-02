@@ -1,80 +1,50 @@
 .jstree-association_product
-  position: relative
-  .locked li a
+  .jstree-locked li a
     color: gray
   ul
-    display: block
     margin: 0
+    padding: 0
+
   li
-    display: block !important
     float: none !important
     margin: 2px 0 !important
-  .rtl
-    background-position: right 1px
-    ul
-      background-position: right 1px
-    li
-      background-position: right 8px
-      &.jstree-last
-        background-image: image_url("forgeos/jstree/themes/association_product/lastli_rtl.gif")
-        background-position: right top
-  li
+
     &.jstree-open
-      background: image_url("forgeos/jstree/themes/association_product/dark-blue-minus.png") 0 0 no-repeat
+      ins
+        background: image_url("forgeos/jstree/themes/association_product/dark-blue-minus.png") 0 0 no-repeat
     &.jstree-closed
-      background: image_url("forgeos/jstree/themes/association_product/dark-blue-plus.png") 0 1px no-repeat
+      ins
+        background: image_url("forgeos/jstree/themes/association_product/dark-blue-plus.png") 0 0 no-repeat
+      ul
+        display: none
+    &.jstree-checked
+      ins.jstree-checkbox
+        background: image_url("forgeos/jstree/themes/association_product/check-checked.png") 0px 0 no-repeat
+        margin-right: 5px
+    &.jstree-unchecked
+      ins.jstree-checkbox
+        background: image_url("forgeos/jstree/themes/association_product/check-unchecked.png") 0 0 no-repeat
+        margin-right: 5px
 
-#jstree-dragged.jstree-association_product li li.open
-  background: image_url("forgeos/jstree/themes/association_product/dark-blue-plus.png") 0 1px no-repeat
+    ul li > ins.jstree-icon
+      background: none
+    a
+      display: inline !important
+      color: #557383 !important
+      font-weight: bold
+      font-size: 1em
+      -moz-border-radius: 3px
+      -webkit-border-radius: 3px
+      border-radius: 3px
+      height: 20px
+      &.jstree-hovered
+        background-color: #8fc864
+        color: #FFF !important
+      ins.jstree-icon
+        background: image_url("forgeos/jstree/themes/association_product/folder.png") -4px -4px no-repeat
+    li
+      padding-left: 15px
 
-.jstree-association_product li
-  a
-    padding: 0px 5px 0px 24px
-    display: block
-    color: #557383 !important
-    font-weight: bold
-    font-size: 1em
-    background-image: image_url("forgeos/jstree/themes/association_product/folder.png")
-    background-repeat: no-repeat
-    background-color: #b0e0f1
-    -moz-border-radius: 3px
-    -webkit-border-radius: 3px
-    height: 20px
-    position: relative
-    span
-      height: 13px
-      width: 19px
-      font-size: 0.7em
-      background-image: image_url("forgeos/jstree/themes/association_product/check-unchecked.png")
-      background-repeat: no-repeat
-      background-position: 0 0
-      text-align: center
-      color: #75491b
-      right: 2px
-      position: absolute
-      top: 2px
-    &.jstree-clicked
-      color: white !important
-      span
-        background-image: image_url("forgeos/jstree/themes/association_product/check-checked.png")
-      &:hover
-        color: white !important
-  span.jstree-clicked
-    color: white !important
-    padding: 0px 3px 0px 20px
-  a.jstree-loading
-    background-image: image_url("forgeos/jstree/themes/association_product/throbber.gif")
-.jstree-association_product li li
-  padding-left: 15px
 
-.jsleaf
-  padding-left: 5px !important
-
-.jstree-association_product li a
-  &.jstree-clicked
-    background-color: #8fc864
-  &:hover
-    background-color: #8fc864
-    color: white !important
-  &.jstree-hover, &.jstree-clicked
-    color: white !important
+  .jstree-leaf
+    padding-left: 0px !important
