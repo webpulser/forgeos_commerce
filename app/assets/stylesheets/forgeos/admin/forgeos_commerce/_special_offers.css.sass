@@ -12,7 +12,7 @@
     //--------------------- ----------
     .specialOffer_header
       background-color: $whiteGray
-      +borderCorner(8px, 8px, 8px, 8px)
+      +border-radius(8px)
       padding: 8px 15px
     //--------------------- ----------
     // SPECIAL OFFERS FORM ELEMENTS
@@ -24,7 +24,7 @@
       width: 98%
       padding: 2px
       border: 1px solid $darkGray
-      +borderCorner(3px, 3px, 3px, 3px)
+      +border-radius(3px)
       background:
         position: 0 -600px
         image: image_url("forgeos/admin/backgrounds-verti.png")
@@ -40,7 +40,7 @@
       background-color: $whiteGray
       border: 1px solid $whiteGray - #080808
       position: relative
-      +borderCorner(8px, 8px, 8px, 8px)
+      +border-radius(8px)
       font-size: 0.8em
       margin:
         right: 8px
@@ -69,14 +69,14 @@
     background-color: $white
     border: 1px solid $whiteGray - #080808
     position: relative
-    +borderCorner(8px, 8px, 8px, 8px)
+    +border-radius(8px)
     font-size: 0.8em
     margin:
       right: 8px
       top: 30px
     .specialOffer_header
       background-color: $whiteGray
-      +borderCorner(8px, 8px, 0, 0)
+      +border-top-radius(8px)
       padding: 8px 15px
     span.conditioner
       +left
@@ -118,14 +118,14 @@
     .specialOffers_products_header
       color: $white
       background-color: $lightGreenBg
-      +borderCorner(8px, 8px, 0, 0)
+      +border-top-radius(8px)
       text-align: center
       padding: 5px 0
     #specialOffers_products_table_wrapper,
     #specialOffers_products_table
       border: 1px solid $whiteGray - #080808
       border-top: 0
-      +borderCorner(0, 0, 8px, 8px)
+      +border-bottom-radius(8px)
       #specialOffers_products_table_length,
       #specialOffers_products_table_filter
         display: none
@@ -162,12 +162,12 @@
         margin: 0
         padding: 5px 0
         text-align: center
-        +borderCorner(8px, 8px, 0, 0)
+        +border-top-radius(8px)
         #specialOffers_products_table_previous,
         #specialOffers_products_table_next
           color: $white
           background-color: $gray
-          +borderCorner(3px, 3px, 3px, 3px)
+          +border-radius(3px)
         #specialOffers_products_table_previous
           background:
             image: image_url("forgeos/admin/small-icons-16-16-verti.png")
@@ -181,7 +181,7 @@
         .paginate_active
           background-color: $lightGray
           color: $white
-          +borderCorner(2px, 2px, 2px, 2px)
+          +border-radius(2px)
         .paginate_button
           color: $lightGray
   .red-delete-icon, .green-add-icon
