@@ -19,4 +19,9 @@ class ProductType < ActiveRecord::Base
   validates :name, :presence => true
 
   has_many :brands, :through => :products, :uniq => true
+
+  def self.modify_import_attributes(attributes)
+    attributes[:url] = attributes[:name].parameterize if attributes[:url].blank? and attributes[:name].present?
+    attributes
+  end
 end

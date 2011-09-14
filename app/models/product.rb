@@ -286,4 +286,9 @@ class Product < ActiveRecord::Base
       self.url = name.parameterize
     end
   end
+
+  def self.modify_import_attributes(attributes)
+    attributes[:category_ids] = attributes.delete(:categories) unless attributes[:categories].blank?
+    attributes
+  end
 end

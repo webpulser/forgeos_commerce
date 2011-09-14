@@ -14,4 +14,9 @@ class Brand < ActiveRecord::Base
   define_index do
     indexes name, :sortable => true
   end
+
+  def self.modify_import_attributes(attributes)
+    attributes[:category_ids] = attributes.delete(:categories) unless attributes[:categories].blank?
+    attributes
+  end
 end

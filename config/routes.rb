@@ -5,6 +5,10 @@ Forgeos::Commerce::Engine.routes.draw do
     match '/admin/get_cross_selling_id' => 'admin/products#get_cross_selling_id'
     match '/admin/transporter_categories.:format' => 'admin/transporter_rules#categories'
 
+    %w(product product_type brand address product_category order order_detail attribute_value).each do |model|
+      match "/import/create_#{model}" => "import#create_#{model}", :as => "import_create_#{model}"
+    end
+
     resources :transporters, :controller => 'transporter_rules' do
       member do
         post :activate
